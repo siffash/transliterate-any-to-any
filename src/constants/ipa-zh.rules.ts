@@ -1,3 +1,6 @@
+// https://en.wikipedia.org/wiki/Transcription_into_Chinese_characters
+// https://zh.wikipedia.org/wiki/Wikipedia:%E5%A4%96%E8%AA%9E%E8%AD%AF%E9%9F%B3%E8%A1%A8
+
 export const ipaZhRules = `
   $v_a = [a æ ʌ ɑ {ɑː}];
   $v_e = [ɛ {eɪ}];
@@ -526,6 +529,12 @@ export const ipaZhRules = `
   [ʃ ʒ] ə n > 申;
   t ʃ ə n > 琴;
   d ʒ ə n > 震;
+  [v f] } [ $ ] > 夫;
+  s k i > 斯基;
+  w a > 瓦;
+  ʃ t > 施特;
+  t͡s > 茨;
+  d͡z > 兹;
   b > 布;
   p > 普;
   d > 德;
@@ -536,7 +545,7 @@ export const ipaZhRules = `
   k > 克;
   v > 夫;
   f > 夫;
-  ð > 斯;
+  ð > 德;
   θ > 斯;
   s > 斯;
   z > 兹;
@@ -552,4 +561,37 @@ export const ipaZhRules = `
   ɾ > 塔;
   ɝ > 尔;
   e > 埃;
+  y > 郁;
+  ø > 厄;
+  œ > 厄;
+  ã > 安;
+  ɛ̃ > 昂;
+  ɔ̃ > 翁;
+  ç > 希;
+  ɲ > 尼;
+  ʁ > 尔;
+  ʀ > 尔;
+  ʎ > 利;
+  ɨ > 依;
+  ʲ > 亚;
+  ɕ > 什;
+  x > 赫;
+  ɤ > 厄;
+  q > 克;
+  ħ > 赫;
+  ʕ > 阿; 
+  ʔ > 阿;
+  [ʈ ʈʰ] > 特;
+  [ɖ ɖʱ] > 德;
+  ɳ > 尼;
+  þ > 斯;
+  ɓ > 布;
+  ɗ > 德;
+  ɠ > 格;
+  ɬ > 利;
+  ʋ > 夫;
+  [ɱ ɴ] > 姆;
+  [ʜ ʢ] > 赫;
+  [ʂ ʐ] > 什;
+  [ː ˑ ˈ ˌ ꜜ ꜛ ˞ ̆ ‖ | ↗ ↘ \u0361 \u035C] > ;
 `;
