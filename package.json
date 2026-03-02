@@ -1,0 +1,72 @@
+{
+  "name": "transliterate-any-to-any",
+  "version": "1.0.0",
+  "description": "Transliterate from any script to any script",
+  "keywords": [
+    "transliterate",
+    "transliteration",
+    "ICU",
+    "ICU4X",
+    "i18n",
+    "unicode"
+  ],
+  "homepage": "https://github.com/siffash/transliterate-any-to-any#readme",
+  "bugs": {
+    "url": "https://github.com/siffash/transliterate-any-to-any/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/siffash/transliterate-any-to-any.git"
+  },
+  "license": "MIT",
+  "author": "Anton Sivashtenko",
+  "type": "commonjs",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsdown src/index.ts --format cjs,esm --dts",
+    "type-check": "tsc --noEmit --pretty",
+    "lint": "eslint src/**/*.ts --max-warnings=0",
+    "lint:fix": "eslint --fix src/**/*.ts",
+    "format": "prettier --write src/**/*.ts --config ./.prettierrc",
+    "format:check": "prettier --check src/**/*.ts --config ./.prettierrc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "aromanize": "^0.1.5",
+    "hangul-js": "^0.2.6",
+    "icu-transliterator": "^0.3.7",
+    "kuroshiro": "^1.2.0",
+    "kuroshiro-analyzer-kuromoji": "^1.1.0",
+    "opencc": "^1.2.0",
+    "pinyin-pro": "^3.28.0"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.3.4",
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^25.3.2",
+    "@typescript-eslint/eslint-plugin": "^8.56.1",
+    "@typescript-eslint/parser": "^8.56.1",
+    "eslint": "^10.0.2",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-chai-friendly": "^1.1.0",
+    "eslint-plugin-no-only-tests": "^3.3.0",
+    "eslint-plugin-prettier": "^5.5.5",
+    "prettier": "^3.8.1",
+    "tsdown": "^0.21.0-beta.2",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  }
+}
