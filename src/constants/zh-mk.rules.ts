@@ -1,7 +1,7 @@
 export const zhMkRules = `
-  :: Any-Latin;
-  :: Latin-ASCII;
-  :: Lower();
+  ::Any-Latin;
+  ::Latin-ASCII;
+  ::Lower();
   
   # 1. ATOMIC SYLLABLES & MACEDONIAN PALATALS
   yuan > јуан;
@@ -49,12 +49,12 @@ export const zhMkRules = `
   n } [^[:L:]] > н;
   n } $ > н;
   
-  :: Any-Cyrillic;
+  ::Any-Cyrillic;
   
   # 6. POST-CYRILLIC CLEANUP
   # Macedonian 'Ј' is the standard, replace any leftover 'Й'
   й > ј;
   
   # Format
-  :: Title();
+  ::Title();
 `;

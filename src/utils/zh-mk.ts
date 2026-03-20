@@ -1,7 +1,14 @@
-export const zhMk = async (text: string) => {
+import { Text } from "types/languages";
+
+export const zhMk = async (text: Text) => {
   const { RBT } = await import("icu-transliterator");
   const { zhMkRules } = await import("constants/zh-mk.rules");
 
   const transliterator = RBT.fromRules(zhMkRules);
-  return transliterator.transliterate(text);
+
+  if (typeof text === "string") {
+    return transliterator.transliterate(text);
+  } else {
+    return text.map(text => transliterator.transliterate(text));
+  }
 };

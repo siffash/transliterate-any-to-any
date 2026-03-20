@@ -1,4 +1,11 @@
-export const koLatn = async (text: string) => {
+import { Text } from "types/languages";
+
+export const koLatn = async (text: Text) => {
   const Aromanize = (await import("aromanize")).default;
-  return Aromanize.romanize(text);
+
+  if (typeof text === "string") {
+    return Aromanize.romanize(text);
+  } else {
+    return text.map(text => Aromanize.romanize(text));
+  }
 };

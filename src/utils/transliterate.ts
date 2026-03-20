@@ -1,6 +1,5 @@
 import { cyrlLanguages, latnLanguages, supportedLanguages } from "constants/languages";
-import { CyrlLanguage, Language, LatnLanguage } from "types/languages";
-import { anyLatn } from "utils/any-latn";
+import { CyrlLanguage, Language, LatnLanguage, Text } from "types/languages";
 import { jaLatn } from "utils/ja-latn";
 import { anyJa } from "utils/any-ja";
 import { anyHi } from "utils/any-hi";
@@ -16,12 +15,18 @@ import { zhRu } from "utils/zh-ru";
 import { zhUa } from "utils/zh-ua";
 import { zhBg } from "utils/zh-bg";
 import { zhMk } from "utils/zh-mk";
+import { mkZh } from "utils/mk-zh";
+import { bgZh } from "utils/bg-zh";
+import { ruZh } from "utils/ru-zh";
+import { ukZh } from "utils/uk-zh";
+import { azZh } from "utils/az-zh";
+import { bsZh } from "utils/bs-zh";
 
-export const transliterate = async (
-  text: string,
-  language: { input?: Language; output: Language },
+export const transliterate = async <T extends Text>(
+  text: T,
+  language: { input: Language; output: Language },
   options: { silent?: boolean; latin_ASCII?: boolean } = { silent: false, latin_ASCII: false }, // TODO: latin_ASCII
-): Promise<string | null> => {
+): Promise<T | null> => {
   if (!text) {
     if (options.silent) {
       return null;
@@ -29,7 +34,7 @@ export const transliterate = async (
       throw new Error("Text is empty");
     }
   }
-  if (language.input && !supportedLanguages.includes(language.input)) {
+  if (!supportedLanguages.includes(language.input)) {
     if (options.silent) {
       return null;
     } else {
@@ -47,37 +52,32 @@ export const transliterate = async (
   try {
     // if OUTPUT language is Latin
     if (latnLanguages.includes(language.output as LatnLanguage)) {
-      if (language.input) {
-        // if input language is Cyrillic
-        if (cyrlLanguages.includes(language.input as CyrlLanguage)) {
-          // return cyrlLatn(language.input as CyrlLanguage, text); // TODO
-        }
-
-        // if input language is Japanese
-        if (language.input === "ja") {
-          return await jaLatn(text);
-        }
-
-        // if input language is Korean
-        if (language.input === "ko") {
-          return await koLatn(text);
-        }
-
-        // if input language is Chinese
-        if (language.input === "zh") {
-          return await zhLatn(text);
-        }
+      // if input language is Cyrillic
+      if (cyrlLanguages.includes(language.input as CyrlLanguage)) {
+        // return cyrlLatn(language.input as CyrlLanguage, text); // TODO
       }
 
-      // fallback to any
-      return await anyLatn(text);
+      // if input language is Japanese
+      if (language.input === "ja") {
+        return (await jaLatn(text)) as T;
+      }
+
+      // if input language is Korean
+      if (language.input === "ko") {
+        return (await koLatn(text)) as T;
+      }
+
+      // if input language is Chinese
+      if (language.input === "zh") {
+        return (await zhLatn(text)) as T;
+      }
     }
 
     // if OUTPUT language is Bulgarian
     else if (language.output === "bg") {
       // if input language is Chinese
       if (language.input === "zh") {
-        return await zhBg(text);
+        return (await zhBg(text)) as T;
       }
     }
 
@@ -85,7 +85,7 @@ export const transliterate = async (
     else if (language.output === "mk") {
       // if input language is Chinese
       if (language.input === "zh") {
-        return await zhMk(text);
+        return (await zhMk(text)) as T;
       }
     }
 
@@ -93,7 +93,7 @@ export const transliterate = async (
     else if (language.output === "ru") {
       // if input language is Chinese
       if (language.input === "zh") {
-        return await zhRu(text);
+        return (await zhRu(text)) as T;
       }
     }
 
@@ -101,58 +101,84 @@ export const transliterate = async (
     else if (language.output === "uk") {
       // if input language is Chinese
       if (language.input === "zh") {
-        return await zhUa(text);
+        return (await zhUa(text)) as T;
       }
     }
 
     // if OUTPUT language is Hindi
     else if (language.output === "hi") {
-      return await anyHi(text);
+      return (await anyHi(text)) as T;
     }
 
     // if OUTPUT language is Japanese
     else if (language.output === "ja") {
       // if input language is Korean
       if (language.input === "ko") {
-        return await koJa(text);
+        return (await koJa(text)) as T;
       }
 
       // if input language is Chinese
       if (language.input === "zh") {
-        return await zhJa(text);
+        return (await zhJa(text)) as T;
       }
 
-      return await anyJa(text);
+      return (await anyJa(text)) as T;
     }
 
     // if OUTPUT language is Korean
     else if (language.output === "ko") {
       // if input language is Japanese
       if (language.input === "ja") {
-        return await jaKo(text);
+        return (await jaKo(text)) as T;
       }
 
       // if input language is Chinese
       if (language.input === "zh") {
-        return await zhKo(text);
+        return (await zhKo(text)) as T;
       }
-
-      // return anyKo(text); // TODO
     }
 
     // if OUTPUT language is Chinese
     else if (language.output === "zh") {
+      // if input language is Azerbaijani
+      if (language.input === "az") {
+        return (await azZh(text)) as T;
+      }
+
+      // if input language is Bosnian
+      if (language.input === "bs") {
+        return (await bsZh(text)) as T;
+      }
+
+      // if input language is Bulgarian
+      if (language.input === "bg") {
+        return (await bgZh(text)) as T;
+      }
+
+      // if input language is Macedonian
+      if (language.input === "mk") {
+        return (await mkZh(text)) as T;
+      }
+
+      // if input language is Russian
+      if (language.input === "ru") {
+        return (await ruZh(text)) as T;
+      }
+
+      // if input language is Ukrainian
+      if (language.input === "uk") {
+        return (await ukZh(text)) as T;
+      }
+
       // if input language is Korean
       if (language.input === "ko") {
-        return await koZh(text);
+        return (await koZh(text)) as T;
       }
 
       // if input language is Japanese
       if (language.input === "ja") {
-        return await jaZh(text);
+        return (await jaZh(text)) as T;
       }
-
-      // return anyZh(text); // TODO
     }
   } catch (e: unknown) {
     if (options.silent) {

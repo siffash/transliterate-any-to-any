@@ -1,7 +1,7 @@
 export const zhUaRules = `
-  :: Any-Latin;
-  :: Latin-ASCII;
-  :: Lower();
+  ::Any-Latin;
+  ::Latin-ASCII;
+  ::Lower();
   
   # 1. ATOMIC SYLLABLE PROTECTIONS (Longest first)
   # 1. Syllable Boundaries (Xi'an, Tian'anmen)
@@ -73,7 +73,7 @@ export const zhUaRules = `
   y } e > є;
   y > і;
   
-  :: Any-Cyrillic;
+  ::Any-Cyrillic;
   
   # 6. POST-CYRILLIC CLEANUP
   # Fixes the 'ee' sound and removes accidental double-softening
@@ -87,5 +87,5 @@ export const zhUaRules = `
   ннь > нь;
   
   # Format
-  :: Title();
+  ::Title();
 `;

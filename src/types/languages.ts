@@ -10,3 +10,5 @@ export type CyrlLanguage = (typeof cyrlLanguages)[number];
 export type OtherLanguage = (typeof otherLanguages)[number];
 
 export type Language = (typeof supportedLanguages)[number];
+
+export type Text = string | string[];

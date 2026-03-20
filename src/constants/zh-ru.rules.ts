@@ -1,8 +1,8 @@
 export const zhRuRules = `
-  :: Any-Latin;
+  ::Any-Latin;
   
-  :: Latin-ASCII;
-  :: Lower();
+  ::Latin-ASCII;
+  ::Lower();
   
   # 1. ATOMIC PINYIN TO CYRILLIC (The "Nuclear" Option)
   # We map these directly to Russian letters so ICU can't break them.
@@ -44,7 +44,7 @@ export const zhRuRules = `
   y } e > е;
   y > и;
   
-  :: Any-Cyrillic;
+  ::Any-Cyrillic;
   
   # 5. POST-CYRILLIC CLEANUP
   # Fix double soft signs or weird overlaps
@@ -54,5 +54,5 @@ export const zhRuRules = `
   иуань > юань;
   
   # Format
-  :: Title();
+  ::Title();
 `;
