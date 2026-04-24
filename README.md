@@ -11,9 +11,9 @@ A Node.js library for transliteration from any language to any language (see the
 ## Examples
 
 ```typescript
-import {transliterate} from "transliterate-any-to-any";
+import { transliterate } from "transliterate-any-to-any";
 
-await transliterate("Копривщица", {input: "bg", output: "en"}); // Koprivshtitsa ???????
+await transliterate("Копривщица", { input: "bg", output: "en" }); // Koprivshtitsa ???????
 ```
 
 ## Limitations
@@ -21,7 +21,6 @@ await transliterate("Копривщица", {input: "bg", output: "en"}); // Kop
 - There are no transliteration rules between languages using Latin script, e.g. if you transliterate from Norwegian to
   Italian you'll get the same string (unless you use `latin_ASCII: true` option).
 - Cyrillic is not supported for Serbian and Kazakh languages (only Latin).
-- No vocabularies for historical/traditional transliterations.
 
 ## Prerequisites
 
@@ -29,12 +28,6 @@ await transliterate("Копривщица", {input: "bg", output: "en"}); // Kop
 - You need to have ICU (`brew install icu4c`)
 - You need to have ICU added to the `pkg-config` path (e.g.
   `echo 'export PKG_CONFIG_PATH="/opt/homebrew/opt/icu4c@78/lib/pkgconfig"' >> ~/.zshrc` for macOS)
-
-## Installation
-
-```sh
-npm i transliterate-any-to-any
-```
 
 ## API Reference
 
@@ -44,11 +37,11 @@ npm i transliterate-any-to-any
 |------------|-----------------|----------------------|----------|---------|----------------------------------------------------------------------------------------------------|
 | `text`     |                 | `string \| string[]` | Yes      |         | Input text (can be an array of strings for batching)                                               |
 | `language` |                 | `object`             | Yes      |         | Input and output languages - see below                                                             |
-|            | `input`         | `string`             | Yes      |         | Input language in [BCP 47](https://developer.mozilla.org/en-US/docs/Glossary/BCP_47_language_tag)  |
-|            | `output`        | `string`             | Yes      |         | Output language in [BCP 47](https://developer.mozilla.org/en-US/docs/Glossary/BCP_47_language_tag) |
+| ↳          | `input`         | `string`             | Yes      |         | Input language in [BCP 47](https://developer.mozilla.org/en-US/docs/Glossary/BCP_47_language_tag)  |
+| ↳          | `output`        | `string`             | Yes      |         | Output language in [BCP 47](https://developer.mozilla.org/en-US/docs/Glossary/BCP_47_language_tag) |
 | `options`  |                 | `object`             | No       |         | Options - see below                                                                                |
-|            | `latin_ASCII`   | `boolean`            | No       | `false` | If `true` and the output language is a language that uses Latin script - converts to Latin ASCII   |
-|            | `silent`        | `boolean`            | No       | `false` | If `true` - never throws errors, returns `null` instead                                            |
+| ↳          | `latin_ASCII`   | `boolean`            | No       | `false` | If `true` and the output language is a language that uses Latin script - converts to Latin ASCII   |
+| ↳          | `silent`        | `boolean`            | No       | `false` | If `true` - never throws errors, returns `null` instead                                            |
 
 ## Supported languages
 
@@ -65,3 +58,5 @@ npm i transliterate-any-to-any
 - [kuroshiro](https://www.npmjs.com/package/kuroshiro) for handling Japanese Hiragana and Katakana
 - [kuroshiro-analyzer-kuromoji](https://www.npmjs.com/package/kuroshiro-analyzer-kuromoji) for handling Japanese
   Hiragana and Katakana
+- [hanviet-pinyin-words](https://www.npmjs.com/package/hanviet-pinyin-words) for handling Vietnamese
+- [phonemize](https://www.npmjs.com/package/phonemize) for converting some languages to IPA

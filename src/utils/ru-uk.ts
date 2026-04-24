@@ -1,0 +1,14 @@
+import { Text } from "types/languages";
+
+export const ruUk = async (text: Text) => {
+  const { RBT } = await import("icu-transliterator");
+  const { ruUkRules } = await import("constants/ru-uk.rules");
+
+  const transliterator = RBT.fromRules(ruUkRules);
+
+  if (typeof text === "string") {
+    return transliterator.transliterate(text);
+  } else {
+    return text.map(text => transliterator.transliterate(text));
+  }
+};

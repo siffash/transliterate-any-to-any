@@ -12,7 +12,7 @@ import { koJa } from "utils/ko-ja";
 import { koZh } from "utils/ko-zh";
 import { zhKo } from "utils/zh-ko";
 import { zhRu } from "utils/zh-ru";
-import { zhUa } from "utils/zh-ua";
+import { zhUk } from "utils/zh-uk";
 import { zhBg } from "utils/zh-bg";
 import { zhMk } from "utils/zh-mk";
 import { mkZh } from "utils/mk-zh";
@@ -21,6 +21,20 @@ import { ruZh } from "utils/ru-zh";
 import { ukZh } from "utils/uk-zh";
 import { azZh } from "utils/az-zh";
 import { bsZh } from "utils/bs-zh";
+import { zhVi } from "utils/zh-vi";
+import { viZh } from "utils/vi-zh";
+import { ruUk } from "utils/ru-uk";
+import { ukRu } from "utils/uk-ru";
+import { ukMk } from "utils/uk-mk";
+import { mkUk } from "utils/mk-uk";
+import { mkBg } from "utils/mk-bg";
+import { bgMk } from "utils/bg-mk";
+import { bgRu } from "utils/bg-ru";
+import { ruBg } from "utils/ru-bg";
+import { ruMk } from "utils/ru-mk";
+import { mkRu } from "utils/mk-ru";
+import { bgUk } from "utils/bg-uk";
+import { ukBg } from "utils/uk-bg";
 
 export const transliterate = async <T extends Text>(
   text: T,
@@ -50,8 +64,16 @@ export const transliterate = async <T extends Text>(
   }
 
   try {
+    // if OUTPUT language is Vietnamese
+    if (language.output === "vi") {
+      // if input language is Chinese
+      if (language.input === "zh") {
+        return (await zhVi(text)) as T;
+      }
+    }
+
     // if OUTPUT language is Latin
-    if (latnLanguages.includes(language.output as LatnLanguage)) {
+    else if (latnLanguages.includes(language.output as LatnLanguage)) {
       // if input language is Cyrillic
       if (cyrlLanguages.includes(language.input as CyrlLanguage)) {
         // return cyrlLatn(language.input as CyrlLanguage, text); // TODO
@@ -75,6 +97,21 @@ export const transliterate = async <T extends Text>(
 
     // if OUTPUT language is Bulgarian
     else if (language.output === "bg") {
+      // if input language is Macedonian
+      if (language.input === "mk") {
+        return (await mkBg(text)) as T;
+      }
+
+      // if input language is Russian
+      if (language.input === "ru") {
+        return (await ruBg(text)) as T;
+      }
+
+      // if input language is Ukrainian
+      if (language.input === "uk") {
+        return (await ukBg(text)) as T;
+      }
+
       // if input language is Chinese
       if (language.input === "zh") {
         return (await zhBg(text)) as T;
@@ -83,6 +120,21 @@ export const transliterate = async <T extends Text>(
 
     // if OUTPUT language is Macedonian
     else if (language.output === "mk") {
+      // if input language is Bulgarian
+      if (language.input === "bg") {
+        return (await bgMk(text)) as T;
+      }
+
+      // if input language is Russian
+      if (language.input === "ru") {
+        return (await ruMk(text)) as T;
+      }
+
+      // if input language is Ukrainian
+      if (language.input === "uk") {
+        return (await ukMk(text)) as T;
+      }
+
       // if input language is Chinese
       if (language.input === "zh") {
         return (await zhMk(text)) as T;
@@ -91,6 +143,21 @@ export const transliterate = async <T extends Text>(
 
     // if OUTPUT language is Russian
     else if (language.output === "ru") {
+      // if input language is Bulgarian
+      if (language.input === "bg") {
+        return (await bgRu(text)) as T;
+      }
+
+      // if input language is Macedonian
+      if (language.input === "mk") {
+        return (await mkRu(text)) as T;
+      }
+
+      // if input language is Ukrainian
+      if (language.input === "uk") {
+        return (await ukRu(text)) as T;
+      }
+
       // if input language is Chinese
       if (language.input === "zh") {
         return (await zhRu(text)) as T;
@@ -99,9 +166,24 @@ export const transliterate = async <T extends Text>(
 
     // if OUTPUT language is Ukrainian
     else if (language.output === "uk") {
+      // if input language is Bulgarian
+      if (language.input === "bg") {
+        return (await bgUk(text)) as T;
+      }
+
+      // if input language is Russian
+      if (language.input === "ru") {
+        return (await ruUk(text)) as T;
+      }
+
+      // if input language is Macedonian
+      if (language.input === "mk") {
+        return (await mkUk(text)) as T;
+      }
+
       // if input language is Chinese
       if (language.input === "zh") {
-        return (await zhUa(text)) as T;
+        return (await zhUk(text)) as T;
       }
     }
 
@@ -179,12 +261,17 @@ export const transliterate = async <T extends Text>(
       if (language.input === "ja") {
         return (await jaZh(text)) as T;
       }
+
+      // if input language is Vietnamese
+      if (language.input === "vi") {
+        return (await viZh(text)) as T;
+      }
     }
   } catch (e: unknown) {
     if (options.silent) {
       return null;
     } else {
-      throw new Error(`Error: ${typeof e === "string" ? e : JSON.stringify(e)}`, { cause: e });
+      throw new Error(typeof e === "string" ? e : JSON.stringify(e), { cause: e });
     }
   }
 

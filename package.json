@@ -32,7 +32,7 @@
     }
   },
   "scripts": {
-    "dev": "tsx watch src/index.ts",
+    "dev": "NODE_NO_WARNINGS=1 tsx watch src/index.ts",
     "build": "tsdown src/index.ts --format cjs,esm --dts",
     "type-check": "tsc --noEmit --pretty",
     "lint": "eslint src/**/*.ts --max-warnings=0",
@@ -47,10 +47,13 @@
   "dependencies": {
     "aromanize": "^0.1.5",
     "hangul-js": "^0.2.6",
+    "hanviet-pinyin-words": "^2.1.7",
+    "hebrew-transliteration": "^2.9.1",
     "icu-transliterator": "^0.3.7",
     "kuroshiro": "^1.2.0",
     "kuroshiro-analyzer-kuromoji": "^1.1.0",
     "opencc": "^1.2.0",
+    "phonemize": "^1.1.0",
     "pinyin-pro": "^3.28.0"
   },
   "devDependencies": {
@@ -68,5 +71,8 @@
     "tsdown": "^0.21.0-beta.2",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3"
+  },
+  "overrides": {
+    "tar": "7.5.13"
   }
 }
