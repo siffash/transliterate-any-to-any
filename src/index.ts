@@ -1,12 +1,12 @@
-export { supportedLanguages } from "constants/languages";
+export { supportedLanguages } from "languages";
 export { Language } from "types/languages";
-export { transliterate } from "utils/transliterate";
+export { transliterate } from "transliterate";
 
 // *** EXPERIMENTS ***
 
-import { transliterate } from "utils/transliterate";
+import { transliterate } from "transliterate";
 import { RBT } from "icu-transliterator";
-import { ipaZhRules } from "constants/ipa-zh.rules";
+import { ipaJaRules } from "constants/ipa-ja.rules";
 const test = async () => {
   // console.log(
   //   await transliterate(
@@ -29,7 +29,7 @@ const test = async () => {
   //   ),
   // );
 
-  const transliterator = RBT.fromRules(ipaZhRules);
+  const transliterator = RBT.fromRules(ipaJaRules);
   console.log(
     transliterator.transliterate(`
 ʔalqds, bɣdaːd, tˤndʒa, msqtˤ, ʔalmnaːma, bjrwt, ʔalxrtˤwm, tlmsaːn, bnɣaːzj, ħlb, nwaːkʃwtˤ, dʒjbwtj, sˤfaːqs, dʒbl tˤaːrq, waːdj ʔannjl, sˤlaːla, mka ʔalmkrma, ʔrbd, ttˤwaːn, tʕz, mħmd ʕbd ʔarrħmn ʔalfaːsj, jwsf ʔbraːhjm ʔalħwsnj, faːtˤma sˤaːlħ ʔalmrj, saːra dʒaːsm ʔalɣaːmdj, xaːld wljd ʔazzhraːnj, ʕmr ħsn ʔaʃʃmrj, ljlaː kmaːl ʔalʕbjdj, zjnb mħmwd ʔarrʃjdj, ʕlj ħmza ʔalblwʃj, mrjm sjf ʔannaːsˤrj, ʔjmaːn naːsˤr ʔalkndrj, fhd sljmaːn ʔalʕtjbj, nwra ħmd ʔattmjmj, maːdʒd ʕdnaːn ʔassʕdj, rjm mnjr ʔalqħtˤaːnj, bdr ʕsˤaːm ʔalħrbj, mnaː twfjq ʔaddwsrj, ħmd ʕjsaː ʔalhaːdʒrj, lwlwa msaːʕd ʔalmtˤjrj, saːmj raːʔd ʔalxaːldj, ʃrka ʔannbraːs llxdmaːt ʔannftˤja, mʔssa ʔalʔfq lttdʒaːra ʔalʕaːma, msˤnʕ ʔarrwaːd lsˤsˤnaːʕaːt ʔaθθqjla, mdʒmwʕa ʔalhlaːl llaːstθmaːraːt ʔalmaːlja, wkaːla ʔasˤsˤqwr lssjaːħa wassfr, mtˤaːbʕ ʔattmjz ʔalfnja, mxtbraːt ʔalħjaː lttħaːljl ʔatˤtˤbja, mdaːrs ʔalqma ʔalʕaːlmja, fndq ʔallʔlʔa ʔassjaːħj, mtˤaːʕm ʔadˤdˤjaːfa ʔalʕrbja, ʃrka ʔalbnjaːn llmqaːwlaːt ʔalʔnʃaːʔja, mʔssa ʔaθθrjaː ltˤtˤaːqa ʔalmtdʒdda, ʃrka ʔassnaːbl llmntdʒaːt ʔalɣðaːʔja, msˤnʕ ʔaljaːqwt llmdʒwhraːt, mdʒmwʕa ʔalmsaːr llħlwl ʔattqnja, ʃrka ʔalʔmaːna lttʔmjn ʔattkaːflj, mʔssa ʔaʃʃraːʕ llmlaːħa ʔalbħrja, ʃrka ʔalwaːħa lzzraːʕa ʔalħdjθa, mktba ʔalħkma lnnʃr wattwzjʕ, ʃrka ʔalmnaːra llxdmaːt ʔallwdʒstja

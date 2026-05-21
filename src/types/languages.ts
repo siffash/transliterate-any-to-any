@@ -1,9 +1,4 @@
-import {
-  latnLanguages,
-  cyrlLanguages,
-  otherLanguages,
-  supportedLanguages,
-} from "constants/languages";
+import { latnLanguages, cyrlLanguages, otherLanguages, supportedLanguages } from "languages";
 
 export type LatnLanguage = (typeof latnLanguages)[number];
 export type CyrlLanguage = (typeof cyrlLanguages)[number];

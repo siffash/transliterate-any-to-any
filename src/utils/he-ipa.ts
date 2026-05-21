@@ -1,6 +1,6 @@
 import { Text } from "types/languages";
 
-export const heIpa = async (text: Text) => {
+export const heIpa = async <T = Text>(text: Text): Promise<T> => {
   const { heIpaMap, charMap } = await import("constants/he-ipa.map");
 
   const convert = (text: string) => {
@@ -141,8 +141,8 @@ export const heIpa = async (text: Text) => {
   };
 
   if (typeof text === "string") {
-    return convert(text);
+    return convert(text) as T;
   } else {
-    return text.map(async text => convert(text));
+    return text.map(async text => convert(text)) as T;
   }
 };
