@@ -39,18 +39,14 @@ $frontVowel = [εηιυέήίύϊϋΐΰɛi];
 ::Null;
 
 $boundary { μπ } > b;
-^ { μπ } > b;
 μπ > mb;
 
 $boundary { ντ } > d;
-^ { ντ } > d;
 ντ > nd;
 
 $boundary { γκ } $frontVowel > ɟ;
 $boundary { γκ } > g;
-^ { γκ } $frontVowel > ɟ;
 { γκ } $frontVowel > ŋɟ;
-^ { γκ } > g;
 γκ > ŋg;
 
 { γγ } $frontVowel > ŋɟ;

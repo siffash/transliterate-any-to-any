@@ -5,9 +5,7 @@ $lower_all = [а-я];
 $non_letter = [^[:L:]];
 
 $non_letter { е > э;
-^ { е > э;
 $non_letter { Е > Э;
-^ { Е > Э;
 
 българ > болгар;
 Българ > Болгар;
@@ -52,9 +50,7 @@ $lower_cons { Ъ } $non_letter > ;
 $lower_cons { Ъ } $ > ;
 
 $non_letter { ъ > и;
-^ { ъ > и;
 $non_letter { Ъ > И;
-^ { Ъ > И;
 
 жъ > же;
 Жъ > Же;

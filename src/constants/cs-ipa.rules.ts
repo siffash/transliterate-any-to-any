@@ -32,9 +32,7 @@ dž > d͡ʒ;
 dz > d͡z;
 
 $cons {r} [$cons $boundary] > r̩;
-^ {r} [$cons $boundary] > r̩;
 $cons {l} [$cons $boundary] > l̩;
-^ {l} [$cons $boundary] > l̩;
 
 b } $boundary > p;
 d } $boundary > t;

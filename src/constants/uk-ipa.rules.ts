@@ -56,7 +56,6 @@ d͡z { є > ʲɛ;
 d͡z { і > ʲi;
 d͡z { ь > ʲ;
 
-^ { в } [^$vowel] > w;
 $boundary { в } [^$vowel] > w;
 в } [^$vowel] > w;
 в } $ > w;

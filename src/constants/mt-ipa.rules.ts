@@ -6,13 +6,9 @@ $voicedfinal = [bdgġvżz];
 $boundary = [:^Letter:];
 
 $boundary { m } $cons > im;
-^ { m } $cons > im;
 $boundary { n } $cons > in;
-^ { n } $cons > in;
 $boundary { s } $cons > is;
-^ { s } $cons > is;
 $boundary { x } $cons > iʃ;
-^ { x } $cons > iʃ;
 
 għi > ɐɪ̯;
 għaj > ɐːɪ̯;

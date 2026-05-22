@@ -49,14 +49,9 @@ $cons { r } $ > r̩;
 $boundary { r } $cons > r̩;
 $boundary { ŕ } $cons > r̩ː;
 $boundary { r̀ } $cons > r̩;
-^ { r } $cons > r̩;
-^ { ŕ } $cons > r̩ː;
-^ { r̀ } $cons > r̩;
 
 $boundary { v } r > ʋ ;
 $boundary { v } l > ʋ ;
-^ { v } r > ʋ ;
-^ { v } l > ʋ ;
 { v } $cons > w ;
 { v } $boundary > w ;
 { v } $ > w ;

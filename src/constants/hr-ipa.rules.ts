@@ -15,13 +15,10 @@ $boundary = [:^Letter:];
 
 $not_v { r } $not_v > r̩;
 $boundary { r } $not_v > r̩;
-^ { r } $not_v > r̩;
 $not_v { r } $boundary > r̩;
 $not_v { r } $ > r̩;
 $boundary { r } $boundary > r̩;
-^ { r } $boundary > r̩;
 $boundary { r } $ > r̩;
-^ { r } $ > r̩;
 { v } [p t k s š c č ć f h] > f;
 
 a > a;

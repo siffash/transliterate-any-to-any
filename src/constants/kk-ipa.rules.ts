@@ -44,7 +44,6 @@ b > b;
 c > t͡s;
 d > d;
 $boundary { e > je;
-^ { e > je;
 e > e;
 f > f;
 g > ɡ;

@@ -105,15 +105,10 @@ $V { g } $ > x;
 { k } [ieíyýæé] > cʰ;
 
 $boundary { p } > pʰ;
-^ { p } > pʰ;
 $boundary { t } > tʰ;
-^ { t } > tʰ;
 $boundary { k } $front > cʰ;
-^ { k } $front > cʰ;
 { k } $front > c;
 $boundary { k } > kʰ;
-^ { k } > kʰ;
-
 
 p { n } > n̥;
 t { n } > n̥;

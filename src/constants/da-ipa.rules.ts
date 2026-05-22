@@ -127,15 +127,12 @@ f { f } > ;
 
 $boundary { p } > pʰ;
 { p } [$v l r j] > pʰ;
-^ { p } > pʰ;
 
 $boundary { t } > tʰ;
 { t } [$v l r j] > tʰ;
-^ { t } > tʰ;
 
 $boundary { k } > kʰ;
 { k } [$v l r j] > kʰ;
-^ { k } > kʰ;
 
 g > k;
 `;

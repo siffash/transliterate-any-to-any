@@ -27,7 +27,7 @@ a l e { x } a n d r > ʃ;
 {ex} $vowel > ez;
 {ex} $cons > eʃ;
 $vowel {x} [p t k] > ks;
-^ {x} > ʃ;
+$boundary {x} > ʃ;
 x > ʃ;
 
 {c} [e é ê i í î] > s;
@@ -37,7 +37,7 @@ c > k;
 j > ʒ;
 
 {r} r > ʁ;
-^ {r} > ʁ;
+$boundary {r} > ʁ;
 r > ɾ;
 
 $vowel {s} $vowel > z;
@@ -104,7 +104,7 @@ $letter {e} $letter > ɨ;
 
 {a} t r [i í] > ɐ;
 {a} [m r] > ɐ;
-^{a} > ɐ;
+$boundary {a} > ɐ;
 a > a;
 e > e;
 {i} ɲ > ĩ;

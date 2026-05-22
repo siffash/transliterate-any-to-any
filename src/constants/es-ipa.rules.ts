@@ -5,10 +5,10 @@ $vowel = [a á e é i í o ó u ú ü];
 $voiced_cons = [b β d ð ɡ ɣ m n ɲ ŋ l ʎ r ɾ ʝ z];
 $boundary = [:^Letter:];
 
-^ps > s;
-^gn > n;
-^mn > n;
-^pt > t;
+$boundary { ps > s;
+$boundary { gn > n;
+$boundary { mn > n;
+$boundary { pt > t;
 
 ch > t͡ʃ;
 ll > ʎ;
@@ -37,14 +37,12 @@ z > θ;
 
 $boundary { r > r;
 [l n s] { r > r;
-^r > r;
 [r] } $boundary > ɾ;
 r > ɾ;
 
 s } $voiced_cons > z;
 s > s;
 x } $vowel > ks;
-^x > s;
 x > s;
 
 hi } $vowel > ʝ;
@@ -73,15 +71,12 @@ n } [t d] > n̪;
 
 $boundary { β > b;
 [m n ɲ ŋ] { β > b;
-^β > b;
 
 $boundary { ð > d;
 [m n ɲ ŋ l] { ð > d;
-^ð > d;
 
 $boundary { ɣ > ɡ;
 [m n ɲ ŋ] { ɣ > ɡ;
-^ɣ > ɡ;
 
 n } [p b v m] > m;
 n } [f] > ɱ;
