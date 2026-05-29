@@ -113,6 +113,49 @@ import { svJa } from "utils/sv-ja";
 import { trJa } from "utils/tr-ja";
 import { ukJa } from "utils/uk-ja";
 import { viJa } from "utils/vi-ja";
+import { arKo } from "utils/ar-ko";
+import { azKo } from "utils/az-ko";
+import { bgKo } from "utils/bg-ko";
+import { bsKo } from "utils/bs-ko";
+import { caKo } from "utils/ca-ko";
+import { csKo } from "utils/cs-ko";
+import { daKo } from "utils/da-ko";
+import { deKo } from "utils/de-ko";
+import { elKo } from "utils/el-ko";
+import { enKo } from "utils/en-ko";
+import { esKo } from "utils/es-ko";
+import { etKo } from "utils/et-ko";
+import { fiKo } from "utils/fi-ko";
+import { frKo } from "utils/fr-ko";
+import { heKo } from "utils/he-ko";
+import { hiKo } from "utils/hi-ko";
+import { hrKo } from "utils/hr-ko";
+import { huKo } from "utils/hu-ko";
+import { hyKo } from "utils/hy-ko";
+import { idKo } from "utils/id-ko";
+import { isKo } from "utils/is-ko";
+import { itKo } from "utils/it-ko";
+import { kaKo } from "utils/ka-ko";
+import { kkKo } from "utils/kk-ko";
+import { lbKo } from "utils/lb-ko";
+import { ltKo } from "utils/lt-ko";
+import { lvKo } from "utils/lv-ko";
+import { mkKo } from "utils/mk-ko";
+import { mtKo } from "utils/mt-ko";
+import { nlKo } from "utils/nl-ko";
+import { noKo } from "utils/no-ko";
+import { plKo } from "utils/pl-ko";
+import { ptKo } from "utils/pt-ko";
+import { roKo } from "utils/ro-ko";
+import { ruKo } from "utils/ru-ko";
+import { skKo } from "utils/sk-ko";
+import { slKo } from "utils/sl-ko";
+import { sqKo } from "utils/sq-ko";
+import { srKo } from "utils/sr-ko";
+import { svKo } from "utils/sv-ko";
+import { trKo } from "utils/tr-ko";
+import { ukKo } from "utils/uk-ko";
+import { viKo } from "utils/vi-ko";
 
 export const transliterate = async <T extends Text>(
   text: T,
@@ -508,6 +551,221 @@ export const transliterate = async <T extends Text>(
       // if input language is Chinese
       if (language.input === "zh") {
         return (await zhKo(text)) as T;
+      }
+
+      // if input language is Arabic
+      if (language.input === "ar") {
+        return (await arKo(text)) as T;
+      }
+
+      // if input language is Azerbaijani
+      if (language.input === "az") {
+        return (await azKo(text)) as T;
+      }
+
+      // if input language is Bulgarian
+      if (language.input === "bg") {
+        return (await bgKo(text)) as T;
+      }
+
+      // if input language is Bosnian
+      if (language.input === "bs") {
+        return (await bsKo(text)) as T;
+      }
+
+      // if input language is Catalan
+      if (language.input === "ca") {
+        return (await caKo(text)) as T;
+      }
+
+      // if input language is Czech
+      if (language.input === "cs") {
+        return (await csKo(text)) as T;
+      }
+
+      // if input language is Danish
+      if (language.input === "da") {
+        return (await daKo(text)) as T;
+      }
+
+      // if input language is German
+      if (language.input === "de") {
+        return (await deKo(text)) as T;
+      }
+
+      // if input language is Greek
+      if (language.input === "el") {
+        return (await elKo(text)) as T;
+      }
+
+      // if input language is English
+      if (language.input === "en") {
+        return (await enKo(text)) as T;
+      }
+
+      // if input language is Spanish
+      if (language.input === "es") {
+        return (await esKo(text)) as T;
+      }
+
+      // if input language is Estonian
+      if (language.input === "et") {
+        return (await etKo(text)) as T;
+      }
+
+      // if input language is Finnish
+      if (language.input === "fi") {
+        return (await fiKo(text)) as T;
+      }
+
+      // if input language is French
+      if (language.input === "fr") {
+        return (await frKo(text)) as T;
+      }
+
+      // if input language is Hebrew
+      if (language.input === "he") {
+        return (await heKo(text)) as T;
+      }
+
+      // if input language is Hindi
+      if (language.input === "hi") {
+        return (await hiKo(text)) as T;
+      }
+
+      // if input language is Croatian
+      if (language.input === "hr") {
+        return (await hrKo(text)) as T;
+      }
+
+      // if input language is Hungarian
+      if (language.input === "hu") {
+        return (await huKo(text)) as T;
+      }
+
+      // if input language is Armenian
+      if (language.input === "hy") {
+        return (await hyKo(text)) as T;
+      }
+
+      // if input language is Indonesian
+      if (language.input === "id") {
+        return (await idKo(text)) as T;
+      }
+
+      // if input language is Icelandic
+      if (language.input === "is") {
+        return (await isKo(text)) as T;
+      }
+
+      // if input language is Italian
+      if (language.input === "it") {
+        return (await itKo(text)) as T;
+      }
+
+      // if input language is Georgian
+      if (language.input === "ka") {
+        return (await kaKo(text)) as T;
+      }
+
+      // if input language is Kazakh
+      if (language.input === "kk") {
+        return (await kkKo(text)) as T;
+      }
+
+      // if input language is Luxembourgish
+      if (language.input === "lb") {
+        return (await lbKo(text)) as T;
+      }
+
+      // if input language is Lithuanian
+      if (language.input === "lt") {
+        return (await ltKo(text)) as T;
+      }
+
+      // if input language is Latvian
+      if (language.input === "lv") {
+        return (await lvKo(text)) as T;
+      }
+
+      // if input language is Macedonian
+      if (language.input === "mk") {
+        return (await mkKo(text)) as T;
+      }
+
+      // if input language is Maltese
+      if (language.input === "mt") {
+        return (await mtKo(text)) as T;
+      }
+
+      // if input language is Dutch
+      if (language.input === "nl") {
+        return (await nlKo(text)) as T;
+      }
+
+      // if input language is Norwegian
+      if (language.input === "no") {
+        return (await noKo(text)) as T;
+      }
+
+      // if input language is Polish
+      if (language.input === "pl") {
+        return (await plKo(text)) as T;
+      }
+
+      // if input language is Portuguese
+      if (language.input === "pt") {
+        return (await ptKo(text)) as T;
+      }
+
+      // if input language is Romanian
+      if (language.input === "ro") {
+        return (await roKo(text)) as T;
+      }
+
+      // if input language is Russian
+      if (language.input === "ru") {
+        return (await ruKo(text)) as T;
+      }
+
+      // if input language is Slovak
+      if (language.input === "sk") {
+        return (await skKo(text)) as T;
+      }
+
+      // if input language is Slovenian
+      if (language.input === "sl") {
+        return (await slKo(text)) as T;
+      }
+
+      // if input language is Albanian
+      if (language.input === "sq") {
+        return (await sqKo(text)) as T;
+      }
+
+      // if input language is Serbian
+      if (language.input === "sr") {
+        return (await srKo(text)) as T;
+      }
+
+      // if input language is Swedish
+      if (language.input === "sv") {
+        return (await svKo(text)) as T;
+      }
+
+      // if input language is Turkish
+      if (language.input === "tr") {
+        return (await trKo(text)) as T;
+      }
+
+      // if input language is Ukrainian
+      if (language.input === "uk") {
+        return (await ukKo(text)) as T;
+      }
+
+      // if input language is Vietnamese
+      if (language.input === "vi") {
+        return (await viKo(text)) as T;
       }
     }
 
