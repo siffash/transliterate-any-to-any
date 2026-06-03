@@ -1,6 +1,6 @@
 import { Text } from "types/languages";
 
-export const koIpa = async (text: Text) => {
+export const koIpa = async <T = Text>(text: Text): Promise<T> => {
   const { phonemize } = await import("phonemize/all");
 
   const convert = async (text: string) => {
@@ -8,8 +8,8 @@ export const koIpa = async (text: Text) => {
   };
 
   if (typeof text === "string") {
-    return convert(text);
+    return (await convert(text)) as T;
   } else {
-    return Promise.all(text.map(async text => await convert(text)));
+    return (await Promise.all(text.map(async text => await convert(text)))) as T;
   }
 };

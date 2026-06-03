@@ -1,6 +1,6 @@
 import { Text } from "types/languages";
 
-export const jaIpa = async (text: Text) => {
+export const jaIpa = async <T = Text>(text: Text): Promise<T> => {
   const { default: Kuroshiro } = await import("kuroshiro");
   const { default: KuromojiAnalyzer } = await import("kuroshiro-analyzer-kuromoji");
   const { phonemize } = await import("phonemize/all");
@@ -14,8 +14,8 @@ export const jaIpa = async (text: Text) => {
   };
 
   if (typeof text === "string") {
-    return convert(text);
+    return (await convert(text)) as T;
   } else {
-    return Promise.all(text.map(async text => await convert(text)));
+    return (await Promise.all(text.map(async text => await convert(text)))) as T;
   }
 };

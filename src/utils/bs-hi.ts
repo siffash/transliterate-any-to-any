@@ -1,10 +1,11 @@
 import { Text } from "types/languages";
 
-export const anyHi = async (text: Text) => {
+export const bsHi = async (text: Text) => {
   const { RBT } = await import("icu-transliterator");
-  const { anyHiRules } = await import("constants/any-hi.rules");
+  const { bsIpaRules } = await import("constants/bs-ipa.rules");
+  const { ipaHiRules } = await import("constants/ipa-hi.rules");
 
-  const transliterator = RBT.fromRules(anyHiRules);
+  const transliterator = RBT.fromRules(bsIpaRules + ipaHiRules);
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);
