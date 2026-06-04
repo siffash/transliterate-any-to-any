@@ -41,7 +41,6 @@ await transliterate("Копривщица", { input: "bg", output: "en" }); // K
 | ↳          | `output`        | `string`             | Yes      |         | Output language in [BCP 47](https://developer.mozilla.org/en-US/docs/Glossary/BCP_47_language_tag) |
 | `options`  |                 | `object`             | No       |         | Options - see below                                                                                |
 | ↳          | `latin_ASCII`   | `boolean`            | No       | `false` | If `true` and the output language is a language that uses Latin script - converts to Latin ASCII   |
-| ↳          | `silent`        | `boolean`            | No       | `false` | If `true` - never throws errors, returns `null` instead                                            |
 
 ## Supported languages
 

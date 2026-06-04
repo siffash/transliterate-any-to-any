@@ -1,8 +1,7 @@
 import { Text } from "types/languages";
+import { heIpaMap, charMap } from "constants/he-ipa.map";
 
 export const heIpa = async <T = Text>(text: Text): Promise<T> => {
-  const { heIpaMap, charMap } = await import("constants/he-ipa.map");
-
   const convert = (text: string) => {
     const SINGLE_PREFIXES = ["ו", "ב", "כ", "ל", "מ", "ה"];
     const DOUBLE_PREFIXES = ["וב", "וכ", "ול", "ומ", "וה", "שה", "מה"];

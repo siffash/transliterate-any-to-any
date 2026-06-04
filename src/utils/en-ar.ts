@@ -1,0 +1,19 @@
+import { Text } from "types/languages";
+
+export const enAr = async (text: Text) => {
+  const { toIPA } = await import("phonemize");
+  const { RBT } = await import("icu-transliterator");
+  const { ipaArRules } = await import("constants/ipa-ar.rules");
+
+  const transliterator = RBT.fromRules(ipaArRules);
+
+  if (typeof text === "string") {
+    const ipa = toIPA(text);
+    return transliterator.transliterate(ipa);
+  } else {
+    return text.map(text => {
+      const ipa = toIPA(text);
+      return transliterator.transliterate(ipa);
+    });
+  }
+};

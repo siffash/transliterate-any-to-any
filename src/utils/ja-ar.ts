@@ -1,21 +1,25 @@
 import { Text } from "types/languages";
 
-export const jaIpa = async <T = Text>(text: Text): Promise<T> => {
+export const jaAr = async (text: Text) => {
   const { default: Kuroshiro } = await import("kuroshiro");
   const { default: KuromojiAnalyzer } = await import("kuroshiro-analyzer-kuromoji");
   const { phonemize } = await import("phonemize/all");
+  const { RBT } = await import("icu-transliterator");
+  const { ipaArRules } = await import("constants/ipa-ar.rules");
 
   const kuroshiro = new Kuroshiro();
   await kuroshiro.init(new KuromojiAnalyzer());
+  const transliterator = RBT.fromRules(ipaArRules);
 
   const convert = async (text: string) => {
     const hiragana = await kuroshiro.convert(text, { to: "hiragana" });
-    return phonemize(hiragana, { anyAscii: true });
+    const ipa = phonemize(hiragana, { anyAscii: true });
+    return transliterator.transliterate(ipa);
   };
 
   if (typeof text === "string") {
-    return (await convert(text)) as T;
+    return await convert(text);
   } else {
-    return (await Promise.all(text.map(async text => await convert(text)))) as T;
+    return Promise.all(text.map(convert));
   }
 };

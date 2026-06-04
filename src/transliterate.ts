@@ -200,32 +200,65 @@ import { trHi } from "utils/tr-hi";
 import { ukHi } from "utils/uk-hi";
 import { viHi } from "utils/vi-hi";
 import { zhHi } from "utils/zh-hi";
+import { azAr } from "utils/az-ar";
+import { bgAr } from "utils/bg-ar";
+import { bsAr } from "utils/bs-ar";
+import { caAr } from "utils/ca-ar";
+import { csAr } from "utils/cs-ar";
+import { daAr } from "utils/da-ar";
+import { deAr } from "utils/de-ar";
+import { elAr } from "utils/el-ar";
+import { enAr } from "utils/en-ar";
+import { esAr } from "utils/es-ar";
+import { etAr } from "utils/et-ar";
+import { fiAr } from "utils/fi-ar";
+import { frAr } from "utils/fr-ar";
+import { heAr } from "utils/he-ar";
+import { hiAr } from "utils/hi-ar";
+import { hrAr } from "utils/hr-ar";
+import { huAr } from "utils/hu-ar";
+import { hyAr } from "utils/hy-ar";
+import { idAr } from "utils/id-ar";
+import { isAr } from "utils/is-ar";
+import { itAr } from "utils/it-ar";
+import { jaAr } from "utils/ja-ar";
+import { kaAr } from "utils/ka-ar";
+import { kkAr } from "utils/kk-ar";
+import { koAr } from "utils/ko-ar";
+import { lbAr } from "utils/lb-ar";
+import { ltAr } from "utils/lt-ar";
+import { lvAr } from "utils/lv-ar";
+import { mkAr } from "utils/mk-ar";
+import { mtAr } from "utils/mt-ar";
+import { nlAr } from "utils/nl-ar";
+import { noAr } from "utils/no-ar";
+import { plAr } from "utils/pl-ar";
+import { ptAr } from "utils/pt-ar";
+import { roAr } from "utils/ro-ar";
+import { ruAr } from "utils/ru-ar";
+import { skAr } from "utils/sk-ar";
+import { slAr } from "utils/sl-ar";
+import { sqAr } from "utils/sq-ar";
+import { srAr } from "utils/sr-ar";
+import { svAr } from "utils/sv-ar";
+import { trAr } from "utils/tr-ar";
+import { ukAr } from "utils/uk-ar";
+import { viAr } from "utils/vi-ar";
+import { zhAr } from "utils/zh-ar";
 
 export const transliterate = async <T extends Text>(
   text: T,
   language: { input: Language; output: Language },
-  options: { silent?: boolean; latin_ASCII?: boolean } = { silent: false, latin_ASCII: false }, // TODO: latin_ASCII
+  options: { latin_ASCII?: boolean } = { latin_ASCII: false }, // TODO: latin_ASCII
 ): Promise<T | null> => {
   if (!text) {
-    if (options.silent) {
-      return null;
-    } else {
-      throw new Error("Text is empty");
-    }
+    throw new Error("Text is empty");
   }
   if (!supportedLanguages.includes(language.input)) {
-    if (options.silent) {
-      return null;
-    } else {
-      throw new Error(`Unsupported input language: ${language.input}`);
-    }
+    throw new Error(`Unsupported input language: ${language.input}`);
   }
   if (!supportedLanguages.includes(language.output)) {
-    if (options.silent) {
-      return null;
-    } else {
-      throw new Error(`Unsupported output language: ${language.output}`);
-    }
+    throw new Error(`Unsupported output language: ${language.output}`);
   }
 
   try {
@@ -1036,6 +1069,234 @@ export const transliterate = async <T extends Text>(
       }
     }
 
+    // if OUTPUT language is Arabic
+    else if (language.output === "ar") {
+      // if input language is Azerbaijani
+      if (language.input === "az") {
+        return (await azAr(text)) as T;
+      }
+
+      // if input language is Bulgarian
+      if (language.input === "bg") {
+        return (await bgAr(text)) as T;
+      }
+
+      // if input language is Bosnian
+      if (language.input === "bs") {
+        return (await bsAr(text)) as T;
+      }
+
+      // if input language is Catalan
+      if (language.input === "ca") {
+        return (await caAr(text)) as T;
+      }
+
+      // if input language is Czech
+      if (language.input === "cs") {
+        return (await csAr(text)) as T;
+      }
+
+      // if input language is Danish
+      if (language.input === "da") {
+        return (await daAr(text)) as T;
+      }
+
+      // if input language is German
+      if (language.input === "de") {
+        return (await deAr(text)) as T;
+      }
+
+      // if input language is Greek
+      if (language.input === "el") {
+        return (await elAr(text)) as T;
+      }
+
+      // if input language is English
+      if (language.input === "en") {
+        return (await enAr(text)) as T;
+      }
+
+      // if input language is Spanish
+      if (language.input === "es") {
+        return (await esAr(text)) as T;
+      }
+
+      // if input language is Estonian
+      if (language.input === "et") {
+        return (await etAr(text)) as T;
+      }
+
+      // if input language is Finnish
+      if (language.input === "fi") {
+        return (await fiAr(text)) as T;
+      }
+
+      // if input language is French
+      if (language.input === "fr") {
+        return (await frAr(text)) as T;
+      }
+
+      // if input language is Hebrew
+      if (language.input === "he") {
+        return (await heAr(text)) as T;
+      }
+
+      // if input language is Hindi
+      if (language.input === "hi") {
+        return (await hiAr(text)) as T;
+      }
+
+      // if input language is Croatian
+      if (language.input === "hr") {
+        return (await hrAr(text)) as T;
+      }
+
+      // if input language is Hungarian
+      if (language.input === "hu") {
+        return (await huAr(text)) as T;
+      }
+
+      // if input language is Armenian
+      if (language.input === "hy") {
+        return (await hyAr(text)) as T;
+      }
+
+      // if input language is Indonesian
+      if (language.input === "id") {
+        return (await idAr(text)) as T;
+      }
+
+      // if input language is Icelandic
+      if (language.input === "is") {
+        return (await isAr(text)) as T;
+      }
+
+      // if input language is Italian
+      if (language.input === "it") {
+        return (await itAr(text)) as T;
+      }
+
+      // if input language is Japanese
+      if (language.input === "ja") {
+        return (await jaAr(text)) as T;
+      }
+
+      // if input language is Georgian
+      if (language.input === "ka") {
+        return (await kaAr(text)) as T;
+      }
+
+      // if input language is Kazakh
+      if (language.input === "kk") {
+        return (await kkAr(text)) as T;
+      }
+
+      // if input language is Korean
+      if (language.input === "ko") {
+        return (await koAr(text)) as T;
+      }
+
+      // if input language is Luxembourgish
+      if (language.input === "lb") {
+        return (await lbAr(text)) as T;
+      }
+
+      // if input language is Lithuanian
+      if (language.input === "lt") {
+        return (await ltAr(text)) as T;
+      }
+
+      // if input language is Latvian
+      if (language.input === "lv") {
+        return (await lvAr(text)) as T;
+      }
+
+      // if input language is Macedonian
+      if (language.input === "mk") {
+        return (await mkAr(text)) as T;
+      }
+
+      // if input language is Maltese
+      if (language.input === "mt") {
+        return (await mtAr(text)) as T;
+      }
+
+      // if input language is Dutch
+      if (language.input === "nl") {
+        return (await nlAr(text)) as T;
+      }
+
+      // if input language is Norwegian
+      if (language.input === "no") {
+        return (await noAr(text)) as T;
+      }
+
+      // if input language is Polish
+      if (language.input === "pl") {
+        return (await plAr(text)) as T;
+      }
+
+      // if input language is Portuguese
+      if (language.input === "pt") {
+        return (await ptAr(text)) as T;
+      }
+
+      // if input language is Romanian
+      if (language.input === "ro") {
+        return (await roAr(text)) as T;
+      }
+
+      // if input language is Russian
+      if (language.input === "ru") {
+        return (await ruAr(text)) as T;
+      }
+
+      // if input language is Slovak
+      if (language.input === "sk") {
+        return (await skAr(text)) as T;
+      }
+
+      // if input language is Slovenian
+      if (language.input === "sl") {
+        return (await slAr(text)) as T;
+      }
+
+      // if input language is Albanian
+      if (language.input === "sq") {
+        return (await sqAr(text)) as T;
+      }
+
+      // if input language is Serbian
+      if (language.input === "sr") {
+        return (await srAr(text)) as T;
+      }
+
+      // if input language is Swedish
+      if (language.input === "sv") {
+        return (await svAr(text)) as T;
+      }
+
+      // if input language is Turkish
+      if (language.input === "tr") {
+        return (await trAr(text)) as T;
+      }
+
+      // if input language is Ukrainian
+      if (language.input === "uk") {
+        return (await ukAr(text)) as T;
+      }
+
+      // if input language is Vietnamese
+      if (language.input === "vi") {
+        return (await viAr(text)) as T;
+      }
+
+      // if input language is Chinese
+      if (language.input === "zh") {
+        return (await zhAr(text)) as T;
+      }
+    }
+
     // if OUTPUT language is Chinese
     else if (language.output === "zh") {
       // if input language is Azerbaijani
@@ -1264,16 +1525,8 @@ export const transliterate = async <T extends Text>(
       }
     }
   } catch (e: unknown) {
-    if (options.silent) {
-      return null;
-    } else {
-      throw new Error(typeof e === "string" ? e : JSON.stringify(e), { cause: e });
-    }
+    throw new Error(typeof e === "string" ? e : JSON.stringify(e), { cause: e });
   }
 
-  if (options.silent) {
-    return null;
-  } else {
-    throw new Error("Transliteration failed");
-  }
+  throw new Error("Transliteration failed");
 };
