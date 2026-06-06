@@ -245,6 +245,49 @@ import { trAr } from "utils/tr-ar";
 import { ukAr } from "utils/uk-ar";
 import { viAr } from "utils/vi-ar";
 import { zhAr } from "utils/zh-ar";
+import { azHe } from "utils/az-he";
+import { bgHe } from "utils/bg-he";
+import { bsHe } from "utils/bs-he";
+import { caHe } from "utils/ca-he";
+import { csHe } from "utils/cs-he";
+import { daHe } from "utils/da-he";
+import { deHe } from "utils/de-he";
+import { elHe } from "utils/el-he";
+import { enHe } from "utils/en-he";
+import { esHe } from "utils/es-he";
+import { etHe } from "utils/et-he";
+import { fiHe } from "utils/fi-he";
+import { frHe } from "utils/fr-he";
+import { hrHe } from "utils/hr-he";
+import { huHe } from "utils/hu-he";
+import { hyHe } from "utils/hy-he";
+import { idHe } from "utils/id-he";
+import { isHe } from "utils/is-he";
+import { itHe } from "utils/it-he";
+import { jaHe } from "utils/ja-he";
+import { kaHe } from "utils/ka-he";
+import { kkHe } from "utils/kk-he";
+import { koHe } from "utils/ko-he";
+import { lbHe } from "utils/lb-he";
+import { ltHe } from "utils/lt-he";
+import { lvHe } from "utils/lv-he";
+import { mkHe } from "utils/mk-he";
+import { mtHe } from "utils/mt-he";
+import { nlHe } from "utils/nl-he";
+import { noHe } from "utils/no-he";
+import { plHe } from "utils/pl-he";
+import { ptHe } from "utils/pt-he";
+import { roHe } from "utils/ro-he";
+import { ruHe } from "utils/ru-he";
+import { skHe } from "utils/sk-he";
+import { slHe } from "utils/sl-he";
+import { sqHe } from "utils/sq-he";
+import { srHe } from "utils/sr-he";
+import { svHe } from "utils/sv-he";
+import { trHe } from "utils/tr-he";
+import { ukHe } from "utils/uk-he";
+import { viHe } from "utils/vi-he";
+import { zhHe } from "utils/zh-he";
 
 export const transliterate = async <T extends Text>(
   text: T,
@@ -1294,6 +1337,224 @@ export const transliterate = async <T extends Text>(
       // if input language is Chinese
       if (language.input === "zh") {
         return (await zhAr(text)) as T;
+      }
+    }
+
+    // if OUTPUT language is Hebrew
+    else if (language.output === "he") {
+      // if input language is Azerbaijani
+      if (language.input === "az") {
+        return (await azHe(text)) as T;
+      }
+
+      // if input language is Bulgarian
+      if (language.input === "bg") {
+        return (await bgHe(text)) as T;
+      }
+
+      // if input language is Bosnian
+      if (language.input === "bs") {
+        return (await bsHe(text)) as T;
+      }
+
+      // if input language is Catalan
+      if (language.input === "ca") {
+        return (await caHe(text)) as T;
+      }
+
+      // if input language is Czech
+      if (language.input === "cs") {
+        return (await csHe(text)) as T;
+      }
+
+      // if input language is Danish
+      if (language.input === "da") {
+        return (await daHe(text)) as T;
+      }
+
+      // if input language is German
+      if (language.input === "de") {
+        return (await deHe(text)) as T;
+      }
+
+      // if input language is Greek
+      if (language.input === "el") {
+        return (await elHe(text)) as T;
+      }
+
+      // if input language is English
+      if (language.input === "en") {
+        return (await enHe(text)) as T;
+      }
+
+      // if input language is Spanish
+      if (language.input === "es") {
+        return (await esHe(text)) as T;
+      }
+
+      // if input language is Estonian
+      if (language.input === "et") {
+        return (await etHe(text)) as T;
+      }
+
+      // if input language is Finnish
+      if (language.input === "fi") {
+        return (await fiHe(text)) as T;
+      }
+
+      // if input language is French
+      if (language.input === "fr") {
+        return (await frHe(text)) as T;
+      }
+
+      // if input language is Croatian
+      if (language.input === "hr") {
+        return (await hrHe(text)) as T;
+      }
+
+      // if input language is Hungarian
+      if (language.input === "hu") {
+        return (await huHe(text)) as T;
+      }
+
+      // if input language is Armenian
+      if (language.input === "hy") {
+        return (await hyHe(text)) as T;
+      }
+
+      // if input language is Indonesian
+      if (language.input === "id") {
+        return (await idHe(text)) as T;
+      }
+
+      // if input language is Icelandic
+      if (language.input === "is") {
+        return (await isHe(text)) as T;
+      }
+
+      // if input language is Italian
+      if (language.input === "it") {
+        return (await itHe(text)) as T;
+      }
+
+      // if input language is Japanese
+      if (language.input === "ja") {
+        return (await jaHe(text)) as T;
+      }
+
+      // if input language is Georgian
+      if (language.input === "ka") {
+        return (await kaHe(text)) as T;
+      }
+
+      // if input language is Kazakh
+      if (language.input === "kk") {
+        return (await kkHe(text)) as T;
+      }
+
+      // if input language is Korean
+      if (language.input === "ko") {
+        return (await koHe(text)) as T;
+      }
+
+      // if input language is Luxembourgish
+      if (language.input === "lb") {
+        return (await lbHe(text)) as T;
+      }
+
+      // if input language is Lithuanian
+      if (language.input === "lt") {
+        return (await ltHe(text)) as T;
+      }
+
+      // if input language is Latvian
+      if (language.input === "lv") {
+        return (await lvHe(text)) as T;
+      }
+
+      // if input language is Macedonian
+      if (language.input === "mk") {
+        return (await mkHe(text)) as T;
+      }
+
+      // if input language is Maltese
+      if (language.input === "mt") {
+        return (await mtHe(text)) as T;
+      }
+
+      // if input language is Dutch
+      if (language.input === "nl") {
+        return (await nlHe(text)) as T;
+      }
+
+      // if input language is Norwegian
+      if (language.input === "no") {
+        return (await noHe(text)) as T;
+      }
+
+      // if input language is Polish
+      if (language.input === "pl") {
+        return (await plHe(text)) as T;
+      }
+
+      // if input language is Portuguese
+      if (language.input === "pt") {
+        return (await ptHe(text)) as T;
+      }
+
+      // if input language is Romanian
+      if (language.input === "ro") {
+        return (await roHe(text)) as T;
+      }
+
+      // if input language is Russian
+      if (language.input === "ru") {
+        return (await ruHe(text)) as T;
+      }
+
+      // if input language is Slovak
+      if (language.input === "sk") {
+        return (await skHe(text)) as T;
+      }
+
+      // if input language is Slovenian
+      if (language.input === "sl") {
+        return (await slHe(text)) as T;
+      }
+
+      // if input language is Albanian
+      if (language.input === "sq") {
+        return (await sqHe(text)) as T;
+      }
+
+      // if input language is Serbian
+      if (language.input === "sr") {
+        return (await srHe(text)) as T;
+      }
+
+      // if input language is Swedish
+      if (language.input === "sv") {
+        return (await svHe(text)) as T;
+      }
+
+      // if input language is Turkish
+      if (language.input === "tr") {
+        return (await trHe(text)) as T;
+      }
+
+      // if input language is Ukrainian
+      if (language.input === "uk") {
+        return (await ukHe(text)) as T;
+      }
+
+      // if input language is Vietnamese
+      if (language.input === "vi") {
+        return (await viHe(text)) as T;
+      }
+
+      // if input language is Chinese
+      if (language.input === "zh") {
+        return (await zhHe(text)) as T;
       }
     }
 
