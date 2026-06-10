@@ -1,7 +1,6 @@
 export const zhRuRules = `
-::Any-Latin;
-
-::Latin-ASCII;
+::Any-Latn;
+::Latn-ASCII;
 ::Lower();
 
 yuan > юань;
@@ -44,5 +43,5 @@ y > и;
 ывань > айвань;
 иуань > юань;
 
-::Title();
+::Title;
 `;

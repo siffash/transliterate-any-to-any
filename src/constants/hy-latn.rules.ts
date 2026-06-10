@@ -1,0 +1,34 @@
+export const hyLatnRules = `
+::Armenian-Latn/BGN;
+
+CH’ > Č’;
+Ch’ > Č’;
+ch’ > č’;
+TS’ > TS’;
+Ts’ > Ts’;
+ts’ > ts’;
+SH > Š;
+Sh > Š;
+sh > š;
+ZH > Ž;
+Zh > Ž;
+zh > ž;
+KH > X;
+Kh > X;
+kh > x;
+GH > Ğ;
+Gh > Ğ;
+gh > ğ;
+RR > R;
+Rr > R;
+rr > r;
+T’ > T’;
+t’ > t’;
+P’ > P’;
+p’ > p’;
+K’ > K’;
+k’ > k’;
+J } [:lowercase:] > Dž;
+J > DŽ;
+j > dž;
+`;

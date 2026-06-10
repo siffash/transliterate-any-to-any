@@ -2,7 +2,7 @@ export const zhJaRules = `
 ::Any-Latn;
 
 [vüǚǜǘǔ\u0075\u0308] > yu;
-::Latin-ASCII;
+::Latn-ASCII;
 ::Lower();
 
 xi > shi;

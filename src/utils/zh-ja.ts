@@ -1,7 +1,7 @@
 import { Text } from "types/languages";
 
 export const zhJa = async (text: Text) => {
-  const { OpenCC } = (await import("opencc")).default;
+  const { OpenCC } = await import("opencc");
   const { default: Kuroshiro } = await import("kuroshiro");
   const { default: KuromojiAnalyzer } = await import("kuroshiro-analyzer-kuromoji");
   const { RBT } = await import("icu-transliterator");

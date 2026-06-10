@@ -9,7 +9,7 @@ export const viZh = async (text: Text) => {
   const transliteratorToIpa = RBT.fromRules(viIpaRules);
   const transliteratorToZh = RBT.fromRules(ipaZhRules);
 
-  const transliterate = async (text: string) => {
+  const convert = async (text: string) => {
     // 1. Tokenize: Split into words (letters + diacritics) and non-words (spaces/punctuation)
     // The 'u' flag is critical for \p{L} (Letters) and \p{M} (Marks/Diacritics) to support Vietnamese
     const tokens = text.match(/[\p{L}\p{M}]+|[^\p{L}\p{M}]+/gu) || [];
@@ -103,8 +103,8 @@ export const viZh = async (text: Text) => {
   };
 
   if (typeof text === "string") {
-    return await transliterate(text);
+    return await convert(text);
   } else {
-    return Promise.all(text.map(text => transliterate(text)));
+    return Promise.all(text.map(text => convert(text)));
   }
 };

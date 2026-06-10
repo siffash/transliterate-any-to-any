@@ -1,6 +1,6 @@
 export const zhBgRules = `
-::Any-Latin;
-::Latin-ASCII;
+::Any-Latn;
+::Latn-ASCII;
 ::Lower();
 lu } $ > лю;
 nu } $ > ню;
@@ -44,5 +44,5 @@ y } e > е;
 y } i > и;
 y > й;
 ::Any-Cyrillic;
-::Title();
+::Title;
 `;

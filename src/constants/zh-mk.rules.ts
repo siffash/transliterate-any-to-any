@@ -1,6 +1,6 @@
 export const zhMkRules = `
-::Any-Latin;
-::Latin-ASCII;
+::Any-Latn;
+::Latn-ASCII;
 ::Lower();
 
 yuan > јуан;
@@ -45,5 +45,5 @@ n } $ > н;
 
 й > ј;
 
-::Title();
+::Title;
 `;

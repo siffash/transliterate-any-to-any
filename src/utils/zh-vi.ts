@@ -1,14 +1,14 @@
 import { Text } from "types/languages";
 
-export const zhVi = async (text: Text) => {
-  const { OpenCC } = (await import("opencc")).default;
+export const zhVi = async (text: Text, latin_ASCII: boolean) => {
+  const { OpenCC } = await import("opencc");
   const { pinyin } = await import("pinyin-pro");
   const { getHanviet } = await import("hanviet-pinyin-words");
   const { ZH_VI_MAP } = await import("constants/zh-vi.map");
 
   const converter = new OpenCC("s2t.json");
 
-  const transliterate = async (text: string) => {
+  const convert = async (text: string) => {
     // 1. Normalize input to Traditional Chinese for accurate dictionary lookups
     const traditionalText = await converter.convertPromise(text);
 
@@ -95,15 +95,24 @@ export const zhVi = async (text: Text) => {
     result += remainder;
 
     // Clean up any double spaces that might have been introduced
-    return result
+    result = result
       .replace(/\s+/g, " ")
       .replace(/\s+([.,!?;:])/g, "$1")
       .trim();
+
+    if (latin_ASCII) {
+      const { RBT } = await import("icu-transliterator");
+      const { latnAsciiRules } = await import("constants/latn-ascii.rules");
+      const transliterator = RBT.fromRules(latnAsciiRules);
+      result = transliterator.transliterate(result);
+    }
+
+    return result;
   };
 
   if (typeof text === "string") {
-    return await transliterate(text);
+    return await convert(text);
   } else {
-    return Promise.all(text.map(text => transliterate(text)));
+    return Promise.all(text.map(text => convert(text)));
   }
 };

@@ -2,25 +2,19 @@
 
 A Node.js library for transliteration from any language to any language (see the list of supported languages).
 
-### Suitable for transliteration of:
+### Most suitable for transliteration of:
 
-- **toponyms** (e.g. names of cities, streets, rivers, mountains, etc.)
-- **names of people** (first, middle, last, etc.)
-- **names of companies, organizations, businesses, brands**, etc.
+- place names (toponyms)
+- personal names
+- business names
 
 ## Examples
 
 ```typescript
-import { transliterate } from "transliterate-any-to-any";
+import {transliterate} from "transliterate-any-to-any";
 
-await transliterate("Копривщица", { input: "bg", output: "en" }); // Koprivshtitsa ???????
+await transliterate("Копривщица", {from: "bg", to: "en"}); // Koprivshtitsa ???????
 ```
-
-## Limitations
-
-- There are no transliteration rules between languages using Latin script, e.g. if you transliterate from Norwegian to
-  Italian you'll get the same string (unless you use `latin_ASCII: true` option).
-- Cyrillic is not supported for Serbian and Kazakh languages (only Latin).
 
 ## Prerequisites
 
@@ -31,16 +25,20 @@ await transliterate("Копривщица", { input: "bg", output: "en" }); // K
 
 ## API Reference
 
-### `transliterate(text, language[, options]): string | null`
+### `transliterate(text, options): string | string[]`
 
-| Parameter  | Object property | Type                 | Required | Default | Description                                                                                        |
-|------------|-----------------|----------------------|----------|---------|----------------------------------------------------------------------------------------------------|
-| `text`     |                 | `string \| string[]` | Yes      |         | Input text (can be an array of strings for batching)                                               |
-| `language` |                 | `object`             | Yes      |         | Input and output languages - see below                                                             |
-| ↳          | `input`         | `string`             | Yes      |         | Input language in [BCP 47](https://developer.mozilla.org/en-US/docs/Glossary/BCP_47_language_tag)  |
-| ↳          | `output`        | `string`             | Yes      |         | Output language in [BCP 47](https://developer.mozilla.org/en-US/docs/Glossary/BCP_47_language_tag) |
-| `options`  |                 | `object`             | No       |         | Options - see below                                                                                |
-| ↳          | `latin_ASCII`   | `boolean`            | No       | `false` | If `true` and the output language is a language that uses Latin script - converts to Latin ASCII   |
+| Parameter | Type                 | Required | Description         |
+|-----------|----------------------|----------|---------------------|
+| `text`    | `string \| string[]` | Yes      | Input text or texts |
+| `options` | `object`             | Yes      | Options - see below |
+
+### Options
+
+| Object property | Type      | Required | Default | Description                                                                                        |
+|-----------------|-----------|----------|---------|----------------------------------------------------------------------------------------------------|
+| `from`          | `string`  | Yes      | -       | Input language in [BCP 47](https://developer.mozilla.org/en-US/docs/Glossary/BCP_47_language_tag)  |
+| `to`            | `string`  | Yes      | -       | Output language in [BCP 47](https://developer.mozilla.org/en-US/docs/Glossary/BCP_47_language_tag) |
+| `latin_ASCII`   | `boolean` | No       | `false` | If `true` and the output language is a Latin-script language - converts to Latin ASCII             |
 
 ## Supported languages
 

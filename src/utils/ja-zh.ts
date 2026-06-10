@@ -1,7 +1,7 @@
 import { Text } from "types/languages";
 
 export const jaZh = async (text: Text) => {
-  const { OpenCC } = (await import("opencc")).default;
+  const { OpenCC } = await import("opencc");
   const { jaZhMap } = await import("constants/ja-zh.map");
   const pattern = new RegExp(Object.keys(jaZhMap).join("|"), "g");
 

@@ -1,6 +1,6 @@
 export const zhUkRules = `
-::Any-Latin;
-::Latin-ASCII;
+::Any-Latn;
+::Latn-ASCII;
 ::Lower();
 
 '' > ;
@@ -69,5 +69,5 @@ y > і;
 ньг > нг;
 ннь > нь;
 
-::Title();
+::Title;
 `;
