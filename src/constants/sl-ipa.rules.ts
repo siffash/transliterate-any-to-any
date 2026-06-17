@@ -1,6 +1,5 @@
 export const slIpaRules = `
 ::Lower;
-
 $boundary = [:^Letter:];
 $vowel = [a e i o u á â à é ê è ẹ í î ì ó ô ò ọ ú û ù y ŕ r̀];
 $cons = [b c č d f g h j k l m n p q r s š t v w x z ž ʋ ʎ ɲ];

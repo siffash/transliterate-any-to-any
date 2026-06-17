@@ -1,0 +1,30 @@
+export const fiLatnRules = `
+$boundary = [:^Letter:];
+
+SCH > Š;
+Sch > Š;
+sch > š;
+SH > Š;
+Sh > Š;
+sh > š;
+CH > Č;
+Ch > Č;
+ch > č;
+X } [A-ZÄÖÅ] > KS;
+X > Ks;
+x > ks;
+C } [EIYÄÖeiyäö] > S;
+c } [EIYÄÖeiyäö] > s;
+C > K;
+c > k;
+Q > K;
+q > k;
+W > V;
+w > v;
+Å > O;
+å > o;
+J > Y;
+j > y;
+Y > Ü;
+y > ü;
+`;

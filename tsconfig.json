@@ -12,9 +12,10 @@
     "rootDir": "src",
     "baseUrl": "./src",
     "paths": {
-      "constants/*": ["constants/*"],
       "types/*": ["types/*"],
-      "utils/*": ["utils/*"]
+      "constants/*": ["constants/*"],
+      "converters/*": ["converters/*"],
+      "helpers/*": ["helpers/*"]
     }
   },
   "include": ["src/**/*"],

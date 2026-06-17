@@ -5,6 +5,7 @@
   "keywords": [
     "transliterate",
     "transliteration",
+    "transliterating",
     "ICU",
     "ICU4X",
     "i18n",
@@ -48,13 +49,12 @@
     "aromanize": "^0.1.5",
     "hangul-js": "^0.2.6",
     "hanviet-pinyin-words": "^2.1.7",
-    "hebrew-transliteration": "^2.9.1",
     "icu-transliterator": "^0.3.7",
     "kuroshiro": "^1.2.0",
     "kuroshiro-analyzer-kuromoji": "^1.1.0",
     "opencc": "^1.3.1",
-    "phonemize": "^1.1.0",
-    "pinyin-pro": "^3.28.0"
+    "phonemize": "^1.2.0",
+    "pinyin-pro": "^3.28.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.4",

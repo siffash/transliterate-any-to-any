@@ -1,12 +1,15 @@
 # transliterate-any-to-any
 
-A Node.js library for transliteration from any language to any language (see the list of supported languages).
+A Node.js library for transliteration from any language to any language (see the list
+of [supported languages](#supported-languages)). Supports batching - you can pass an array of texts to be transliterated
+at once. Does not load libraries/mappings/rules if they are not needed for transliteration between the specified
+languages.
 
 ### Most suitable for transliteration of:
 
-- place names (toponyms)
-- personal names
-- business names
+- Place names / toponyms (e.g. names of cities, neighborhoods, towns, villages, streets, rivers, mountains, etc.)
+- Personal names (e.g. first names, middle names, last names, nicknames, etc.)
+- Business names (e.g. company names, brand names, trademarks, etc.)
 
 ## Examples
 
@@ -38,7 +41,7 @@ await transliterate("Копривщица", {from: "bg", to: "en"}); // Koprivsh
 |-----------------|-----------|----------|---------|----------------------------------------------------------------------------------------------------|
 | `from`          | `string`  | Yes      | -       | Input language in [BCP 47](https://developer.mozilla.org/en-US/docs/Glossary/BCP_47_language_tag)  |
 | `to`            | `string`  | Yes      | -       | Output language in [BCP 47](https://developer.mozilla.org/en-US/docs/Glossary/BCP_47_language_tag) |
-| `latin_ASCII`   | `boolean` | No       | `false` | If `true` and the output language is a Latin-script language - converts to Latin ASCII             |
+| `ascii`         | `boolean` | No       | `false` | If `true` and the output language is a Latin-script language - converts to Latin ASCII             |
 
 ## Supported languages
 
