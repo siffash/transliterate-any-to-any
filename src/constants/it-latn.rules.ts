@@ -1,10 +1,38 @@
 export const itLatnRules = `
-::Null;
 $boundary = [:^Letter:];
+
+à > a;
+À > A;
+è > e;
+é > e;
+È > E;
+É > E;
+ì > i;
+í > i;
+Ì > I;
+Í > I;
+ò > o;
+ó > o;
+Ò > O;
+Ó > O;
+ù > u;
+ú > u;
+Ù > U;
+Ú > U;
+
+::Null;
 
 s c i } [a o u A O U] > š;
 S c i } [a o u] > Š;
 S C I } [A O U] > Š;
+
+c c i } [a o u A O U] > č č;
+C c i } [a o u] > Č č;
+C C I } [A O U] > Č Č;
+
+g g i } [a o u A O U] > dž dž;
+G g i } [a o u] > Dž dž;
+G G I } [A O U] > DŽ DŽ;
 
 c i } [a o u A O U] > č;
 C i } [a o u] > Č;
@@ -26,9 +54,17 @@ s c h > s k;
 S c h > S k;
 S C H > S K;
 
+c c h > k k;
+C c h > K k;
+C C H > K K;
+
 c h > k;
 C h > K;
 C H > K;
+
+g g h > g g;
+G g h > G g;
+G G H > G G;
 
 g h > g;
 G h > G;
@@ -41,6 +77,14 @@ Q U > K V;
 s c } [i e I E] > š;
 S c } [i e] > Š;
 S C } [I E] > Š;
+
+c c } [i e I E] > č č;
+C c } [i e I E] > Č č;
+C C } [I E] > Č Č;
+
+g g } [i e I E] > dž dž;
+G g } [i e I E] > Dž dž;
+G G } [I E] > DŽ DŽ;
 
 c } [i e I E] > č;
 C } [i e I E] > Č;

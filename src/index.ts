@@ -6,7 +6,7 @@ export { transliterate } from "transliterate";
 
 import { transliterate } from "transliterate";
 import { RBT } from "icu-transliterator";
-import { idLatnRules } from "constants/id-latn.rules";
+import { kkLatnRules } from "constants/kk-latn.rules";
 const test = async () => {
   // console.log(
   //   await transliterate(
@@ -16,8 +16,8 @@ const test = async () => {
   //   ),
   // );
   console.log(
-    RBT.fromRules(idLatnRules)
-      .transliterate(`Bukittinggi, Jayapura, Singkawang, Pangkalpinang, Banjarbaru, Samarinda, Mojokerto, Palangkaraya, Gorontalo, Prabumulih, Payakumbuh, Tomohon, Banda Aceh, Pematangsiantar, Tasikmalaya, Purwokerto, Salatiga, Probolinggo, Denpasar, Parepare, Aditya Pratama Wijaya, Budi Santoso Kusuma, Citra Lestari Putri, Dedi Hermawan Saputra, Eka Ramadhan Putra, Fajar Nugraha Setiawan, Gita Permata Sari, Hendra Kurniawan Bakrie, Indah Wahyuni Susilo, Joko Prasetyo Utomo, Kartika Chandra Kirana, Lukman Hakim Mansyur, Maya Indah Permadi, Nurul Hidayah Azahra, Oscar Panji Gumilang, Putu Gede Artawan, Rina Amalia Nasution, Surya Dharma Ali, Tiara Kasih Sucipto, Wisnu Wardhana Putra, Dirgantara Perkasa Sejahtera, Nusantara Makmur Abadi, Cahaya Matahari Terang, Samudra Biru Indonesia, Gunung Hijau Lestari, Angkasa Raya Logistik, Pangan Sehat Utama, Bangun Desa Mandiri, Kencana Emas Murni, Teknologi Digital Maju, Bakti Pertiwi Persada, Sinar Jaya Konstruksi, Bintang Timur Niaga, Armada Lautan Luas, Kreasi Anak Bangsa, Sumber Energi Alam, Jasa Mulia Teknik, Inti Sari Keramik, Pelangi Indah Tekstil, Wahana Transportasi Cepat
+    RBT.fromRules(kkLatnRules)
+      .transliterate(`Alakól, Balqaş, Kökşetau, Ulytau, Baianauyl, Mañğystau, Zaiysan, Qyzylorda, Jetisu, Saryarqa, Temirtau, Shardara, Qarqaraly, Merkí, Qatunqarğai, Atasu, Üştöbe, Jarkent, Alatau, Maibalyq, Arman Seríkuly Bolatov, Dana Muratqyzy Sakenova, Bauyrjan Erjanuly Amanov, Gùlnar Bolatqyzy Isajonova, Ruslan Aslanuly Qairatov, Aigùl Janatqyzy Omarova, Marat Sùleimenuly Ahmedov, Janar Aidarqyzy Beisenova, Timur Erbolatuly Jùsípov, Meruert Qanatqyzy Seríkova, Oljas Muratuly Ismailov, Saule Beríkqyzy Hasanova, Darhan Nurlanuly Saparov, Tolqyn Talatqyzy Alieva, Esen Bolatuly Qydyrov, Saltanat Asqarqyzy Temírova, Nurdaulet Erjanuly Batyrov, Ämína Diasqyzy Joldasova, Bekzat Maratuly Nurjanov, Gauhar Alíqyzy Maqsutova, Qazaqstan Temír Joly, Almaty Qurylys Kompaniasy, Astana Baiterek Holdingi, Kaspi Bank Aktsionerlìk Qoğamy, Nomad Saqtandyru Ortalyğy, Barys Hokkei Kluby, Samruq Qazyna Qory, Qazaqtelekom Bailanys Operatory, Kúitai Jer Resurstary, Dalatrans Jùk Tasymaldaýşy, Alma TV Televizia Jelìsì, Magnum Retail Sauda Jelìsì, Air Astana Äue Kompaniasy, Qazaqoil Energetika Korporasiasy, Bi Group Qurylys Holdingi, Techno Dom Elekronika Dùkenì, Sulpak Turmystyq Tehnika, Kazatomprom Atom Óndìrìsì, Beeline Mobil Baky qyzmetì, Halyk Bank Halyqtyq Jinaq Bankì
   `),
   );
 };

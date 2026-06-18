@@ -1,9 +1,7 @@
 export const ltLatnRules = `
-$boundary = [:^Letter:];
-
-C } H > X;
-C } h > X;
-c } h > x;
+CH > X;
+Ch > X;
+ch > x;
 
 X } [:UppercaseLetter:] > KS;
 X > Ks;
