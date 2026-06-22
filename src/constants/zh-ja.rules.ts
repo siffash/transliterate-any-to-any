@@ -3,7 +3,7 @@ export const zhJaRules = `
 
 [vüǚǜǘǔ\u0075\u0308] > yu;
 ::Latn-ASCII;
-::Lower();
+::Lower;
 
 xi > shi;
 

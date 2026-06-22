@@ -1,5 +1,5 @@
 export const azLatnRules = `
-C } [:Ll:] > Dž;
+C } [:Lower:] > Dž;
 C > DŽ;
 c > dž;
 Ç > Č;

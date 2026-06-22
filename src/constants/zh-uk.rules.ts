@@ -1,7 +1,7 @@
 export const zhUkRules = `
 ::Any-Latn;
 ::Latn-ASCII;
-::Lower();
+::Lower;
 
 '' > ;
 lü > лю;

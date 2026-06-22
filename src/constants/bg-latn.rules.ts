@@ -6,23 +6,23 @@ $boundary = [:^Letter:];
 ИЯ } $boundary > IA;
 иЯ } $boundary > iA;
 
-[:Lu:] { Ц > TS;
-Ц } [:Lu:] > TS;
+[:Upper:] { Ц > TS;
+Ц } [:Upper:] > TS;
 Ц > Ts;
 ц > ts;
 
-[:Lu:] { Щ > ŠT;
-Щ } [:Lu:] > ŠT;
+[:Upper:] { Щ > ŠT;
+Щ } [:Upper:] > ŠT;
 Щ > Št;
 щ > št;
 
-[:Lu:] { Ю > YU;
-Ю } [:Lu:] > YU;
+[:Upper:] { Ю > YU;
+Ю } [:Upper:] > YU;
 Ю > Yu;
 ю > yu;
 
-[:Lu:] { Я > YA;
-Я } [:Lu:] > YA;
+[:Upper:] { Я > YA;
+Я } [:Upper:] > YA;
 Я > Ya;
 я > ya;
 

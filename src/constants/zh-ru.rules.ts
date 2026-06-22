@@ -1,7 +1,7 @@
 export const zhRuRules = `
 ::Any-Latn;
 ::Latn-ASCII;
-::Lower();
+::Lower;
 
 yuan > юань;
 qian > цянь;

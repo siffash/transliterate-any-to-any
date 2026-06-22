@@ -1,6 +1,6 @@
 export const hrLatnRules = `
 $boundary = [:^Letter:];
-$upper = [:Lu:];
+$upper = [:Upper:];
 
 LJ > Ľ;
 Lj > Ľ;

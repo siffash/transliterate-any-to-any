@@ -37,8 +37,8 @@ ZS > Ž;
 Zs > Ž;
 zs > ž;
 
-C } [:Uppercase:] > TS;
-[:Uppercase:] { C } $boundary > TS;
+C } [:Upper:] > TS;
+[:Upper:] { C } $boundary > TS;
 C > Ts;
 c > ts;
 

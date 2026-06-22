@@ -98,7 +98,7 @@ G n > Ń;
 G N > Ń;
 
 z > ts;
-Z } [[:Lowercase:]] > Ts;
+Z } [[:Lower:]] > Ts;
 Z } $boundary > TS;
 Z > TS;
 
@@ -112,7 +112,7 @@ j > y;
 J > Y;
 
 x > k s;
-X } [[:Lowercase:]] > K s;
+X } [[:Lower:]] > K s;
 X } $boundary > K S;
 X > K S;
 

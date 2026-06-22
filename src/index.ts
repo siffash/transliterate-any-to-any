@@ -15,10 +15,10 @@ const test = async () => {
   //     { from: "el", to: "en" },
   //   ),
   // );
-  console.log(
-    RBT.fromRules(kkLatnRules)
-      .transliterate(`Alakól, Balqaş, Kökşetau, Ulytau, Baianauyl, Mañğystau, Zaiysan, Qyzylorda, Jetisu, Saryarqa, Temirtau, Shardara, Qarqaraly, Merkí, Qatunqarğai, Atasu, Üştöbe, Jarkent, Alatau, Maibalyq, Arman Seríkuly Bolatov, Dana Muratqyzy Sakenova, Bauyrjan Erjanuly Amanov, Gùlnar Bolatqyzy Isajonova, Ruslan Aslanuly Qairatov, Aigùl Janatqyzy Omarova, Marat Sùleimenuly Ahmedov, Janar Aidarqyzy Beisenova, Timur Erbolatuly Jùsípov, Meruert Qanatqyzy Seríkova, Oljas Muratuly Ismailov, Saule Beríkqyzy Hasanova, Darhan Nurlanuly Saparov, Tolqyn Talatqyzy Alieva, Esen Bolatuly Qydyrov, Saltanat Asqarqyzy Temírova, Nurdaulet Erjanuly Batyrov, Ämína Diasqyzy Joldasova, Bekzat Maratuly Nurjanov, Gauhar Alíqyzy Maqsutova, Qazaqstan Temír Joly, Almaty Qurylys Kompaniasy, Astana Baiterek Holdingi, Kaspi Bank Aktsionerlìk Qoğamy, Nomad Saqtandyru Ortalyğy, Barys Hokkei Kluby, Samruq Qazyna Qory, Qazaqtelekom Bailanys Operatory, Kúitai Jer Resurstary, Dalatrans Jùk Tasymaldaýşy, Alma TV Televizia Jelìsì, Magnum Retail Sauda Jelìsì, Air Astana Äue Kompaniasy, Qazaqoil Energetika Korporasiasy, Bi Group Qurylys Holdingi, Techno Dom Elekronika Dùkenì, Sulpak Turmystyq Tehnika, Kazatomprom Atom Óndìrìsì, Beeline Mobil Baky qyzmetì, Halyk Bank Halyqtyq Jinaq Bankì
-  `),
-  );
+  // console.log(
+  //   RBT.fromRules(kkLatnRules)
+  //     .transliterate(`Alakól, Balqaş, Kökşetau, Ulytau, Baianauyl, Mañğystau, Zaiysan, Qyzylorda, Jetisu, Saryarqa, Temirtau, Shardara, Qarqaraly, Merkí, Qatunqarğai, Atasu, Üştöbe, Jarkent, Alatau, Maibalyq, Arman Seríkuly Bolatov, Dana Muratqyzy Sakenova, Bauyrjan Erjanuly Amanov, Gùlnar Bolatqyzy Isajonova, Ruslan Aslanuly Qairatov, Aigùl Janatqyzy Omarova, Marat Sùleimenuly Ahmedov, Janar Aidarqyzy Beisenova, Timur Erbolatuly Jùsípov, Meruert Qanatqyzy Seríkova, Oljas Muratuly Ismailov, Saule Beríkqyzy Hasanova, Darhan Nurlanuly Saparov, Tolqyn Talatqyzy Alieva, Esen Bolatuly Qydyrov, Saltanat Asqarqyzy Temírova, Nurdaulet Erjanuly Batyrov, Ämína Diasqyzy Joldasova, Bekzat Maratuly Nurjanov, Gauhar Alíqyzy Maqsutova, Qazaqstan Temír Joly, Almaty Qurylys Kompaniasy, Astana Baiterek Holdingi, Kaspi Bank Aktsionerlìk Qoğamy, Nomad Saqtandyru Ortalyğy, Barys Hokkei Kluby, Samruq Qazyna Qory, Qazaqtelekom Bailanys Operatory, Kúitai Jer Resurstary, Dalatrans Jùk Tasymaldaýşy, Alma TV Televizia Jelìsì, Magnum Retail Sauda Jelìsì, Air Astana Äue Kompaniasy, Qazaqoil Energetika Korporasiasy, Bi Group Qurylys Holdingi, Techno Dom Elekronika Dùkenì, Sulpak Turmystyq Tehnika, Kazatomprom Atom Óndìrìsì, Beeline Mobil Baky qyzmetì, Halyk Bank Halyqtyq Jinaq Bankì
+  // `),
+  // );
 };
 test();

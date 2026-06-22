@@ -1,6 +1,6 @@
 export const ukLatnRules = `
 $boundary=[:^Letter:];
-$upper=[АБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯ[:Lu:]];
+$upper=[АБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯ[:Upper:]];
 
 ['’ʼ‘´\`] > ;
 

@@ -1,0 +1,33 @@
+export const latnLvRules = `
+::Null;
+
+TS > C;
+Ts > C;
+ts > c;
+Đ > Dž;
+đ > dž;
+Ć > Č;
+ć > č;
+Ľ > Ļ;
+ľ > ļ;
+Ń > Ņ;
+ń > ņ;
+Ä > E;
+ä > e;
+Ï > I;
+ï > i;
+Ö > O;
+ö > o;
+Ü > U;
+ü > u;
+Ÿ > J;
+ÿ > j;
+Q > K;
+q > k;
+W > V;
+w > v;
+X > H;
+x > h;
+Y > J;
+y > j;
+`;

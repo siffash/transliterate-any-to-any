@@ -8,38 +8,38 @@ $boundary = [:^Letter:];
 ИЯ } $boundary > IA;
 иЯ } $boundary > iA;
 
-[:Lu:] { Ж > ZH;
-Ж } [:Lu:] > ZH;
+[:Upper:] { Ж > ZH;
+Ж } [:Upper:] > ZH;
 Ж > Zh;
 ж > zh;
 
-[:Lu:] { Ц > TS;
-Ц } [:Lu:] > TS;
+[:Upper:] { Ц > TS;
+Ц } [:Upper:] > TS;
 Ц > Ts;
 ц > ts;
 
-[:Lu:] { Ч > CH;
-Ч } [:Lu:] > CH;
+[:Upper:] { Ч > CH;
+Ч } [:Upper:] > CH;
 Ч > Ch;
 ч > ch;
 
-[:Lu:] { Ш > SH;
-Ш } [:Lu:] > SH;
+[:Upper:] { Ш > SH;
+Ш } [:Upper:] > SH;
 Ш > Sh;
 ш > sh;
 
-[:Lu:] { Щ > SHT;
-Щ } [:Lu:] > SHT;
+[:Upper:] { Щ > SHT;
+Щ } [:Upper:] > SHT;
 Щ > Sht;
 щ > sht;
 
-[:Lu:] { Ю > YU;
-Ю } [:Lu:] > YU;
+[:Upper:] { Ю > YU;
+Ю } [:Upper:] > YU;
 Ю > Yu;
 ю > yu;
 
-[:Lu:] { Я > YA;
-Я } [:Lu:] > YA;
+[:Upper:] { Я > YA;
+Я } [:Upper:] > YA;
 Я > Ya;
 я > ya;
 

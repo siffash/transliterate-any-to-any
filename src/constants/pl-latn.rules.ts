@@ -1,5 +1,5 @@
 export const plLatnRules = `
-$lower = [:Ll:];
+$lower = [:Lower:];
 
 dz } i > đ;
 dz } I > đ;

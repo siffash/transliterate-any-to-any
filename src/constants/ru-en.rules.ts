@@ -1,7 +1,7 @@
 // ICAO system Doc 9303 "Machine Readable Travel Documents, Part 3"
 
 export const ruEnRules = `
-$upper = [:Lu:];
+$upper = [:Upper:];
 
 А > A;
 а > a;

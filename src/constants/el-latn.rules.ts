@@ -67,7 +67,7 @@ $voiced = [βγδζλμνρΒΓΔΖΛΜΝΡαεηιουωΑΕΗΙΟΥΩ];
 Υ Ι > Y I;
 υ ι > y i;
 
-Γ Κ } [:Lowercase_Letter:] > G k;
+Γ Κ } [:Lower:] > G k;
 Γ Κ > G K;
 Γ κ > G k;
 γ κ > g k;
@@ -79,52 +79,52 @@ $boundary { Μ π > B;
 μ π } $boundary > b;
 $boundary { μ π > b;
 
-Μ Π } [:Lowercase_Letter:] > M p;
+Μ Π } [:Lower:] > M p;
 Μ Π > M P;
 Μ π > M p;
 μ π > m p;
 
-Ν Τ } [:Lowercase_Letter:] > N t;
+Ν Τ } [:Lower:] > N t;
 Ν Τ > N T;
 Ν τ > N t;
 ν τ > n t;
 
-Γ Γ } [:Lowercase_Letter:] > N g;
+Γ Γ } [:Lower:] > N g;
 Γ Γ > N G;
 Γ γ > N g;
 γ γ > n g;
 
-Γ Ξ } [:Lowercase_Letter:] > N k s;
+Γ Ξ } [:Lower:] > N k s;
 Γ Ξ > N K S;
 Γ ξ > N k s;
 γ ξ > n k s;
 
-Γ Χ } [:Lowercase_Letter:] > N x;
+Γ Χ } [:Lower:] > N x;
 Γ Χ > N X;
 Γ χ > N x;
 γ χ > n x;
 
-Τ Σ } [:Lowercase_Letter:] > T s;
+Τ Σ } [:Lower:] > T s;
 Τ Σ > T S;
 Τ σ > T s;
 Τ ς > T s;
 τ σ > t s;
 τ ς > t s;
 
-Τ Ζ } [:Lowercase_Letter:] > D z;
+Τ Ζ } [:Lower:] > D z;
 Τ Ζ > D Z;
 Τ ζ > D z;
 τ ζ > d z;
 
-Θ } [:Lowercase_Letter:] > T h;
+Θ } [:Lower:] > T h;
 Θ > T H;
 θ > t h;
 
-Ξ } [:Lowercase_Letter:] > K s;
+Ξ } [:Lower:] > K s;
 Ξ > K S;
 ξ > k s;
 
-Ψ } [:Lowercase_Letter:] > P s;
+Ψ } [:Lower:] > P s;
 Ψ > P S;
 ψ > p s;
 

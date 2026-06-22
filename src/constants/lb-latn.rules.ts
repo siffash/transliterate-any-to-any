@@ -37,20 +37,20 @@ $boundary { SP > ŠP;
 $boundary { Sp > Šp;
 $boundary { sp > šp;
 
-[:Uppercase:] { C } $v > TS;
+[:Upper:] { C } $v > TS;
 C } $v > Ts;
 c } $v > ts;
 
 C > K;
 c > k;
 
-[:Uppercase:] { Z > TS;
-Z } [:Uppercase:] > TS;
+[:Upper:] { Z > TS;
+Z } [:Upper:] > TS;
 Z > Ts;
 z > ts;
 
-[:Uppercase:] { X > KS;
-X } [:Uppercase:] > KS;
+[:Upper:] { X > KS;
+X } [:Upper:] > KS;
 X > Ks;
 x > ks;
 

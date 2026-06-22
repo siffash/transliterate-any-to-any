@@ -4,7 +4,7 @@ export const hyEnRules = `
 ::NFD;
 
 $boundary = [:^Letter:];
-$upper = [:Uppercase_Letter:];
+$upper = [:Upper:];
 
 ՈՒ > U;
 Ու > U;

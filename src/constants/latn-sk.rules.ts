@@ -1,0 +1,44 @@
+export const latnSkRules = `
+::Null;
+
+$v = [eEiIíÍéÉ];
+
+TS > C;
+Ts > C;
+tS > c;
+ts > c;
+X } [:Upper:] > CH;
+[:Upper:] { X > CH;
+X > Ch;
+x > ch;
+Q } [:Upper:] > KV;
+[:Upper:] { Q > KV;
+Q > Kv;
+q > kv;
+W > V;
+w > v;
+Y > J;
+y > j;
+Ï > Y;
+ï > y;
+Ö > O;
+ö > o;
+Ü > U;
+ü > u;
+Ÿ > Y;
+ÿ > y;
+Đ } $v > D;
+đ } $v > d;
+Đ > Ď;
+đ > ď;
+Ć } $v > T;
+ć } $v > t;
+Ć > Ť;
+ć > ť;
+Ń } $v > N;
+ń } $v > n;
+Ń > Ň;
+ń > ň;
+Ľ } $v > L;
+ľ } $v > l;
+`;

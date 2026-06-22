@@ -109,23 +109,23 @@ N } Í > Ń;
 Ň > Ń;
 
 c > ts;
-C } [:Lowercase:] > Ts;
+C } [:Lower:] > Ts;
 C > TS;
 
 j > y;
-J } [:Lowercase:] > Y;
+J } [:Lower:] > Y;
 J > Y;
 
 q > kv;
-Q } [:Lowercase:] > Kv;
+Q } [:Lower:] > Kv;
 Q > KV;
 
 w > v;
-W } [:Lowercase:] > V;
+W } [:Lower:] > V;
 W > V;
 
 x > ks;
-X } [:Lowercase:] > Ks;
+X } [:Lower:] > Ks;
 X > KS;
 
 y > i;

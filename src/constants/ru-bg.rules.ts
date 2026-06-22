@@ -2,7 +2,7 @@ export const ruBgRules = `
 $hard = [ЖЧШЩЦжчшщц];
 $cons = [БВГДЗКЛМНПРСТФХбвгдзклмнпрстфх];
 $not_o = [^оО];
-$lower = [:Ll:];
+$lower = [:Lower:];
 
 ский > ски;
 Ский > Ски;

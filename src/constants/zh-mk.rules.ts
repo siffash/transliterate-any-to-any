@@ -1,7 +1,7 @@
 export const zhMkRules = `
 ::Any-Latn;
 ::Latn-ASCII;
-::Lower();
+::Lower;
 
 yuan > јуан;
 qian > ќен;

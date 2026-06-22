@@ -1,5 +1,5 @@
 export const lvLatnRules = `
-$upper = [:Uppercase:];
+$upper = [:Upper:];
 $boundary = [:^Letter:];
 
 CH > X;

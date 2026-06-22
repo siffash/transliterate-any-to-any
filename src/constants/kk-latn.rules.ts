@@ -1,7 +1,7 @@
 export const kkLatnRules = `
 $boundary = [:^Letter:];
 
-$boundary { Е } [:Lowercase:] > Ye;
+$boundary { Е } [:Lower:] > Ye;
 $boundary { Е > YE;
 $boundary { е > ye;
 Sh > Š;
@@ -22,22 +22,22 @@ gh > g;
 Ng > Ń;
 NG > Ń;
 ng > ń;
-Щ } [:Lowercase:] > Šč;
+Щ } [:Lower:] > Šč;
 Щ > ŠČ;
 щ > šč;
-Я } [:Lowercase:] > Ya;
+Я } [:Lower:] > Ya;
 Я > YA;
 я > ya;
-Ю } [:Lowercase:] > Yu;
+Ю } [:Lower:] > Yu;
 Ю > YU;
 ю > yu;
-Ё } [:Lowercase:] > Yo;
+Ё } [:Lower:] > Yo;
 Ё > YO;
 ё > yo;
-Ц } [:Lowercase:] > Ts;
+Ц } [:Lower:] > Ts;
 Ц > TS;
 ц > ts;
-C } [:Lowercase:] > Ts;
+C } [:Lower:] > Ts;
 C > TS;
 c > ts;
 Ş > Š;

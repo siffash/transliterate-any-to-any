@@ -1,5 +1,5 @@
 export const idLatnRules = `
-$lower = [:Ll:];
+$lower = [:Lower:];
 
 kh > x;
 Kh > X;

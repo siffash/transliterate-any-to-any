@@ -1,6 +1,6 @@
 export const ruLatnRules = `
 $boundary = [:^Letter:];
-$upper = [:Lu:];
+$upper = [:Upper:];
 $vowel = [АЕЁИОУЫЭЮЯаеёиоуыэюяAEIOUÏaeiouï];
 
 $vowel { Е } $upper > YE;

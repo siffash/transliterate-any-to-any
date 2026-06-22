@@ -79,11 +79,11 @@ c > k;
 C > K;
 
 ț > ts;
-Ț } [:Uppercase:] > TS;
+Ț } [:Upper:] > TS;
 Ț > Ts;
 
 ţ > ts;
-Ţ } [:Uppercase:] > TS;
+Ţ } [:Upper:] > TS;
 Ţ > Ts;
 
 ș > š;
@@ -96,7 +96,7 @@ j > ž;
 J > Ž;
 
 x > k s;
-X } [:Uppercase:] > K S;
+X } [:Upper:] > K S;
 X > K s;
 
 q u > k v;

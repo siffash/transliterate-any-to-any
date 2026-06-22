@@ -1,7 +1,7 @@
 // Digraph system ICAO Doc 9303
 
 export const mkEnRules = `
-$uc = [АБВГДЃЕЖЗЅИЈКЛЉМНЊОПРСТЌУФХЦЧЏШ[:Lu:]];
+$uc = [АБВГДЃЕЖЗЅИЈКЛЉМНЊОПРСТЌУФХЦЧЏШ[:Upper:]];
 
 { Ѓ } $uc > GJ;
 $uc { Ѓ } > GJ;

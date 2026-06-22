@@ -1,16 +1,16 @@
 export const etLatnRules = `
 $boundary = [:^Letter:];
 
-Sh } [[:Ll:]] > Š;
+Sh } [[:Lower:]] > Š;
 SH > Š;
 sh > š;
-Zh } [[:Ll:]] > Ž;
+Zh } [[:Lower:]] > Ž;
 ZH > Ž;
 zh > ž;
-X } [[:Ll:]] > Ks;
+X } [[:Lower:]] > Ks;
 X > KS;
 x > ks;
-C } [[:Ll:]] > Ts;
+C } [[:Lower:]] > Ts;
 C > TS;
 c > ts;
 W > V;

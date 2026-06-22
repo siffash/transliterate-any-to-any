@@ -1,7 +1,7 @@
 export const zhBgRules = `
 ::Any-Latn;
 ::Latn-ASCII;
-::Lower();
+::Lower;
 lu } $ > лю;
 nu } $ > ню;
 yuan > юан;

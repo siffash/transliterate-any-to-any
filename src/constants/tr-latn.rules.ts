@@ -1,6 +1,6 @@
 export const trLatnRules = `
-C } [:Uppercase:] > DŽ;
-[:Uppercase:] { C > DŽ;
+C } [:Upper:] > DŽ;
+[:Upper:] { C > DŽ;
 C > Dž;
 c > dž;
 Ç > Č;
