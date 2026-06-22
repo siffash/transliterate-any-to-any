@@ -1,6 +1,6 @@
 export const plIpaRules = `
 ::Lower;
-$boundary = [:^Letter:];
+
 $vowel = [a ą e ę i o ó u y];
 $fric = [f w s z ś ź ż x h];
 
@@ -45,7 +45,7 @@ i } $vowel > j;
 ę } s z > ɛ̃;
 ę } c h > ɛ̃;
 ę } r z > ɛ̃;
-ę } $boundary > ɛ;
+ę } [:^Letter:] > ɛ;
 ę } $ > ɛ;
 ę > ɛ̃w̃;
 
@@ -61,7 +61,7 @@ t͡ʂ { w > f;
 ʂ { w > f;
 [p t k c f s ś ć x] { w > f;
 w } [p t k c f s ś ć x] > f;
-w } $boundary > f;
+w } [:^Letter:] > f;
 w } $ > f;
 w > v;
 
@@ -88,13 +88,13 @@ z } [p t k c f s ś ć x] > s;
 ź } [p t k c f s ś ć x] > ɕ;
 ż } [p t k c f s ś ć x] > ʂ;
 
-dź } $boundary > t͡ɕ;
+dź } [:^Letter:] > t͡ɕ;
 dź } $ > t͡ɕ;
-dż } $boundary > t͡ʂ;
+dż } [:^Letter:] > t͡ʂ;
 dż } $ > t͡ʂ;
-dz } $boundary > t͡s;
+dz } [:^Letter:] > t͡s;
 dz } $ > t͡s;
-rz } $boundary > ʂ;
+rz } [:^Letter:] > ʂ;
 rz } $ > ʂ;
 
 cz > t͡ʂ;
@@ -105,17 +105,17 @@ sz > ʂ;
 rz > ʐ;
 ch > x;
 
-b } $boundary > p;
+b } [:^Letter:] > p;
 b } $ > p;
-d } $boundary > t;
+d } [:^Letter:] > t;
 d } $ > t;
-g } $boundary > k;
+g } [:^Letter:] > k;
 g } $ > k;
-z } $boundary > s;
+z } [:^Letter:] > s;
 z } $ > s;
-ź } $boundary > ɕ;
+ź } [:^Letter:] > ɕ;
 ź } $ > ɕ;
-ż } $boundary > ʂ;
+ż } [:^Letter:] > ʂ;
 ż } $ > ʂ;
 
 a > a;

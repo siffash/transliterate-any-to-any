@@ -1,5 +1,4 @@
 export const esLatnRules = `
-$boundary = [:^Letter:];
 $frontVowel = [eéiíEÉIÍ];
 
 á > a;
@@ -38,8 +37,8 @@ QU } $frontVowel > K;
 q > k;
 Q > K;
 
-$boundary { x > s;
-$boundary { X > S;
+[:^Letter:] { x > s;
+[:^Letter:] { X > S;
 
 x > ks;
 X > Ks;
@@ -52,8 +51,8 @@ C } $frontVowel > S;
 c > k;
 C > K;
 
-y } $boundary > i;
-Y } $boundary > I;
+y } [:^Letter:] > i;
+Y } [:^Letter:] > I;
 
 ñ > ń;
 Ñ > Ń;

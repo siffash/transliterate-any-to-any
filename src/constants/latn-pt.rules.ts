@@ -1,44 +1,43 @@
 export const latnPtRules = `
 ::Null;
 
-$boundary = [:^Letter:];
 $upper = [ABDEFGHIKLMNOPQRSTUVWXYZÄÏÖÜŸĆČĐĽŃŠŽ];
 $lower = [abdefghiklmnopqrstuvwxyzäïöüÿćčđľńšž];
 $vowel = [AEIOUYÄÏÖÜŸaeiouyäïöüÿ];
 $front_upper = [EIYÄÏÖÜŸ];
 $front_lower = [eiyäïöüÿ];
 
-$upper { Ć } $boundary > TCH;
+$upper { Ć } [:^Letter:] > TCH;
 Ć } $upper > TCH;
 Ć > Tch;
 ć > tch;
 
-$upper { Č } $boundary > TCH;
+$upper { Č } [:^Letter:] > TCH;
 Č } $upper > TCH;
 Č > Tch;
 č > tch;
 
-$upper { Đ } $boundary > DJ;
+$upper { Đ } [:^Letter:] > DJ;
 Đ } $upper > DJ;
 Đ > Dj;
 đ > dj;
 
-$upper { Ľ } $boundary > LH;
+$upper { Ľ } [:^Letter:] > LH;
 Ľ } $upper > LH;
 Ľ > Lh;
 ľ > lh;
 
-$upper { Ń } $boundary > NH;
+$upper { Ń } [:^Letter:] > NH;
 Ń } $upper > NH;
 Ń > Nh;
 ń > nh;
 
-$upper { Š } $boundary > CH;
+$upper { Š } [:^Letter:] > CH;
 Š } $upper > CH;
 Š > Ch;
 š > ch;
 
-$upper { X } $boundary > KH;
+$upper { X } [:^Letter:] > KH;
 X } $upper > KH;
 X > Kh;
 x > kh;

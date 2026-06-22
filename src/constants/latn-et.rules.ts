@@ -1,38 +1,35 @@
 export const latnEtRules = `
 ::Null;
 
-$boundary = [:^Letter:];
-$upper = [:Upper:];
-$lower = [:Lower:];
 $vowel = [AEIOUÄÖÜÏŸaeiouäöüïÿ];
 
-$upper { Č > TŠ;
-Č } $upper > TŠ;
+[:Upper:] { Č > TŠ;
+Č } [:Upper:] > TŠ;
 Č > Tš;
 č > tš;
 
-$upper { Ć > TŠ;
-Ć } $upper > TŠ;
+[:Upper:] { Ć > TŠ;
+Ć } [:Upper:] > TŠ;
 Ć > Tš;
 ć > tš;
 
-$upper { Đ > DŽ;
-Đ } $upper > DŽ;
+[:Upper:] { Đ > DŽ;
+Đ } [:Upper:] > DŽ;
 Đ > Dž;
 đ > dž;
 
-$upper { Ń > NJ;
-Ń } $upper > NJ;
+[:Upper:] { Ń > NJ;
+Ń } [:Upper:] > NJ;
 Ń > Nj;
 ń > nj;
 
-$upper { Ľ > LJ;
-Ľ } $upper > LJ;
+[:Upper:] { Ľ > LJ;
+Ľ } [:Upper:] > LJ;
 Ľ > Lj;
 ľ > lj;
 
-$vowel { X } $boundary > HH;
-$vowel { x } $boundary > hh;
+$vowel { X } [:^Letter:] > HH;
+$vowel { x } [:^Letter:] > hh;
 $vowel { X } $vowel > HH;
 $vowel { x } $vowel > hh;
 X > H;

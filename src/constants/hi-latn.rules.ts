@@ -4,7 +4,6 @@ export const hiLatnRules = `
 ‌ > ;
 ‍ > ;
 
-$boundary = [:^Letter:];
 $nukta = ़;
 
 अ > a;
@@ -112,7 +111,7 @@ a् > ;
 ं}bh > m;
 ं}b > m;
 ं}m > m;
-ं}$boundary > m;
+ं}[:^Letter:] > m;
 ं > n;
 ँ > n;
 ः > h;

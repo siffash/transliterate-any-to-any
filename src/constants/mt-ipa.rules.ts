@@ -3,12 +3,11 @@ export const mtIpaRules = `
 $v = [aeiou];
 $cons = [bcdfghjklmnpqrstvwxzċġħż];
 $voicedfinal = [bdgġvżz];
-$boundary = [:^Letter:];
 
-$boundary { m } $cons > im;
-$boundary { n } $cons > in;
-$boundary { s } $cons > is;
-$boundary { x } $cons > iʃ;
+[:^Letter:] { m } $cons > im;
+[:^Letter:] { n } $cons > in;
+[:^Letter:] { s } $cons > is;
+[:^Letter:] { x } $cons > iʃ;
 
 għi > ɐɪ̯;
 għaj > ɐːɪ̯;
@@ -34,9 +33,9 @@ ph > f;
 sh > ʃ;
 th > t;
 għh > ħː;
-{ għ } $boundary > ħ;
+{ għ } [:^Letter:] > ħ;
 { għ } $ > ħ;
-{ h } $boundary > ħ;
+{ h } [:^Letter:] > ħ;
 { h } $ > ħ;
 
 ah > ɐː;
@@ -93,20 +92,20 @@ jj > jː;
 zz > t͡sː;
 żż > zː;
 
-{ b } $boundary > p;
+{ b } [:^Letter:] > p;
 { b } $ > p;
-{ d } $boundary > t;
+{ d } [:^Letter:] > t;
 { d } $ > t;
 { g } [e i y ɛ ɪ] > d͡ʒ;
-{ g } $boundary > k;
+{ g } [:^Letter:] > k;
 { g } $ > k;
-{ ġ } $boundary > t͡ʃ;
+{ ġ } [:^Letter:] > t͡ʃ;
 { ġ } $ > t͡ʃ;
-{ v } $boundary > f;
+{ v } [:^Letter:] > f;
 { v } $ > f;
-{ ż } $boundary > s;
+{ ż } [:^Letter:] > s;
 { ż } $ > s;
-{ z } $boundary > t͡s;
+{ z } [:^Letter:] > t͡s;
 { z } $ > t͡s;
 
 a > ɐ;

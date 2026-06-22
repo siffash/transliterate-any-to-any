@@ -6,7 +6,6 @@ export const hiEnRules = `
 ‌ > ;
 ‍ > ;
 
-$boundary = [:^Letter:];
 $cons = [bcdfghjklmnpqrstvwxyz];
 $v = [aāiīuūeoŏĕ];
 $nukta = ़;
@@ -114,20 +113,20 @@ a् > ;
 ं}bh > m;
 ं}b > m;
 ं}m > m;
-ं} $boundary > m;
+ं} [:^Letter:] > m;
 ं > n;
 ँ > m̐;
 ः > h;
 
 ::Null;
 
-$boundary $cons h h { a } $boundary > a;
-$boundary $cons h { a } $boundary > a;
-$boundary $cons { a } $boundary > a;
-$cons y { a } $boundary > a;
-$cons r { a } $boundary > a;
-$cons v { a } $boundary > a;
-$cons { a } $boundary > ;
+[:^Letter:] $cons h h { a } [:^Letter:] > a;
+[:^Letter:] $cons h { a } [:^Letter:] > a;
+[:^Letter:] $cons { a } [:^Letter:] > a;
+$cons y { a } [:^Letter:] > a;
+$cons r { a } [:^Letter:] > a;
+$cons v { a } [:^Letter:] > a;
+$cons { a } [:^Letter:] > ;
 
 ::Null;
 

@@ -1,7 +1,7 @@
 export const elIpaRules = `
 ::Lower;
 ::NFC;
-$boundary = [:^Letter:];
+
 $voicedC = [βγδζλμνρbdgɟʝŋmnlɾvðɣz];
 $vowOrVoiced = [αεηιουωάέήίόύώϊϋΐΰβγδζλμνρaɛiɔu];
 $frontVowel = [εηιυέήίύϊϋΐΰɛi];
@@ -38,14 +38,14 @@ $frontVowel = [εηιυέήίύϊϋΐΰɛi];
 
 ::Null;
 
-$boundary { μπ } > b;
+[:^Letter:] { μπ } > b;
 μπ > mb;
 
-$boundary { ντ } > d;
+[:^Letter:] { ντ } > d;
 ντ > nd;
 
-$boundary { γκ } $frontVowel > ɟ;
-$boundary { γκ } > g;
+[:^Letter:] { γκ } $frontVowel > ɟ;
+[:^Letter:] { γκ } > g;
 { γκ } $frontVowel > ŋɟ;
 γκ > ŋg;
 
@@ -73,7 +73,7 @@ $boundary { γκ } > g;
 ττ > t;
 
 { σ } $voicedC > z;
-{ ς } $boundary $voicedC > z;
+{ ς } [:^Letter:] $voicedC > z;
 σ > s;
 ς > s;
 

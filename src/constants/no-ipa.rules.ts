@@ -3,15 +3,14 @@ export const noIpaRules = `
 $vowel = [aeiouyæøå];
 $cons = [bcdfghjklmnpqrstvwxz];
 $pal = [eiy];
-$boundary = [:^Letter:];
 
-ige } $boundary > iə;
+ige } [:^Letter:] > iə;
 ige } $ > iə;
-ig } $boundary > i;
+ig } [:^Letter:] > i;
 ig } $ > i;
-et } $boundary > ɛ;
+et } [:^Letter:] > ɛ;
 et } $ > ɛ;
-er } $boundary > əɾ;
+er } [:^Letter:] > əɾ;
 er } $ > əɾ;
 
 hv > ʋ;

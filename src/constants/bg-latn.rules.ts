@@ -1,10 +1,8 @@
 export const bgLatnRules = `
-$boundary = [:^Letter:];
-
-ия } $boundary > ia;
-Ия } $boundary > Ia;
-ИЯ } $boundary > IA;
-иЯ } $boundary > iA;
+ия } [:^Letter:] > ia;
+Ия } [:^Letter:] > Ia;
+ИЯ } [:^Letter:] > IA;
+иЯ } [:^Letter:] > iA;
 
 [:Upper:] { Ц > TS;
 Ц } [:Upper:] > TS;

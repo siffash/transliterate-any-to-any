@@ -1,6 +1,4 @@
 export const etLatnRules = `
-$boundary = [:^Letter:];
-
 Sh } [[:Lower:]] > Š;
 SH > Š;
 sh > š;

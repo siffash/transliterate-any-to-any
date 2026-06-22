@@ -3,23 +3,22 @@ export const roIpaRules = `
 
 $vowel = [aăâeîiou];
 $cons_for_i = [bdfhjklmnprstvwxzșțkgŋ];
-$boundary = [:^Letter:];
 
-$boundary {eu} $boundary > jeu;
-$boundary {el} $boundary > jel;
-$boundary {ei} $boundary > jej;
-$boundary {ele} $boundary > jele;
-$boundary {ea} $boundary > ja;
-$boundary {este} $boundary > jeste;
-$boundary {ești} $boundary > jeʃtʲ;
-$boundary {eram} $boundary > jeram;
-$boundary {erai} $boundary > jeraj;
-$boundary {era} $boundary > jera;
-$boundary {erați} $boundary > jerat͡sʲ;
-$boundary {erau} $boundary > jerau;
+[:^Letter:] {eu} [:^Letter:] > jeu;
+[:^Letter:] {el} [:^Letter:] > jel;
+[:^Letter:] {ei} [:^Letter:] > jej;
+[:^Letter:] {ele} [:^Letter:] > jele;
+[:^Letter:] {ea} [:^Letter:] > ja;
+[:^Letter:] {este} [:^Letter:] > jeste;
+[:^Letter:] {ești} [:^Letter:] > jeʃtʲ;
+[:^Letter:] {eram} [:^Letter:] > jeram;
+[:^Letter:] {erai} [:^Letter:] > jeraj;
+[:^Letter:] {era} [:^Letter:] > jera;
+[:^Letter:] {erați} [:^Letter:] > jerat͡sʲ;
+[:^Letter:] {erau} [:^Letter:] > jerau;
 
-$boundary e {x} $vowel > gz;
-$boundary e {x} h $vowel > gz;
+[:^Letter:] e {x} $vowel > gz;
+[:^Letter:] e {x} h $vowel > gz;
 x > ks;
 
 {n} c > ŋ;
@@ -39,10 +38,10 @@ x > ks;
 {gio} > d͡ʒo;
 {giu} > d͡ʒu;
 
-{ci} $boundary > t͡ʃʲ;
-{gi} $boundary > d͡ʒʲ;
-{chi} $boundary > kʲ;
-{ghi} $boundary > gʲ;
+{ci} [:^Letter:] > t͡ʃʲ;
+{gi} [:^Letter:] > d͡ʒʲ;
+{chi} [:^Letter:] > kʲ;
+{ghi} [:^Letter:] > gʲ;
 
 {cheo} > ke̯o;
 {gheo} > ge̯o;
@@ -67,10 +66,10 @@ eea > eja;
 {e} a > e̯;
 {o} a > o̯;
 
-i {i} $boundary > j;
-$cons_for_i r {i} $boundary > i;
-$cons_for_i l {i} $boundary > i;
-$cons_for_i {i} $boundary > ʲ;
+i {i} [:^Letter:] > j;
+$cons_for_i r {i} [:^Letter:] > i;
+$cons_for_i l {i} [:^Letter:] > i;
+$cons_for_i {i} [:^Letter:] > ʲ;
 
 ă > ə;
 â > ɨ;

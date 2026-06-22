@@ -1,5 +1,4 @@
 export const deLatnRules = `
-$boundary = [:^Letter:];
 $upper = [A-ZÄÖÜ];
 
 TSCH > Č;
@@ -10,13 +9,13 @@ SCH > Š;
 Sch > Š;
 sch > š;
 
-$boundary { S } T > Š;
-$boundary { S } t > Š;
-$boundary { s } t > š;
+[:^Letter:] { S } T > Š;
+[:^Letter:] { S } t > Š;
+[:^Letter:] { s } t > š;
 
-$boundary { S } P > Š;
-$boundary { S } p > Š;
-$boundary { s } p > š;
+[:^Letter:] { S } P > Š;
+[:^Letter:] { S } p > Š;
+[:^Letter:] { s } p > š;
 
 CH > X;
 Ch > X;

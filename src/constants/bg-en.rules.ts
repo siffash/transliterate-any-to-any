@@ -1,12 +1,10 @@
 // Streamlined System with -ia-exception (2009 Transliteration Act)
 
 export const bgEnRules = `
-$boundary = [:^Letter:];
-
-ия } $boundary > ia;
-Ия } $boundary > Ia;
-ИЯ } $boundary > IA;
-иЯ } $boundary > iA;
+ия } [:^Letter:] > ia;
+Ия } [:^Letter:] > Ia;
+ИЯ } [:^Letter:] > IA;
+иЯ } [:^Letter:] > iA;
 
 [:Upper:] { Ж > ZH;
 Ж } [:Upper:] > ZH;

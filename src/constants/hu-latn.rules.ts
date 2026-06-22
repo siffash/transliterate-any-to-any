@@ -1,6 +1,4 @@
 export const huLatnRules = `
-$boundary = [:^Letter:];
-
 DZS > DŽ;
 Dzs > Dž;
 dzs > dž;
@@ -38,7 +36,7 @@ Zs > Ž;
 zs > ž;
 
 C } [:Upper:] > TS;
-[:Upper:] { C } $boundary > TS;
+[:Upper:] { C } [:^Letter:] > TS;
 C > Ts;
 c > ts;
 

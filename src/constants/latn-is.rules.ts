@@ -1,40 +1,39 @@
 export const latnIsRules = `
 ::Null;
 
-$boundary = [:^Letter:];
 $upper = [ABDEFGHIKLMNOPQRSTUVWXYZÄÏÖÜŸĆČĐĽŃŠŽ];
 
-$upper { Ć } $boundary > TSJ;
+$upper { Ć } [:^Letter:] > TSJ;
 Ć } $upper > TSJ;
 Ć > Tsj;
 ć > tsj;
 
-$upper { Č } $boundary > TSJ;
+$upper { Č } [:^Letter:] > TSJ;
 Č } $upper > TSJ;
 Č > Tsj;
 č > tsj;
 
-$upper { Đ } $boundary > DJ;
+$upper { Đ } [:^Letter:] > DJ;
 Đ } $upper > DJ;
 Đ > Dj;
 đ > dj;
 
-$upper { Ľ } $boundary > LJ;
+$upper { Ľ } [:^Letter:] > LJ;
 Ľ } $upper > LJ;
 Ľ > Lj;
 ľ > lj;
 
-$upper { Ń } $boundary > NJ;
+$upper { Ń } [:^Letter:] > NJ;
 Ń } $upper > NJ;
 Ń > Nj;
 ń > nj;
 
-$upper { Š } $boundary > SJ;
+$upper { Š } [:^Letter:] > SJ;
 Š } $upper > SJ;
 Š > Sj;
 š > sj;
 
-$upper { Ž } $boundary > SJ;
+$upper { Ž } [:^Letter:] > SJ;
 Ž } $upper > SJ;
 Ž > Sj;
 ž > sj;

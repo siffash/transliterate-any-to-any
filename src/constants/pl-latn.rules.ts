@@ -1,6 +1,4 @@
 export const plLatnRules = `
-$lower = [:Lower:];
-
 dz } i > đ;
 dz } I > đ;
 Dz } i > Đ;
@@ -53,15 +51,15 @@ Sz > Š;
 SZ > Š;
 
 c > ts;
-C } $lower > Ts;
+C } [:Lower:] > Ts;
 C > TS;
 
 ą > on;
-Ą } $lower > On;
+Ą } [:Lower:] > On;
 Ą > ON;
 
 ę > en;
-Ę } $lower > En;
+Ę } [:Lower:] > En;
 Ę > EN;
 
 j > y;

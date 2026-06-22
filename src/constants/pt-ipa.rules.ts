@@ -6,7 +6,6 @@ $nasal_vowel = [ã õ];
 $cons = [b c d f g j k l m n p q r s t v w x y z ç ɲ ʎ ʃ ʒ ʁ ɾ];
 $voiceless = [p t k f s ʃ ç x];
 $voiced_cons = [b d g v m n l r z ʒ ʎ ɲ];
-$boundary = [:^Letter:];
 $letter = [:Letter:];
 
 ch > ʃ;
@@ -27,7 +26,7 @@ a l e { x } a n d r > ʃ;
 {ex} $vowel > ez;
 {ex} $cons > eʃ;
 $vowel {x} [p t k] > ks;
-$boundary {x} > ʃ;
+[:^Letter:] {x} > ʃ;
 x > ʃ;
 
 {c} [e é ê i í î] > s;
@@ -37,17 +36,17 @@ c > k;
 j > ʒ;
 
 {r} r > ʁ;
-$boundary {r} > ʁ;
+[:^Letter:] {r} > ʁ;
 r > ɾ;
 
 $vowel {s} $vowel > z;
 {s} [p t k f s ç x h] > ʃ;
-{s} $boundary > ʃ;
+{s} [:^Letter:] > ʃ;
 { s } $voiced_cons > ʒ;
 s > s;
 
 {z} [p t k f s ç x h] > ʒ;
-{z} $boundary > ʃ;
+{z} [:^Letter:] > ʃ;
 {z} $voiced_cons > z;
 z > z;
 
@@ -61,11 +60,11 @@ h > ;
 ão > ɐ̃w̃;
 õe > õj̃;
 
-{ens} $boundary > ɐ̃j̃ʃ;
-{em} $boundary > ɐ̃j̃;
-{ém} $boundary > ˈɐ̃j̃;
-{am} $boundary > ɐ̃w̃;
-{en} $boundary > ẽj̃;
+{ens} [:^Letter:] > ɐ̃j̃ʃ;
+{em} [:^Letter:] > ɐ̃j̃;
+{ém} [:^Letter:] > ˈɐ̃j̃;
+{am} [:^Letter:] > ɐ̃w̃;
+{en} [:^Letter:] > ẽj̃;
 
 {am} $cons > ɐ̃;
 {an} $cons > ɐ̃;
@@ -91,20 +90,20 @@ h > ;
 ô > o;
 ú > ˈu;
 
-{a} [l r z x] $boundary > a;
-{a} $boundary > ɐ;
-{e} [l r z x] $boundary > ɛ;
-{e} $boundary > ɨ;
+{a} [l r z x] [:^Letter:] > a;
+{a} [:^Letter:] > ɐ;
+{e} [l r z x] [:^Letter:] > ɛ;
+{e} [:^Letter:] > ɨ;
 $letter {e} $letter > ɨ;
-{o} [l r z x] $boundary > ɔ;
-{o} $boundary > u;
+{o} [l r z x] [:^Letter:] > ɔ;
+{o} [:^Letter:] > u;
 
 {i} $vowel > j;
 {u} $vowel > w;
 
 {a} t r [i í] > ɐ;
 {a} [m r] > ɐ;
-$boundary {a} > ɐ;
+[:^Letter:] {a} > ɐ;
 a > a;
 e > e;
 {i} ɲ > ĩ;
@@ -114,5 +113,5 @@ o > o;
 u > u;
 
 {l} $cons > ɫ;
-{l} $boundary > ɫ;
+{l} [:^Letter:] > ɫ;
 `;

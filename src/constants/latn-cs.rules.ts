@@ -1,8 +1,6 @@
 export const latnCsRules = `
 ::Null;
 
-$upper = [:Upper:];
-
 TS > C;
 Ts > C;
 ts > c;
@@ -19,13 +17,13 @@ ts > c;
 Ńe > Ně;
 ńe > ně;
 
-$upper { X > CH;
-X } $upper > CH;
+[:Upper:] { X > CH;
+X } [:Upper:] > CH;
 X > Ch;
 x > ch;
 
-$upper { Q > KV;
-Q } $upper > KV;
+[:Upper:] { Q > KV;
+Q } [:Upper:] > KV;
 Q > Kv;
 q > kv;
 

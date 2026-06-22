@@ -1,31 +1,30 @@
 export const hyIpaRules = `
 ::Lower;
 $vowel_letter = [աեէըիոօւև];
-$boundary = [:^Letter:];
 
-$boundary { ով } $boundary > ov;
-$boundary { ովքեր } $boundary > ovkʰɛɾ;
-$boundary { եմ } $boundary > ɛm;
-$boundary { ես } $boundary > ɛs;
-$boundary { ենք } $boundary > ɛnkʰ;
-$boundary { եք } $boundary > ɛkʰ;
-$boundary { են } $boundary > ɛn;
+[:^Letter:] { ով } [:^Letter:] > ov;
+[:^Letter:] { ովքեր } [:^Letter:] > ovkʰɛɾ;
+[:^Letter:] { եմ } [:^Letter:] > ɛm;
+[:^Letter:] { ես } [:^Letter:] > ɛs;
+[:^Letter:] { ենք } [:^Letter:] > ɛnkʰ;
+[:^Letter:] { եք } [:^Letter:] > ɛkʰ;
+[:^Letter:] { են } [:^Letter:] > ɛn;
 
-$boundary { և > jɛv;
+[:^Letter:] { և > jɛv;
 $vowel_letter { և > jɛv;
 և > ev;
 
-$boundary { եւ > jɛv;
+[:^Letter:] { եւ > jɛv;
 $vowel_letter { եւ > jɛv;
 եւ > ev;
 
 ու > u;
 
-$boundary { ե > jɛ;
+[:^Letter:] { ե > jɛ;
 $vowel_letter { ե > jɛ;
 ե > ɛ;
 
-$boundary { ո > vɔ;
+[:^Letter:] { ո > vɔ;
 $vowel_letter { ո > vɔ;
 ո > ɔ;
 

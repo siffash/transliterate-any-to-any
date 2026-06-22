@@ -3,12 +3,11 @@ export const esIpaRules = `
 
 $vowel = [a á e é i í o ó u ú ü];
 $voiced_cons = [b β d ð ɡ ɣ m n ɲ ŋ l ʎ r ɾ ʝ z];
-$boundary = [:^Letter:];
 
-$boundary { ps > s;
-$boundary { gn > n;
-$boundary { mn > n;
-$boundary { pt > t;
+[:^Letter:] { ps > s;
+[:^Letter:] { gn > n;
+[:^Letter:] { mn > n;
+[:^Letter:] { pt > t;
 
 ch > t͡ʃ;
 ll > ʎ;
@@ -35,9 +34,9 @@ p > p;
 t > t;
 z > θ;
 
-$boundary { r > r;
+[:^Letter:] { r > r;
 [l n s] { r > r;
-[r] } $boundary > ɾ;
+[r] } [:^Letter:] > ɾ;
 r > ɾ;
 
 s } $voiced_cons > z;
@@ -69,13 +68,13 @@ n } [d ð] > n̪;
 n } [b β] > m;
 n } [t d] > n̪;
 
-$boundary { β > b;
+[:^Letter:] { β > b;
 [m n ɲ ŋ] { β > b;
 
-$boundary { ð > d;
+[:^Letter:] { ð > d;
 [m n ɲ ŋ l] { ð > d;
 
-$boundary { ɣ > ɡ;
+[:^Letter:] { ɣ > ɡ;
 [m n ɲ ŋ] { ɣ > ɡ;
 
 n } [p b v m] > m;

@@ -1,6 +1,4 @@
 export const idLatnRules = `
-$lower = [:Lower:];
-
 kh > x;
 Kh > X;
 KH > X;
@@ -20,6 +18,6 @@ c > č;
 C > Č;
 
 j > dž;
-J } $lower > Dž;
+J } [:Lower:] > Dž;
 J > DŽ;
 `;

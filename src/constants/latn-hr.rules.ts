@@ -1,18 +1,16 @@
 export const latnHrRules = `
 ::Null;
 
-$boundary = [:^Letter:];
-
 TS > C;
 Ts > C;
 tS > C;
 ts > c;
 Ľ } [:Upper:] > LJ;
-[:Upper:] { Ľ } $boundary > LJ;
+[:Upper:] { Ľ } [:^Letter:] > LJ;
 Ľ > Lj;
 ľ > lj;
 Ń } [:Upper:] > NJ;
-[:Upper:] { Ń } $boundary > NJ;
+[:Upper:] { Ń } [:^Letter:] > NJ;
 Ń > Nj;
 ń > nj;
 W > V;

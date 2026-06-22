@@ -1,7 +1,6 @@
 export const latnDeRules = `
 ::Null;
 
-$boundary = [:^Letter:];
 $vowel = [aeiouäöüïÿAEIOUÄÖÜÏŸ];
 
 dž > dsch;
@@ -12,8 +11,8 @@ ts > z;
 Ts > Z;
 TS > Z;
 
-$boundary { š } [pPtT] > s;
-$boundary { Š } [pPtT] > S;
+[:^Letter:] { š } [pPtT] > s;
+[:^Letter:] { Š } [pPtT] > S;
 
 $vowel { s } $vowel > ss;
 $vowel { S } [aeiouäöüïÿ] > Ss;

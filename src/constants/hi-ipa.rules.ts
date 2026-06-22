@@ -1,6 +1,6 @@
 export const hiIpaRules = `
 ::Lower;
-$boundary = [:^Letter:];
+
 $v = [ə a aː ɪ i iː ʊ u uː e eː o oː ɛ ɛː æ ɔ ɔː ː ̃];
 $c = [k ɡ ŋ ɲ ʈ ɖ ɳ n p b m j ɾ l ʋ ʃ ʂ s ɦ q x ɣ z ʒ ɽ f ɭ t d];
 $m = [̪ ʰ ʱ ͡];
@@ -165,19 +165,19 @@ $c_drop = [k ɡ ŋ ɲ ʈ ɖ ɳ n p b ʃ ʂ s ɦ q x ɣ z ʒ ɽ f t d];
 
 ::Null;
 
-$v t͡ʃ $m* { ə } $boundary > ;
-$v d͡ʒ $m* { ə } $boundary > ;
+$v t͡ʃ $m* { ə } [:^Letter:] > ;
+$v d͡ʒ $m* { ə } [:^Letter:] > ;
 $v t͡ʃ $m* { ə } $ > ;
 $v d͡ʒ $m* { ə } $ > ;
 
-$v $c $m* { ə } $boundary > ;
+$v $c $m* { ə } [:^Letter:] > ;
 $v $c $m* { ə } $ > ;
 
-$c $m* $c_drop $m* { ə } $boundary > ;
+$c $m* $c_drop $m* { ə } [:^Letter:] > ;
 $c $m* $c_drop $m* { ə } $ > ;
-$c $m* t͡ʃ $m* { ə } $boundary > ;
+$c $m* t͡ʃ $m* { ə } [:^Letter:] > ;
 $c $m* t͡ʃ $m* { ə } $ > ;
-$c $m* d͡ʒ $m* { ə } $boundary > ;
+$c $m* d͡ʒ $m* { ə } [:^Letter:] > ;
 $c $m* d͡ʒ $m* { ə } $ > ;
 
 ::Null;

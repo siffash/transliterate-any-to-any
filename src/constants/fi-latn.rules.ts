@@ -1,6 +1,4 @@
 export const fiLatnRules = `
-$boundary = [:^Letter:];
-
 SCH > Š;
 Sch > Š;
 sch > š;

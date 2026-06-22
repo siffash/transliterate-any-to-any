@@ -5,7 +5,6 @@ $front_v = [e ə i ö ü];
 $back_v = [a ı o u];
 $voiceless = [p f k t s ş x ç h];
 $voiced = [b v g ğ d z c j l m n r y];
-$boundary = [:^Letter:];
 
 bb > bː;
 cc > d͡ʒː;
@@ -27,14 +26,14 @@ tt > tː;
 vv > vː;
 zz > zː;
 
-b } [ $voiceless $boundary ] > p;
-v } [ $voiceless $boundary ] > f;
-g } [ $voiceless $boundary ] > k;
-ğ } [ $voiceless $boundary ] > x;
-d } [ $voiceless $boundary ] > t;
-z } [ $voiceless $boundary ] > s;
-c } [ $voiceless $boundary ] > t͡ʃ;
-j } [ $voiceless $boundary ] > ʃ;
+b } [ $voiceless [:^Letter:] ] > p;
+v } [ $voiceless [:^Letter:] ] > f;
+g } [ $voiceless [:^Letter:] ] > k;
+ğ } [ $voiceless [:^Letter:] ] > x;
+d } [ $voiceless [:^Letter:] ] > t;
+z } [ $voiceless [:^Letter:] ] > s;
+c } [ $voiceless [:^Letter:] ] > t͡ʃ;
+j } [ $voiceless [:^Letter:] ] > ʃ;
 
 p } $voiced > b;
 f } $voiced > v;
@@ -45,12 +44,12 @@ s } $voiced > z;
 ç } $voiced > d͡ʒ;
 ş } $voiced > ʒ;
 
-q } [ $voiceless $boundary ] > x;
+q } [ $voiceless [:^Letter:] ] > x;
 q } [ $back_v $voiced ] > ɡ;
 q > ɡ;
 
 k } $front_v > c;
-k } [ $voiceless $boundary ] > ç;
+k } [ $voiceless [:^Letter:] ] > ç;
 
 l } $back_v > ɫ;
 

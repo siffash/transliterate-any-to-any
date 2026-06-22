@@ -1,48 +1,45 @@
 export const hyLatnRules = `
 ::NFD;
 
-$boundary = [:^Letter:];
-$upper = [:Upper:];
-
 ՈՒ > U;
 Ու > U;
 ու > u;
 
-$boundary { Ե } $upper > YE;
-$boundary { Ե } > Ye;
-$boundary { ե } > ye;
+[:^Letter:] { Ե } [:Upper:] > YE;
+[:^Letter:] { Ե } > Ye;
+[:^Letter:] { ե } > ye;
 
-$boundary { Ո } $upper > VO;
-$boundary { Ո } > Vo;
-$boundary { ո } > vo;
+[:^Letter:] { Ո } [:Upper:] > VO;
+[:^Letter:] { Ո } > Vo;
+[:^Letter:] { ո } > vo;
 
-$boundary { և } > yev;
+[:^Letter:] { և } > yev;
 և > ev;
 
 ::Null;
 
-$upper { Ծ } > TS;
-Ծ } $upper > TS;
+[:Upper:] { Ծ } > TS;
+Ծ } [:Upper:] > TS;
 Ծ > Ts;
 ծ > ts;
 
-$upper { Ձ } > DZ;
-Ձ } $upper > DZ;
+[:Upper:] { Ձ } > DZ;
+Ձ } [:Upper:] > DZ;
 Ձ > Dz;
 ձ > dz;
 
-$upper { Ղ } > GH;
-Ղ } $upper > GH;
+[:Upper:] { Ղ } > GH;
+Ղ } [:Upper:] > GH;
 Ղ > Gh;
 ղ > gh;
 
-$upper { Ց } > TS;
-Ց } $upper > TS;
+[:Upper:] { Ց } > TS;
+Ց } [:Upper:] > TS;
 Ց > Ts;
 ց > ts;
 
-$upper { Ջ } > DŽ;
-Ջ } $upper > DŽ;
+[:Upper:] { Ջ } > DŽ;
+Ջ } [:Upper:] > DŽ;
 Ջ > Dž;
 ջ > dž;
 

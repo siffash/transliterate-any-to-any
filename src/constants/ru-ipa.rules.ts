@@ -5,7 +5,6 @@ $soft_cons = [б в г д з к л м н п р с т ф х];
 $hard_cons = [ж ш ц];
 $voiceless = [п ф к т с ш х ц ч щ];
 $voiced = [б в г д з ж];
-$boundary = [:^Letter:];
 
 б } $voiceless > п;
 в } $voiceless > ф;
@@ -21,12 +20,12 @@ $boundary = [:^Letter:];
 ш } $voiced > ж;
 с } $voiced > з;
 
-б } $boundary > п;
-в } $boundary > ф;
-г } $boundary > к;
-д } $boundary > т;
-ж } $boundary > ш;
-з } $boundary > с;
+б } [:^Letter:] > п;
+в } [:^Letter:] > ф;
+г } [:^Letter:] > к;
+д } [:^Letter:] > т;
+ж } [:^Letter:] > ш;
+з } [:^Letter:] > с;
 
 ::Null;
 

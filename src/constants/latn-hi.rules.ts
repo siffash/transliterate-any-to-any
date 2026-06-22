@@ -2,8 +2,6 @@ export const latnHiRules = `
 ::Null;
 ::Lower;
 
-$boundary = [:^Letter:];
-
 dž > ज्;
 ts > त्स्;
 dz > द्ज़्;
@@ -62,5 +60,5 @@ u > उ;
 
 ::Null;
 
-् } $boundary > ;
+् } [:^Letter:] > ;
 `;

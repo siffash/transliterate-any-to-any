@@ -1,7 +1,7 @@
 // Ukrainian National (2010) transliteration system
 
 export const ukEnRules = `
-$boundary=[:^Letter:];
+[:^Letter:]=[:^Letter:];
 $upper=[АБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯ[:Upper:]];
 
 ['’ʼ‘´\`] > ;
@@ -11,44 +11,44 @@ $upper=[АБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯ[:Uppe
 зГ>zGH;
 зг>zgh;
 
-$boundary{Є}$upper>YE;
-$boundary{Є}>Ye;
+[:^Letter:]{Є}$upper>YE;
+[:^Letter:]{Є}>Ye;
 $upper{Є}>IE;
 Є}$upper>IE;
 Є>Ie;
-$boundary{є}>ye;
+[:^Letter:]{є}>ye;
 є>ie;
 
-$boundary{Ю}$upper>YU;
-$boundary{Ю}>Yu;
+[:^Letter:]{Ю}$upper>YU;
+[:^Letter:]{Ю}>Yu;
 $upper{Ю}>IU;
 Ю}$upper>IU;
 Ю>Iu;
-$boundary{ю}>yu;
+[:^Letter:]{ю}>yu;
 ю>iu;
 
-$boundary{Я}$upper>YA;
-$boundary{Я}>Ya;
+[:^Letter:]{Я}$upper>YA;
+[:^Letter:]{Я}>Ya;
 $upper{Я}>IA;
 Я}$upper>IA;
 Я>Ia;
-$boundary{я}>ya;
+[:^Letter:]{я}>ya;
 я>ia;
 
-$boundary{Ї}$upper>YI;
-$boundary{Ї}>Yi;
+[:^Letter:]{Ї}$upper>YI;
+[:^Letter:]{Ї}>Yi;
 $upper{Ї}>I;
 Ї}$upper>I;
 Ї>I;
-$boundary{ї}>yi;
+[:^Letter:]{ї}>yi;
 ї>i;
 
-$boundary{Й}$upper>Y;
-$boundary{Й}>Y;
+[:^Letter:]{Й}$upper>Y;
+[:^Letter:]{Й}>Y;
 $upper{Й}>I;
 Й}$upper>I;
 Й>I;
-$boundary{й}>y;
+[:^Letter:]{й}>y;
 й>i;
 
 $upper{Щ}>SHCH;

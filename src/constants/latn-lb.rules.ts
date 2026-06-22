@@ -1,15 +1,14 @@
 export const latnLbRules = `
 ::Null;
 
-$boundary = [:^Letter:];
 $vowel = [aäeiïoöuüÿAÄEIÏOÖUÜŸ];
 
-$boundary { š } t > s;
-$boundary { š } p > s;
-$boundary { Š } t > S;
-$boundary { Š } p > S;
-$boundary { Š } T > S;
-$boundary { Š } P > S;
+[:^Letter:] { š } t > s;
+[:^Letter:] { š } p > s;
+[:^Letter:] { Š } t > S;
+[:^Letter:] { Š } p > S;
+[:^Letter:] { Š } T > S;
+[:^Letter:] { Š } P > S;
 $vowel { s } $vowel > ss;
 $vowel { S } $vowel > SS;
 DŽ } [:Lower:] > Dsch;

@@ -1,8 +1,6 @@
 export const latnElRules = `
 ::Null;
 
-$boundary = [:^Letter:];
-
 DŽ > ΤΖ;
 Dž > Τζ;
 dž > τζ;
@@ -10,20 +8,20 @@ DZ > ΤΖ;
 Dz > Τζ;
 dz > τζ;
 TS > ΤΣ;
-Ts } $boundary > Τς;
+Ts } [:^Letter:] > Τς;
 Ts > Τσ;
-ts } $boundary > τς;
+ts } [:^Letter:] > τς;
 ts > τσ;
-š } $boundary > ς;
+š } [:^Letter:] > ς;
 š > σ;
 Š > Σ;
-č } $boundary > τς;
+č } [:^Letter:] > τς;
 č > τσ;
 Č } [[:Lower:]] > Τσ;
 Č > ΤΣ;
 ž > ζ;
 Ž > Ζ;
-ć } $boundary > τς;
+ć } [:^Letter:] > τς;
 ć > τσ;
 Ć } [[:Lower:]] > Τσ;
 Ć > ΤΣ;
@@ -67,7 +65,7 @@ q > κ;
 Q > Κ;
 r > ρ;
 R > Ρ;
-s } $boundary > ς;
+s } [:^Letter:] > ς;
 s > σ;
 S > Σ;
 t > τ;

@@ -1,9 +1,7 @@
 export const kkLatnRules = `
-$boundary = [:^Letter:];
-
-$boundary { Е } [:Lower:] > Ye;
-$boundary { Е > YE;
-$boundary { е > ye;
+[:^Letter:] { Е } [:Lower:] > Ye;
+[:^Letter:] { Е > YE;
+[:^Letter:] { е > ye;
 Sh > Š;
 SH > Š;
 sh > š;

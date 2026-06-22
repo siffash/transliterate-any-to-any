@@ -4,7 +4,6 @@ export const ukIpaRules = `
 $dentals = [д т з с л н ц в];
 $voiced = [б г ґ д ж з];
 $vowel = [а е є и і ї о у ю я];
-$boundary = [:^Letter:];
 $apostrophe = [' ’ ‘ \` ´ "];
 
 дж > d͡ʒ;
@@ -56,7 +55,7 @@ d͡z { є > ʲɛ;
 d͡z { і > ʲi;
 d͡z { ь > ʲ;
 
-$boundary { в } [^$vowel] > w;
+[:^Letter:] { в } [^$vowel] > w;
 в } [^$vowel] > w;
 в } $ > w;
 

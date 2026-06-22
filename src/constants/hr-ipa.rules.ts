@@ -10,15 +10,14 @@ nj > ɲ;
 { n } [k g] > ŋ;
 { n } [b p] > m;
 
-$not_v = [^a e i o u j y];
-$boundary = [:^Letter:];
+$not_v = [^aeioujy];
 
 $not_v { r } $not_v > r̩;
-$boundary { r } $not_v > r̩;
-$not_v { r } $boundary > r̩;
+[:^Letter:] { r } $not_v > r̩;
+$not_v { r } [:^Letter:] > r̩;
 $not_v { r } $ > r̩;
-$boundary { r } $boundary > r̩;
-$boundary { r } $ > r̩;
+[:^Letter:] { r } [:^Letter:] > r̩;
+[:^Letter:] { r } $ > r̩;
 { v } [p t k s š c č ć f h] > f;
 
 a > a;

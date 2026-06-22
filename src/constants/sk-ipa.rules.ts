@@ -1,6 +1,5 @@
 export const skIpaRules = `
 ::Lower;
-$boundary = [:^Letter:];
 
 t } islav > t;
 t } er > t;
@@ -39,15 +38,15 @@ z } $voiceless > s;
 h } $voiceless > x;
 v } $voiceless > f;
 
-b } $boundary > p;
-d } $boundary > t;
-ď } $boundary > ť;
-dz } $boundary > c;
-dž } $boundary > č;
-g } $boundary > k;
-z } $boundary > s;
-ž } $boundary > ʃ;
-h } $boundary > x;
+b } [:^Letter:] > p;
+d } [:^Letter:] > t;
+ď } [:^Letter:] > ť;
+dz } [:^Letter:] > c;
+dž } [:^Letter:] > č;
+g } [:^Letter:] > k;
+z } [:^Letter:] > s;
+ž } [:^Letter:] > ʃ;
+h } [:^Letter:] > x;
 
 p } $voiced > b;
 t } $voiced > d;
@@ -118,7 +117,7 @@ ie > ɪɛ;
 iu > ɪu;
 ou > ɔu;
 
-{ v } $boundary > u̯;
+{ v } [:^Letter:] > u̯;
 
 a > a;
 á > aː;

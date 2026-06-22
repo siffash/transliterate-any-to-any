@@ -1,31 +1,28 @@
 export const latnHyRules = `
 ::Null;
 
-$boundary = [:^Letter:];
-$upper = [:Upper:];
+[:^Letter:] { E > Է;
+[:^Letter:] { e > է;
+[:^Letter:] { O > Օ;
+[:^Letter:] { o > օ;
 
-$boundary { E > Է;
-$boundary { e > է;
-$boundary { O > Օ;
-$boundary { o > օ;
-
-$upper { U > ՈՒ;
-U } $upper > ՈՒ;
+[:Upper:] { U > ՈՒ;
+U } [:Upper:] > ՈՒ;
 U > Ու;
 u > ու;
 
-$upper { Ü > ՅՈՒ;
-Ü } $upper > ՅՈՒ;
+[:Upper:] { Ü > ՅՈՒ;
+Ü } [:Upper:] > ՅՈՒ;
 Ü > Յու;
 ü > յու;
 
-$upper { Ń > ՆՅ;
-Ń } $upper > ՆՅ;
+[:Upper:] { Ń > ՆՅ;
+Ń } [:Upper:] > ՆՅ;
 Ń > Նյ;
 ń > նյ;
 
-$upper { Ľ > ԼՅ;
-Ľ } $upper > ԼՅ;
+[:Upper:] { Ľ > ԼՅ;
+Ľ } [:Upper:] > ԼՅ;
 Ľ > Լյ;
 ľ > լյ;
 

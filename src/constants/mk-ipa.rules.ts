@@ -6,7 +6,6 @@ $front = [еиј];
 $velar = [кг];
 $voiced = [бвгдѓжзѕџ];
 $voiceless = [пфктќшсцчх];
-$boundary = [:^Letter:];
 
 н } $velar > ŋ;
 л } $front > l;
@@ -30,15 +29,15 @@ $boundary = [:^Letter:];
 ц } [бгдѓжзѕџ] > d͡z;
 ч } [бгдѓжзѕџ] > d͡ʒ;
 
-б } $boundary > p;
-в } $boundary > f;
-г } $boundary > k;
-д } $boundary > t;
-ѓ } $boundary > c;
-ж } $boundary > ʃ;
-з } $boundary > s;
-ѕ } $boundary > t͡s;
-џ } $boundary > t͡ʃ;
+б } [:^Letter:] > p;
+в } [:^Letter:] > f;
+г } [:^Letter:] > k;
+д } [:^Letter:] > t;
+ѓ } [:^Letter:] > c;
+ж } [:^Letter:] > ʃ;
+з } [:^Letter:] > s;
+ѕ } [:^Letter:] > t͡s;
+џ } [:^Letter:] > t͡ʃ;
 
 а > a;
 б > b;

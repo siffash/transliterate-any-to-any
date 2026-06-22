@@ -1,8 +1,6 @@
 export const latnEnRules = `
 ::Null;
 
-$upper = [:Upper:];
-
 Ä > A;
 ä > a;
 Ï > I;
@@ -20,23 +18,23 @@ $upper = [:Upper:];
 Ń > N;
 ń > n;
 
-$upper { Č > CH;
-Č } $upper > CH;
+[:Upper:] { Č > CH;
+Č } [:Upper:] > CH;
 Č > Ch;
 č > ch;
 
-$upper { Đ > DJ;
-Đ } $upper > DJ;
+[:Upper:] { Đ > DJ;
+Đ } [:Upper:] > DJ;
 Đ > Dj;
 đ > dj;
 
-$upper { Š > SH;
-Š } $upper > SH;
+[:Upper:] { Š > SH;
+Š } [:Upper:] > SH;
 Š > Sh;
 š > sh;
 
-$upper { Ž > ZH;
-Ž } $upper > ZH;
+[:Upper:] { Ž > ZH;
+Ž } [:Upper:] > ZH;
 Ž > Zh;
 ž > zh;
 

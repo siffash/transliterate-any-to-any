@@ -4,19 +4,18 @@ export const deIpaRules = `
 $v = [aäeéiíoöuúüyə];
 $c = [bcdfghjklmnpqrstvwxz];
 $letter = [:Letter:];
-$boundary = [:^Letter:];
 
 ch } arlotte > ʃ;
 
-ng } $boundary > ŋ;
-ig } $boundary > ɪç;
-er } $boundary > ɐ;
-en } $boundary > ən;
-el } $boundary > ə;
-e } $boundary > ə;
-g } $boundary > k;
-b } $boundary > p;
-d } $boundary > t;
+ng } [:^Letter:] > ŋ;
+ig } [:^Letter:] > ɪç;
+er } [:^Letter:] > ɐ;
+en } [:^Letter:] > ən;
+el } [:^Letter:] > ə;
+e } [:^Letter:] > ə;
+g } [:^Letter:] > k;
+b } [:^Letter:] > p;
+d } [:^Letter:] > t;
 
 o } tt > '_ɔ_';
 a } tt > '_a_';
@@ -85,8 +84,8 @@ chr > kʁ;
 ch } [aou] > x;
 ch > ç;
 sch > ʃ;
-$boundary { sp > ʃp;
-$boundary { st > ʃt;
+[:^Letter:] { sp > ʃp;
+[:^Letter:] { st > ʃt;
 ng > ŋ;
 nk > ŋk;
 ck > k;
@@ -95,8 +94,8 @@ qu > kv;
 ph > f;
 th > t;
 
-i } k $boundary > ɪ;
-a } l $boundary > a;
+i } k [:^Letter:] > ɪ;
+a } l [:^Letter:] > a;
 
 er } [iɪ] > əʁ;
 en } $c > ən;
@@ -107,7 +106,7 @@ b } [ptkçxfsʃ] > p;
 d } [ptkçxfsʃ] > t;
 
 a } $c $c > a;
-a } $c $boundary > a;
+a } $c [:^Letter:] > a;
 a } $c $v > aː;
 a > a;
 ä } $c $c > ɛ;

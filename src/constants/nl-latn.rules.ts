@@ -1,12 +1,12 @@
 export const nlLatnRules = `
 ::Null;
-$boundary = [:^Letter:];
+
 TSJ > Č;
 Tsj > Č;
 tsj > č;
-SCH } $boundary > S;
-Sch } $boundary > S;
-sch } $boundary > s;
+SCH } [:^Letter:] > S;
+Sch } [:^Letter:] > S;
+sch } [:^Letter:] > s;
 SCH > SX;
 Sch > Sx;
 sch > sx;
@@ -31,9 +31,9 @@ zh > ž;
 NJ > Ń;
 Nj > Ń;
 nj > ń;
-TIE } $boundary > TSI;
-Tie } $boundary > Tsi;
-tie } $boundary > tsi;
+TIE } [:^Letter:] > TSI;
+Tie } [:^Letter:] > Tsi;
+tie } [:^Letter:] > tsi;
 QU > KV;
 Qu > Kv;
 qu > kv;

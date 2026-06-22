@@ -1,5 +1,4 @@
 export const lbLatnRules = `
-$boundary = [:^Letter:];
 $v = [eéèêëiïyäöüEÉÈÊËIÏYÄÖÜ];
 
 TSCH > Č;
@@ -18,9 +17,9 @@ DJ > DŽ;
 Dj > Dž;
 dj > dž;
 
-QUE } $boundary > K;
-Que } $boundary > K;
-que } $boundary > k;
+QUE } [:^Letter:] > K;
+Que } [:^Letter:] > K;
+que } [:^Letter:] > k;
 
 QU > KV;
 Qu > Kv;
@@ -29,13 +28,13 @@ qu > kv;
 Q > K;
 q > k;
 
-$boundary { ST > ŠT;
-$boundary { St > Št;
-$boundary { st > št;
+[:^Letter:] { ST > ŠT;
+[:^Letter:] { St > Št;
+[:^Letter:] { st > št;
 
-$boundary { SP > ŠP;
-$boundary { Sp > Šp;
-$boundary { sp > šp;
+[:^Letter:] { SP > ŠP;
+[:^Letter:] { Sp > Šp;
+[:^Letter:] { sp > šp;
 
 [:Upper:] { C } $v > TS;
 C } $v > Ts;

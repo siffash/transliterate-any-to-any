@@ -1,40 +1,38 @@
 export const latnDaRules = `
 ::Null;
 
-$boundary = [:^Letter:];
-
 Č } [:Lower:] > Tj;
-Č } $boundary > Tj;
+Č } [:^Letter:] > Tj;
 Č > TJ;
 č > tj;
 
 Đ } [:Lower:] > Dj;
-Đ } $boundary > Dj;
+Đ } [:^Letter:] > Dj;
 Đ > DJ;
 đ > dj;
 
 Ľ } [:Lower:] > Lj;
-Ľ } $boundary > Lj;
+Ľ } [:^Letter:] > Lj;
 Ľ > LJ;
 ľ > lj;
 
 Ń } [:Lower:] > Nj;
-Ń } $boundary > Nj;
+Ń } [:^Letter:] > Nj;
 Ń > NJ;
 ń > nj;
 
 Š } [:Lower:] > Sj;
-Š } $boundary > Sj;
+Š } [:^Letter:] > Sj;
 Š > SJ;
 š > sj;
 
 Ž } [:Lower:] > Zj;
-Ž } $boundary > Zj;
+Ž } [:^Letter:] > Zj;
 Ž > ZJ;
 ž > zj;
 
 X } [:Lower:] > Kh;
-X } $boundary > Kh;
+X } [:^Letter:] > Kh;
 X > KH;
 x > kh;
 

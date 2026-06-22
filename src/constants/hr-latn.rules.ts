@@ -1,7 +1,4 @@
 export const hrLatnRules = `
-$boundary = [:^Letter:];
-$upper = [:Upper:];
-
 LJ > Ľ;
 Lj > Ľ;
 lj > ľ;
@@ -10,8 +7,8 @@ NJ > Ń;
 Nj > Ń;
 nj > ń;
 
-C } $upper > TS;
-$upper { C } $boundary > TS;
+C } [:Upper:] > TS;
+[:Upper:] { C } [:^Letter:] > TS;
 C > Ts;
 c > ts;
 

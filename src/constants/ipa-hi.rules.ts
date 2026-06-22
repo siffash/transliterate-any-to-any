@@ -1,8 +1,6 @@
 export const ipaHiRules = `
 ::Null;
 
-$boundary = [:^Letter:];
-
 ˈ>;
 ˌ>;
 \\.>;
@@ -154,9 +152,9 @@ q>क़्;
 g>ग्;
 ɡ>ग्;
 ɢ>ग़्;
-$boundary { ŋ } [k g ɡ q ɢ]>ङ्;
-$boundary { n } [k g ɡ ɢ q c ɟ ʈ ɖ t d p b f v ɸ β s z ʃ ʒ θ ð]>न्;
-$boundary { m } [p b f v ɸ β]>म्;
+[:^Letter:] { ŋ } [k g ɡ q ɢ]>ङ्;
+[:^Letter:] { n } [k g ɡ ɢ q c ɟ ʈ ɖ t d p b f v ɸ β s z ʃ ʒ θ ð]>न्;
+[:^Letter:] { m } [p b f v ɸ β]>म्;
 ŋ } [k g ɡ q ɢ]>ं;
 ŋ>ङ्;
 ɴ>ङ्;
@@ -252,5 +250,5 @@ v>व्;
 
 ::Null;
 
-् } $boundary >;
+् } [:^Letter:] >;
 `;

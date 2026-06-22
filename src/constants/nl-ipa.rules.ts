@@ -6,27 +6,26 @@ export const nlIpaRules = `
 
 $c = [bcdfghjklmnpqrstvwxz];
 $v = [aeiouy];
-$boundary = [:^Letter:];
 
-{lijken} $boundary > ləkən;
+{lijken} [:^Letter:] > ləkən;
 {lijken} $ > ləkən;
-{lijks} $boundary > ləks;
+{lijks} [:^Letter:] > ləks;
 {lijks} $ > ləks;
-{lijke} $boundary > ləkə;
+{lijke} [:^Letter:] > ləkə;
 {lijke} $ > ləkə;
-{lijk} $boundary > lək;
+{lijk} [:^Letter:] > lək;
 {lijk} $ > lək;
-{ische} $boundary > ɪsə;
+{ische} [:^Letter:] > ɪsə;
 {ische} $ > ɪsə;
-{isch} $boundary > ɪs;
+{isch} [:^Letter:] > ɪs;
 {isch} $ > ɪs;
-{ige} $boundary > əɣə;
+{ige} [:^Letter:] > əɣə;
 {ige} $ > əɣə;
-{ig} $boundary > əx;
+{ig} [:^Letter:] > əx;
 {ig} $ > əx;
-{ties} $boundary > tsis;
+{ties} [:^Letter:] > tsis;
 {ties} $ > tsis;
-{tie} $boundary > tsi;
+{tie} [:^Letter:] > tsi;
 {tie} $ > tsi;
 
 eeuw > eːu;
@@ -35,7 +34,7 @@ aai > aːi;
 ooi > oːi;
 oei > ui;
 
-{sch} $boundary > s;
+{sch} [:^Letter:] > s;
 {sch} $ > s;
 sch > sx;
 ch > x;
@@ -92,9 +91,9 @@ vv > v;
 ww > ʋ;
 zz > z;
 
-{en} $boundary > ən;
+{en} [:^Letter:] > ən;
 {en} $ > ən;
-{e} $boundary > ə;
+{e} [:^Letter:] > ə;
 {e} $ > ə;
 
 {b} [c f h k p s t] > p;
@@ -103,21 +102,21 @@ zz > z;
 {z} [st] > s;
 {g} [st] > x;
 
-{a} $boundary > aː;
+{a} [:^Letter:] > aː;
 {a} $ > aː;
-{o} $boundary > oː;
+{o} [:^Letter:] > oː;
 {o} $ > oː;
-{u} $boundary > yː;
+{u} [:^Letter:] > yː;
 {u} $ > yː;
-{b} $boundary > p;
+{b} [:^Letter:] > p;
 {b} $ > p;
-{d} $boundary > t;
+{d} [:^Letter:] > t;
 {d} $ > t;
-{v} $boundary > f;
+{v} [:^Letter:] > f;
 {v} $ > f;
-{z} $boundary > s;
+{z} [:^Letter:] > s;
 {z} $ > s;
-{g} $boundary > x;
+{g} [:^Letter:] > x;
 {g} $ > x;
 
 b > b;

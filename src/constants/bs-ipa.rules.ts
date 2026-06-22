@@ -1,7 +1,6 @@
 export const bsIpaRules = `
 ::Lower;
 
-$boundary = [:^Letter:];
 $vowel = [a e i o u ɛ ɔ];
 $consonant = [b c č ć d dž đ f g h j k l lj m n nj p r s š t u v z ž];
 $sonorant = [v m n l r j ʎ ɲ];
@@ -51,7 +50,7 @@ nj > ɲ;
 č > t͡ʃ;
 š > ʃ;
 ž > ʒ;
-[c] } $boundary > t͡s;
+[c] } [:^Letter:] > t͡s;
 c > t͡s;
 ou > u;
 ai > aj;
@@ -75,17 +74,17 @@ s } $voiced_trigger > z;
 t͡ɕ } $voiced_trigger > d͡ʑ;
 t͡ʃ } $voiced_trigger > d͡ʒ;
 
-b } $boundary > p;
-d } $boundary > t;
-g } $boundary > k;
-v } $boundary > f;
-z } $boundary > s;
-ʒ } $boundary > ʃ;
-d͡ʑ } $boundary > t͡ɕ;
-d͡ʒ } $boundary > t͡ʃ;
+b } [:^Letter:] > p;
+d } [:^Letter:] > t;
+g } [:^Letter:] > k;
+v } [:^Letter:] > f;
+z } [:^Letter:] > s;
+ʒ } [:^Letter:] > ʃ;
+d͡ʑ } [:^Letter:] > t͡ɕ;
+d͡ʒ } [:^Letter:] > t͡ʃ;
 
 [^$vowel] { r } [^$vowel] > r̩;
-$boundary { r } [^$vowel] > r̩;
+[:^Letter:] { r } [^$vowel] > r̩;
 
 a > a;
 b > b;

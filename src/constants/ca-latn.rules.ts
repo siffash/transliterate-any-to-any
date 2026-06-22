@@ -1,5 +1,4 @@
 export const caLatnRules = `
-$boundary = [:^Letter:];
 $vowel = [a e i o u A E I O U à è é í ò ó ú À È É Í Ò Ó Ú];
 $front_vowel = [e i é è í E I É È Í];
 
@@ -11,13 +10,13 @@ l·l > ll;
 L·l > Ll;
 L·L > LL;
 
-$vowel { i g } $boundary > č;
-$vowel { I g } $boundary > Č;
-$vowel { I G } $boundary > Č;
+$vowel { i g } [:^Letter:] > č;
+$vowel { I g } [:^Letter:] > Č;
+$vowel { I G } [:^Letter:] > Č;
 
-i { g } $boundary > č;
-I { g } $boundary > Č;
-I { G } $boundary > Č;
+i { g } [:^Letter:] > č;
+I { g } [:^Letter:] > Č;
+I { G } [:^Letter:] > Č;
 
 $vowel { i x > š;
 $vowel { I x > Š;

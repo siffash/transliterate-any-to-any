@@ -1,13 +1,10 @@
 export const lvLatnRules = `
-$upper = [:Upper:];
-$boundary = [:^Letter:];
-
 CH > X;
 Ch > X;
 ch > x;
 
-C } $upper > TS;
-C } $boundary > TS;
+C } [:Upper:] > TS;
+C } [:^Letter:] > TS;
 C > Ts;
 c > ts;
 

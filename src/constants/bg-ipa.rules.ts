@@ -4,7 +4,6 @@ export const bgIpaRules = `
 $c_pal = [бвгдзклмнпрстфх];
 $voiceless = [пфктшсцчщ];
 $voiced = [бгджз];
-$boundary = [:^Letter:];
 
 б } $voiceless > п;
 в } $voiceless > ф;
@@ -20,12 +19,12 @@ $boundary = [:^Letter:];
 ш } $voiced > ж;
 с } $voiced > з;
 
-б } $boundary > п;
-в } $boundary > ф;
-г } $boundary > к;
-д } $boundary > т;
-ж } $boundary > ш;
-з } $boundary > с;
+б } [:^Letter:] > п;
+в } [:^Letter:] > ф;
+г } [:^Letter:] > к;
+д } [:^Letter:] > т;
+ж } [:^Letter:] > ш;
+з } [:^Letter:] > с;
 
 ::Null;
 

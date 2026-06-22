@@ -6,7 +6,6 @@ $cons = [b c č d ď f g h ch j k l m n ň p q r ř s š t ť v w x z ž];
 $voiced = [b d ď g z ž ɦ h];
 $voiceless = [p t ť k s š f c č x];
 $obstruent = [b d ď g z ž h p t ť k s š f c č x];
-$boundary = [:^Letter:];
 
 ch } [b d ď g z ž h] > ɣ;
 ch > x;
@@ -31,18 +30,18 @@ f ě > fjɛ;
 dž > d͡ʒ;
 dz > d͡z;
 
-$cons {r} [$cons $boundary] > r̩;
-$cons {l} [$cons $boundary] > l̩;
+$cons {r} [$cons [:^Letter:]] > r̩;
+$cons {l} [$cons [:^Letter:]] > l̩;
 
-b } $boundary > p;
-d } $boundary > t;
-ď } $boundary > c;
-g } $boundary > k;
-z } $boundary > s;
-ž } $boundary > ʃ;
-h } $boundary > x;
-v } $boundary > f;
-ř } $boundary > r̝̊;
+b } [:^Letter:] > p;
+d } [:^Letter:] > t;
+ď } [:^Letter:] > c;
+g } [:^Letter:] > k;
+z } [:^Letter:] > s;
+ž } [:^Letter:] > ʃ;
+h } [:^Letter:] > x;
+v } [:^Letter:] > f;
+ř } [:^Letter:] > r̝̊;
 
 b } $voiceless > p;
 d } $voiceless > t;

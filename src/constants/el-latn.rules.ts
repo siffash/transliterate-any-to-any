@@ -1,7 +1,6 @@
 export const elLatnRules = `
 ::NFD;
 
-$boundary = [:^Letter:];
 $mark = [:Mn:];
 $voiced = [βγδζλμνρΒΓΔΖΛΜΝΡαεηιουωΑΕΗΙΟΥΩ];
 
@@ -72,12 +71,12 @@ $voiced = [βγδζλμνρΒΓΔΖΛΜΝΡαεηιουωΑΕΗΙΟΥΩ];
 Γ κ > G k;
 γ κ > g k;
 
-$boundary { Μ Π > B;
-$boundary { Μ π > B;
-Μ Π } $boundary > B;
-Μ π } $boundary > b;
-μ π } $boundary > b;
-$boundary { μ π > b;
+[:^Letter:] { Μ Π > B;
+[:^Letter:] { Μ π > B;
+Μ Π } [:^Letter:] > B;
+Μ π } [:^Letter:] > b;
+μ π } [:^Letter:] > b;
+[:^Letter:] { μ π > b;
 
 Μ Π } [:Lower:] > M p;
 Μ Π > M P;

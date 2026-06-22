@@ -1,6 +1,4 @@
 export const csLatnRules = `
-$boundary = [:^Letter:];
-
 chř > xrš;
 Chř > Xrš;
 CHŘ > XRŠ;
@@ -37,8 +35,8 @@ cř > tsrš;
 Cř > Tsrš;
 CŘ > TSRŠ;
 
-ř } $boundary > rš;
-Ř } $boundary > Rš;
+ř } [:^Letter:] > rš;
+Ř } [:^Letter:] > Rš;
 
 ř > rž;
 Ř > Rž;

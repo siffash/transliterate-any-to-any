@@ -1,5 +1,5 @@
 export const ipaEnRules = `
-$boundary = [:^Letter:];
+::Null;
 
 [ˈˌːˑ͡ ͜ ˤ˥˧˩̝̟̥̩̪̯̃̊ʰʱˠ] > ;
 
@@ -9,18 +9,18 @@ tʃ > ch;
 ʧ > ch;
 ʤ > j;
 
-$boundary { ʔa } > a;
-$boundary { ʔi } > i;
-$boundary { ʔu } > u;
-$boundary { ʔe } > e;
-$boundary { ʔo } > o;
-$boundary { ʔ } > ;
-$boundary { ʕa } > a;
-$boundary { ʕi } > i;
-$boundary { ʕu } > u;
-$boundary { ʕe } > e;
-$boundary { ʕo } > o;
-$boundary { ʕ } > a;
+[:^Letter:] { ʔa } > a;
+[:^Letter:] { ʔi } > i;
+[:^Letter:] { ʔu } > u;
+[:^Letter:] { ʔe } > e;
+[:^Letter:] { ʔo } > o;
+[:^Letter:] { ʔ } > ;
+[:^Letter:] { ʕa } > a;
+[:^Letter:] { ʕi } > i;
+[:^Letter:] { ʕu } > u;
+[:^Letter:] { ʕe } > e;
+[:^Letter:] { ʕo } > o;
+[:^Letter:] { ʕ } > a;
 
 ʔ > \\';
 ʕ > \\';

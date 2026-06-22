@@ -1,15 +1,18 @@
 import { Text } from "types";
 
-export const ipaEn = async (text: Text, ascii: boolean) => {
+export const heEn = async (text: Text, ascii: boolean) => {
   const { RBT } = await import("icu-transliterator");
+  const { heIpa } = await import("converters/he-ipa");
   const { ipaEnRules } = await import("constants/ipa-en.rules");
   const { latnAsciiRules } = await import("constants/latn-ascii.rules");
 
   const transliterator = RBT.fromRules(ipaEnRules + (ascii ? latnAsciiRules : ""));
 
   if (typeof text === "string") {
-    return transliterator.transliterate(text);
+    const ipa = await heIpa<string>(text);
+    return transliterator.transliterate(ipa);
   } else {
-    return text.map(text => transliterator.transliterate(text));
+    const ipaArray = await heIpa<string[]>(text);
+    return ipaArray.map(ipa => transliterator.transliterate(ipa));
   }
 };

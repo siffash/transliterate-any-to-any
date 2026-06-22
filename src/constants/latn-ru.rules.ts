@@ -1,8 +1,6 @@
 export const latnRuRules = `
 ::Null;
 
-$boundary = [:^Letter:];
-
 DŽ > ДЖ;
 Dž > Дж;
 dž > дж;
@@ -75,8 +73,8 @@ yu > ю;
 Ńu > Ню;
 ńu > ню;
 
-$boundary { E > Э;
-$boundary { e > э;
+[:^Letter:] { E > Э;
+[:^Letter:] { e > э;
 
 Đ } [:LowercaseLetter:] > Дж;
 Đ > ДЖ;

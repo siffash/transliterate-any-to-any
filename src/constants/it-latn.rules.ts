@@ -1,6 +1,4 @@
 export const itLatnRules = `
-$boundary = [:^Letter:];
-
 à > a;
 À > A;
 è > e;
@@ -99,7 +97,7 @@ G N > Ń;
 
 z > ts;
 Z } [[:Lower:]] > Ts;
-Z } $boundary > TS;
+Z } [:^Letter:] > TS;
 Z > TS;
 
 q > k;
@@ -113,7 +111,7 @@ J > Y;
 
 x > k s;
 X } [[:Lower:]] > K s;
-X } $boundary > K S;
+X } [:^Letter:] > K S;
 X > K S;
 
 h > ;

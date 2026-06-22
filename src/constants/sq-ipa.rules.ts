@@ -1,5 +1,4 @@
 export const sqIpaRules = `
-$boundary = [:^Letter:];
 ::Lower;
 
 ngj > ɲɟ;

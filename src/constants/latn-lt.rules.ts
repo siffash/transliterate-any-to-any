@@ -1,39 +1,36 @@
 export const latnLtRules = `
 ::Null;
 
-$upper = [:Upper:];
-$boundary = [:^Letter:];
-
 TS > C;
 Ts > C;
 tS > c;
 ts > c;
 
-$boundary { Ö } $upper > JO;
-$boundary { Ö > Jo;
-$boundary { ö > jo;
+[:^Letter:] { Ö } [:Upper:] > JO;
+[:^Letter:] { Ö > Jo;
+[:^Letter:] { ö > jo;
 
-$upper { Ö > IO;
-Ö } $upper > IO;
+[:Upper:] { Ö > IO;
+Ö } [:Upper:] > IO;
 Ö > Io;
 ö > io;
 
-$boundary { Ü } $upper > JU;
-$boundary { Ü > Ju;
-$boundary { ü > ju;
+[:^Letter:] { Ü } [:Upper:] > JU;
+[:^Letter:] { Ü > Ju;
+[:^Letter:] { ü > ju;
 
-$upper { Ü > IU;
-Ü } $upper > IU;
+[:Upper:] { Ü > IU;
+Ü } [:Upper:] > IU;
 Ü > Iu;
 ü > iu;
 
-$upper { Đ > DŽ;
-Đ } $upper > DŽ;
+[:Upper:] { Đ > DŽ;
+Đ } [:Upper:] > DŽ;
 Đ > Dž;
 đ > dž;
 
-$upper { X > CH;
-X } $upper > CH;
+[:Upper:] { X > CH;
+X } [:Upper:] > CH;
 X > Ch;
 x > ch;
 

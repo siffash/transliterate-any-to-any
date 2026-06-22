@@ -1,24 +1,23 @@
 export const latnSlRules = `
 ::Null;
 
-$boundary = [:^Letter:];
 $upper = [A-ZÄÏÖÜŸĆČĐĽŃŠŽ];
 
 TS > C;
 Ts > C;
 ts > c;
 
-$upper { Đ } $boundary > DŽ;
+$upper { Đ } [:^Letter:] > DŽ;
 Đ } $upper > DŽ;
 Đ > Dž;
 đ > dž;
 
-$upper { Ľ } $boundary > LJ;
+$upper { Ľ } [:^Letter:] > LJ;
 Ľ } $upper > LJ;
 Ľ > Lj;
 ľ > lj;
 
-$upper { Ń } $boundary > NJ;
+$upper { Ń } [:^Letter:] > NJ;
 Ń } $upper > NJ;
 Ń > Nj;
 ń > nj;

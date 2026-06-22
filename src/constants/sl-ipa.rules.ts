@@ -1,6 +1,6 @@
 export const slIpaRules = `
 ::Lower;
-$boundary = [:^Letter:];
+
 $vowel = [a e i o u á â à é ê è ẹ í î ì ó ô ò ọ ú û ù y ŕ r̀];
 $cons = [b c č d f g h j k l m n p q r s š t v w x z ž ʋ ʎ ɲ];
 $voiced = [b d g z ž];
@@ -25,34 +25,34 @@ n j > ɲ;
 { z } $voiceless > s;
 { ž } $voiceless > ʃ;
 
-{ b } $boundary > p;
+{ b } [:^Letter:] > p;
 { b } $ > p;
-{ d } $boundary > t;
+{ d } [:^Letter:] > t;
 { d } $ > t;
-{ g } $boundary > k;
+{ g } [:^Letter:] > k;
 { g } $ > k;
-{ z } $boundary > s;
+{ z } [:^Letter:] > s;
 { z } $ > s;
-{ ž } $boundary > ʃ;
+{ ž } [:^Letter:] > ʃ;
 { ž } $ > ʃ;
 
 $cons { r } $cons > r̩;
 $cons { ŕ } $cons > r̩ː;
 $cons { r̀ } $cons > r̩;
-$cons { r } $boundary > r̩;
-$cons { ŕ } $boundary > r̩ː;
-$cons { r̀ } $boundary > r̩;
+$cons { r } [:^Letter:] > r̩;
+$cons { ŕ } [:^Letter:] > r̩ː;
+$cons { r̀ } [:^Letter:] > r̩;
 $cons { ŕ } $ > r̩ː;
 $cons { r̀ } $ > r̩;
 $cons { r } $ > r̩;
-$boundary { r } $cons > r̩;
-$boundary { ŕ } $cons > r̩ː;
-$boundary { r̀ } $cons > r̩;
+[:^Letter:] { r } $cons > r̩;
+[:^Letter:] { ŕ } $cons > r̩ː;
+[:^Letter:] { r̀ } $cons > r̩;
 
-$boundary { v } r > ʋ ;
-$boundary { v } l > ʋ ;
+[:^Letter:] { v } r > ʋ ;
+[:^Letter:] { v } l > ʋ ;
 { v } $cons > w ;
-{ v } $boundary > w ;
+{ v } [:^Letter:] > w ;
 { v } $ > w ;
 
 b > b;

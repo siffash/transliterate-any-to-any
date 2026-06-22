@@ -1,8 +1,6 @@
 export const latnRoRules = `
 ::Null;
 
-$boundary = [:^Letter:];
-
 DŽ } [eE] > G;
 DŽ } [iI] > G;
 Dž } [eE] > G;
@@ -57,10 +55,10 @@ g } [iI] > gh;
 Ľ } [:Lower:] > Li;
 Ľ > LI;
 ľ > li;
-$boundary { ï > î;
-ï } $boundary > î;
-$boundary { Ï > Î;
-Ï } $boundary > Î;
+[:^Letter:] { ï > î;
+ï } [:^Letter:] > î;
+[:^Letter:] { Ï > Î;
+Ï } [:^Letter:] > Î;
 ï > â;
 Ï > Â;
 š > ș;

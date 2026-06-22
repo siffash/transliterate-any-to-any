@@ -1,8 +1,6 @@
 export const latnViRules = `
 ::Null;
 
-$boundary = [:^Letter:];
-
 D } Ž > ;
 D } ž > ;
 d } ž > ;
@@ -12,9 +10,9 @@ K } ü > Q;
 k } ü > q;
 
 K } [aAoOuUöÖïÏ] > C;
-K } $boundary > C;
+K } [:^Letter:] > C;
 k } [aAoOuUöÖïÏ] > c;
-k } $boundary > c;
+k } [:^Letter:] > c;
 
 G } [EÄIÏYŸ] > GH;
 G } [eäiïyÿ] > Gh;

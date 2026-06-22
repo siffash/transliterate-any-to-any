@@ -4,14 +4,13 @@ export const daIpaRules = `
 $c = [b c d f g h j k l m n p q r s t v w x z];
 $voiced_c = [l m n ŋ r v d ð];
 $v = [a e i o u y æ ø å ː];
-$boundary = [:^Letter:];
 $letter = [:Letter:];
 
 aa { r } [^ $v] > ;
-[$letter] [o u å] { g } $boundary > w;
-[a r] { g } $boundary > ;
-jeg } $boundary > jɑj;
-mig } $boundary > mɑj;
+[$letter] [o u å] { g } [:^Letter:] > w;
+[a r] { g } [:^Letter:] > ;
+jeg } [:^Letter:] > jɑj;
+mig } [:^Letter:] > mɑj;
 
 ::Null;
 
@@ -31,19 +30,19 @@ uu > uː;
 { ø } $c $v > øː;
 { å } $c $v > ɔː;
 
-{ a } $boundary > ɑː;
-{ i } $boundary > iː;
-{ o } $boundary > oː;
-{ u } $boundary > uː;
-{ y } $boundary > yː;
-{ æ } $boundary > ɛː;
-{ ø } $boundary > øː;
-{ å } $boundary > ɔː;
+{ a } [:^Letter:] > ɑː;
+{ i } [:^Letter:] > iː;
+{ o } [:^Letter:] > oː;
+{ u } [:^Letter:] > uː;
+{ y } [:^Letter:] > yː;
+{ æ } [:^Letter:] > ɛː;
+{ ø } [:^Letter:] > øː;
+{ å } [:^Letter:] > ɔː;
 
-{ i } g $boundary > iː;
-{ e } g $boundary > eː;
+{ i } g [:^Letter:] > iː;
+{ e } g [:^Letter:] > eː;
 
-[{iː} {eː}] { g } $boundary > ;
+[{iː} {eː}] { g } [:^Letter:] > ;
 
 tion > sjon;
 th > t;
@@ -63,23 +62,23 @@ ch > ɕ;
 ng > ŋ;
 nk > ŋk;
 
-er } $boundary > ɐ;
-{ e } $boundary > ə;
-a [v f] n } $boundary > ɑʊ̯n;
-a [v f] } $boundary > ɑʊ̯;
+er } [:^Letter:] > ɐ;
+{ e } [:^Letter:] > ə;
+a [v f] n } [:^Letter:] > ɑʊ̯n;
+a [v f] } [:^Letter:] > ɑʊ̯;
 
 $v { r } [^ $v] > ɐ̯;
-$v { r } $boundary > ɐ̯;
+$v { r } [:^Letter:] > ɐ̯;
 
 $v { d } [ $v l r n ] > ð;
-$v { d } $boundary > ð;
+$v { d } [:^Letter:] > ð;
 $v { t } [ $v ɐ ] > ð;
 
 { j } eg > ɑɪ̯;
 eg > eːɡ;
 og > ɔʊ̯;
 øg > øj;
-en } $boundary > n̩;
+en } [:^Letter:] > n̩;
 
 c } [e i y æ ø] > s;
 c > k;
@@ -125,13 +124,13 @@ p { p } > ;
 s { s } > ;
 f { f } > ;
 
-$boundary { p } > pʰ;
+[:^Letter:] { p } > pʰ;
 { p } [$v l r j] > pʰ;
 
-$boundary { t } > tʰ;
+[:^Letter:] { t } > tʰ;
 { t } [$v l r j] > tʰ;
 
-$boundary { k } > kʰ;
+[:^Letter:] { k } > kʰ;
 { k } [$v l r j] > kʰ;
 
 g > k;

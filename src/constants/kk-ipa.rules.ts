@@ -1,8 +1,6 @@
 export const kkIpaRules = `
 ::Lower;
 
-$boundary = [:^Letter:];
-
 tş > t͡ɕ;
 ts > t͡s;
 ch > t͡ɕ;
@@ -12,19 +10,19 @@ n } [b p m] > m;
 n } [g k ğ q] > ŋ;
 z } [s ş] > s;
 
-b } $boundary > p;
+b } [:^Letter:] > p;
 b } $ > p;
-d } $boundary > t;
+d } [:^Letter:] > t;
 d } $ > t;
-g } $boundary > k;
+g } [:^Letter:] > k;
 g } $ > k;
-ğ } $boundary > q;
+ğ } [:^Letter:] > q;
 ğ } $ > q;
-v } $boundary > f;
+v } [:^Letter:] > f;
 v } $ > f;
-z } $boundary > s;
+z } [:^Letter:] > s;
 z } $ > s;
-j } $boundary > ɕ;
+j } [:^Letter:] > ɕ;
 j } $ > ɕ;
 
 ó > ɵ;
@@ -43,7 +41,7 @@ a > ɑ;
 b > b;
 c > t͡s;
 d > d;
-$boundary { e > je;
+[:^Letter:] { e > je;
 e > e;
 f > f;
 g > ɡ;

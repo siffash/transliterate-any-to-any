@@ -1,5 +1,4 @@
 export const idIpaRules = `
-$boundary = [:^Letter:];
 $vowel = [aiueo];
 $consonant = [bcdfghjklmnpqrstvwxyz];
 
@@ -23,7 +22,7 @@ n } g > ŋ;
 n } q > ŋ;
 n } x > ŋ;
 
-$vowel { k } $boundary > ʔ;
+$vowel { k } [:^Letter:] > ʔ;
 $vowel { k } $consonant > ʔ;
 
 ai > aɪ;
