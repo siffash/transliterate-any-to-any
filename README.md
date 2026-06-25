@@ -60,3 +60,4 @@ await transliterate("Копривщица", {from: "bg", to: "en"}); // Koprivsh
   Hiragana and Katakana
 - [hanviet-pinyin-words](https://www.npmjs.com/package/hanviet-pinyin-words) for handling Vietnamese
 - [phonemize](https://www.npmjs.com/package/phonemize) for converting some languages to IPA
+- [ipa-dict](https://github.com/open-dict-data/ipa-dict) for Arabic-IPA dictionary

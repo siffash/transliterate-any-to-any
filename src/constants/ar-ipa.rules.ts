@@ -1,34 +1,7 @@
 export const arIpaRules = `
-::Lower;
-
-$sun = [\u062A\u062B\u062F\u0630\u0631\u0632\u0633\u0634\u0635\u0636\u0637\u0638\u0644\u0646];
-$consonant = [\u0621\u0623\u0625\u0624\u0626\u0628\u062A\u062B\u062C\u062D\u062E\u062F\u0630\u0631\u0632\u0633\u0634\u0635\u0636\u0637\u0638\u0639\u063A\u0641\u0642\u0643\u0644\u0645\u0646\u0647\u0648\u064A];
-
-[:^Letter:] { ( [\u0648\u0641\u0628\u0643] ) \u0627 \u0644 \u0652 ( $sun ) \u0651 > | $1 a $2 $2;
-[:^Letter:] { ( [\u0648\u0641\u0628\u0643] ) \u0627 \u0644 ( $sun ) \u0651 > | $1 a $2 $2;
-[:^Letter:] { ( [\u0648\u0641\u0628\u0643] ) \u0627 \u0644 \u0652 ( $sun ) > | $1 a $2 $2;
-[:^Letter:] { ( [\u0648\u0641\u0628\u0643] ) \u0627 \u0644 ( $sun ) > | $1 a $2 $2;
-[:^Letter:] { ( [\u0648\u0641\u0628\u0643] ) \u0627 \u0644 \u0652 > | $1 al;
-[:^Letter:] { ( [\u0648\u0641\u0628\u0643] ) \u0627 \u0644 > | $1 al;
-
-[:^Letter:] { \u0627 \u0644 \u0652 ( $sun ) \u0651 > ʔa | $1 $1;
-[:^Letter:] { \u0627 \u0644 ( $sun ) \u0651 > ʔa | $1 $1;
-[:^Letter:] { \u0627 \u0644 \u0652 ( $sun ) > ʔa | $1 $1;
-[:^Letter:] { \u0627 \u0644 ( $sun ) > ʔa | $1 $1;
-[:^Letter:] { \u0627 \u0644 \u0652 > ʔal;
-[:^Letter:] { \u0627 \u0644 > ʔal;
-
-[:^Letter:] { \u0644 \u0644 \u0652 ( $sun ) \u0651 > l | $1 $1;
-[:^Letter:] { \u0644 \u0644 ( $sun ) \u0651 > l | $1 $1;
-[:^Letter:] { \u0644 \u0644 \u0652 ( $sun ) > l | $1 $1;
-[:^Letter:] { \u0644 \u0644 ( $sun ) > l | $1 $1;
-
-( $consonant ) ( [\u064E\u0650\u064F] ) \u0651 > | $1 $1 $2;
-( $consonant ) \u0651 > | $1 $1;
-
-[:^Letter:] { \u0627 } \u064E > ʔ;
-[:^Letter:] { \u0627 } \u0650 > ʔ;
-[:^Letter:] { \u0627 } \u064F > ʔ;
+[:^Letter:] { \u0627 } \u064E >;
+[:^Letter:] { \u0627 } \u0650 >;
+[:^Letter:] { \u0627 } \u064F >;
 
 \u0629 \u064B > atan;
 \u0629 \u064D > atin;
@@ -37,7 +10,7 @@ $consonant = [\u0621\u0623\u0625\u0624\u0626\u0628\u062A\u062B\u062C\u062D\u062E
 \u064B \u0627 > an;
 \u0627 \u064B > an;
 \u0627 \u0629 > aː;
-[:^Letter:] { \u0627 > ʔa;
+[:^Letter:] { \u0627 > a;
 \u064B > an;
 \u064D > in;
 \u064C > un;
@@ -47,12 +20,12 @@ $consonant = [\u0621\u0623\u0625\u0624\u0626\u0628\u062A\u062B\u062C\u062D\u062E
 \u064F \u0648 > uː;
 \u064E \u0649 > aː;
 
-\u0622 > ʔaː;
-\u0621 > ʔ;
-\u0623 > ʔ;
-\u0625 > ʔ;
-\u0624 > ʔ;
-\u0626 > ʔ;
+\u0622 > aː;
+\u0621 >;
+\u0623 >;
+\u0625 >;
+\u0624 >;
+\u0626 >;
 \u0628 > b;
 \u062A > t;
 \u062B > θ;
@@ -91,4 +64,68 @@ $consonant = [\u0621\u0623\u0625\u0624\u0626\u0628\u062A\u062B\u062C\u062D\u062E
 \u064F > u;
 \u0652 >;
 \u0670 > aː;
+
+::Null;
+
+aa > a;
+aʔu > aː;
+aʔa > aː;
+ħħ > ħ;
+
+::Null;
+
+[:^Letter:] { aːl > al;
+[:^Letter:] { ali > al;
+[:^Letter:] { ʔala > al;
+[:^Letter:] { lili > lil;
+[:^Letter:] { waːl > wal;
+
+::Null;
+
+[:^Letter:] { al } tˤ > atˤ;
+[:^Letter:] { al } t > at;
+[:^Letter:] { al } dˤ > adˤ;
+[:^Letter:] { al } d > ad;
+[:^Letter:] { al } r > ar;
+[:^Letter:] { al } zˤ > azˤ;
+[:^Letter:] { al } z > az;
+[:^Letter:] { al } sˤ > asˤ;
+[:^Letter:] { al } s > as;
+[:^Letter:] { al } ʃ > aʃ;
+[:^Letter:] { al } n > an;
+[:^Letter:] { al } θ > aθ;
+[:^Letter:] { al } ð > að;
+
+[:^Letter:] { lil } tˤ > litˤ;
+[:^Letter:] { lil } t > lit;
+[:^Letter:] { lil } dˤ > lidˤ;
+[:^Letter:] { lil } d > lid;
+[:^Letter:] { lil } r > lir;
+[:^Letter:] { lil } zˤ > lizˤ;
+[:^Letter:] { lil } z > liz;
+[:^Letter:] { lil } sˤ > lisˤ;
+[:^Letter:] { lil } s > lis;
+[:^Letter:] { lil } ʃ > liʃ;
+[:^Letter:] { lil } n > lin;
+[:^Letter:] { lil } θ > liθ;
+[:^Letter:] { lil } ð > lið;
+
+[:^Letter:] { wal } tˤ > watˤ;
+[:^Letter:] { wal } t > wat;
+[:^Letter:] { wal } dˤ > wadˤ;
+[:^Letter:] { wal } d > wad;
+[:^Letter:] { wal } r > war;
+[:^Letter:] { wal } zˤ > wazˤ;
+[:^Letter:] { wal } z > waz;
+[:^Letter:] { wal } sˤ > wasˤ;
+[:^Letter:] { wal } s > was;
+[:^Letter:] { wal } ʃ > waʃ;
+[:^Letter:] { wal } n > wan;
+[:^Letter:] { wal } θ > waθ;
+[:^Letter:] { wal } ð > wað;
+
+[btθdðrzsʃʕɣfqklmnhħʒ] { j } [:^Letter:] > ijj;
+[btθdðrzsʃʕɣfqklmnhħʒ]ˤ { j } [:^Letter:] > ijj;
+
+[[:Arabic:]] > ;
 `;

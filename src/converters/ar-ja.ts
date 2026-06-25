@@ -2,14 +2,16 @@ import { Text } from "types";
 
 export const arJa = async (text: Text) => {
   const { RBT } = await import("icu-transliterator");
-  const { arIpaRules } = await import("constants/ar-ipa.rules");
+  const { arIpa } = await import("converters/ar-ipa");
   const { ipaJaRules } = await import("constants/ipa-ja.rules");
 
-  const transliterator = RBT.fromRules(arIpaRules + ipaJaRules);
+  const transliterator = RBT.fromRules(ipaJaRules);
 
   if (typeof text === "string") {
-    return transliterator.transliterate(text);
+    const ipa = await arIpa<string>(text);
+    return transliterator.transliterate(ipa);
   } else {
-    return text.map(text => transliterator.transliterate(text));
+    const ipaArray = await arIpa<string[]>(text);
+    return ipaArray.map(ipa => transliterator.transliterate(ipa));
   }
 };
