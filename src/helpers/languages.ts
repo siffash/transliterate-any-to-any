@@ -34,8 +34,8 @@ export const latnLanguages = [
   "vi",
 ] as const;
 
-export const cyrlLanguages = ["bg", "mk", "ru", "uk"] as const;
+export const cyrlLanguages = ["ru", "uk", "bg", "mk"] as const;
 
-export const otherLanguages = ["ar", "el", "he", "hi", "hy", "ja", "ka", "ko", "zh"] as const;
+export const otherLanguages = ["zh", "ja", "ko", "hi", "ar", "he", "ka", "hy", "el"] as const;
 
 export const supportedLanguages = [...latnLanguages, ...cyrlLanguages, ...otherLanguages] as const;

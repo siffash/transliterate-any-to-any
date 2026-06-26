@@ -1,8 +1,5 @@
-import { latnLanguages, supportedLanguages } from "helpers/languages";
-import { LatnLanguage, Options, Text } from "types";
-import { jaLatn } from "converters/ja-latn";
-import { zhLatn } from "converters/zh-latn";
-import { koLatn } from "converters/ko-latn";
+import { supportedLanguages } from "helpers/languages";
+import { Options, Text } from "types";
 
 export const transliterate = async <T extends Text>(
   text: T,
@@ -20,194 +17,188 @@ export const transliterate = async <T extends Text>(
 
   try {
     switch (to) {
-      // if OUTPUT language is English
-      case "en":
+      // if OUTPUT language is Chinese
+      case "zh":
         switch (from) {
-          case "el": {
-            const { elEn } = await import("converters/el-en");
-            return (await elEn(text, ascii)) as T;
-          }
-          case "hy": {
-            const { hyEn } = await import("converters/hy-en");
-            return (await hyEn(text, ascii)) as T;
-          }
-          case "ka": {
-            const { kaEn } = await import("converters/ka-en");
-            return (await kaEn(text, ascii)) as T;
-          }
-          case "hi": {
-            const { hiEn } = await import("converters/hi-en");
-            return (await hiEn(text, ascii)) as T;
-          }
-          case "ru": {
-            const { ruEn } = await import("converters/ru-en");
-            return (await ruEn(text, ascii)) as T;
-          }
-          case "uk": {
-            const { ukEn } = await import("converters/uk-en");
-            return (await ukEn(text, ascii)) as T;
-          }
-          case "bg": {
-            const { bgEn } = await import("converters/bg-en");
-            return (await bgEn(text, ascii)) as T;
-          }
-          case "mk": {
-            const { mkEn } = await import("converters/mk-en");
-            return (await mkEn(text, ascii)) as T;
+          case "az": {
+            const { azZh } = await import("converters/az-zh");
+            return (await azZh(text)) as T;
           }
           case "ar": {
-            const { arEn } = await import("converters/ar-en");
-            return (await arEn(text, ascii)) as T;
+            const { arZh } = await import("converters/ar-zh");
+            return (await arZh(text)) as T;
+          }
+          case "hi": {
+            const { hiZh } = await import("converters/hi-zh");
+            return (await hiZh(text)) as T;
+          }
+          case "hy": {
+            const { hyZh } = await import("converters/hy-zh");
+            return (await hyZh(text)) as T;
+          }
+          case "ka": {
+            const { kaZh } = await import("converters/ka-zh");
+            return (await kaZh(text)) as T;
+          }
+          case "el": {
+            const { elZh } = await import("converters/el-zh");
+            return (await elZh(text)) as T;
           }
           case "he": {
-            const { heEn } = await import("converters/he-en");
-            return (await heEn(text, ascii)) as T;
+            const { heZh } = await import("converters/he-zh");
+            return (await heZh(text)) as T;
           }
-        }
-        break;
-
-      // if OUTPUT language is Vietnamese
-      case "vi":
-        switch (from) {
-          case "zh": {
-            const { zhVi } = await import("converters/zh-vi");
-            return (await zhVi(text, ascii)) as T;
+          case "en": {
+            const { enZh } = await import("converters/en-zh");
+            return (await enZh(text)) as T;
           }
-        }
-        break;
-
-      // if OUTPUT language is Bulgarian
-      case "bg":
-        switch (from) {
+          case "ca": {
+            const { caZh } = await import("converters/ca-zh");
+            return (await caZh(text)) as T;
+          }
+          case "cs": {
+            const { csZh } = await import("converters/cs-zh");
+            return (await csZh(text)) as T;
+          }
+          case "da": {
+            const { daZh } = await import("converters/da-zh");
+            return (await daZh(text)) as T;
+          }
+          case "de": {
+            const { deZh } = await import("converters/de-zh");
+            return (await deZh(text)) as T;
+          }
+          case "es": {
+            const { esZh } = await import("converters/es-zh");
+            return (await esZh(text)) as T;
+          }
+          case "et": {
+            const { etZh } = await import("converters/et-zh");
+            return (await etZh(text)) as T;
+          }
+          case "fi": {
+            const { fiZh } = await import("converters/fi-zh");
+            return (await fiZh(text)) as T;
+          }
+          case "fr": {
+            const { frZh } = await import("converters/fr-zh");
+            return (await frZh(text)) as T;
+          }
+          case "hr": {
+            const { hrZh } = await import("converters/hr-zh");
+            return (await hrZh(text)) as T;
+          }
+          case "hu": {
+            const { huZh } = await import("converters/hu-zh");
+            return (await huZh(text)) as T;
+          }
+          case "id": {
+            const { idZh } = await import("converters/id-zh");
+            return (await idZh(text)) as T;
+          }
+          case "is": {
+            const { isZh } = await import("converters/is-zh");
+            return (await isZh(text)) as T;
+          }
+          case "it": {
+            const { itZh } = await import("converters/it-zh");
+            return (await itZh(text)) as T;
+          }
+          case "kk": {
+            const { kkZh } = await import("converters/kk-zh");
+            return (await kkZh(text)) as T;
+          }
+          case "lb": {
+            const { lbZh } = await import("converters/lb-zh");
+            return (await lbZh(text)) as T;
+          }
+          case "lt": {
+            const { ltZh } = await import("converters/lt-zh");
+            return (await ltZh(text)) as T;
+          }
+          case "lv": {
+            const { lvZh } = await import("converters/lv-zh");
+            return (await lvZh(text)) as T;
+          }
+          case "mt": {
+            const { mtZh } = await import("converters/mt-zh");
+            return (await mtZh(text)) as T;
+          }
+          case "nl": {
+            const { nlZh } = await import("converters/nl-zh");
+            return (await nlZh(text)) as T;
+          }
+          case "no": {
+            const { noZh } = await import("converters/no-zh");
+            return (await noZh(text)) as T;
+          }
+          case "pl": {
+            const { plZh } = await import("converters/pl-zh");
+            return (await plZh(text)) as T;
+          }
+          case "pt": {
+            const { ptZh } = await import("converters/pt-zh");
+            return (await ptZh(text)) as T;
+          }
+          case "ro": {
+            const { roZh } = await import("converters/ro-zh");
+            return (await roZh(text)) as T;
+          }
+          case "sk": {
+            const { skZh } = await import("converters/sk-zh");
+            return (await skZh(text)) as T;
+          }
+          case "sl": {
+            const { slZh } = await import("converters/sl-zh");
+            return (await slZh(text)) as T;
+          }
+          case "sq": {
+            const { sqZh } = await import("converters/sq-zh");
+            return (await sqZh(text)) as T;
+          }
+          case "sr": {
+            const { srZh } = await import("converters/sr-zh");
+            return (await srZh(text)) as T;
+          }
+          case "sv": {
+            const { svZh } = await import("converters/sv-zh");
+            return (await svZh(text)) as T;
+          }
+          case "tr": {
+            const { trZh } = await import("converters/tr-zh");
+            return (await trZh(text)) as T;
+          }
+          case "bs": {
+            const { bsZh } = await import("converters/bs-zh");
+            return (await bsZh(text)) as T;
+          }
+          case "bg": {
+            const { bgZh } = await import("converters/bg-zh");
+            return (await bgZh(text)) as T;
+          }
           case "mk": {
-            const { mkBg } = await import("converters/mk-bg");
-            return (await mkBg(text)) as T;
+            const { mkZh } = await import("converters/mk-zh");
+            return (await mkZh(text)) as T;
           }
           case "ru": {
-            const { ruBg } = await import("converters/ru-bg");
-            return (await ruBg(text)) as T;
+            const { ruZh } = await import("converters/ru-zh");
+            return (await ruZh(text)) as T;
           }
           case "uk": {
-            const { ukBg } = await import("converters/uk-bg");
-            return (await ukBg(text)) as T;
-          }
-          case "zh": {
-            const { zhBg } = await import("converters/zh-bg");
-            return (await zhBg(text)) as T;
-          }
-          case "ja": {
-            const { jaBg } = await import("converters/ja-bg");
-            return (await jaBg(text)) as T;
+            const { ukZh } = await import("converters/uk-zh");
+            return (await ukZh(text)) as T;
           }
           case "ko": {
-            const { koBg } = await import("converters/ko-bg");
-            return (await koBg(text)) as T;
-          }
-          case "hi": {
-            const { hiBg } = await import("converters/hi-bg");
-            return (await hiBg(text)) as T;
-          }
-        }
-        break;
-
-      // if OUTPUT language is Macedonian
-      case "mk":
-        switch (from) {
-          case "bg": {
-            const { bgMk } = await import("converters/bg-mk");
-            return (await bgMk(text)) as T;
-          }
-          case "ru": {
-            const { ruMk } = await import("converters/ru-mk");
-            return (await ruMk(text)) as T;
-          }
-          case "uk": {
-            const { ukMk } = await import("converters/uk-mk");
-            return (await ukMk(text)) as T;
-          }
-          case "zh": {
-            const { zhMk } = await import("converters/zh-mk");
-            return (await zhMk(text)) as T;
+            const { koZh } = await import("converters/ko-zh");
+            return (await koZh(text)) as T;
           }
           case "ja": {
-            const { jaMk } = await import("converters/ja-mk");
-            return (await jaMk(text)) as T;
+            const { jaZh } = await import("converters/ja-zh");
+            return (await jaZh(text)) as T;
           }
-          case "ko": {
-            const { koMk } = await import("converters/ko-mk");
-            return (await koMk(text)) as T;
-          }
-          case "hi": {
-            const { hiMk } = await import("converters/hi-mk");
-            return (await hiMk(text)) as T;
-          }
-        }
-        break;
-
-      // if OUTPUT language is Russian
-      case "ru":
-        switch (from) {
-          case "bg": {
-            const { bgRu } = await import("converters/bg-ru");
-            return (await bgRu(text)) as T;
-          }
-          case "mk": {
-            const { mkRu } = await import("converters/mk-ru");
-            return (await mkRu(text)) as T;
-          }
-          case "uk": {
-            const { ukRu } = await import("converters/uk-ru");
-            return (await ukRu(text)) as T;
-          }
-          case "zh": {
-            const { zhRu } = await import("converters/zh-ru");
-            return (await zhRu(text)) as T;
-          }
-          case "ja": {
-            const { jaRu } = await import("converters/ja-ru");
-            return (await jaRu(text)) as T;
-          }
-          case "ko": {
-            const { koRu } = await import("converters/ko-ru");
-            return (await koRu(text)) as T;
-          }
-          case "hi": {
-            const { hiRu } = await import("converters/hi-ru");
-            return (await hiRu(text)) as T;
-          }
-        }
-        break;
-
-      // if OUTPUT language is Ukrainian
-      case "uk":
-        switch (from) {
-          case "bg": {
-            const { bgUk } = await import("converters/bg-uk");
-            return (await bgUk(text)) as T;
-          }
-          case "ru": {
-            const { ruUk } = await import("converters/ru-uk");
-            return (await ruUk(text)) as T;
-          }
-          case "mk": {
-            const { mkUk } = await import("converters/mk-uk");
-            return (await mkUk(text)) as T;
-          }
-          case "zh": {
-            const { zhUk } = await import("converters/zh-uk");
-            return (await zhUk(text)) as T;
-          }
-          case "ja": {
-            const { jaUk } = await import("converters/ja-uk");
-            return (await jaUk(text)) as T;
-          }
-          case "ko": {
-            const { koUk } = await import("converters/ko-uk");
-            return (await koUk(text)) as T;
-          }
-          case "hi": {
-            const { hiUk } = await import("converters/hi-uk");
-            return (await hiUk(text)) as T;
+          case "vi": {
+            const { viZh } = await import("converters/vi-zh");
+            return (await viZh(text)) as T;
           }
         }
         break;
@@ -1134,188 +1125,36 @@ export const transliterate = async <T extends Text>(
         }
         break;
 
-      // if OUTPUT language is Chinese
-      case "zh":
+      // if OUTPUT language is Georgian
+      case "ka":
         switch (from) {
-          case "az": {
-            const { azZh } = await import("converters/az-zh");
-            return (await azZh(text)) as T;
+          case "hy": {
+            const { hyKa } = await import("converters/hy-ka");
+            return (await hyKa(text)) as T;
           }
           case "ar": {
-            const { arZh } = await import("converters/ar-zh");
-            return (await arZh(text)) as T;
-          }
-          case "hi": {
-            const { hiZh } = await import("converters/hi-zh");
-            return (await hiZh(text)) as T;
-          }
-          case "hy": {
-            const { hyZh } = await import("converters/hy-zh");
-            return (await hyZh(text)) as T;
-          }
-          case "ka": {
-            const { kaZh } = await import("converters/ka-zh");
-            return (await kaZh(text)) as T;
-          }
-          case "el": {
-            const { elZh } = await import("converters/el-zh");
-            return (await elZh(text)) as T;
+            const { arKa } = await import("converters/ar-ka");
+            return (await arKa(text)) as T;
           }
           case "he": {
-            const { heZh } = await import("converters/he-zh");
-            return (await heZh(text)) as T;
+            const { heKa } = await import("converters/he-ka");
+            return (await heKa(text)) as T;
           }
-          case "en": {
-            const { enZh } = await import("converters/en-zh");
-            return (await enZh(text)) as T;
+          case "hi": {
+            const { hiKa } = await import("converters/hi-ka");
+            return (await hiKa(text)) as T;
           }
-          case "ca": {
-            const { caZh } = await import("converters/ca-zh");
-            return (await caZh(text)) as T;
-          }
-          case "cs": {
-            const { csZh } = await import("converters/cs-zh");
-            return (await csZh(text)) as T;
-          }
-          case "da": {
-            const { daZh } = await import("converters/da-zh");
-            return (await daZh(text)) as T;
-          }
-          case "de": {
-            const { deZh } = await import("converters/de-zh");
-            return (await deZh(text)) as T;
-          }
-          case "es": {
-            const { esZh } = await import("converters/es-zh");
-            return (await esZh(text)) as T;
-          }
-          case "et": {
-            const { etZh } = await import("converters/et-zh");
-            return (await etZh(text)) as T;
-          }
-          case "fi": {
-            const { fiZh } = await import("converters/fi-zh");
-            return (await fiZh(text)) as T;
-          }
-          case "fr": {
-            const { frZh } = await import("converters/fr-zh");
-            return (await frZh(text)) as T;
-          }
-          case "hr": {
-            const { hrZh } = await import("converters/hr-zh");
-            return (await hrZh(text)) as T;
-          }
-          case "hu": {
-            const { huZh } = await import("converters/hu-zh");
-            return (await huZh(text)) as T;
-          }
-          case "id": {
-            const { idZh } = await import("converters/id-zh");
-            return (await idZh(text)) as T;
-          }
-          case "is": {
-            const { isZh } = await import("converters/is-zh");
-            return (await isZh(text)) as T;
-          }
-          case "it": {
-            const { itZh } = await import("converters/it-zh");
-            return (await itZh(text)) as T;
-          }
-          case "kk": {
-            const { kkZh } = await import("converters/kk-zh");
-            return (await kkZh(text)) as T;
-          }
-          case "lb": {
-            const { lbZh } = await import("converters/lb-zh");
-            return (await lbZh(text)) as T;
-          }
-          case "lt": {
-            const { ltZh } = await import("converters/lt-zh");
-            return (await ltZh(text)) as T;
-          }
-          case "lv": {
-            const { lvZh } = await import("converters/lv-zh");
-            return (await lvZh(text)) as T;
-          }
-          case "mt": {
-            const { mtZh } = await import("converters/mt-zh");
-            return (await mtZh(text)) as T;
-          }
-          case "nl": {
-            const { nlZh } = await import("converters/nl-zh");
-            return (await nlZh(text)) as T;
-          }
-          case "no": {
-            const { noZh } = await import("converters/no-zh");
-            return (await noZh(text)) as T;
-          }
-          case "pl": {
-            const { plZh } = await import("converters/pl-zh");
-            return (await plZh(text)) as T;
-          }
-          case "pt": {
-            const { ptZh } = await import("converters/pt-zh");
-            return (await ptZh(text)) as T;
-          }
-          case "ro": {
-            const { roZh } = await import("converters/ro-zh");
-            return (await roZh(text)) as T;
-          }
-          case "sk": {
-            const { skZh } = await import("converters/sk-zh");
-            return (await skZh(text)) as T;
-          }
-          case "sl": {
-            const { slZh } = await import("converters/sl-zh");
-            return (await slZh(text)) as T;
-          }
-          case "sq": {
-            const { sqZh } = await import("converters/sq-zh");
-            return (await sqZh(text)) as T;
-          }
-          case "sr": {
-            const { srZh } = await import("converters/sr-zh");
-            return (await srZh(text)) as T;
-          }
-          case "sv": {
-            const { svZh } = await import("converters/sv-zh");
-            return (await svZh(text)) as T;
-          }
-          case "tr": {
-            const { trZh } = await import("converters/tr-zh");
-            return (await trZh(text)) as T;
-          }
-          case "bs": {
-            const { bsZh } = await import("converters/bs-zh");
-            return (await bsZh(text)) as T;
-          }
-          case "bg": {
-            const { bgZh } = await import("converters/bg-zh");
-            return (await bgZh(text)) as T;
-          }
-          case "mk": {
-            const { mkZh } = await import("converters/mk-zh");
-            return (await mkZh(text)) as T;
-          }
-          case "ru": {
-            const { ruZh } = await import("converters/ru-zh");
-            return (await ruZh(text)) as T;
-          }
-          case "uk": {
-            const { ukZh } = await import("converters/uk-zh");
-            return (await ukZh(text)) as T;
-          }
-          case "ko": {
-            const { koZh } = await import("converters/ko-zh");
-            return (await koZh(text)) as T;
+          case "zh": {
+            const { zhKa } = await import("converters/zh-ka");
+            return (await zhKa(text)) as T;
           }
           case "ja": {
-            const { jaZh } = await import("converters/ja-zh");
-            return (await jaZh(text)) as T;
+            const { jaKa } = await import("converters/ja-ka");
+            return (await jaKa(text)) as T;
           }
-          case "vi": {
-            const { viZh } = await import("converters/vi-zh");
-            return (await viZh(text)) as T;
+          case "ko": {
+            const { koKa } = await import("converters/ko-ka");
+            return (await koKa(text)) as T;
           }
         }
         break;
@@ -1354,57 +1193,325 @@ export const transliterate = async <T extends Text>(
         }
         break;
 
-      // if OUTPUT language is Georgian
-      case "ka":
+      // if OUTPUT language is Greek
+      case "el":
+        break;
+
+      // if OUTPUT language is Russian
+      case "ru":
         switch (from) {
-          case "hy": {
-            const { hyKa } = await import("converters/hy-ka");
-            return (await hyKa(text)) as T;
+          case "bg": {
+            const { bgRu } = await import("converters/bg-ru");
+            return (await bgRu(text)) as T;
           }
-          case "ar": {
-            const { arKa } = await import("converters/ar-ka");
-            return (await arKa(text)) as T;
+          case "mk": {
+            const { mkRu } = await import("converters/mk-ru");
+            return (await mkRu(text)) as T;
           }
-          case "he": {
-            const { heKa } = await import("converters/he-ka");
-            return (await heKa(text)) as T;
-          }
-          case "hi": {
-            const { hiKa } = await import("converters/hi-ka");
-            return (await hiKa(text)) as T;
+          case "uk": {
+            const { ukRu } = await import("converters/uk-ru");
+            return (await ukRu(text)) as T;
           }
           case "zh": {
-            const { zhKa } = await import("converters/zh-ka");
-            return (await zhKa(text)) as T;
+            const { zhRu } = await import("converters/zh-ru");
+            return (await zhRu(text)) as T;
           }
           case "ja": {
-            const { jaKa } = await import("converters/ja-ka");
-            return (await jaKa(text)) as T;
+            const { jaRu } = await import("converters/ja-ru");
+            return (await jaRu(text)) as T;
           }
           case "ko": {
-            const { koKa } = await import("converters/ko-ka");
-            return (await koKa(text)) as T;
+            const { koRu } = await import("converters/ko-ru");
+            return (await koRu(text)) as T;
+          }
+          case "hi": {
+            const { hiRu } = await import("converters/hi-ru");
+            return (await hiRu(text)) as T;
           }
         }
         break;
-    }
 
-    // if OUTPUT language is Latin
-    if (latnLanguages.includes(to as LatnLanguage)) {
-      // if input language is Japanese
-      if (from === "ja") {
-        return (await jaLatn(text, ascii)) as T;
-      }
+      // if OUTPUT language is Ukrainian
+      case "uk":
+        switch (from) {
+          case "bg": {
+            const { bgUk } = await import("converters/bg-uk");
+            return (await bgUk(text)) as T;
+          }
+          case "ru": {
+            const { ruUk } = await import("converters/ru-uk");
+            return (await ruUk(text)) as T;
+          }
+          case "mk": {
+            const { mkUk } = await import("converters/mk-uk");
+            return (await mkUk(text)) as T;
+          }
+          case "zh": {
+            const { zhUk } = await import("converters/zh-uk");
+            return (await zhUk(text)) as T;
+          }
+          case "ja": {
+            const { jaUk } = await import("converters/ja-uk");
+            return (await jaUk(text)) as T;
+          }
+          case "ko": {
+            const { koUk } = await import("converters/ko-uk");
+            return (await koUk(text)) as T;
+          }
+          case "hi": {
+            const { hiUk } = await import("converters/hi-uk");
+            return (await hiUk(text)) as T;
+          }
+        }
+        break;
 
-      // if input language is Korean
-      if (from === "ko") {
-        return (await koLatn(text, ascii)) as T;
-      }
+      // if OUTPUT language is Bulgarian
+      case "bg":
+        switch (from) {
+          case "mk": {
+            const { mkBg } = await import("converters/mk-bg");
+            return (await mkBg(text)) as T;
+          }
+          case "ru": {
+            const { ruBg } = await import("converters/ru-bg");
+            return (await ruBg(text)) as T;
+          }
+          case "uk": {
+            const { ukBg } = await import("converters/uk-bg");
+            return (await ukBg(text)) as T;
+          }
+          case "zh": {
+            const { zhBg } = await import("converters/zh-bg");
+            return (await zhBg(text)) as T;
+          }
+          case "ja": {
+            const { jaBg } = await import("converters/ja-bg");
+            return (await jaBg(text)) as T;
+          }
+          case "ko": {
+            const { koBg } = await import("converters/ko-bg");
+            return (await koBg(text)) as T;
+          }
+          case "hi": {
+            const { hiBg } = await import("converters/hi-bg");
+            return (await hiBg(text)) as T;
+          }
+        }
+        break;
 
-      // if input language is Chinese
-      if (from === "zh") {
-        return (await zhLatn(text, ascii)) as T;
-      }
+      // if OUTPUT language is Macedonian
+      case "mk":
+        switch (from) {
+          case "bg": {
+            const { bgMk } = await import("converters/bg-mk");
+            return (await bgMk(text)) as T;
+          }
+          case "ru": {
+            const { ruMk } = await import("converters/ru-mk");
+            return (await ruMk(text)) as T;
+          }
+          case "uk": {
+            const { ukMk } = await import("converters/uk-mk");
+            return (await ukMk(text)) as T;
+          }
+          case "zh": {
+            const { zhMk } = await import("converters/zh-mk");
+            return (await zhMk(text)) as T;
+          }
+          case "ja": {
+            const { jaMk } = await import("converters/ja-mk");
+            return (await jaMk(text)) as T;
+          }
+          case "ko": {
+            const { koMk } = await import("converters/ko-mk");
+            return (await koMk(text)) as T;
+          }
+          case "hi": {
+            const { hiMk } = await import("converters/hi-mk");
+            return (await hiMk(text)) as T;
+          }
+        }
+        break;
+
+      // if OUTPUT language is Azerbaijani
+      case "az":
+        break;
+
+      // if OUTPUT language is Bosnian
+      case "bs":
+        break;
+
+      // if OUTPUT language is Catalan
+      case "ca":
+        break;
+
+      // if OUTPUT language is Czech
+      case "cs":
+        break;
+
+      // if OUTPUT language is Danish
+      case "da":
+        break;
+
+      // if OUTPUT language is German
+      case "de":
+        break;
+
+      // if OUTPUT language is English
+      case "en":
+        switch (from) {
+          case "el": {
+            const { elEn } = await import("converters/el-en");
+            return (await elEn(text, ascii)) as T;
+          }
+          case "hy": {
+            const { hyEn } = await import("converters/hy-en");
+            return (await hyEn(text, ascii)) as T;
+          }
+          case "ka": {
+            const { kaEn } = await import("converters/ka-en");
+            return (await kaEn(text, ascii)) as T;
+          }
+          case "hi": {
+            const { hiEn } = await import("converters/hi-en");
+            return (await hiEn(text, ascii)) as T;
+          }
+          case "ru": {
+            const { ruEn } = await import("converters/ru-en");
+            return (await ruEn(text, ascii)) as T;
+          }
+          case "uk": {
+            const { ukEn } = await import("converters/uk-en");
+            return (await ukEn(text, ascii)) as T;
+          }
+          case "bg": {
+            const { bgEn } = await import("converters/bg-en");
+            return (await bgEn(text, ascii)) as T;
+          }
+          case "mk": {
+            const { mkEn } = await import("converters/mk-en");
+            return (await mkEn(text, ascii)) as T;
+          }
+          case "ar": {
+            const { arEn } = await import("converters/ar-en");
+            return (await arEn(text, ascii)) as T;
+          }
+          case "he": {
+            const { heEn } = await import("converters/he-en");
+            return (await heEn(text, ascii)) as T;
+          }
+        }
+        break;
+
+      // if OUTPUT language is Spanish
+      case "es":
+        break;
+
+      // if OUTPUT language is Estonian
+      case "et":
+        break;
+
+      // if OUTPUT language is Finnish
+      case "fi":
+        break;
+
+      // if OUTPUT language is French
+      case "fr":
+        break;
+
+      // if OUTPUT language is Croatian
+      case "hr":
+        break;
+
+      // if OUTPUT language is Hungarian
+      case "hu":
+        break;
+
+      // if OUTPUT language is Indonesian
+      case "id":
+        break;
+
+      // if OUTPUT language is Icelandic
+      case "is":
+        break;
+
+      // if OUTPUT language is Italian
+      case "it":
+        break;
+
+      // if OUTPUT language is Kazakh
+      case "kk":
+        break;
+
+      // if OUTPUT language is Luxembourgish
+      case "lb":
+        break;
+
+      // if OUTPUT language is Lithuanian
+      case "lt":
+        break;
+
+      // if OUTPUT language is Latvian
+      case "lv":
+        break;
+
+      // if OUTPUT language is Maltese
+      case "mt":
+        break;
+
+      // if OUTPUT language is Dutch
+      case "nl":
+        break;
+
+      // if OUTPUT language is Norwegian
+      case "no":
+        break;
+
+      // if OUTPUT language is Polish
+      case "pl":
+        break;
+
+      // if OUTPUT language is Portuguese
+      case "pt":
+        break;
+
+      // if OUTPUT language is Romanian
+      case "ro":
+        break;
+
+      // if OUTPUT language is Slovak
+      case "sk":
+        break;
+
+      // if OUTPUT language is Slovene
+      case "sl":
+        break;
+
+      // if OUTPUT language is Albanian
+      case "sq":
+        break;
+
+      // if OUTPUT language is Serbian
+      case "sr":
+        break;
+
+      // if OUTPUT language is Swedish
+      case "sv":
+        break;
+
+      // if OUTPUT language is Turkish
+      case "tr":
+        break;
+
+      // if OUTPUT language is Vietnamese
+      case "vi":
+        switch (from) {
+          case "zh": {
+            const { zhVi } = await import("converters/zh-vi");
+            return (await zhVi(text, ascii)) as T;
+          }
+        }
+        break;
     }
   } catch (e: unknown) {
     throw new Error(typeof e === "string" ? e : JSON.stringify(e), { cause: e });
