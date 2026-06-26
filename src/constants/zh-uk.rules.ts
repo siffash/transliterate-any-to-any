@@ -1,73 +1,155 @@
 export const zhUkRules = `
-::Any-Latn;
-::Latn-ASCII;
-::Lower;
+$apos = ['’];
+$v = [aeiouü];
 
-'' > ;
-lü > лю;
-nü > ню;
-lyu > лю;
-nyu > ню;
-lu } $ > лю;
-nu } $ > ню;
-xie > сє;
-jie > цзіє;
-qie > ціє;
-ye > є;
-shen > шень;
-zhen > чжень;
-zhe > чже;
-che > че;
-she > ше;
-re > же;
-ian > янь;
-i } $ > і;
-ping } $ > пін;
-ping > пінь;
-jing } $ > цзін;
-jing > цзінь;
-ning } $ > нін;
-ning > нінь;
+[āáǎàɑɐæ] > a;
+[ēéěèê] > e;
+[īíǐì] > i;
+[ōóǒò] > o;
+[ūúǔù] > u;
+[ǖǘǚǜv] > ü;
 
+[:^Letter:] { $apos > ;
+$apos } [:^Letter:] > ;
+
+::Null;
+
+iang } $v > яньґ;
+uang } $v > уаньґ;
+ang } $v > аньґ;
+eng } $v > еньґ;
+ing } $v > іньґ;
+ong } $v > уньґ;
+iong } $v > юньґ;
+
+ang $apos > ан\\';
+eng $apos > ен\\';
+ing $apos > ін\\';
+ong $apos > ун\\';
+iang $apos > ян\\';
+iong $apos > юн\\';
+uang $apos > уан\\';
+
+yang > ян;
+ying > їн;
+yong > юн;
 yuan > юань;
-qian > цянь;
-sh > ш;
-zh > чж;
-ch > ч;
-xi > сі;
-ji > цзі;
-qi > ці;
-ju > цзю;
-qu > цю;
-xu > сю;
+yue > юе;
+yun > юнь;
+yao > яо;
+yan > янь;
+you > ю;
+ya > я;
+ye > є;
+yin > їнь;
+yi > ї;
+yu > юй;
+yo > йо;
 
+wang > ван;
+weng > вен;
+wai > вай;
+wei > вей;
+wan > вань;
+wen > вень;
+wa > ва;
+wo > во;
+wu > у;
+
+juan > цзюань;
+quan > цюань;
+xuan > сюань;
+jue > цзюе;
+que > цюе;
+xue > сюе;
+jun > цзюнь;
+qun > цюнь;
+xun > сюнь;
+ju > цзюй;
+qu > цюй;
+xu > сюй;
+jü > цзюй;
+qü > цюй;
+xü > сюй;
+
+zhi > чжи;
+chi > чи;
+shi > ши;
+ri > жи;
+zi > цзи;
+ci > ци;
+si > си;
+
+hui > хуей;
+
+iang > ян;
+iong > юн;
+uang > уан;
+ueng > уен;
+
+ang > ан;
+eng > ен;
+ing > ін;
 ong > ун;
+ian > янь;
+iao > яо;
+uai > уай;
+uan > уань;
+üan > юань;
+
 ai > ай;
 ei > ей;
 ui > уй;
+ao > ао;
+ou > оу;
+iu > ю;
+ie > є;
+ia > я;
+in > інь;
+un > унь;
+ün > юнь;
+ua > уа;
+uo > о;
+ue > юе;
+üe > юе;
+er > ер;
+an > ань;
+en > ень;
+
+ng > н;
+
+zh > чж;
+ch > ч;
+sh > ш;
+r > ж;
+z > цз;
+c > ц;
+s > с;
+b > б;
+p > п;
+m > м;
+f > ф;
+d > д;
+t > т;
+n > н;
+l > л;
+g > ґ;
+k > к;
+h > х;
+j > цз;
+q > ц;
+x > с;
 w > в;
-g } [aeiou] > ґ;
+y > й;
 
-ng } [^[:L:]] > н;
-ng } $ > н;
-n } [^[:L:]] > нь; 
-n } $ > нь;
+a > а;
+o > о;
+e > е;
+i > і;
+u > у;
+ü > юй;
 
-y } a > я;
-y } u > ю;
-y } e > є;
-y > і;
-
-::Any-Cyrillic;
-
-ци > ці;
-зи > зі;
-пи > пі;
-ли > лі;
-ми > мі;
-ни > ні;
-ньг > нг;
-ннь > нь;
+$apos > ;
 
 ::Title;
 `;

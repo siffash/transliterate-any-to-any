@@ -95,6 +95,14 @@ export const transliterate = async <T extends Text>(
             const { zhBg } = await import("converters/zh-bg");
             return (await zhBg(text)) as T;
           }
+          case "ja": {
+            const { jaBg } = await import("converters/ja-bg");
+            return (await jaBg(text)) as T;
+          }
+          case "ko": {
+            const { koBg } = await import("converters/ko-bg");
+            return (await koBg(text)) as T;
+          }
         }
         break;
 
@@ -116,6 +124,14 @@ export const transliterate = async <T extends Text>(
           case "zh": {
             const { zhMk } = await import("converters/zh-mk");
             return (await zhMk(text)) as T;
+          }
+          case "ja": {
+            const { jaMk } = await import("converters/ja-mk");
+            return (await jaMk(text)) as T;
+          }
+          case "ko": {
+            const { koMk } = await import("converters/ko-mk");
+            return (await koMk(text)) as T;
           }
         }
         break;
@@ -139,6 +155,14 @@ export const transliterate = async <T extends Text>(
             const { zhRu } = await import("converters/zh-ru");
             return (await zhRu(text)) as T;
           }
+          case "ja": {
+            const { jaRu } = await import("converters/ja-ru");
+            return (await jaRu(text)) as T;
+          }
+          case "ko": {
+            const { koRu } = await import("converters/ko-ru");
+            return (await koRu(text)) as T;
+          }
         }
         break;
 
@@ -160,6 +184,14 @@ export const transliterate = async <T extends Text>(
           case "zh": {
             const { zhUk } = await import("converters/zh-uk");
             return (await zhUk(text)) as T;
+          }
+          case "ja": {
+            const { jaUk } = await import("converters/ja-uk");
+            return (await jaUk(text)) as T;
+          }
+          case "ko": {
+            const { koUk } = await import("converters/ko-uk");
+            return (await koUk(text)) as T;
           }
         }
         break;

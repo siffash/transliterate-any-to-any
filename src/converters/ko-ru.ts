@@ -1,14 +1,14 @@
 import { Text } from "types";
 
-export const zhBg = async (text: Text) => {
-  const { pinyin } = await import("pinyin-pro");
+export const koRu = async (text: Text) => {
+  const Aromanize = (await import("aromanize")).default;
   const { RBT } = await import("icu-transliterator");
-  const { zhBgRules } = await import("constants/zh-bg.rules");
+  const { koRuRules } = await import("constants/ko-ru.rules");
 
-  const transliterator = RBT.fromRules(zhBgRules);
+  const transliterator = RBT.fromRules(koRuRules);
 
   const convert = (text: string) => {
-    const romanized = pinyin(text, { separator: "" });
+    const romanized = Aromanize.romanize(text);
     return transliterator.transliterate(romanized);
   };
 
