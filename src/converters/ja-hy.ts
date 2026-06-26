@@ -1,15 +1,15 @@
 import { Text } from "types";
 
-export const jaAr = async (text: Text) => {
+export const jaHy = async (text: Text) => {
   const { default: Kuroshiro } = await import("kuroshiro");
   const { default: KuromojiAnalyzer } = await import("kuroshiro-analyzer-kuromoji");
   const { phonemize } = require("phonemize/all");
   const { RBT } = await import("icu-transliterator");
-  const { ipaArRules } = await import("constants/ipa-ar.rules");
+  const { ipaHyRules } = await import("constants/ipa-hy.rules");
 
   const kuroshiro = new Kuroshiro();
   await kuroshiro.init(new KuromojiAnalyzer());
-  const transliterator = RBT.fromRules(ipaArRules);
+  const transliterator = RBT.fromRules(ipaHyRules + "::Title;");
 
   const convert = async (text: string) => {
     const hiragana = await kuroshiro.convert(text, { to: "hiragana" });

@@ -7,7 +7,6 @@ export const ipaArRules = `
 ::Null;
 
 ̃ > ن;
-̃ > ن;
 ̨ > ن;
 ʲa > يا;
 ʲɑ > يا;

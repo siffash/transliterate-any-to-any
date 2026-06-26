@@ -1,7 +1,7 @@
 import { Text } from "types";
 
 export const koAr = async (text: Text) => {
-  const { phonemize } = await import("phonemize/all");
+  const { phonemize } = require("phonemize/all");
   const { RBT } = await import("icu-transliterator");
   const { ipaArRules } = await import("constants/ipa-ar.rules");
 

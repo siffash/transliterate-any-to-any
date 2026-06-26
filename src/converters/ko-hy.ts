@@ -1,11 +1,11 @@
 import { Text } from "types";
 
-export const koHi = async (text: Text) => {
+export const koHy = async (text: Text) => {
   const { phonemize } = require("phonemize/all");
   const { RBT } = await import("icu-transliterator");
-  const { ipaHiRules } = await import("constants/ipa-hi.rules");
+  const { ipaHyRules } = await import("constants/ipa-hy.rules");
 
-  const transliterator = RBT.fromRules(ipaHiRules);
+  const transliterator = RBT.fromRules(ipaHyRules + "::Title;");
 
   const convert = (text: string) => {
     const ipa = phonemize(text, { anyAscii: true });

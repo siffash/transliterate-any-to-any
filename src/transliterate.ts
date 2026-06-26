@@ -1319,6 +1319,66 @@ export const transliterate = async <T extends Text>(
           }
         }
         break;
+
+      // if OUTPUT language is Armenian
+      case "hy":
+        switch (from) {
+          case "ar": {
+            const { arHy } = await import("converters/ar-hy");
+            return (await arHy(text)) as T;
+          }
+          case "he": {
+            const { heHy } = await import("converters/he-hy");
+            return (await heHy(text)) as T;
+          }
+          case "hi": {
+            const { hiHy } = await import("converters/hi-hy");
+            return (await hiHy(text)) as T;
+          }
+          case "zh": {
+            const { zhHy } = await import("converters/zh-hy");
+            return (await zhHy(text)) as T;
+          }
+          case "ja": {
+            const { jaHy } = await import("converters/ja-hy");
+            return (await jaHy(text)) as T;
+          }
+          case "ko": {
+            const { koHy } = await import("converters/ko-hy");
+            return (await koHy(text)) as T;
+          }
+        }
+        break;
+
+      // if OUTPUT language is Georgian
+      case "ka":
+        switch (from) {
+          case "ar": {
+            const { arKa } = await import("converters/ar-ka");
+            return (await arKa(text)) as T;
+          }
+          case "he": {
+            const { heKa } = await import("converters/he-ka");
+            return (await heKa(text)) as T;
+          }
+          case "hi": {
+            const { hiKa } = await import("converters/hi-ka");
+            return (await hiKa(text)) as T;
+          }
+          case "zh": {
+            const { zhKa } = await import("converters/zh-ka");
+            return (await zhKa(text)) as T;
+          }
+          case "ja": {
+            const { jaKa } = await import("converters/ja-ka");
+            return (await jaKa(text)) as T;
+          }
+          case "ko": {
+            const { koKa } = await import("converters/ko-ka");
+            return (await koKa(text)) as T;
+          }
+        }
+        break;
     }
 
     // if OUTPUT language is Latin
@@ -1337,16 +1397,6 @@ export const transliterate = async <T extends Text>(
       if (from === "zh") {
         return (await zhLatn(text, ascii)) as T;
       }
-    }
-
-    // Mandarin, Japanese, Korean, Arabic, Hebrew, Hindi > IPA > Georgian / Armenian
-    // if OUTPUT language is Armenian
-    else if (to === "hy") {
-      //
-    }
-    // if OUTPUT language is Georgian
-    else if (to === "ka") {
-      //
     }
   } catch (e: unknown) {
     throw new Error(typeof e === "string" ? e : JSON.stringify(e), { cause: e });

@@ -3,7 +3,7 @@ import { Text } from "types";
 export const jaHe = async (text: Text) => {
   const { default: Kuroshiro } = await import("kuroshiro");
   const { default: KuromojiAnalyzer } = await import("kuroshiro-analyzer-kuromoji");
-  const { toIPA } = await import("phonemize");
+  const { toIPA } = require("phonemize");
   const { RBT } = await import("icu-transliterator");
   const { ipaHeRules } = await import("constants/ipa-he.rules");
 

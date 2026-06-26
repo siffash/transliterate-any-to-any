@@ -1,7 +1,7 @@
 import { Text } from "types";
 
 export const enHi = async (text: Text) => {
-  const { toIPA } = await import("phonemize");
+  const { toIPA } = require("phonemize");
   const { RBT } = await import("icu-transliterator");
   const { ipaHiRules } = await import("constants/ipa-hi.rules");
 
