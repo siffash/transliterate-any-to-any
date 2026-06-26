@@ -1323,6 +1323,10 @@ export const transliterate = async <T extends Text>(
       // if OUTPUT language is Armenian
       case "hy":
         switch (from) {
+          case "ka": {
+            const { kaHy } = await import("converters/ka-hy");
+            return (await kaHy(text)) as T;
+          }
           case "ar": {
             const { arHy } = await import("converters/ar-hy");
             return (await arHy(text)) as T;
@@ -1353,6 +1357,10 @@ export const transliterate = async <T extends Text>(
       // if OUTPUT language is Georgian
       case "ka":
         switch (from) {
+          case "hy": {
+            const { hyKa } = await import("converters/hy-ka");
+            return (await hyKa(text)) as T;
+          }
           case "ar": {
             const { arKa } = await import("converters/ar-ka");
             return (await arKa(text)) as T;
