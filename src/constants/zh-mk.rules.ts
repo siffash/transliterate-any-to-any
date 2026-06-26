@@ -1,5 +1,5 @@
 export const zhMkRules = `
-$apos = ['’];
+$apos = ['’‘\`´ʼ"];
 
 [āáǎàɑɐæ] > a;
 [ēéěèê] > e;

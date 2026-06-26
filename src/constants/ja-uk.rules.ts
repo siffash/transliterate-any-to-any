@@ -2,7 +2,7 @@ export const jaUkRules = `
 tōkyōto > токіо;
 kyōtofu > кіото;
 
-$apos = [' ’ ‘ \` ´ "];
+$apos = ['’‘\`´ʼ"];
 $a = [aāâɑɐæ];
 $i = [iīî];
 $u = [uūû];

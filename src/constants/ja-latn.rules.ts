@@ -1,5 +1,5 @@
 export const jaLatnRules = `
-$apos = [' ’ ‘ \` ´ "];
+$apos = ['’‘\`´ʼ"];
 
 tch > čč;
 cch > čč;

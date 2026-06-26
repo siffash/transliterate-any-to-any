@@ -1,5 +1,5 @@
 export const zhRuRules = `
-$apos = ['’];
+$apos = ['’‘\`´ʼ"];
 $v = [aeiouü];
 
 [āáǎàɑɐæ] > a;

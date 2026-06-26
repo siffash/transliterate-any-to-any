@@ -1,5 +1,5 @@
 export const zhBgRules = `
-$apos = ['’];
+$apos = ['’‘\`´ʼ"];
 
 [āáǎàɑɐæ] > a;
 [ēéěèê] > e;

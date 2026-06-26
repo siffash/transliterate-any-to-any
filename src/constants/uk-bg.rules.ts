@@ -1,5 +1,5 @@
 export const ukBgRules = `
-$apos = [' ’ ʼ ‘];
+$apos = ['’‘\`´ʼ"];
 $upper = [А-ЯЄІЇҐ];
 
 Україна > Украйна;
