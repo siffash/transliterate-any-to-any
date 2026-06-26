@@ -46,7 +46,6 @@ i } $vowel > j;
 ę } c h > ɛ̃;
 ę } r z > ɛ̃;
 ę } [:^Letter:] > ɛ;
-ę } $ > ɛ;
 ę > ɛ̃w̃;
 
 chrz > xʂ;
@@ -62,7 +61,6 @@ t͡ʂ { w > f;
 [p t k c f s ś ć x] { w > f;
 w } [p t k c f s ś ć x] > f;
 w } [:^Letter:] > f;
-w } $ > f;
 w > v;
 
 cz } [b d g z ź ż] > d͡ʐ;
@@ -89,13 +87,9 @@ z } [p t k c f s ś ć x] > s;
 ż } [p t k c f s ś ć x] > ʂ;
 
 dź } [:^Letter:] > t͡ɕ;
-dź } $ > t͡ɕ;
 dż } [:^Letter:] > t͡ʂ;
-dż } $ > t͡ʂ;
 dz } [:^Letter:] > t͡s;
-dz } $ > t͡s;
 rz } [:^Letter:] > ʂ;
-rz } $ > ʂ;
 
 cz > t͡ʂ;
 dź > d͡ʑ;
@@ -106,17 +100,11 @@ rz > ʐ;
 ch > x;
 
 b } [:^Letter:] > p;
-b } $ > p;
 d } [:^Letter:] > t;
-d } $ > t;
 g } [:^Letter:] > k;
-g } $ > k;
 z } [:^Letter:] > s;
-z } $ > s;
 ź } [:^Letter:] > ɕ;
-ź } $ > ɕ;
 ż } [:^Letter:] > ʂ;
-ż } $ > ʂ;
 
 a > a;
 b > b;

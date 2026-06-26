@@ -5,13 +5,9 @@ $cons = [bcdfghjklmnpqrstvwxz];
 $pal = [eiy];
 
 ige } [:^Letter:] > iə;
-ige } $ > iə;
 ig } [:^Letter:] > i;
-ig } $ > i;
 et } [:^Letter:] > ɛ;
-et } $ > ɛ;
 er } [:^Letter:] > əɾ;
-er } $ > əɾ;
 
 hv > ʋ;
 hj > j;

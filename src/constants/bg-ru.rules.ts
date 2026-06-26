@@ -2,10 +2,9 @@ export const bgRuRules = `
 $lower_cons = [бвгджзклмнпрстфхцчшщ];
 $upper_cons = [БВГДЖЗКЛМНПРСТФХЦЧШЩ];
 $lower_all = [а-я];
-$non_letter = [^[:L:]];
 
-$non_letter { е > э;
-$non_letter { Е > Э;
+[:^Letter:] { е > э;
+[:^Letter:] { Е > Э;
 
 българ > болгар;
 Българ > Болгар;
@@ -23,34 +22,22 @@ $non_letter { Е > Э;
 Съ > Со;
 СЪ > СО;
 
-$lower_cons { ъ } р $non_letter > ;
-$lower_cons { ъ } р $ > ;
-$upper_cons { Ъ } Р $non_letter > ;
-$upper_cons { Ъ } Р $ > ;
-$upper_cons { ъ } р $non_letter > ;
-$upper_cons { ъ } р $ > ;
-$lower_cons { Ъ } Р $non_letter > ;
-$lower_cons { Ъ } Р $ > ;
-$lower_cons { ъ } л $non_letter > ;
-$lower_cons { ъ } л $ > ;
-$upper_cons { Ъ } Л $non_letter > ;
-$upper_cons { Ъ } Л $ > ;
-$upper_cons { ъ } л $non_letter > ;
-$upper_cons { ъ } л $ > ;
-$lower_cons { Ъ } Л $non_letter > ;
-$lower_cons { Ъ } Л $ > ;
+$lower_cons { ъ } р [:^Letter:] > ;
+$upper_cons { Ъ } Р [:^Letter:] > ;
+$upper_cons { ъ } р [:^Letter:] > ;
+$lower_cons { Ъ } Р [:^Letter:] > ;
+$lower_cons { ъ } л [:^Letter:] > ;
+$upper_cons { Ъ } Л [:^Letter:] > ;
+$upper_cons { ъ } л [:^Letter:] > ;
+$lower_cons { Ъ } Л [:^Letter:] > ;
 
-$lower_cons { ъ } $non_letter > ;
-$lower_cons { ъ } $ > ;
-$upper_cons { Ъ } $non_letter > ;
-$upper_cons { Ъ } $ > ;
-$upper_cons { ъ } $non_letter > ;
-$upper_cons { ъ } $ > ;
-$lower_cons { Ъ } $non_letter > ;
-$lower_cons { Ъ } $ > ;
+$lower_cons { ъ } [:^Letter:] > ;
+$upper_cons { Ъ } [:^Letter:] > ;
+$upper_cons { ъ } [:^Letter:] > ;
+$lower_cons { Ъ } [:^Letter:] > ;
 
-$non_letter { ъ > и;
-$non_letter { Ъ > И;
+[:^Letter:] { ъ > и;
+[:^Letter:] { Ъ > И;
 
 жъ > же;
 Жъ > Же;

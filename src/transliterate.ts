@@ -103,6 +103,10 @@ export const transliterate = async <T extends Text>(
             const { koBg } = await import("converters/ko-bg");
             return (await koBg(text)) as T;
           }
+          case "hi": {
+            const { hiBg } = await import("converters/hi-bg");
+            return (await hiBg(text)) as T;
+          }
         }
         break;
 
@@ -132,6 +136,10 @@ export const transliterate = async <T extends Text>(
           case "ko": {
             const { koMk } = await import("converters/ko-mk");
             return (await koMk(text)) as T;
+          }
+          case "hi": {
+            const { hiMk } = await import("converters/hi-mk");
+            return (await hiMk(text)) as T;
           }
         }
         break;
@@ -163,6 +171,10 @@ export const transliterate = async <T extends Text>(
             const { koRu } = await import("converters/ko-ru");
             return (await koRu(text)) as T;
           }
+          case "hi": {
+            const { hiRu } = await import("converters/hi-ru");
+            return (await hiRu(text)) as T;
+          }
         }
         break;
 
@@ -192,6 +204,10 @@ export const transliterate = async <T extends Text>(
           case "ko": {
             const { koUk } = await import("converters/ko-uk");
             return (await koUk(text)) as T;
+          }
+          case "hi": {
+            const { hiUk } = await import("converters/hi-uk");
+            return (await hiUk(text)) as T;
           }
         }
         break;

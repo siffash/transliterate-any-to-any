@@ -11,19 +11,12 @@ n } [g k ğ q] > ŋ;
 z } [s ş] > s;
 
 b } [:^Letter:] > p;
-b } $ > p;
 d } [:^Letter:] > t;
-d } $ > t;
 g } [:^Letter:] > k;
-g } $ > k;
 ğ } [:^Letter:] > q;
-ğ } $ > q;
 v } [:^Letter:] > f;
-v } $ > f;
 z } [:^Letter:] > s;
-z } $ > s;
 j } [:^Letter:] > ɕ;
-j } $ > ɕ;
 
 ó > ɵ;
 ú > ʉ;

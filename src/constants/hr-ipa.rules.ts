@@ -15,9 +15,7 @@ $not_v = [^aeioujy];
 $not_v { r } $not_v > r̩;
 [:^Letter:] { r } $not_v > r̩;
 $not_v { r } [:^Letter:] > r̩;
-$not_v { r } $ > r̩;
 [:^Letter:] { r } [:^Letter:] > r̩;
-[:^Letter:] { r } $ > r̩;
 { v } [p t k s š c č ć f h] > f;
 
 a > a;

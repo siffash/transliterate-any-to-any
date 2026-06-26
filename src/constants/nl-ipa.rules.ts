@@ -8,25 +8,15 @@ $c = [bcdfghjklmnpqrstvwxz];
 $v = [aeiouy];
 
 {lijken} [:^Letter:] > ləkən;
-{lijken} $ > ləkən;
 {lijks} [:^Letter:] > ləks;
-{lijks} $ > ləks;
 {lijke} [:^Letter:] > ləkə;
-{lijke} $ > ləkə;
 {lijk} [:^Letter:] > lək;
-{lijk} $ > lək;
 {ische} [:^Letter:] > ɪsə;
-{ische} $ > ɪsə;
 {isch} [:^Letter:] > ɪs;
-{isch} $ > ɪs;
 {ige} [:^Letter:] > əɣə;
-{ige} $ > əɣə;
 {ig} [:^Letter:] > əx;
-{ig} $ > əx;
 {ties} [:^Letter:] > tsis;
-{ties} $ > tsis;
 {tie} [:^Letter:] > tsi;
-{tie} $ > tsi;
 
 eeuw > eːu;
 ieuw > iu;
@@ -35,7 +25,6 @@ ooi > oːi;
 oei > ui;
 
 {sch} [:^Letter:] > s;
-{sch} $ > s;
 sch > sx;
 ch > x;
 ng > ŋ;
@@ -92,9 +81,7 @@ ww > ʋ;
 zz > z;
 
 {en} [:^Letter:] > ən;
-{en} $ > ən;
 {e} [:^Letter:] > ə;
-{e} $ > ə;
 
 {b} [c f h k p s t] > p;
 {d} [c f h k p s t] > t;
@@ -103,21 +90,13 @@ zz > z;
 {g} [st] > x;
 
 {a} [:^Letter:] > aː;
-{a} $ > aː;
 {o} [:^Letter:] > oː;
-{o} $ > oː;
 {u} [:^Letter:] > yː;
-{u} $ > yː;
 {b} [:^Letter:] > p;
-{b} $ > p;
 {d} [:^Letter:] > t;
-{d} $ > t;
 {v} [:^Letter:] > f;
-{v} $ > f;
 {z} [:^Letter:] > s;
-{z} $ > s;
 {g} [:^Letter:] > x;
-{g} $ > x;
 
 b > b;
 d > d;

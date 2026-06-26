@@ -34,9 +34,7 @@ sh > ʃ;
 th > t;
 għh > ħː;
 { għ } [:^Letter:] > ħ;
-{ għ } $ > ħ;
 { h } [:^Letter:] > ħ;
-{ h } $ > ħ;
 
 ah > ɐː;
 eh > ɛː;
@@ -93,20 +91,13 @@ zz > t͡sː;
 żż > zː;
 
 { b } [:^Letter:] > p;
-{ b } $ > p;
 { d } [:^Letter:] > t;
-{ d } $ > t;
 { g } [e i y ɛ ɪ] > d͡ʒ;
 { g } [:^Letter:] > k;
-{ g } $ > k;
 { ġ } [:^Letter:] > t͡ʃ;
-{ ġ } $ > t͡ʃ;
 { v } [:^Letter:] > f;
-{ v } $ > f;
 { ż } [:^Letter:] > s;
-{ ż } $ > s;
 { z } [:^Letter:] > t͡s;
-{ z } $ > t͡s;
 
 a > ɐ;
 e > ɛ;

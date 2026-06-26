@@ -81,13 +81,11 @@ $V { f } [j á] > f;
 $V { f } $V > v;
 $V { f } $voicedC > v;
 $V { f } [:^Letter:] > v;
-$V { f } $ > v;
 f > f;
 
 $V { ð } $V > ð;
 $V { ð } $voicedC > ð;
 $V { ð } [:^Letter:] > θ;
-$V { ð } $ > θ;
 ð > ð;
 
 { k } j > c;
@@ -98,7 +96,6 @@ g g > kk;
 $V { g } $V > ɣ;
 $V { g } $voicedC > ɣ;
 $V { g } [:^Letter:] > x;
-$V { g } $ > x;
 
 { g } [ieíyýæé] > c;
 { k } [ieíyýæé] > cʰ;

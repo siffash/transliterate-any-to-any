@@ -26,15 +26,10 @@ n j > ɲ;
 { ž } $voiceless > ʃ;
 
 { b } [:^Letter:] > p;
-{ b } $ > p;
 { d } [:^Letter:] > t;
-{ d } $ > t;
 { g } [:^Letter:] > k;
-{ g } $ > k;
 { z } [:^Letter:] > s;
-{ z } $ > s;
 { ž } [:^Letter:] > ʃ;
-{ ž } $ > ʃ;
 
 $cons { r } $cons > r̩;
 $cons { ŕ } $cons > r̩ː;
@@ -42,18 +37,14 @@ $cons { r̀ } $cons > r̩;
 $cons { r } [:^Letter:] > r̩;
 $cons { ŕ } [:^Letter:] > r̩ː;
 $cons { r̀ } [:^Letter:] > r̩;
-$cons { ŕ } $ > r̩ː;
-$cons { r̀ } $ > r̩;
-$cons { r } $ > r̩;
 [:^Letter:] { r } $cons > r̩;
 [:^Letter:] { ŕ } $cons > r̩ː;
 [:^Letter:] { r̀ } $cons > r̩;
 
-[:^Letter:] { v } r > ʋ ;
-[:^Letter:] { v } l > ʋ ;
-{ v } $cons > w ;
-{ v } [:^Letter:] > w ;
-{ v } $ > w ;
+[:^Letter:] { v } r > ʋ;
+[:^Letter:] { v } l > ʋ;
+{ v } $cons > w;
+{ v } [:^Letter:] > w;
 
 b > b;
 c > t͡s;
