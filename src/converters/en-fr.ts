@@ -1,0 +1,22 @@
+import { Text } from "types";
+import { copyCase } from "helpers/copyCase";
+
+export const enFr = async (text: Text) => {
+  const { toIPA } = require("phonemize");
+  const { RBT } = await import("icu-transliterator");
+  const { ipaFrRules } = await import("constants/ipa-fr.rules");
+
+  const transliterator = RBT.fromRules(ipaFrRules);
+
+  const convert = (text: string) => {
+    const ipa = toIPA(text);
+    const transliterated = transliterator.transliterate(ipa);
+    return copyCase(text, transliterated);
+  };
+
+  if (typeof text === "string") {
+    return convert(text);
+  } else {
+    return text.map(convert);
+  }
+};

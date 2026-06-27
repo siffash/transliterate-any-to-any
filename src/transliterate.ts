@@ -1203,11 +1203,21 @@ export const transliterate = async <T extends Text>(
 
       // if OUTPUT language is Greek
       case "el":
+        switch (from) {
+          case "en": {
+            const { enEl } = await import("converters/en-el");
+            return (await enEl(text)) as T;
+          }
+        }
         break;
 
       // if OUTPUT language is Russian
       case "ru":
         switch (from) {
+          case "en": {
+            const { enRu } = await import("converters/en-ru");
+            return (await enRu(text)) as T;
+          }
           case "bg": {
             const { bgRu } = await import("converters/bg-ru");
             return (await bgRu(text)) as T;
@@ -1242,6 +1252,10 @@ export const transliterate = async <T extends Text>(
       // if OUTPUT language is Ukrainian
       case "uk":
         switch (from) {
+          case "en": {
+            const { enUk } = await import("converters/en-uk");
+            return (await enUk(text)) as T;
+          }
           case "bg": {
             const { bgUk } = await import("converters/bg-uk");
             return (await bgUk(text)) as T;
@@ -1276,6 +1290,10 @@ export const transliterate = async <T extends Text>(
       // if OUTPUT language is Bulgarian
       case "bg":
         switch (from) {
+          case "en": {
+            const { enBg } = await import("converters/en-bg");
+            return (await enBg(text)) as T;
+          }
           case "mk": {
             const { mkBg } = await import("converters/mk-bg");
             return (await mkBg(text)) as T;
@@ -1310,6 +1328,10 @@ export const transliterate = async <T extends Text>(
       // if OUTPUT language is Macedonian
       case "mk":
         switch (from) {
+          case "en": {
+            const { enMk } = await import("converters/en-mk");
+            return (await enMk(text)) as T;
+          }
           case "bg": {
             const { bgMk } = await import("converters/bg-mk");
             return (await bgMk(text)) as T;
@@ -1343,26 +1365,62 @@ export const transliterate = async <T extends Text>(
 
       // if OUTPUT language is Azerbaijani
       case "az":
+        switch (from) {
+          case "en": {
+            const { enAz } = await import("converters/en-az");
+            return (await enAz(text)) as T;
+          }
+        }
         break;
 
       // if OUTPUT language is Bosnian
       case "bs":
+        switch (from) {
+          case "en": {
+            const { enBs } = await import("converters/en-bs");
+            return (await enBs(text)) as T;
+          }
+        }
         break;
 
       // if OUTPUT language is Catalan
       case "ca":
+        switch (from) {
+          case "en": {
+            const { enCa } = await import("converters/en-ca");
+            return (await enCa(text)) as T;
+          }
+        }
         break;
 
       // if OUTPUT language is Czech
       case "cs":
+        switch (from) {
+          case "en": {
+            const { enCs } = await import("converters/en-cs");
+            return (await enCs(text)) as T;
+          }
+        }
         break;
 
       // if OUTPUT language is Danish
       case "da":
+        switch (from) {
+          case "en": {
+            const { enDa } = await import("converters/en-da");
+            return (await enDa(text)) as T;
+          }
+        }
         break;
 
       // if OUTPUT language is German
       case "de":
+        switch (from) {
+          case "en": {
+            const { enDe } = await import("converters/en-de");
+            return (await enDe(text)) as T;
+          }
+        }
         break;
 
       // if OUTPUT language is English
@@ -1413,107 +1471,261 @@ export const transliterate = async <T extends Text>(
 
       // if OUTPUT language is Spanish
       case "es":
+        switch (from) {
+          case "en": {
+            const { enEs } = await import("converters/en-es");
+            return (await enEs(text)) as T;
+          }
+        }
         break;
 
       // if OUTPUT language is Estonian
       case "et":
+        switch (from) {
+          case "en": {
+            const { enEt } = await import("converters/en-et");
+            return (await enEt(text)) as T;
+          }
+        }
         break;
 
       // if OUTPUT language is Finnish
       case "fi":
+        switch (from) {
+          case "en": {
+            const { enFi } = await import("converters/en-fi");
+            return (await enFi(text)) as T;
+          }
+        }
         break;
 
       // if OUTPUT language is French
       case "fr":
+        switch (from) {
+          case "en": {
+            const { enFr } = await import("converters/en-fr");
+            return (await enFr(text)) as T;
+          }
+        }
         break;
 
       // if OUTPUT language is Croatian
       case "hr":
+        switch (from) {
+          case "en": {
+            const { enHr } = await import("converters/en-hr");
+            return (await enHr(text)) as T;
+          }
+        }
         break;
 
       // if OUTPUT language is Hungarian
       case "hu":
+        switch (from) {
+          case "en": {
+            const { enHu } = await import("converters/en-hu");
+            return (await enHu(text)) as T;
+          }
+        }
         break;
 
       // if OUTPUT language is Indonesian
       case "id":
+        switch (from) {
+          case "en": {
+            const { enId } = await import("converters/en-id");
+            return (await enId(text)) as T;
+          }
+        }
         break;
 
       // if OUTPUT language is Icelandic
       case "is":
+        switch (from) {
+          case "en": {
+            const { enIs } = await import("converters/en-is");
+            return (await enIs(text)) as T;
+          }
+        }
         break;
 
       // if OUTPUT language is Italian
       case "it":
+        switch (from) {
+          case "en": {
+            const { enIt } = await import("converters/en-it");
+            return (await enIt(text)) as T;
+          }
+        }
         break;
 
       // if OUTPUT language is Kazakh
       case "kk":
+        switch (from) {
+          case "en": {
+            const { enKk } = await import("converters/en-kk");
+            return (await enKk(text)) as T;
+          }
+        }
         break;
 
       // if OUTPUT language is Luxembourgish
       case "lb":
+        switch (from) {
+          case "en": {
+            const { enLb } = await import("converters/en-lb");
+            return (await enLb(text)) as T;
+          }
+        }
         break;
 
       // if OUTPUT language is Lithuanian
       case "lt":
+        switch (from) {
+          case "en": {
+            const { enLt } = await import("converters/en-lt");
+            return (await enLt(text)) as T;
+          }
+        }
         break;
 
       // if OUTPUT language is Latvian
       case "lv":
+        switch (from) {
+          case "en": {
+            const { enLv } = await import("converters/en-lv");
+            return (await enLv(text)) as T;
+          }
+        }
         break;
 
       // if OUTPUT language is Maltese
       case "mt":
+        switch (from) {
+          case "en": {
+            const { enMt } = await import("converters/en-mt");
+            return (await enMt(text)) as T;
+          }
+        }
         break;
 
       // if OUTPUT language is Dutch
       case "nl":
+        switch (from) {
+          case "en": {
+            const { enNl } = await import("converters/en-nl");
+            return (await enNl(text)) as T;
+          }
+        }
         break;
 
       // if OUTPUT language is Norwegian
       case "no":
+        switch (from) {
+          case "en": {
+            const { enNo } = await import("converters/en-no");
+            return (await enNo(text)) as T;
+          }
+        }
         break;
 
       // if OUTPUT language is Polish
       case "pl":
+        switch (from) {
+          case "en": {
+            const { enPl } = await import("converters/en-pl");
+            return (await enPl(text)) as T;
+          }
+        }
         break;
 
       // if OUTPUT language is Portuguese
       case "pt":
+        switch (from) {
+          case "en": {
+            const { enPt } = await import("converters/en-pt");
+            return (await enPt(text)) as T;
+          }
+        }
         break;
 
       // if OUTPUT language is Romanian
       case "ro":
+        switch (from) {
+          case "en": {
+            const { enRo } = await import("converters/en-ro");
+            return (await enRo(text)) as T;
+          }
+        }
         break;
 
       // if OUTPUT language is Slovak
       case "sk":
+        switch (from) {
+          case "en": {
+            const { enSk } = await import("converters/en-sk");
+            return (await enSk(text)) as T;
+          }
+        }
         break;
 
       // if OUTPUT language is Slovene
       case "sl":
+        switch (from) {
+          case "en": {
+            const { enSl } = await import("converters/en-sl");
+            return (await enSl(text)) as T;
+          }
+        }
         break;
 
       // if OUTPUT language is Albanian
       case "sq":
+        switch (from) {
+          case "en": {
+            const { enSq } = await import("converters/en-sq");
+            return (await enSq(text)) as T;
+          }
+        }
         break;
 
       // if OUTPUT language is Serbian
       case "sr":
+        switch (from) {
+          case "en": {
+            const { enSr } = await import("converters/en-sr");
+            return (await enSr(text)) as T;
+          }
+        }
         break;
 
       // if OUTPUT language is Swedish
       case "sv":
+        switch (from) {
+          case "en": {
+            const { enSv } = await import("converters/en-sv");
+            return (await enSv(text)) as T;
+          }
+        }
         break;
 
       // if OUTPUT language is Turkish
       case "tr":
+        switch (from) {
+          case "en": {
+            const { enTr } = await import("converters/en-tr");
+            return (await enTr(text)) as T;
+          }
+        }
         break;
 
       // if OUTPUT language is Vietnamese
       case "vi":
         switch (from) {
+          case "en": {
+            const { enVi } = await import("converters/en-vi");
+            return (await enVi(text)) as T;
+          }
           case "zh": {
             const { zhVi } = await import("converters/zh-vi");
             return (await zhVi(text, ascii)) as T;
