@@ -1160,6 +1160,34 @@ export const transliterate = async <T extends Text>(
             const { enKa } = await import("converters/en-ka");
             return (await enKa(text)) as T;
           }
+          case "fr": {
+            const { frKa } = await import("converters/fr-ka");
+            return (await frKa(text)) as T;
+          }
+          case "da": {
+            const { daKa } = await import("converters/da-ka");
+            return (await daKa(text)) as T;
+          }
+          case "no": {
+            const { noKa } = await import("converters/no-ka");
+            return (await noKa(text)) as T;
+          }
+          case "sv": {
+            const { svKa } = await import("converters/sv-ka");
+            return (await svKa(text)) as T;
+          }
+          case "is": {
+            const { isKa } = await import("converters/is-ka");
+            return (await isKa(text)) as T;
+          }
+          case "pt": {
+            const { ptKa } = await import("converters/pt-ka");
+            return (await ptKa(text)) as T;
+          }
+          case "vi": {
+            const { viKa } = await import("converters/vi-ka");
+            return (await viKa(text)) as T;
+          }
         }
         break;
 
