@@ -6,8 +6,8 @@ interface Token {
 }
 
 /**
- * Copies the case pattern of each word in `input1` to the
- * corresponding word in `input2`.
+ * Copies the case pattern of each word in `from` to the
+ * corresponding word in `to`.
  *
  * Rules
  * ─────
@@ -17,21 +17,21 @@ interface Token {
  *   characters like e + ◌́ (NFD) are not treated as word-breakers.
  * • Non-letter characters (punctuation, spaces, digits …) are
  *   preserved verbatim in the output.
- * • If input1 has more words than input2, the extra case patterns
- *   are silently ignored. If input2 has more words, the extra
+ * • If `from` has more words than `to`, the extra case patterns
+ *   are silently ignored. If `to` has more words, the extra
  *   words stay lowercase.
  * • Case classes: "lower" (word), "upper" (WORD), "title" (Word).
  *
  * Works with Latin, Cyrillic, Greek, Armenian, Georgian, and any
  * other Unicode script that has case distinctions.
  */
-export const copyCase = (input1: string, input2: string): string => {
-  const cases = tokenize(input1)
+export const copyCase = (from: string, to: string): string => {
+  const cases = tokenize(from)
     .filter((t: Token) => t.isWord)
     .map((t: Token) => getWordCase(t.text));
 
   let wi = 0;
-  return tokenize(input2)
+  return tokenize(to)
     .map((t: Token) =>
       t.isWord ? applyCase(t.text, wi < cases.length ? cases[wi++] : "lower") : t.text,
     )
@@ -66,7 +66,7 @@ const getWordCase = (word: string): CaseType => {
   return "title";
 };
 
-/** Applies a case pattern to a word (input2 is assumed pre-lowercased). */
+/** Applies a case pattern to a word (`to` is assumed pre-lowercased). */
 const applyCase = (word: string, type: CaseType): string => {
   if (type === "upper") return word.toUpperCase();
   if (type === "lower") return word.toLowerCase();

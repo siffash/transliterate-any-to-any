@@ -1156,6 +1156,10 @@ export const transliterate = async <T extends Text>(
             const { koKa } = await import("converters/ko-ka");
             return (await koKa(text)) as T;
           }
+          case "en": {
+            const { enKa } = await import("converters/en-ka");
+            return (await enKa(text)) as T;
+          }
         }
         break;
 
@@ -1189,6 +1193,10 @@ export const transliterate = async <T extends Text>(
           case "ko": {
             const { koHy } = await import("converters/ko-hy");
             return (await koHy(text)) as T;
+          }
+          case "en": {
+            const { enHy } = await import("converters/en-hy");
+            return (await enHy(text)) as T;
           }
         }
         break;
