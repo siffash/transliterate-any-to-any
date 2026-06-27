@@ -177,7 +177,13 @@ $apos > ;
 юю > ю;
 яя > я;
 
-::Title;
+::Null;
+
+йа > я;
+йу > ю;
+шт > щ;
 
 [:Letter:] [:Letter:] { ъ } [:^Letter:] > ;
+
+::Title;
 `;

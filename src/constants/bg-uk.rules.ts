@@ -24,4 +24,19 @@ $non_nine { И > І;
 
 ъ > и;
 Ъ > И;
+
+::Null;
+
+$vowel_uk = [аеєиіїоуюяАЕЄИІЇОУЮЯ];
+$vowel_uk { йа > я;
+$vowel_uk { ЙА > Я;
+$vowel_uk { йе > є;
+$vowel_uk { ЙЕ > Є;
+$vowel_uk { йі > ї;
+$vowel_uk { ЙІ > Ї;
+$vowel_uk { йу > ю;
+$vowel_uk { ЙУ > Ю;
+шч > щ;
+Шч > Щ;
+ШЧ > Щ;
 `;
