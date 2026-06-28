@@ -1,19 +1,10 @@
 import { Text } from "types";
 
-export const koLatn = async (text: Text, ascii: boolean) => {
+export const koLatn = async (text: Text) => {
   const Aromanize = (await import("aromanize")).default;
 
   const convert = async (text: string) => {
-    let result = Aromanize.romanize(text);
-
-    if (ascii) {
-      const { RBT } = await import("icu-transliterator");
-      const { latnAsciiRules } = await import("constants/latn-ascii.rules");
-      const transliterator = RBT.fromRules(latnAsciiRules);
-      result = transliterator.transliterate(result);
-    }
-
-    return result;
+    return Aromanize.romanize(text);
   };
 
   if (typeof text === "string") {

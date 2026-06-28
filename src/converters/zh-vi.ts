@@ -1,6 +1,6 @@
 import { Text } from "types";
 
-export const zhVi = async (text: Text, ascii: boolean) => {
+export const zhVi = async (text: Text) => {
   const { OpenCC } = await import("opencc");
   const { pinyin } = await import("pinyin-pro");
   const { getHanviet } = await import("hanviet-pinyin-words");
@@ -99,13 +99,6 @@ export const zhVi = async (text: Text, ascii: boolean) => {
       .replace(/\s+/g, " ")
       .replace(/\s+([.,!?;:])/g, "$1")
       .trim();
-
-    if (ascii) {
-      const { RBT } = await import("icu-transliterator");
-      const { latnAsciiRules } = await import("constants/latn-ascii.rules");
-      const transliterator = RBT.fromRules(latnAsciiRules);
-      result = transliterator.transliterate(result);
-    }
 
     return result;
   };

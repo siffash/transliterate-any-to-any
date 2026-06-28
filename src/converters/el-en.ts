@@ -1,11 +1,10 @@
 import { Text } from "types";
 
-export const elEn = async (text: Text, ascii: boolean) => {
+export const elEn = async (text: Text) => {
   const { RBT } = await import("icu-transliterator");
   const { elEnRules } = await import("constants/el-en.rules");
-  const { latnAsciiRules } = await import("constants/latn-ascii.rules");
 
-  const transliterator = RBT.fromRules(elEnRules + (ascii ? latnAsciiRules : ""));
+  const transliterator = RBT.fromRules(elEnRules);
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);

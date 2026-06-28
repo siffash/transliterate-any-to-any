@@ -7,5 +7,4 @@ export type Text = string | string[];
 export type Options = {
   from: Language;
   to: Language;
-  ascii?: boolean;
 };

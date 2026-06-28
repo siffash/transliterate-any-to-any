@@ -1,6 +1,6 @@
 import { Text } from "types";
 
-export const jaLatn = async (text: Text, ascii: boolean) => {
+export const jaLatn = async (text: Text) => {
   const { default: Kuroshiro } = await import("kuroshiro");
   const { default: KuromojiAnalyzer } = await import("kuroshiro-analyzer-kuromoji");
 
@@ -8,16 +8,7 @@ export const jaLatn = async (text: Text, ascii: boolean) => {
   await kuroshiro.init(new KuromojiAnalyzer());
 
   const convert = async (text: string) => {
-    let result = await kuroshiro.convert(text, { to: "romaji" });
-
-    if (ascii) {
-      const { RBT } = await import("icu-transliterator");
-      const { latnAsciiRules } = await import("constants/latn-ascii.rules");
-      const transliterator = RBT.fromRules(latnAsciiRules);
-      result = transliterator.transliterate(result);
-    }
-
-    return result;
+    return await kuroshiro.convert(text, { to: "romaji" });
   };
 
   if (typeof text === "string") {
