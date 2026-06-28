@@ -1,14 +1,14 @@
 import { Text } from "types";
 
 export const koKa = async (text: Text) => {
-  const { phonemize } = require("phonemize/all");
+  const { toIPA } = require("phonemize/all");
   const { RBT } = await import("icu-transliterator");
   const { ipaKaRules } = await import("constants/ipa-ka.rules");
 
   const transliterator = RBT.fromRules(ipaKaRules);
 
   const convert = (text: string) => {
-    const ipa = phonemize(text, { anyAscii: true });
+    const ipa = toIPA(text, { anyAscii: true });
     return transliterator.transliterate(ipa);
   };
 
