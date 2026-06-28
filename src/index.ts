@@ -6,11 +6,11 @@ export { transliterate } from "transliterate";
 
 import { transliterate } from "transliterate";
 const test = async () => {
-  // console.log(
-  //   await transliterate(
-  //     "London, Tokyo, Nairobi, Vancouver, Rio de Janeiro, Istanbul, Sydney, Mumbai, Reykjavik, Buenos Aires, Casablanca, Edinburgh, Singapore, Kathmandu, Lisbon, Mexico City, Amsterdam, Stockholm, Vienna, Florence, James Alexander Sterling, Elizabeth Marie Montgomery, William Thomas Jefferson, Catherine Anne Sullivan, Robert Michael Henderson, Sophia Louise Richardson, David Christopher Wallace, Margaret Rose Fitzgerald, Benjamin Edward Thompson, Olivia Grace Patterson, Samuel Richard Harrison, Eleanor Jane Whittaker, Jonathan David Miller, Victoria Beatrice Thorne, Nicholas Arthur Sterling, Isabella Mary Crawford, Daniel Patrick O'Sullivan, Beatrice Alice Kensington, Henry Lawrence Faulkner, Penelope Diane Wentworth, Global Innovation Technologies, Silver Creek Manufacturing, Horizon Strategic Consulting, Radiant Energy Solutions, Emerald Valley Agriculture, Northern Star Logistics, Peak Performance Athletics, Blue Marble Aerospace, Golden Gate Software, Velvet Thread Textiles, Crystal Clear Communications, Iron Works Infrastructure, Harmony Health Systems, Midnight Sun Productions, Prairie Wind Renewables, Grand Vista Hospitality, Sterling Bridge Finance, Alpine Ridge Outdoor, Urban Pulse Media, Crimson Oak Furniture",
-  //     { from: "en", to: "ka" },
-  //   ),
-  // );
+  console.log(
+    await transliterate(
+      "ירושלים, תל אביב יפו, חיפה, באר שבע, נצרת, טבריה, צפת, אילת, ראשון לציון, פתח תקווה, אשדוד, נתניה, חולון, בני ברק, רמת גן, הרצליה, כפר סבא, מודיעין מכבים רעות, בית שמש, מעלה אדומים, אברהם יצחק כהן, שרה רבקה לוי, דוד משה מזרחי, מרים לאה פרץ, יונתן שמואל אברהם, נועה חנה פרידמן, איתי אלכסנדר כץ, מאיה שלומית אשכנזי, גיא בנימין ביטון, תמר בתיה שפירא, רועי יהודה מלכה, עדי רחל גולדשטיין, דניאל אהרון סבג, הילה מלכה חדד, יובל ישראל ברקוביץ, רוני שירה דיין, מתן פנחס אזולאי, שירה אילנה וייס, עומר שלמה גבאי, מיכל זהבה שוורץ, התעשייה האווירית לישראל, בנק הפועלים בעירבון מוגבל, שירותי בריאות כללית, חברת החשמל לישראל, בנק לאומי לישראל, אל על נתיבי אוויר לישראל, שופרסל חברה להשקעות, שטראוס גרופ ניהול, טבע תעשיות פרמצבטיות, פלאפון תקשורת בעירבון מוגבל, סלקום ישראל בעירבון מוגבל, פרטנר תקשורת בעירבון מוגבל, אסם השקעות בעירבון מוגבל, מפעלי ים המלח, מקורות חברת המים הלאומית, רכבת ישראל בעירבון מוגבל, התעשייה הצבאית לישראל, בנק דיסקונט לישראל, מגדל חברה לביטוח, הראל השקעות בביטוח ושירותים פיננסיים",
+      { from: "he", to: "ar" },
+    ),
+  );
 };
 test();

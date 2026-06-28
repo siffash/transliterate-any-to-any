@@ -50,8 +50,9 @@ const isLower = (ch: string): boolean => isLetter(ch) && ch === ch.toLowerCase()
  * to a preceding base letter. They must not act as word-breakers;
  * e.g. the NFD sequence "e\u0301" (decomposed é) must stay together
  * as part of one word token, not split into "e" | "◌́".
+ * The same applies for all kinds of apostrophes.
  */
-const isMark = (ch: string): boolean => /\p{M}/u.test(ch);
+const isMark = (ch: string): boolean => /[\p{M}'’‘`´ʼ]/u.test(ch);
 
 /**
  * Classifies the case pattern of a word token.
