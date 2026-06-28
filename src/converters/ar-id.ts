@@ -1,0 +1,17 @@
+import { Text } from "types";
+
+export const arId = async (text: Text) => {
+  const { RBT } = await import("icu-transliterator");
+  const { arIpa } = await import("converters/ar-ipa");
+  const { ipaIdRules } = await import("constants/ipa-id.rules");
+
+  const transliterator = RBT.fromRules(ipaIdRules);
+
+  if (typeof text === "string") {
+    const ipa = await arIpa<string>(text);
+    return transliterator.transliterate(ipa);
+  } else {
+    const ipaArray = await arIpa<string[]>(text);
+    return ipaArray.map(ipa => transliterator.transliterate(ipa));
+  }
+};
