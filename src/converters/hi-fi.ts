@@ -1,0 +1,15 @@
+import { Text } from "types";
+
+export const hiFi = async (text: Text) => {
+  const { RBT } = await import("icu-transliterator");
+  const { hiIpaRules } = await import("constants/hi-ipa.rules");
+  const { ipaFiRules } = await import("constants/ipa-fi.rules");
+
+  const transliterator = RBT.fromRules(hiIpaRules + ipaFiRules + "::Title;");
+
+  if (typeof text === "string") {
+    return transliterator.transliterate(text);
+  } else {
+    return text.map(text => transliterator.transliterate(text));
+  }
+};
