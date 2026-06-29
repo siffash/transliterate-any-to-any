@@ -1,11 +1,11 @@
 import { Text } from "types";
 
-export const heEn = async (text: Text) => {
+export const heDa = async (text: Text) => {
   const { RBT } = await import("icu-transliterator");
   const { heIpa } = await import("converters/he-ipa");
-  const { ipaEnRules } = await import("constants/ipa-en.rules");
+  const { ipaDaRules } = await import("constants/ipa-da.rules");
 
-  const transliterator = RBT.fromRules(ipaEnRules + "::Title;");
+  const transliterator = RBT.fromRules(ipaDaRules + "::Title;");
 
   if (typeof text === "string") {
     const ipa = await heIpa<string>(text);
