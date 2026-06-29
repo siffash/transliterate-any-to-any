@@ -1,17 +1,18 @@
 export const koLatnRules = `
+$double = [jklpst];
+
+[:^Letter:] { ng > ;
+$double } $double > ;
+
+::Null;
+
 ch > č;
-jj > dž;
-kk > k;
-ll > l;
-pp > p;
-ss > s;
-tt > t;
+sh > š;
 ae > ä;
 eo > o;
 eu > ï;
 oe > ö;
 ui > ïi;
-sh > š;
 c > k;
 j > dž;
 w > v;
