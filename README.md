@@ -14,9 +14,9 @@ languages.
 ## Examples
 
 ```typescript
-import { transliterate } from "transliterate-any-to-any";
-
 await transliterate("Копривщица", { from: "bg", to: "en" }); // Koprivshtitsa ???????
+
+await transliterate(["上海", "广州"], { from: "zh", to: "bg" }); // ["Шанхай", "Гуанджоу"]
 ```
 
 ## Prerequisites
@@ -37,10 +37,10 @@ await transliterate("Копривщица", { from: "bg", to: "en" }); // Kopriv
 
 ### Options
 
-| Object property | Type     | Required | Default | Description                                                                  |
-| --------------- | -------- | -------- | ------- | ---------------------------------------------------------------------------- |
-| `from`          | `string` | Yes      | -       | Input language in [BCP 47](https://en.wikipedia.org/wiki/IETF_language_tag)  |
-| `to`            | `string` | Yes      | -       | Output language in [BCP 47](https://en.wikipedia.org/wiki/IETF_language_tag) |
+| Object property | Type     | Required | Description                                                                  |
+| --------------- | -------- | -------- | ---------------------------------------------------------------------------- |
+| `from`          | `string` | Yes      | Input language in [BCP 47](https://en.wikipedia.org/wiki/IETF_language_tag)  |
+| `to`            | `string` | Yes      | Output language in [BCP 47](https://en.wikipedia.org/wiki/IETF_language_tag) |
 
 ## Supported languages
 

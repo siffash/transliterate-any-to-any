@@ -1,12 +1,12 @@
 import { Text } from "types";
 
-export const zhKa = async (text: Text) => {
+export const zhAz = async (text: Text) => {
   const { toIPA } = require("phonemize/all");
   const { RBT } = await import("icu-transliterator");
-  const { ipaKaRules } = await import("constants/ipa-ka.rules");
+  const { ipaAzRules } = await import("constants/ipa-az.rules");
   const { splitZh } = await import("helpers/splitZh");
 
-  const transliterator = RBT.fromRules(ipaKaRules);
+  const transliterator = RBT.fromRules(ipaAzRules + "::Title;");
 
   const convert = (text: string) => {
     const ipa = splitZh(text, text => toIPA(text, { separator: "" }));

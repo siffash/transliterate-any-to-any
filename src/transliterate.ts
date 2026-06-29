@@ -1559,6 +1559,10 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
       // if OUTPUT language is Azerbaijani
       case "az":
         switch (from) {
+          case "zh": {
+            const { zhAz } = await import("converters/zh-az");
+            return (await zhAz(text)) as T;
+          }
           case "en": {
             const { enAz } = await import("converters/en-az");
             return (await enAz(text)) as T;

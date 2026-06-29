@@ -183,7 +183,5 @@ $apos > ;
 йу > ю;
 шт > щ;
 
-[:Letter:] [:Letter:] { ъ } [:^Letter:] > ;
-
 ::Title;
 `;

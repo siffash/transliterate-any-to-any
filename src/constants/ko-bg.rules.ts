@@ -136,7 +136,5 @@ n > н;
 йу > ю;
 шт > щ;
 
-[:Letter:] [:Letter:] { ъ } [:^Letter:] > ;
-
 ::Title;
 `;

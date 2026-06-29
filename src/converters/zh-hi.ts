@@ -4,11 +4,12 @@ export const zhHi = async (text: Text) => {
   const { toIPA } = require("phonemize/all");
   const { RBT } = await import("icu-transliterator");
   const { ipaHiRules } = await import("constants/ipa-hi.rules");
+  const { splitZh } = await import("helpers/splitZh");
 
   const transliterator = RBT.fromRules(ipaHiRules);
 
   const convert = (text: string) => {
-    const ipa = toIPA(text);
+    const ipa = splitZh(text, text => toIPA(text, { separator: "" }));
     return transliterator.transliterate(ipa);
   };
 
