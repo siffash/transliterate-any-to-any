@@ -1,5 +1,5 @@
-export { supportedLanguages } from "helpers/languages";
-export { Language } from "types";
+export { scripts, languages } from "helpers/constants";
+export { Script, Language } from "types";
 export { transliterate } from "transliterate";
 
 // *** EXPERIMENTS ***

@@ -1,4 +1,4 @@
-import { supportedLanguages } from "helpers/languages";
+import { supportedLanguages } from "helpers/constants";
 import { Options, Text } from "types";
 
 export const transliterate = async <T extends Text>(text: T, { from, to }: Options): Promise<T> => {
