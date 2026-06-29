@@ -2031,6 +2031,10 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
       // if OUTPUT language is French
       case "fr":
         switch (from) {
+          case "hi": {
+            const { hiFr } = await import("converters/hi-fr");
+            return (await hiFr(text)) as T;
+          }
           case "zh": {
             const { zhFr } = await import("converters/zh-fr");
             return (await zhFr(text)) as T;
