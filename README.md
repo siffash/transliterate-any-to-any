@@ -16,6 +16,8 @@ languages.
 ```typescript
 await transliterate("Копривщица", { from: "bg", to: "en" }); // Koprivshtitsa ???????
 
+await transliterate("上海", { from: "zh", to: "en" }); // Shanghai
+
 await transliterate(["上海", "广州"], { from: "zh", to: "bg" }); // ["Шанхай", "Гуанджоу"]
 ```
 

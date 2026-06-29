@@ -18,6 +18,16 @@ export const latnEnRules = `
 Ń > N;
 ń > n;
 
+DŽ > ZH;
+Dž > Zh;
+dŽ > zH;
+dž > zh;
+
+DZ > Z;
+Dz > Z;
+dZ > z;
+dz > z;
+
 [:Upper:] { Č > CH;
 Č } [:Upper:] > CH;
 Č > Ch;
@@ -37,6 +47,11 @@ export const latnEnRules = `
 Ž } [:Upper:] > ZH;
 Ž > Zh;
 ž > zh;
+
+[:Upper:] { X > H;
+X } [:Upper:] > H;
+X > H;
+x > h;
 
 · > ;
 `;
