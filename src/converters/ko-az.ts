@@ -1,12 +1,12 @@
 import { Text } from "types";
 
-export const koHy = async (text: Text) => {
+export const koAz = async (text: Text) => {
   const { toIPA } = require("phonemize/all");
   const { RBT } = await import("icu-transliterator");
-  const { ipaHyRules } = await import("constants/ipa-hy.rules");
+  const { ipaAzRules } = await import("constants/ipa-az.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
 
-  const transliterator = RBT.fromRules(ipaHyRules + "::Title;");
+  const transliterator = RBT.fromRules(ipaAzRules + "::Title;");
 
   const convert = (text: string) => {
     const split = wordSplitter(text, "ko");

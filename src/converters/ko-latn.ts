@@ -2,9 +2,11 @@ import { Text } from "types";
 
 export const koLatn = async (text: Text) => {
   const Aromanize = (await import("aromanize")).default;
+  const { wordSplitter } = await import("helpers/wordSplitter");
 
   const convert = async (text: string) => {
-    return Aromanize.romanize(text);
+    const split = wordSplitter(text, "ko");
+    return Aromanize.romanize(split);
   };
 
   if (typeof text === "string") {

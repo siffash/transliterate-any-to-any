@@ -3,7 +3,6 @@ const pluginNoOnlyTests = require("eslint-plugin-no-only-tests");
 const prettier = require("eslint-plugin-prettier");
 const { defineConfig } = require("eslint/config");
 const globals = require("globals");
-const path = require("node:path");
 const { FlatCompat } = require("@eslint/eslintrc");
 const js = require("@eslint/js");
 const typescriptEslint = require("@typescript-eslint/eslint-plugin");
@@ -48,7 +47,6 @@ module.exports = defineConfig([
     },
 
     rules: {
-      "@typescript-eslint/no-unused-vars": "warn",
       "@typescript-eslint/no-var-requires": "off",
       "@typescript-eslint/no-namespace": "off",
       "@typescript-eslint/no-require-imports": "off",

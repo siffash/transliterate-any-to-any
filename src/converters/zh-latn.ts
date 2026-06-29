@@ -2,10 +2,10 @@ import { Text } from "types";
 
 export const zhLatn = async (text: Text) => {
   const { pinyin } = await import("pinyin-pro");
-  const { splitZh } = await import("helpers/splitZh");
+  const { wordSplitter } = await import("helpers/wordSplitter");
 
   const convert = async (text: string) => {
-    const split = splitZh(text);
+    const split = wordSplitter(text, "zh");
     return pinyin(split, { separator: "" });
   };
 

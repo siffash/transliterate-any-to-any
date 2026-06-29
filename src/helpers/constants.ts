@@ -1,18 +1,28 @@
 import { Direction, Language, Script } from "types";
 
-export const scripts: Record<Script, { cases: boolean; direction: Direction }> = {
-  Hani: { cases: false, direction: "LTR" },
-  Jpan: { cases: false, direction: "LTR" },
-  Kore: { cases: false, direction: "LTR" },
-  Deva: { cases: false, direction: "LTR" },
-  Arab: { cases: false, direction: "RTL" },
-  Hebr: { cases: false, direction: "RTL" },
-  Geor: { cases: false, direction: "LTR" },
-  Armn: { cases: true, direction: "LTR" },
-  Grek: { cases: true, direction: "LTR" },
-  Cyrl: { cases: true, direction: "LTR" },
-  Latn: { cases: true, direction: "LTR" },
+// [\p{scx=Han}\p{M}\p{Cf}\p{scx=Common}]+ (example regex for Chinese script + Standard spaces, commas, standard periods, hyphens, and numbers belong to the Common script extension)
+export const scripts: Record<
+  Script,
+  { cases: boolean; direction: Direction; regex: string | RegExp }
+> = {
+  Hani: { cases: false, direction: "LTR", regex: "\\p{scx=Han}\\p{M}\\p{Cf}" },
+  Jpan: {
+    cases: false,
+    direction: "LTR",
+    regex: "\\p{scx=Hiragana}\\p{scx=Katakana}\\p{scx=Han}\\p{M}\\p{Cf}",
+  },
+  Kore: { cases: false, direction: "LTR", regex: "\\p{scx=Hangul}\\p{M}\\p{Cf}" },
+  Deva: { cases: false, direction: "LTR", regex: "\\p{scx=Devanagari}\\p{M}\\p{Cf}" },
+  Arab: { cases: false, direction: "RTL", regex: "\\p{scx=Arabic}\\p{M}\\p{Cf}" },
+  Hebr: { cases: false, direction: "RTL", regex: "\\p{scx=Hebrew}\\p{M}\\p{Cf}" },
+  Geor: { cases: false, direction: "LTR", regex: "\\p{scx=Georgian}\\p{M}\\p{Cf}" },
+  Armn: { cases: true, direction: "LTR", regex: "\\p{scx=Armenian}\\p{M}\\p{Cf}" },
+  Grek: { cases: true, direction: "LTR", regex: "\\p{scx=Greek}\\p{M}\\p{Cf}" },
+  Cyrl: { cases: true, direction: "LTR", regex: "\\p{scx=Cyrillic}\\p{M}\\p{Cf}" },
+  Latn: { cases: true, direction: "LTR", regex: "\\p{scx=Latin}\\p{M}\\p{Cf}" },
 } as const;
+
+new RegExp(scripts["Hani"].regex, "u");
 
 export const languages: Record<Language, { script: Script }> = {
   zh: { script: "Hani" },

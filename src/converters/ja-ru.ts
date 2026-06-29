@@ -5,6 +5,7 @@ export const jaRu = async (text: Text) => {
   const { default: KuromojiAnalyzer } = await import("kuroshiro-analyzer-kuromoji");
   const { RBT } = await import("icu-transliterator");
   const { jaRuRules } = await import("constants/ja-ru.rules");
+  const { wordSplitter } = await import("helpers/wordSplitter");
 
   const kuroshiro = new Kuroshiro();
   await kuroshiro.init(new KuromojiAnalyzer());
@@ -12,7 +13,8 @@ export const jaRu = async (text: Text) => {
   const transliterator = RBT.fromRules(jaRuRules);
 
   const convert = async (text: string) => {
-    const romanized = await kuroshiro.convert(text, { to: "romaji" });
+    const split = wordSplitter(text, "ja");
+    const romanized = await kuroshiro.convert(split, { to: "romaji" });
     return transliterator.transliterate(romanized);
   };
 

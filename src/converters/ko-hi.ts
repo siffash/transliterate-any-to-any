@@ -4,11 +4,13 @@ export const koHi = async (text: Text) => {
   const { toIPA } = require("phonemize/all");
   const { RBT } = await import("icu-transliterator");
   const { ipaHiRules } = await import("constants/ipa-hi.rules");
+  const { wordSplitter } = await import("helpers/wordSplitter");
 
   const transliterator = RBT.fromRules(ipaHiRules);
 
   const convert = (text: string) => {
-    const ipa = toIPA(text, { anyAscii: true });
+    const split = wordSplitter(text, "ko");
+    const ipa = toIPA(split, { anyAscii: true });
     return transliterator.transliterate(ipa);
   };
 

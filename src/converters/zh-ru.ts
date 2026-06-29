@@ -4,12 +4,12 @@ export const zhRu = async (text: Text) => {
   const { pinyin } = await import("pinyin-pro");
   const { RBT } = await import("icu-transliterator");
   const { zhRuRules } = await import("constants/zh-ru.rules");
-  const { splitZh } = await import("helpers/splitZh");
+  const { wordSplitter } = await import("helpers/wordSplitter");
 
   const transliterator = RBT.fromRules(zhRuRules);
 
   const convert = (text: string) => {
-    const split = splitZh(text);
+    const split = wordSplitter(text, "zh");
     const romanized = pinyin(split, { separator: "" });
     return transliterator.transliterate(romanized);
   };

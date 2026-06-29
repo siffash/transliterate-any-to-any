@@ -1,16 +1,16 @@
 import { Text } from "types";
 
-export const jaHy = async (text: Text) => {
+export const jaAz = async (text: Text) => {
   const { default: Kuroshiro } = await import("kuroshiro");
   const { default: KuromojiAnalyzer } = await import("kuroshiro-analyzer-kuromoji");
   const { toIPA } = require("phonemize/all");
   const { RBT } = await import("icu-transliterator");
-  const { ipaHyRules } = await import("constants/ipa-hy.rules");
+  const { ipaAzRules } = await import("constants/ipa-az.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
 
   const kuroshiro = new Kuroshiro();
   await kuroshiro.init(new KuromojiAnalyzer());
-  const transliterator = RBT.fromRules(ipaHyRules + "::Title;");
+  const transliterator = RBT.fromRules(ipaAzRules + "::Title;");
 
   const convert = async (text: string) => {
     const split = wordSplitter(text, "ja");

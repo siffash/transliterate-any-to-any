@@ -4,11 +4,13 @@ export const koRu = async (text: Text) => {
   const Aromanize = (await import("aromanize")).default;
   const { RBT } = await import("icu-transliterator");
   const { koRuRules } = await import("constants/ko-ru.rules");
+  const { wordSplitter } = await import("helpers/wordSplitter");
 
   const transliterator = RBT.fromRules(koRuRules);
 
   const convert = (text: string) => {
-    const romanized = Aromanize.romanize(text);
+    const split = wordSplitter(text, "ko");
+    const romanized = Aromanize.romanize(split);
     return transliterator.transliterate(romanized);
   };
 

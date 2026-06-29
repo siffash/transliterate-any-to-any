@@ -4,12 +4,12 @@ export const zhHe = async (text: Text) => {
   const { toIPA } = require("phonemize/all");
   const { RBT } = await import("icu-transliterator");
   const { ipaHeRules } = await import("constants/ipa-he.rules");
-  const { splitZh } = await import("helpers/splitZh");
+  const { wordSplitter } = await import("helpers/wordSplitter");
 
   const transliterator = RBT.fromRules(ipaHeRules);
 
   if (typeof text === "string") {
-    const ipa = splitZh(text, text => toIPA(text, { separator: "" }));
+    const ipa = wordSplitter(text, "zh", text => toIPA(text, { separator: "" }));
     return transliterator.transliterate(ipa);
   } else {
     return text.map(text => {

@@ -6,13 +6,15 @@ export const jaAr = async (text: Text) => {
   const { toIPA } = require("phonemize/all");
   const { RBT } = await import("icu-transliterator");
   const { ipaArRules } = await import("constants/ipa-ar.rules");
+  const { wordSplitter } = await import("helpers/wordSplitter");
 
   const kuroshiro = new Kuroshiro();
   await kuroshiro.init(new KuromojiAnalyzer());
   const transliterator = RBT.fromRules(ipaArRules);
 
   const convert = async (text: string) => {
-    const hiragana = await kuroshiro.convert(text, { to: "hiragana" });
+    const split = wordSplitter(text, "ja");
+    const hiragana = await kuroshiro.convert(split, { to: "hiragana" });
     const ipa = toIPA(hiragana, { anyAscii: true });
     return transliterator.transliterate(ipa);
   };
