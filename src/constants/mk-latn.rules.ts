@@ -1,4 +1,4 @@
-export const mkEnRules = `
+export const mkLatnRules = `
 $uc = [АБВГДЃЕЖЗЅИЈКЛЉМНЊОПРСТЌУФХЦЧЏШ[:Upper:]];
 
 { Ѕ } $uc > DZ;
