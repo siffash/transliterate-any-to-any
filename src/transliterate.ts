@@ -1435,6 +1435,10 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
       // if OUTPUT language is Bulgarian
       case "bg":
         switch (from) {
+          case "el": {
+            const { elBg } = await import("converters/el-bg");
+            return (await elBg(text)) as T;
+          }
           case "en": {
             const { enBg } = await import("converters/en-bg");
             return (await enBg(text)) as T;
