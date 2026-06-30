@@ -1,0 +1,15 @@
+import { Text } from "types";
+
+export const kkKa = async (text: Text) => {
+  const { RBT } = await import("icu-transliterator");
+  const { kkLatnRules } = await import("constants/kk-latn.rules");
+  const { latnKaRules } = await import("constants/latn-ka.rules");
+
+  const transliterator = RBT.fromRules(kkLatnRules + latnKaRules);
+
+  if (typeof text === "string") {
+    return transliterator.transliterate(text);
+  } else {
+    return text.map(text => transliterator.transliterate(text));
+  }
+};

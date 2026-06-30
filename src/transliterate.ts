@@ -1129,6 +1129,10 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
       // if OUTPUT language is Georgian
       case "ka":
         switch (from) {
+          case "el": {
+            const { elKa } = await import("converters/el-ka");
+            return (await elKa(text)) as T;
+          }
           case "hy": {
             const { hyKa } = await import("converters/hy-ka");
             return (await hyKa(text)) as T;
