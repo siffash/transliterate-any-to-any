@@ -14,6 +14,8 @@ languages.
 ## Examples
 
 ```typescript
+await transliterate("Λάρισα", { from: "el", to: "hy" }); // Լարիսա
+
 await transliterate("Копривщица", { from: "bg", to: "en" }); // Koprivshtitsa ???????
 
 await transliterate("上海", { from: "zh", to: "en" }); // Shanghai
