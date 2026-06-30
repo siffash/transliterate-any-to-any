@@ -1,0 +1,15 @@
+import { Text } from "types";
+
+export const plMk = async (text: Text) => {
+  const { RBT } = await import("icu-transliterator");
+  const { plLatnRules } = await import("constants/pl-latn.rules");
+  const { latnMkRules } = await import("constants/latn-mk.rules");
+
+  const transliterator = RBT.fromRules(plLatnRules + latnMkRules);
+
+  if (typeof text === "string") {
+    return transliterator.transliterate(text);
+  } else {
+    return text.map(text => transliterator.transliterate(text));
+  }
+};

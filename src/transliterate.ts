@@ -1509,6 +1509,10 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
       // if OUTPUT language is Macedonian
       case "mk":
         switch (from) {
+          case "el": {
+            const { elMk } = await import("converters/el-mk");
+            return (await elMk(text)) as T;
+          }
           case "en": {
             const { enMk } = await import("converters/en-mk");
             return (await enMk(text)) as T;
