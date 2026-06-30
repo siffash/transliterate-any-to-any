@@ -1287,6 +1287,10 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
       // if OUTPUT language is Russian
       case "ru":
         switch (from) {
+          case "el": {
+            const { elRu } = await import("converters/el-ru");
+            return (await elRu(text)) as T;
+          }
           case "en": {
             const { enRu } = await import("converters/en-ru");
             return (await enRu(text)) as T;
