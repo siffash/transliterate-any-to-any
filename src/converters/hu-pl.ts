@@ -1,0 +1,15 @@
+import { Text } from "types";
+
+export const huPl = async (text: Text) => {
+  const { RBT } = await import("icu-transliterator");
+  const { huLatnRules } = await import("constants/hu-latn.rules");
+  const { latnPlRules } = await import("constants/latn-pl.rules");
+
+  const transliterator = RBT.fromRules(huLatnRules + latnPlRules);
+
+  if (typeof text === "string") {
+    return transliterator.transliterate(text);
+  } else {
+    return text.map(text => transliterator.transliterate(text));
+  }
+};
