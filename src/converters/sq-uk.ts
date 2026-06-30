@@ -1,0 +1,15 @@
+import { Text } from "types";
+
+export const sqUk = async (text: Text) => {
+  const { RBT } = await import("icu-transliterator");
+  const { sqLatnRules } = await import("constants/sq-latn.rules");
+  const { latnUkRules } = await import("constants/latn-uk.rules");
+
+  const transliterator = RBT.fromRules(sqLatnRules + latnUkRules);
+
+  if (typeof text === "string") {
+    return transliterator.transliterate(text);
+  } else {
+    return text.map(text => transliterator.transliterate(text));
+  }
+};
