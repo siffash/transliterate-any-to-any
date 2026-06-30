@@ -1,0 +1,15 @@
+import { Text } from "types";
+
+export const csTr = async (text: Text) => {
+  const { RBT } = await import("icu-transliterator");
+  const { csLatnRules } = await import("constants/cs-latn.rules");
+  const { latnTrRules } = await import("constants/latn-tr.rules");
+
+  const transliterator = RBT.fromRules(csLatnRules + latnTrRules);
+
+  if (typeof text === "string") {
+    return transliterator.transliterate(text);
+  } else {
+    return text.map(text => transliterator.transliterate(text));
+  }
+};
