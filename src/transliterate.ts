@@ -1,24 +1,28 @@
 import { supportedLanguages } from "helpers/constants";
 import { Options, Text } from "types";
+import { confirmLanguageByScript } from "helpers/confirmLanguageByScript";
 
 export const transliterate = async <T extends Text>(text: T, { from, to }: Options): Promise<T> => {
   if (!text) {
-    throw new Error("Text is empty");
+    throw new Error("Input text is empty.");
   }
   if (!from) {
-    throw new Error("Input language is not specified");
+    throw new Error('Language "from" is not specified.');
   }
   if (!to) {
-    throw new Error("Output language is not specified");
+    throw new Error('Language "to" is not specified.');
   }
   if (!supportedLanguages.includes(from)) {
-    throw new Error(`Unsupported input language: ${from}`);
+    throw new Error(`Unsupported language "from": ${from}.`);
   }
   if (!supportedLanguages.includes(to)) {
-    throw new Error(`Unsupported output language: ${to}`);
+    throw new Error(`Unsupported language "to": ${to}.`);
   }
   if (from === to) {
-    throw new Error(`Input and output languages are the same: ${to}`);
+    throw new Error(`Languages "from" and "to" are the same: ${to}.`);
+  }
+  if (!confirmLanguageByScript(from, text)) {
+    throw new Error(`Input text does not match language "from": ${from}.`);
   }
 
   try {
@@ -8492,5 +8496,5 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
     throw new Error(typeof e === "string" ? e : JSON.stringify(e), { cause: e });
   }
 
-  throw new Error("Transliteration failed: the language pair is not supported");
+  throw new Error(`Transliteration failed: the language pair is not supported: ${from} -> ${to}`);
 };

@@ -1,10 +1,6 @@
 import { Direction, Language, Script } from "types";
 
-// [\p{scx=Han}\p{M}\p{Cf}\p{scx=Common}]+ (example regex for Chinese script + Standard spaces, commas, standard periods, hyphens, and numbers belong to the Common script extension)
-export const scripts: Record<
-  Script,
-  { cases: boolean; direction: Direction; regex: string | RegExp }
-> = {
+export const scripts: Record<Script, { cases: boolean; direction: Direction; regex: string }> = {
   Hani: { cases: false, direction: "LTR", regex: "\\p{scx=Han}\\p{M}\\p{Cf}" },
   Jpan: {
     cases: false,

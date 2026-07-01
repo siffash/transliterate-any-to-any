@@ -1,10 +1,10 @@
 export const ruLatnRules = `
-$vowel = [АЕЁИОУЫЭЮЯаеёиоуыэюяAEIOUÏaeiouï];
+$vowel_ru = [АЕЁИОУЫЭЮЯаеёиоуыэюяAEIOUÏaeiouï];
 
-$vowel { Е } [:Upper:] > YE;
-$vowel { Е } [:^Letter:] > YE;
-$vowel { Е > Ye;
-$vowel { е > ye;
+$vowel_ru { Е } [:Upper:] > YE;
+$vowel_ru { Е } [:^Letter:] > YE;
+$vowel_ru { Е > Ye;
+$vowel_ru { е > ye;
 [:^Letter:] { Е } [:Upper:] > YE;
 [:^Letter:] { Е > Ye;
 [:^Letter:] { е > ye;
