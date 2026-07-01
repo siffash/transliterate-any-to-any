@@ -18,8 +18,6 @@ export const scripts: Record<Script, { cases: boolean; direction: Direction; reg
   Latn: { cases: true, direction: "LTR", regex: "\\p{scx=Latin}\\p{M}\\p{Cf}" },
 } as const;
 
-new RegExp(scripts["Hani"].regex, "u");
-
 export const languages: Record<Language, { name: string; script: Script }> = {
   zh: { name: "Mandarin Chinese", script: "Hani" },
   ja: { name: "Japanese", script: "Jpan" },
