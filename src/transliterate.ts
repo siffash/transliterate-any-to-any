@@ -6,6 +6,9 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
   if (!text) {
     throw new Error("Input text is empty.");
   }
+  if (Array.isArray(text) && text.length === 0) {
+    throw new Error("Input text is empty.");
+  }
   if (!from) {
     throw new Error('Language "from" is not specified.');
   }
@@ -13,16 +16,16 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
     throw new Error('Language "to" is not specified.');
   }
   if (!supportedLanguages.includes(from)) {
-    throw new Error(`Unsupported language "from": ${from}.`);
+    throw new Error(`Unsupported language "from": "${from}".`);
   }
   if (!supportedLanguages.includes(to)) {
-    throw new Error(`Unsupported language "to": ${to}.`);
+    throw new Error(`Unsupported language "to": "${to}".`);
   }
   if (from === to) {
-    throw new Error(`Languages "from" and "to" are the same: ${to}.`);
+    throw new Error(`Languages "from" and "to" are the same: "${to}".`);
   }
   if (!confirmLanguageByScript(from, text)) {
-    throw new Error(`Input text does not match language "from": ${from}.`);
+    throw new Error(`Input text does not match language "from": "${from}".`);
   }
 
   try {

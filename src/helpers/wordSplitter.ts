@@ -2,11 +2,12 @@ import { Segmenter } from "intl-segmenter";
 import { Language } from "types";
 import { languages, scripts } from "helpers/constants";
 
-export const wordSplitter = (
+export const wordSplitter = async (
   input: string,
   language: Language,
-  fn?: (word: string) => string,
-): string => {
+  fn?: (word: string) => string | Promise<string>,
+  skipSegmenter?: boolean,
+): Promise<string> => {
   const { script } = languages[language];
   const re = new RegExp(`[${scripts[script].regex}]+`, "gu");
   const segmenter = new Segmenter(language, { granularity: "word" });
@@ -20,16 +21,20 @@ export const wordSplitter = (
     }
 
     let words: string[] = [];
-    for (const seg of segmenter.segment(m[0])) {
-      if (seg.isWordLike) {
-        words.push(seg.segment);
+    if (skipSegmenter) {
+      words.push(m[0]);
+    } else {
+      for (const seg of segmenter.segment(m[0])) {
+        if (seg.isWordLike) {
+          words.push(seg.segment);
+        }
       }
     }
 
     if (fn) {
       const transformed: string[] = [];
       for (let i = 0; i < words.length; i++) {
-        transformed.push(fn(words[i]));
+        transformed.push(await fn(words[i]));
       }
       words = transformed;
     }

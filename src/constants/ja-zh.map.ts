@@ -1,6 +1,4 @@
 export const jaZhMap: Record<string, string> = {
-  // --- 1. 2-CHARACTER SEQUENCES (Yōon) ---
-  // Must be at the top to prevent greedy 1-character matching
   キャ: "恰",
   きゃ: "恰",
   キュ: "久",
@@ -67,8 +65,20 @@ export const jaZhMap: Record<string, string> = {
   ぴゅ: "皮尤",
   ピョ: "皮奥",
   ぴょ: "皮奥",
-
-  // --- 2. 1-CHARACTER SEQUENCES (Gojūon & Dakuon) ---
+  ヴィ: "维",
+  ウィ: "威",
+  ウェ: "韦",
+  ウォ: "沃",
+  ジェ: "杰",
+  チェ: "切",
+  ティ: "蒂",
+  ディ: "迪",
+  デュ: "杜",
+  ファ: "法",
+  フィ: "菲",
+  フェ: "费",
+  フォ: "佛",
+  ヴァ: "瓦",
   ア: "阿",
   あ: "阿",
   イ: "伊",
@@ -211,8 +221,15 @@ export const jaZhMap: Record<string, string> = {
   ぺ: "佩",
   ポ: "波",
   ぽ: "波",
-
-  // --- 3. SPECIALS ---
+  ヴ: "武",
+  ァ: "阿",
+  ィ: "伊",
+  ゥ: "乌",
+  ェ: "埃",
+  ォ: "奥",
+  ャ: "亚",
+  ュ: "尤",
+  ョ: "约",
   ッ: "",
   っ: "",
   ー: "",

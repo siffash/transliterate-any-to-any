@@ -3,7 +3,7 @@ export const svIpaRules = `
 
 $softv = [e i y ä ö];
 $hardv = [a o u å];
-$vowel = [a e i o u y å ä ö];
+$vowel_sv = [a e i o u y å ä ö];
 $cons = [b c d f g h j k l m n p q r s t v w x z ʈ ɖ ɳ ɭ ʂ ɧ ɕ ŋ];
 $bound = [^a-zåäö];
 

@@ -3,7 +3,9 @@ import { Text } from "types";
 export const jaZh = async (text: Text) => {
   const { OpenCC } = await import("opencc");
   const { jaZhMap } = await import("constants/ja-zh.map");
-  const pattern = new RegExp(Object.keys(jaZhMap).join("|"), "g");
+
+  const sortedKeys = Object.keys(jaZhMap).sort((a, b) => b.length - a.length);
+  const pattern = new RegExp(sortedKeys.join("|"), "g");
 
   // Kanji conversion (Japanese Shinjitai -> Simplified Chinese Hanzi)
   const jp2t = new OpenCC("jp2t.json");

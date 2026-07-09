@@ -1,36 +1,58 @@
 export const latnKkRules = `
 ::Null;
 
-$lower = [a-zäöüïščžćđńľÿ];
-
-Č } $lower > Tş;
+Č } [:Lowercase:] > Tş;
 Č > TŞ;
 č > tş;
-
-Ć } $lower > Tş;
+Ć } [:Lowercase:] > Tş;
 Ć > TŞ;
 ć > tş;
-
-Đ } $lower > Dj;
+Đ } [:Lowercase:] > Dj;
 Đ > DJ;
 đ > dj;
-
+IJ } [:Lowercase:] > İy;
+IJ > İY;
+Ij > İy;
+ij > iy;
+DŽ > J;
+Dž > J;
+dž > j;
+DZ > Z;
+Dz > Z;
+dz > z;
+GH > Ğ;
+Gh > Ğ;
+gh > ğ;
+NG > Ñ;
+Ng > Ñ;
+ng > ñ;
+KH > Q;
+Kh > Q;
+kh > q;
+TH > T;
+Th > T;
+th > t;
+DH > D;
+Dh > D;
+dh > d;
+TS > S;
+Ts > S;
+ts > s;
 Š > Ş;
 š > ş;
 Ž > J;
 ž > j;
 X > H;
 x > h;
-
 Ń > N;
 ń > n;
 Ľ > L;
 ľ > l;
-
 Ï > I;
 ï > ı;
 I > İ;
-
-Ÿ > Y;
-ÿ > y;
+Ÿ > Ū;
+ÿ > ū;
+W > U;
+w > u;
 `;

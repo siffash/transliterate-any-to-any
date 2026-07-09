@@ -1,4 +1,4 @@
-declare module 'hanviet-pinyin-words' {
+declare module "hanviet-pinyin-words" {
   /**
    * Convert Chinese characters to Sino-Vietnamese words according to pinyin
    * @param tradHanzi - Traditional Chinese characters
@@ -9,6 +9,6 @@ declare module 'hanviet-pinyin-words' {
   export function getHanviet(
     tradHanzi: string,
     pinyinWords: string[],
-    firstCharUpperCase?: boolean
+    firstCharUpperCase?: boolean,
   ): string;
 }

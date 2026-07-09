@@ -1,21 +1,21 @@
 export const plIpaRules = `
 ::Lower;
 
-$vowel = [a ą e ę i o ó u y];
+$vowel_pl = [a ą e ę i o ó u y];
 $fric = [f w s z ś ź ż x h];
 
-c i } $vowel > t͡ɕ;
-d z i } $vowel > d͡ʑ;
-s i } $vowel > ɕ;
-z i } $vowel > ʑ;
-n i } $vowel > ɲ;
+c i } $vowel_pl > t͡ɕ;
+d z i } $vowel_pl > d͡ʑ;
+s i } $vowel_pl > ɕ;
+z i } $vowel_pl > ʑ;
+n i } $vowel_pl > ɲ;
 
 c i > t͡ɕi;
 d z i > d͡ʑi;
 s i > ɕi;
 z i > ʑi;
 n i > ɲi;
-i } $vowel > j;
+i } $vowel_pl > j;
 
 ą } [p b] > ɔm;
 ą } [t d c] > ɔn;
@@ -24,7 +24,7 @@ i } $vowel > j;
 ą } d ż > ɔn;
 ą } c z > ɔn;
 ą } [k g] > ɔŋ;
-ą } [ć dź] > ɔɲ;
+ą } [ć {dź}] > ɔɲ;
 ą } [ł l] > ɔ;
 ą } $fric > ɔ̃;
 ą } s z > ɔ̃;
@@ -39,7 +39,7 @@ i } $vowel > j;
 ę } d ż > ɛn;
 ę } c z > ɛn;
 ę } [k g] > ɛŋ;
-ę } [ć dź] > ɛɲ;
+ę } [ć {dź}] > ɛɲ;
 ę } [ł l] > ɛ;
 ę } $fric > ɛ̃;
 ę } s z > ɛ̃;

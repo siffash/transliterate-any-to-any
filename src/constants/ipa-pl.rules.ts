@@ -1,9 +1,9 @@
 export const ipaPlRules = `
 ::Null;
 
-$vowel = [a ą e ę i o ó u y â æ ê ô õ ø ă ĩ œ ũ ơ ư ɐ ɑ ɒ ɔ ɘ ə ɚ ɛ ɜ ɝ ɤ ɨ ɪ ɯ ɵ ʉ ʊ ʌ ʏ ẽ];
+$vowel_ipa = [a ą e ę i o ó u y â æ ê ô õ ø ă ĩ œ ũ ơ ư ɐ ɑ ɒ ɔ ɘ ə ɚ ɛ ɜ ɝ ɤ ɨ ɪ ɯ ɵ ʉ ʊ ʌ ʏ ẽ];
 
-[ʔ ʕ ˈ ˌ ː ˥ ˧ ˩ ʰ ʱ ʷ ʼ ̇ ̧ ˠ ˤ ̝ ̟ ̥ ̩ ̪ ̯ ̊ ͡] > ;
+[͈̚ ʔ ʕ ˈ ˌ ː ˥ ˧ ˩ ʰ ʱ ʷ ʼ ̇ ̧ ˠ ˤ ̝ ̟ ̥ ̩ ̪ ̯ ̊ ͡] > ;
 
 ::Null;
 
@@ -18,17 +18,17 @@ a ̃ > ą;
 
 [:^Letter:] { [ɪ ɨ ʏ ɵ] > i;
 
-t [ɕ ç] } $vowel > ci;
-d [ʑ ʝ] } $vowel > dzi;
-t s ʲ } $vowel > ci;
-d z ʲ } $vowel > dzi;
-s ʲ } $vowel > si;
-z ʲ } $vowel > zi;
-n ʲ } $vowel > ni;
-[ɕ ç] } $vowel > si;
-[ʑ ʝ] } $vowel > zi;
-ɲ } $vowel > ni;
-ɟ } $vowel > dzi;
+t [ɕ ç] } $vowel_ipa > ci;
+d [ʑ ʝ] } $vowel_ipa > dzi;
+t s ʲ } $vowel_ipa > ci;
+d z ʲ } $vowel_ipa > dzi;
+s ʲ } $vowel_ipa > si;
+z ʲ } $vowel_ipa > zi;
+n ʲ } $vowel_ipa > ni;
+[ɕ ç] } $vowel_ipa > si;
+[ʑ ʝ] } $vowel_ipa > zi;
+ɲ } $vowel_ipa > ni;
+ɟ } $vowel_ipa > dzi;
 
 t [ɕ ç] > ć;
 d [ʑ ʝ] > dź;
@@ -62,7 +62,7 @@ d z > dz;
 [ď ɖ ɗ ð] > d;
 [ħ χ x] > ch;
 [ŋ ɳ] > n;
-[ɡ ɢ ɣ] > g;
+[ɡ ɢ ɣ ɰ] > g;
 [ɥ ɦ ɧ] > h;
 [ɫ w] > ł;
 [ɭ ʎ] > l;
@@ -74,5 +74,24 @@ d z > dz;
 [ɓ β] > b;
 θ > t;
 q > k;
+ɸ > f;
 ʲ > i;
+
+::Null;
+
+[ćśźńji] { y > i;
+
+::Null;
+
+ć } [aąeęoóu] > ci;
+ć } i > c;
+
+ś } [aąeęoóu] > si;
+ś } i > s;
+
+ź } [aąeęoóu] > zi;
+ź } i > z;
+
+ń } [aąeęoóu] > ni;
+ń } i > n;
 `;

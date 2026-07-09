@@ -2,14 +2,14 @@ export const koRuRules = `
 seoul > сеул;
 pyeongyang > пхеньян;
 
-$vowel = [aeiouywаеёиоуыэюя];
+$vowel_koru = [aeiouywаеёиоуыэюя];
 $cyr_voiceless = [ктпсхчщшц];
 $cyr_j_end = [чж];
 
-ng } $vowel > нъ;
-k } $vowel > кх;
-t } $vowel > тх;
-p } $vowel > пх;
+ng } $vowel_koru > нъ;
+k } $vowel_koru > кх;
+t } $vowel_koru > тх;
+p } $vowel_koru > пх;
 
 chyae > чхэ;
 chya > чха;
@@ -34,11 +34,11 @@ ch { yo > о;
 j { yu > у;
 ch { yu > у;
 
-$vowel { ui > ый;
+$vowel_koru { ui > ый;
 [:^Letter:] { ui > ый;
 ui > и;
 
-$vowel { eui > ый;
+$vowel_koru { eui > ый;
 [:^Letter:] { eui > ый;
 eui > и;
 
@@ -107,6 +107,20 @@ m > м;
 n > н;
 
 \\- > ;
+
+::Null;
+
+[жшчщ] { ы > и;
+йй > й;
+
+::Null;
+
+[:^Letter:] { й } [бвгджзйклмнпрстфхцчшщ] > и;
+[бвгджзйклмнпрстфхцчшщ] { й } [бвгджзйклмнпрстфхцчшщ] > и;
+
+[:^Letter:] { [ъь] > ;
+ъ } [:^Letter:] > ;
+[ьъй] { [ьъ] > ;
 
 ::Title;
 `;

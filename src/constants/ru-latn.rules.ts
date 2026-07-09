@@ -1,64 +1,72 @@
 export const ruLatnRules = `
-$vowel_ru = [АЕЁИОУЫЭЮЯаеёиоуыэюяAEIOUÏaeiouï];
+::NFC;
 
-$vowel_ru { Е } [:Upper:] > YE;
-$vowel_ru { Е } [:^Letter:] > YE;
-$vowel_ru { Е > Ye;
-$vowel_ru { е > ye;
+ДЖ } [:Upper:] > DŽ;
+[:Upper:] { ДЖ > DŽ;
+ДЖ > Dž;
+Дж > Dž;
+дж > dž;
+
+ДЗ } [:Upper:] > DZ;
+[:Upper:] { ДЗ > DZ;
+ДЗ > Dz;
+Дз > Dz;
+дз > dz;
+
+Щ } [:Upper:] > ŠČ;
+[:Upper:] { Щ > ŠČ;
+Щ > Šč;
+щ > šč;
+
+Ц } [:Upper:] > TS;
+[:Upper:] { Ц > TS;
+Ц > Ts;
+ц > ts;
+
+Ю } [:Upper:] > YU;
+[:Upper:] { Ю > YU;
+Ю > Yu;
+ю > yu;
+
+Я } [:Upper:] > YA;
+[:Upper:] { Я > YA;
+Я > Ya;
+я > ya;
+
+Ё } [:Upper:] > YO;
+[:Upper:] { Ё > YO;
+Ё > Yo;
+ё > yo;
+
 [:^Letter:] { Е } [:Upper:] > YE;
 [:^Letter:] { Е > Ye;
 [:^Letter:] { е > ye;
 
-ЪЕ } [:Upper:] > YE;
-[:Upper:] { ЪЕ > YE;
-ЪЕ > Ye;
-Ъе > Ye;
-ъе > ye;
-ЪЁ } [:Upper:] > YO;
-[:Upper:] { ЪЁ > YO;
-ЪЁ > Yo;
-Ъё > Yo;
-ъё > yo;
-ЪЮ } [:Upper:] > YU;
-[:Upper:] { ЪЮ > YU;
-ЪЮ > Yu;
-Ъю > Yu;
-ъю > yu;
-ЪЯ } [:Upper:] > YA;
-[:Upper:] { ЪЯ > YA;
-ЪЯ > Ya;
-Ъя > Ya;
-ъя > ya;
-ЬЕ } [:Upper:] > YE;
-[:Upper:] { ЬЕ > YE;
-ЬЕ > Ye;
-Ье > Ye;
-ье > ye;
-ЬЁ } [:Upper:] > YO;
-[:Upper:] { ЬЁ > YO;
-ЬЁ > Yo;
-Ьё > Yo;
-ьё > yo;
-ЬО } [:Upper:] > YO;
-[:Upper:] { ЬО > YO;
-ЬО > Yo;
-Ьо > Yo;
-ьо > yo;
-ЬИ } [:Upper:] > YI;
-[:Upper:] { ЬИ > YI;
-ЬИ > Yi;
-Ьи > Yi;
-ьи > yi;
-ЬЮ } [:Upper:] > YU;
-[:Upper:] { ЬЮ > YU;
-ЬЮ > Yu;
-Ью > Yu;
-ью > yu;
-ЬЯ } [:Upper:] > YA;
-[:Upper:] { ЬЯ > YA;
-ЬЯ > Ya;
-Ья > Ya;
-ья > ya;
+[АЕЁИОУЫЭЮЯаеёиоуыэюя] { Е } [:Upper:] > YE;
+[АЕЁИОУЫЭЮЯаеёиоуыэюя] { Е > Ye;
+[АЕЁИОУЫЭЮЯаеёиоуыэюя] { е > ye;
+
+[ЪЬъь] { Е } [:Upper:] > YE;
+[ЪЬъь] { Е > Ye;
+[ЪЬъь] { е > ye;
+
+ЛЬ > Ľ;
+Ль > Ľ;
+ль > ľ;
+
+НЬ > Ń;
+Нь > Ń;
+нь > ń;
+
+ТЬ > Ć;
+Ть > Ć;
+ть > ć;
+
+ДЬ > Đ;
+Дь > Đ;
+дь > đ;
+
+::Null;
 
 А > A;
 а > a;
@@ -70,17 +78,8 @@ $vowel_ru { е > ye;
 г > g;
 Д > D;
 д > d;
-
 Е > E;
 е > e;
-
-[:Upper:] { Ё } [:Upper:] > YO;
-[:^Letter:] { Ё } [:Upper:] > YO;
-Ё } [:Upper:] > YO;
-[:Upper:] { Ё > YO;
-Ё > Yo;
-ё > yo;
-
 Ж > Ž;
 ж > ž;
 З > Z;
@@ -113,38 +112,14 @@ $vowel_ru { е > ye;
 ф > f;
 Х > X;
 х > x;
-
-Ц } [:Upper:] > TS;
-[:Upper:] { Ц > TS;
-Ц > Ts;
-ц > ts;
-
 Ч > Č;
 ч > č;
 Ш > Š;
 ш > š;
-
-Щ } [:Upper:] > ŠČ;
-[:Upper:] { Щ > ŠČ;
-Щ > Šč;
-щ > šč;
-
-
 Ы > Ï;
 ы > ï;
-
 Э > E;
 э > e;
-
-Ю } [:Upper:] > YU;
-[:Upper:] { Ю > YU;
-Ю > Yu;
-ю > yu;
-
-Я } [:Upper:] > YA;
-[:Upper:] { Я > YA;
-Я > Ya;
-я > ya;
-
-[ЪъЬь] > ;
+[Ъъ] > \\';
+[Ьь] > ;
 `;

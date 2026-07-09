@@ -1,16 +1,14 @@
 export const slLatnRules = `
-DŽ > DŽ;
-Dž > Dž;
-dž > dž;
+::NFC;
 NJ > Ń;
 Nj > Ń;
 nj > ń;
 LJ > Ľ;
 Lj > Ľ;
 lj > ľ;
+[:Upper:] { C > TS;
 C } [:Upper:] > TS;
-C } [:Lower:] > Ts;
-C > TS;
+C > Ts;
 c > ts;
 H > X;
 h > x;

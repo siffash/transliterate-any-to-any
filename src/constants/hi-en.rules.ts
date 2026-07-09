@@ -150,5 +150,19 @@ $v $cons { a } $cons h $v > ;
 $v $cons { a } $cons $v > ;
 
 ::NFC;
+::Null;
+
+w { w > ;
+y { y > ;
+h { h > ;
+i { [iy] } [:^Letter:] > ;
+y { [iy] } [:^Letter:] > ;
+[:^Letter:] { c } k > ;
+
+::Null;
+
+k { k } h > ;
+g { g } h > ;
+
 ::Title;
 `;

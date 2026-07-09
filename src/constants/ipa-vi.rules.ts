@@ -1,17 +1,17 @@
 export const ipaViRules = `
 ::Null;
 
-$frontVowel = [ieêyɪɨĩęɛæœøʏɵʉ];
+$frontVowel_vi = [ieêyɪɨĩęɛæœøʏɵʉ];
 
-[ʔʕˈˌːˠˤ˥˧˩̝̟̥̩̪̯̃̊͡ʼ̧̇] > ;
+[͈̚ʔʕˈˌːˠˤ˥˧˩̝̟̥̩̪̯̃̊͡ʼ̧̇] > ;
 
 ::Null;
 
-ŋ } $frontVowel > ngh;
+ŋ } $frontVowel_vi > ngh;
 ŋ > ng;
-[gɡɢɟɣʁ] } $frontVowel > gh;
-[gɡɢɟɣʁ] > g;
-[kq] } $frontVowel > k;
+[gɡɢɟɣɰʁ] } $frontVowel_vi > gh;
+[gɡɢɟɣɰʁ] > g;
+[kq] } $frontVowel_vi > k;
 [kq] } [wʷuʊũ] > q;
 [kq] > c;
 [:^Letter:] { [jʝ] > gi;
@@ -29,7 +29,7 @@ $frontVowel = [ieêyɪɨĩęɛæœøʏɵʉ];
 [ɓ] > b;
 [cčç] > ch;
 [dɖďɗð] > đ;
-[f] > ph;
+[fɸ] > ph;
 [ɦɧħʰʱ] > h;
 [ɫɭʎ] > l;
 [ɱ] > m;
@@ -42,4 +42,11 @@ $frontVowel = [ieêyɪɨĩęɛæœøʏɵʉ];
 [ʋβ] > v;
 [xχ] > kh;
 [zʑʒž] > d;
+
+::Null;
+
+c } [iìỉĩíịeèẻẽéẹêềểễếệyỳỷỹýỵ] > k;
+n { g } [iìỉĩíịeèẻẽéẹêềểễếệyỳỷỹýỵ] > gh;
+g } [eèẻẽéẹêềểễếệyỳỷỹýỵ] > gh;
+g { h } [aàảãáạăằẳẵắặâầẩẫấậoòỏõóọôồổỗốộơờởỡớợuùủũúụưừửữứự] > ;
 `;

@@ -13,7 +13,7 @@ export const ipaEtRules = `
 [ɚɝ] > er;
 [ɓ] > b;
 [ðďɖɗ] > d;
-[ɡɢɣ] > g;
+[ɡɢɣɰ] > g;
 [ħɦɧχ] > h;
 [ɟʝ] > j;
 [cq] > k;
@@ -30,8 +30,9 @@ export const ipaEtRules = `
 č > tš;
 [:^Letter:] { ŋ } > n;
 ŋ > ng;
+ɸ > f;
 
-[ʔʕʰʱʲʷʼˈ̇ˌ̧ˠˤ˥˧˩̝̟̥̩̪̯̃̊͡] > ;
+[͈̚ʔʕʰʱʲʷʼˈ̇ˌ̧ˠˤ˥˧˩̝̟̥̩̪̯̃̊͡] > ;
 
 ::Null;
 
@@ -63,4 +64,18 @@ v { ː } > v;
 ö { ː } > ö;
 ü { ː } > ü;
 ː > ;
+
+::Null;
+
+i { j } [aeiouõäöüAEIOUÕÄÖÜ] > ;
+i { j } [:^Letter:] > ;
+õ { j } [:^Letter:] > i;
+i { j } [bcdfghjklmnprstvwxzž] > i;
+[šž] { j > ;
+[bcdfghjklmnprstvwxzž] { šš > š;
+[bcdfghjklmnprstvwxzž] { žž > ž;
+[bcdfghjklmnprstvwxzž] { ff > f;
+š { š } [bcdfghjklmnprstvwxzž] > ;
+ž { ž } [bcdfghjklmnprstvwxzž] > ;
+f { f } [bcdfghjklmnprstvwxzž] > ;
 `;

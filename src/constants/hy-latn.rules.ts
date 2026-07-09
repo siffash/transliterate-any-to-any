@@ -43,14 +43,19 @@ export const hyLatnRules = `
 Ջ > Dž;
 ջ > dž;
 
+[:Upper:] { Թ } > TH;
+Թ } [:Upper:] > TH;
+Թ > Th;
+թ > th;
+
 Ժ > Ž;
 ժ > ž;
 
 Խ > X;
 խ > x;
 
-Ճ > Č;
-ճ > č;
+Ճ > Ć;
+ճ > ć;
 
 Շ > Š;
 շ > š;
@@ -74,8 +79,6 @@ export const hyLatnRules = `
 է > e;
 Ը > Ï;
 ը > ï;
-Թ > T;
-թ > t;
 Ի > I;
 ի > i;
 Լ > L;
@@ -104,8 +107,8 @@ export const hyLatnRules = `
 տ > t;
 Ր > R;
 ր > r;
-Ւ > V;
-ւ > v;
+Ւ > W;
+ւ > w;
 Փ > P;
 փ > p;
 Ք > K;

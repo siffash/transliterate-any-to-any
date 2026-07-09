@@ -2,7 +2,7 @@ export const csIpaRules = `
 ::Lower;
 
 $vowel = [a á e é ě i í o ó u ú ů y ý];
-$cons = [b c č d ď f g h ch j k l m n ň p q r ř s š t ť v w x z ž];
+$cons = [b c č d ď f g h {ch} j k l m n ň p q r ř s š t ť v w x z ž];
 $voiced = [b d ď g z ž ɦ h];
 $voiceless = [p t ť k s š f c č x];
 $obstruent = [b d ď g z ž h p t ť k s š f c č x];

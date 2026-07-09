@@ -1,8 +1,10 @@
 export const bgLatnRules = `
-ия } [:^Letter:] > ia;
-Ия } [:^Letter:] > Ia;
-ИЯ } [:^Letter:] > IA;
-иЯ } [:^Letter:] > iA;
+::NFC;
+
+И { Я } [:^Letter:] > A;
+И { я } [:^Letter:] > a;
+и { Я } [:^Letter:] > A;
+и { я } [:^Letter:] > a;
 
 [:Upper:] { Ц > TS;
 Ц } [:Upper:] > TS;
@@ -24,8 +26,8 @@ export const bgLatnRules = `
 Я > Ya;
 я > ya;
 
-А > A;
-а > a;
+[АЪ] > A;
+[аъ] > a;
 Б > B;
 б > b;
 В > V;
@@ -40,12 +42,10 @@ export const bgLatnRules = `
 ж > ž;
 З > Z;
 з > z;
-И > I;
-и > i;
-Ѝ > I;
-ѝ > i;
-Й > Y;
-й > y;
+[ИЍ] > I;
+[иѝ] > i;
+[ЙЬ] > Y;
+[йь] > y;
 К > K;
 к > k;
 Л > L;
@@ -74,8 +74,4 @@ export const bgLatnRules = `
 ч > č;
 Ш > Š;
 ш > š;
-Ъ > A;
-ъ > a;
-Ь > Y;
-ь > y;
 `;

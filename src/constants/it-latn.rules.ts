@@ -1,118 +1,99 @@
 export const itLatnRules = `
-à > a;
-À > A;
-è > e;
-é > e;
-È > E;
-É > E;
-ì > i;
-í > i;
-Ì > I;
-Í > I;
-ò > o;
-ó > o;
-Ò > O;
-Ó > O;
-ù > u;
-ú > u;
-Ù > U;
-Ú > U;
+::NFC;
+
+[àá] > a;
+[ÀÁ] > A;
+[èé] > e;
+[ÈÉ] > E;
+[ìí] > i;
+[ÌÍ] > I;
+[òó] > o;
+[ÒÓ] > O;
+[ùú] > u;
+[ÙÚ] > U;
 
 ::Null;
 
-s c i } [a o u A O U] > š;
-S c i } [a o u] > Š;
-S C I } [A O U] > Š;
+sci } [aouAOU] > š;
+Sci } [aouAOU] > Š;
+SCI } [AOU] > Š;
 
-c c i } [a o u A O U] > č č;
-C c i } [a o u] > Č č;
-C C I } [A O U] > Č Č;
+cci } [aouAOU] > čč;
+Cci } [aouAOU] > Čč;
+CCI } [AOU] > ČČ;
 
-g g i } [a o u A O U] > dž dž;
-G g i } [a o u] > Dž dž;
-G G I } [A O U] > DŽ DŽ;
+ggi } [aouAOU] > dždž;
+Ggi } [aouAOU] > Dždž;
+GGI } [AOU] > DŽDŽ;
 
-c i } [a o u A O U] > č;
-C i } [a o u] > Č;
-C I } [A O U] > Č;
+gli } [aeouAEOU] > ľ;
+Gli } [aeouAEOU] > Ľ;
+GLI } [AEOU] > Ľ;
 
-g i } [a o u A O U] > dž;
-G i } [a o u] > Dž;
-G I } [A O U] > DŽ;
+gl } [iI] > ľ;
+Gl } [iI] > Ľ;
+GL } [I] > Ľ;
 
-g l i } [a e o u A E O U] > ľ;
-G l i } [a e o u] > Ľ;
-G L I } [A E O U] > Ľ;
+sc } [eiEI] > š;
+Sc } [eiEI] > Š;
+SC } [EI] > Š;
 
-g l i > ľ i;
-G l i > Ľ i;
-G L I > Ľ I;
+cc } [eiEI] > čč;
+Cc } [eiEI] > Čč;
+CC } [EI] > ČČ;
 
-s c h > s k;
-S c h > S k;
-S C H > S K;
+gg } [eiEI] > dždž;
+Gg } [eiEI] > Dždž;
+GG } [EI] > DŽDŽ;
 
-c c h > k k;
-C c h > K k;
-C C H > K K;
+ci } [aouAOU] > č;
+Ci } [aouAOU] > Č;
+CI } [AOU] > Č;
 
-c h > k;
-C h > K;
-C H > K;
+gi } [aouAOU] > dž;
+Gi } [aouAOU] > Dž;
+GI } [AOU] > DŽ;
 
-g g h > g g;
-G g h > G g;
-G G H > G G;
+gn > ń;
+Gn > Ń;
+GN > Ń;
 
-g h > g;
-G h > G;
-G H > G;
+ch > k;
+Ch > K;
+CH > K;
 
-q u > k v;
-Q u > K v;
-Q U > K V;
+gh > g;
+Gh > G;
+GH > G;
 
-s c } [i e I E] > š;
-S c } [i e] > Š;
-S C } [I E] > Š;
+qu > kw;
+Qu > Kw;
+QU > KW;
 
-c c } [i e I E] > č č;
-C c } [i e I E] > Č č;
-C C } [I E] > Č Č;
+c } [eiEI] > č;
+C } [eiEI] > Č;
 
-g g } [i e I E] > dž dž;
-G g } [i e I E] > Dž dž;
-G G } [I E] > DŽ DŽ;
-
-c } [i e I E] > č;
-C } [i e I E] > Č;
-
-g } [i e I E] > dž;
-G } [i e] > Dž;
-G } [I E] > DŽ;
-
-g n > ń;
-G n > Ń;
-G N > Ń;
-
-z > ts;
-Z } [[:Lower:]] > Ts;
-Z } [:^Letter:] > TS;
-Z > TS;
-
-q > k;
-Q > K;
+g } [eiEI] > dž;
+G } [eiEI] > Dž;
 
 c > k;
 C > K;
 
+q > k;
+Q > K;
+
+x > ks;
+X } [:Lower:] > Ks;
+X } [:^Letter:] > KS;
+X > KS;
+
+z > ts;
+Z } [:Lower:] > Ts;
+Z } [:^Letter:] > TS;
+Z > TS;
+
 j > y;
 J > Y;
-
-x > k s;
-X } [[:Lower:]] > K s;
-X } [:^Letter:] > K S;
-X > K S;
 
 h > ;
 H ([:Letter:]) > &Any-Upper($1);

@@ -1,7 +1,7 @@
 export const ipaDaRules = `
 ::Null;
 
-[ʰʱʲʷʼˈ̇ˌ̧ːˠˤ˥˧˩̝̟̥̩̪̯̃̊͡ʔ] > ;
+[͈̚ʰʱʲʷʼˈ̇ˌ̧ːˠˤ˥˧˩̝̟̥̩̪̯̃̊͡ʔ] > ;
 
 ::Null;
 
@@ -21,7 +21,7 @@ export const ipaDaRules = `
 [ťʈθ] > t;
 [ďɖɗð] > d;
 [ɓβ] > b;
-[ɡɢɣ] > g;
+[ɡɢɣɰ] > g;
 [ħɦʕ] > h;
 [ɟɥʝ] > j;
 [ɫɭ] > l;
@@ -35,4 +35,5 @@ export const ipaDaRules = `
 ʋ > v;
 ʎ > lj;
 [ʐʑ] > z;
+ɸ > f;
 `;

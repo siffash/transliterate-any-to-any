@@ -4,7 +4,7 @@ export const frIpaRules = `
 $vowel = [aàâäæeéèêëiîïoôœuûüùy];
 $cons = [bcdfghjklmnpqrstvwxz];
 $soft = [eéèêëiîïy];
-$nasal_trigger = [^$vowel n m];
+$nasal_trigger = [bcdçfghjklpqrstvwxz];
 
 femme > fam;
 monsieur > məsjø;

@@ -1,18 +1,21 @@
 export const latnMtRules = `
 ::Null;
 
-GH } [:Upper:] > GĦ;
-GH > Għ;
+GH > GĦ;
 Gh > Għ;
 gh > għ;
 
-Ľ } [:Upper:] > LJ;
-Ľ > Lj;
-ľ > lj;
+KH > Ħ;
+Kh > Ħ;
+kh > ħ;
 
-Ń } [:Upper:] > NJ;
-Ń > Nj;
-ń > nj;
+TH > T;
+Th > T;
+th > t;
+
+DH > D;
+Dh > D;
+dh > d;
 
 DŽ > Ġ;
 Dž > Ġ;
@@ -25,6 +28,18 @@ dz > z;
 TS > Z;
 Ts > Z;
 ts > z;
+
+IJ > EJ;
+Ij > Ej;
+ij > ej;
+
+Ľ } [:Upper:] > LJ;
+Ľ > Lj;
+ľ > lj;
+
+Ń } [:Upper:] > NJ;
+Ń > Nj;
+ń > nj;
 
 Ć > Ċ;
 ć > ċ;
@@ -50,6 +65,9 @@ y > j;
 Z > Ż;
 z > ż;
 
+Q > K;
+q > k;
+
 Ä > A;
 ä > a;
 
@@ -64,4 +82,9 @@ z > ż;
 
 Ÿ > J;
 ÿ > j;
+
+\\' } [:Upper:] > Q;
+\\' > q;
+
+· > ;
 `;

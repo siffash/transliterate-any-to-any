@@ -1,17 +1,36 @@
 export const latnTrRules = `
 ::Null;
 
-$lower = [:LowercaseLetter:];
-
 DŽ > C;
 Dž > C;
 dž > c;
 
-Ń } $lower > Ny;
+TH > T;
+Th > T;
+th > t;
+
+DH > D;
+Dh > D;
+dh > d;
+
+GH > Ğ;
+Gh > Ğ;
+gh > ğ;
+
+KH > H;
+Kh > H;
+kh > h;
+
+IJ } [:LowercaseLetter:] > Ey;
+IJ > EY;
+Ij > Ey;
+ij > ey;
+
+Ń } [:LowercaseLetter:] > Ny;
 Ń > NY;
 ń > ny;
 
-Ľ } $lower > Ly;
+Ľ } [:LowercaseLetter:] > Ly;
 Ľ > LY;
 ľ > ly;
 
@@ -32,12 +51,21 @@ x > h;
 ä > e;
 Ï > I;
 ï > ı;
-Ÿ > Y;
-ÿ > y;
+Ÿ > Ü;
+ÿ > ü;
 
 I > İ;
 W > V;
 w > v;
 Q > K;
 q > k;
+
+· > ;
+
+::Null;
+
+[:^Letter:] { ğ > g;
+[:^Letter:] { Ğ > G;
+[bcçdfgğhjklmnprsştvyzBCÇDFGĞHJKLMNPRSŞTVYZ] { ğ > g;
+[bcçdfgğhjklmnprsştvyzBCÇDFGĞHJKLMNPRSŞTVYZ] { Ğ > G;
 `;

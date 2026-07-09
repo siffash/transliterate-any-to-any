@@ -1,12 +1,12 @@
 export const bsIpaRules = `
 ::Lower;
 
-$vowel = [a e i o u ɛ ɔ];
-$consonant = [b c č ć d dž đ f g h j k l lj m n nj p r s š t u v z ž];
+$vowel_bs = [a e i o u ɛ ɔ];
+$consonant = [b c č ć d {dž} đ f g h j k l {lj} m n {nj} p r s š t u v z ž];
 $sonorant = [v m n l r j ʎ ɲ];
-$voiceless = [p f k t s š c č ć h t͡s t͡ʃ t͡ɕ];
-$voiced = [b g d z ž dž đ d͡ʒ d͡ʑ];
-$voiced_trigger = [b g d z ž dž đ d͡ʒ d͡ʑ];
+$voiceless = [p f k t s š c č ć h {t͡s} {t͡ʃ} {t͡ɕ}];
+$voiced = [b g d z ž {dž} đ {d͡ʒ} {d͡ʑ}];
+$voiced_trigger = [b g d z ž {dž} đ {d͡ʒ} {d͡ʑ}];
 
 aa > aː;
 ee > iː;
@@ -83,8 +83,8 @@ z } [:^Letter:] > s;
 d͡ʑ } [:^Letter:] > t͡ɕ;
 d͡ʒ } [:^Letter:] > t͡ʃ;
 
-[^$vowel] { r } [^$vowel] > r̩;
-[:^Letter:] { r } [^$vowel] > r̩;
+[^$vowel_bs] { r } [^$vowel_bs] > r̩;
+[:^Letter:] { r } [^$vowel_bs] > r̩;
 
 a > a;
 b > b;

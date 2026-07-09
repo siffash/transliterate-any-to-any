@@ -1,11 +1,11 @@
 export const ipaJaRules = `
 ::Null;
 
-[ˈˌˑʰʱʷˠˤʼ͜͡\\.\u0300-\u036F\u02E0-\u02E9\uA71B-\uA71F] > ;
+[͈̚ˈˌˑʰʱʷˠˤʼ͜͡\\.\u0300-\u036F\u02E0-\u02E9\uA71B-\uA71F] > ;
 
 ::Null;
 
-[- \t]+ > ・;
+[- {\t}]+ > ・;
 
 pː > pp;
 bː > bb;
@@ -15,7 +15,7 @@ kː > kk;
 gː > gg;
 sː > ss;
 zː > zz;
-fː > ff;
+[fɸ]ː > ff;
 vː > vv;
 mː > mm;
 nː > nn;
@@ -79,7 +79,7 @@ j > y;
 ɥ > y;
 [xχħhɦ] > h;
 ç > hy;
-ɣ > g;
+[ɣɰ] > g;
 [ʕʔ] > ;
 [wʍ] > w;
 tsh > ch;

@@ -8,15 +8,14 @@ export const koSq = async (text: Text) => {
 
   const transliterator = RBT.fromRules(ipaSqRules + "::Title;");
 
-  const convert = (text: string) => {
-    const split = wordSplitter(text, "ko");
-    const ipa = toIPA(split, { anyAscii: true });
+  const convert = async (text: string) => {
+    const ipa = await wordSplitter(text, "ko", text => toIPA(text, { anyAscii: true }));
     return transliterator.transliterate(ipa);
   };
 
   if (typeof text === "string") {
-    return convert(text);
+    return await convert(text);
   } else {
-    return text.map(convert);
+    return Promise.all(text.map(convert));
   }
 };

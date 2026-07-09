@@ -206,4 +206,17 @@ $voiced = [βγδζλμνρΒΓΔΖΛΜΝΡαεηιουωΑΕΗΙΟΥΩ];
 ω > o;
 
 ::NFC;
+::Null;
+
+[wW] { [wW] > ;
+[yY] { [yY] > ;
+[hH] { [hH] > ;
+[iI] { [iIyY] } [:^Letter:] > ;
+[yY] { [iIyY] } [:^Letter:] > ;
+[:^Letter:] { [cC] } [kK] > ;
+
+::Null;
+
+[kK] { [kK] } [hH] > ;
+[gG] { [gG] } [hH] > ;
 `;

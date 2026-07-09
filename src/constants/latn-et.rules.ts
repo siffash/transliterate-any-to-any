@@ -1,7 +1,40 @@
 export const latnEtRules = `
 ::Null;
 
-$vowel = [AEIOUÄÖÜÏŸaeiouäöüïÿ];
+['·] > ;
+
+IJ > EI;
+Ij > Ei;
+ij > ei;
+
+TH > T;
+Th > T;
+th > t;
+
+DH > D;
+Dh > D;
+dh > d;
+
+GH > G;
+Gh > G;
+gh > g;
+
+[AÄEIÏOÖUÜŸaäeiïoöuüÿ] { KH } [:^Letter:] > HH;
+[AÄEIÏOÖUÜŸaäeiïoöuüÿ] { KH } [AÄEIÏOÖUÜŸaäeiïoöuüÿ] > HH;
+[AÄEIÏOÖUÜŸaäeiïoöuüÿ] { Kh } [:^Letter:] > Hh;
+[AÄEIÏOÖUÜŸaäeiïoöuüÿ] { Kh } [AÄEIÏOÖUÜŸaäeiïoöuüÿ] > Hh;
+[AÄEIÏOÖUÜŸaäeiïoöuüÿ] { kh } [:^Letter:] > hh;
+[AÄEIÏOÖUÜŸaäeiïoöuüÿ] { kh } [AÄEIÏOÖUÜŸaäeiïoöuüÿ] > hh;
+KH > H;
+Kh > H;
+kh > h;
+
+[AÄEIÏOÖUÜŸaäeiïoöuüÿ] { X } [:^Letter:] > HH;
+[AÄEIÏOÖUÜŸaäeiïoöuüÿ] { X } [AÄEIÏOÖUÜŸaäeiïoöuüÿ] > HH;
+[AÄEIÏOÖUÜŸaäeiïoöuüÿ] { x } [:^Letter:] > hh;
+[AÄEIÏOÖUÜŸaäeiïoöuüÿ] { x } [AÄEIÏOÖUÜŸaäeiïoöuüÿ] > hh;
+X > H;
+x > h;
 
 [:Upper:] { Č > TŠ;
 Č } [:Upper:] > TŠ;
@@ -28,16 +61,40 @@ $vowel = [AEIOUÄÖÜÏŸaeiouäöüïÿ];
 Ľ > Lj;
 ľ > lj;
 
-$vowel { X } [:^Letter:] > HH;
-$vowel { x } [:^Letter:] > hh;
-$vowel { X } $vowel > HH;
-$vowel { x } $vowel > hh;
-X > H;
-x > h;
+Ï > Õ;
+ï > õ;
+
+Ÿ > Ü;
+ÿ > ü;
+
+Q > K;
+q > k;
+
+W > V;
+w > v;
 
 Y > J;
 y > j;
 
-Ï > Õ;
-ï > õ;
+::Null;
+
+[iI] { [jJ] } [aeiouõäöüAEIOUÕÄÖÜ] > ;
+[iI] { [jJ] } [:^Letter:] > ;
+[õÕ] { j } [:^Letter:] > i;
+[õÕ] { J } [:^Letter:] > I;
+[iI] { j } [bcdfghjklmnprstvwxzžBCDFGHJKLMNPRSTVWXZŽ] > i;
+[iI] { J } [bcdfghjklmnprstvwxzžBCDFGHJKLMNPRSTVWXZŽ] > I;
+[šŠžŽ] { [jJ] > ;
+[bcdfghjklmnprstvwxzžBCDFGHJKLMNPRSTVWXZŽ] { šš > š;
+[bcdfghjklmnprstvwxzžBCDFGHJKLMNPRSTVWXZŽ] { Šš > Š;
+[bcdfghjklmnprstvwxzžBCDFGHJKLMNPRSTVWXZŽ] { ŠŠ > Š;
+[bcdfghjklmnprstvwxzžBCDFGHJKLMNPRSTVWXZŽ] { žž > ž;
+[bcdfghjklmnprstvwxzžBCDFGHJKLMNPRSTVWXZŽ] { Žž > Ž;
+[bcdfghjklmnprstvwxzžBCDFGHJKLMNPRSTVWXZŽ] { ŽŽ > Ž;
+[bcdfghjklmnprstvwxzžBCDFGHJKLMNPRSTVWXZŽ] { ff > f;
+[bcdfghjklmnprstvwxzžBCDFGHJKLMNPRSTVWXZŽ] { Ff > F;
+[bcdfghjklmnprstvwxzžBCDFGHJKLMNPRSTVWXZŽ] { FF > F;
+[šŠ] { [šŠ] } [bcdfghjklmnprstvwxzžBCDFGHJKLMNPRSTVWXZŽ] > ;
+[žŽ] { [žŽ] } [bcdfghjklmnprstvwxzžBCDFGHJKLMNPRSTVWXZŽ] > ;
+[fF] { [fF] } [bcdfghjklmnprstvwxzžBCDFGHJKLMNPRSTVWXZŽ] > ;
 `;

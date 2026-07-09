@@ -85,4 +85,18 @@ export const ruEnRules = `
 [:Upper:] { Я > IA;
 Я > Ia;
 я > ia;
+
+::Null;
+
+[wW] { [wW] > ;
+[yY] { [yY] > ;
+[hH] { [hH] > ;
+[iI] { [iIyY] } [:^Letter:] > ;
+[yY] { [iIyY] } [:^Letter:] > ;
+[:^Letter:] { [cC] } [kK] > ;
+
+::Null;
+
+[kK] { [kK] } [hH] > ;
+[gG] { [gG] } [hH] > ;
 `;

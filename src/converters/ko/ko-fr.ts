@@ -10,8 +10,7 @@ export const koFr = async (text: Text) => {
   const transliterator = RBT.fromRules(koLatnRules + latnFrRules);
 
   const convert = async (text: string) => {
-    const split = wordSplitter(text, "ko");
-    const romanized = Aromanize.romanize(split);
+    const romanized = await wordSplitter(text, "ko", text => Aromanize.romanize(text));
     return transliterator.transliterate(romanized);
   };
 

@@ -5,6 +5,25 @@ DŽ > DJ;
 Dž > Dj;
 dž > dj;
 
+GH } [:Lower:] > G;
+GH > G;
+Gh > G;
+gh > g;
+
+KH > CH;
+Kh > Ch;
+kh > ch;
+
+TH } [:Lower:] > T;
+TH > T;
+Th > T;
+th > t;
+
+DH } [:Lower:] > D;
+DH > D;
+Dh > D;
+dh > d;
+
 Š } [:Lower:] > Sj;
 Š > SJ;
 š > sj;
@@ -37,6 +56,9 @@ x > ch;
 Ľ > LJ;
 ľ > lj;
 
+Q > K;
+q > k;
+
 U } [:Lower:] > Oe;
 U > OE;
 u > oe;
@@ -45,16 +67,41 @@ u > oe;
 Ö > EU;
 ö > eu;
 
-Ÿ } [:Lower:] > Ij;
-Ÿ > IJ;
-ÿ > ij;
+Ÿ > U;
+ÿ > u;
 
 Ä > E;
 ä > e;
+
 Ü > U;
 ü > u;
+
 Ï > I;
 ï > i;
+
 Y > J;
 y > j;
+
+\\' > ;
+· > \\-;
+
+::Null;
+
+[aA] { [aA] } [:^Letter:] > ;
+[oO] { [oO] } [:^Letter:] > ;
+[uU] { [uU] } [:^Letter:] > ;
+
+[cC] [hH] { [cC] [hH] } > ;
+[sS] [jJ] { [sS] [jJ] } > ;
+[zZ] [jJ] { [zZ] [jJ] } > ;
+[nN] [gG] { [nN] [gG] } > ;
+
+[tT] [sS] [jJ] { [tT] [sS] [jJ] } > ;
+[dD] [zZ] [jJ] { [dD] [zZ] [jJ] } > ;
+
+[aA] [aA] { [aA] } > ;
+[eE] [eE] { [eE] } > ;
+[iI] [iI] { [iI] } > ;
+[oO] [oO] { [oO] } > ;
+[uU] [uU] { [uU] } > ;
 `;

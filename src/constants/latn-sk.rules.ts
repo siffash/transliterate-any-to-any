@@ -1,44 +1,96 @@
 export const latnSkRules = `
 ::Null;
 
-$v = [eEiIíÍéÉ];
+IJ > Ej;
+Ij > Ej;
+iJ > eJ;
+ij > ej;
 
 TS > C;
 Ts > C;
 tS > c;
 ts > c;
+
+TH > T;
+Th > T;
+tH > t;
+th > t;
+
+DH > D;
+Dh > D;
+dH > d;
+dh > d;
+
+GH > G;
+Gh > G;
+gH > g;
+gh > g;
+
+KH > Ch;
+Kh > Ch;
+kH > cH;
+kh > ch;
+
 X } [:Upper:] > CH;
 [:Upper:] { X > CH;
 X > Ch;
 x > ch;
+
 Q } [:Upper:] > KV;
 [:Upper:] { Q > KV;
 Q > Kv;
 q > kv;
+
 W > V;
 w > v;
+
 Y > J;
 y > j;
-Ï > Y;
-ï > y;
+
+[ÏŸ] > Y;
+[ïÿ] > y;
+
 Ö > O;
 ö > o;
+
 Ü > U;
 ü > u;
-Ÿ > Y;
-ÿ > y;
-Đ } $v > D;
-đ } $v > d;
+
+Đ } [eEiI] > D;
+đ } [eEiI] > d;
 Đ > Ď;
 đ > ď;
-Ć } $v > T;
-ć } $v > t;
+
+Ć } [eEiI] > T;
+ć } [eEiI] > t;
 Ć > Ť;
 ć > ť;
-Ń } $v > N;
-ń } $v > n;
+
+Ń } [eEiI] > N;
+ń } [eEiI] > n;
 Ń > Ň;
 ń > ň;
-Ľ } $v > L;
-ľ } $v > l;
+
+Ľ } [eEiI] > L;
+ľ } [eEiI] > l;
+
+['·] > ;
+
+::Null;
+
+[ďťňľĎŤŇĽ] { y > i;
+[ďťňľĎŤŇĽ] { ý > í;
+[ďťňľĎŤŇĽ] { Y > I;
+[ďťňľĎŤŇĽ] { Ý > Í;
+
+::Null;
+
+ď } [iíeéIÍEÉ] > d;
+ť } [iíeéIÍEÉ] > t;
+ň } [iíeéIÍEÉ] > n;
+ľ } [iíeéIÍEÉ] > l;
+Ď } [iíeéIÍEÉ] > D;
+Ť } [iíeéIÍEÉ] > T;
+Ň } [iíeéIÍEÉ] > N;
+Ľ } [iíeéIÍEÉ] > L;
 `;

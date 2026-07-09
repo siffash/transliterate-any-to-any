@@ -4,7 +4,7 @@ export const elIpaRules = `
 
 $voicedC = [βγδζλμνρbdgɟʝŋmnlɾvðɣz];
 $vowOrVoiced = [αεηιουωάέήίόύώϊϋΐΰβγδζλμνρaɛiɔu];
-$frontVowel = [εηιυέήίύϊϋΐΰɛi];
+$frontVowel_el = [εηιυέήίύϊϋΐΰɛi];
 
 αί > έ;
 έι > ί;
@@ -44,23 +44,23 @@ $frontVowel = [εηιυέήίύϊϋΐΰɛi];
 [:^Letter:] { ντ } > d;
 ντ > nd;
 
-[:^Letter:] { γκ } $frontVowel > ɟ;
+[:^Letter:] { γκ } $frontVowel_el > ɟ;
 [:^Letter:] { γκ } > g;
-{ γκ } $frontVowel > ŋɟ;
+{ γκ } $frontVowel_el > ŋɟ;
 γκ > ŋg;
 
-{ γγ } $frontVowel > ŋɟ;
+{ γγ } $frontVowel_el > ŋɟ;
 γγ > ŋg;
 
-{ γχ } $frontVowel > ŋç;
+{ γχ } $frontVowel_el > ŋç;
 γχ > ŋx;
 
 τζ > dz;
 τσ > ts;
 
-{ κ } $frontVowel > c;
-{ γ } $frontVowel > ʝ;
-{ χ } $frontVowel > ç;
+{ κ } $frontVowel_el > c;
+{ γ } $frontVowel_el > ʝ;
+{ χ } $frontVowel_el > ç;
 
 ββ > v;
 κκ > k;

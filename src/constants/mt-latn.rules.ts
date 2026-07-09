@@ -1,40 +1,22 @@
 export const mtLatnRules = `
-À > A;
-à > a;
-Á > A;
-á > a;
-Â > A;
-â > a;
-È > E;
-è > e;
-É > E;
-é > e;
-Ê > E;
-ê > e;
-Ì > I;
-ì > i;
-Í > I;
-í > i;
-Î > I;
-î > i;
-Ò > O;
-ò > o;
-Ó > O;
-ó > o;
-Ô > O;
-ô > o;
-Ù > U;
-ù > u;
-Ú > U;
-ú > u;
-Û > U;
-û > u;
+::NFC;
+[ÀÁÂ] > A;
+[àáâ] > a;
+[ÈÉÊ] > E;
+[èéê] > e;
+[ÌÍÎ] > I;
+[ìíî] > i;
+[ÒÓÔ] > O;
+[òóô] > o;
+[ÙÚÛ] > U;
+[ùúû] > u;
 
 ::Null;
 
 IE > I;
 Ie > I;
 ie > i;
+
 GĦ } [:^Letter:] > H;
 Għ } [:^Letter:] > H;
 għ } [:^Letter:] > h;
@@ -43,50 +25,64 @@ Għ ([:Letter:]) > &Any-Upper($1);
 GĦ > ;
 Għ > ;
 għ > ;
-C H > K;
-C h > K;
-c h > k;
-Q U > K V;
-Q u > K v;
-q u > k v;
+
+CH > K;
+Ch > K;
+ch > k;
+
+QU > KW;
+Qu > Kw;
+qu > kw;
+
 Ġ } [:^Letter:] > Č;
 ġ } [:^Letter:] > č;
+
 B } [:^Letter:] > P;
 b } [:^Letter:] > p;
+
 D } [:^Letter:] > T;
 d } [:^Letter:] > t;
+
 G } [:^Letter:] > K;
 g } [:^Letter:] > k;
+
 V } [:^Letter:] > F;
 v } [:^Letter:] > f;
+
 Ż } [:^Letter:] > S;
 ż } [:^Letter:] > s;
+
 Ġ } [:Upper:] > DŽ;
 Ġ > Dž;
 ġ > dž;
+
 Z } [:Upper:] > TS;
 Z > Ts;
 z > ts;
+
 Ċ > Č;
 ċ > č;
+
 X > Š;
 x > š;
+
 J > Y;
 j > y;
+
 Ż > Z;
 ż > z;
+
 Ħ > H;
 ħ > h;
-W > V;
-w > v;
+H ([:Letter:]) > &Any-Upper($1);
+H } [:Letter:] > ;
+h } [:Letter:] > ;
+
 C } [eEiIyY] > Č;
 c } [eEiIyY] > č;
 C > K;
 c > k;
-G } [EIY] > DŽ;
-G } [eiy] > Dž;
-g } [eEiIyY] > dž;
-Q ([:Letter:]) > &Any-Upper($1);
-Q > ;
-q > ;
+
+Q > ';
+q > ';
 `;

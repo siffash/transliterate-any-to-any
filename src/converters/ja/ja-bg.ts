@@ -13,8 +13,11 @@ export const jaBg = async (text: Text) => {
   const transliterator = RBT.fromRules(jaBgRules);
 
   const convert = async (text: string) => {
-    const split = wordSplitter(text, "ja");
-    const romanized = await kuroshiro.convert(split, { to: "romaji" });
+    const romanized = await wordSplitter(
+      text,
+      "ja",
+      async text => await kuroshiro.convert(text, { to: "romaji" }),
+    );
     return transliterator.transliterate(romanized);
   };
 

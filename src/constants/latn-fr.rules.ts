@@ -1,68 +1,93 @@
 export const latnFrRules = `
 ::Null;
 
-$upper = [ABDEFGHIKLMNOPQRSTUVWXYZÄÏÖÜŸĆČĐĽŃŠŽ];
-$vowelUpper = [AEIOUYÄÏÖÜŸ];
-$vowelLower = [aeiouyäïöüÿ];
-$vowel = [$vowelUpper $vowelLower];
-$gTriggerUpper = [EIYÖÏŸ];
-$gTriggerLower = [eiyöïÿ];
-$gTrigger = [$gTriggerUpper $gTriggerLower];
+['·] > ;
 
-· > ;
+DZ > DZ; Dz > Dz; dz > dz;
+TS > TS; Ts > Ts; ts > ts;
+TH > TH; Th > Th; th > th;
+DH > DH; Dh > Dh; dh > dh;
+KH > KH; Kh > Kh; kh > kh;
+GH > GH; Gh > Gh; gh > gh;
 
-Š } $upper > CH;
+NG } [EIYÖÏ] > NGU;
+NG } [eiyöï] > NGu;
+Ng } [EIYÖÏeiyöï] > Ngu;
+ng } [EIYÖÏeiyöï] > ngu;
+NG > NG; Ng > Ng; ng > ng;
+
+IJ } [ABDEFGHIKLMNOPQRSTUVWXYZÄÏÖÜŸĆČĐĽŃŠŽ] > EI;
+IJ > Ei;
+Ij > Ei;
+ij > ei;
+
+Š } [ABDEFGHIKLMNOPQRSTUVWXYZÄÏÖÜŸĆČĐĽŃŠŽ] > CH;
 Š > Ch;
 š > ch;
 
-Č } $upper > TCH;
+Č } [ABDEFGHIKLMNOPQRSTUVWXYZÄÏÖÜŸĆČĐĽŃŠŽ] > TCH;
 Č > Tch;
 č > tch;
 
-Ć } $upper > TCH;
+Ć } [ABDEFGHIKLMNOPQRSTUVWXYZÄÏÖÜŸĆČĐĽŃŠŽ] > TCH;
 Ć > Tch;
 ć > tch;
 
-Đ } $upper > DJ;
+Đ } [ABDEFGHIKLMNOPQRSTUVWXYZÄÏÖÜŸĆČĐĽŃŠŽ] > DJ;
 Đ > Dj;
 đ > dj;
 
-Ľ } $upper > LI;
+Ľ } [:^Letter:] > ILLE;
+ľ } [:^Letter:] > ille;
+Ľ } [ABDEFGHIKLMNOPQRSTUVWXYZÄÏÖÜŸĆČĐĽŃŠŽ] > LI;
 Ľ > Li;
 ľ > li;
 
-Ń } $upper > GN;
+Ń } [ABDEFGHIKLMNOPQRSTUVWXYZÄÏÖÜŸĆČĐĽŃŠŽ] > GN;
 Ń > Gn;
 ń > gn;
 
-X } $upper > KH;
+X } [ABDEFGHIKLMNOPQRSTUVWXYZÄÏÖÜŸĆČĐĽŃŠŽ] > KH;
 X > Kh;
 x > kh;
 
 Ž > J;
 ž > j;
 
-$vowel { S } $vowelUpper > SS;
-$vowel { S } $vowelLower > Ss;
-$vowel { s } $vowel > ss;
+[AEIOUYÄÏÖÜŸJaeiouyäïöüÿj] { S } [AEIOUYÄÏÖÜŸaeiouyäïöüÿ] > SS;
+[AEIOUYÄÏÖÜŸJaeiouyäïöüÿj] { S } [aeiouyäïöüÿ] > Ss;
+[AEIOUYÄÏÖÜŸJaeiouyäïöüÿj] { s } [AEIOUYÄÏÖÜŸaeiouyäïöüÿ] > ss;
 
-G } $gTriggerUpper > GU;
-G } $gTriggerLower > Gu;
-g } $gTrigger > gu;
+S } [:^Letter:] > SSE;
+s } [:^Letter:] > sse;
 
-Ä } $upper > AE;
+G } [EIYÖÏ] > GU;
+G } [eiyöï] > Gu;
+g } [EIYÖÏeiyöï] > gu;
+
+Ä } [ABDEFGHIKLMNOPQRSTUVWXYZÄÏÖÜŸĆČĐĽŃŠŽ] > AE;
 Ä > Ae;
 ä > ae;
 
-Ö } $upper > EU;
+Ö } [ABDEFGHIKLMNOPQRSTUVWXYZÄÏÖÜŸĆČĐĽŃŠŽ] > EU;
 Ö > Eu;
 ö > eu;
 
-U } $upper > OU;
+U } [ABDEFGHIKLMNOPQRSTUVWXYZÄÏÖÜŸĆČĐĽŃŠŽ] > OU;
 U > Ou;
 u > ou;
 
-Ü } $upper > U;
 Ü > U;
 ü > u;
+
+Ÿ > U;
+ÿ > u;
+
+Ï > I;
+ï > i;
+
+::Null;
+
+ç } [eéèêëiîïyEÉÈÊËIÎÏY] > c;
+Ç } [eéèêëiîïyEÉÈÊËIÎÏY] > C;
 `;

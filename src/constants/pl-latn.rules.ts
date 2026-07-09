@@ -1,38 +1,13 @@
 export const plLatnRules = `
-dz } i > đ;
-dz } I > đ;
-Dz } i > Đ;
-Dz } I > Đ;
-DZ } i > Đ;
-DZ } I > Đ;
-
-c } i > ć;
-c } I > ć;
-C } i > Ć;
-C } I > Ć;
-
-n } i > ń;
-n } I > ń;
-N } i > Ń;
-N } I > Ń;
-
-s } i > š;
-s } I > š;
-S } i > Š;
-S } I > Š;
-
-z } i > ž;
-z } I > ž;
-Z } i > Ž;
-Z } I > Ž;
-
-dż > dž;
-Dż > Dž;
-DŻ > DŽ;
+::NFC;
 
 dź > đ;
 Dź > Đ;
 DŹ > Đ;
+
+dz } [iI] > đ;
+Dz } [iI] > Đ;
+DZ } [iI] > Đ;
 
 ch > x;
 Ch > X;
@@ -49,6 +24,18 @@ RZ > Ž;
 sz > š;
 Sz > Š;
 SZ > Š;
+
+c } [iI] > ć;
+C } [iI] > Ć;
+
+n } [iI] > ń;
+N } [iI] > Ń;
+
+s } [iI] > š;
+S } [iI] > Š;
+
+z } [iI] > ž;
+Z } [iI] > Ž;
 
 c > ts;
 C } [:Lower:] > Ts;

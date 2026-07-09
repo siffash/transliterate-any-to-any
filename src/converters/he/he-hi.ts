@@ -2,7 +2,7 @@ import { Text } from "types";
 
 export const heHi = async (text: Text) => {
   const { RBT } = await import("icu-transliterator");
-  const { heIpa } = await import("converters/he-ipa");
+  const { heIpa } = await import("converters/he/he-ipa");
   const { ipaHiRules } = await import("constants/ipa-hi.rules");
 
   const transliterator = RBT.fromRules(ipaHiRules);

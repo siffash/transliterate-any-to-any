@@ -52,9 +52,9 @@ z > z;
 
 h > ;
 
-[ $vowel ɾ ɫ ʃ ʒ f v ] {b} $vowel > β;
-[ $vowel ɾ ɫ ʃ ʒ f v ] {d} $vowel > ð;
-[ $vowel ɾ ɫ ʃ ʒ f v ] {g} $vowel > ɣ;
+[$vowel ɾ ɫ ʃ ʒ f v] {b} $vowel > β;
+[$vowel ɾ ɫ ʃ ʒ f v] {d} $vowel > ð;
+[$vowel ɾ ɫ ʃ ʒ f v] {g} $vowel > ɣ;
 
 ãe > ɐ̃j̃;
 ão > ɐ̃w̃;

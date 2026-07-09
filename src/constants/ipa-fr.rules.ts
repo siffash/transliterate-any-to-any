@@ -1,21 +1,21 @@
 export const ipaFrRules = `
 ::Null;
 
-$vowel = [aeiouyâæêôõøăęĩœũơưɐɑɒɔɘəɚɛɜɝɤɨɪɯɵʉʊʌʏẽ];
-$consonant = [bcdfghjklmnpqrstvwxzçðčďħŋťžɓɕɖɗɟɡɢɣɥɦɧɫɭɱɲɳɹɽɾʀʁʂʃʈʋʎʐʑʒʔʕʝβθχ];
-$frontVowel = [eêiyɛɪɨɘəɜøɵœęĩẽ];
+$vowel_fr = [aeiouyâæêôõøăęĩœũơưɐɑɒɔɘəɚɛɜɝɤɨɪɯɵʉʊʌʏẽ];
+$consonant_fr = [bcdfɸghjklmnpqrstvwxzçðčďħŋťžɓɕɖɗɟɡɢɣɰɥɦɧɫɭɱɲɳɹɽɾʀʁʂʃʈʋʎʐʑʒʔʕʝβθχ];
+$frontVowel_fr = [eêiyɛɪɨɘəɜøɵœęĩẽ];
 
-[ʰʱʲʷʼˈ̇ˌ̧ːˠˤ˥˧˩̝̟̥̩̪̯̃̊͡ʔ] > ;
+[͈̚ʰʱʲʷʼˈ̇ˌ̧ːˠˤ˥˧˩̝̟̥̩̪̯̃̊͡ʔ] > ;
 
 ::Null;
 
-$vowel { s } $vowel > ss;
+$vowel_fr { s } $vowel_fr > ss;
 ɲ } [:^Letter:] > gne;
-k } $frontVowel > qu;
+k } $frontVowel_fr > qu;
 k > c;
-ɡ } $frontVowel > gu;
+ɡ } $frontVowel_fr > gu;
 [ɡɢ] > g;
-ɣ > gh;
+[ɣɰ] > gh;
 [ęẽĩ] > in;
 õ > on;
 ũ > un;
@@ -47,4 +47,9 @@ e > é;
 [ʐʑʒž] > j;
 [ʝɟj] > y;
 [χx] > kh;
+ɸ > f;
+
+::Null;
+
+ç } [eéèêëiîïy] > c;
 `;

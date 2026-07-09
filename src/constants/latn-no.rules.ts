@@ -1,19 +1,30 @@
 export const latnNoRules = `
 ::Null;
 
-Ä } [:Lower:] > Æ;
+IJ > EI;
+Ij > Ei;
+ij > ei;
+TH > T;
+Th > T;
+th > t;
+DH > D;
+Dh > D;
+dh > d;
+GH > G;
+Gh > G;
+gh > g;
+['·] > ;
+
+::Null;
+
 Ä > Æ;
 ä > æ;
-Ö } [:Lower:] > Ø;
 Ö > Ø;
 ö > ø;
-Ü } [:Lower:] > Y;
 Ü > Y;
 ü > y;
-Ï } [:Lower:] > I;
 Ï > I;
 ï > i;
-Ÿ } [:Lower:] > Y;
 Ÿ > Y;
 ÿ > y;
 Ć } [:Lower:] > Tsj;

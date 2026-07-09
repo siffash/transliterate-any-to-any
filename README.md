@@ -1,15 +1,12 @@
 # transliterate-any-to-any
 
-A Node.js library for transliteration from any language to any language (see the list
-of [supported languages](#supported-languages)). Supports batching - you can pass an array of texts to be transliterated
-at once. Does not load libraries/mappings/rules if they are not needed for transliteration between the specified
-languages.
+A Node.js library for [transliteration](https://en.wikipedia.org/wiki/Transliteration) (not translation) from any language to any language (see the [list of the supported languages](#supported-languages)). Loads only specific libraries/mappings/rules needed for the given transliteration. Supports batching - you can pass an array of texts.
 
-### Most suitable for transliteration of:
+### Most suitable for transliteration of proper nouns:
 
 - Place names, toponyms (e.g. names of cities, neighborhoods, towns, villages, streets, rivers, mountains, etc.)
-- Personal names (e.g. first names, middle names, last names, nicknames, etc.)
-- Business names (e.g. company names, brand names, trademarks, etc.)
+- Personal names, anthroponyms (e.g. first names, middle names, last names, nicknames, names of pets, etc.)
+- Business names (e.g. company or organization names, brand names, trademarks, etc.)
 
 ## Examples
 
@@ -27,8 +24,7 @@ await transliterate(["上海", "广州"], { from: "zh", to: "bg" }); // ["Шан
 
 - You need to have `pkg-config` (`brew install pkg-config`)
 - You need to have ICU (`brew install icu4c`)
-- You need to have ICU added to the `pkg-config` path (e.g.
-  `echo 'export PKG_CONFIG_PATH="/opt/homebrew/opt/icu4c@78/lib/pkgconfig"' >> ~/.zshrc` for macOS)
+- You need to have ICU added to the `pkg-config` path (e.g. `echo 'export PKG_CONFIG_PATH="/opt/homebrew/opt/icu4c@78/lib/pkgconfig"' >> ~/.zshrc` for macOS)
 
 ## API Reference
 
@@ -99,17 +95,13 @@ await transliterate(["上海", "广州"], { from: "zh", to: "bg" }); // ["Шан
 
 ## Third-party libraries used
 
-- [ICU](https://icu.unicode.org/)'s
-  [Rule-Based Transliterators](https://unicode-org.github.io/icu/userguide/transforms/general/rules.html)
-  through [icu-transliterator](https://github.com/longnow/node-icu-transliterator)
+- [ICU](https://icu.unicode.org/)'s [Transforms](https://unicode-org.github.io/icu/userguide/transforms/) through [icu-transliterator](https://github.com/longnow/node-icu-transliterator)
 - [aromanize](https://github.com/fujaru/aromanize-js) for handling Korean Hangul
 - [hangul-js](https://github.com/e-/Hangul.js) for handling Korean Hangul
 - [pinyin-pro](https://github.com/zh-lx/pinyin-pro) for handling Pinyin (Chinese)
-- [opencc](https://github.com/BYVoid/OpenCC) for handling Traditional Chinese, Simplified Chinese and Japanese
-  Kanji (Shinjitai)
+- [opencc](https://github.com/BYVoid/OpenCC) for handling Traditional Chinese, Simplified Chinese and Japanese Kanji (Shinjitai)
 - [kuroshiro](https://github.com/hexenq/kuroshiro) for handling Japanese Hiragana and Katakana
-- [kuroshiro-analyzer-kuromoji](https://github.com/hexenq/kuroshiro-analyzer-kuromoji) for handling Japanese
-  Hiragana and Katakana
+- [kuroshiro-analyzer-kuromoji](https://github.com/hexenq/kuroshiro-analyzer-kuromoji) for handling Japanese Hiragana and Katakana
 - [hanviet-pinyin-words](https://github.com/ph0ngp/hanviet-pinyin-words) for handling Vietnamese
 - [phonemize](https://github.com/hans00/phonemize) for converting some languages to IPA
 - [ipa-dict](https://github.com/open-dict-data/ipa-dict) for Arabic-IPA dictionary

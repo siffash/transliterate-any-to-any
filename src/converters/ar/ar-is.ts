@@ -2,10 +2,10 @@ import { Text } from "types";
 
 export const arIs = async (text: Text) => {
   const { RBT } = await import("icu-transliterator");
-  const { arIpa } = await import("converters/ar-ipa");
+  const { arIpa } = await import("converters/ar/ar-ipa");
   const { ipaIsRules } = await import("constants/ipa-is.rules");
 
-  const transliterator = RBT.fromRules(ipaIsRules);
+  const transliterator = RBT.fromRules(ipaIsRules + "::Title;");
 
   if (typeof text === "string") {
     const ipa = await arIpa<string>(text);

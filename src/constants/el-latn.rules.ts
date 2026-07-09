@@ -1,92 +1,115 @@
 export const elLatnRules = `
 ::NFD;
 
-$mark = [:Mn:];
-$voiced = [βγδζλμνρΒΓΔΖΛΜΝΡαεηιουωΑΕΗΙΟΥΩ];
-
 ́ > ;
+̀ > ;
+͂ > ;
 ̓ > ;
 ̔ > ;
 ͅ > ;
 
-Α Υ ̈ > A Y ̈;
-Α υ ̈ > A y ̈;
-α υ ̈ > a y ̈;
-Ε Υ ̈ > E Y ̈;
-Ε υ ̈ > E y ̈;
-ε υ ̈ > e y ̈;
-Η Υ ̈ > I Y ̈;
-Η υ ̈ > I y ̈;
-η υ ̈ > i y ̈;
-Ο Υ ̈ > O Y ̈;
-Ο υ ̈ > O y ̈;
-ο υ ̈ > o y ̈;
+::Null;
 
-Ο υ > U;
-Ο Υ > U;
-ο υ > u;
+$voiced = [βγδζλμνρΒΓΔΖΛΜΝΡαεηιουωΑΕΗΙΟΥΩ];
 
-Α ι > E;
-Α Ι > E;
-α ι > e;
+Α Υ ̈ > A I;
+Α υ ̈ > A i;
+α υ ̈ > a i;
+Ε Υ ̈ > E I;
+Ε υ ̈ > E i;
+ε υ ̈ > e i;
+Η Υ ̈ > I I;
+Η υ ̈ > I i;
+η υ ̈ > i i;
+Ο Υ ̈ > O I;
+Ο υ ̈ > O i;
+ο υ ̈ > o i;
+Α Ι ̈ > A I;
+Α ι ̈ > A i;
+α ι ̈ > a i;
+Ε Ι ̈ > E I;
+Ε ι ̈ > E i;
+ε ι ̈ > e i;
+Ο Ι ̈ > O I;
+Ο ι ̈ > O i;
+ο ι ̈ > o i;
+Υ Ι ̈ > I I;
+Υ ι ̈ > I i;
+υ ι ̈ > i i;
 
-Ε ι > I;
-Ε Ι > I;
-ε ι > i;
-
-Ο ι > I;
-Ο Ι > I;
-ο ι > i;
-
-Υ ι > I;
-Υ Ι > I;
-υ ι > i;
-
-Α υ } $mark* $voiced > A v;
-Α Υ } $mark* $voiced > A V;
-α υ } $mark* $voiced > a v;
-
-Α υ > A f;
+Α Υ } $voiced > A V;
+Α υ } $voiced > A v;
+α υ } $voiced > a v;
 Α Υ > A F;
+Α υ > A f;
 α υ > a f;
 
-Ε υ } $mark* $voiced > E v;
-Ε Υ } $mark* $voiced > E V;
-ε υ } $mark* $voiced > e v;
-
-Ε υ > E f;
+Ε Υ } $voiced > E V;
+Ε υ } $voiced > E v;
+ε υ } $voiced > e v;
 Ε Υ > E F;
+Ε υ > E f;
 ε υ > e f;
 
-Η υ } $mark* $voiced > I v;
-Η Υ } $mark* $voiced > I V;
-η υ } $mark* $voiced > i v;
-
-Η υ > I f;
+Η Υ } $voiced > I V;
+Η υ } $voiced > I v;
+η υ } $voiced > i v;
 Η Υ > I F;
+Η υ > I f;
 η υ > i f;
 
-Γ Κ } [:Lower:] > G k;
-Γ Κ > G K;
-Γ κ > G k;
-γ κ > g k;
+Ο Υ > U;
+Ο υ > U;
+ο υ > u;
+
+Α Ι > E;
+Α ι > E;
+α ι > e;
+
+Ε Ι > I;
+Ε ι > I;
+ε ι > i;
+
+Ο Ι > I;
+Ο ι > I;
+ο ι > i;
+
+Υ Ι > I;
+Υ ι > I;
+υ ι > i;
 
 [:^Letter:] { Μ Π > B;
 [:^Letter:] { Μ π > B;
+[:^Letter:] { μ π > b;
 Μ Π } [:^Letter:] > B;
 Μ π } [:^Letter:] > b;
 μ π } [:^Letter:] > b;
-[:^Letter:] { μ π > b;
+Μ Π } [:Lower:] > M b;
+Μ Π > M B;
+Μ π > M b;
+μ π > m b;
 
-Μ Π } [:Lower:] > M p;
-Μ Π > M P;
-Μ π > M p;
-μ π > m p;
+[:^Letter:] { Ν Τ > D;
+[:^Letter:] { Ν τ > D;
+[:^Letter:] { ν τ > d;
+Ν Τ } [:^Letter:] > D;
+Ν τ } [:^Letter:] > d;
+ν τ } [:^Letter:] > d;
+Ν Τ } [:Lower:] > N d;
+Ν Τ > N D;
+Ν τ > N d;
+ν τ > n d;
 
-Ν Τ } [:Lower:] > N t;
-Ν Τ > N T;
-Ν τ > N t;
-ν τ > n t;
+[:^Letter:] { Γ Κ > G;
+[:^Letter:] { Γ κ > G;
+[:^Letter:] { γ κ > g;
+Γ Κ } [:^Letter:] > G;
+Γ κ } [:^Letter:] > g;
+γ κ } [:^Letter:] > g;
+Γ Κ } [:Lower:] > N g;
+Γ Κ > N G;
+Γ κ > N g;
+γ κ > n g;
 
 Γ Γ } [:Lower:] > N g;
 Γ Γ > N G;
@@ -115,32 +138,25 @@ $voiced = [βγδζλμνρΒΓΔΖΛΜΝΡαεηιουωΑΕΗΙΟΥΩ];
 Τ ζ > D z;
 τ ζ > d z;
 
-Θ } [:Lower:] > T h;
-Θ > T H;
-θ > t h;
-
-Ξ } [:Lower:] > K s;
-Ξ > K S;
-ξ > k s;
-
-Ψ } [:Lower:] > P s;
-Ψ > P S;
-ψ > p s;
-
 Α > A;
 α > a;
 Β > V;
 β > v;
-Γ > G;
-γ > g;
-Δ > D;
-δ > d;
+Γ } [:Lower:] > G h;
+Γ > G H;
+γ > g h;
+Δ } [:Lower:] > D h;
+Δ > D H;
+δ > d h;
 Ε > E;
 ε > e;
 Ζ > Z;
 ζ > z;
 Η > I;
 η > i;
+Θ } [:Lower:] > T h;
+Θ > T H;
+θ > t h;
 Ι > I;
 ι > i;
 Κ > K;
@@ -151,6 +167,9 @@ $voiced = [βγδζλμνρΒΓΔΖΛΜΝΡαεηιουωΑΕΗΙΟΥΩ];
 μ > m;
 Ν > N;
 ν > n;
+Ξ } [:Lower:] > K s;
+Ξ > K S;
+ξ > k s;
 Ο > O;
 ο > o;
 Π > P;
@@ -162,14 +181,19 @@ $voiced = [βγδζλμνρΒΓΔΖΛΜΝΡαεηιουωΑΕΗΙΟΥΩ];
 ς > s;
 Τ > T;
 τ > t;
-Υ > Y;
-υ > y;
+Υ > I;
+υ > i;
 Φ > F;
 φ > f;
 Χ > X;
 χ > x;
+Ψ } [:Lower:] > P s;
+Ψ > P S;
+ψ > p s;
 Ω > O;
 ω > o;
+
+̈ > ;
 
 ::NFC;
 `;

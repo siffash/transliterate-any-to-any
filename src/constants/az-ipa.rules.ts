@@ -44,12 +44,12 @@ s } $voiced > z;
 ç } $voiced > d͡ʒ;
 ş } $voiced > ʒ;
 
-q } [ $voiceless [:^Letter:] ] > x;
-q } [ $back_v $voiced ] > ɡ;
+q } [$voiceless [:^Letter:]] > x;
+q } [$back_v $voiced] > ɡ;
 q > ɡ;
 
 k } $front_v > c;
-k } [ $voiceless [:^Letter:] ] > ç;
+k } [$voiceless [:^Letter:]] > ç;
 
 l } $back_v > ɫ;
 

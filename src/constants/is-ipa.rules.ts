@@ -1,8 +1,8 @@
 export const isIpaRules = `
 ::Lower;
 
-$V = [a á e é i í o ó u ú y ý æ ö au ei ey ɔ ʏ œ ː];
-$front = [e é i í y ý æ ei ey];
+$V = [a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː];
+$front = [e é i í y ý æ {ei} {ey}];
 $voicedC = [b d ð g ɣ j l m n r v];
 $singleC = [b c d f g h j k l m n p q r s t v w x z þ ð ʰ ̥];
 $stop = [p t k c];
@@ -122,7 +122,6 @@ n { $stop } > n̥;
 { n k } > ŋ̊ k;
 
 { æ } r [:^Letter:] > aiː;
-{ æ } r$ > aiː;
 
 [:^Letter:] { á } $singleC $V > auː;
 [:^Letter:] $singleC { á } $singleC $V > auː;
@@ -222,7 +221,6 @@ ey > ei;
 á > au;
 é > jɛ;
 v { í } k [:^Letter:] > iː;
-v { í } k $ > iː;
 í > i;
 ó > ou;
 ú > u;
@@ -248,8 +246,7 @@ z > s;
 ö > œ;
 
 ::Null;
-sːɔːn [:^Letter:] > sːɔn;
-sːɔːn $ > sːɔn;
-sɔːn [:^Letter:] > sɔn;
-sɔːn $ > sɔn;
+
+sːɔːn } [:^Letter:] > sːɔn;
+sɔːn } [:^Letter:] > sɔn;
 `;

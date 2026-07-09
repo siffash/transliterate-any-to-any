@@ -1,30 +1,29 @@
 export const ipaEsRules = `
 ::Null;
 
-$vowel = [a â ă æ ɐ ɑ ɒ e ê ę ɛ ɘ ə ɜ ẽ i ĩ ɪ ɨ y o ô õ ø œ ơ ɔ ɤ ɵ u ũ ʊ ʉ ɯ ư ʌ y ʏ];
-$front = [e ê ę ɛ ɘ ə ɜ ẽ i ĩ ɪ ɨ y ʏ œ];
+$vowel_ipa = [a â ă æ ɐ ɑ ɒ e ê ę ɛ ɘ ə ɜ ẽ i ĩ ɪ ɨ y o ô õ ø œ ơ ɔ ɤ ɵ u ũ ʊ ʉ ɯ ư ʌ y ʏ];
+$front_ipa = [e ê ę ɛ ɘ ə ɜ ẽ i ĩ ɪ ɨ y ʏ œ];
 
-[ʰ ʱ ʲ ʷ ʼ ˈ ̇ ˌ ̧ ː ˠ ˤ ˥ ˧ ˩ ̝ ̟ ̥ ̩ ̪ ̯ ̃ ̊ ͡] > ;
-[ʔ ʕ] > ;
+[͈̚ ʔ ʕ ʰ ʱ ʲ ʷ ʼ ˈ ̇ ˌ ̧ ː ˠ ˤ ˥ ˧ ˩ ̝ ̟ ̥ ̩ ̪ ̯ ̃ ̊ ͡] > ;
 
 ::Null;
 
 t [ʃ ɕ ʂ] > ch;
 d [ʒ ʐ ʑ ž ʝ] > y;
 
-$vowel { [r ʀ ɹ ʁ] } $vowel > rr;
-$vowel { [i ɪ ɨ ĩ] } [:^Letter:] > y;
+$vowel_ipa { [r ʀ ɹ ʁ] } $vowel_ipa > rr;
+$vowel_ipa { [i ɪ ɨ ĩ] } [:^Letter:] > y;
 
-[:^Letter:] { w } $front > hu;
+[:^Letter:] { w } $front_ipa > hu;
 w > gu;
 
-[c k q] } $front > qu;
+[c k q] } $front_ipa > qu;
 [k q] > c;
 
-[g ɡ ɢ ɟ ɣ] } $front > gu;
-[ɡ ɢ ɟ ɣ] > g;
+[g ɡ ɢ ɟ ɣ ɰ] } $front_ipa > gu;
+[ɡ ɢ ɟ ɣ ɰ] > g;
 
-θ } $front > c;
+θ } $front_ipa > c;
 θ > z;
 
 [č ç] > ch;
@@ -42,6 +41,7 @@ w > gu;
 [ʋ] > v;
 [ɥ] > hu;
 j > y;
+ɸ > f;
 
 [ʀ ɹ ʁ ɾ ɽ] > r;
 
@@ -51,4 +51,41 @@ j > y;
 [ĩ ɪ ɨ y ʏ] > i;
 [ô õ ø ơ ɔ ɤ ɵ] > o;
 [ũ ʊ ʉ ɯ ư] > u;
+
+::Null;
+
+b { b > ;
+c { c } [aáoóuúübcdfghjklmnñpqrstvwxyz] > ;
+c { c } [:^Letter:] > ;
+d { d > ;
+f { f > ;
+g { g > ;
+h { h > ;
+j { j > ;
+k { k > ;
+m { m > ;
+p { p > ;
+q { q > ;
+s { s > ;
+t { t > ;
+v { v > ;
+w { w > ;
+x { x > ;
+z { z > ;
+
+::Null;
+
+n } [bp] > m;
+m } v > n;
+
+q } [eéií] > qu;
+q } ü [eéií] > c;
+q } [uúü] [aáoóuú] > c;
+q } [uúü] [bcdfghjklmnñpqrstvwxyz] > c;
+q } [uúü] [:^Letter:] > c;
+q } [aáAÁoóOÓ] > c;
+q } [bcdfghjklmnñpqrstvwxyz] > c;
+q } [:^Letter:] > c;
+
+[bcdfghjklmnñpqrstvwxyz] { y } [:^Letter:] > i;
 `;

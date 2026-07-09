@@ -1,7 +1,7 @@
 export const ipaItRules = `
 ::Null;
 
-[ʕʔˈ̇ˌ̧ːˠˤ˥˧˩̝̟̥̩̪̯̃̊͡ʰʱʲʷʼ] > ;
+[͈̚ʕʔˈ̇ˌ̧ːˠˤ˥˧˩̝̟̥̩̪̯̃̊͡ʰʱʲʷʼ] > ;
 
 ::Null;
 
@@ -13,25 +13,25 @@ export const ipaItRules = `
 
 ::Null;
 
-$front = [e i];
+$front_it = [e i];
 
-[k q x χ] } $front > ch;
+[k q x χ] } $front_it > ch;
 [k q x χ] > c;
-[ɡ ɢ ɣ] } $front > gh;
-[ɡ ɢ ɣ] > g;
-g } $front > gh;
-tʃ } $front > c;
+[ɡ ɢ ɣ ɰ] } $front_it > gh;
+[ɡ ɢ ɣ ɰ] > g;
+g } $front_it > gh;
+tʃ } $front_it > c;
 tʃ > ci;
-č } $front > c;
+č } $front_it > c;
 č > ci;
 c } [^e i] > ci;
-dʒ } $front > g;
+dʒ } $front_it > g;
 dʒ > gi;
-ɟ } $front > g;
+ɟ } $front_it > g;
 ɟ > gi;
-[ʃ ʂ ɕ ç] } $front > sc;
+[ʃ ʂ ɕ ç] } $front_it > sc;
 [ʃ ʂ ɕ ç] > sci;
-[ʒ ʐ ʑ ž] } $front > g;
+[ʒ ʐ ʑ ž] } $front_it > g;
 [ʒ ʐ ʑ ž] > gi;
 ʎ } i > gl;
 ʎ > gli;
@@ -46,4 +46,11 @@ dʒ > gi;
 ɱ > m;
 ʋ > v;
 [ɦ ɧ ħ] > h;
+ɸ > f;
+
+::Null;
+
+[cg] { i } [eèéiìí] > ;
+g n { i } [aàáeèéiìíoòóuùú] > ;
+g l { i } [iìí] > ;
 `;

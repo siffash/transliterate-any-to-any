@@ -1,6 +1,7 @@
 export const latnEsRules = `
 ::Null;
 
+['·] > ;
 Ä > E;
 ä > e;
 Ö > O;
@@ -9,54 +10,122 @@ export const latnEsRules = `
 ü > u;
 Ï > I;
 ï > i;
-Ÿ > Y;
-ÿ > y;
-
+Ÿ > I;
+ÿ > i;
+IJ > EI;
+Ij > Ei;
+ij > ei;
 Č } [:Lower:] > Ch;
 Č > CH;
 č > ch;
-
 Ć } [:Lower:] > Ch;
 Ć > CH;
 ć > ch;
-
 DŽ > Y;
 Dž > Y;
 dž > y;
-
+DZ > Z;
+Dz > Z;
+dz > z;
+Đ > Y;
+đ > y;
 Ľ } [:Lower:] > Ll;
 Ľ > LL;
 ľ > ll;
-
 Ń > Ñ;
 ń > ñ;
-
 Š } [:Lower:] > Sh;
 Š > SH;
 š > sh;
-
 Ž } [:Lower:] > Zh;
 Ž > ZH;
 ž > zh;
-
-Đ > Y;
-đ > y;
-
-X > J;
-x > j;
-
+TH > Z;
+Th > Z;
+th > z;
+DH > D;
+Dh > D;
+dh > d;
+GH > G;
+Gh > G;
+gh > g;
+KH > J;
+Kh > J;
+kh > j;
 KS > X;
 Ks > X;
 kS > x;
 ks > x;
+Q > K;
+q > k;
+X > J;
+x > j;
+H > J;
+h > j;
 
-K } [eiy] > Qu;
-K } [EIY] > QU;
-k } [eEiIyY] > qu;
+::Null;
+
+[:^Letter:] { I } [:^Letter:] > Y;
+[:^Letter:] { i } [:^Letter:] > y;
+[aAeEoO] { I } [:^Letter:] > Y;
+[aAeEoO] { i } [:^Letter:] > y;
+K } [EI] > QU;
+K } [ei] > Qu;
+k } [EIei] > qu;
 K > C;
 k > c;
+G } [EI] > GU;
+G } [ei] > Gu;
+g } [EIei] > gu;
+Z } [EIei] > C;
+z } [EIei] > c;
 
-G } [eiy] > Gu;
-G } [EIY] > GU;
-g } [eEiIyY] > gu;
+::Null;
+
+[bB] { [bB] > ;
+[cC] { [cC] } [aáAÁoóOÓuúUÚüÜbcdfghjklmnñpqrstvwxyzBCDFGHJKLMNÑPQRSTVWXYZ] > ;
+[cC] { [cC] } [:^Letter:] > ;
+[dD] { [dD] > ;
+[fF] { [fF] > ;
+[gG] { [gG] > ;
+[hH] { [hH] > ;
+[jJ] { [jJ] > ;
+[kK] { [kK] > ;
+[mM] { [mM] > ;
+[pP] { [pP] > ;
+[qQ] { [qQ] > ;
+[sS] { [sS] > ;
+[tT] { [tT] > ;
+[vV] { [vV] > ;
+[wW] { [wW] > ;
+[xX] { [xX] > ;
+[zZ] { [zZ] > ;
+
+::Null;
+
+n } [bpBP] > m;
+N } [bpBP] > M;
+m } [vV] > n;
+M } [vV] > N;
+
+Q } [EÉIÍ] > QU;
+Q } [eéií] > Qu;
+q } [eéEÉiíIÍ] > qu;
+q } [üÜ] [eéEÉiíIÍ] > c;
+Q } [üÜ] [eéEÉiíIÍ] > C;
+q } [uúüÜUÚ] [aáAÁoóOÓuúUÚ] > c;
+Q } [uúüÜUÚ] [aáAÁoóOÓuúUÚ] > C;
+q } [uúüÜUÚ] [bcdfghjklmnñpqrstvwxyzBCDFGHJKLMNÑPQRSTVWXYZ] > c;
+Q } [uúüÜUÚ] [bcdfghjklmnñpqrstvwxyzBCDFGHJKLMNÑPQRSTVWXYZ] > C;
+q } [uúüÜUÚ] [:^Letter:] > c;
+Q } [uúüÜUÚ] [:^Letter:] > C;
+q } [aáAÁoóOÓ] > c;
+Q } [aáAÁoóOÓ] > C;
+q } [bcdfghjklmnñpqrstvwxyzBCDFGHJKLMNÑPQRSTVWXYZ] > c;
+Q } [bcdfghjklmnñpqrstvwxyzBCDFGHJKLMNÑPQRSTVWXYZ] > C;
+q } [:^Letter:] > c;
+Q } [:^Letter:] > C;
+
+[bcdfghjklmnñpqrstvwxyzBCDFGHJKLMNÑPQRSTVWXYZ] { y } [:^Letter:] > i;
+[bcdfghjklmnñpqrstvwxyzBCDFGHJKLMNÑPQRSTVWXYZ] { Y } [:^Letter:] > I;
 `;

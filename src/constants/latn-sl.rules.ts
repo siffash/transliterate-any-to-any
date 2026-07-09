@@ -1,24 +1,42 @@
 export const latnSlRules = `
 ::Null;
 
-$upper = [A-ZÄÏÖÜŸĆČĐĽŃŠŽ];
-
 TS > C;
 Ts > C;
 ts > c;
 
-$upper { Đ } [:^Letter:] > DŽ;
-Đ } $upper > DŽ;
+TH > T;
+Th > T;
+th > t;
+
+DH > D;
+Dh > D;
+dh > d;
+
+GH > G;
+Gh > G;
+gh > g;
+
+KH > H;
+Kh > H;
+kh > h;
+
+IJ > EJ;
+Ij > Ej;
+ij > ej;
+
+[A-ZÄÏÖÜŸĆČĐĽŃŠŽ] { Đ } [:^Letter:] > DŽ;
+Đ } [A-ZÄÏÖÜŸĆČĐĽŃŠŽ] > DŽ;
 Đ > Dž;
 đ > dž;
 
-$upper { Ľ } [:^Letter:] > LJ;
-Ľ } $upper > LJ;
+[A-ZÄÏÖÜŸĆČĐĽŃŠŽ] { Ľ } [:^Letter:] > LJ;
+Ľ } [A-ZÄÏÖÜŸĆČĐĽŃŠŽ] > LJ;
 Ľ > Lj;
 ľ > lj;
 
-$upper { Ń } [:^Letter:] > NJ;
-Ń } $upper > NJ;
+[A-ZÄÏÖÜŸĆČĐĽŃŠŽ] { Ń } [:^Letter:] > NJ;
+Ń } [A-ZÄÏÖÜŸĆČĐĽŃŠŽ] > NJ;
 Ń > Nj;
 ń > nj;
 
@@ -40,15 +58,62 @@ y > j;
 Ä > E;
 ä > e;
 
-Ï > I;
-ï > i;
-
 Ö > E;
 ö > e;
 
-Ü > I;
-ü > i;
+[ÏÜŸ] > I;
+[ïüÿ] > i;
 
-Ÿ > J;
-ÿ > j;
+['·] > ;
+
+::Null;
+
+[:^Letter:] { i } [aeouAEOU] > j;
+[:^Letter:] { I } [aeouAEOU] > J;
+
+::Null;
+
+ia > ija;
+ie > ije;
+io > ijo;
+iu > iju;
+iA > ijA;
+iE > ijE;
+iO > ijO;
+iU > ijU;
+Ia > Ija;
+Ie > Ije;
+Io > Ijo;
+Iu > Iju;
+IA > IJA;
+IE > IJE;
+IO > IJO;
+IU > IJU;
+
+::Null;
+
+[čšžcČŠŽC] { [jJ] > ;
+
+::Null;
+
+[bB] { [bB] > ;
+[cC] { [cC] > ;
+[čČ] { [čČ] > ;
+[dD] { [dD] > ;
+[fF] { [fF] > ;
+[gG] { [gG] > ;
+[hH] { [hH] > ;
+[jJ] { [jJ] > ;
+[kK] { [kK] > ;
+[lL] { [lL] > ;
+[mM] { [mM] > ;
+[nN] { [nN] > ;
+[pP] { [pP] > ;
+[rR] { [rR] > ;
+[sS] { [sS] > ;
+[šŠ] { [šŠ] > ;
+[tT] { [tT] > ;
+[vV] { [vV] > ;
+[zZ] { [zZ] > ;
+[žŽ] { [žŽ] > ;
 `;

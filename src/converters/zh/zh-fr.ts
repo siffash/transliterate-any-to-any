@@ -10,8 +10,7 @@ export const zhFr = async (text: Text) => {
   const transliterator = RBT.fromRules(zhLatnRules + latnFrRules);
 
   const convert = async (text: string) => {
-    const split = wordSplitter(text, "zh");
-    const romanized = pinyin(split, { separator: "" });
+    const romanized = await wordSplitter(text, "zh", text => pinyin(text, { separator: "" }));
     return transliterator.transliterate(romanized);
   };
 

@@ -8,15 +8,14 @@ export const koUk = async (text: Text) => {
 
   const transliterator = RBT.fromRules(koUkRules);
 
-  const convert = (text: string) => {
-    const split = wordSplitter(text, "ko");
-    const romanized = Aromanize.romanize(split);
-    return transliterator.transliterate(romanized);
+  const convert = async (text: string) => {
+    const split = await wordSplitter(text, "ko", text => Aromanize.romanize(text));
+    return transliterator.transliterate(split);
   };
 
   if (typeof text === "string") {
-    return convert(text);
+    return await convert(text);
   } else {
-    return text.map(convert);
+    return Promise.all(text.map(convert));
   }
 };

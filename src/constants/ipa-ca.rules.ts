@@ -1,7 +1,7 @@
 export const ipaCaRules = `
 ::Null;
 
-[ʰʱʲʷʼˈ̇ˌ̧ːˠˤ˥˧˩̝̟̥̩̪̯̃̊͡] > ;
+[͈̚ʰʱʲʷʼˈ̇ˌ̧ːˠˤ˥˧˩̝̟̥̩̪̯̃̊͡] > ;
 
 ::Null;
 
@@ -28,8 +28,8 @@ d [ʒžʐʑ] > tj;
 k } [ei] > qu;
 k > c;
 
-[ɡɟɢɣ] } [ei] > gu;
-[ɡɟɢɣ] > g;
+[ɡɟɢɣɰ] } [ei] > gu;
+[ɡɟɢɣɰ] > g;
 g } [ei] > gu;
 
 [ɲɳ] > ny;
@@ -48,4 +48,45 @@ g } [ei] > gu;
 
 j > i;
 w > u;
+ɸ > f;
+
+::Null;
+
+n } [bpm] > m;
+m } [fv] > n;
+
+::Null;
+
+[:^Letter:] { ç } [eiéíè] > c;
+[:^Letter:] { ç > s;
+ç } [eiéíè] > c;
+
+::Null;
+
+[:^Letter:] { ss > s;
+ss } [:^Letter:] > s;
+
+[:^Letter:] { rr > r;
+rr } [:^Letter:] > r;
+
+[:^Letter:] { l·l > l;
+l·l } [:^Letter:] > l;
+
+[:^Letter:] { l.l > l;
+l.l } [:^Letter:] > l;
+
+::Null;
+
+t { g } [aàoòóuúü] > j;
+t { j } [eéèiíï] > g;
+
+::Null;
+
+[:^Letter:] { y > i;
+[^n] { y > i;
+
+::Null;
+
+[:^Letter:] { ix > x;
+[bcdfghjklmnpqrstvwxyzç] { ix > x;
 `;

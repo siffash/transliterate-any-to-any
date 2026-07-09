@@ -1,5 +1,14 @@
 export const deLatnRules = `
-$upper = [A-ZÄÖÜ];
+::NFC;
+
+$vowel = [AEIOUÄÖÜYaeiouäöüy];
+
+[:^Letter:] { S } T > Š;
+[:^Letter:] { S } t > Š;
+[:^Letter:] { s } t > š;
+[:^Letter:] { S } P > Š;
+[:^Letter:] { S } p > Š;
+[:^Letter:] { s } p > š;
 
 TSCH > Č;
 Tsch > Č;
@@ -9,26 +18,44 @@ SCH > Š;
 Sch > Š;
 sch > š;
 
-[:^Letter:] { S } T > Š;
-[:^Letter:] { S } t > Š;
-[:^Letter:] { s } t > š;
-
-[:^Letter:] { S } P > Š;
-[:^Letter:] { S } p > Š;
-[:^Letter:] { s } p > š;
+X } [:Lowercase_Letter:] > Ks;
+X > KS;
+x > ks;
 
 CH > X;
 Ch > X;
 ch > x;
 
+DSCH } [:Lowercase_Letter:] > Dž;
+DSCH > DŽ;
+Dsch > Dž;
+dsch > dž;
+
+TZ } [:Lowercase_Letter:] > Ts;
 TZ > TS;
 Tz > Ts;
 tz > ts;
+
+Z } [:Lowercase_Letter:] > Ts;
+Z > TS;
+z > ts;
+
+[:^Letter:] { S } $vowel > Z;
+[:^Letter:] { s } $vowel > z;
+$vowel { S } $vowel > Z;
+$vowel { s } $vowel > z;
 
 PH > F;
 Ph > F;
 ph > f;
 
+V > F;
+v > f;
+
+W > V;
+w > v;
+
+QU } [:Lowercase_Letter:] > Kv;
 QU > KV;
 Qu > Kv;
 qu > kv;
@@ -37,23 +64,12 @@ CK > K;
 Ck > K;
 ck > k;
 
-C } [E I Y Ä Ö Ü] > TS;
-C } [e i y ä ö ü] > Ts;
-c } [e i y ä ö ü E I Y Ä Ö Ü] > ts;
+C } [eiyäöü] > Ts;
+C } [EIYÄÖÜ] > TS;
+c } [eiyäöüEIYÄÖÜ] > ts;
 
 C > K;
 c > k;
-
-Z } $upper > TS;
-Z > Ts;
-z > ts;
-
-X } $upper > KS;
-X > Ks;
-x > ks;
-
-W > V;
-w > v;
 
 J > Y;
 j > y;

@@ -1,7 +1,7 @@
 export const ipaLbRules = `
 ::Null;
 
-[ʔʕʰʱʲʷʼˈ̇ˌ̧ːˠˤ˥˧˩̝̟̥̩̪̯̃̊͡] > ;
+[͈̚ʔʕʰʱʲʷʼˈ̇ˌ̧ːˠˤ˥˧˩̝̟̥̩̪̯̃̊͡] > ;
 
 ::Null;
 
@@ -27,11 +27,31 @@ export const ipaLbRules = `
 [žʒʑɟʝɥ] > j;
 ɓ > b;
 [ɕʃ] > sch;
-[ɡɢɣ] > g;
+[ɡɢɣɰ] > g;
 [ɫɭʎ] > l;
 ɱ > m;
 ɳ > n;
 [ɹɽɾʀʁ] > r;
 ʂ > s;
 ʐ > z;
+ɸ > f;
+
+::Null;
+
+i { i > ;
+u { u > ;
+ä { ä > ;
+ë { ë > ;
+é { é > ;
+
+u { o > e;
+k } k > c;
+z } z > t;
+s { z > s;
+ß > ss;
+ch { ch > ;
+sch { sch > ;
+ng { ng > ;
+
+[:^Letter:] { sch } [pt] > s;
 `;

@@ -1,92 +1,94 @@
 export const caLatnRules = `
-$vowel = [a e i o u A E I O U à è é í ò ó ú À È É Í Ò Ó Ú];
-$front_vowel = [e i é è í E I É È Í];
+::NFC;
 
-l l > ľ;
-L l > Ľ;
-L L > Ľ;
+ll > ľ;
+Ll > Ľ;
+LL > Ľ;
 
 l·l > ll;
 L·l > Ll;
 L·L > LL;
 
-$vowel { i g } [:^Letter:] > č;
-$vowel { I g } [:^Letter:] > Č;
-$vowel { I G } [:^Letter:] > Č;
+h > ;
+H ([:Letter:]) > &Any-Upper($1);
+H > ;
+
+[aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] { ig } [:^Letter:] > č;
+[aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] { Ig } [:^Letter:] > Č;
+[aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] { IG } [:^Letter:] > Č;
 
 i { g } [:^Letter:] > č;
 I { g } [:^Letter:] > Č;
 I { G } [:^Letter:] > Č;
 
-$vowel { i x > š;
-$vowel { I x > Š;
-$vowel { I X > Š;
+[aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] { ix > š;
+[aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] { Ix > Š;
+[aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] { IX > Š;
 
-n y > ń;
-N y > Ń;
-N Y > Ń;
+tx > č;
+Tx > Č;
+TX > Č;
 
-t x > č;
-T x > Č;
-T X > Č;
+tz > dz;
+Tz > Dz;
+TZ > DZ;
 
-t g } $front_vowel > dž;
-T g } $front_vowel > Dž;
-T G } $front_vowel > DŽ;
+ny > ń;
+Ny > Ń;
+NY > Ń;
 
-t j > dž;
-T j > Dž;
-T J > DŽ;
+tg } [eiéèíEIÉÈÍïÏ] > dž;
+Tg } [eiéèíEIÉÈÍïÏ] > Dž;
+TG } [eiéèíEIÉÈÍïÏ] > DŽ;
 
-q u } $front_vowel > k;
-Q u } $front_vowel > K;
-Q U } $front_vowel > K;
+tj > dž;
+Tj > Dž;
+TJ > DŽ;
 
-g u } $front_vowel > g;
-G u } $front_vowel > G;
-G U } $front_vowel > G;
+qu } [eiéèíEIÉÈÍïÏ] > k;
+Qu } [eiéèíEIÉÈÍïÏ] > K;
+QU } [eiéèíEIÉÈÍïÏ] > K;
 
-g } $front_vowel > ž;
-G } $front_vowel > Ž;
+gu } [eiéèíEIÉÈÍïÏ] > g;
+Gu } [eiéèíEIÉÈÍïÏ] > G;
+GU } [eiéèíEIÉÈÍïÏ] > G;
 
-c } $front_vowel > s;
-C } $front_vowel > S;
+ss > s;
+Ss > S;
+SS > S;
+
+[aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] { s } [aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] > z;
+[aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] { S } [aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] > Z;
+
+[aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] { x } [aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] > ks;
+[aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] { X } [aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] > Ks;
 
 x > š;
 X > Š;
 
+c } [eiéèíEIÉÈÍïÏ] > s;
+C } [eiéèíEIÉÈÍïÏ] > S;
+
+g } [eiéèíEIÉÈÍïÏ] > ž;
+G } [eiéèíEIÉÈÍïÏ] > Ž;
+
 j > ž;
 J > Ž;
-
 ç > s;
 Ç > S;
-
 c > k;
 C > K;
-
 q > k;
 Q > K;
 
-h > ;
-H ([:Letter:]) > &Any-Upper($1);
-H > ;
-
-à > a;
-À > A;
-è > e;
-È > E;
-é > e;
-É > E;
-í > i;
-Í > I;
-ï > i;
-Ï > I;
-ò > o;
-Ò > O;
-ó > o;
-Ó > O;
-ú > u;
-Ú > U;
-ü > u;
-Ü > U;
+[àá] > a;
+[ÀÁ] > A;
+[èé] > e;
+[ÈÉ] > E;
+[íï] > i;
+[ÍÏ] > I;
+[òó] > o;
+[ÒÓ] > O;
+[úü] > u;
+[ÚÜ] > U;
 `;

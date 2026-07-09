@@ -92,4 +92,18 @@ $uc { Ш } > SH;
 х > h;
 Ц > C;
 ц > c;
+
+::Null;
+
+[wW] { [wW] > ;
+[yY] { [yY] > ;
+[hH] { [hH] > ;
+[iI] { [iIyY] } [:^Letter:] > ;
+[yY] { [iIyY] } [:^Letter:] > ;
+[:^Letter:] { [cC] } [kK] > ;
+
+::Null;
+
+[kK] { [kK] } [hH] > ;
+[gG] { [gG] } [hH] > ;
 `;

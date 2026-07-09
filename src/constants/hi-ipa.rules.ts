@@ -1,7 +1,7 @@
 export const hiIpaRules = `
 ::Lower;
 
-$v = [ə a aː ɪ i iː ʊ u uː e eː o oː ɛ ɛː æ ɔ ɔː ː ̃];
+$v = [ə a {aː} ɪ i {iː} ʊ u {uː} e {eː} o {oː} ɛ {ɛː} æ ɔ {ɔː} ː ̃];
 $c = [k ɡ ŋ ɲ ʈ ɖ ɳ n p b m j ɾ l ʋ ʃ ʂ s ɦ q x ɣ z ʒ ɽ f ɭ t d];
 $m = [̪ ʰ ʱ ͡];
 $c_drop = [k ɡ ŋ ɲ ʈ ɖ ɳ n p b ʃ ʂ s ɦ q x ɣ z ʒ ɽ f t d];

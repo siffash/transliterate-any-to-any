@@ -40,7 +40,8 @@
     "lint:fix": "eslint --fix src/**/*.ts",
     "format": "prettier --write src/**/*.ts --config ./.prettierrc",
     "format:check": "prettier --check src/**/*.ts --config ./.prettierrc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "vitest",
+    "test:run": "vitest run"
   },
   "files": [
     "dist"
@@ -54,7 +55,7 @@
     "kuroshiro": "^1.2.0",
     "kuroshiro-analyzer-kuromoji": "^1.1.0",
     "opencc": "^1.3.1",
-    "phonemize": "^1.2.0",
+    "phonemize": "^2.0.0",
     "pinyin-pro": "^3.28.1"
   },
   "devDependencies": {
@@ -71,10 +72,17 @@
     "prettier": "^3.8.1",
     "tsdown": "^0.21.0-beta.2",
     "tsx": "^4.21.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.9"
   },
   "overrides": {
     "tar": "7.5.13",
     "lodash": "^4.18.1"
+  },
+  "allowScripts": {
+    "esbuild@0.28.1": true,
+    "fsevents@2.3.3": true,
+    "icu-transliterator@0.3.7": true,
+    "opencc@1.3.1": true
   }
 }

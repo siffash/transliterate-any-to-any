@@ -1,10 +1,42 @@
 export const latnDaRules = `
 ::Null;
 
-Č } [:Lower:] > Tj;
-Č } [:^Letter:] > Tj;
-Č > TJ;
-č > tj;
+['·] > ;
+
+[ĆČ] } [:Lower:] > Tj;
+[ĆČ] } [:^Letter:] > Tj;
+[ĆČ] > TJ;
+[ćč] > tj;
+
+DŽ } [:Lower:] > Dj;
+DŽ } [:^Letter:] > Dj;
+DŽ > DJ;
+Dž > Dj;
+dž > dj;
+
+DZ } [:Lower:] > Ds;
+DZ } [:^Letter:] > Ds;
+DZ > DS;
+Dz > Ds;
+dz > ds;
+
+IJ } [:Lower:] > Ej;
+IJ } [:^Letter:] > Ej;
+IJ > EJ;
+Ij > Ej;
+ij > ej;
+
+TH > T;
+Th > T;
+th > t;
+
+DH > D;
+Dh > D;
+dh > d;
+
+GH > G;
+Gh > G;
+gh > g;
 
 Đ } [:Lower:] > Dj;
 Đ } [:^Letter:] > Dj;
@@ -36,26 +68,27 @@ X } [:^Letter:] > Kh;
 X > KH;
 x > kh;
 
-Ć > C;
-ć > c;
+Q > K;
+q > k;
+
+W > V;
+w > v;
+
+Z > S;
+z > s;
 
 Ä > Æ;
 ä > æ;
 
-Ï > I;
-ï > i;
-
 Ö > Ø;
 ö > ø;
 
-Ü > Y;
-ü > y;
-
-Ÿ > Y;
-ÿ > y;
+Ï > I;
+ï > i;
 
 Y > J;
 y > j;
 
-· > ;
+[ÜŸ] > Y;
+[üÿ] > y;
 `;

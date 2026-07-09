@@ -1,45 +1,39 @@
 export const csLatnRules = `
-chř > xrš;
-Chř > Xrš;
-CHŘ > XRŠ;
+::NFC;
+
+x > ks;
+X } [:Lower:] > Ks;
+X > KS;
+
+q > kv;
+Q } [:Lower:] > Kv;
+Q > KV;
+
+w > v;
+W > V;
 
 ch > x;
 Ch > X;
+cH > X;
 CH > X;
 
-př > prš;
-Př > Prš;
-PŘ > PRŠ;
+[ptkfsšcčxPTKFSŠCČX] { ř > rš;
+[ptkfsšcčxPTKFSŠCČX] { Ř > RŠ;
 
-tř > trš;
-Tř > Trš;
-TŘ > TRŠ;
-
-kř > krš;
-Kř > Krš;
-KŘ > KRŠ;
-
-fř > frš;
-Fř > Frš;
-FŘ > FRŠ;
-
-sř > srš;
-Sř > Srš;
-SŘ > SRŠ;
-
-šř > šrš;
-Šř > Šrš;
-ŠŘ > ŠRŠ;
-
-cř > tsrš;
-Cř > Tsrš;
-CŘ > TSRŠ;
+ř } [ptkfsšcčxPTKFSŠCČX] > rš;
+Ř } [ptkfsšcčxPTKFSŠCČX] > RŠ;
 
 ř } [:^Letter:] > rš;
+[:Upper:] { Ř } [:^Letter:] > RŠ;
 Ř } [:^Letter:] > Rš;
 
 ř > rž;
+[:Upper:] { Ř > RŽ;
 Ř > Rž;
+
+c > ts;
+C } [:Lower:] > Ts;
+C > TS;
 
 dě > đe;
 Dě > Đe;
@@ -73,29 +67,17 @@ fě > fye;
 Fě > Fye;
 FĚ > FYE;
 
-d } i > đ;
-D } i > Đ;
-D } I > Đ;
+d } [ií] > đ;
+D } [ií] > Đ;
+D } [IÍ] > Đ;
 
-d } í > đ;
-D } í > Đ;
-D } Í > Đ;
+t } [ií] > ć;
+T } [ií] > Ć;
+T } [IÍ] > Ć;
 
-t } i > ć;
-T } i > Ć;
-T } I > Ć;
-
-t } í > ć;
-T } í > Ć;
-T } Í > Ć;
-
-n } i > ń;
-N } i > Ń;
-N } I > Ń;
-
-n } í > ń;
-N } í > Ń;
-N } Í > Ń;
+n } [ií] > ń;
+N } [ií] > Ń;
+N } [IÍ] > Ń;
 
 ď > đ;
 Ď > Đ;
@@ -106,50 +88,21 @@ N } Í > Ń;
 ň > ń;
 Ň > Ń;
 
-c > ts;
-C } [:Lower:] > Ts;
-C > TS;
-
 j > y;
-J } [:Lower:] > Y;
 J > Y;
-
-q > kv;
-Q } [:Lower:] > Kv;
-Q > KV;
-
-w > v;
-W } [:Lower:] > V;
-W > V;
-
-x > ks;
-X } [:Lower:] > Ks;
-X > KS;
-
-y > i;
-Y > I;
-
-ý > i;
-Ý > I;
 
 á > a;
 Á > A;
 
-é > e;
-É > E;
-
-ě > e;
-Ě > E;
-
-í > i;
-Í > I;
-
 ó > o;
 Ó > O;
 
-ú > u;
-Ú > U;
+[éě] > e;
+[ÉĚ] > E;
 
-ů > u;
-Ů > U;
+[íýy] > i;
+[ÍÝY] > I;
+
+[úů] > u;
+[ÚŮ] > U;
 `;

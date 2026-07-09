@@ -8,14 +8,14 @@ export const zhAr = async (text: Text) => {
 
   const transliterator = RBT.fromRules(ipaArRules);
 
-  const convert = (text: string) => {
-    const ipa = wordSplitter(text, "zh", text => toIPA(text, { separator: "" }));
+  const convert = async (text: string) => {
+    const ipa = await wordSplitter(text, "zh", text => toIPA(text, { separator: "" }));
     return transliterator.transliterate(ipa);
   };
 
   if (typeof text === "string") {
-    return convert(text);
+    return await convert(text);
   } else {
-    return text.map(convert);
+    return Promise.all(text.map(convert));
   }
 };

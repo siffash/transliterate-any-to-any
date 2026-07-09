@@ -3,8 +3,8 @@ export const huIpaRules = `
 
 szombathely > sombɒthɛj;
 
-$vowel = [a á e é i í o ó ö ő u ú ü ű];
-$consonant = [b c d f g h j k l m n p q r s t v w x y z];
+$vowel = [aáeéiíoóöőuúüű];
+$consonant = [bcdfghjklmnpqrstvwxyz];
 
 ddzs > d͡ʒː;
 ccs > t͡ʃː;

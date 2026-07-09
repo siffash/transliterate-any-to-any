@@ -7,8 +7,8 @@ export const caIpaRules = `
 
 $front = [e è é i í ï];
 $vowel = [a à e è é i í ï o ò ó u ú ü];
-$voiced_cons = [b d g v z ʒ d͡ʒ];
-$voiceless_cons = [p t k f s ʃ t͡ʃ];
+$voiced_cons = [b d g v z ʒ {d͡ʒ}];
+$voiceless_cons = [p t k f s ʃ {t͡ʃ}];
 
 ll > ʎ;
 ny > ɲ;
@@ -27,7 +27,7 @@ i g } n > i ɡ;
 i g } m > i ɡ;
 i g } l > i ɡ;
 i g } r > i ɡ;
-i g } [^aàeèéiíïoòóuúü] > t͡ʃ;
+i g } [bcdçfghjklmnpqrstvwxyz] > t͡ʃ;
 i g } [:^Letter:] > t͡ʃ;
 qu } $front > k;
 gu } $front > ɡ;
@@ -88,11 +88,11 @@ l > ɫ;
 ó > o;
 [u ú ü] > u;
 
-[:^Letter:] [^$vowel]* { e } [^$vowel]* [àèéíòóú] > ə;
-e } [^$vowel]* [àèéíòóú] > ə;
-[a e] } [^$vowel]* [:^Letter:] > ə;
-o } [^$vowel]* [àèéíòóú] > u;
-o } [^$vowel]* [:^Letter:] > u;
+[:^Letter:] [bcdfgçhjklmnpqrstvwxyz]* { e } [bcdfgçhjklmnpqrstvwxyz]* [àèéíòóú] > ə;
+e } [bcdfgçhjklmnpqrstvwxyz]* [àèéíòóú] > ə;
+[a e] } [bcdfgçhjklmnpqrstvwxyz]* [:^Letter:] > ə;
+o } [bcdfgçhjklmnpqrstvwxyz]* [àèéíòóú] > u;
+o } [bcdfgçhjklmnpqrstvwxyz]* [:^Letter:] > u;
 
 e > ɛ;
 o > ɔ;

@@ -1,113 +1,96 @@
 export const ukLatnRules = `
-$upper = [АБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯ[:Upper:]];
+::NFC;
 
 ['’‘\`´ʼ"] > ;
 
-ЗГ > ZH;
-Зг > Zh;
-зГ > zH;
-зг > zh;
+ЕЙ > IJ;
+Ей > Ij;
+ей > ij;
 
-[:^Letter:] { Є } $upper > YE;
-[:^Letter:] { Є } > Ye;
-$upper { Є } > IE;
-Є } $upper > IE;
+Д } [ЬЮЯЄьюяє] > Đ;
+д } [ЬЮЯЄьюяє] > đ;
+Т } [ЬЮЯЄьюяє] > Ć;
+т } [ЬЮЯЄьюяє] > ć;
+Л } [ЬЮЯЄьюяє] > Ľ;
+л } [ЬЮЯЄьюяє] > ľ;
+Н } [ЬЮЯЄьюяє] > Ń;
+н } [ЬЮЯЄьюяє] > ń;
+
+[ĐĆĽŃđćľń] { Я > A;
+[ĐĆĽŃđćľń] { я > a;
+[ĐĆĽŃđćľń] { Ю > U;
+[ĐĆĽŃđćľń] { ю > u;
+[ĐĆĽŃđćľń] { Є > E;
+[ĐĆĽŃđćľń] { є > e;
+
+[[:^Letter:]AEIOUÏaeiouï] { Є } [:Upper:] > YE;
+[[:^Letter:]AEIOUÏaeiouï] { Є > Ye;
+[[:^Letter:]AEIOUÏaeiouï] { є > ye;
+
+[[:^Letter:]AEIOUÏaeiouï] { Ю } [:Upper:] > YU;
+[[:^Letter:]AEIOUÏaeiouï] { Ю > Yu;
+[[:^Letter:]AEIOUÏaeiouï] { ю > yu;
+
+[[:^Letter:]AEIOUÏaeiouï] { Я } [:Upper:] > YA;
+[[:^Letter:]AEIOUÏaeiouï] { Я > Ya;
+[[:^Letter:]AEIOUÏaeiouï] { я > ya;
+
+Ї } [:Upper:] > YI;
+Ї > Yi;
+ї > yi;
+
+Й } [:Upper:] > Y;
+Й > Y;
+й > y;
+
+Є } [:Upper:] > IE;
 Є > Ie;
-[:^Letter:] { є } > ye;
 є > ie;
 
-[:^Letter:] { Ю } $upper > YU;
-[:^Letter:] { Ю } > Yu;
-$upper { Ю } > IU;
-Ю } $upper > IU;
+Ю } [:Upper:] > IU;
 Ю > Iu;
-[:^Letter:] { ю } > yu;
 ю > iu;
 
-[:^Letter:] { Я } $upper > YA;
-[:^Letter:] { Я } > Ya;
-$upper { Я } > IA;
-Я } $upper > IA;
+Я } [:Upper:] > IA;
 Я > Ia;
-[:^Letter:] { я } > ya;
 я > ia;
 
-[:^Letter:] { Ї } $upper > YI;
-[:^Letter:] { Ї } > Yi;
-$upper { Ї } > I;
-Ї } $upper > I;
-Ї > I;
-[:^Letter:] { ї } > yi;
-ї > i;
-
-[:^Letter:] { Й } $upper > Y;
-[:^Letter:] { Й } > Y;
-$upper { Й } > I;
-Й } $upper > I;
-Й > I;
-[:^Letter:] { й } > y;
-й > i;
-
-$upper { Щ } > ŠČ;
-Щ } $upper > ŠČ;
+[:Upper:] { Щ > ŠČ;
+Щ } [:Upper:] > ŠČ;
 Щ > Šč;
 щ > šč;
 
-$upper { Ц } > TS;
-Ц } $upper > TS;
+[:Upper:] { Ц > TS;
+Ц } [:Upper:] > TS;
 Ц > Ts;
 ц > ts;
 
-А > A;
-Б > B;
-В > V;
-Г > H;
-Ґ > G;
-Д > D;
-Е > E;
-Ж > Ž;
-З > Z;
-И > Ï;
-І > I;
-К > K;
-Л > L;
-М > M;
-Н > N;
-О > O;
-П > P;
-Р > R;
-С > S;
-Т > T;
-У > U;
-Ф > F;
-Х > X;
-Ч > Č;
-Ш > Š;
+А > A; а > a;
+Б > B; б > b;
+В > V; в > v;
+Г > H; г > h;
+Ґ > G; ґ > g;
+Д > D; д > d;
+Е > E; е > e;
+Ж > Ž; ж > ž;
+З > Z; з > z;
+И > Ï; и > ï;
+І > I; і > i;
+К > K; к > k;
+Л > L; л > l;
+М > M; м > m;
+Н > N; н > n;
+О > O; о > o;
+П > P; п > p;
+Р > R; р > r;
+С > S; с > s;
+Т > T; т > t;
+У > U; у > u;
+Ф > F; ф > f;
+Х > X; х > x;
+Ч > Č; ч > č;
+Ш > Š; ш > š;
+
 Ь > ;
-а > a;
-б > b;
-в > v;
-г > h;
-ґ > g;
-д > d;
-е > e;
-ж > ž;
-з > z;
-и > ï;
-і > i;
-к > k;
-л > l;
-м > m;
-н > n;
-о > o;
-п > p;
-р > r;
-с > s;
-т > t;
-у > u;
-ф > f;
-х > x;
-ч > č;
-ш > š;
 ь > ;
 `;

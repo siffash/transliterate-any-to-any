@@ -3,7 +3,7 @@ export const itIpaRules = `
 
 $vowel = [a à e è é i ì í o ò ó u ù ú ɛ ɔ];
 $frontv = [e è é i ì í ɛ];
-$voiced_cons = [b d g j l m n r v w z dʒ ɲ ʎ];
+$voiced_cons = [b d g j l m n r v w z {dʒ} ɲ ʎ];
 $velar = [k q g];
 
 à > a;
@@ -60,8 +60,8 @@ t t > tː;
 v v > vː;
 z z > tːs;
 
-n } [p b pː bː] > m;
-n } [f v fː vː] > ɱ;
+n } [p b {pː} {bː}] > m;
+n } [f v {fː} {vː}] > ɱ;
 n } c [a à o ò ó u ù ú h r l] > ŋ;
 n } g [a à o ò ó u ù ú h r l] > ŋ;
 n } [k q] > ŋ;

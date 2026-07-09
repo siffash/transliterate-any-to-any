@@ -1,33 +1,57 @@
 export const ltLatnRules = `
-CH > X;
-Ch > X;
-ch > x;
+::NFC;
 
 X } [:UppercaseLetter:] > KS;
+[:UppercaseLetter:] { X > KS;
 X > Ks;
 x > ks;
-
-C } [:UppercaseLetter:] > TS;
-C > Ts;
-c > ts;
-
-J > Y;
-j > y;
-
-Y > I;
-y > i;
-
-W > V;
-w > v;
 
 Q > K;
 q > k;
 
+W > V;
+w > v;
+
+CH > X;
+Ch > X;
+ch > x;
+
+DZ } [EĘĖIĮYeęėiįy] > Đ;
+Dz } [EĘĖIĮYeęėiįy] > Đ;
+dz } [EĘĖIĮYeęėiįy] > đ;
+
+C } [EĘĖIĮYeęėiįy] > Ć;
+c } [EĘĖIĮYeęėiįy] > ć;
+
+L } [EĘĖIĮYeęėiįy] > Ľ;
+l } [EĘĖIĮYeęėiįy] > ľ;
+
+N } [EĘĖIĮYeęėiįy] > Ń;
+n } [EĘĖIĮYeęėiįy] > ń;
+
+N } [KkGg] > NG;
+n } [KkGg] > ng;
+
+C } [:UppercaseLetter:] > TS;
+[:UppercaseLetter:] { C > TS;
+C > Ts;
+c > ts;
+
+Y > I;
+y > i;
+
+J > Y;
+j > y;
+
+EI > IJ;
+Ei > Ij;
+ei > ij;
+
 Ą > A;
 ą > a;
 
-Ę > E;
-ę > e;
+Ę > Ä;
+ę > ä;
 
 Ė > E;
 ė > e;
@@ -35,9 +59,6 @@ q > k;
 Į > I;
 į > i;
 
-Ų > U;
-ų > u;
-
-Ū > U;
-ū > u;
+[ŲŪ] > U;
+[ųū] > u;
 `;

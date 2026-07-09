@@ -1,18 +1,18 @@
 export const mkLatnRules = `
-$uc = [АБВГДЃЕЖЗЅИЈКЛЉМНЊОПРСТЌУФХЦЧЏШ[:Upper:]];
+::NFC;
 
-{ Ѕ } $uc > DZ;
-$uc { Ѕ } > DZ;
+{ Ѕ } [:Upper:] > DZ;
+[:Upper:] { Ѕ } > DZ;
 Ѕ > Dz;
 ѕ > dz;
 
-{ Ц } $uc > TS;
-$uc { Ц } > TS;
+{ Ц } [:Upper:] > TS;
+[:Upper:] { Ц } > TS;
 Ц > Ts;
 ц > ts;
 
-{ Џ } $uc > DŽ;
-$uc { Џ } > DŽ;
+{ Џ } [:Upper:] > DŽ;
+[:Upper:] { Џ } > DŽ;
 Џ > Dž;
 џ > dž;
 

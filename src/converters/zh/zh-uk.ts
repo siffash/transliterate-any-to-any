@@ -8,15 +8,14 @@ export const zhUk = async (text: Text) => {
 
   const transliterator = RBT.fromRules(zhUkRules);
 
-  const convert = (text: string) => {
-    const split = wordSplitter(text, "zh");
-    const romanized = pinyin(split, { separator: "" });
+  const convert = async (text: string) => {
+    const romanized = await wordSplitter(text, "zh", text => pinyin(text, { separator: "" }));
     return transliterator.transliterate(romanized);
   };
 
   if (typeof text === "string") {
-    return convert(text);
+    return await convert(text);
   } else {
-    return text.map(convert);
+    return Promise.all(text.map(convert));
   }
 };

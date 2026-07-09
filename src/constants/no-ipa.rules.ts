@@ -1,6 +1,6 @@
 export const noIpaRules = `
 ::Lower;
-$vowel = [aeiouyæøå];
+$vowel_no = [aeiouyæøå];
 $cons = [bcdfghjklmnpqrstvwxz];
 $pal = [eiy];
 

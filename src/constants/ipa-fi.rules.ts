@@ -1,7 +1,7 @@
 export const ipaFiRules = `
 ::Null;
 
-$vowel = [aeiouyäö];
+$vowel_fi = [aeiouyäö];
 
 c > k;
 q > k;
@@ -13,7 +13,7 @@ x > ks;
 ɓ > b;
 [ðďɖɗ] > d;
 [êęɘəɚɛɜɝẽ] > e;
-[ɡɢɣ] > g;
+[ɡɢɣɰ] > g;
 [ħɦɧχ] > h;
 [ĩɨɪ] > i;
 [ɟʝʲ] > j;
@@ -34,14 +34,20 @@ x > ks;
 [ɥʉʏ] > y;
 [žʐʑʒ] > z;
 ʎ > lj;
+ɸ > f;
 
 [:^Letter:] { ʔ } > ;
 ʔ } [:^Letter:] > ;
-$vowel { ʔ } $vowel > ';
+$vowel_fi { ʔ } $vowel_fi > \\';
 ʔ > ;
 
 ([a-zäö]) { ː } > $1;
 ː > ;
 
-[ʕʰʱʼˈ̇ˌ̧ˠˤ˥˧˩̝̟̥̩̪̯̃̊͡] > ;
+[͈̚ʕʰʱʼˈ̇ˌ̧ˠˤ˥˧˩̝̟̥̩̪̯̃̊͡] > ;
+
+::Null;
+
+j } [bcdfghklmnpqrstvwxzšž] > i;
+j } [:^Letter:] > i;
 `;

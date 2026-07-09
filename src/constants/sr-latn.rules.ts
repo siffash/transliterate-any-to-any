@@ -1,4 +1,6 @@
 export const srLatnRules = `
+::NFC;
+
 LJ > Ľ;
 Lj > Ľ;
 lj > ľ;
@@ -9,18 +11,19 @@ DJ > Đ;
 Dj > Đ;
 dj > đ;
 
-C } [:LowercaseLetter:] > Ts;
-C > TS;
-c > ts;
-H > X;
-h > x;
-J > Y;
-j > y;
+[ЦC] } [:LowercaseLetter:] > Ts;
+[ЦC] } [:^Letter:] > Ts;
+[ЦC] > TS;
+[цc] > ts;
 
-Ц } [:LowercaseLetter:] > Ts;
-Ц > TS;
-ц > ts;
+[ХH] > X;
+[хh] > x;
+
+[ЈJ] > Y;
+[јj] > y;
+
 Џ } [:LowercaseLetter:] > Dž;
+Џ } [:^Letter:] > Dž;
 Џ > DŽ;
 џ > dž;
 
@@ -44,8 +47,6 @@ j > y;
 з > z;
 И > I;
 и > i;
-Ј > Y;
-ј > y;
 К > K;
 к > k;
 Л > L;
@@ -74,8 +75,6 @@ j > y;
 у > u;
 Ф > F;
 ф > f;
-Х > X;
-х > x;
 Ч > Č;
 ч > č;
 Ш > Š;
