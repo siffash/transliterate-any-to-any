@@ -6,7 +6,7 @@ $voiced_c = [l m n ŋ r v d ð];
 $v = [a e i o u y æ ø å ː];
 $letter = [:Letter:];
 
-aa { r } [bcdfghjklmnpqrstvwxz] > ;
+aa { r } [^ $v] > ;
 [$letter] [o u å] { g } [:^Letter:] > w;
 [a r] { g } [:^Letter:] > ;
 jeg } [:^Letter:] > jɑj;
@@ -67,7 +67,7 @@ er } [:^Letter:] > ɐ;
 a [v f] n } [:^Letter:] > ɑʊ̯n;
 a [v f] } [:^Letter:] > ɑʊ̯;
 
-$v { r } [bcdfghjklmnpqrstvwxz] > ɐ̯;
+$v { r } [^ $v] > ɐ̯;
 $v { r } [:^Letter:] > ɐ̯;
 
 $v { d } [$v l r n] > ð;

@@ -27,7 +27,7 @@ i g } n > i ɡ;
 i g } m > i ɡ;
 i g } l > i ɡ;
 i g } r > i ɡ;
-i g } [bcdçfghjklmnpqrstvwxyz] > t͡ʃ;
+i g } [^aàeèéiíïoòóuúü] > t͡ʃ;
 i g } [:^Letter:] > t͡ʃ;
 qu } $front > k;
 gu } $front > ɡ;

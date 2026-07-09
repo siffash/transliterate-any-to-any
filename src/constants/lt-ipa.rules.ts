@@ -30,7 +30,7 @@ n } g i $back > ŋʲ;
 n } g $front > ŋʲ;
 n } [kg] > ŋ;
 
-i [{au} {ei} {ui}] } [bcčdfghjklmnprsštvzž] > i;
+i [{au} {ei} {ui}] } [^$front $back] > i;
 
 k } š č i > kʲ;
 k } š č e > kʲ;
