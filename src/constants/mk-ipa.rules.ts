@@ -1,24 +1,18 @@
 export const mkIpaRules = `
 ::Lower;
 
-$vowel = [аеиоу'];
-$front = [еиј];
-$velar = [кг];
-$voiced = [бвгдѓжзѕџ];
-$voiceless = [пфктќшсцчх];
+н } [кг] > ŋ;
+л } [еиј] > l;
 
-н } $velar > ŋ;
-л } $front > l;
-
-б } $voiceless > p;
-в } $voiceless > f;
-г } $voiceless > k;
-д } $voiceless > t;
-ѓ } $voiceless > c;
-ж } $voiceless > ʃ;
-з } $voiceless > s;
-ѕ } $voiceless > t͡s;
-џ } $voiceless > t͡ʃ;
+б } [пфктќшсцчх] > p;
+в } [пфктќшсцчх] > f;
+г } [пфктќшсцчх] > k;
+д } [пфктќшсцчх] > t;
+ѓ } [пфктќшсцчх] > c;
+ж } [пфктќшсцчх] > ʃ;
+з } [пфктќшсцчх] > s;
+ѕ } [пфктќшсцчх] > t͡s;
+џ } [пфктќшсцчх] > t͡ʃ;
 
 п } [бгдѓжзѕџ] > b;
 т } [бгдѓжзѕџ] > d;
@@ -70,5 +64,5 @@ $voiceless = [пфктќшсцчх];
 ч > t͡ʃ;
 џ > d͡ʒ;
 ш > ʃ;
-'' > ə;
+\\' > ə;
 `;

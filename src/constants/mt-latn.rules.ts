@@ -1,5 +1,6 @@
 export const mtLatnRules = `
 ::NFC;
+
 [ÀÁÂ] > A;
 [àáâ] > a;
 [ÈÉÊ] > E;
@@ -83,6 +84,7 @@ c } [eEiIyY] > č;
 C > K;
 c > k;
 
-Q > ';
-q > ';
+Q ([:Letter:]) > \\' &Any-Upper($1);
+Q > \\';
+q > \\';
 `;

@@ -1,15 +1,10 @@
 export const azLatnRules = `
 ::NFC;
 
-[eəiöüEƏİÖÜ] { K > Ć;
-[eəiöüEƏİÖÜ] { k > ć;
-K } [eəiöüEƏİÖÜ] > Ć;
-k } [eəiöüEƏİÖÜ] > ć;
-
-Q } [:^Letter:] > X;
-q } [:^Letter:] > x;
-Q > G;
-q > g;
+Q } [aəeıioöuüAƏEIİOÖUÜ] > G;
+q } [aəeıioöuüAƏEIİOÖUÜ] > g;
+Q > X;
+q > x;
 
 I > Ï;
 ı > ï;

@@ -29,10 +29,6 @@ S } SZ > S;
 S } Sz > S;
 s } sz > s;
 
-T } TY > Ć;
-T } Ty > Ć;
-t } ty > ć;
-
 Z } ZS > Ž;
 Z } Zs > Ž;
 z } zs > ž;
@@ -61,13 +57,17 @@ SZ > S;
 Sz > S;
 sz > s;
 
-TY > Ć;
-Ty > Ć;
-ty > ć;
-
 ZS > Ž;
 Zs > Ž;
 zs > ž;
+
+C } CZ > TS;
+C } Cz > TS;
+c } cz > ts;
+
+CZ > TS;
+Cz > Ts;
+cz > ts;
 
 C } [:Upper:] > TS;
 [:Upper:] { C } [:^Letter:] > TS;

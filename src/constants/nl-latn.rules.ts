@@ -21,10 +21,6 @@ SJ > Š;
 Sj > Š;
 sj > š;
 
-TJ > Ć;
-Tj > Ć;
-tj > ć;
-
 DJ > DŽ;
 Dj > Dž;
 dj > dž;
@@ -57,6 +53,10 @@ PH > F;
 Ph > F;
 ph > f;
 
+EAU > O;
+Eau > O;
+eau > o;
+
 OE > U;
 Oe > U;
 oe > u;
@@ -73,9 +73,17 @@ IE > I;
 Ie > I;
 ie > i;
 
+EIJ > IJ;
+Eij > Ij;
+eij > ij;
+
 EI > IJ;
 Ei > Ij;
 ei > ij;
+
+UIJ > ÖY;
+Uij > Öy;
+uij > öy;
 
 UI > ÖY;
 Ui > Öy;
@@ -86,6 +94,7 @@ c } [eéiíyýEÉIÍYÝ] > s;
 C > K;
 c > k;
 
+[:Uppercase:] { X > KS;
 X } [:Uppercase:] > KS;
 X > Ks;
 x > ks;

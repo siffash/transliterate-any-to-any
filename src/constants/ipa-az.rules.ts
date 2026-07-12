@@ -7,7 +7,7 @@ export const ipaAzRules = `
 
 [:^Letter:] { ʔ } > ;
 { ʔ } [:^Letter:] > ;
-ʔ > '';
+ʔ > \\';
 
 c > k;
 ɟ > g;

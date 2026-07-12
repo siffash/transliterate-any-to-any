@@ -1,23 +1,19 @@
 export const lbIpaRules = `
 ::Lower;
 
-$frontv = [e ë é i ï ä ö ü y];
-$backv = [a o u];
-$anyv = [a ä e ë é i ï o ö u ü y];
-
 éi > eɪ̯;
 ie > iə;
 ue > uə;
 ois } [:^Letter:] > wɑ;
 ée } [:^Letter:] > eː;
-ndré } [:^Letter:] > n d ʀ eː;
+ndré } [:^Letter:] > ndʀeː;
 ai > ɑɪ̯;
 äi > æːɪ̯;
 au > ɑʊ̯;
 ei > ɑɪ̯;
 oe > øː;
-{ t } i o n > t͡s;
-{ t } i o u > t͡s;
+{ t } ion > t͡s;
+{ t } iou > t͡s;
 ou > oʊ̯;
 eu > ɔɪ̯;
 äu > ɔɪ̯;
@@ -49,14 +45,14 @@ que } [:^Letter:] > k;
 qu > kv;
 ph > f;
 th > t;
-$frontv { ch } > ɕ;
+[eëéiïäöüy] { ch } > ɕ;
 { ch } > χ;
-{ c } $frontv > s;
+{ c } [eëéiïäöüy] > s;
 c > k;
 ss > s;
 [:^Letter:] { s } p > ʃ;
 [:^Letter:] { s } t > ʃ;
-{ s } $anyv > z;
+{ s } [aäeëéiïoöuüy] > z;
 { b } [:^Letter:] > p;
 { d } [:^Letter:] > t;
 { g } [:^Letter:] > χ;

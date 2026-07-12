@@ -1,17 +1,15 @@
 export const etIpaRules = `
 ::Lower;
 
-$letter = [:Letter:];
-
-$letter { ll } [ij] > lʲː;
-$letter { nn } [ij] > nʲː;
-$letter { ss } [ij] > sʲː;
-$letter { tt } [ij] > tʲː;
-$letter { l } [ij] > lʲ;
-$letter { n } [ij] > nʲ;
-$letter { s } [ij] > sʲ;
-$letter { t } [ij] > tʲ;
-$letter { d } [ij] > tʲ;
+[:Letter:] { ll } [ij] > lʲː;
+[:Letter:] { nn } [ij] > nʲː;
+[:Letter:] { ss } [ij] > sʲː;
+[:Letter:] { tt } [ij] > tʲː;
+[:Letter:] { l } [ij] > lʲ;
+[:Letter:] { n } [ij] > nʲ;
+[:Letter:] { s } [ij] > sʲ;
+[:Letter:] { t } [ij] > tʲ;
+[:Letter:] { d } [ij] > tʲ;
 {n} g > ŋ;
 {n} k > ŋ;
 c{h} > tʃ;

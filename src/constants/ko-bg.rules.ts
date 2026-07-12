@@ -2,19 +2,15 @@ export const koBgRules = `
 seoul > сеул;
 pyeongyang > пхенян;
 
-$vowel_kobg = [aeiouwyаеиоуъюя];
-$cyr_voiceless = [ктпсхчшц];
-$cyr_j_end = [чж];
-
 chyae > чхе;
 chya > чха;
 chyeo > чхо;
 chyo > чхо;
 chyu > чху;
 
-k } $vowel_kobg > кх;
-t } $vowel_kobg > тх;
-p } $vowel_kobg > пх;
+k } [aeiouwyаеиоуъюя] > кх;
+t } [aeiouwyаеиоуъюя] > тх;
+p } [aeiouwyаеиоуъюя] > пх;
 
 kk > кк;
 tt > тт;
@@ -23,11 +19,11 @@ ss > сс;
 jj > чч;
 ch > чх;
 
-$cyr_j_end { yae > е;
-$cyr_j_end { ya > а;
-$cyr_j_end { yeo > о;
-$cyr_j_end { yo > о;
-$cyr_j_end { yu > у;
+[чж] { yae > е;
+[чж] { ya > а;
+[чж] { yeo > о;
+[чж] { yo > о;
+[чж] { yu > у;
 
 j { yae > е;
 j { ya > а;
@@ -35,24 +31,24 @@ j { yeo > о;
 j { yo > о;
 j { yu > у;
 
-$vowel_kobg { ui > ъй;
+[aeiouwyаеиоуъюя] { ui > ъй;
 [:^Letter:] { ui > ъй;
 ui > и;
-$vowel_kobg { eui > ъй;
+[aeiouwyаеиоуъюя] { eui > ъй;
 [:^Letter:] { eui > ъй;
 eui > и;
 [:^Letter:] { yae > йе;
-$vowel_kobg { yae > йе;
+[aeiouwyаеиоуъюя] { yae > йе;
 yae > е;
 [:^Letter:] { yeo > йо;
-$vowel_kobg { yeo > йо;
+[aeiouwyаеиоуъюя] { yeo > йо;
 yeo > ьо;
 wae > уе;
 [:^Letter:] { ye > йе;
-$vowel_kobg { ye > йе;
+[aeiouwyаеиоуъюя] { ye > йе;
 ye > е;
 [:^Letter:] { yo > йо;
-$vowel_kobg { yo > йо;
+[aeiouwyаеиоуъюя] { yo > йо;
 yo > ьо;
 
 wa > уа;
@@ -76,16 +72,16 @@ p > п;
 s > с;
 h > х;
 
-$cyr_voiceless { g > к;
+[ктпсхчшц] { g > к;
 [:^Letter:] { g > к;
 g > г;
-$cyr_voiceless { d > т;
+[ктпсхчшц] { d > т;
 [:^Letter:] { d > т;
 d > д;
-$cyr_voiceless { b > п;
+[ктпсхчшц] { b > п;
 [:^Letter:] { b > п;
 b > б;
-$cyr_voiceless { j > ч;
+[ктпсхчшц] { j > ч;
 [:^Letter:] { j > ч;
 j > дж;
 

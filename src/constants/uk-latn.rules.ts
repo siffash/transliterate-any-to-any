@@ -1,7 +1,7 @@
 export const ukLatnRules = `
 ::NFC;
 
-['’‘\`´ʼ"] > ;
+['’‘\`´ʼ] > \\';
 
 ЕЙ > IJ;
 Ей > Ij;
@@ -9,59 +9,74 @@ export const ukLatnRules = `
 
 Д } [ЬЮЯЄьюяє] > Đ;
 д } [ЬЮЯЄьюяє] > đ;
-Т } [ЬЮЯЄьюяє] > Ć;
-т } [ЬЮЯЄьюяє] > ć;
 Л } [ЬЮЯЄьюяє] > Ľ;
 л } [ЬЮЯЄьюяє] > ľ;
 Н } [ЬЮЯЄьюяє] > Ń;
 н } [ЬЮЯЄьюяє] > ń;
 
-[ĐĆĽŃđćľń] { Я > A;
-[ĐĆĽŃđćľń] { я > a;
-[ĐĆĽŃđćľń] { Ю > U;
-[ĐĆĽŃđćľń] { ю > u;
-[ĐĆĽŃđćľń] { Є > E;
-[ĐĆĽŃđćľń] { є > e;
+[ĐĽŃđľń] { Я > A;
+[ĐĽŃđľń] { я > a;
+[ĐĽŃđľń] { Ю > U;
+[ĐĽŃđľń] { ю > u;
+[ĐĽŃđľń] { Є > E;
+[ĐĽŃđľń] { є > e;
 
-[[:^Letter:]AEIOUÏaeiouï] { Є } [:Upper:] > YE;
-[[:^Letter:]AEIOUÏaeiouï] { Є > Ye;
-[[:^Letter:]AEIOUÏaeiouï] { є > ye;
+[AEIOUÏaeiouï] { Є } [:Upper:] > YE;
+[:^Letter:] { Є } [:Upper:] > YE;
+[AEIOUÏ] { Є > YE;
+[AEIOUÏaeiouï] { Є > Ye;
+[:^Letter:] { Є > Ye;
+[AEIOUÏaeiouï] { є > ye;
+[:^Letter:] { є > ye;
 
-[[:^Letter:]AEIOUÏaeiouï] { Ю } [:Upper:] > YU;
-[[:^Letter:]AEIOUÏaeiouï] { Ю > Yu;
-[[:^Letter:]AEIOUÏaeiouï] { ю > yu;
+[AEIOUÏaeiouï] { Ю } [:Upper:] > YU;
+[:^Letter:] { Ю } [:Upper:] > YU;
+[AEIOUÏ] { Ю > YU;
+[AEIOUÏaeiouï] { Ю > Yu;
+[:^Letter:] { Ю > Yu;
+[AEIOUÏaeiouï] { ю > yu;
+[:^Letter:] { ю > yu;
 
-[[:^Letter:]AEIOUÏaeiouï] { Я } [:Upper:] > YA;
-[[:^Letter:]AEIOUÏaeiouï] { Я > Ya;
-[[:^Letter:]AEIOUÏaeiouï] { я > ya;
+[AEIOUÏaeiouï] { Я } [:Upper:] > YA;
+[:^Letter:] { Я } [:Upper:] > YA;
+[AEIOUÏ] { Я > YA;
+[AEIOUÏaeiouï] { Я > Ya;
+[:^Letter:] { Я > Ya;
+[AEIOUÏaeiouï] { я > ya;
+[:^Letter:] { я > ya;
 
 Ї } [:Upper:] > YI;
+[:Upper:] { Ї > YI;
 Ї > Yi;
 ї > yi;
 
 Й } [:Upper:] > Y;
+[:Upper:] { Й > Y;
 Й > Y;
 й > y;
 
 Є } [:Upper:] > IE;
+[:Upper:] { Є > IE;
 Є > Ie;
 є > ie;
 
 Ю } [:Upper:] > IU;
+[:Upper:] { Ю > IU;
 Ю > Iu;
 ю > iu;
 
 Я } [:Upper:] > IA;
+[:Upper:] { Я > IA;
 Я > Ia;
 я > ia;
 
-[:Upper:] { Щ > ŠČ;
 Щ } [:Upper:] > ŠČ;
+[:Upper:] { Щ > ŠČ;
 Щ > Šč;
 щ > šč;
 
-[:Upper:] { Ц > TS;
 Ц } [:Upper:] > TS;
+[:Upper:] { Ц > TS;
 Ц > Ts;
 ц > ts;
 
@@ -91,6 +106,5 @@ export const ukLatnRules = `
 Ч > Č; ч > č;
 Ш > Š; ш > š;
 
-Ь > ;
-ь > ;
+Ь > ; ь > ;
 `;

@@ -1,9 +1,6 @@
 export const roIpaRules = `
 ::Lower;
 
-$vowel = [aăâeîiou];
-$cons_for_i = [bdfhjklmnprstvwxzșțkgŋ];
-
 [:^Letter:] {eu} [:^Letter:] > jeu;
 [:^Letter:] {el} [:^Letter:] > jel;
 [:^Letter:] {ei} [:^Letter:] > jej;
@@ -17,8 +14,8 @@ $cons_for_i = [bdfhjklmnprstvwxzșțkgŋ];
 [:^Letter:] {erați} [:^Letter:] > jerat͡sʲ;
 [:^Letter:] {erau} [:^Letter:] > jerau;
 
-[:^Letter:] e {x} $vowel > gz;
-[:^Letter:] e {x} h $vowel > gz;
+[:^Letter:] e {x} [aăâeîiou] > gz;
+[:^Letter:] e {x} h [aăâeîiou] > gz;
 x > ks;
 
 {n} c > ŋ;
@@ -67,9 +64,9 @@ eea > eja;
 {o} a > o̯;
 
 i {i} [:^Letter:] > j;
-$cons_for_i r {i} [:^Letter:] > i;
-$cons_for_i l {i} [:^Letter:] > i;
-$cons_for_i {i} [:^Letter:] > ʲ;
+[bdfhjklmnprstvwxzșțkgŋ] r {i} [:^Letter:] > i;
+[bdfhjklmnprstvwxzșțkgŋ] l {i} [:^Letter:] > i;
+[bdfhjklmnprstvwxzșțkgŋ] {i} [:^Letter:] > ʲ;
 
 ă > ə;
 â > ɨ;

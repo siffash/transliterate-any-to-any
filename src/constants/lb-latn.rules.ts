@@ -18,6 +18,10 @@ X } [:Upper:] > KS;
 X > Ks;
 x > ks;
 
+[AOUaou] { CH > KH;
+[AOUaou] { Ch > Kh;
+[AOUaou] { ch > kh;
+
 CH > X;
 Ch > X;
 ch > x;
@@ -65,6 +69,10 @@ c } [eéèêëiïyäöüEÉÈÊËIÏYÄÖÜ] > ts;
 C > K;
 c > k;
 
+TZ > TS;
+Tz > Ts;
+tz > ts;
+
 [:Upper:] { Z > TS;
 Z } [:Upper:] > TS;
 Z > Ts;
@@ -76,9 +84,9 @@ w > v;
 Ç > S;
 ç > s;
 
-[ÄE] I > IJ;
-[ÄE] i > Ij;
-[äe] i > ij;
+[ÄEÉ] I > IJ;
+[ÄEÉ] i > Ij;
+[äeé] i > ij;
 
 Y > Ü;
 y > ü;

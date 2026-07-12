@@ -6,17 +6,15 @@ dž > d͡ʒ;
 lj > ʎ;
 nj > ɲ;
 
-{ d } [s š c č ć] > t;
-{ n } [k g] > ŋ;
-{ n } [b p] > m;
+{ d } [sšcčć] > t;
+{ n } [kg] > ŋ;
+{ n } [bp] > m;
 
-$not_v = [^aeioujy];
-
-$not_v { r } $not_v > r̩;
-[:^Letter:] { r } $not_v > r̩;
-$not_v { r } [:^Letter:] > r̩;
+[^aeioujy] { r } [^aeioujy] > r̩;
+[:^Letter:] { r } [^aeioujy] > r̩;
+[^aeioujy] { r } [:^Letter:] > r̩;
 [:^Letter:] { r } [:^Letter:] > r̩;
-{ v } [p t k s š c č ć f h] > f;
+{ v } [ptksšcčćfh] > f;
 
 a > a;
 b > b;
@@ -37,7 +35,7 @@ m > m;
 n > n;
 o > o;
 p > p;
-q > k ʋ;
+q > kʋ;
 r > r;
 s > s;
 š > ʃ;
@@ -45,7 +43,7 @@ t > t;
 u > u;
 v > ʋ;
 w > ʋ;
-x > k s;
+x > ks;
 y > i;
 z > z;
 ž > ʒ;

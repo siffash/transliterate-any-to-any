@@ -1,11 +1,7 @@
 export const svIpaRules = `
 ::Lower;
 
-$softv = [e i y ä ö];
-$hardv = [a o u å];
-$vowel_sv = [a e i o u y å ä ö];
-$cons = [b c d f g h j k l m n p q r s t v w x z ʈ ɖ ɳ ɭ ʂ ɧ ɕ ŋ];
-$bound = [^a-zåäö];
+[bcdfghjklmnpqrstvwxzʈɖɳɭʂɧɕŋ] = [bcdfghjklmnpqrstvwxzʈɖɳɭʂɧɕŋ];
 
 kristian > krɪɧan;
 tion > ɧuːn;
@@ -34,14 +30,14 @@ enkø > ɛnɕø;
 nk > ŋk;
 gn > ŋn;
 
-sk } $softv > ɧ;
+sk } [eiyäö] > ɧ;
 falk > falk;
-k } $softv > ɕ;
-g } $softv > j;
-c } $softv > s;
+k } [eiyäö] > ɕ;
+g } [eiyäö] > j;
+c } [eiyäö] > s;
 
-rg } $bound > rj;
-lg } $bound > lj;
+rg } [:^Letter:] > rj;
+lg } [:^Letter:] > lj;
 
 ck > k;
 qu > kv;
@@ -52,33 +48,33 @@ x > ks;
 z > s;
 c > k;
 
-ese } $bound > eːs;
-nne } $bound > n;
-ice } $bound > ɪs;
+ese } [:^Letter:] > eːs;
+nne } [:^Letter:] > n;
+ice } [:^Letter:] > ɪs;
 au > aʊ;
 oy > ɔj;
-a } $cons $cons > a;
-e } $cons $cons > ɛ;
-i } $cons $cons > ɪ;
+a } [bcdfghjklmnpqrstvwxzʈɖɳɭʂɧɕŋ] [bcdfghjklmnpqrstvwxzʈɖɳɭʂɧɕŋ] > a;
+e } [bcdfghjklmnpqrstvwxzʈɖɳɭʂɧɕŋ] [bcdfghjklmnpqrstvwxzʈɖɳɭʂɧɕŋ] > ɛ;
+i } [bcdfghjklmnpqrstvwxzʈɖɳɭʂɧɕŋ] [bcdfghjklmnpqrstvwxzʈɖɳɭʂɧɕŋ] > ɪ;
 oo > uː;
-o } $cons $cons > ɔ;
-u } $cons $cons > ɵ;
-y } $cons $cons > ʏ;
-å } $cons $cons > ɔ;
+o } [bcdfghjklmnpqrstvwxzʈɖɳɭʂɧɕŋ] [bcdfghjklmnpqrstvwxzʈɖɳɭʂɧɕŋ] > ɔ;
+u } [bcdfghjklmnpqrstvwxzʈɖɳɭʂɧɕŋ] [bcdfghjklmnpqrstvwxzʈɖɳɭʂɧɕŋ] > ɵ;
+y } [bcdfghjklmnpqrstvwxzʈɖɳɭʂɧɕŋ] [bcdfghjklmnpqrstvwxzʈɖɳɭʂɧɕŋ] > ʏ;
+å } [bcdfghjklmnpqrstvwxzʈɖɳɭʂɧɕŋ] [bcdfghjklmnpqrstvwxzʈɖɳɭʂɧɕŋ] > ɔ;
 ei > ɛj;
-ä } $cons $cons > ɛ;
-ö } $cons $cons > œ;
+ä } [bcdfghjklmnpqrstvwxzʈɖɳɭʂɧɕŋ] [bcdfghjklmnpqrstvwxzʈɖɳɭʂɧɕŋ] > ɛ;
+ö } [bcdfghjklmnpqrstvwxzʈɖɳɭʂɧɕŋ] [bcdfghjklmnpqrstvwxzʈɖɳɭʂɧɕŋ] > œ;
 
-a } $cons $bound > a;
-e } $cons $bound > ɛ;
-i } $cons $bound > ɪ;
-o } $cons $bound > ɔ;
-u } $cons $bound > ɵ;
-y } $cons $bound > ʏ;
-å } $cons $bound > ɔ;
-ä } $cons $bound > ɛ;
-ö } $cons $bound > œ;
-a } $bound > a;
+a } [bcdfghjklmnpqrstvwxzʈɖɳɭʂɧɕŋ] [:^Letter:] > a;
+e } [bcdfghjklmnpqrstvwxzʈɖɳɭʂɧɕŋ] [:^Letter:] > ɛ;
+i } [bcdfghjklmnpqrstvwxzʈɖɳɭʂɧɕŋ] [:^Letter:] > ɪ;
+o } [bcdfghjklmnpqrstvwxzʈɖɳɭʂɧɕŋ] [:^Letter:] > ɔ;
+u } [bcdfghjklmnpqrstvwxzʈɖɳɭʂɧɕŋ] [:^Letter:] > ɵ;
+y } [bcdfghjklmnpqrstvwxzʈɖɳɭʂɧɕŋ] [:^Letter:] > ʏ;
+å } [bcdfghjklmnpqrstvwxzʈɖɳɭʂɧɕŋ] [:^Letter:] > ɔ;
+ä } [bcdfghjklmnpqrstvwxzʈɖɳɭʂɧɕŋ] [:^Letter:] > ɛ;
+ö } [bcdfghjklmnpqrstvwxzʈɖɳɭʂɧɕŋ] [:^Letter:] > œ;
+a } [:^Letter:] > a;
 
 a > ɑː;
 e > eː;

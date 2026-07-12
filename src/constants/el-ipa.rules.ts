@@ -2,10 +2,6 @@ export const elIpaRules = `
 ::Lower;
 ::NFC;
 
-$voicedC = [βγδζλμνρbdgɟʝŋmnlɾvðɣz];
-$vowOrVoiced = [αεηιουωάέήίόύώϊϋΐΰβγδζλμνρaɛiɔu];
-$frontVowel_el = [εηιυέήίύϊϋΐΰɛi];
-
 αί > έ;
 έι > ί;
 εί > ί;
@@ -21,19 +17,19 @@ $frontVowel_el = [εηιυέήίύϊϋΐΰɛi];
 ου > u;
 υι > i;
 
-{ αύ } $vowOrVoiced > άv;
+{ αύ } [αεηιουωάέήίόύώϊϋΐΰβγδζλμνρaɛiɔu] > άv;
 αύ > άf;
-{ αυ } $vowOrVoiced > av;
+{ αυ } [αεηιουωάέήίόύώϊϋΐΰβγδζλμνρaɛiɔu] > av;
 αυ > af;
 
-{ εύ } $vowOrVoiced > έv;
+{ εύ } [αεηιουωάέήίόύώϊϋΐΰβγδζλμνρaɛiɔu] > έv;
 εύ > έf;
-{ ευ } $vowOrVoiced > ɛv;
+{ ευ } [αεηιουωάέήίόύώϊϋΐΰβγδζλμνρaɛiɔu] > ɛv;
 ευ > ɛf;
 
-{ ηύ } $vowOrVoiced > ίv;
+{ ηύ } [αεηιουωάέήίόύώϊϋΐΰβγδζλμνρaɛiɔu] > ίv;
 ηύ > ίf;
-{ ηυ } $vowOrVoiced > iv;
+{ ηυ } [αεηιουωάέήίόύώϊϋΐΰβγδζλμνρaɛiɔu] > iv;
 ηυ > if;
 
 ::Null;
@@ -44,23 +40,23 @@ $frontVowel_el = [εηιυέήίύϊϋΐΰɛi];
 [:^Letter:] { ντ } > d;
 ντ > nd;
 
-[:^Letter:] { γκ } $frontVowel_el > ɟ;
+[:^Letter:] { γκ } [εηιυέήίύϊϋΐΰɛi] > ɟ;
 [:^Letter:] { γκ } > g;
-{ γκ } $frontVowel_el > ŋɟ;
+{ γκ } [εηιυέήίύϊϋΐΰɛi] > ŋɟ;
 γκ > ŋg;
 
-{ γγ } $frontVowel_el > ŋɟ;
+{ γγ } [εηιυέήίύϊϋΐΰɛi] > ŋɟ;
 γγ > ŋg;
 
-{ γχ } $frontVowel_el > ŋç;
+{ γχ } [εηιυέήίύϊϋΐΰɛi] > ŋç;
 γχ > ŋx;
 
 τζ > dz;
 τσ > ts;
 
-{ κ } $frontVowel_el > c;
-{ γ } $frontVowel_el > ʝ;
-{ χ } $frontVowel_el > ç;
+{ κ } [εηιυέήίύϊϋΐΰɛi] > c;
+{ γ } [εηιυέήίύϊϋΐΰɛi] > ʝ;
+{ χ } [εηιυέήίύϊϋΐΰɛi] > ç;
 
 ββ > v;
 κκ > k;
@@ -72,8 +68,8 @@ $frontVowel_el = [εηιυέήίύϊϋΐΰɛi];
 σσ > s;
 ττ > t;
 
-{ σ } $voicedC > z;
-{ ς } [:^Letter:] $voicedC > z;
+{ σ } [βγδζλμνρbdgɟʝŋmnlɾvðɣz] > z;
+{ ς } [:^Letter:] [βγδζλμνρbdgɟʝŋmnlɾvðɣz] > z;
 σ > s;
 ς > s;
 
@@ -117,17 +113,16 @@ $frontVowel_el = [εηιυέήίύϊϋΐΰɛi];
 
 ::Null;
 
-$vowSyn = [a ɛ ɔ u];
 
-n i ˈ } $vowSyn > ˈɲ;
-l i ˈ } $vowSyn > ˈʎ;
-ʝ i ˈ } $vowSyn > ˈʝ;
-ç i ˈ } $vowSyn > ˈç;
-c i ˈ } $vowSyn > ˈc;
+niˈ } [aɛɔu] > ˈɲ;
+liˈ } [aɛɔu] > ˈʎ;
+ʝiˈ } [aɛɔu] > ˈʝ;
+çiˈ } [aɛɔu] > ˈç;
+ciˈ } [aɛɔu] > ˈc;
 
-n i } $vowSyn > ɲ;
-l i } $vowSyn > ʎ;
-ʝ i } $vowSyn > ʝ;
-ç i } $vowSyn > ç;
-c i } $vowSyn > c;
+ni } [aɛɔu] > ɲ;
+li } [aɛɔu] > ʎ;
+ʝi } [aɛɔu] > ʝ;
+çi } [aɛɔu] > ç;
+ci } [aɛɔu] > c;
 `;

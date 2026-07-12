@@ -1,13 +1,10 @@
 export const mtIpaRules = `
 ::Lower;
-$v = [aeiou];
-$cons = [bcdfghjklmnpqrstvwxzċġħż];
-$voicedfinal = [bdgġvżz];
 
-[:^Letter:] { m } $cons > im;
-[:^Letter:] { n } $cons > in;
-[:^Letter:] { s } $cons > is;
-[:^Letter:] { x } $cons > iʃ;
+[:^Letter:] { m } [bcdfghjklmnpqrstvwxzċġħż] > im;
+[:^Letter:] { n } [bcdfghjklmnpqrstvwxzċġħż] > in;
+[:^Letter:] { s } [bcdfghjklmnpqrstvwxzċġħż] > is;
+[:^Letter:] { x } [bcdfghjklmnpqrstvwxzċġħż] > iʃ;
 
 għi > ɐɪ̯;
 għaj > ɐːɪ̯;
@@ -20,7 +17,7 @@ għa > ɐː;
 għe > ɛː;
 għo > ɔː;
 għu > ʊː;
-għ } $v > ɐː;
+għ } [aeiou] > ɐː;
 
 agħ > ɐː;
 egħ > ɛː;

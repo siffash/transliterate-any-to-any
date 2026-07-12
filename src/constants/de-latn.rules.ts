@@ -1,8 +1,6 @@
 export const deLatnRules = `
 ::NFC;
 
-$vowel = [AEIOUÄÖÜYaeiouäöüy];
-
 [:^Letter:] { S } T > Š;
 [:^Letter:] { S } t > Š;
 [:^Letter:] { s } t > š;
@@ -40,10 +38,10 @@ Z } [:Lowercase_Letter:] > Ts;
 Z > TS;
 z > ts;
 
-[:^Letter:] { S } $vowel > Z;
-[:^Letter:] { s } $vowel > z;
-$vowel { S } $vowel > Z;
-$vowel { s } $vowel > z;
+[:^Letter:] { S } [AEIOUÄÖÜYaeiouäöüy] > Z;
+[:^Letter:] { s } [AEIOUÄÖÜYaeiouäöüy] > z;
+[AEIOUÄÖÜYaeiouäöüy] { S } [AEIOUÄÖÜYaeiouäöüy] > Z;
+[AEIOUÄÖÜYaeiouäöüy] { s } [AEIOUÄÖÜYaeiouäöüy] > z;
 
 PH > F;
 Ph > F;

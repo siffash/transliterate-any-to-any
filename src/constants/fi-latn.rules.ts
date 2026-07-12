@@ -9,6 +9,10 @@ SH > Š;
 Sh > Š;
 sh > š;
 
+ZH > Ž;
+Zh > Ž;
+zh > ž;
+
 CH > Č;
 Ch > Č;
 ch > č;
@@ -19,18 +23,16 @@ c } [EIYÄÖeiyäö] > s;
 C > K;
 c > k;
 
-N } [KCQ] > NG;
-N } [kcq] > Ng;
-n } [KkCcQq] > ng;
-
-[:Uppercase:] { X > KS;
-X } [:Uppercase:] > KS;
-X > Ks;
+X } [:Lowercase:] > Ks;
+[:Lowercase:] { X > Ks;
+[:^Letter:] { X } [:^Letter:] > KS;
+X > KS;
 x > ks;
 
-[:Uppercase:] { Z > TS;
-Z } [:Uppercase:] > TS;
-Z > Ts;
+Z } [:Lowercase:] > Ts;
+[:Lowercase:] { Z > Ts;
+[:^Letter:] { Z } [:^Letter:] > TS;
+Z > TS;
 z > ts;
 
 Q > K;

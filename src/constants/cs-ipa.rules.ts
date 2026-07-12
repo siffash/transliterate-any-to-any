@@ -1,37 +1,33 @@
 export const csIpaRules = `
 ::Lower;
 
-$vowel = [a á e é ě i í o ó u ú ů y ý];
-$cons = [b c č d ď f g h {ch} j k l m n ň p q r ř s š t ť v w x z ž];
-$voiced = [b d ď g z ž ɦ h];
-$voiceless = [p t ť k s š f c č x];
-$obstruent = [b d ď g z ž h p t ť k s š f c č x];
-
-ch } [b d ď g z ž h] > ɣ;
+ch } [bdďgzžh] > ɣ;
 ch > x;
 
 ou > oʊ̯;
 au > aʊ̯;
 eu > ɛʊ̯;
 
-d ě > ɟɛ;
-t ě > cɛ;
-n ě > ɲɛ;
-m ě > mɲɛ;
-b ě > bjɛ;
-p ě > pjɛ;
-v ě > vjɛ;
-f ě > fjɛ;
+dě > ɟɛ;
+tě > cɛ;
+ně > ɲɛ;
+mě > mɲɛ;
+bě > bjɛ;
+pě > pjɛ;
+vě > vjɛ;
+fě > fjɛ;
 
-{ d } [i í] > ɟ;
-{ t } [i í] > c;
-{ n } [i í] > ɲ;
+{ d } [ií] > ɟ;
+{ t } [ií] > c;
+{ n } [ií] > ɲ;
 
 dž > d͡ʒ;
 dz > d͡z;
 
-$cons {r} [$cons [:^Letter:]] > r̩;
-$cons {l} [$cons [:^Letter:]] > l̩;
+[bcčdďfgh{ch}jklmnňpqrřsštťvwxzž] { r } [bcčdďfgh{ch}jklmnňpqrřsštťvwxzž] > r̩;
+[bcčdďfgh{ch}jklmnňpqrřsštťvwxzž] { r } [:^Letter:] > r̩;
+[bcčdďfgh{ch}jklmnňpqrřsštťvwxzž] { l } [bcčdďfgh{ch}jklmnňpqrřsštťvwxzž] > l̩;
+[bcčdďfgh{ch}jklmnňpqrřsštťvwxzž] { l } [:^Letter:] > l̩;
 
 b } [:^Letter:] > p;
 d } [:^Letter:] > t;
@@ -43,27 +39,27 @@ h } [:^Letter:] > x;
 v } [:^Letter:] > f;
 ř } [:^Letter:] > r̝̊;
 
-b } $voiceless > p;
-d } $voiceless > t;
-ď } $voiceless > c;
-g } $voiceless > k;
-z } $voiceless > s;
-ž } $voiceless > ʃ;
-h } $voiceless > x;
-v } $voiceless > f;
-ř } $voiceless > r̝̊;
-$voiceless { ř } > r̝̊;
+b } [ptťksšfcčx] > p;
+d } [ptťksšfcčx] > t;
+ď } [ptťksšfcčx] > c;
+g } [ptťksšfcčx] > k;
+z } [ptťksšfcčx] > s;
+ž } [ptťksšfcčx] > ʃ;
+h } [ptťksšfcčx] > x;
+v } [ptťksšfcčx] > f;
+ř } [ptťksšfcčx] > r̝̊;
+[ptťksšfcčx] { ř } > r̝̊;
 
-p } $voiced > b;
-t } $voiced > d;
-ť } $voiced > ď;
-k } $voiced > g;
-s } $voiced > z;
-š } $voiced > ž;
-f } $voiced > ɦ;
-x } $voiced > ɦ;
-c } $voiced > d͡z;
-č } $voiced > d͡ʒ;
+p } [bdďgzžɦh] > b;
+t } [bdďgzžɦh] > d;
+ť } [bdďgzžɦh] > ď;
+k } [bdďgzžɦh] > g;
+s } [bdďgzžɦh] > z;
+š } [bdďgzžɦh] > ž;
+f } [bdďgzžɦh] > ɦ;
+x } [bdďgzžɦh] > ɦ;
+c } [bdďgzžɦh] > d͡z;
+č } [bdďgzžɦh] > d͡ʒ;
 
 a > a;
 á > aː;
@@ -84,10 +80,10 @@ j > j;
 k > k;
 l > l;
 
-m } [f v] > ɱ;
+m } [fv] > ɱ;
 m > m;
 
-n } [g k x] > ŋ;
+n } [gkx] > ŋ;
 n > n;
 ň > ɲ;
 

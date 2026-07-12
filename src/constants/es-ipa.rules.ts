@@ -1,9 +1,6 @@
 export const esIpaRules = `
 ::Lower;
 
-$vowel = [a á e é i í o ó u ú ü];
-$voiced_cons = [b β d ð ɡ ɣ m n ɲ ŋ l ʎ r ɾ ʝ z];
-
 [:^Letter:] { ps > s;
 [:^Letter:] { gn > n;
 [:^Letter:] { mn > n;
@@ -12,17 +9,17 @@ $voiced_cons = [b β d ð ɡ ɣ m n ɲ ŋ l ʎ r ɾ ʝ z];
 ch > t͡ʃ;
 ll > ʎ;
 rr > r;
-qu } [e é i í] > k;
-gu } [e é i í] > ɡ;
+qu } [eéií] > k;
+gu } [eéií] > ɡ;
 gü > ɡw;
 
 b > β;
 v > β;
-c } [e é i í] > θ;
+c } [eéií] > θ;
 c > k;
 d > ð;
 f > f;
-g } [e é i í] > x;
+g } [eéií] > x;
 g > ɣ;
 j > x;
 k > k;
@@ -35,52 +32,52 @@ t > t;
 z > θ;
 
 [:^Letter:] { r > r;
-[l n s] { r > r;
+[lns] { r > r;
 [r] } [:^Letter:] > ɾ;
 r > ɾ;
 
-s } $voiced_cons > z;
+s } [bβdðɡɣmnɲŋlʎrɾʝz] > z;
 s > s;
-x } $vowel > ks;
+x } [aáeéiíoóuúü] > ks;
 x > s;
 
-hi } $vowel > ʝ;
+hi } [aáeéiíoóuúü] > ʝ;
 h > ;
-y } $vowel > ʝ;
+y } [aáeéiíoóuúü] > ʝ;
 y > i;
 
-i } $vowel > j;
-u } [a á e é i í o ó] > w;
-[a á e é o ó] { i > i̯;
-[a á e é o ó] { u > u̯;
+i } [aáeéiíoóuúü] > j;
+u } [aáeéiíoó] > w;
+[aáeéoó] { i > i̯;
+[aáeéoó] { u > u̯;
 
-[a á] > a;
-[e é] > e;
-[i í] > i;
-[o ó] > o;
-[u ú] > u;
+[aá] > a;
+[eé] > e;
+[ií] > i;
+[oó] > o;
+[uú] > u;
 
 ::Null;
 
-n } [g ɡ ɣ k x] > ŋ;
-n } [{t͡ʃ} ʎ ʝ] > ɲ;
-n } [d ð] > n̪;
-n } [b β] > m;
-n } [t d] > n̪;
+n } [gɡɣkx] > ŋ;
+n } [{t͡ʃ}ʎʝ] > ɲ;
+n } [dð] > n̪;
+n } [bβ] > m;
+n } [td] > n̪;
 
 [:^Letter:] { β > b;
-[m n ɲ ŋ] { β > b;
+[mnɲŋ] { β > b;
 
 [:^Letter:] { ð > d;
-[m n ɲ ŋ l] { ð > d;
+[mnɲŋl] { ð > d;
 
 [:^Letter:] { ɣ > ɡ;
-[m n ɲ ŋ] { ɣ > ɡ;
+[mnɲŋ] { ɣ > ɡ;
 
-n } [p b v m] > m;
+n } [pbvm] > m;
 n } [f] > ɱ;
-n } [t d] > n̪;
+n } [td] > n̪;
 n } [θ] > n̟;
-n } [{t͡ʃ} ʎ ʝ] > ɲ;
-n } [k ɡ x] > ŋ;
+n } [{t͡ʃ}ʎʝ] > ɲ;
+n } [kɡx] > ŋ;
 `;

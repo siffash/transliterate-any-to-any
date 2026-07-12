@@ -1,5 +1,6 @@
 export const roLatnRules = `
 ::NFC;
+
 chi } [aouăâîAOUĂÂÎ] > ky;
 Chi } [aouăâîAOUĂÂÎ] > Ky;
 CHi } [aouăâîAOUĂÂÎ] > Ky;
@@ -8,29 +9,38 @@ ghi } [aouăâîAOUĂÂÎ] > gy;
 Ghi } [aouăâîAOUĂÂÎ] > Gy;
 GHi } [aouăâîAOUĂÂÎ] > Gy;
 GHI } [aouăâîAOUĂÂÎ] > GY;
-ci } [aouăâîAOUĂÂÎ] > č;
-Ci } [aouăâîAOUĂÂÎ] > Č;
-CI } [aouăâîAOUĂÂÎ] > Č;
-gi } [aouăâîAOUĂÂÎ] > dž;
-Gi } [aouăâîAOUĂÂÎ] > Dž;
-GI } [aouăâîAOUĂÂÎ] > DŽ;
+
+ci } [ouăâîOUĂÂÎ] > č;
+Ci } [ouăâîOUĂÂÎ] > Č;
+CI } [ouăâîOUĂÂÎ] > Č;
+
+gi } [ouăâîOUĂÂÎ] > dž;
+Gi } [ouăâîOUĂÂÎ] > Dž;
+GI } [ouăâîOUĂÂÎ] > DŽ;
+
 ce } [aouăâîAOUĂÂÎ] > č;
 Ce } [aouăâîAOUĂÂÎ] > Č;
 CE } [aouăâîAOUĂÂÎ] > Č;
+
 ge } [aouăâîAOUĂÂÎ] > dž;
 Ge } [aouăâîAOUĂÂÎ] > Dž;
 GE } [aouăâîAOUĂÂÎ] > DŽ;
+
 ch } [eiyEIY] > k;
 Ch } [eiyEIY] > K;
 CH } [eiyEIY] > K;
+
 gh } [eiyEIY] > g;
 Gh } [eiyEIY] > G;
 GH } [eiyEIY] > G;
+
 c } [eiyEIY] > č;
 C } [eiyEIY] > Č;
+
 g } [eiyEIY] > dž;
 G } [eiy] > Dž;
 G } [EIY] > DŽ;
+
 c > k;
 C > K;
 ș > š;

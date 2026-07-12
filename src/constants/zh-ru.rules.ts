@@ -1,7 +1,4 @@
 export const zhRuRules = `
-$apos = ['’‘\`´ʼ"];
-$v = [aeiouü];
-
 [āáǎàɑɐæ] > a;
 [ēéěèê] > e;
 [īíǐì] > i;
@@ -9,24 +6,24 @@ $v = [aeiouü];
 [ūúǔù] > u;
 [ǖǘǚǜv] > ü;
 
-[:^Letter:] { $apos > ;
-$apos } [:^Letter:] > ;
+[:^Letter:] { ['’‘\`´ʼ] > ;
+['’‘\`´ʼ] } [:^Letter:] > ;
 
 ::Null;
 
-iang } $v > яньг;
-uang } $v > уаньг;
-ang } $v > аньг;
-eng } $v > эньг;
-ing } $v > иньг;
+iang } [aeiouü] > яньг;
+uang } [aeiouü] > уаньг;
+ang } [aeiouü] > аньг;
+eng } [aeiouü] > эньг;
+ing } [aeiouü] > иньг;
 
-ang $apos > анъ;
-eng $apos > энъ;
-ing $apos > инъ;
-ong $apos > унъ;
-iang $apos > янъ;
-iong $apos > юнъ;
-uang $apos > уанъ;
+ang ['’‘\`´ʼ] > анъ;
+eng ['’‘\`´ʼ] > энъ;
+ing ['’‘\`´ʼ] > инъ;
+ong ['’‘\`´ʼ] > унъ;
+iang ['’‘\`´ʼ] > янъ;
+iong ['’‘\`´ʼ] > юнъ;
+uang ['’‘\`´ʼ] > уанъ;
 
 yang > ян;
 ying > ин;
@@ -147,7 +144,7 @@ i > и;
 u > у;
 ü > юй;
 
-$apos > ;
+['’‘\`´ʼ] > ;
 
 ::Null;
 

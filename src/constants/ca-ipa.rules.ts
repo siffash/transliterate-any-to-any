@@ -5,69 +5,64 @@ export const caIpaRules = `
 
 ::Null;
 
-$front = [e è é i í ï];
-$vowel = [a à e è é i í ï o ò ó u ú ü];
-$voiced_cons = [b d g v z ʒ {d͡ʒ}];
-$voiceless_cons = [p t k f s ʃ {t͡ʃ}];
-
 ll > ʎ;
 ny > ɲ;
 tx > t͡ʃ;
 tj > d͡ʒ;
-tg } $front > d͡ʒ;
+tg } [eèéiíï] > d͡ʒ;
 ix > ʃ;
 rr > r;
 ss > s;
 ç > s;
 l·l > ɫː;
-m m > mː;
-n n > nː;
+mm > mː;
+nn > nː;
 y > j;
-i g } n > i ɡ;
-i g } m > i ɡ;
-i g } l > i ɡ;
-i g } r > i ɡ;
-i g } [^aàeèéiíïoòóuúü] > t͡ʃ;
-i g } [:^Letter:] > t͡ʃ;
-qu } $front > k;
-gu } $front > ɡ;
+ig } n > i ɡ;
+ig } m > i ɡ;
+ig } l > i ɡ;
+ig } r > i ɡ;
+ig } [^aàeèéiíïoòóuúü] > t͡ʃ;
+ig } [:^Letter:] > t͡ʃ;
+qu } [eèéiíï] > k;
+gu } [eèéiíï] > ɡ;
 gü > ɡw;
 tz > d͡z;
 ds > t͡s;
 ts > t͡s;
 
-c } $front > s;
+c } [eèéiíï] > s;
 c > k;
-g } $front > ʒ;
+g } [eèéiíï] > ʒ;
 j > ʒ;
 h > ;
 
 [:^Letter:] { r > r;
 [r] } [:^Letter:] > r;
-$vowel { r } $vowel > ɾ;
+[aàeèéiíïoòóuúü] { r } [aàeèéiíïoòóuúü] > ɾ;
 r > r;
 
-$vowel { s } $vowel > z;
+[aàeèéiíïoòóuúü] { s } [aàeèéiíïoòóuúü] > z;
 
 x } [:^Letter:] > ʃ;
-$vowel { x } $vowel > ks;
+[aàeèéiíïoòóuúü] { x } [aàeèéiíïoòóuúü] > ks;
 x > ʃ;
 
-b } $voiceless_cons > p;
-d } $voiceless_cons > t;
-g } $voiceless_cons > k;
-v } $voiceless_cons > f;
-z } $voiceless_cons > s;
-ʒ } $voiceless_cons > ʃ;
-d͡ʒ } $voiceless_cons > t͡ʃ;
+b } [ptkfsʃ{t͡ʃ}] > p;
+d } [ptkfsʃ{t͡ʃ}] > t;
+g } [ptkfsʃ{t͡ʃ}] > k;
+v } [ptkfsʃ{t͡ʃ}] > f;
+z } [ptkfsʃ{t͡ʃ}] > s;
+ʒ } [ptkfsʃ{t͡ʃ}] > ʃ;
+d͡ʒ } [ptkfsʃ{t͡ʃ}] > t͡ʃ;
 
-p } $voiced_cons > b;
-t } $voiced_cons > d;
-k } $voiced_cons > g;
-f } $voiced_cons > v;
-s } $voiced_cons > z;
-ʃ } $voiced_cons > ʒ;
-t͡ʃ } $voiced_cons > d͡ʒ;
+p } [bdgvzʒ{d͡ʒ}] > b;
+t } [bdgvzʒ{d͡ʒ}] > d;
+k } [bdgvzʒ{d͡ʒ}] > g;
+f } [bdgvzʒ{d͡ʒ}] > v;
+s } [bdgvzʒ{d͡ʒ}] > z;
+ʃ } [bdgvzʒ{d͡ʒ}] > ʒ;
+t͡ʃ } [bdgvzʒ{d͡ʒ}] > d͡ʒ;
 
 b } [:^Letter:] > p;
 d } [:^Letter:] > t;
@@ -86,7 +81,7 @@ l > ɫ;
 [i í ï] > i;
 ò > ɔ;
 ó > o;
-[u ú ü] > u;
+[uúü] > u;
 
 [:^Letter:] [bcdfgçhjklmnpqrstvwxyz]* { e } [bcdfgçhjklmnpqrstvwxyz]* [àèéíòóú] > ə;
 e } [bcdfgçhjklmnpqrstvwxyz]* [àèéíòóú] > ə;

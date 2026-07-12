@@ -11,9 +11,9 @@ DJ > Đ;
 Dj > Đ;
 dj > đ;
 
-[ЦC] } [:LowercaseLetter:] > Ts;
-[ЦC] } [:^Letter:] > Ts;
-[ЦC] > TS;
+[ЦC] } [:UppercaseLetter:] > TS;
+[:UppercaseLetter:] { [ЦC] > TS;
+[ЦC] > Ts;
 [цc] > ts;
 
 [ХH] > X;
@@ -22,9 +22,9 @@ dj > đ;
 [ЈJ] > Y;
 [јj] > y;
 
-Џ } [:LowercaseLetter:] > Dž;
-Џ } [:^Letter:] > Dž;
-Џ > DŽ;
+Џ } [:UppercaseLetter:] > DŽ;
+[:UppercaseLetter:] { Џ > DŽ;
+Џ > Dž;
 џ > dž;
 
 А > A;

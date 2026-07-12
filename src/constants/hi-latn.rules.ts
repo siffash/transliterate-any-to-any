@@ -1,8 +1,7 @@
 export const hiLatnRules = `
 ::NFD;
 
-‌ > ;
-‍ > ;
+[‌‍] > ;
 
 अ > a;
 आ > a;
@@ -12,7 +11,7 @@ export const hiLatnRules = `
 ऊ > u;
 ऋ > ri;
 ए > e;
-ऐ > ai;
+ऐ > ij;
 ऍ > ä;
 ओ > o;
 औ > au;
@@ -83,7 +82,7 @@ aु > u;
 aू > u;
 aृ > ri;
 aे > e;
-aै > ai;
+aै > ij;
 aॅ > ä;
 aो > o;
 aौ > au;

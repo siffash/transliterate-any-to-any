@@ -1,12 +1,8 @@
 export const lvIpaRules = `
 ::Lower;
 
-$vl = [p t k ķ c č s š f h];
-$vd = [b d g ģ z ž];
-$nonletter = [^a-zāčēģīķļņšūž];
-
-dž } $vl > t͡ʃ;
-dz } $vl > t͡s;
+dž } [ptkķcčsšfh] > t͡ʃ;
+dz } [ptkķcčsšfh] > t͡s;
 
 p } dz > b;
 p } dž > b;
@@ -25,22 +21,22 @@ s } dž > z;
 ķ } dz > ɟ;
 ķ } dž > ɟ;
 
-b } $vl > p;
-d } $vl > t;
-g } $vl > k;
-ģ } $vl > c;
-z } $vl > s;
-ž } $vl > ʃ;
-v } $vl > f;
+b } [ptkķcčsšfh] > p;
+d } [ptkķcčsšfh] > t;
+g } [ptkķcčsšfh] > k;
+ģ } [ptkķcčsšfh] > c;
+z } [ptkķcčsšfh] > s;
+ž } [ptkķcčsšfh] > ʃ;
+v } [ptkķcčsšfh] > f;
 
-p } $vd > b;
-t } $vd > d;
-k } $vd > ɡ;
-c } $vd > d͡z;
-č } $vd > d͡ʒ;
-s } $vd > z;
-š } $vd > ʒ;
-ķ } $vd > ɟ;
+p } [bdgģzž] > b;
+t } [bdgģzž] > d;
+k } [bdgģzž] > ɡ;
+c } [bdgģzž] > d͡z;
+č } [bdgģzž] > d͡ʒ;
+s } [bdgģzž] > z;
+š } [bdgģzž] > ʒ;
+ķ } [bdgģzž] > ɟ;
 
 n } k > ŋ;
 n } g > ŋ;

@@ -1,31 +1,14 @@
 export const ipaHyRules = `
 ::Null;
 
-$vowels_e = [eêęẽœøɛ];
-$vowels_o = [oôõơɒɔɵ];
-$vowels_a = [aâæăɐɑʌ];
-$vowels_i = [iĩɨɪyʏ];
-$vowels_u = [uũưɯʉʊ];
-$vowels_schwa = [əɘɚɝɤ];
-$stops_p = [pɓ];
-$stops_b = [bβ];
-$stops_t = [tťʈ];
-$stops_d = [dďðɖɗ];
-$stops_k = [kc];
-$stops_g = [gɡɢɟ];
-$fric_s = [sɕʂ];
-$fric_z = [zʑʐ];
-$fric_sh = [ʃɧ];
-$fric_zh = [ʒž];
-
-[:^Letter:] { $vowels_e } > ե;
-$vowels_e > է;
-[:^Letter:] { $vowels_o } > ո;
-$vowels_o > օ;
-$vowels_a > ա;
-$vowels_i > ի;
-$vowels_u > ու;
-$vowels_schwa > ը;
+[:^Letter:] { [eêęẽœøɛ] } > ե;
+[eêęẽœøɛ] > է;
+[:^Letter:] { [oôõơɒɔɵ] } > ո;
+[oôõơɒɔɵ] > օ;
+[aâæăɐɑʌ] > ա;
+[iĩɨɪyʏ] > ի;
+[uũưɯʉʊ] > ու;
+[əɘɚɝɤ] > ը;
 
 [tťʈ]͡[sɕʂ]ʰ > ց;
 [tťʈ][sɕʂ]ʰ > ց;
@@ -43,17 +26,17 @@ $vowels_schwa > ը;
 čʰ > չ;
 č > ճ;
 
-$stops_p ʰ > փ;
-$stops_t ʰ > թ;
-$stops_k ʰ > ք;
+[pɓ] ʰ > փ;
+[tťʈ] ʰ > թ;
+[kc] ʰ > ք;
 qʰ > ք;
 
-$stops_p > պ;
-$stops_b > բ;
-$stops_t > տ;
-$stops_d > դ;
-$stops_k > կ;
-$stops_g > գ;
+[pɓ] > պ;
+[bβ] > բ;
+[tťʈ] > տ;
+[dďðɖɗ] > դ;
+[kc] > կ;
+[gɡɢɟ] > գ;
 q > ք;
 
 [fɸ] > ֆ;
@@ -63,10 +46,10 @@ q > ք;
 [ɣɰʁʕ] > ղ;
 θ > թ;
 
-$fric_s > ս;
-$fric_z > զ;
-$fric_sh > շ;
-$fric_zh > ժ;
+[sɕʂ] > ս;
+[zʑʐ] > զ;
+[ʃɧ] > շ;
+[ʒž] > ժ;
 
 [mɱ] > մ;
 [nŋɲɳ] > ն;

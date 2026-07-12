@@ -3,7 +3,17 @@ export const etLatnRules = `
 
 N } k > Ng;
 N } K > NG;
-n } [k K] > ng;
+n } [kK] > ng;
+
+[AEIOUÕÄÖÜYaeiouõäöüy] { S } [AEIOUÕÄÖÜYaeiouõäöüy] > Z;
+[AEIOUÕÄÖÜYaeiouõäöüy] { s } [AEIOUÕÄÖÜYaeiouõäöüy] > z;
+
+B } [:^Letter:] > P;
+b } [:^Letter:] > p;
+D } [:^Letter:] > T;
+d } [:^Letter:] > t;
+G } [:^Letter:] > K;
+g } [:^Letter:] > k;
 
 Sh > Š;
 SH > Š;
@@ -13,11 +23,11 @@ Zh > Ž;
 ZH > Ž;
 zh > ž;
 
-X } [[:Lower:]] > Ks;
+X } [:Lower:] > Ks;
 X > KS;
 x > ks;
 
-C } [[:Lower:]] > Ts;
+C } [:Lower:] > Ts;
 C > TS;
 c > ts;
 

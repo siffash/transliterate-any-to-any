@@ -61,6 +61,7 @@ SS > S;
 [aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] { S } [aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] > Z;
 
 [aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] { x } [aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] > ks;
+[AEIOUÀÈÉÍÒÓÚÏÜ] { X } [AEIOUÀÈÉÍÒÓÚÏÜ] > KS;
 [aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] { X } [aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] > Ks;
 
 x > š;

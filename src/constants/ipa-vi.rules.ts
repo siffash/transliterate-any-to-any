@@ -1,17 +1,15 @@
 export const ipaViRules = `
 ::Null;
 
-$frontVowel_vi = [ieêyɪɨĩęɛæœøʏɵʉ];
-
 [͈̚ʔʕˈˌːˠˤ˥˧˩̝̟̥̩̪̯̃̊͡ʼ̧̇] > ;
 
 ::Null;
 
-ŋ } $frontVowel_vi > ngh;
+ŋ } [ieêyɪɨĩęɛæœøʏɵʉ] > ngh;
 ŋ > ng;
-[gɡɢɟɣɰʁ] } $frontVowel_vi > gh;
+[gɡɢɟɣɰʁ] } [ieêyɪɨĩęɛæœøʏɵʉ] > gh;
 [gɡɢɟɣɰʁ] > g;
-[kq] } $frontVowel_vi > k;
+[kq] } [ieêyɪɨĩęɛæœøʏɵʉ] > k;
 [kq] } [wʷuʊũ] > q;
 [kq] > c;
 [:^Letter:] { [jʝ] > gi;

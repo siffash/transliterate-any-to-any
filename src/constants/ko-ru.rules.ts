@@ -2,14 +2,10 @@ export const koRuRules = `
 seoul > сеул;
 pyeongyang > пхеньян;
 
-$vowel_koru = [aeiouywаеёиоуыэюя];
-$cyr_voiceless = [ктпсхчщшц];
-$cyr_j_end = [чж];
-
-ng } $vowel_koru > нъ;
-k } $vowel_koru > кх;
-t } $vowel_koru > тх;
-p } $vowel_koru > пх;
+ng } [aeiouywаеёиоуыэюя] > нъ;
+k } [aeiouywаеёиоуыэюя] > кх;
+t } [aeiouywаеёиоуыэюя] > тх;
+p } [aeiouywаеёиоуыэюя] > пх;
 
 chyae > чхэ;
 chya > чха;
@@ -17,11 +13,11 @@ chyeo > чхо;
 chyo > чхо;
 chyu > чху;
 
-$cyr_j_end { yae > э;
-$cyr_j_end { ya > а;
-$cyr_j_end { yeo > о;
-$cyr_j_end { yo > о;
-$cyr_j_end { yu > у;
+[чж] { yae > э;
+[чж] { ya > а;
+[чж] { yeo > о;
+[чж] { yo > о;
+[чж] { yu > у;
 
 j { yae > э;
 ch { yae > э;
@@ -34,11 +30,11 @@ ch { yo > о;
 j { yu > у;
 ch { yu > у;
 
-$vowel_koru { ui > ый;
+[aeiouywаеёиоуыэюя] { ui > ый;
 [:^Letter:] { ui > ый;
 ui > и;
 
-$vowel_koru { eui > ый;
+[aeiouywаеёиоуыэюя] { eui > ый;
 [:^Letter:] { eui > ый;
 eui > и;
 
@@ -83,19 +79,19 @@ p > п;
 s > с;
 h > х;
 
-$cyr_voiceless { g > к;
+[ктпсхчщшц] { g > к;
 [:^Letter:] { g > к;
 g > г;
 
-$cyr_voiceless { d > т;
+[ктпсхчщшц] { d > т;
 [:^Letter:] { d > т;
 d > д;
 
-$cyr_voiceless { b > п;
+[ктпсхчщшц] { b > п;
 [:^Letter:] { b > п;
 b > б;
 
-$cyr_voiceless { j > ч;
+[ктпсхчщшц] { j > ч;
 [:^Letter:] { j > ч;
 j > дж;
 

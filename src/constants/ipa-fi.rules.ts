@@ -1,8 +1,6 @@
 export const ipaFiRules = `
 ::Null;
 
-$vowel_fi = [aeiouyäö];
-
 c > k;
 q > k;
 w > v;
@@ -38,7 +36,7 @@ x > ks;
 
 [:^Letter:] { ʔ } > ;
 ʔ } [:^Letter:] > ;
-$vowel_fi { ʔ } $vowel_fi > \\';
+[aeiouyäö] { ʔ } [aeiouyäö] > \\';
 ʔ > ;
 
 ([a-zäö]) { ː } > $1;

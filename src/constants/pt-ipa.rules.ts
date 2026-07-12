@@ -1,81 +1,74 @@
 export const ptIpaRules = `
 ::Lower;
 
-$vowel = [a á à ã â e é ê i í î o ó õ ô u ú];
-$nasal_vowel = [ã õ];
-$cons = [b c d f g j k l m n p q r s t v w x y z ç ɲ ʎ ʃ ʒ ʁ ɾ];
-$voiceless = [p t k f s ʃ ç x];
-$voiced_cons = [b d g v m n l r z ʒ ʎ ɲ];
-$letter = [:Letter:];
-
 ch > ʃ;
 lh > ʎ;
 nh > ɲ;
 rr > ʁ;
 ss > s;
 ç > s;
-a l e { x } a n d r > ʃ;
+ale { x } andr > ʃ;
 
 ::Null;
 
-{qu} [e é ê i í î] > k;
-{qu} [a á à ã â o ó õ ô u ú] > kw;
-{gu} [e é ê i í î] > g;
-{gu} [a á à ã â o ó õ ô u ú] > gw;
+{ qu } [eéêiíî] > k;
+{ qu } [aáàãâoóõôuú] > kw;
+{ gu } [eéêiíî] > g;
+{ gu } [aáàãâoóõôuú] > gw;
 
-{ex} $vowel > ez;
-{ex} $cons > eʃ;
-$vowel {x} [p t k] > ks;
-[:^Letter:] {x} > ʃ;
+{ ex } [aáàãâeéêiíîoóõôuú] > ez;
+{ ex } [bcdfgjklmnpqrstvwxyzçɲʎʃʒʁɾ] > eʃ;
+[aáàãâeéêiíîoóõôuú] { x } [ptk] > ks;
+[:^Letter:] { x } > ʃ;
 x > ʃ;
 
-{c} [e é ê i í î] > s;
+{ c } [eéêiíî] > s;
 c > k;
-{g} [e é ê i í î] > ʒ;
+{ g } [eéêiíî] > ʒ;
 
 j > ʒ;
 
-{r} r > ʁ;
+{ r } r > ʁ;
 [:^Letter:] {r} > ʁ;
 r > ɾ;
 
-$vowel {s} $vowel > z;
-{s} [p t k f s ç x h] > ʃ;
-{s} [:^Letter:] > ʃ;
-{ s } $voiced_cons > ʒ;
+[aáàãâeéêiíîoóõôuú] { s } [aáàãâeéêiíîoóõôuú] > z;
+{ s } [ptkfsçxh] > ʃ;
+{ s } [:^Letter:] > ʃ;
+{ s } [bdgvmnlrzʒʎɲ] > ʒ;
 s > s;
 
-{z} [p t k f s ç x h] > ʒ;
-{z} [:^Letter:] > ʃ;
-{z} $voiced_cons > z;
+{ z } [ptkfsçxh] > ʒ;
+{ z } [:^Letter:] > ʃ;
+{ z } [bdgvmnlrzʒʎɲ] > z;
 z > z;
 
 h > ;
 
-[$vowel ɾ ɫ ʃ ʒ f v] {b} $vowel > β;
-[$vowel ɾ ɫ ʃ ʒ f v] {d} $vowel > ð;
-[$vowel ɾ ɫ ʃ ʒ f v] {g} $vowel > ɣ;
+[aáàãâeéêiíîoóõôuúɾɫʃʒfv] { b } [aáàãâeéêiíîoóõôuú] > β;
+[aáàãâeéêiíîoóõôuúɾɫʃʒfv] { d } [aáàãâeéêiíîoóõôuú] > ð;
+[aáàãâeéêiíîoóõôuúɾɫʃʒfv] { g } [aáàãâeéêiíîoóõôuú] > ɣ;
 
 ãe > ɐ̃j̃;
 ão > ɐ̃w̃;
 õe > õj̃;
 
-{ens} [:^Letter:] > ɐ̃j̃ʃ;
-{em} [:^Letter:] > ɐ̃j̃;
-{ém} [:^Letter:] > ˈɐ̃j̃;
-{am} [:^Letter:] > ɐ̃w̃;
-{en} [:^Letter:] > ẽj̃;
+{ ens } [:^Letter:] > ɐ̃j̃ʃ;
+{ em } [:^Letter:] > ɐ̃j̃;
+{ ém } [:^Letter:] > ˈɐ̃j̃;
+{ am } [:^Letter:] > ɐ̃w̃;
+{ en } [:^Letter:] > ẽj̃;
 
-{am} $cons > ɐ̃;
-{an} $cons > ɐ̃;
-{em} $cons > ẽ;
-{en} $cons > ẽ;
-{im} $cons > ĩ;
-{in} $cons > ĩ;
-{om} $cons > õ;
-{on} $cons > õ;
-{um} $cons > ũ;
-{un} $cons > ũ;
+{ am } [bcdfgjklmnpqrstvwxyzçɲʎʃʒʁɾ] > ɐ̃;
+{ an } [bcdfgjklmnpqrstvwxyzçɲʎʃʒʁɾ] > ɐ̃;
+{ em } [bcdfgjklmnpqrstvwxyzçɲʎʃʒʁɾ] > ẽ;
+{ en } [bcdfgjklmnpqrstvwxyzçɲʎʃʒʁɾ] > ẽ;
+{ im } [bcdfgjklmnpqrstvwxyzçɲʎʃʒʁɾ] > ĩ;
+{ in } [bcdfgjklmnpqrstvwxyzçɲʎʃʒʁɾ] > ĩ;
+{ om } [bcdfgjklmnpqrstvwxyzçɲʎʃʒʁɾ] > õ;
+{ on } [bcdfgjklmnpqrstvwxyzçɲʎʃʒʁɾ] > õ;
+{ um } [bcdfgjklmnpqrstvwxyzçɲʎʃʒʁɾ] > ũ;
+{ un } [bcdfgjklmnpqrstvwxyzçɲʎʃʒʁɾ] > ũ;
 
 ã > ɐ̃;
 õ > õ;
@@ -90,28 +83,28 @@ h > ;
 ô > o;
 ú > ˈu;
 
-{a} [l r z x] [:^Letter:] > a;
-{a} [:^Letter:] > ɐ;
-{e} [l r z x] [:^Letter:] > ɛ;
-{e} [:^Letter:] > ɨ;
-$letter {e} $letter > ɨ;
-{o} [l r z x] [:^Letter:] > ɔ;
-{o} [:^Letter:] > u;
+{ a } [lrzx] [:^Letter:] > a;
+{ a } [:^Letter:] > ɐ;
+{ e } [lrzx] [:^Letter:] > ɛ;
+{ e } [:^Letter:] > ɨ;
+[:Letter:] { e } [:Letter:] > ɨ;
+{ o } [lrzx] [:^Letter:] > ɔ;
+{ o } [:^Letter:] > u;
 
-{i} $vowel > j;
-{u} $vowel > w;
+{ i } [aáàãâeéêiíîoóõôuú] > j;
+{ u } [aáàãâeéêiíîoóõôuú] > w;
 
-{a} t r [i í] > ɐ;
-{a} [m r] > ɐ;
-[:^Letter:] {a} > ɐ;
+{ a } tr [ií] > ɐ;
+{ a } [mr] > ɐ;
+[:^Letter:] { a } > ɐ;
 a > a;
 e > e;
-{i} ɲ > ĩ;
+{ i } ɲ > ĩ;
 i > i;
-{o} s > u;
+{ o } s > u;
 o > o;
 u > u;
 
-{l} $cons > ɫ;
-{l} [:^Letter:] > ɫ;
+{ l } [bcdfgjklmnpqrstvwxyzçɲʎʃʒʁɾ] > ɫ;
+{ l } [:^Letter:] > ɫ;
 `;

@@ -47,23 +47,38 @@ export const jaLatnRules = `
 ::Null;
 ::Lower;
 
-n ['’‘\`´ʼ"] y > ny;
-n ['’‘\`´ʼ"] } [:^Letter:] > n;
-['’‘\`´ʼ"] > ;
-
-tch > ćć;
-cch > ćć;
-ssh > šš;
-sh > š;
-ch > ć;
-ny > ń;
-j > đ;
+[:^Letter:] { ['’‘\`´ʼ] > ;
+['’‘\`´ʼ] } [:^Letter:] > ;
 
 [āâ] > a;
 [īî] > i;
 [ūû] > u;
 [ēê] > e;
 [ōô] > o;
+
+::Null;
+
+[aeiou] { g } [aeiouy] > ng;
+
+tch } e > čč;
+cch } e > čč;
+tch > ćć;
+cch > ćć;
+ssh > šš;
+sh > š;
+ch } e > č;
+ch > ć;
+n } i > ń;
+ny > ń;
+j } e > dž;
+j > đ;
+
+e { i > j;
+
+::Null;
+
+n } ń > ń;
+e } j > i;
 
 ･ > ' ';
 

@@ -1,19 +1,15 @@
 export const ipaFrRules = `
 ::Null;
 
-$vowel_fr = [aeiouyâæêôõøăęĩœũơưɐɑɒɔɘəɚɛɜɝɤɨɪɯɵʉʊʌʏẽ];
-$consonant_fr = [bcdfɸghjklmnpqrstvwxzçðčďħŋťžɓɕɖɗɟɡɢɣɰɥɦɧɫɭɱɲɳɹɽɾʀʁʂʃʈʋʎʐʑʒʔʕʝβθχ];
-$frontVowel_fr = [eêiyɛɪɨɘəɜøɵœęĩẽ];
-
 [͈̚ʰʱʲʷʼˈ̇ˌ̧ːˠˤ˥˧˩̝̟̥̩̪̯̃̊͡ʔ] > ;
 
 ::Null;
 
-$vowel_fr { s } $vowel_fr > ss;
+[aeiouyâæêôõøăęĩœũơưɐɑɒɔɘəɚɛɜɝɤɨɪɯɵʉʊʌʏẽ] { s } [aeiouyâæêôõøăęĩœũơưɐɑɒɔɘəɚɛɜɝɤɨɪɯɵʉʊʌʏẽ] > ss;
 ɲ } [:^Letter:] > gne;
-k } $frontVowel_fr > qu;
+k } [eêiyɛɪɨɘəɜøɵœęĩẽ] > qu;
 k > c;
-ɡ } $frontVowel_fr > gu;
+ɡ } [eêiyɛɪɨɘəɜøɵœęĩẽ] > gu;
 [ɡɢ] > g;
 [ɣɰ] > gh;
 [ęẽĩ] > in;

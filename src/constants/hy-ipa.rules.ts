@@ -1,6 +1,5 @@
 export const hyIpaRules = `
 ::Lower;
-$vowel_letter = [աեէըիոօւև];
 
 [:^Letter:] { ով } [:^Letter:] > ov;
 [:^Letter:] { ովքեր } [:^Letter:] > ovkʰɛɾ;
@@ -11,21 +10,21 @@ $vowel_letter = [աեէըիոօւև];
 [:^Letter:] { են } [:^Letter:] > ɛn;
 
 [:^Letter:] { և > jɛv;
-$vowel_letter { և > jɛv;
+[աեէըիոօւև] { և > jɛv;
 և > ev;
 
 [:^Letter:] { եւ > jɛv;
-$vowel_letter { եւ > jɛv;
+[աեէըիոօւև] { եւ > jɛv;
 եւ > ev;
 
 ու > u;
 
 [:^Letter:] { ե > jɛ;
-$vowel_letter { ե > jɛ;
+[աեէըիոօւև] { ե > jɛ;
 ե > ɛ;
 
 [:^Letter:] { ո > vɔ;
-$vowel_letter { ո > vɔ;
+[աեէըիոօւև] { ո > vɔ;
 ո > ɔ;
 
 ա > ɑ;

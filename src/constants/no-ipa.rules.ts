@@ -1,8 +1,5 @@
 export const noIpaRules = `
 ::Lower;
-$vowel_no = [aeiouyæøå];
-$cons = [bcdfghjklmnpqrstvwxz];
-$pal = [eiy];
 
 ige } [:^Letter:] > iə;
 ig } [:^Letter:] > i;
@@ -11,9 +8,9 @@ er } [:^Letter:] > əɾ;
 
 hv > ʋ;
 hj > j;
-o l d e > ɔldɛ;
+olde > ɔldɛ;
 ld > l;
-e n d a > ɛndɑ;
+enda > ɛndɑ;
 nd > n;
 
 ai > ɑɪ;
@@ -25,7 +22,7 @@ oy > ɔʏ;
 sch > ʂ;
 skj > ʂ;
 sj > ʂ;
-sk } $pal > ʂ;
+sk } [eiy] > ʂ;
 sl > ʂl;
 nkj > nç;
 kj > ç;
@@ -34,12 +31,12 @@ th > t;
 tj > ç;
 a { k } er > k;
 aker > ɑkəɾ;
-k } $pal > ç;
+k } [eiy] > ç;
 gj > j;
 r { g } e > g;
 bergen > bæɾgɛn;
 holger > hɔlgəɾ;
-g } $pal > j;
+g } [eiy] > j;
 
 rt > ʈ;
 rd > ɖ;
@@ -67,7 +64,7 @@ rr > ɾ;
 ss > s;
 tt > t;
 
-o } $cons $cons > ɔ;
+o } [bcdfghjklmnpqrstvwxz] [bcdfghjklmnpqrstvwxz] > ɔ;
 
 aa > ɔ;
 a > ɑ;
@@ -86,7 +83,7 @@ k > k;
 l > l;
 m > m;
 n } k j > n;
-n } k $pal > n;
+n } k [eiy] > n;
 n } k > ŋ;
 n > n;
 o > u;

@@ -1,11 +1,6 @@
 export const bgLatnRules = `
 ::NFC;
 
-И { Я } [:^Letter:] > A;
-И { я } [:^Letter:] > a;
-и { Я } [:^Letter:] > A;
-и { я } [:^Letter:] > a;
-
 [:Upper:] { Ц > TS;
 Ц } [:Upper:] > TS;
 Ц > Ts;

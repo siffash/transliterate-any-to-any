@@ -20,9 +20,6 @@ DZ } [EĘĖIĮYeęėiįy] > Đ;
 Dz } [EĘĖIĮYeęėiįy] > Đ;
 dz } [EĘĖIĮYeęėiįy] > đ;
 
-C } [EĘĖIĮYeęėiįy] > Ć;
-c } [EĘĖIĮYeęėiįy] > ć;
-
 L } [EĘĖIĮYeęėiįy] > Ľ;
 l } [EĘĖIĮYeęėiįy] > ľ;
 

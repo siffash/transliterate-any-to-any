@@ -1,16 +1,16 @@
 import { Text } from "types";
 
 export const zhVi = async (text: Text) => {
-  const { OpenCC } = await import("opencc");
+  const OpenCC = await import("opencc-js");
   const { pinyin } = await import("pinyin-pro");
   const { getHanviet } = await import("hanviet-pinyin-words");
   const { ZH_VI_MAP } = await import("constants/zh-vi.map");
 
-  const converter = new OpenCC("s2t.json");
+  const converter = OpenCC.Converter({ from: "cn", to: "t" });
 
-  const convert = async (text: string) => {
+  const convert = (text: string) => {
     // 1. Normalize input to Traditional Chinese for accurate dictionary lookups
-    const traditionalText = await converter.convertPromise(text);
+    const traditionalText = converter(text);
 
     // 2. Regex to extract continuous blocks of Chinese characters
     const chineseRegex = /[\u4e00-\u9fa5]+/g;
@@ -104,8 +104,8 @@ export const zhVi = async (text: Text) => {
   };
 
   if (typeof text === "string") {
-    return await convert(text);
+    return convert(text);
   } else {
-    return Promise.all(text.map(text => convert(text)));
+    return text.map(text => convert(text));
   }
 };

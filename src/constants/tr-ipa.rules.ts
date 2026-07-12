@@ -1,9 +1,9 @@
 export const trIpaRules = `
 ::Lower;
-i̇ > i;
-::Null;
 
-$palatal = [e i ö œ ü y â û î];
+i̇ > i;
+
+::Null;
 
 ağ > aː;
 eğ > eː;
@@ -24,25 +24,25 @@ k } û > c;
 g } û > ɟ;
 l } û > l;
 
-k } $palatal > c;
-g } $palatal > ɟ;
-l } $palatal > l;
-$palatal [rɾ] { k > c;
-$palatal l { k > c;
-$palatal n { k > c;
-$palatal s { k > c;
-$palatal [rɾ] { g > ɟ;
-$palatal l { g > ɟ;
-$palatal n { g > ɟ;
-$palatal s { g > ɟ;
-$palatal [rɾ] { l > l;
+k } [eiöœüyâûî] > c;
+g } [eiöœüyâûî] > ɟ;
+l } [eiöœüyâûî] > l;
+[eiöœüyâûî] [rɾ] { k > c;
+[eiöœüyâûî] l { k > c;
+[eiöœüyâûî] n { k > c;
+[eiöœüyâûî] s { k > c;
+[eiöœüyâûî] [rɾ] { g > ɟ;
+[eiöœüyâûî] l { g > ɟ;
+[eiöœüyâûî] n { g > ɟ;
+[eiöœüyâûî] s { g > ɟ;
+[eiöœüyâûî] [rɾ] { l > l;
 k } [aıou] > k;
 g } [aıou] > ɡ;
 l } [aıou] > ɫ;
-$palatal { k > c;
-$palatal { g > ɟ;
-$palatal { l > l;
-$palatal l { l > l;
+[eiöœüyâûî] { k > c;
+[eiöœüyâûî] { g > ɟ;
+[eiöœüyâûî] { l > l;
+[eiöœüyâûî] l { l > l;
 
 â > aː;
 û > uː;

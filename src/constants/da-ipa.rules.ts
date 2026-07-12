@@ -1,14 +1,9 @@
 export const daIpaRules = `
 ::Lower;
 
-$c = [b c d f g h j k l m n p q r s t v w x z];
-$voiced_c = [l m n ŋ r v d ð];
-$v = [a e i o u y æ ø å ː];
-$letter = [:Letter:];
-
-aa { r } [^ $v] > ;
-[$letter] [o u å] { g } [:^Letter:] > w;
-[a r] { g } [:^Letter:] > ;
+aa { r } [^aeiouyæøåː] > ;
+[:Letter:] [ouå] { g } [:^Letter:] > w;
+[ar] { g } [:^Letter:] > ;
 jeg } [:^Letter:] > jɑj;
 mig } [:^Letter:] > mɑj;
 
@@ -20,15 +15,15 @@ ii > iː;
 oo > oː;
 uu > uː;
 
-{ a } $c $v > ɑː;
-{ e } $c $v > eː;
-{ i } $c $v > iː;
-{ o } $c $v > oː;
-{ u } $c $v > uː;
-{ y } $c $v > yː;
-{ æ } $c $v > ɛː;
-{ ø } $c $v > øː;
-{ å } $c $v > ɔː;
+{ a } [bcdfghjklmnpqrstvwxz] [aeiouyæøåː] > ɑː;
+{ e } [bcdfghjklmnpqrstvwxz] [aeiouyæøåː] > eː;
+{ i } [bcdfghjklmnpqrstvwxz] [aeiouyæøåː] > iː;
+{ o } [bcdfghjklmnpqrstvwxz] [aeiouyæøåː] > oː;
+{ u } [bcdfghjklmnpqrstvwxz] [aeiouyæøåː] > uː;
+{ y } [bcdfghjklmnpqrstvwxz] [aeiouyæøåː] > yː;
+{ æ } [bcdfghjklmnpqrstvwxz] [aeiouyæøåː] > ɛː;
+{ ø } [bcdfghjklmnpqrstvwxz] [aeiouyæøåː] > øː;
+{ å } [bcdfghjklmnpqrstvwxz] [aeiouyæøåː] > ɔː;
 
 { a } [:^Letter:] > ɑː;
 { i } [:^Letter:] > iː;
@@ -64,15 +59,15 @@ nk > ŋk;
 
 er } [:^Letter:] > ɐ;
 { e } [:^Letter:] > ə;
-a [v f] n } [:^Letter:] > ɑʊ̯n;
-a [v f] } [:^Letter:] > ɑʊ̯;
+a [vf] n } [:^Letter:] > ɑʊ̯n;
+a [vf] } [:^Letter:] > ɑʊ̯;
 
-$v { r } [^ $v] > ɐ̯;
-$v { r } [:^Letter:] > ɐ̯;
+[aeiouyæøåː] { r } [^aeiouyæøåː] > ɐ̯;
+[aeiouyæøåː] { r } [:^Letter:] > ɐ̯;
 
-$v { d } [$v l r n] > ð;
-$v { d } [:^Letter:] > ð;
-$v { t } [$v ɐ] > ð;
+[aeiouyæøåː] { d } [aeiouyæøåːlrn] > ð;
+[aeiouyæøåː] { d } [:^Letter:] > ð;
+[aeiouyæøåː] { t } [aeiouyæøåːɐ] > ð;
 
 { j } eg > ɑɪ̯;
 eg > eːɡ;
@@ -80,9 +75,9 @@ og > ɔʊ̯;
 øg > øj;
 en } [:^Letter:] > n̩;
 
-c } [e i y æ ø] > s;
+c } [eiyæø] > s;
 c > k;
-g } [e i y æ ø] > j;
+g } [eiyæø] > j;
 
 a > ɑ;
 e > ɛ;
@@ -125,13 +120,13 @@ s { s } > ;
 f { f } > ;
 
 [:^Letter:] { p } > pʰ;
-{ p } [$v l r j] > pʰ;
+{ p } [aeiouyæøåːlrj] > pʰ;
 
 [:^Letter:] { t } > tʰ;
-{ t } [$v l r j] > tʰ;
+{ t } [aeiouyæøåːlrj] > tʰ;
 
 [:^Letter:] { k } > kʰ;
-{ k } [$v l r j] > kʰ;
+{ k } [aeiouyæøåːlrj] > kʰ;
 
 g > k;
 `;

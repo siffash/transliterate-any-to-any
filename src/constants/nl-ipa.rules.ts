@@ -1,11 +1,9 @@
 export const nlIpaRules = `
 ::Lower;
 
-[’'] s [-] > s;
-::Null;
+['’‘\`´ʼ] s [-] > s;
 
-$c = [bcdfghjklmnpqrstvwxz];
-$v = [aeiouy];
+::Null;
 
 {lijken} [:^Letter:] > ləkən;
 {lijks} [:^Letter:] > ləks;
@@ -59,10 +57,10 @@ uw > yʋ;
 {c}[eiy] > s;
 {c} > k;
 
-{a} $c $v > aː;
-{e} $c $v > eː;
-{o} $c $v > oː;
-{u} $c $v > yː;
+{a} [bcdfghjklmnpqrstvwxz] [aeiouy] > aː;
+{e} [bcdfghjklmnpqrstvwxz] [aeiouy] > eː;
+{o} [bcdfghjklmnpqrstvwxz] [aeiouy] > oː;
+{u} [bcdfghjklmnpqrstvwxz] [aeiouy] > yː;
 
 bb > b;
 dd > d;

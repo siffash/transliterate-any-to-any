@@ -1,29 +1,24 @@
 export const slIpaRules = `
 ::Lower;
 
-$vowel_sl = [a e i o u á â à é ê è ẹ í î ì ó ô ò ọ ú û ù y {ŕ} {r̀}];
-$cons = [b c č d f g h j k l m n p q r s š t v w x z ž ʋ ʎ ɲ];
-$voiced = [b d g z ž];
-$voiceless = [p t k s š c č f h x];
+dž > d͡ʒ;
+lj > ʎ;
+nj > ɲ;
 
-d ž > d͡ʒ;
-l j > ʎ;
-n j > ɲ;
+{ p } [bdgzž] > b;
+{ t } [bdgzž] > d;
+{ k } [bdgzž] > ɡ;
+{ s } [bdgzž] > z;
+{ š } [bdgzž] > ʒ;
+{ c } [bdgzž] > d͡z;
+{ č } [bdgzž] > d͡ʒ;
+{ f } [bdgzž] > v;
 
-{ p } $voiced > b;
-{ t } $voiced > d;
-{ k } $voiced > ɡ;
-{ s } $voiced > z;
-{ š } $voiced > ʒ;
-{ c } $voiced > d͡z;
-{ č } $voiced > d͡ʒ;
-{ f } $voiced > v;
-
-{ b } $voiceless > p;
-{ d } $voiceless > t;
-{ g } $voiceless > k;
-{ z } $voiceless > s;
-{ ž } $voiceless > ʃ;
+{ b } [ptksšcčfhx] > p;
+{ d } [ptksšcčfhx] > t;
+{ g } [ptksšcčfhx] > k;
+{ z } [ptksšcčfhx] > s;
+{ ž } [ptksšcčfhx] > ʃ;
 
 { b } [:^Letter:] > p;
 { d } [:^Letter:] > t;
@@ -31,19 +26,19 @@ n j > ɲ;
 { z } [:^Letter:] > s;
 { ž } [:^Letter:] > ʃ;
 
-$cons { r } $cons > r̩;
-$cons { ŕ } $cons > r̩ː;
-$cons { r̀ } $cons > r̩;
-$cons { r } [:^Letter:] > r̩;
-$cons { ŕ } [:^Letter:] > r̩ː;
-$cons { r̀ } [:^Letter:] > r̩;
-[:^Letter:] { r } $cons > r̩;
-[:^Letter:] { ŕ } $cons > r̩ː;
-[:^Letter:] { r̀ } $cons > r̩;
+[bcčdfghjklmnpqrsštvwxzžʋʎɲ] { r } [bcčdfghjklmnpqrsštvwxzžʋʎɲ] > r̩;
+[bcčdfghjklmnpqrsštvwxzžʋʎɲ] { ŕ } [bcčdfghjklmnpqrsštvwxzžʋʎɲ] > r̩ː;
+[bcčdfghjklmnpqrsštvwxzžʋʎɲ] { r̀ } [bcčdfghjklmnpqrsštvwxzžʋʎɲ] > r̩;
+[bcčdfghjklmnpqrsštvwxzžʋʎɲ] { r } [:^Letter:] > r̩;
+[bcčdfghjklmnpqrsštvwxzžʋʎɲ] { ŕ } [:^Letter:] > r̩ː;
+[bcčdfghjklmnpqrsštvwxzžʋʎɲ] { r̀ } [:^Letter:] > r̩;
+[:^Letter:] { r } [bcčdfghjklmnpqrsštvwxzžʋʎɲ] > r̩;
+[:^Letter:] { ŕ } [bcčdfghjklmnpqrsštvwxzžʋʎɲ] > r̩ː;
+[:^Letter:] { r̀ } [bcčdfghjklmnpqrsštvwxzžʋʎɲ] > r̩;
 
 [:^Letter:] { v } r > ʋ;
 [:^Letter:] { v } l > ʋ;
-{ v } $cons > w;
+{ v } [bcčdfghjklmnpqrsštvwxzžʋʎɲ] > w;
 { v } [:^Letter:] > w;
 
 b > b;
@@ -66,7 +61,7 @@ s > s;
 t > t;
 v > ʋ;
 w > ʋ;
-x > k s;
+x > ks;
 z > z;
 ž > ʒ;
 

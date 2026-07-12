@@ -1,27 +1,25 @@
 export const ipaRoRules = `
 ::Null;
 
-$vowelFront = [eiɛɪĩẽêęæœyʏjɥ];
-
 [͈̚ʰʱʲʷʼˈ̇ˌ̧ːˠˤ˥˧˩̝̟̥̩̪̯̃̊͡ʔʕ] > ;
 
 ::Null;
 
-tʃ } $vowelFront > c;
+tʃ } [eiɛɪĩẽêęæœyʏjɥ] > c;
 tʃ > ci;
-dʒ } $vowelFront > g;
+dʒ } [eiɛɪĩẽêęæœyʏjɥ] > g;
 dʒ > gi;
 ts > ț;
 dz > z;
 
-[cč] } $vowelFront > c;
+[cč] } [eiɛɪĩẽêęæœyʏjɥ] > c;
 [cč] > ci;
-ɟ } $vowelFront > g;
+ɟ } [eiɛɪĩẽêęæœyʏjɥ] > g;
 ɟ > gi;
 
-[kq] } $vowelFront > ch;
+[kq] } [eiɛɪĩẽêęæœyʏjɥ] > ch;
 [kq] > c;
-[gɡɢɣɰ] } $vowelFront > gh;
+[gɡɢɣɰ] } [eiɛɪĩẽêęæœyʏjɥ] > gh;
 [ɡɢɣɰ] > g;
 
 [:^Letter:] { [ɨɯư] > î;

@@ -1,19 +1,17 @@
 import { Text } from "types";
 
 export const zhJa = async (text: Text) => {
-  const { OpenCC } = await import("opencc");
+  const OpenCC = await import("opencc-js");
 
-  const s2t = new OpenCC("s2t.json");
-  const t2jp = new OpenCC("t2jp.json");
+  const s2jp = OpenCC.Converter({ from: "cn", to: "jp" });
 
-  const convert = async (text: string) => {
-    const traditional = await s2t.convertPromise(text);
-    return await t2jp.convertPromise(traditional);
+  const convert = (text: string) => {
+    return s2jp(text);
   };
 
   if (typeof text === "string") {
-    return await convert(text);
+    return convert(text);
   } else {
-    return Promise.all(text.map(convert));
+    return text.map(convert);
   }
 };

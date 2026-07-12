@@ -1,14 +1,6 @@
 export const ipaSkRules = `
 ::Null;
 
-$vowel_a = [aɑɐɒăâ];
-$vowel_e = [eɛɜɘəɚɝêęẽ];
-$vowel_i = [iɪɨĩyʏ];
-$vowel_o = [oɔœøɵơõɤʌ];
-$vowel_u = [uʊʉɯưũ];
-$cons_l = [lɫɭ];
-$cons_r = [rɾɹɽʀʁ];
-
 t͡s > c;
 ts > c;
 t͡ʃ > č;
@@ -26,24 +18,24 @@ tʂ > č;
 d͡ʐ > dž;
 dʐ > dž;
 
-$vowel_a ː > á;
-$vowel_e ː > é;
-$vowel_i ː > í;
-$vowel_o ː > ó;
-$vowel_u ː > ú;
-$cons_l ː > ĺ;
-$cons_r ː > ŕ;
+[aɑɐɒăâ] ː > á;
+[eɛɜɘəɚɝêęẽ] ː > é;
+[iɪɨĩyʏ] ː > í;
+[oɔœøɵơõɤʌ] ː > ó;
+[uʊʉɯưũ] ː > ú;
+[lɫɭ] ː > ĺ;
+[rɾɹɽʀʁ] ː > ŕ;
 
 [͈̚ːʰʱʲʷʼˈ̇ˌ̧ˠˤ˥˧˩̝̟̥̩̪̯̃̊͡ʔ] > ;
 
 ::Null;
 
-$vowel_a > a;
+[aɑɐɒăâ] > a;
 æ > ä;
-$vowel_e > e;
-$vowel_i > i;
-$vowel_o > o;
-$vowel_u > u;
+[eɛɜɘəɚɝêęẽ] > e;
+[iɪɨĩyʏ] > i;
+[oɔœøɵơõɤʌ] > o;
+[uʊʉɯưũ] > u;
 
 ɓ > b;
 [çχħɧx] > ch;
@@ -55,9 +47,9 @@ $vowel_u > u;
 ɱ > m;
 [ŋɳ] > n;
 ɲ > ň;
-$cons_l > l;
+[lɫɭ] > l;
 ʎ > ľ;
-$cons_r > r;
+[rɾɹɽʀʁ] > r;
 [ʂʃɕ] > š;
 ʈ > t;
 [ʋβw] > v;

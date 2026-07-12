@@ -1,10 +1,6 @@
 export const deIpaRules = `
 ::Lower;
 
-$v = [aäeéiíoöuúüyə];
-$c = [bcdfghjklmnpqrstvwxz];
-$letter = [:Letter:];
-
 ch } arlotte > ʃ;
 
 ng } [:^Letter:] > ŋ;
@@ -60,23 +56,23 @@ aa > aː;
 ee > eː;
 oo > oː;
 uu > uː;
-ah } $v > aːh;
+ah } [aäeéiíoöuúüyə] > aːh;
 ah > aː;
-äh } $v > ɛːh;
+äh } [aäeéiíoöuúüyə] > ɛːh;
 äh > ɛː;
-eh } $v > eːh;
+eh } [aäeéiíoöuúüyə] > eːh;
 eh > eː;
-ih } $v > iːh;
+ih } [aäeéiíoöuúüyə] > iːh;
 ih > iː;
-oh } $v > oːh;
+oh } [aäeéiíoöuúüyə] > oːh;
 oh > oː;
-öh } $v > øːh;
+öh } [aäeéiíoöuúüyə] > øːh;
 öh > øː;
-uh } $v > uːh;
+uh } [aäeéiíoöuúüyə] > uːh;
 uh > uː;
-üh } $v > yːh;
+üh } [aäeéiíoöuúüyə] > yːh;
 üh > yː;
-ie } $v > iːh;
+ie } [aäeéiíoöuúüyə] > iːh;
 ie > iː;
 
 chs > ks;
@@ -98,30 +94,30 @@ i } k [:^Letter:] > ɪ;
 a } l [:^Letter:] > a;
 
 er } [iɪ] > əʁ;
-en } $c > ən;
-el } $c > əl;
+en } [bcdfghjklmnpqrstvwxz] > ən;
+el } [bcdfghjklmnpqrstvwxz] > əl;
 
 g } [ptkçxfsʃ] > k;
 b } [ptkçxfsʃ] > p;
 d } [ptkçxfsʃ] > t;
 
-a } $c $c > a;
-a } $c [:^Letter:] > a;
-a } $c $v > aː;
+a } [bcdfghjklmnpqrstvwxz] [bcdfghjklmnpqrstvwxz] > a;
+a } [bcdfghjklmnpqrstvwxz] [:^Letter:] > a;
+a } [bcdfghjklmnpqrstvwxz] [aäeéiíoöuúüyə] > aː;
 a > a;
-ä } $c $c > ɛ;
+ä } [bcdfghjklmnpqrstvwxz] [bcdfghjklmnpqrstvwxz] > ɛ;
 ä > ɛː;
-e } $c $c > ɛ;
+e } [bcdfghjklmnpqrstvwxz] [bcdfghjklmnpqrstvwxz] > ɛ;
 e > eː;
-i } $c $c > ɪ;
+i } [bcdfghjklmnpqrstvwxz] [bcdfghjklmnpqrstvwxz] > ɪ;
 i > iː;
-o } $c $c > ɔ;
+o } [bcdfghjklmnpqrstvwxz] [bcdfghjklmnpqrstvwxz] > ɔ;
 o > oː;
-ö } $c $c > œ;
+ö } [bcdfghjklmnpqrstvwxz] [bcdfghjklmnpqrstvwxz] > œ;
 ö > øː;
-u } $c $c > ʊ;
+u } [bcdfghjklmnpqrstvwxz] [bcdfghjklmnpqrstvwxz] > ʊ;
 u > uː;
-ü } $c $c > ʏ;
+ü } [bcdfghjklmnpqrstvwxz] [bcdfghjklmnpqrstvwxz] > ʏ;
 ü > yː;
 
 b > b;
@@ -130,7 +126,7 @@ c > k;
 d > d;
 f > f;
 g > ɡ;
-[$v r ʁ] { h >;
+[aäeéiíoöuúüyərʁ] { h >;
 h > h;
 j > j;
 k > k;

@@ -1,13 +1,6 @@
 export const bsIpaRules = `
 ::Lower;
 
-$vowel_bs = [a e i o u ɛ ɔ];
-$consonant = [b c č ć d {dž} đ f g h j k l {lj} m n {nj} p r s š t u v z ž];
-$sonorant = [v m n l r j ʎ ɲ];
-$voiceless = [p f k t s š c č ć h {t͡s} {t͡ʃ} {t͡ɕ}];
-$voiced = [b g d z ž {dž} đ {d͡ʒ} {d͡ʑ}];
-$voiced_trigger = [b g d z ž {dž} đ {d͡ʒ} {d͡ʑ}];
-
 aa > aː;
 ee > iː;
 ii > iː;
@@ -56,23 +49,23 @@ ou > u;
 ai > aj;
 i } [a e o u] > j;
 
-b } $voiceless > p;
-d } $voiceless > t;
-g } $voiceless > k;
-v } $voiceless > f;
-z } $voiceless > s;
-ʒ } $voiceless > ʃ;
-d͡ʑ } $voiceless > t͡ɕ;
-d͡ʒ } $voiceless > t͡ʃ;
+b } [pfktsšcčćh{t͡s}{t͡ʃ}{t͡ɕ}] > p;
+d } [pfktsšcčćh{t͡s}{t͡ʃ}{t͡ɕ}] > t;
+g } [pfktsšcčćh{t͡s}{t͡ʃ}{t͡ɕ}] > k;
+v } [pfktsšcčćh{t͡s}{t͡ʃ}{t͡ɕ}] > f;
+z } [pfktsšcčćh{t͡s}{t͡ʃ}{t͡ɕ}] > s;
+ʒ } [pfktsšcčćh{t͡s}{t͡ʃ}{t͡ɕ}] > ʃ;
+d͡ʑ } [pfktsšcčćh{t͡s}{t͡ʃ}{t͡ɕ}] > t͡ɕ;
+d͡ʒ } [pfktsšcčćh{t͡s}{t͡ʃ}{t͡ɕ}] > t͡ʃ;
 
-p } $voiced_trigger > b;
-t } $voiced_trigger > d;
-k } $voiced_trigger > g;
-f } $voiced_trigger > v;
-s } $voiced_trigger > z;
-ʃ } $voiced_trigger > ʒ;
-t͡ɕ } $voiced_trigger > d͡ʑ;
-t͡ʃ } $voiced_trigger > d͡ʒ;
+p } [bgdzž{dž}đ{d͡ʒ}{d͡ʑ}] > b;
+t } [bgdzž{dž}đ{d͡ʒ}{d͡ʑ}] > d;
+k } [bgdzž{dž}đ{d͡ʒ}{d͡ʑ}] > g;
+f } [bgdzž{dž}đ{d͡ʒ}{d͡ʑ}] > v;
+s } [bgdzž{dž}đ{d͡ʒ}{d͡ʑ}] > z;
+ʃ } [bgdzž{dž}đ{d͡ʒ}{d͡ʑ}] > ʒ;
+t͡ɕ } [bgdzž{dž}đ{d͡ʒ}{d͡ʑ}] > d͡ʑ;
+t͡ʃ } [bgdzž{dž}đ{d͡ʒ}{d͡ʑ}] > d͡ʒ;
 
 b } [:^Letter:] > p;
 d } [:^Letter:] > t;
@@ -83,8 +76,8 @@ z } [:^Letter:] > s;
 d͡ʑ } [:^Letter:] > t͡ɕ;
 d͡ʒ } [:^Letter:] > t͡ʃ;
 
-[^$vowel_bs] { r } [^$vowel_bs] > r̩;
-[:^Letter:] { r } [^$vowel_bs] > r̩;
+[^aeiouɛɔ] { r } [^aeiouɛɔ] > r̩;
+[:^Letter:] { r } [^aeiouɛɔ] > r̩;
 
 a > a;
 b > b;

@@ -3,9 +3,6 @@ export const huIpaRules = `
 
 szombathely > sombɒthɛj;
 
-$vowel = [aáeéiíoóöőuúüű];
-$consonant = [bcdfghjklmnpqrstvwxyz];
-
 ddzs > d͡ʒː;
 ccs > t͡ʃː;
 ddz > d͡zː;
@@ -101,7 +98,7 @@ v > v;
 w > v;
 x > ks;
 
-y } [^$vowel] > i;
+y } [^aáeéiíoóöőuúüű] > i;
 y > j;
 zp > sp;
 zt > st;

@@ -3,12 +3,7 @@
 export const hiEnRules = `
 ::NFD;
 
-‌ > ;
-‍ > ;
-
-$cons = [bcdfghjklmnpqrstvwxyz];
-$v = [aāiīuūeoŏĕ];
-$nukta = ़;
+[‌‍] > ;
 
 अ > a;
 आ > ā;
@@ -23,13 +18,13 @@ $nukta = ़;
 ओ > o;
 औ > au;
 ऑ > ŏ;
-क$nukta > qa;
-ख$nukta > kha;
-ग$nukta > gha;
-ज$nukta > za;
-ड$nukta > ra;
-ढ$nukta > rha;
-फ$nukta > fa;
+क़ > qa;
+ख़ > kha;
+ग़ > gha;
+ज़ > za;
+ड़ > ra;
+ढ़ > rha;
+फ़ > fa;
 ज्ञ > gya;
 क > ka;
 ख > kha;
@@ -120,34 +115,34 @@ a् > ;
 
 ::Null;
 
-[:^Letter:] $cons h h { a } [:^Letter:] > a;
-[:^Letter:] $cons h { a } [:^Letter:] > a;
-[:^Letter:] $cons { a } [:^Letter:] > a;
-$cons y { a } [:^Letter:] > a;
-$cons r { a } [:^Letter:] > a;
-$cons v { a } [:^Letter:] > a;
-$cons { a } [:^Letter:] > ;
+[:^Letter:] [bcdfghjklmnpqrstvwxyz] h h { a } [:^Letter:] > a;
+[:^Letter:] [bcdfghjklmnpqrstvwxyz] h { a } [:^Letter:] > a;
+[:^Letter:] [bcdfghjklmnpqrstvwxyz] { a } [:^Letter:] > a;
+[bcdfghjklmnpqrstvwxyz] y { a } [:^Letter:] > a;
+[bcdfghjklmnpqrstvwxyz] r { a } [:^Letter:] > a;
+[bcdfghjklmnpqrstvwxyz] v { a } [:^Letter:] > a;
+[bcdfghjklmnpqrstvwxyz] { a } [:^Letter:] > ;
 
 ::Null;
 
 ey { a } r > a;
-$v $cons h a $cons h { a } $cons h $v > ;
-$v $cons h a $cons h { a } $cons $v > ;
-$v $cons h a $cons { a } $cons h $v > ;
-$v $cons h a $cons { a } $cons $v > ;
-$v $cons a $cons h { a } $cons h $v > ;
-$v $cons a $cons h { a } $cons $v > ;
-$v $cons a $cons { a } $cons h $v > ;
-$v $cons a $cons { a } $cons $v > ;
-$v $cons h h { a } $cons h h $v > ;
-$v $cons h h { a } $cons h $v > ;
-$v $cons h h { a } $cons $v > ;
-$v $cons h { a } $cons h h $v > ;
-$v $cons { a } $cons h h $v > ;
-$v $cons h { a } $cons h $v > ;
-$v $cons h { a } $cons $v > ;
-$v $cons { a } $cons h $v > ;
-$v $cons { a } $cons $v > ;
+[aāiīuūeoŏĕ] [bcdfghjklmnpqrstvwxyz] h a [bcdfghjklmnpqrstvwxyz] h { a } [bcdfghjklmnpqrstvwxyz] h [aāiīuūeoŏĕ] > ;
+[aāiīuūeoŏĕ] [bcdfghjklmnpqrstvwxyz] h a [bcdfghjklmnpqrstvwxyz] h { a } [bcdfghjklmnpqrstvwxyz] [aāiīuūeoŏĕ] > ;
+[aāiīuūeoŏĕ] [bcdfghjklmnpqrstvwxyz] h a [bcdfghjklmnpqrstvwxyz] { a } [bcdfghjklmnpqrstvwxyz] h [aāiīuūeoŏĕ] > ;
+[aāiīuūeoŏĕ] [bcdfghjklmnpqrstvwxyz] h a [bcdfghjklmnpqrstvwxyz] { a } [bcdfghjklmnpqrstvwxyz] [aāiīuūeoŏĕ] > ;
+[aāiīuūeoŏĕ] [bcdfghjklmnpqrstvwxyz] a [bcdfghjklmnpqrstvwxyz] h { a } [bcdfghjklmnpqrstvwxyz] h [aāiīuūeoŏĕ] > ;
+[aāiīuūeoŏĕ] [bcdfghjklmnpqrstvwxyz] a [bcdfghjklmnpqrstvwxyz] h { a } [bcdfghjklmnpqrstvwxyz] [aāiīuūeoŏĕ] > ;
+[aāiīuūeoŏĕ] [bcdfghjklmnpqrstvwxyz] a [bcdfghjklmnpqrstvwxyz] { a } [bcdfghjklmnpqrstvwxyz] h [aāiīuūeoŏĕ] > ;
+[aāiīuūeoŏĕ] [bcdfghjklmnpqrstvwxyz] a [bcdfghjklmnpqrstvwxyz] { a } [bcdfghjklmnpqrstvwxyz] [aāiīuūeoŏĕ] > ;
+[aāiīuūeoŏĕ] [bcdfghjklmnpqrstvwxyz] h h { a } [bcdfghjklmnpqrstvwxyz] h h [aāiīuūeoŏĕ] > ;
+[aāiīuūeoŏĕ] [bcdfghjklmnpqrstvwxyz] h h { a } [bcdfghjklmnpqrstvwxyz] h [aāiīuūeoŏĕ] > ;
+[aāiīuūeoŏĕ] [bcdfghjklmnpqrstvwxyz] h h { a } [bcdfghjklmnpqrstvwxyz] [aāiīuūeoŏĕ] > ;
+[aāiīuūeoŏĕ] [bcdfghjklmnpqrstvwxyz] h { a } [bcdfghjklmnpqrstvwxyz] h h [aāiīuūeoŏĕ] > ;
+[aāiīuūeoŏĕ] [bcdfghjklmnpqrstvwxyz] { a } [bcdfghjklmnpqrstvwxyz] h h [aāiīuūeoŏĕ] > ;
+[aāiīuūeoŏĕ] [bcdfghjklmnpqrstvwxyz] h { a } [bcdfghjklmnpqrstvwxyz] h [aāiīuūeoŏĕ] > ;
+[aāiīuūeoŏĕ] [bcdfghjklmnpqrstvwxyz] h { a } [bcdfghjklmnpqrstvwxyz] [aāiīuūeoŏĕ] > ;
+[aāiīuūeoŏĕ] [bcdfghjklmnpqrstvwxyz] { a } [bcdfghjklmnpqrstvwxyz] h [aāiīuūeoŏĕ] > ;
+[aāiīuūeoŏĕ] [bcdfghjklmnpqrstvwxyz] { a } [bcdfghjklmnpqrstvwxyz] [aāiīuūeoŏĕ] > ;
 
 ::NFC;
 ::Null;

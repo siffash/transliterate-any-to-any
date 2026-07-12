@@ -13,39 +13,38 @@ export const ipaItRules = `
 
 ::Null;
 
-$front_it = [e i];
 
-[k q x χ] } $front_it > ch;
-[k q x χ] > c;
-[ɡ ɢ ɣ ɰ] } $front_it > gh;
-[ɡ ɢ ɣ ɰ] > g;
-g } $front_it > gh;
-tʃ } $front_it > c;
+[kqxχ] } [ei] > ch;
+[kqxχ] > c;
+[ɡɢɣɰ] } [ei] > gh;
+[ɡɢɣɰ] > g;
+g } [ei] > gh;
+tʃ } [ei] > c;
 tʃ > ci;
-č } $front_it > c;
+č } [ei] > c;
 č > ci;
-c } [^e i] > ci;
-dʒ } $front_it > g;
+c } [^ei] > ci;
+dʒ } [ei] > g;
 dʒ > gi;
-ɟ } $front_it > g;
+ɟ } [ei] > g;
 ɟ > gi;
-[ʃ ʂ ɕ ç] } $front_it > sc;
-[ʃ ʂ ɕ ç] > sci;
-[ʒ ʐ ʑ ž] } $front_it > g;
-[ʒ ʐ ʑ ž] > gi;
+[ʃʂɕç] } [ei] > sc;
+[ʃʂɕç] > sci;
+[ʒʐʑž] } [ei] > g;
+[ʒʐʑž] > gi;
 ʎ } i > gl;
 ʎ > gli;
 ɲ > gn;
-[ʈ θ ť] > t;
-[ɖ ɗ ď ð] > d;
+[ʈθť] > t;
+[ɖɗďð] > d;
 ɓ > b;
 β > v;
-[ɫ ɭ] > l;
-[ɽ ɾ ʀ ʁ ɹ] > r;
+[ɫɭ] > l;
+[ɽɾʀʁɹ] > r;
 [ŋ ɳ] > n;
 ɱ > m;
 ʋ > v;
-[ɦ ɧ ħ] > h;
+[ɦɧħ] > h;
 ɸ > f;
 
 ::Null;

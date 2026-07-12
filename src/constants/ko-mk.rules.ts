@@ -2,22 +2,18 @@ export const koMkRules = `
 seoul > сеул;
 pyeongyang > пјонгјанг;
 
-$vowel_komk = [aeiouwyаеиоу];
-$voiceless = [кптсхчшц];
-$j_end = [чџ];
+[чџ] { yae > е;
+[чџ] { ya > а;
+[чџ] { yeo > о;
+[чџ] { yo > о;
+[чџ] { yu > у;
+[чџ] { ye > е;
 
-$j_end { yae > е;
-$j_end { ya > а;
-$j_end { yeo > о;
-$j_end { yo > о;
-$j_end { yu > у;
-$j_end { ye > е;
-
-$vowel_komk { ui > уи;
+[aeiouwyаеиоу] { ui > уи;
 [:^Letter:] { ui > уи;
 ui > и;
 
-$vowel_komk { eui > уи;
+[aeiouwyаеиоу] { eui > уи;
 [:^Letter:] { eui > уи;
 eui > и;
 
@@ -57,19 +53,19 @@ p > п;
 s > с;
 h > х;
 
-$voiceless { g > к;
+[кптсхчшц] { g > к;
 [:^Letter:] { g > к;
 g > г;
 
-$voiceless { d > т;
+[кптсхчшц] { d > т;
 [:^Letter:] { d > т;
 d > д;
 
-$voiceless { b > п;
+[кптсхчшц] { b > п;
 [:^Letter:] { b > п;
 b > б;
 
-$voiceless { j > ч;
+[кптсхчшц] { j > ч;
 [:^Letter:] { j > ч;
 j > џ;
 
@@ -128,7 +124,7 @@ n > н;
 
 [аеиоу] { ј } [ео] > ;
 
-[:^Letter:] { ['’‘\`´ʼ"] } р > ;
+[:^Letter:] { ['’‘\`´ʼ] } р > ;
 
 [:^Letter:] { ј } [бвгдѓжзѕјклљмнњпрстќфхцчџш] > и;
 [бвгдѓжзѕјклљмнњпрстќфхцчџш] { ј } [бвгдѓжзѕјклљмнњпрстќфхцчџш] > и;

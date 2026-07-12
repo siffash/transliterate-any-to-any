@@ -12,15 +12,13 @@ export const zhLatnRules = `
 ::Null;
 
 [zcshr] { i > ï;
-[jqxy] { ue > ü ö;
+[jqxy] { ue > üö;
 ü { e > ö;
-[jqxy] { uan > ü ä n;
+[jqxy] { uan > üän;
 [jqxy] { u > ü;
-[iy] { an > ä n;
-[iy] { ong > ÿ n g;
-[:^Letter:] { a > \\'a;
-[:^Letter:] { e > \\'e;
-[:^Letter:] { o > \\'o;
+[iy] { a } ng > a;
+[iy] { an > än;
+[iy] { ong > ÿng;
 
 ::Null;
 
@@ -34,7 +32,6 @@ j > đ;
 x > s;
 h > x;
 r } [aäeiïoöuüÿ] > ž;
-w > v;
 
 ::Null;
 

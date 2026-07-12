@@ -24,19 +24,16 @@ gy > ɟ;
 ř > r̝;
 ch > x;
 
-$voiceless = [p t ť c č k f s š ʃ x];
-$voiced = [b d ď g z ž ʒ h ɦ];
-
-b } $voiceless > p;
-d } $voiceless > t;
-ď } $voiceless > ť;
-dz } $voiceless > c;
-dž } $voiceless > č;
-g } $voiceless > k;
-z } $voiceless > s;
-ž } $voiceless > ʃ;
-h } $voiceless > x;
-v } $voiceless > f;
+b } [ptťcčkfsšʃx] > p;
+d } [ptťcčkfsšʃx] > t;
+ď } [ptťcčkfsšʃx] > ť;
+dz } [ptťcčkfsšʃx] > c;
+dž } [ptťcčkfsšʃx] > č;
+g } [ptťcčkfsšʃx] > k;
+z } [ptťcčkfsšʃx] > s;
+ž } [ptťcčkfsšʃx] > ʃ;
+h } [ptťcčkfsšʃx] > x;
+v } [ptťcčkfsšʃx] > f;
 
 b } [:^Letter:] > p;
 d } [:^Letter:] > t;
@@ -48,16 +45,16 @@ z } [:^Letter:] > s;
 ž } [:^Letter:] > ʃ;
 h } [:^Letter:] > x;
 
-p } $voiced > b;
-t } $voiced > d;
-ť } $voiced > ď;
-k } $voiced > g;
-s } $voiced > z;
-š } $voiced > ʒ;
-f } $voiced > v;
-c } $voiced > d͡z;
-č } $voiced > d͡ʒ;
-x } $voiced > ɦ;
+p } [bdďgzžʒhɦ] > b;
+t } [bdďgzžʒhɦ] > d;
+ť } [bdďgzžʒhɦ] > ď;
+k } [bdďgzžʒhɦ] > g;
+s } [bdďgzžʒhɦ] > z;
+š } [bdďgzžʒhɦ] > ʒ;
+f } [bdďgzžʒhɦ] > v;
+c } [bdďgzžʒhɦ] > d͡z;
+č } [bdďgzžʒhɦ] > d͡ʒ;
+x } [bdďgzžʒhɦ] > ɦ;
 
 p } dz > b;
 t } dz > d;

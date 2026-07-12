@@ -1,14 +1,6 @@
 export const isIpaRules = `
 ::Lower;
 
-$V = [a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː];
-$front = [e é i í y ý æ {ei} {ey}];
-$voicedC = [b d ð g ɣ j l m n r v];
-$singleC = [b c d f g h j k l m n p q r s t v w x z þ ð ʰ ̥];
-$stop = [p t k c];
-$longtrigger = [p t k s];
-$longtrigger_follow = [v j r];
-
 á { n n } > t n;
 é { n n } > t n;
 í { n n } > t n;
@@ -52,15 +44,15 @@ s s > sː;
 p p > ʰp;
 t t > ʰt;
 k k > ʰk;
-$V { p l } > ʰp l;
-$V { p n } > ʰp n;
-$V { p m } > ʰp m;
-$V { t l } > ʰt l;
-$V { t n } > ʰt n;
-$V { t m } > ʰt m;
-$V { k l } > ʰk l;
-$V { k n } > ʰk n;
-$V { k m } > ʰk m;
+[a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] { p l } > ʰp l;
+[a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] { p n } > ʰp n;
+[a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] { p m } > ʰp m;
+[a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] { t l } > ʰt l;
+[a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] { t n } > ʰt n;
+[a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] { t m } > ʰt m;
+[a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] { k l } > ʰk l;
+[a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] { k n } > ʰk n;
+[a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] { k m } > ʰk m;
 
 l l > t l;
 r l > r t l;
@@ -77,142 +69,142 @@ n j > ɲ;
 
 { f } l > p;
 { f } n > p;
-$V { f } [j á] > f;
-$V { f } $V > v;
-$V { f } $voicedC > v;
-$V { f } [:^Letter:] > v;
+[a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] { f } [j á] > f;
+[a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] { f } [a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] > v;
+[a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] { f } [bdðgɣjlmnrv] > v;
+[a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] { f } [:^Letter:] > v;
 f > f;
 
-$V { ð } $V > ð;
-$V { ð } $voicedC > ð;
-$V { ð } [:^Letter:] > θ;
+[a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] { ð } [a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] > ð;
+[a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] { ð } [bdðgɣjlmnrv] > ð;
+[a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] { ð } [:^Letter:] > θ;
 ð > ð;
 
 { k } j > c;
-s { k } $front > c;
+s { k } [e é i í y ý æ {ei} {ey}] > c;
 { g g } j > cc;
 g g > kk;
 { g } j > c;
-$V { g } $V > ɣ;
-$V { g } $voicedC > ɣ;
-$V { g } [:^Letter:] > x;
+[a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] { g } [a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] > ɣ;
+[a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] { g } [bdðgɣjlmnrv] > ɣ;
+[a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] { g } [:^Letter:] > x;
 
 { g } [ieíyýæé] > c;
 { k } [ieíyýæé] > cʰ;
 
 [:^Letter:] { p } > pʰ;
 [:^Letter:] { t } > tʰ;
-[:^Letter:] { k } $front > cʰ;
-{ k } $front > c;
+[:^Letter:] { k } [e é i í y ý æ {ei} {ey}] > cʰ;
+{ k } [e é i í y ý æ {ei} {ey}] > c;
 [:^Letter:] { k } > kʰ;
 
 p { n } > n̥;
 t { n } > n̥;
 k { n } > n̥;
 
-l { $stop } > l̥;
-r { $stop } > r̥;
-m { $stop } > m̥;
-n { $stop } > n̥;
-ŋ { $stop } > ŋ̊;
+l { [ptkc] } > l̥;
+r { [ptkc] } > r̥;
+m { [ptkc] } > m̥;
+n { [ptkc] } > n̥;
+ŋ { [ptkc] } > ŋ̊;
 
-{ n g } $front > ŋ c;
+{ n g } [e é i í y ý æ {ei} {ey}] > ŋ c;
 { n g } > ŋ k;
-{ n k } $front > ŋ̊ c;
+{ n k } [e é i í y ý æ {ei} {ey}] > ŋ̊ c;
 { n k } > ŋ̊ k;
 
 { æ } r [:^Letter:] > aiː;
 
-[:^Letter:] { á } $singleC $V > auː;
-[:^Letter:] $singleC { á } $singleC $V > auː;
-[:^Letter:] $singleC $singleC { á } $singleC $V > auː;
-[:^Letter:] { á } $singleC [:^Letter:] > auː;
-[:^Letter:] $singleC { á } $singleC [:^Letter:] > auː;
-[:^Letter:] $singleC $singleC { á } $singleC [:^Letter:] > auː;
+[:^Letter:] { á } [bcdfghjklmnpqrstvwxzþðʰ̥] [a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] > auː;
+[:^Letter:] [bcdfghjklmnpqrstvwxzþðʰ̥] { á } [bcdfghjklmnpqrstvwxzþðʰ̥] [a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] > auː;
+[:^Letter:] [bcdfghjklmnpqrstvwxzþðʰ̥] [bcdfghjklmnpqrstvwxzþðʰ̥] { á } [bcdfghjklmnpqrstvwxzþðʰ̥] [a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] > auː;
+[:^Letter:] { á } [bcdfghjklmnpqrstvwxzþðʰ̥] [:^Letter:] > auː;
+[:^Letter:] [bcdfghjklmnpqrstvwxzþðʰ̥] { á } [bcdfghjklmnpqrstvwxzþðʰ̥] [:^Letter:] > auː;
+[:^Letter:] [bcdfghjklmnpqrstvwxzþðʰ̥] [bcdfghjklmnpqrstvwxzþðʰ̥] { á } [bcdfghjklmnpqrstvwxzþðʰ̥] [:^Letter:] > auː;
 
-[:^Letter:] { é } $singleC $V > jɛː;
-[:^Letter:] $singleC { é } $singleC $V > jɛː;
-[:^Letter:] $singleC $singleC { é } $singleC $V > jɛː;
-[:^Letter:] { é } $singleC [:^Letter:] > jɛː;
-[:^Letter:] $singleC { é } $singleC [:^Letter:] > jɛː;
-[:^Letter:] $singleC $singleC { é } $singleC [:^Letter:] > jɛː;
+[:^Letter:] { é } [bcdfghjklmnpqrstvwxzþðʰ̥] [a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] > jɛː;
+[:^Letter:] [bcdfghjklmnpqrstvwxzþðʰ̥] { é } [bcdfghjklmnpqrstvwxzþðʰ̥] [a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] > jɛː;
+[:^Letter:] [bcdfghjklmnpqrstvwxzþðʰ̥] [bcdfghjklmnpqrstvwxzþðʰ̥] { é } [bcdfghjklmnpqrstvwxzþðʰ̥] [a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] > jɛː;
+[:^Letter:] { é } [bcdfghjklmnpqrstvwxzþðʰ̥] [:^Letter:] > jɛː;
+[:^Letter:] [bcdfghjklmnpqrstvwxzþðʰ̥] { é } [bcdfghjklmnpqrstvwxzþðʰ̥] [:^Letter:] > jɛː;
+[:^Letter:] [bcdfghjklmnpqrstvwxzþðʰ̥] [bcdfghjklmnpqrstvwxzþðʰ̥] { é } [bcdfghjklmnpqrstvwxzþðʰ̥] [:^Letter:] > jɛː;
 
-[:^Letter:] { í } $singleC $V > iː;
-[:^Letter:] $singleC { í } $singleC $V > iː;
-[:^Letter:] $singleC $singleC { í } $singleC $V > iː;
-[:^Letter:] { í } $singleC [:^Letter:] > iː;
-[:^Letter:] $singleC { í } $singleC [:^Letter:] > iː;
-[:^Letter:] $singleC $singleC { í } $singleC [:^Letter:] > iː;
+[:^Letter:] { í } [bcdfghjklmnpqrstvwxzþðʰ̥] [a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] > iː;
+[:^Letter:] [bcdfghjklmnpqrstvwxzþðʰ̥] { í } [bcdfghjklmnpqrstvwxzþðʰ̥] [a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] > iː;
+[:^Letter:] [bcdfghjklmnpqrstvwxzþðʰ̥] [bcdfghjklmnpqrstvwxzþðʰ̥] { í } [bcdfghjklmnpqrstvwxzþðʰ̥] [a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] > iː;
+[:^Letter:] { í } [bcdfghjklmnpqrstvwxzþðʰ̥] [:^Letter:] > iː;
+[:^Letter:] [bcdfghjklmnpqrstvwxzþðʰ̥] { í } [bcdfghjklmnpqrstvwxzþðʰ̥] [:^Letter:] > iː;
+[:^Letter:] [bcdfghjklmnpqrstvwxzþðʰ̥] [bcdfghjklmnpqrstvwxzþðʰ̥] { í } [bcdfghjklmnpqrstvwxzþðʰ̥] [:^Letter:] > iː;
 
-[:^Letter:] { ó } $singleC $V > ouː;
-[:^Letter:] $singleC { ó } $singleC $V > ouː;
-[:^Letter:] $singleC $singleC { ó } $singleC $V > ouː;
-[:^Letter:] { ó } $singleC [:^Letter:] > ouː;
-[:^Letter:] $singleC { ó } $singleC [:^Letter:] > ouː;
-[:^Letter:] $singleC $singleC { ó } $singleC [:^Letter:] > ouː;
+[:^Letter:] { ó } [bcdfghjklmnpqrstvwxzþðʰ̥] [a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] > ouː;
+[:^Letter:] [bcdfghjklmnpqrstvwxzþðʰ̥] { ó } [bcdfghjklmnpqrstvwxzþðʰ̥] [a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] > ouː;
+[:^Letter:] [bcdfghjklmnpqrstvwxzþðʰ̥] [bcdfghjklmnpqrstvwxzþðʰ̥] { ó } [bcdfghjklmnpqrstvwxzþðʰ̥] [a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] > ouː;
+[:^Letter:] { ó } [bcdfghjklmnpqrstvwxzþðʰ̥] [:^Letter:] > ouː;
+[:^Letter:] [bcdfghjklmnpqrstvwxzþðʰ̥] { ó } [bcdfghjklmnpqrstvwxzþðʰ̥] [:^Letter:] > ouː;
+[:^Letter:] [bcdfghjklmnpqrstvwxzþðʰ̥] [bcdfghjklmnpqrstvwxzþðʰ̥] { ó } [bcdfghjklmnpqrstvwxzþðʰ̥] [:^Letter:] > ouː;
 
-[:^Letter:] { ú } $singleC $V > uː;
-[:^Letter:] $singleC { ú } $singleC $V > uː;
-[:^Letter:] $singleC $singleC { ú } $singleC $V > uː;
-[:^Letter:] { ú } $singleC [:^Letter:] > uː;
-[:^Letter:] $singleC { ú } $singleC [:^Letter:] > uː;
-[:^Letter:] $singleC $singleC { ú } $singleC [:^Letter:] > uː;
+[:^Letter:] { ú } [bcdfghjklmnpqrstvwxzþðʰ̥] [a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] > uː;
+[:^Letter:] [bcdfghjklmnpqrstvwxzþðʰ̥] { ú } [bcdfghjklmnpqrstvwxzþðʰ̥] [a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] > uː;
+[:^Letter:] [bcdfghjklmnpqrstvwxzþðʰ̥] [bcdfghjklmnpqrstvwxzþðʰ̥] { ú } [bcdfghjklmnpqrstvwxzþðʰ̥] [a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] > uː;
+[:^Letter:] { ú } [bcdfghjklmnpqrstvwxzþðʰ̥] [:^Letter:] > uː;
+[:^Letter:] [bcdfghjklmnpqrstvwxzþðʰ̥] { ú } [bcdfghjklmnpqrstvwxzþðʰ̥] [:^Letter:] > uː;
+[:^Letter:] [bcdfghjklmnpqrstvwxzþðʰ̥] [bcdfghjklmnpqrstvwxzþðʰ̥] { ú } [bcdfghjklmnpqrstvwxzþðʰ̥] [:^Letter:] > uː;
 
-[:^Letter:] { ý } $singleC $V > iː;
-[:^Letter:] $singleC { ý } $singleC $V > iː;
-[:^Letter:] $singleC $singleC { ý } $singleC $V > iː;
-[:^Letter:] { ý } $singleC [:^Letter:] > iː;
-[:^Letter:] $singleC { ý } $singleC [:^Letter:] > iː;
-[:^Letter:] $singleC $singleC { ý } $singleC [:^Letter:] > iː;
+[:^Letter:] { ý } [bcdfghjklmnpqrstvwxzþðʰ̥] [a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] > iː;
+[:^Letter:] [bcdfghjklmnpqrstvwxzþðʰ̥] { ý } [bcdfghjklmnpqrstvwxzþðʰ̥] [a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] > iː;
+[:^Letter:] [bcdfghjklmnpqrstvwxzþðʰ̥] [bcdfghjklmnpqrstvwxzþðʰ̥] { ý } [bcdfghjklmnpqrstvwxzþðʰ̥] [a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] > iː;
+[:^Letter:] { ý } [bcdfghjklmnpqrstvwxzþðʰ̥] [:^Letter:] > iː;
+[:^Letter:] [bcdfghjklmnpqrstvwxzþðʰ̥] { ý } [bcdfghjklmnpqrstvwxzþðʰ̥] [:^Letter:] > iː;
+[:^Letter:] [bcdfghjklmnpqrstvwxzþðʰ̥] [bcdfghjklmnpqrstvwxzþðʰ̥] { ý } [bcdfghjklmnpqrstvwxzþðʰ̥] [:^Letter:] > iː;
 
-[:^Letter:] { a } $singleC $V > aː;
-[:^Letter:] $singleC { a } $singleC $V > aː;
-[:^Letter:] $singleC $singleC { a } $singleC $V > aː;
-[:^Letter:] { a } $singleC [:^Letter:] > aː;
-[:^Letter:] $singleC { a } $singleC [:^Letter:] > aː;
-[:^Letter:] $singleC $singleC { a } $singleC [:^Letter:] > aː;
+[:^Letter:] { a } [bcdfghjklmnpqrstvwxzþðʰ̥] [a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] > aː;
+[:^Letter:] [bcdfghjklmnpqrstvwxzþðʰ̥] { a } [bcdfghjklmnpqrstvwxzþðʰ̥] [a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] > aː;
+[:^Letter:] [bcdfghjklmnpqrstvwxzþðʰ̥] [bcdfghjklmnpqrstvwxzþðʰ̥] { a } [bcdfghjklmnpqrstvwxzþðʰ̥] [a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] > aː;
+[:^Letter:] { a } [bcdfghjklmnpqrstvwxzþðʰ̥] [:^Letter:] > aː;
+[:^Letter:] [bcdfghjklmnpqrstvwxzþðʰ̥] { a } [bcdfghjklmnpqrstvwxzþðʰ̥] [:^Letter:] > aː;
+[:^Letter:] [bcdfghjklmnpqrstvwxzþðʰ̥] [bcdfghjklmnpqrstvwxzþðʰ̥] { a } [bcdfghjklmnpqrstvwxzþðʰ̥] [:^Letter:] > aː;
 
-[:^Letter:] { e } $singleC $V > ɛː;
-[:^Letter:] $singleC { e } $singleC $V > ɛː;
-[:^Letter:] $singleC $singleC { e } $singleC $V > ɛː;
-[:^Letter:] { e } $singleC [:^Letter:] > ɛː;
-[:^Letter:] $singleC { e } $singleC [:^Letter:] > ɛː;
-[:^Letter:] $singleC $singleC { e } $singleC [:^Letter:] > ɛː;
+[:^Letter:] { e } [bcdfghjklmnpqrstvwxzþðʰ̥] [a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] > ɛː;
+[:^Letter:] [bcdfghjklmnpqrstvwxzþðʰ̥] { e } [bcdfghjklmnpqrstvwxzþðʰ̥] [a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] > ɛː;
+[:^Letter:] [bcdfghjklmnpqrstvwxzþðʰ̥] [bcdfghjklmnpqrstvwxzþðʰ̥] { e } [bcdfghjklmnpqrstvwxzþðʰ̥] [a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] > ɛː;
+[:^Letter:] { e } [bcdfghjklmnpqrstvwxzþðʰ̥] [:^Letter:] > ɛː;
+[:^Letter:] [bcdfghjklmnpqrstvwxzþðʰ̥] { e } [bcdfghjklmnpqrstvwxzþðʰ̥] [:^Letter:] > ɛː;
+[:^Letter:] [bcdfghjklmnpqrstvwxzþðʰ̥] [bcdfghjklmnpqrstvwxzþðʰ̥] { e } [bcdfghjklmnpqrstvwxzþðʰ̥] [:^Letter:] > ɛː;
 
-[:^Letter:] { i } $singleC $V > ɪː;
-[:^Letter:] $singleC { i } $singleC $V > ɪː;
-[:^Letter:] $singleC $singleC { i } $singleC $V > ɪː;
-[:^Letter:] { i } $singleC [:^Letter:] > ɪː;
-[:^Letter:] $singleC { i } $singleC [:^Letter:] > ɪː;
-[:^Letter:] $singleC $singleC { i } $singleC [:^Letter:] > ɪː;
+[:^Letter:] { i } [bcdfghjklmnpqrstvwxzþðʰ̥] [a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] > ɪː;
+[:^Letter:] [bcdfghjklmnpqrstvwxzþðʰ̥] { i } [bcdfghjklmnpqrstvwxzþðʰ̥] [a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] > ɪː;
+[:^Letter:] [bcdfghjklmnpqrstvwxzþðʰ̥] [bcdfghjklmnpqrstvwxzþðʰ̥] { i } [bcdfghjklmnpqrstvwxzþðʰ̥] [a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] > ɪː;
+[:^Letter:] { i } [bcdfghjklmnpqrstvwxzþðʰ̥] [:^Letter:] > ɪː;
+[:^Letter:] [bcdfghjklmnpqrstvwxzþðʰ̥] { i } [bcdfghjklmnpqrstvwxzþðʰ̥] [:^Letter:] > ɪː;
+[:^Letter:] [bcdfghjklmnpqrstvwxzþðʰ̥] [bcdfghjklmnpqrstvwxzþðʰ̥] { i } [bcdfghjklmnpqrstvwxzþðʰ̥] [:^Letter:] > ɪː;
 
-[:^Letter:] { o } $singleC $V > ɔː;
-[:^Letter:] $singleC { o } $singleC $V > ɔː;
-[:^Letter:] $singleC $singleC { o } $singleC $V > ɔː;
-[:^Letter:] { o } $singleC [:^Letter:] > ɔː;
-[:^Letter:] $singleC { o } $singleC [:^Letter:] > ɔː;
-[:^Letter:] $singleC $singleC { o } $singleC [:^Letter:] > ɔː;
+[:^Letter:] { o } [bcdfghjklmnpqrstvwxzþðʰ̥] [a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] > ɔː;
+[:^Letter:] [bcdfghjklmnpqrstvwxzþðʰ̥] { o } [bcdfghjklmnpqrstvwxzþðʰ̥] [a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] > ɔː;
+[:^Letter:] [bcdfghjklmnpqrstvwxzþðʰ̥] [bcdfghjklmnpqrstvwxzþðʰ̥] { o } [bcdfghjklmnpqrstvwxzþðʰ̥] [a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] > ɔː;
+[:^Letter:] { o } [bcdfghjklmnpqrstvwxzþðʰ̥] [:^Letter:] > ɔː;
+[:^Letter:] [bcdfghjklmnpqrstvwxzþðʰ̥] { o } [bcdfghjklmnpqrstvwxzþðʰ̥] [:^Letter:] > ɔː;
+[:^Letter:] [bcdfghjklmnpqrstvwxzþðʰ̥] [bcdfghjklmnpqrstvwxzþðʰ̥] { o } [bcdfghjklmnpqrstvwxzþðʰ̥] [:^Letter:] > ɔː;
 
-[:^Letter:] { u } $singleC $V > ʏː;
-[:^Letter:] $singleC { u } $singleC $V > ʏː;
-[:^Letter:] $singleC $singleC { u } $singleC $V > ʏː;
-[:^Letter:] { u } $singleC [:^Letter:] > ʏː;
-[:^Letter:] $singleC { u } $singleC [:^Letter:] > ʏː;
-[:^Letter:] $singleC $singleC { u } $singleC [:^Letter:] > ʏː;
+[:^Letter:] { u } [bcdfghjklmnpqrstvwxzþðʰ̥] [a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] > ʏː;
+[:^Letter:] [bcdfghjklmnpqrstvwxzþðʰ̥] { u } [bcdfghjklmnpqrstvwxzþðʰ̥] [a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] > ʏː;
+[:^Letter:] [bcdfghjklmnpqrstvwxzþðʰ̥] [bcdfghjklmnpqrstvwxzþðʰ̥] { u } [bcdfghjklmnpqrstvwxzþðʰ̥] [a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] > ʏː;
+[:^Letter:] { u } [bcdfghjklmnpqrstvwxzþðʰ̥] [:^Letter:] > ʏː;
+[:^Letter:] [bcdfghjklmnpqrstvwxzþðʰ̥] { u } [bcdfghjklmnpqrstvwxzþðʰ̥] [:^Letter:] > ʏː;
+[:^Letter:] [bcdfghjklmnpqrstvwxzþðʰ̥] [bcdfghjklmnpqrstvwxzþðʰ̥] { u } [bcdfghjklmnpqrstvwxzþðʰ̥] [:^Letter:] > ʏː;
 
-[:^Letter:] { y } $singleC $V > ɪː;
-[:^Letter:] $singleC { y } $singleC $V > ɪː;
-[:^Letter:] $singleC $singleC { y } $singleC $V > ɪː;
-[:^Letter:] { y } $singleC [:^Letter:] > ɪː;
-[:^Letter:] $singleC { y } $singleC [:^Letter:] > ɪː;
-[:^Letter:] $singleC $singleC { y } $singleC [:^Letter:] > ɪː;
+[:^Letter:] { y } [bcdfghjklmnpqrstvwxzþðʰ̥] [a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] > ɪː;
+[:^Letter:] [bcdfghjklmnpqrstvwxzþðʰ̥] { y } [bcdfghjklmnpqrstvwxzþðʰ̥] [a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] > ɪː;
+[:^Letter:] [bcdfghjklmnpqrstvwxzþðʰ̥] [bcdfghjklmnpqrstvwxzþðʰ̥] { y } [bcdfghjklmnpqrstvwxzþðʰ̥] [a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] > ɪː;
+[:^Letter:] { y } [bcdfghjklmnpqrstvwxzþðʰ̥] [:^Letter:] > ɪː;
+[:^Letter:] [bcdfghjklmnpqrstvwxzþðʰ̥] { y } [bcdfghjklmnpqrstvwxzþðʰ̥] [:^Letter:] > ɪː;
+[:^Letter:] [bcdfghjklmnpqrstvwxzþðʰ̥] [bcdfghjklmnpqrstvwxzþðʰ̥] { y } [bcdfghjklmnpqrstvwxzþðʰ̥] [:^Letter:] > ɪː;
 
-[:^Letter:] { ö } $singleC $V > œː;
-[:^Letter:] $singleC { ö } $singleC $V > œː;
-[:^Letter:] $singleC $singleC { ö } $singleC $V > œː;
-[:^Letter:] { ö } $singleC [:^Letter:] > œː;
-[:^Letter:] $singleC { ö } $singleC [:^Letter:] > œː;
-[:^Letter:] $singleC $singleC { ö } $singleC [:^Letter:] > œː;
+[:^Letter:] { ö } [bcdfghjklmnpqrstvwxzþðʰ̥] [a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] > œː;
+[:^Letter:] [bcdfghjklmnpqrstvwxzþðʰ̥] { ö } [bcdfghjklmnpqrstvwxzþðʰ̥] [a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] > œː;
+[:^Letter:] [bcdfghjklmnpqrstvwxzþðʰ̥] [bcdfghjklmnpqrstvwxzþðʰ̥] { ö } [bcdfghjklmnpqrstvwxzþðʰ̥] [a á e é i í o ó u ú y ý æ ö {au} {ei} {ey} ɔ ʏ œ ː] > œː;
+[:^Letter:] { ö } [bcdfghjklmnpqrstvwxzþðʰ̥] [:^Letter:] > œː;
+[:^Letter:] [bcdfghjklmnpqrstvwxzþðʰ̥] { ö } [bcdfghjklmnpqrstvwxzþðʰ̥] [:^Letter:] > œː;
+[:^Letter:] [bcdfghjklmnpqrstvwxzþðʰ̥] [bcdfghjklmnpqrstvwxzþðʰ̥] { ö } [bcdfghjklmnpqrstvwxzþðʰ̥] [:^Letter:] > œː;
 
 au > œy;
 ei > ei;

@@ -1,15 +1,11 @@
 export const koUkRules = `
-$vowel_kouk = [aeiouywаеєиіоуюяї'];
-$cyr_voiceless = [ктпсхчшц];
-$cyr_j_end = [чж];
-
 seoul > сеул;
 pyeongyang > пхеньян;
 
-ng } $vowel_kouk > н\\';
-k } $vowel_kouk > кх;
-t } $vowel_kouk > тх;
-p } $vowel_kouk > пх;
+ng } [aeiouywаеєиіоуюяї'] > н\\';
+k } [aeiouywаеєиіоуюяї'] > кх;
+t } [aeiouywаеєиіоуюяї'] > тх;
+p } [aeiouywаеєиіоуюяї'] > пх;
 
 chyae > чхе;
 chya > чха;
@@ -17,11 +13,11 @@ chyeo > чхо;
 chyo > чхо;
 chyu > чху;
 
-$cyr_j_end { yae > е;
-$cyr_j_end { ya > а;
-$cyr_j_end { yeo > о;
-$cyr_j_end { yo > о;
-$cyr_j_end { yu > у;
+[чж] { yae > е;
+[чж] { ya > а;
+[чж] { yeo > о;
+[чж] { yo > о;
+[чж] { yu > у;
 
 j { yae > е;
 ch { yae > е;
@@ -34,11 +30,11 @@ ch { yo > о;
 j { yu > у;
 ch { yu > у;
 
-$vowel_kouk { ui > ий;
+[aeiouywаеєиіоуюяї'] { ui > ий;
 [:^Letter:] { ui > ий;
 ui > і;
 
-$vowel_kouk { eui > ий;
+[aeiouywаеєиіоуюяї'] { eui > ий;
 [:^Letter:] { eui > ий;
 eui > і;
 
@@ -55,11 +51,11 @@ ae > е;
 eo > о;
 
 [:^Letter:] { yeo > йо;
-$vowel_kouk { yeo > йо;
+[aeiouywаеєиіоуюяї'] { yeo > йо;
 yeo > ьо;
 
 [:^Letter:] { yo > йо;
-$vowel_kouk { yo > йо;
+[aeiouywаеєиіоуюяї'] { yo > йо;
 yo > ьо;
 
 ye > є;
@@ -69,7 +65,7 @@ e > е;
 o > о;
 u > у;
 
-$vowel_kouk { i > ї;
+[aeiouywаеєиіоуюяї'] { i > ї;
 i > і;
 
 kk > кк;
@@ -85,19 +81,19 @@ p > п;
 s > с;
 h > г;
 
-$cyr_voiceless { g > к;
+[ктпсхчшц] { g > к;
 [:^Letter:] { g > к;
 g > ґ;
 
-$cyr_voiceless { d > т;
+[ктпсхчшц] { d > т;
 [:^Letter:] { d > т;
 d > д;
 
-$cyr_voiceless { b > п;
+[ктпсхчшц] { b > п;
 [:^Letter:] { b > п;
 b > б;
 
-$cyr_voiceless { j > ч;
+[ктпсхчшц] { j > ч;
 [:^Letter:] { j > ч;
 j > дж;
 
@@ -144,11 +140,11 @@ n > н;
 [жчшщ] { ь > ;
 ь } ь > ;
 
-[:^Letter:] { ['’‘\`´ʼ"] > ;
-[аеєиіїоуюя] { ['’‘\`´ʼ"] > ;
-['’‘\`´ʼ"] { ь > ;
-ь } ['’‘\`´ʼ"] > ;
-['’‘\`´ʼ"] { ['’‘\`´ʼ"] > ;
+[:^Letter:] { ['’‘\`´ʼ] > ;
+[аеєиіїоуюя] { ['’‘\`´ʼ] > ;
+['’‘\`´ʼ] { ь > ;
+ь } ['’‘\`´ʼ] > ;
+['’‘\`´ʼ] { ['’‘\`´ʼ] > ;
 
 ::Title;
 `;
