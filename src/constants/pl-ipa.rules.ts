@@ -1,8 +1,6 @@
 export const plIpaRules = `
 ::Lower;
 
-[fwszśźżxh] = [fwszśźżxh];
-
 ci } [aąeęioóuy] > t͡ɕ;
 dzi } [aąeęioóuy] > d͡ʑ;
 si } [aąeęioóuy] > ɕ;

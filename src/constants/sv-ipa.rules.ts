@@ -1,8 +1,6 @@
 export const svIpaRules = `
 ::Lower;
 
-[bcdfghjklmnpqrstvwxzʈɖɳɭʂɧɕŋ] = [bcdfghjklmnpqrstvwxzʈɖɳɭʂɧɕŋ];
-
 kristian > krɪɧan;
 tion > ɧuːn;
 sch > ɧ;
