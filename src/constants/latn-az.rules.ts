@@ -13,10 +13,6 @@ TH > T;
 Th > T;
 th > t;
 
-DH > D;
-Dh > D;
-dh > d;
-
 GH > Ğ;
 Gh > Ğ;
 gh > ğ;

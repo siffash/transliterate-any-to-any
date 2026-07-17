@@ -3,11 +3,22 @@ export const latnMkRules = `
 
 ['·] > ;
 
+LY > Љ;
+Ly > Љ;
+lY > љ;
+ly > љ;
+NY > Њ;
+Ny > Њ;
+nY > њ;
+ny > њ;
+
 DŽ > Џ;
 Dž > Џ;
+dŽ > џ;
 dž > џ;
 DZ > Ѕ;
 Dz > Ѕ;
+dZ > ѕ;
 dz > ѕ;
 TS > Ц;
 Ts > Ц;
@@ -18,9 +29,6 @@ ij > еј;
 TH > Т;
 Th > Т;
 th > т;
-DH > Д;
-Dh > Д;
-dh > д;
 GH > Г;
 Gh > Г;
 gh > г;

@@ -9,10 +9,6 @@ TH > T;
 Th > T;
 th > t;
 
-DH > D;
-Dh > D;
-dh > d;
-
 GH > Ğ;
 Gh > Ğ;
 gh > ğ;
@@ -21,16 +17,16 @@ KH > H;
 Kh > H;
 kh > h;
 
-IJ } [:LowercaseLetter:] > Ey;
+IJ } [:Lower:] > Ey;
 IJ > EY;
 Ij > Ey;
 ij > ey;
 
-Ń } [:LowercaseLetter:] > Ny;
+Ń } [:Lower:] > Ny;
 Ń > NY;
 ń > ny;
 
-Ľ } [:LowercaseLetter:] > Ly;
+Ľ } [:Lower:] > Ly;
 Ľ > LY;
 ľ > ly;
 

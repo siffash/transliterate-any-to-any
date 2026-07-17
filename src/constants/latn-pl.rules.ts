@@ -11,7 +11,7 @@ TS > C;
 Ts > C;
 ts > c;
 
-DŽ > Dż;
+DŽ > DŻ;
 Dž > Dż;
 dž > dż;
 
@@ -19,42 +19,39 @@ TH > T;
 Th > T;
 th > t;
 
-DH > D;
-Dh > D;
-dh > d;
-
 GH > G;
 Gh > G;
 gh > g;
 
-KH > Ch;
+KH > CH;
 Kh > Ch;
 kh > ch;
 
-ć } [iI] > c;
-Ć } [iI] > C;
-ć } [aäeïoöuüÿ] > ci;
-ć } [AÄEÏOÖUÜŸ] > cI;
-Ć } [aäeïoöuüÿ] > Ci;
-Ć } [AÄEÏOÖUÜŸ] > CI;
+ć } [iIüÜÿŸ] > c;
+Ć } [iIüÜÿŸ] > C;
+ć } [aäeïoöu] > ci;
+ć } [AÄEÏOÖU] > cI;
+Ć } [aäeïoöu] > Ci;
+Ć } [AÄEÏOÖU] > CI;
 
-đ } [iI] > dz;
-Đ } [iI] > Dz;
-đ } [aäeïoöuüÿ] > dzi;
-đ } [AÄEÏOÖUÜŸ] > dzI;
-Đ } [aäeïoöuüÿ] > Dzi;
-Đ } [AÄEÏOÖUÜŸ] > DZI;
+đ } [iIüÜÿŸ] > dz;
+Đ } [iüÿ] > Dz;
+Đ } [IÜŸ] > DZ;
+đ } [aäeïoöu] > dzi;
+đ } [AÄEÏOÖU] > dzI;
+Đ } [aäeïoöu] > Dzi;
+Đ } [AÄEÏOÖU] > DZI;
 Đ } [:Upper:] > DŹ;
 [:Upper:] { Đ > DŹ;
 Đ > Dź;
 đ > dź;
 
-ń } [iI] > n;
-Ń } [iI] > N;
-ń } [aäeïoöuüÿ] > ni;
-ń } [AÄEÏOÖUÜŸ] > nI;
-Ń } [aäeïoöuüÿ] > Ni;
-Ń } [AÄEÏOÖUÜŸ] > NI;
+ń } [iIüÜÿŸ] > n;
+Ń } [iIüÜÿŸ] > N;
+ń } [aäeïoöu] > ni;
+ń } [AÄEÏOÖU] > nI;
+Ń } [aäeïoöu] > Ni;
+Ń } [AÄEÏOÖU] > NI;
 
 Š } [:Upper:] > SZ;
 [:Upper:] { Š > SZ;

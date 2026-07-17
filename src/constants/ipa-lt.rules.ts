@@ -27,14 +27,13 @@ q > k;
 [ʋw] > v;
 [xχ] > ch;
 [ʑʐʒ] > ž;
-ɸ > f;::Null;
+ɸ > f;
 
-[cčšž] { i } [aąouųū] > ;
-dz { i } [aąouųū] > ;
+::Null;
+
 j { i } [aąouųū] > ;
 [:^Letter:] { i } [aąouųū] > j;
 j } [bcčdfghklmnprsštvzž] > i;
-j } [:^Letter:] > i;
 [aąeęėiįouųūy] { y > i;
 
 ::Null;

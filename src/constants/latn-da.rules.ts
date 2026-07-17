@@ -30,10 +30,6 @@ TH > T;
 Th > T;
 th > t;
 
-DH > D;
-Dh > D;
-dh > d;
-
 GH > G;
 Gh > G;
 gh > g;

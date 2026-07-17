@@ -5,7 +5,6 @@ DŽ > DJ;
 Dž > Dj;
 dž > dj;
 
-GH } [:Lower:] > G;
 GH > G;
 Gh > G;
 gh > g;
@@ -14,15 +13,9 @@ KH > CH;
 Kh > Ch;
 kh > ch;
 
-TH } [:Lower:] > T;
 TH > T;
 Th > T;
 th > t;
-
-DH } [:Lower:] > D;
-DH > D;
-Dh > D;
-dh > d;
 
 Š } [:Lower:] > Sj;
 Š > SJ;
@@ -67,14 +60,11 @@ u > oe;
 Ö > EU;
 ö > eu;
 
-Ÿ > U;
-ÿ > u;
+[ŸÜ] > U;
+[ÿü] > u;
 
 Ä > E;
 ä > e;
-
-Ü > U;
-ü > u;
 
 Ï > I;
 ï > i;

@@ -4,6 +4,7 @@ export const arIpa = async <T = Text>(text: Text): Promise<T> => {
   const { arIpaMap, charMap } = await import("constants/ar-ipa.map");
   const { RBT } = await import("icu-transliterator");
   const { arIpaRules } = await import("constants/ar-ipa.rules");
+  const { wordSplitter } = await import("helpers/wordSplitter");
 
   const transliterator = RBT.fromRules(arIpaRules);
 
@@ -95,18 +96,14 @@ export const arIpa = async <T = Text>(text: Text): Promise<T> => {
     return charFallback(word);
   };
 
-  const convert = (text: string) => {
-    const result = text.replace(
-      /(\p{P}*)(\p{Script=Arabic}+)(\p{P}*)/gu,
-      (_, leading: string, word: string, trailing: string) => leading + wordToIPA(word) + trailing,
-    );
-
+  const convert = async (text: string) => {
+    const result = await wordSplitter(text, "ar", wordToIPA);
     return transliterator.transliterate(result);
   };
 
   if (typeof text === "string") {
-    return convert(text) as T;
+    return (await convert(text)) as T;
   } else {
-    return text.map(text => convert(text)) as T;
+    return (await Promise.all(text.map(convert))) as T;
   }
 };

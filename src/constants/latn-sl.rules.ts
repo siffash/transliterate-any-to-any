@@ -3,26 +3,27 @@ export const latnSlRules = `
 
 TS > C;
 Ts > C;
+tS > c;
 ts > c;
 
 TH > T;
 Th > T;
+tH > t;
 th > t;
-
-DH > D;
-Dh > D;
-dh > d;
 
 GH > G;
 Gh > G;
+gH > g;
 gh > g;
 
 KH > H;
 Kh > H;
+kH > h;
 kh > h;
 
 IJ > EJ;
 Ij > Ej;
+iJ > ej;
 ij > ej;
 
 [A-ZÄÏÖÜŸĆČĐĽŃŠŽ] { Đ } [:^Letter:] > DŽ;

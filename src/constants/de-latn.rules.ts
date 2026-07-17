@@ -9,11 +9,13 @@ export const deLatnRules = `
 [:^Letter:] { s } p > š;
 
 TSCH > Č;
+TSch > Č;
 Tsch > Č;
 tsch > č;
 
 SCH > Š;
 Sch > Š;
+sCh > š;
 sch > š;
 
 X } [:Lowercase_Letter:] > Ks;
@@ -22,16 +24,18 @@ x > ks;
 
 CH > X;
 Ch > X;
+cH > x;
 ch > x;
 
 DSCH } [:Lowercase_Letter:] > Dž;
 DSCH > DŽ;
+DSch > Dž;
 Dsch > Dž;
 dsch > dž;
 
-TZ } [:Lowercase_Letter:] > Ts;
 TZ > TS;
 Tz > Ts;
+tZ > ts;
 tz > ts;
 
 Z } [:Lowercase_Letter:] > Ts;
@@ -45,6 +49,7 @@ z > ts;
 
 PH > F;
 Ph > F;
+pH > f;
 ph > f;
 
 V > F;
@@ -53,13 +58,14 @@ v > f;
 W > V;
 w > v;
 
-QU } [:Lowercase_Letter:] > Kv;
 QU > KV;
 Qu > Kv;
+qU > kv;
 qu > kv;
 
 CK > K;
 Ck > K;
+cK > k;
 ck > k;
 
 C } [eiyäöü] > Ts;
@@ -74,4 +80,9 @@ j > y;
 
 ẞ > SS;
 ß > ss;
+
+IE > I;
+Ie > I;
+iE > i;
+ie > i;
 `;

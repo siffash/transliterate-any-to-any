@@ -10,7 +10,7 @@ L·l > Ll;
 L·L > LL;
 
 h > ;
-H ([:Letter:]) > &Any-Upper($1);
+H ([:Letter:]) >| &Any-Upper($1);
 H > ;
 
 [aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] { ig } [:^Letter:] > č;

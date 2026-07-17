@@ -29,9 +29,6 @@ dz > z;
 TH > T;
 Th > T;
 th > t;
-DH > D;
-Dh > D;
-dh > d;
 
 KH } [EIÏŸY] > CH;
 KH } [eiïÿy] > CH;
@@ -104,7 +101,7 @@ Z > S;
 z > s;
 
 h > ;
-H ([:Letter:]) > &Any-Upper($1);
+H ([:Letter:]) >| &Any-Upper($1);
 H > ;
 
 [YÏŸ] > I;
@@ -120,7 +117,7 @@ H > ;
 
 ::Null;
 
-[cCgG] { [iI] } [eEèéÈÉiIìíÌÍ] > ;
-[gG] [nN] { [iI] } [aAàáÀÁeEèéÈÉiIìíÌÍoOòóÒÓuUùúÙÚ] > ;
-[gG] [lL] { [iI] } [iIìíÌÍ] > ;
+[cCgG] { [iI] } [eEèéÈÉiIìíÌÍyYïÏÿŸ] > ;
+[gG] [nN] { [iI] } [aAàáÀÁeEèéÈÉiIìíÌÍoOòóÒÓuUùúÙÚyYïÏÿŸäÄöÖüÜ] > ;
+[gG] [lL] { [iI] } [iIìíÌÍyYïÏÿŸ] > ;
 `;

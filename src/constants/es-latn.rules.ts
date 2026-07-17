@@ -52,7 +52,7 @@ v > b;
 V > B;
 
 h > ;
-H ([:Letter:]) > &Any-Upper($1);
+H ([:Letter:]) >| &Any-Upper($1);
 H > ;
 
 á > a;

@@ -3,6 +3,7 @@
     "target": "ES2022",
     "module": "ES2022",
     "moduleResolution": "bundler",
+    "types": ["node"],
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
@@ -10,12 +11,12 @@
     "noEmit": false,
     "outDir": "dist",
     "rootDir": "src",
-    "baseUrl": "./src",
     "paths": {
-      "types/*": ["types/*"],
-      "constants/*": ["constants/*"],
-      "converters/*": ["converters/*"],
-      "helpers/*": ["helpers/*"]
+      "*": ["./src/*"],
+      "types/*": ["./src/types/*"],
+      "constants/*": ["./src/constants/*"],
+      "converters/*": ["./src/converters/*"],
+      "helpers/*": ["./src/helpers/*"]
     }
   },
   "include": ["src/**/*"],

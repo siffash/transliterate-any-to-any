@@ -10,9 +10,6 @@ dz > z;
 TH > T;
 Th > T;
 th > t;
-DH > D;
-Dh > D;
-dh > d;
 GH > H;
 Gh > H;
 gh > h;
@@ -43,11 +40,13 @@ x > h;
 
 ::Null;
 
-K } [EeIi] > CH;
+K } [EI] > CH;
+K } [ei] > Ch;
 k } [EeIi] > ch;
 K > C;
 k > c;
-G } [EeIi] > GH;
+G } [EI] > GH;
+G } [ei] > Gh;
 g } [EeIi] > gh;
 DŽ } [EeIi] > G;
 Dž } [EeIi] > G;

@@ -16,18 +16,13 @@ DZ > Z;
 Dz > Z;
 dz > z;
 
-TS > C;
-Ts > C;
-ts > c;
-
 TH > T;
 Th > T;
 th > t;
 
-DH > D;
-Dh > D;
-dh > d;
-
+[nN] { GH > GH;
+[nN] { Gh > Gh;
+[nN] { gh > gh;
 GH > G;
 Gh > G;
 gh > g;
@@ -116,4 +111,8 @@ zH > z;
 [xX] { [xX] > ;
 [yY] { [yY] > ;
 [zZ] { [zZ] > ;
+
+[sS] [yY] { [sS] [yY] > ;
+[kK] [hH] { [kK] [hH] > ;
+[nN] [yY] { [nN] [yY] > ;
 `;

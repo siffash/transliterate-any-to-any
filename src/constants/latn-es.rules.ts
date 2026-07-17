@@ -2,6 +2,7 @@ export const latnEsRules = `
 ::Null;
 
 ['·] > ;
+
 Ä > E;
 ä > e;
 Ö > O;
@@ -43,9 +44,6 @@ dz > z;
 TH > Z;
 Th > Z;
 th > z;
-DH > D;
-Dh > D;
-dh > d;
 GH > G;
 Gh > G;
 gh > g;

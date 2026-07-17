@@ -96,6 +96,6 @@ j > y;
 J > Y;
 
 h > ;
-H ([:Letter:]) > &Any-Upper($1);
+H ([:Letter:]) >| &Any-Upper($1);
 H > ;
 `;

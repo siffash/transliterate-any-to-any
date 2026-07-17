@@ -21,10 +21,6 @@ TH > T;
 Th > T;
 th > t;
 
-DH > D;
-Dh > D;
-dh > d;
-
 [:Lu:] { Ć } [:^Letter:] > TCH;
 Ć } [:Lu:] > TCH;
 Ć > Tch;

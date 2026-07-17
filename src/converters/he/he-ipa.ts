@@ -143,6 +143,6 @@ export const heIpa = async <T = Text>(text: Text): Promise<T> => {
   if (typeof text === "string") {
     return convert(text) as T;
   } else {
-    return text.map(text => convert(text)) as T;
+    return text.map(convert) as T;
   }
 };

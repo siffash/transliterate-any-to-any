@@ -13,7 +13,6 @@ export const ipaItRules = `
 
 ::Null;
 
-
 [kqxχ] } [ei] > ch;
 [kqxχ] > c;
 [ɡɢɣɰ] } [ei] > gh;
@@ -41,7 +40,7 @@ dʒ > gi;
 β > v;
 [ɫɭ] > l;
 [ɽɾʀʁɹ] > r;
-[ŋ ɳ] > n;
+[ŋɳ] > n;
 ɱ > m;
 ʋ > v;
 [ɦɧħ] > h;
@@ -49,7 +48,7 @@ dʒ > gi;
 
 ::Null;
 
-[cg] { i } [eèéiìí] > ;
-g n { i } [aàáeèéiìíoòóuùú] > ;
-g l { i } [iìí] > ;
+[cg] { i } [eèéiìíyïÿ] > ;
+gn { i } [aàáeèéiìíoòóuùúyïÿäöü] > ;
+gl { i } [iìíyïÿ] > ;
 `;

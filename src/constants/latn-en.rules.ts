@@ -29,11 +29,6 @@ Dz > Z;
 dZ > z;
 dz > z;
 
-DH > TH;
-Dh > Th;
-dH > tH;
-dh > th;
-
 [:Upper:] { Č > CH;
 Č } [:Upper:] > CH;
 Č > Ch;

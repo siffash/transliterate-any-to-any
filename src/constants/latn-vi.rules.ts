@@ -1,6 +1,15 @@
 export const latnViRules = `
 ::Null;
 
+[BbĆćČčDdĐđFfGgHhKkLlĽľMmNnŃńPpQqRrSsŠšTtVvWwXxZzŽž] { Y > I;
+[BbĆćČčDdĐđFfGgHhKkLlĽľMmNnŃńPpQqRrSsŠšTtVvWwXxZzŽž] { y > i;
+
+::Null;
+
+DŽ } [Ii] > G;
+Dž } [Ii] > G;
+dž } [Ii] > g;
+
 DŽ } [:Upper:] > GI;
 DŽ > Gi;
 Dž > Gi;
@@ -21,41 +30,44 @@ IJ > Ay;
 Ij > Ay;
 ij > ay;
 
-NG } [EeÄäIiŸÿ] > NGH;
-NG } [eäiÿ] > Ngh;
-Ng } [eäiÿ] > Ngh;
-ng } [EeÄäIiŸÿ] > ngh;
+NG } [eäiÿy] > Ngh;
+NG } [EÄIŸY] > NGH;
+Ng } [EeÄäIiŸÿYy] > Ngh;
+ng } [EeÄäIiŸÿYy] > ngh;
 
-GH } [EeÄäIiŸÿ] > GH;
-Gh } [eäiÿ] > Gh;
-gh } [EeÄäIiŸÿ] > gh;
+GH } [EeÄäIiŸÿYy] > GH;
+Gh } [EeÄäIiŸÿYy] > Gh;
+gH } [EeÄäIiŸÿYy] > gH;
+gh } [EeÄäIiŸÿYy] > gh;
 GH > G;
 Gh > G;
+gH > g;
 gh > g;
 
-G } [EeÄäIiŸÿ] > GH;
-G } [eäiÿ] > Gh;
-g } [EeÄäIiŸÿ] > gh;
+G } [eäiÿy] > Gh;
+G } [EÄIŸY] > GH;
+g } [EeÄäIiŸÿYy] > gh;
 
 KH } [:Upper:] > KH;
 KH > Kh;
 Kh > Kh;
 kh > kh;
 
-K } [UuÜüWw] > Q;
-k } [UuÜüWw] > q;
+K } [Ww] > Q;
+k } [Ww] > q;
 
-Q { W > U;
-Q { w > u;
-q { w > u;
+[QGqg] { W > U;
+[QGqg] { w > u;
 
-Q } [Uu] > Q;
-q } [Uu] > q;
+Q } [Ww] > Q;
+q } [Ww] > q;
+Q } [EeÄäIiŸÿYy] > K;
+q } [EeÄäIiŸÿYy] > k;
 Q > C;
 q > c;
 
-K } [EeÄäIiŸÿ] > K;
-k } [EeÄäIiŸÿ] > k;
+K } [EeÄäIiŸÿYy] > K;
+k } [EeÄäIiŸÿYy] > k;
 
 K > C;
 k > c;
@@ -72,6 +84,9 @@ k > c;
 Ń > Nh;
 ń > nh;
 
+Ž } [Ii] > G;
+ž } [Ii] > g;
+
 Ž } [:Upper:] > GI;
 Ž > Gi;
 ž > gi;
@@ -83,11 +98,6 @@ k > c;
 Đ } [:Upper:] > D;
 Đ > D;
 đ > d;
-
-DH } [:Upper:] > D;
-DH > D;
-Dh > D;
-dh > d;
 
 D > Đ;
 d > đ;
@@ -103,6 +113,13 @@ x > kh;
 Ü } [:Upper:] > UY;
 Ü > Uy;
 ü > uy;
+
+Y } [AaÄäEeIiÏïOoÖöUuÜüŸÿ] > Y;
+y } [AaÄäEeIiÏïOoÖöUuÜüŸÿ] > y;
+Y } [:^Letter:] > I;
+y } [:^Letter:] > i;
+Y } [BbĆćČčDdĐđFfGgHhKkLlĽľMmNnŃńPpQqRrSsŠšTtVvWwXxZzŽž] > I;
+y } [BbĆćČčDdĐđFfGgHhKkLlĽľMmNnŃńPpQqRrSsŠšTtVvWwXxZzŽž] > i;
 
 Y } [:Upper:] > GI;
 Y > Gi;
@@ -133,23 +150,4 @@ w > v;
 ľ > l;
 
 ['·] > ;
-
-::Null;
-
-c } [iìỉĩíịeèẻẽéẹêềểễếệyỳỷỹýỵIÌỈĨÍỊEÈẺẼÉẸÊỀỂỄẾỆYỲỶỸÝỴ] > k;
-C } [iìỉĩíịeèẻẽéẹêềểễếệyỳỷỹýỵIÌỈĨÍỊEÈẺẼÉẸÊỀỂỄẾỆYỲỶỸÝỴ] > K;
-
-n { g } [iìỉĩíịeèẻẽéẹêềểễếệyỳỷỹýỵIÌỈĨÍỊEÈẺẼÉẸÊỀỂỄẾỆYỲỶỸÝỴ] > gh;
-N { g } [iìỉĩíịeèẻẽéẹêềểễếệyỳỷỹýỵIÌỈĨÍỊEÈẺẼÉẸÊỀỂỄẾỆYỲỶỸÝỴ] > gh;
-n { G } [iìỉĩíịeèẻẽéẹêềểễếệyỳỷỹýỵIÌỈĨÍỊEÈẺẼÉẸÊỀỂỄẾỆYỲỶỸÝỴ] > GH;
-N { G } [iìỉĩíịeèẻẽéẹêềểễếệyỳỷỹýỵIÌỈĨÍỊEÈẺẼÉẸÊỀỂỄẾỆYỲỶỸÝỴ] > GH;
-
-g } [eèẻẽéẹêềểễếệyỳỷỹýỵEÈẺẼÉẸÊỀỂỄẾỆYỲỶỸÝỴ] > gh;
-G } [eèẻẽéẹêềểễếệyỳỷỹýỵ] > Gh;
-G } [EÈẺẼÉẸÊỀỂỄẾỆYỲỶỸÝỴ] > GH;
-
-g { h } [aàảãáạăằẳẵắặâầẩẫấậoòỏõóọôồổỗốộơờởỡớợuùủũúụưừửữứựAÀẢÃÁẠĂẰẲẴẮẶÂẦẨẪẤẬOÒỎÕÓỌÔỒỔỖỐỘƠỜỞỠỚỢUÙỦŨÚỤƯỪỬỮỨỰ] > ;
-G { h } [aàảãáạăằẳẵắặâầẩẫấậoòỏõóọôồổỗốộơờởỡớợuùủũúụưừửữứựAÀẢÃÁẠĂẰẲẴẮẶÂẦẨẪẤẬOÒỎÕÓỌÔỒỔỖỐỘƠỜỞỠỚỢUÙỦŨÚỤƯỪỬỮỨỰ] > ;
-g { H } [aàảãáạăằẳẵắặâầẩẫấậoòỏõóọôồổỗốộơờởỡớợuùủũúụưừửữứựAÀẢÃÁẠĂẰẲẴẮẶÂẦẨẪẤẬOÒỎÕÓỌÔỒỔỖỐỘƠỜỞỠỚỢUÙỦŨÚỤƯỪỬỮỨỰ] > ;
-G { H } [aàảãáạăằẳẵắặâầẩẫấậoòỏõóọôồổỗốộơờởỡớợuùủũúụưừửữứựAÀẢÃÁẠĂẰẲẴẮẶÂẦẨẪẤẬOÒỎÕÓỌÔỒỔỖỐỘƠỜỞỠỚỢUÙỦŨÚỤƯỪỬỮỨỰ] > ;
 `;

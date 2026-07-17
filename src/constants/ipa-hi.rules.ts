@@ -275,22 +275,5 @@ v>व्;
 अ ॉ > ऑ;
 आ ॅ > ऑ;
 आ ॉ > ऑ;
-
-[:^Letter:] { ा > आ;
-[:^Letter:] { ि > इ;
-[:^Letter:] { ी > ई;
-[:^Letter:] { ु > उ;
-[:^Letter:] { ू > ऊ;
-[:^Letter:] { ृ > ऋ;
-[:^Letter:] { े > ए;
-[:^Letter:] { ै > ऐ;
-[:^Letter:] { ो > ओ;
-[:^Letter:] { ौ > औ;
-[:^Letter:] { ॅ > ऍ;
-[:^Letter:] { ॉ > ऑ;
-[:^Letter:] { ं > ;
-[:^Letter:] { ः > ;
-[:^Letter:] { ् > ;
-
 ् { ् > ;
 `;

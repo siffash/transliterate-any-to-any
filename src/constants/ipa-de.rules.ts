@@ -62,4 +62,6 @@ q } [:^Letter:] > k;
 w { w > ;
 y { y > ;
 j { j > ;
+dsch { dsch > ;
+tsch { tsch > ;
 `;

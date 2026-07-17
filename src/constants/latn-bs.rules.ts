@@ -1,6 +1,9 @@
 export const latnBsRules = `
 ::Null;
 
+[:^Letter:] { I } [AaÄäEeOoÖöUuÜüŸÿ] > J;
+[:^Letter:] { i } [AaÄäEeOoÖöUuÜüŸÿ] > j;
+
 [:Upper:] { Ľ > LJ;
 Ľ } [:Upper:] > LJ;
 Ľ > Lj;
@@ -31,13 +34,6 @@ TH > T;
 Th > T;
 tH > t;
 th > t;
-
-[:Upper:] { DH > D;
-DH } [:Upper:] > D;
-DH > D;
-Dh > D;
-dH > d;
-dh > d;
 
 [:Upper:] { GH > G;
 GH } [:Upper:] > G;

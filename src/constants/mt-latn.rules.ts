@@ -21,8 +21,8 @@ ie > i;
 GĦ } [:^Letter:] > H;
 Għ } [:^Letter:] > H;
 għ } [:^Letter:] > h;
-GĦ ([:Letter:]) > &Any-Upper($1);
-Għ ([:Letter:]) > &Any-Upper($1);
+GĦ ([:Letter:]) >| &Any-Upper($1);
+Għ ([:Letter:]) >| &Any-Upper($1);
 GĦ > ;
 Għ > ;
 għ > ;
@@ -75,7 +75,7 @@ j > y;
 
 Ħ > H;
 ħ > h;
-H ([:Letter:]) > &Any-Upper($1);
+H ([:Letter:]) >| &Any-Upper($1);
 H } [:Letter:] > ;
 h } [:Letter:] > ;
 
@@ -84,7 +84,7 @@ c } [eEiIyY] > č;
 C > K;
 c > k;
 
-Q ([:Letter:]) > \\' &Any-Upper($1);
+Q ([:Letter:]) >| \\' &Any-Upper($1);
 Q > \\';
 q > \\';
 `;

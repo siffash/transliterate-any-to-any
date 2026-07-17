@@ -1,7 +1,7 @@
 export const latnSkRules = `
 ::Null;
 
-IJ > Ej;
+IJ > EJ;
 Ij > Ej;
 iJ > eJ;
 ij > ej;
@@ -16,17 +16,12 @@ Th > T;
 tH > t;
 th > t;
 
-DH > D;
-Dh > D;
-dH > d;
-dh > d;
-
 GH > G;
 Gh > G;
 gH > g;
 gh > g;
 
-KH > Ch;
+KH > CH;
 Kh > Ch;
 kH > cH;
 kh > ch;

@@ -6,10 +6,14 @@ Th > T;
 tH > t;
 th > t;
 
-DH > D;
-Dh > D;
-dH > d;
-dh > d;
+NGH > NGH;
+NGh > NGh;
+NgH > NgH;
+Ngh > Ngh;
+nGH > nGH;
+nGh > nGh;
+ngH > ngH;
+ngh > ngh;
 
 GH > G;
 Gh > G;
@@ -72,16 +76,18 @@ q > k;
 
 ::Null;
 
-[iI] { [jJ] } [oO] > ;
-
-::Null;
-
+[dD] [zZ] { [dD] [zZ] > ;
 [dD] [žŽ] { [dD] [žŽ] > ;
 [lL] [jJ] { [lL] [jJ] > ;
 [nN] [jJ] { [nN] [jJ] > ;
 
 ::Null;
 
+[aA] { [aA] > ;
+[eE] { [eE] > ;
+[iI] { [iI] > ;
+[oO] { [oO] > ;
+[uU] { [uU] > ;
 [bB] { [bB] > ;
 [cC] { [cC] > ;
 [čČ] { [čČ] > ;

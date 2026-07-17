@@ -3,40 +3,54 @@ export const latnSqRules = `
 
 DŽ > XH;
 Dž > Xh;
+dŽ > xH;
 dž > xh;
+
 DZ > X;
 Dz > X;
+dZ > x;
 dz > x;
+
 TS > C;
 Ts > C;
+tS > c;
 ts > c;
+
 KH > H;
 Kh > H;
+kH > h;
 kh > h;
+
 GH > G;
 Gh > G;
+gH > g;
 gh > g;
+
 IJ > EJ;
 Ij > Ej;
+iJ > eJ;
 ij > ej;
-Š } [:Upper:] > SH;
-Š > Sh;
+
+Š } [:Lower:] > Sh;
+Š > SH;
 š > sh;
-Ž } [:Upper:] > ZH;
-Ž > Zh;
+
+Ž } [:Lower:] > Zh;
+Ž > ZH;
 ž > zh;
-Đ } [:Upper:] > GJ;
-Đ > Gj;
+
+Đ } [:Lower:] > Gj;
+Đ > GJ;
 đ > gj;
-Ń } [:Upper:] > NJ;
-Ń > Nj;
+
+Ń } [:Lower:] > Nj;
+Ń > NJ;
 ń > nj;
-Ľ } [:Upper:] > LJ;
-Ľ > Lj;
+
+Ľ } [:Lower:] > Lj;
+Ľ > LJ;
 ľ > lj;
-R } [:Upper:] > RR;
-R > Rr;
-r > rr;
+
 Č > Ç;
 č > ç;
 Ć > Q;
@@ -60,6 +74,8 @@ y > j;
 Ö > O;
 ö > o;
 
+· > ;
+
 ::Null;
 
 [:^Letter:] { I } [aAeEëËiIoOuUyY] > J;
@@ -74,10 +90,12 @@ y > j;
 [hH] { [hH] > ;
 [jJ] { [jJ] > ;
 [kK] { [kK] > ;
+[lL] { [lL] > ;
 [mM] { [mM] > ;
 [nN] { [nN] > ;
 [pP] { [pP] > ;
 [qQ] { [qQ] > ;
+[rR] { [rR] > ;
 [sS] { [sS] > ;
 [tT] { [tT] > ;
 [vV] { [vV] > ;

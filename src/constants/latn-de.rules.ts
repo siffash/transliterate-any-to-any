@@ -3,6 +3,7 @@ export const latnDeRules = `
 
 \\' > ;
 · > \\-;
+
 dž > dsch;
 Dž > Dsch;
 DŽ > DSCH;
@@ -15,9 +16,6 @@ IJ > EI;
 th > t;
 Th > T;
 TH > T;
-dh > d;
-Dh > D;
-DH > D;
 gh > g;
 Gh > G;
 GH > G;
@@ -107,4 +105,6 @@ Q } [:^Letter:] > K;
 [Ww] { [Ww] > ;
 [Yy] { [Yy] > ;
 [Jj] { [Jj] > ;
+[Dd] [Ss] [Cc] [Hh] { [Dd] [Ss] [Cc] [Hh] > ;
+[Tt] [Ss] [Cc] [Hh] { [Tt] [Ss] [Cc] [Hh] > ;
 `;

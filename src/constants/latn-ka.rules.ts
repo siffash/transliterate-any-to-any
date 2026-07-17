@@ -5,7 +5,6 @@ export const latnKaRules = `
 dž > ჯ;
 dz > ძ;
 th > თ;
-dh > დ;
 gh > ღ;
 ng > ნგ;
 kh > ხ;

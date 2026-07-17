@@ -65,4 +65,8 @@ w { w > ;
 x { x > ;
 y { y > ;
 z { z > ;
+
+sy { sy > ;
+kh { kh > ;
+ny { ny > ;
 `;

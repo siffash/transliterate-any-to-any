@@ -67,15 +67,15 @@ v { ː } > v;
 
 ::Null;
 
-i { j } [aeiouõäöüAEIOUÕÄÖÜ] > ;
+i { j } [aeiouõäöü] > ;
 i { j } [:^Letter:] > ;
 õ { j } [:^Letter:] > i;
-i { j } [bcdfghjklmnprstvwxzž] > i;
+i { j } [bcdfghjklmnprstvwxzžš] > i;
 [šž] { j > ;
-[bcdfghjklmnprstvwxzž] { šš > š;
-[bcdfghjklmnprstvwxzž] { žž > ž;
-[bcdfghjklmnprstvwxzž] { ff > f;
-š { š } [bcdfghjklmnprstvwxzž] > ;
-ž { ž } [bcdfghjklmnprstvwxzž] > ;
-f { f } [bcdfghjklmnprstvwxzž] > ;
+[bcdfghjklmnprstvwxzžš] { šš > š;
+[bcdfghjklmnprstvwxzžš] { žž > ž;
+[bcdfghjklmnprstvwxzžš] { ff > f;
+š { š } [bcdfghjklmnprstvwxzžš] > ;
+ž { ž } [bcdfghjklmnprstvwxzžš] > ;
+f { f } [bcdfghjklmnprstvwxzžš] > ;
 `;

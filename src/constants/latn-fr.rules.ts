@@ -6,7 +6,6 @@ export const latnFrRules = `
 DZ > DZ; Dz > Dz; dz > dz;
 TS > TS; Ts > Ts; ts > ts;
 TH > TH; Th > Th; th > th;
-DH > DH; Dh > Dh; dh > dh;
 KH > KH; Kh > Kh; kh > kh;
 GH > GH; Gh > Gh; gh > gh;
 
@@ -16,47 +15,46 @@ Ng } [EIYÖÏeiyöï] > Ngu;
 ng } [EIYÖÏeiyöï] > ngu;
 NG > NG; Ng > Ng; ng > ng;
 
-IJ } [ABDEFGHIKLMNOPQRSTUVWXYZÄÏÖÜŸĆČĐĽŃŠŽ] > EI;
-IJ > Ei;
+IJ > EI;
 Ij > Ei;
 ij > ei;
 
-Š } [ABDEFGHIKLMNOPQRSTUVWXYZÄÏÖÜŸĆČĐĽŃŠŽ] > CH;
+Š } [ABDEFGHIKLMNOPQRSTUVWXYZÄÏÖÜŸĆČĐĽŃŠŽJ] > CH;
 Š > Ch;
 š > ch;
 
-Č } [ABDEFGHIKLMNOPQRSTUVWXYZÄÏÖÜŸĆČĐĽŃŠŽ] > TCH;
+Č } [ABDEFGHIKLMNOPQRSTUVWXYZÄÏÖÜŸĆČĐĽŃŠŽJ] > TCH;
 Č > Tch;
 č > tch;
 
-Ć } [ABDEFGHIKLMNOPQRSTUVWXYZÄÏÖÜŸĆČĐĽŃŠŽ] > TCH;
+Ć } [ABDEFGHIKLMNOPQRSTUVWXYZÄÏÖÜŸĆČĐĽŃŠŽJ] > TCH;
 Ć > Tch;
 ć > tch;
 
-Đ } [ABDEFGHIKLMNOPQRSTUVWXYZÄÏÖÜŸĆČĐĽŃŠŽ] > DJ;
+Đ } [ABDEFGHIKLMNOPQRSTUVWXYZÄÏÖÜŸĆČĐĽŃŠŽJ] > DJ;
 Đ > Dj;
 đ > dj;
 
 Ľ } [:^Letter:] > ILLE;
 ľ } [:^Letter:] > ille;
-Ľ } [ABDEFGHIKLMNOPQRSTUVWXYZÄÏÖÜŸĆČĐĽŃŠŽ] > LI;
+Ľ } [ABDEFGHIKLMNOPQRSTUVWXYZÄÏÖÜŸĆČĐĽŃŠŽJ] > LI;
 Ľ > Li;
 ľ > li;
 
-Ń } [ABDEFGHIKLMNOPQRSTUVWXYZÄÏÖÜŸĆČĐĽŃŠŽ] > GN;
+Ń } [ABDEFGHIKLMNOPQRSTUVWXYZÄÏÖÜŸĆČĐĽŃŠŽJ] > GN;
 Ń > Gn;
 ń > gn;
 
-X } [ABDEFGHIKLMNOPQRSTUVWXYZÄÏÖÜŸĆČĐĽŃŠŽ] > KH;
+X } [ABDEFGHIKLMNOPQRSTUVWXYZÄÏÖÜŸĆČĐĽŃŠŽJ] > KH;
 X > Kh;
 x > kh;
 
 Ž > J;
 ž > j;
 
-[AEIOUYÄÏÖÜŸJaeiouyäïöüÿj] { S } [AEIOUYÄÏÖÜŸaeiouyäïöüÿ] > SS;
-[AEIOUYÄÏÖÜŸJaeiouyäïöüÿj] { S } [aeiouyäïöüÿ] > Ss;
-[AEIOUYÄÏÖÜŸJaeiouyäïöüÿj] { s } [AEIOUYÄÏÖÜŸaeiouyäïöüÿ] > ss;
+[AEIOUYÄÏÖÜŸaeiouyäïöüÿ] { S } [AEIOUYÄÏÖÜŸ] > SS;
+[AEIOUYÄÏÖÜŸaeiouyäïöüÿ] { S } [aeiouyäïöüÿ] > Ss;
+[AEIOUYÄÏÖÜŸaeiouyäïöüÿ] { s } [AEIOUYÄÏÖÜŸaeiouyäïöüÿ] > ss;
 
 S } [:^Letter:] > SSE;
 s } [:^Letter:] > sse;
@@ -65,15 +63,15 @@ G } [EIYÖÏ] > GU;
 G } [eiyöï] > Gu;
 g } [EIYÖÏeiyöï] > gu;
 
-Ä } [ABDEFGHIKLMNOPQRSTUVWXYZÄÏÖÜŸĆČĐĽŃŠŽ] > AE;
+Ä } [ABDEFGHIKLMNOPQRSTUVWXYZÄÏÖÜŸĆČĐĽŃŠŽJ] > AE;
 Ä > Ae;
 ä > ae;
 
-Ö } [ABDEFGHIKLMNOPQRSTUVWXYZÄÏÖÜŸĆČĐĽŃŠŽ] > EU;
+Ö } [ABDEFGHIKLMNOPQRSTUVWXYZÄÏÖÜŸĆČĐĽŃŠŽJ] > EU;
 Ö > Eu;
 ö > eu;
 
-U } [ABDEFGHIKLMNOPQRSTUVWXYZÄÏÖÜŸĆČĐĽŃŠŽ] > OU;
+U } [ABDEFGHIKLMNOPQRSTUVWXYZÄÏÖÜŸĆČĐĽŃŠŽJ] > OU;
 U > Ou;
 u > ou;
 

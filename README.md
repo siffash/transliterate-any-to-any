@@ -99,9 +99,9 @@ await transliterate(["上海", "广州"], { from: "zh", to: "bg" }); // ["Шан
 - [aromanize](https://github.com/fujaru/aromanize-js) for handling Korean Hangul
 - [hangul-js](https://github.com/e-/Hangul.js) for handling Korean Hangul
 - [pinyin-pro](https://github.com/zh-lx/pinyin-pro) for handling Pinyin (Chinese)
-- [opencc](https://github.com/BYVoid/OpenCC) for handling Traditional Chinese, Simplified Chinese and Japanese Kanji (Shinjitai)
+- [opencc-js](https://github.com/nk2028/opencc-js) for handling Traditional Chinese, Simplified Chinese and Japanese Kanji (Shinjitai)
 - [kuroshiro](https://github.com/hexenq/kuroshiro) for handling Japanese Hiragana and Katakana
 - [kuroshiro-analyzer-kuromoji](https://github.com/hexenq/kuroshiro-analyzer-kuromoji) for handling Japanese Hiragana and Katakana
 - [hanviet-pinyin-words](https://github.com/ph0ngp/hanviet-pinyin-words) for handling Vietnamese
 - [phonemize](https://github.com/hans00/phonemize) for converting some languages to IPA
-- [ipa-dict](https://github.com/open-dict-data/ipa-dict) for Arabic-IPA dictionary
+- [ipa-dict](https://github.com/open-dict-data/ipa-dict) for IPA dictionaries

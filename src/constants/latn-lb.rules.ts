@@ -1,12 +1,10 @@
 export const latnLbRules = `
 ::Null;
 
-[:^Letter:] { Š } T > S;
-[:^Letter:] { Š } t > S;
-[:^Letter:] { š } t > s;
-[:^Letter:] { Š } P > S;
-[:^Letter:] { Š } p > S;
-[:^Letter:] { š } p > s;
+[:^Letter:] { Š } [Tt] > S;
+[:^Letter:] { š } [Tt] > s;
+[:^Letter:] { Š } [Pp] > S;
+[:^Letter:] { š } [Pp] > s;
 
 [aäeiïoöuüÿAÄEIÏOÖUÜŸ] { S } [aäeiïoöuüÿAÄEIÏOÖUÜŸ] > SS;
 [aäeiïoöuüÿAÄEIÏOÖUÜŸ] { s } [aäeiïoöuüÿAÄEIÏOÖUÜŸ] > ss;
@@ -29,15 +27,10 @@ TH > T;
 Th > T;
 th > t;
 
-DH > D;
-Dh > D;
-dh > d;
-
 GH > G;
 Gh > G;
 gh > g;
 
-KH } [:Lower:] > Ch;
 KH > CH;
 Kh > Ch;
 kh > ch;
@@ -114,17 +107,9 @@ z > s;
 ß } [:Upper:] > SS;
 ß > ss;
 
-ch { ch > ;
-Ch { ch > ;
-CH { CH > ;
-
-sch { sch > ;
-Sch { sch > ;
-SCH { SCH > ;
-
-ng { ng > ;
-Ng { ng > ;
-NG { NG > ;
+[cC] [hH] { [cC] [hH] > ;
+[sS] [cC] [hH] { [sS] [cC] [hH] > ;
+[nN] [gG] { [nN] [gG] > ;
 
 [:^Letter:] { sch } [pPtT] > s;
 [:^Letter:] { Sch } [pPtT] > S;

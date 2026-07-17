@@ -3,12 +3,20 @@
   "version": "0.0.1",
   "description": "Transliterate from any script to any script",
   "keywords": [
-    "transliterate",
     "transliteration",
-    "transliterating",
+    "transliterate",
+    "internationalization",
+    "internationalize",
+    "latinization",
+    "latinize",
+    "romanization",
+    "romanize",
+    "cyrillization",
+    "cyrillize",
+    "t13n",
+    "i18n",
     "ICU",
     "ICU4X",
-    "i18n",
     "unicode"
   ],
   "homepage": "https://github.com/siffash/transliterate-any-to-any#readme",
@@ -19,22 +27,24 @@
     "type": "git",
     "url": "git+https://github.com/siffash/transliterate-any-to-any.git"
   },
-  "license": "MIT",
+  "license": "Apache-2.0",
   "author": "Anton Sivashtenko",
   "type": "commonjs",
+  "types": "dist/index.d.ts",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
+  "browser": "./dist/index.mjs",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
+      "require": "./dist/index.js",
       "import": "./dist/index.mjs",
-      "require": "./dist/index.js"
+      "browser": "./dist/index.mjs"
     }
   },
   "scripts": {
     "dev": "NODE_NO_WARNINGS=1 tsx watch --watch src src/index.ts",
-    "build": "tsdown src/index.ts --format cjs,esm --dts",
+    "build": "tsdown src/index.ts --format cjs,esm --dts --target es2022 --platform neutral --shims --clean --minify",
     "type-check": "tsc --noEmit --pretty",
     "lint": "eslint src/**/*.ts --max-warnings=0",
     "lint:fix": "eslint --fix src/**/*.ts",
@@ -61,20 +71,20 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.4",
     "@eslint/js": "^10.0.1",
-    "@types/node": "^25.3.2",
+    "@types/node": "^25.9.5",
     "@types/opencc-js": "^1.0.3",
-    "@typescript-eslint/eslint-plugin": "^8.56.1",
-    "@typescript-eslint/parser": "^8.56.1",
-    "eslint": "^10.0.2",
+    "@typescript-eslint/eslint-plugin": "^8.64.0",
+    "@typescript-eslint/parser": "^8.64.0",
+    "eslint": "^10.7.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-chai-friendly": "^1.1.0",
     "eslint-plugin-no-only-tests": "^3.3.0",
     "eslint-plugin-prettier": "^5.5.5",
-    "prettier": "^3.8.1",
-    "tsdown": "^0.21.0-beta.2",
-    "tsx": "^4.21.0",
-    "typescript": "^5.9.3",
-    "vitest": "^4.1.9"
+    "prettier": "^3.9.5",
+    "tsdown": "^0.22.8",
+    "tsx": "^4.23.1",
+    "typescript": "^7.0.2",
+    "vitest": "^4.1.10"
   },
   "overrides": {
     "tar": "7.5.13",
