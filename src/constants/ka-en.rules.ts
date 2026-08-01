@@ -118,15 +118,7 @@ export const kaEnRules = `
 
 w { w > ;
 y { y > ;
-h { h > ;
-i { [iy] } [:^Letter:] > ;
-y { [iy] } [:^Letter:] > ;
 [:^Letter:] { c } k > ;
-
-::Null;
-
-k { k } h > ;
-g { g } h > ;
 
 ::Title;
 `;

@@ -16,6 +16,7 @@ gh > g;
 KH > H;
 Kh > H;
 kh > h;
+[:Uppercase:] { Đ > DŽ;
 Đ } [:Uppercase:] > DŽ;
 Đ > Dž;
 đ > dž;

@@ -1,0 +1,14 @@
+import { Text } from "types";
+
+export const hiBn = async (text: Text) => {
+  const { RBT } = await import("icu-transliterator");
+  const { hiBnRules } = await import("constants/hi-bn.rules");
+
+  const transliterator = RBT.fromRules(hiBnRules);
+
+  if (typeof text === "string") {
+    return transliterator.transliterate(text);
+  } else {
+    return text.map(text => transliterator.transliterate(text));
+  }
+};

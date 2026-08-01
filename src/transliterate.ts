@@ -3,10 +3,7 @@ import { Options, Text } from "types";
 import { confirmLanguageByScript } from "helpers/confirmLanguageByScript";
 
 export const transliterate = async <T extends Text>(text: T, { from, to }: Options): Promise<T> => {
-  if (!text) {
-    throw new Error("Input text is empty.");
-  }
-  if (Array.isArray(text) && text.length === 0) {
+  if (Array.isArray(text) ? text.length === 0 : !text) {
     throw new Error("Input text is empty.");
   }
   if (!from) {
@@ -43,6 +40,18 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
           case "hi": {
             const { zhHi } = await import("converters/zh/zh-hi");
             return (await zhHi(text)) as T;
+          }
+          case "bn": {
+            const { zhBn } = await import("converters/zh/zh-bn");
+            return (await zhBn(text)) as T;
+          }
+          case "ur": {
+            const { zhUr } = await import("converters/zh/zh-ur");
+            return (await zhUr(text)) as T;
+          }
+          case "fa": {
+            const { zhFa } = await import("converters/zh/zh-fa");
+            return (await zhFa(text)) as T;
           }
           case "ar": {
             const { zhAr } = await import("converters/zh/zh-ar");
@@ -160,6 +169,10 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
             const { zhLv } = await import("converters/zh/zh-lv");
             return (await zhLv(text)) as T;
           }
+          case "ms": {
+            const { zhMs } = await import("converters/zh/zh-ms");
+            return (await zhMs(text)) as T;
+          }
           case "mt": {
             const { zhMt } = await import("converters/zh/zh-mt");
             return (await zhMt(text)) as T;
@@ -227,6 +240,18 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
           case "hi": {
             const { jaHi } = await import("converters/ja/ja-hi");
             return (await jaHi(text)) as T;
+          }
+          case "bn": {
+            const { jaBn } = await import("converters/ja/ja-bn");
+            return (await jaBn(text)) as T;
+          }
+          case "ur": {
+            const { jaUr } = await import("converters/ja/ja-ur");
+            return (await jaUr(text)) as T;
+          }
+          case "fa": {
+            const { jaFa } = await import("converters/ja/ja-fa");
+            return (await jaFa(text)) as T;
           }
           case "ar": {
             const { jaAr } = await import("converters/ja/ja-ar");
@@ -344,6 +369,10 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
             const { jaLv } = await import("converters/ja/ja-lv");
             return (await jaLv(text)) as T;
           }
+          case "ms": {
+            const { jaMs } = await import("converters/ja/ja-ms");
+            return (await jaMs(text)) as T;
+          }
           case "mt": {
             const { jaMt } = await import("converters/ja/ja-mt");
             return (await jaMt(text)) as T;
@@ -411,6 +440,18 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
           case "hi": {
             const { koHi } = await import("converters/ko/ko-hi");
             return (await koHi(text)) as T;
+          }
+          case "bn": {
+            const { koBn } = await import("converters/ko/ko-bn");
+            return (await koBn(text)) as T;
+          }
+          case "ur": {
+            const { koUr } = await import("converters/ko/ko-ur");
+            return (await koUr(text)) as T;
+          }
+          case "fa": {
+            const { koFa } = await import("converters/ko/ko-fa");
+            return (await koFa(text)) as T;
           }
           case "ar": {
             const { koAr } = await import("converters/ko/ko-ar");
@@ -528,6 +569,10 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
             const { koLv } = await import("converters/ko/ko-lv");
             return (await koLv(text)) as T;
           }
+          case "ms": {
+            const { koMs } = await import("converters/ko/ko-ms");
+            return (await koMs(text)) as T;
+          }
           case "mt": {
             const { koMt } = await import("converters/ko/ko-mt");
             return (await koMt(text)) as T;
@@ -595,6 +640,18 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
           case "ko": {
             const { hiKo } = await import("converters/hi/hi-ko");
             return (await hiKo(text)) as T;
+          }
+          case "bn": {
+            const { hiBn } = await import("converters/hi/hi-bn");
+            return (await hiBn(text)) as T;
+          }
+          case "ur": {
+            const { hiUr } = await import("converters/hi/hi-ur");
+            return (await hiUr(text)) as T;
+          }
+          case "fa": {
+            const { hiFa } = await import("converters/hi/hi-fa");
+            return (await hiFa(text)) as T;
           }
           case "ar": {
             const { hiAr } = await import("converters/hi/hi-ar");
@@ -712,6 +769,10 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
             const { hiLv } = await import("converters/hi/hi-lv");
             return (await hiLv(text)) as T;
           }
+          case "ms": {
+            const { hiMs } = await import("converters/hi/hi-ms");
+            return (await hiMs(text)) as T;
+          }
           case "mt": {
             const { hiMt } = await import("converters/hi/hi-mt");
             return (await hiMt(text)) as T;
@@ -766,6 +827,606 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
           }
         }
         break;
+      case "bn":
+        switch (to) {
+          case "zh": {
+            const { bnZh } = await import("converters/bn/bn-zh");
+            return (await bnZh(text)) as T;
+          }
+          case "ja": {
+            const { bnJa } = await import("converters/bn/bn-ja");
+            return (await bnJa(text)) as T;
+          }
+          case "ko": {
+            const { bnKo } = await import("converters/bn/bn-ko");
+            return (await bnKo(text)) as T;
+          }
+          case "hi": {
+            const { bnHi } = await import("converters/bn/bn-hi");
+            return (await bnHi(text)) as T;
+          }
+          case "ur": {
+            const { bnUr } = await import("converters/bn/bn-ur");
+            return (await bnUr(text)) as T;
+          }
+          case "fa": {
+            const { bnFa } = await import("converters/bn/bn-fa");
+            return (await bnFa(text)) as T;
+          }
+          case "ar": {
+            const { bnAr } = await import("converters/bn/bn-ar");
+            return (await bnAr(text)) as T;
+          }
+          case "he": {
+            const { bnHe } = await import("converters/bn/bn-he");
+            return (await bnHe(text)) as T;
+          }
+          case "ka": {
+            const { bnKa } = await import("converters/bn/bn-ka");
+            return (await bnKa(text)) as T;
+          }
+          case "hy": {
+            const { bnHy } = await import("converters/bn/bn-hy");
+            return (await bnHy(text)) as T;
+          }
+          case "el": {
+            const { bnEl } = await import("converters/bn/bn-el");
+            return (await bnEl(text)) as T;
+          }
+          case "ru": {
+            const { bnRu } = await import("converters/bn/bn-ru");
+            return (await bnRu(text)) as T;
+          }
+          case "uk": {
+            const { bnUk } = await import("converters/bn/bn-uk");
+            return (await bnUk(text)) as T;
+          }
+          case "bg": {
+            const { bnBg } = await import("converters/bn/bn-bg");
+            return (await bnBg(text)) as T;
+          }
+          case "mk": {
+            const { bnMk } = await import("converters/bn/bn-mk");
+            return (await bnMk(text)) as T;
+          }
+          case "az": {
+            const { bnAz } = await import("converters/bn/bn-az");
+            return (await bnAz(text)) as T;
+          }
+          case "bs": {
+            const { bnBs } = await import("converters/bn/bn-bs");
+            return (await bnBs(text)) as T;
+          }
+          case "ca": {
+            const { bnCa } = await import("converters/bn/bn-ca");
+            return (await bnCa(text)) as T;
+          }
+          case "cs": {
+            const { bnCs } = await import("converters/bn/bn-cs");
+            return (await bnCs(text)) as T;
+          }
+          case "da": {
+            const { bnDa } = await import("converters/bn/bn-da");
+            return (await bnDa(text)) as T;
+          }
+          case "de": {
+            const { bnDe } = await import("converters/bn/bn-de");
+            return (await bnDe(text)) as T;
+          }
+          case "en": {
+            const { bnEn } = await import("converters/bn/bn-en");
+            return (await bnEn(text)) as T;
+          }
+          case "es": {
+            const { bnEs } = await import("converters/bn/bn-es");
+            return (await bnEs(text)) as T;
+          }
+          case "et": {
+            const { bnEt } = await import("converters/bn/bn-et");
+            return (await bnEt(text)) as T;
+          }
+          case "fi": {
+            const { bnFi } = await import("converters/bn/bn-fi");
+            return (await bnFi(text)) as T;
+          }
+          case "fr": {
+            const { bnFr } = await import("converters/bn/bn-fr");
+            return (await bnFr(text)) as T;
+          }
+          case "hr": {
+            const { bnHr } = await import("converters/bn/bn-hr");
+            return (await bnHr(text)) as T;
+          }
+          case "hu": {
+            const { bnHu } = await import("converters/bn/bn-hu");
+            return (await bnHu(text)) as T;
+          }
+          case "id": {
+            const { bnId } = await import("converters/bn/bn-id");
+            return (await bnId(text)) as T;
+          }
+          case "is": {
+            const { bnIs } = await import("converters/bn/bn-is");
+            return (await bnIs(text)) as T;
+          }
+          case "it": {
+            const { bnIt } = await import("converters/bn/bn-it");
+            return (await bnIt(text)) as T;
+          }
+          case "kk": {
+            const { bnKk } = await import("converters/bn/bn-kk");
+            return (await bnKk(text)) as T;
+          }
+          case "lb": {
+            const { bnLb } = await import("converters/bn/bn-lb");
+            return (await bnLb(text)) as T;
+          }
+          case "lt": {
+            const { bnLt } = await import("converters/bn/bn-lt");
+            return (await bnLt(text)) as T;
+          }
+          case "lv": {
+            const { bnLv } = await import("converters/bn/bn-lv");
+            return (await bnLv(text)) as T;
+          }
+          case "ms": {
+            const { bnMs } = await import("converters/bn/bn-ms");
+            return (await bnMs(text)) as T;
+          }
+          case "mt": {
+            const { bnMt } = await import("converters/bn/bn-mt");
+            return (await bnMt(text)) as T;
+          }
+          case "nl": {
+            const { bnNl } = await import("converters/bn/bn-nl");
+            return (await bnNl(text)) as T;
+          }
+          case "no": {
+            const { bnNo } = await import("converters/bn/bn-no");
+            return (await bnNo(text)) as T;
+          }
+          case "pl": {
+            const { bnPl } = await import("converters/bn/bn-pl");
+            return (await bnPl(text)) as T;
+          }
+          case "pt": {
+            const { bnPt } = await import("converters/bn/bn-pt");
+            return (await bnPt(text)) as T;
+          }
+          case "ro": {
+            const { bnRo } = await import("converters/bn/bn-ro");
+            return (await bnRo(text)) as T;
+          }
+          case "sk": {
+            const { bnSk } = await import("converters/bn/bn-sk");
+            return (await bnSk(text)) as T;
+          }
+          case "sl": {
+            const { bnSl } = await import("converters/bn/bn-sl");
+            return (await bnSl(text)) as T;
+          }
+          case "sq": {
+            const { bnSq } = await import("converters/bn/bn-sq");
+            return (await bnSq(text)) as T;
+          }
+          case "sr": {
+            const { bnSr } = await import("converters/bn/bn-sr");
+            return (await bnSr(text)) as T;
+          }
+          case "sv": {
+            const { bnSv } = await import("converters/bn/bn-sv");
+            return (await bnSv(text)) as T;
+          }
+          case "tr": {
+            const { bnTr } = await import("converters/bn/bn-tr");
+            return (await bnTr(text)) as T;
+          }
+          case "vi": {
+            const { bnVi } = await import("converters/bn/bn-vi");
+            return (await bnVi(text)) as T;
+          }
+        }
+        break;
+      case "ur":
+        switch (to) {
+          case "zh": {
+            const { urZh } = await import("converters/ur/ur-zh");
+            return (await urZh(text)) as T;
+          }
+          case "ja": {
+            const { urJa } = await import("converters/ur/ur-ja");
+            return (await urJa(text)) as T;
+          }
+          case "ko": {
+            const { urKo } = await import("converters/ur/ur-ko");
+            return (await urKo(text)) as T;
+          }
+          case "hi": {
+            const { urHi } = await import("converters/ur/ur-hi");
+            return (await urHi(text)) as T;
+          }
+          case "bn": {
+            const { urBn } = await import("converters/ur/ur-bn");
+            return (await urBn(text)) as T;
+          }
+          case "fa": {
+            const { urFa } = await import("converters/ur/ur-fa");
+            return (await urFa(text)) as T;
+          }
+          case "ar": {
+            const { urAr } = await import("converters/ur/ur-ar");
+            return (await urAr(text)) as T;
+          }
+          case "he": {
+            const { urHe } = await import("converters/ur/ur-he");
+            return (await urHe(text)) as T;
+          }
+          case "ka": {
+            const { urKa } = await import("converters/ur/ur-ka");
+            return (await urKa(text)) as T;
+          }
+          case "hy": {
+            const { urHy } = await import("converters/ur/ur-hy");
+            return (await urHy(text)) as T;
+          }
+          case "el": {
+            const { urEl } = await import("converters/ur/ur-el");
+            return (await urEl(text)) as T;
+          }
+          case "ru": {
+            const { urRu } = await import("converters/ur/ur-ru");
+            return (await urRu(text)) as T;
+          }
+          case "uk": {
+            const { urUk } = await import("converters/ur/ur-uk");
+            return (await urUk(text)) as T;
+          }
+          case "bg": {
+            const { urBg } = await import("converters/ur/ur-bg");
+            return (await urBg(text)) as T;
+          }
+          case "mk": {
+            const { urMk } = await import("converters/ur/ur-mk");
+            return (await urMk(text)) as T;
+          }
+          case "az": {
+            const { urAz } = await import("converters/ur/ur-az");
+            return (await urAz(text)) as T;
+          }
+          case "bs": {
+            const { urBs } = await import("converters/ur/ur-bs");
+            return (await urBs(text)) as T;
+          }
+          case "ca": {
+            const { urCa } = await import("converters/ur/ur-ca");
+            return (await urCa(text)) as T;
+          }
+          case "cs": {
+            const { urCs } = await import("converters/ur/ur-cs");
+            return (await urCs(text)) as T;
+          }
+          case "da": {
+            const { urDa } = await import("converters/ur/ur-da");
+            return (await urDa(text)) as T;
+          }
+          case "de": {
+            const { urDe } = await import("converters/ur/ur-de");
+            return (await urDe(text)) as T;
+          }
+          case "en": {
+            const { urEn } = await import("converters/ur/ur-en");
+            return (await urEn(text)) as T;
+          }
+          case "es": {
+            const { urEs } = await import("converters/ur/ur-es");
+            return (await urEs(text)) as T;
+          }
+          case "et": {
+            const { urEt } = await import("converters/ur/ur-et");
+            return (await urEt(text)) as T;
+          }
+          case "fi": {
+            const { urFi } = await import("converters/ur/ur-fi");
+            return (await urFi(text)) as T;
+          }
+          case "fr": {
+            const { urFr } = await import("converters/ur/ur-fr");
+            return (await urFr(text)) as T;
+          }
+          case "hr": {
+            const { urHr } = await import("converters/ur/ur-hr");
+            return (await urHr(text)) as T;
+          }
+          case "hu": {
+            const { urHu } = await import("converters/ur/ur-hu");
+            return (await urHu(text)) as T;
+          }
+          case "id": {
+            const { urId } = await import("converters/ur/ur-id");
+            return (await urId(text)) as T;
+          }
+          case "is": {
+            const { urIs } = await import("converters/ur/ur-is");
+            return (await urIs(text)) as T;
+          }
+          case "it": {
+            const { urIt } = await import("converters/ur/ur-it");
+            return (await urIt(text)) as T;
+          }
+          case "kk": {
+            const { urKk } = await import("converters/ur/ur-kk");
+            return (await urKk(text)) as T;
+          }
+          case "lb": {
+            const { urLb } = await import("converters/ur/ur-lb");
+            return (await urLb(text)) as T;
+          }
+          case "lt": {
+            const { urLt } = await import("converters/ur/ur-lt");
+            return (await urLt(text)) as T;
+          }
+          case "lv": {
+            const { urLv } = await import("converters/ur/ur-lv");
+            return (await urLv(text)) as T;
+          }
+          case "ms": {
+            const { urMs } = await import("converters/ur/ur-ms");
+            return (await urMs(text)) as T;
+          }
+          case "mt": {
+            const { urMt } = await import("converters/ur/ur-mt");
+            return (await urMt(text)) as T;
+          }
+          case "nl": {
+            const { urNl } = await import("converters/ur/ur-nl");
+            return (await urNl(text)) as T;
+          }
+          case "no": {
+            const { urNo } = await import("converters/ur/ur-no");
+            return (await urNo(text)) as T;
+          }
+          case "pl": {
+            const { urPl } = await import("converters/ur/ur-pl");
+            return (await urPl(text)) as T;
+          }
+          case "pt": {
+            const { urPt } = await import("converters/ur/ur-pt");
+            return (await urPt(text)) as T;
+          }
+          case "ro": {
+            const { urRo } = await import("converters/ur/ur-ro");
+            return (await urRo(text)) as T;
+          }
+          case "sk": {
+            const { urSk } = await import("converters/ur/ur-sk");
+            return (await urSk(text)) as T;
+          }
+          case "sl": {
+            const { urSl } = await import("converters/ur/ur-sl");
+            return (await urSl(text)) as T;
+          }
+          case "sq": {
+            const { urSq } = await import("converters/ur/ur-sq");
+            return (await urSq(text)) as T;
+          }
+          case "sr": {
+            const { urSr } = await import("converters/ur/ur-sr");
+            return (await urSr(text)) as T;
+          }
+          case "sv": {
+            const { urSv } = await import("converters/ur/ur-sv");
+            return (await urSv(text)) as T;
+          }
+          case "tr": {
+            const { urTr } = await import("converters/ur/ur-tr");
+            return (await urTr(text)) as T;
+          }
+          case "vi": {
+            const { urVi } = await import("converters/ur/ur-vi");
+            return (await urVi(text)) as T;
+          }
+        }
+        break;
+      case "fa":
+        switch (to) {
+          case "zh": {
+            const { faZh } = await import("converters/fa/fa-zh");
+            return (await faZh(text)) as T;
+          }
+          case "ja": {
+            const { faJa } = await import("converters/fa/fa-ja");
+            return (await faJa(text)) as T;
+          }
+          case "ko": {
+            const { faKo } = await import("converters/fa/fa-ko");
+            return (await faKo(text)) as T;
+          }
+          case "hi": {
+            const { faHi } = await import("converters/fa/fa-hi");
+            return (await faHi(text)) as T;
+          }
+          case "bn": {
+            const { faBn } = await import("converters/fa/fa-bn");
+            return (await faBn(text)) as T;
+          }
+          case "ur": {
+            const { faUr } = await import("converters/fa/fa-ur");
+            return (await faUr(text)) as T;
+          }
+          case "ar": {
+            const { faAr } = await import("converters/fa/fa-ar");
+            return (await faAr(text)) as T;
+          }
+          case "he": {
+            const { faHe } = await import("converters/fa/fa-he");
+            return (await faHe(text)) as T;
+          }
+          case "ka": {
+            const { faKa } = await import("converters/fa/fa-ka");
+            return (await faKa(text)) as T;
+          }
+          case "hy": {
+            const { faHy } = await import("converters/fa/fa-hy");
+            return (await faHy(text)) as T;
+          }
+          case "el": {
+            const { faEl } = await import("converters/fa/fa-el");
+            return (await faEl(text)) as T;
+          }
+          case "ru": {
+            const { faRu } = await import("converters/fa/fa-ru");
+            return (await faRu(text)) as T;
+          }
+          case "uk": {
+            const { faUk } = await import("converters/fa/fa-uk");
+            return (await faUk(text)) as T;
+          }
+          case "bg": {
+            const { faBg } = await import("converters/fa/fa-bg");
+            return (await faBg(text)) as T;
+          }
+          case "mk": {
+            const { faMk } = await import("converters/fa/fa-mk");
+            return (await faMk(text)) as T;
+          }
+          case "az": {
+            const { faAz } = await import("converters/fa/fa-az");
+            return (await faAz(text)) as T;
+          }
+          case "bs": {
+            const { faBs } = await import("converters/fa/fa-bs");
+            return (await faBs(text)) as T;
+          }
+          case "ca": {
+            const { faCa } = await import("converters/fa/fa-ca");
+            return (await faCa(text)) as T;
+          }
+          case "cs": {
+            const { faCs } = await import("converters/fa/fa-cs");
+            return (await faCs(text)) as T;
+          }
+          case "da": {
+            const { faDa } = await import("converters/fa/fa-da");
+            return (await faDa(text)) as T;
+          }
+          case "de": {
+            const { faDe } = await import("converters/fa/fa-de");
+            return (await faDe(text)) as T;
+          }
+          case "en": {
+            const { faEn } = await import("converters/fa/fa-en");
+            return (await faEn(text)) as T;
+          }
+          case "es": {
+            const { faEs } = await import("converters/fa/fa-es");
+            return (await faEs(text)) as T;
+          }
+          case "et": {
+            const { faEt } = await import("converters/fa/fa-et");
+            return (await faEt(text)) as T;
+          }
+          case "fi": {
+            const { faFi } = await import("converters/fa/fa-fi");
+            return (await faFi(text)) as T;
+          }
+          case "fr": {
+            const { faFr } = await import("converters/fa/fa-fr");
+            return (await faFr(text)) as T;
+          }
+          case "hr": {
+            const { faHr } = await import("converters/fa/fa-hr");
+            return (await faHr(text)) as T;
+          }
+          case "hu": {
+            const { faHu } = await import("converters/fa/fa-hu");
+            return (await faHu(text)) as T;
+          }
+          case "id": {
+            const { faId } = await import("converters/fa/fa-id");
+            return (await faId(text)) as T;
+          }
+          case "is": {
+            const { faIs } = await import("converters/fa/fa-is");
+            return (await faIs(text)) as T;
+          }
+          case "it": {
+            const { faIt } = await import("converters/fa/fa-it");
+            return (await faIt(text)) as T;
+          }
+          case "kk": {
+            const { faKk } = await import("converters/fa/fa-kk");
+            return (await faKk(text)) as T;
+          }
+          case "lb": {
+            const { faLb } = await import("converters/fa/fa-lb");
+            return (await faLb(text)) as T;
+          }
+          case "lt": {
+            const { faLt } = await import("converters/fa/fa-lt");
+            return (await faLt(text)) as T;
+          }
+          case "lv": {
+            const { faLv } = await import("converters/fa/fa-lv");
+            return (await faLv(text)) as T;
+          }
+          case "ms": {
+            const { faMs } = await import("converters/fa/fa-ms");
+            return (await faMs(text)) as T;
+          }
+          case "mt": {
+            const { faMt } = await import("converters/fa/fa-mt");
+            return (await faMt(text)) as T;
+          }
+          case "nl": {
+            const { faNl } = await import("converters/fa/fa-nl");
+            return (await faNl(text)) as T;
+          }
+          case "no": {
+            const { faNo } = await import("converters/fa/fa-no");
+            return (await faNo(text)) as T;
+          }
+          case "pl": {
+            const { faPl } = await import("converters/fa/fa-pl");
+            return (await faPl(text)) as T;
+          }
+          case "pt": {
+            const { faPt } = await import("converters/fa/fa-pt");
+            return (await faPt(text)) as T;
+          }
+          case "ro": {
+            const { faRo } = await import("converters/fa/fa-ro");
+            return (await faRo(text)) as T;
+          }
+          case "sk": {
+            const { faSk } = await import("converters/fa/fa-sk");
+            return (await faSk(text)) as T;
+          }
+          case "sl": {
+            const { faSl } = await import("converters/fa/fa-sl");
+            return (await faSl(text)) as T;
+          }
+          case "sq": {
+            const { faSq } = await import("converters/fa/fa-sq");
+            return (await faSq(text)) as T;
+          }
+          case "sr": {
+            const { faSr } = await import("converters/fa/fa-sr");
+            return (await faSr(text)) as T;
+          }
+          case "sv": {
+            const { faSv } = await import("converters/fa/fa-sv");
+            return (await faSv(text)) as T;
+          }
+          case "tr": {
+            const { faTr } = await import("converters/fa/fa-tr");
+            return (await faTr(text)) as T;
+          }
+          case "vi": {
+            const { faVi } = await import("converters/fa/fa-vi");
+            return (await faVi(text)) as T;
+          }
+        }
+        break;
       case "ar":
         switch (to) {
           case "zh": {
@@ -783,6 +1444,18 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
           case "hi": {
             const { arHi } = await import("converters/ar/ar-hi");
             return (await arHi(text)) as T;
+          }
+          case "bn": {
+            const { arBn } = await import("converters/ar/ar-bn");
+            return (await arBn(text)) as T;
+          }
+          case "ur": {
+            const { arUr } = await import("converters/ar/ar-ur");
+            return (await arUr(text)) as T;
+          }
+          case "fa": {
+            const { arFa } = await import("converters/ar/ar-fa");
+            return (await arFa(text)) as T;
           }
           case "he": {
             const { arHe } = await import("converters/ar/ar-he");
@@ -896,6 +1569,10 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
             const { arLv } = await import("converters/ar/ar-lv");
             return (await arLv(text)) as T;
           }
+          case "ms": {
+            const { arMs } = await import("converters/ar/ar-ms");
+            return (await arMs(text)) as T;
+          }
           case "mt": {
             const { arMt } = await import("converters/ar/ar-mt");
             return (await arMt(text)) as T;
@@ -967,6 +1644,18 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
           case "hi": {
             const { heHi } = await import("converters/he/he-hi");
             return (await heHi(text)) as T;
+          }
+          case "bn": {
+            const { heBn } = await import("converters/he/he-bn");
+            return (await heBn(text)) as T;
+          }
+          case "ur": {
+            const { heUr } = await import("converters/he/he-ur");
+            return (await heUr(text)) as T;
+          }
+          case "fa": {
+            const { heFa } = await import("converters/he/he-fa");
+            return (await heFa(text)) as T;
           }
           case "ar": {
             const { heAr } = await import("converters/he/he-ar");
@@ -1080,6 +1769,10 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
             const { heLv } = await import("converters/he/he-lv");
             return (await heLv(text)) as T;
           }
+          case "ms": {
+            const { heMs } = await import("converters/he/he-ms");
+            return (await heMs(text)) as T;
+          }
           case "mt": {
             const { heMt } = await import("converters/he/he-mt");
             return (await heMt(text)) as T;
@@ -1151,6 +1844,18 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
           case "hi": {
             const { kaHi } = await import("converters/ka/ka-hi");
             return (await kaHi(text)) as T;
+          }
+          case "bn": {
+            const { kaBn } = await import("converters/ka/ka-bn");
+            return (await kaBn(text)) as T;
+          }
+          case "ur": {
+            const { kaUr } = await import("converters/ka/ka-ur");
+            return (await kaUr(text)) as T;
+          }
+          case "fa": {
+            const { kaFa } = await import("converters/ka/ka-fa");
+            return (await kaFa(text)) as T;
           }
           case "ar": {
             const { kaAr } = await import("converters/ka/ka-ar");
@@ -1264,6 +1969,10 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
             const { kaLv } = await import("converters/ka/ka-lv");
             return (await kaLv(text)) as T;
           }
+          case "ms": {
+            const { kaMs } = await import("converters/ka/ka-ms");
+            return (await kaMs(text)) as T;
+          }
           case "mt": {
             const { kaMt } = await import("converters/ka/ka-mt");
             return (await kaMt(text)) as T;
@@ -1335,6 +2044,18 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
           case "hi": {
             const { hyHi } = await import("converters/hy/hy-hi");
             return (await hyHi(text)) as T;
+          }
+          case "bn": {
+            const { hyBn } = await import("converters/hy/hy-bn");
+            return (await hyBn(text)) as T;
+          }
+          case "ur": {
+            const { hyUr } = await import("converters/hy/hy-ur");
+            return (await hyUr(text)) as T;
+          }
+          case "fa": {
+            const { hyFa } = await import("converters/hy/hy-fa");
+            return (await hyFa(text)) as T;
           }
           case "ar": {
             const { hyAr } = await import("converters/hy/hy-ar");
@@ -1448,6 +2169,10 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
             const { hyLv } = await import("converters/hy/hy-lv");
             return (await hyLv(text)) as T;
           }
+          case "ms": {
+            const { hyMs } = await import("converters/hy/hy-ms");
+            return (await hyMs(text)) as T;
+          }
           case "mt": {
             const { hyMt } = await import("converters/hy/hy-mt");
             return (await hyMt(text)) as T;
@@ -1519,6 +2244,18 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
           case "hi": {
             const { elHi } = await import("converters/el/el-hi");
             return (await elHi(text)) as T;
+          }
+          case "bn": {
+            const { elBn } = await import("converters/el/el-bn");
+            return (await elBn(text)) as T;
+          }
+          case "ur": {
+            const { elUr } = await import("converters/el/el-ur");
+            return (await elUr(text)) as T;
+          }
+          case "fa": {
+            const { elFa } = await import("converters/el/el-fa");
+            return (await elFa(text)) as T;
           }
           case "ar": {
             const { elAr } = await import("converters/el/el-ar");
@@ -1632,6 +2369,10 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
             const { elLv } = await import("converters/el/el-lv");
             return (await elLv(text)) as T;
           }
+          case "ms": {
+            const { elMs } = await import("converters/el/el-ms");
+            return (await elMs(text)) as T;
+          }
           case "mt": {
             const { elMt } = await import("converters/el/el-mt");
             return (await elMt(text)) as T;
@@ -1703,6 +2444,18 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
           case "hi": {
             const { ruHi } = await import("converters/ru/ru-hi");
             return (await ruHi(text)) as T;
+          }
+          case "bn": {
+            const { ruBn } = await import("converters/ru/ru-bn");
+            return (await ruBn(text)) as T;
+          }
+          case "ur": {
+            const { ruUr } = await import("converters/ru/ru-ur");
+            return (await ruUr(text)) as T;
+          }
+          case "fa": {
+            const { ruFa } = await import("converters/ru/ru-fa");
+            return (await ruFa(text)) as T;
           }
           case "ar": {
             const { ruAr } = await import("converters/ru/ru-ar");
@@ -1816,6 +2569,10 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
             const { ruLv } = await import("converters/ru/ru-lv");
             return (await ruLv(text)) as T;
           }
+          case "ms": {
+            const { ruMs } = await import("converters/ru/ru-ms");
+            return (await ruMs(text)) as T;
+          }
           case "mt": {
             const { ruMt } = await import("converters/ru/ru-mt");
             return (await ruMt(text)) as T;
@@ -1887,6 +2644,18 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
           case "hi": {
             const { ukHi } = await import("converters/uk/uk-hi");
             return (await ukHi(text)) as T;
+          }
+          case "bn": {
+            const { ukBn } = await import("converters/uk/uk-bn");
+            return (await ukBn(text)) as T;
+          }
+          case "ur": {
+            const { ukUr } = await import("converters/uk/uk-ur");
+            return (await ukUr(text)) as T;
+          }
+          case "fa": {
+            const { ukFa } = await import("converters/uk/uk-fa");
+            return (await ukFa(text)) as T;
           }
           case "ar": {
             const { ukAr } = await import("converters/uk/uk-ar");
@@ -2000,6 +2769,10 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
             const { ukLv } = await import("converters/uk/uk-lv");
             return (await ukLv(text)) as T;
           }
+          case "ms": {
+            const { ukMs } = await import("converters/uk/uk-ms");
+            return (await ukMs(text)) as T;
+          }
           case "mt": {
             const { ukMt } = await import("converters/uk/uk-mt");
             return (await ukMt(text)) as T;
@@ -2071,6 +2844,18 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
           case "hi": {
             const { bgHi } = await import("converters/bg/bg-hi");
             return (await bgHi(text)) as T;
+          }
+          case "bn": {
+            const { bgBn } = await import("converters/bg/bg-bn");
+            return (await bgBn(text)) as T;
+          }
+          case "ur": {
+            const { bgUr } = await import("converters/bg/bg-ur");
+            return (await bgUr(text)) as T;
+          }
+          case "fa": {
+            const { bgFa } = await import("converters/bg/bg-fa");
+            return (await bgFa(text)) as T;
           }
           case "ar": {
             const { bgAr } = await import("converters/bg/bg-ar");
@@ -2184,6 +2969,10 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
             const { bgLv } = await import("converters/bg/bg-lv");
             return (await bgLv(text)) as T;
           }
+          case "ms": {
+            const { bgMs } = await import("converters/bg/bg-ms");
+            return (await bgMs(text)) as T;
+          }
           case "mt": {
             const { bgMt } = await import("converters/bg/bg-mt");
             return (await bgMt(text)) as T;
@@ -2255,6 +3044,18 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
           case "hi": {
             const { mkHi } = await import("converters/mk/mk-hi");
             return (await mkHi(text)) as T;
+          }
+          case "bn": {
+            const { mkBn } = await import("converters/mk/mk-bn");
+            return (await mkBn(text)) as T;
+          }
+          case "ur": {
+            const { mkUr } = await import("converters/mk/mk-ur");
+            return (await mkUr(text)) as T;
+          }
+          case "fa": {
+            const { mkFa } = await import("converters/mk/mk-fa");
+            return (await mkFa(text)) as T;
           }
           case "ar": {
             const { mkAr } = await import("converters/mk/mk-ar");
@@ -2368,6 +3169,10 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
             const { mkLv } = await import("converters/mk/mk-lv");
             return (await mkLv(text)) as T;
           }
+          case "ms": {
+            const { mkMs } = await import("converters/mk/mk-ms");
+            return (await mkMs(text)) as T;
+          }
           case "mt": {
             const { mkMt } = await import("converters/mk/mk-mt");
             return (await mkMt(text)) as T;
@@ -2439,6 +3244,18 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
           case "hi": {
             const { azHi } = await import("converters/az/az-hi");
             return (await azHi(text)) as T;
+          }
+          case "bn": {
+            const { azBn } = await import("converters/az/az-bn");
+            return (await azBn(text)) as T;
+          }
+          case "ur": {
+            const { azUr } = await import("converters/az/az-ur");
+            return (await azUr(text)) as T;
+          }
+          case "fa": {
+            const { azFa } = await import("converters/az/az-fa");
+            return (await azFa(text)) as T;
           }
           case "ar": {
             const { azAr } = await import("converters/az/az-ar");
@@ -2552,6 +3369,10 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
             const { azLv } = await import("converters/az/az-lv");
             return (await azLv(text)) as T;
           }
+          case "ms": {
+            const { azMs } = await import("converters/az/az-ms");
+            return (await azMs(text)) as T;
+          }
           case "mt": {
             const { azMt } = await import("converters/az/az-mt");
             return (await azMt(text)) as T;
@@ -2623,6 +3444,18 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
           case "hi": {
             const { bsHi } = await import("converters/bs/bs-hi");
             return (await bsHi(text)) as T;
+          }
+          case "bn": {
+            const { bsBn } = await import("converters/bs/bs-bn");
+            return (await bsBn(text)) as T;
+          }
+          case "ur": {
+            const { bsUr } = await import("converters/bs/bs-ur");
+            return (await bsUr(text)) as T;
+          }
+          case "fa": {
+            const { bsFa } = await import("converters/bs/bs-fa");
+            return (await bsFa(text)) as T;
           }
           case "ar": {
             const { bsAr } = await import("converters/bs/bs-ar");
@@ -2736,6 +3569,10 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
             const { bsLv } = await import("converters/bs/bs-lv");
             return (await bsLv(text)) as T;
           }
+          case "ms": {
+            const { bsMs } = await import("converters/bs/bs-ms");
+            return (await bsMs(text)) as T;
+          }
           case "mt": {
             const { bsMt } = await import("converters/bs/bs-mt");
             return (await bsMt(text)) as T;
@@ -2807,6 +3644,18 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
           case "hi": {
             const { caHi } = await import("converters/ca/ca-hi");
             return (await caHi(text)) as T;
+          }
+          case "bn": {
+            const { caBn } = await import("converters/ca/ca-bn");
+            return (await caBn(text)) as T;
+          }
+          case "ur": {
+            const { caUr } = await import("converters/ca/ca-ur");
+            return (await caUr(text)) as T;
+          }
+          case "fa": {
+            const { caFa } = await import("converters/ca/ca-fa");
+            return (await caFa(text)) as T;
           }
           case "ar": {
             const { caAr } = await import("converters/ca/ca-ar");
@@ -2920,6 +3769,10 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
             const { caLv } = await import("converters/ca/ca-lv");
             return (await caLv(text)) as T;
           }
+          case "ms": {
+            const { caMs } = await import("converters/ca/ca-ms");
+            return (await caMs(text)) as T;
+          }
           case "mt": {
             const { caMt } = await import("converters/ca/ca-mt");
             return (await caMt(text)) as T;
@@ -2991,6 +3844,18 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
           case "hi": {
             const { csHi } = await import("converters/cs/cs-hi");
             return (await csHi(text)) as T;
+          }
+          case "bn": {
+            const { csBn } = await import("converters/cs/cs-bn");
+            return (await csBn(text)) as T;
+          }
+          case "ur": {
+            const { csUr } = await import("converters/cs/cs-ur");
+            return (await csUr(text)) as T;
+          }
+          case "fa": {
+            const { csFa } = await import("converters/cs/cs-fa");
+            return (await csFa(text)) as T;
           }
           case "ar": {
             const { csAr } = await import("converters/cs/cs-ar");
@@ -3104,6 +3969,10 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
             const { csLv } = await import("converters/cs/cs-lv");
             return (await csLv(text)) as T;
           }
+          case "ms": {
+            const { csMs } = await import("converters/cs/cs-ms");
+            return (await csMs(text)) as T;
+          }
           case "mt": {
             const { csMt } = await import("converters/cs/cs-mt");
             return (await csMt(text)) as T;
@@ -3175,6 +4044,18 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
           case "hi": {
             const { daHi } = await import("converters/da/da-hi");
             return (await daHi(text)) as T;
+          }
+          case "bn": {
+            const { daBn } = await import("converters/da/da-bn");
+            return (await daBn(text)) as T;
+          }
+          case "ur": {
+            const { daUr } = await import("converters/da/da-ur");
+            return (await daUr(text)) as T;
+          }
+          case "fa": {
+            const { daFa } = await import("converters/da/da-fa");
+            return (await daFa(text)) as T;
           }
           case "ar": {
             const { daAr } = await import("converters/da/da-ar");
@@ -3288,6 +4169,10 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
             const { daLv } = await import("converters/da/da-lv");
             return (await daLv(text)) as T;
           }
+          case "ms": {
+            const { daMs } = await import("converters/da/da-ms");
+            return (await daMs(text)) as T;
+          }
           case "mt": {
             const { daMt } = await import("converters/da/da-mt");
             return (await daMt(text)) as T;
@@ -3359,6 +4244,18 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
           case "hi": {
             const { deHi } = await import("converters/de/de-hi");
             return (await deHi(text)) as T;
+          }
+          case "bn": {
+            const { deBn } = await import("converters/de/de-bn");
+            return (await deBn(text)) as T;
+          }
+          case "ur": {
+            const { deUr } = await import("converters/de/de-ur");
+            return (await deUr(text)) as T;
+          }
+          case "fa": {
+            const { deFa } = await import("converters/de/de-fa");
+            return (await deFa(text)) as T;
           }
           case "ar": {
             const { deAr } = await import("converters/de/de-ar");
@@ -3472,6 +4369,10 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
             const { deLv } = await import("converters/de/de-lv");
             return (await deLv(text)) as T;
           }
+          case "ms": {
+            const { deMs } = await import("converters/de/de-ms");
+            return (await deMs(text)) as T;
+          }
           case "mt": {
             const { deMt } = await import("converters/de/de-mt");
             return (await deMt(text)) as T;
@@ -3543,6 +4444,18 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
           case "hi": {
             const { enHi } = await import("converters/en/en-hi");
             return (await enHi(text)) as T;
+          }
+          case "bn": {
+            const { enBn } = await import("converters/en/en-bn");
+            return (await enBn(text)) as T;
+          }
+          case "ur": {
+            const { enUr } = await import("converters/en/en-ur");
+            return (await enUr(text)) as T;
+          }
+          case "fa": {
+            const { enFa } = await import("converters/en/en-fa");
+            return (await enFa(text)) as T;
           }
           case "ar": {
             const { enAr } = await import("converters/en/en-ar");
@@ -3656,6 +4569,10 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
             const { enLv } = await import("converters/en/en-lv");
             return (await enLv(text)) as T;
           }
+          case "ms": {
+            const { enMs } = await import("converters/en/en-ms");
+            return (await enMs(text)) as T;
+          }
           case "mt": {
             const { enMt } = await import("converters/en/en-mt");
             return (await enMt(text)) as T;
@@ -3727,6 +4644,18 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
           case "hi": {
             const { esHi } = await import("converters/es/es-hi");
             return (await esHi(text)) as T;
+          }
+          case "bn": {
+            const { esBn } = await import("converters/es/es-bn");
+            return (await esBn(text)) as T;
+          }
+          case "ur": {
+            const { esUr } = await import("converters/es/es-ur");
+            return (await esUr(text)) as T;
+          }
+          case "fa": {
+            const { esFa } = await import("converters/es/es-fa");
+            return (await esFa(text)) as T;
           }
           case "ar": {
             const { esAr } = await import("converters/es/es-ar");
@@ -3840,6 +4769,10 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
             const { esLv } = await import("converters/es/es-lv");
             return (await esLv(text)) as T;
           }
+          case "ms": {
+            const { esMs } = await import("converters/es/es-ms");
+            return (await esMs(text)) as T;
+          }
           case "mt": {
             const { esMt } = await import("converters/es/es-mt");
             return (await esMt(text)) as T;
@@ -3911,6 +4844,18 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
           case "hi": {
             const { etHi } = await import("converters/et/et-hi");
             return (await etHi(text)) as T;
+          }
+          case "bn": {
+            const { etBn } = await import("converters/et/et-bn");
+            return (await etBn(text)) as T;
+          }
+          case "ur": {
+            const { etUr } = await import("converters/et/et-ur");
+            return (await etUr(text)) as T;
+          }
+          case "fa": {
+            const { etFa } = await import("converters/et/et-fa");
+            return (await etFa(text)) as T;
           }
           case "ar": {
             const { etAr } = await import("converters/et/et-ar");
@@ -4024,6 +4969,10 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
             const { etLv } = await import("converters/et/et-lv");
             return (await etLv(text)) as T;
           }
+          case "ms": {
+            const { etMs } = await import("converters/et/et-ms");
+            return (await etMs(text)) as T;
+          }
           case "mt": {
             const { etMt } = await import("converters/et/et-mt");
             return (await etMt(text)) as T;
@@ -4095,6 +5044,18 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
           case "hi": {
             const { fiHi } = await import("converters/fi/fi-hi");
             return (await fiHi(text)) as T;
+          }
+          case "bn": {
+            const { fiBn } = await import("converters/fi/fi-bn");
+            return (await fiBn(text)) as T;
+          }
+          case "ur": {
+            const { fiUr } = await import("converters/fi/fi-ur");
+            return (await fiUr(text)) as T;
+          }
+          case "fa": {
+            const { fiFa } = await import("converters/fi/fi-fa");
+            return (await fiFa(text)) as T;
           }
           case "ar": {
             const { fiAr } = await import("converters/fi/fi-ar");
@@ -4208,6 +5169,10 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
             const { fiLv } = await import("converters/fi/fi-lv");
             return (await fiLv(text)) as T;
           }
+          case "ms": {
+            const { fiMs } = await import("converters/fi/fi-ms");
+            return (await fiMs(text)) as T;
+          }
           case "mt": {
             const { fiMt } = await import("converters/fi/fi-mt");
             return (await fiMt(text)) as T;
@@ -4279,6 +5244,18 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
           case "hi": {
             const { frHi } = await import("converters/fr/fr-hi");
             return (await frHi(text)) as T;
+          }
+          case "bn": {
+            const { frBn } = await import("converters/fr/fr-bn");
+            return (await frBn(text)) as T;
+          }
+          case "ur": {
+            const { frUr } = await import("converters/fr/fr-ur");
+            return (await frUr(text)) as T;
+          }
+          case "fa": {
+            const { frFa } = await import("converters/fr/fr-fa");
+            return (await frFa(text)) as T;
           }
           case "ar": {
             const { frAr } = await import("converters/fr/fr-ar");
@@ -4392,6 +5369,10 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
             const { frLv } = await import("converters/fr/fr-lv");
             return (await frLv(text)) as T;
           }
+          case "ms": {
+            const { frMs } = await import("converters/fr/fr-ms");
+            return (await frMs(text)) as T;
+          }
           case "mt": {
             const { frMt } = await import("converters/fr/fr-mt");
             return (await frMt(text)) as T;
@@ -4463,6 +5444,18 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
           case "hi": {
             const { hrHi } = await import("converters/hr/hr-hi");
             return (await hrHi(text)) as T;
+          }
+          case "bn": {
+            const { hrBn } = await import("converters/hr/hr-bn");
+            return (await hrBn(text)) as T;
+          }
+          case "ur": {
+            const { hrUr } = await import("converters/hr/hr-ur");
+            return (await hrUr(text)) as T;
+          }
+          case "fa": {
+            const { hrFa } = await import("converters/hr/hr-fa");
+            return (await hrFa(text)) as T;
           }
           case "ar": {
             const { hrAr } = await import("converters/hr/hr-ar");
@@ -4576,6 +5569,10 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
             const { hrLv } = await import("converters/hr/hr-lv");
             return (await hrLv(text)) as T;
           }
+          case "ms": {
+            const { hrMs } = await import("converters/hr/hr-ms");
+            return (await hrMs(text)) as T;
+          }
           case "mt": {
             const { hrMt } = await import("converters/hr/hr-mt");
             return (await hrMt(text)) as T;
@@ -4647,6 +5644,18 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
           case "hi": {
             const { huHi } = await import("converters/hu/hu-hi");
             return (await huHi(text)) as T;
+          }
+          case "bn": {
+            const { huBn } = await import("converters/hu/hu-bn");
+            return (await huBn(text)) as T;
+          }
+          case "ur": {
+            const { huUr } = await import("converters/hu/hu-ur");
+            return (await huUr(text)) as T;
+          }
+          case "fa": {
+            const { huFa } = await import("converters/hu/hu-fa");
+            return (await huFa(text)) as T;
           }
           case "ar": {
             const { huAr } = await import("converters/hu/hu-ar");
@@ -4760,6 +5769,10 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
             const { huLv } = await import("converters/hu/hu-lv");
             return (await huLv(text)) as T;
           }
+          case "ms": {
+            const { huMs } = await import("converters/hu/hu-ms");
+            return (await huMs(text)) as T;
+          }
           case "mt": {
             const { huMt } = await import("converters/hu/hu-mt");
             return (await huMt(text)) as T;
@@ -4831,6 +5844,18 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
           case "hi": {
             const { idHi } = await import("converters/id/id-hi");
             return (await idHi(text)) as T;
+          }
+          case "bn": {
+            const { idBn } = await import("converters/id/id-bn");
+            return (await idBn(text)) as T;
+          }
+          case "ur": {
+            const { idUr } = await import("converters/id/id-ur");
+            return (await idUr(text)) as T;
+          }
+          case "fa": {
+            const { idFa } = await import("converters/id/id-fa");
+            return (await idFa(text)) as T;
           }
           case "ar": {
             const { idAr } = await import("converters/id/id-ar");
@@ -4944,6 +5969,10 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
             const { idLv } = await import("converters/id/id-lv");
             return (await idLv(text)) as T;
           }
+          case "ms": {
+            const { idMs } = await import("converters/id/id-ms");
+            return (await idMs(text)) as T;
+          }
           case "mt": {
             const { idMt } = await import("converters/id/id-mt");
             return (await idMt(text)) as T;
@@ -5015,6 +6044,18 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
           case "hi": {
             const { isHi } = await import("converters/is/is-hi");
             return (await isHi(text)) as T;
+          }
+          case "bn": {
+            const { isBn } = await import("converters/is/is-bn");
+            return (await isBn(text)) as T;
+          }
+          case "ur": {
+            const { isUr } = await import("converters/is/is-ur");
+            return (await isUr(text)) as T;
+          }
+          case "fa": {
+            const { isFa } = await import("converters/is/is-fa");
+            return (await isFa(text)) as T;
           }
           case "ar": {
             const { isAr } = await import("converters/is/is-ar");
@@ -5128,6 +6169,10 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
             const { isLv } = await import("converters/is/is-lv");
             return (await isLv(text)) as T;
           }
+          case "ms": {
+            const { isMs } = await import("converters/is/is-ms");
+            return (await isMs(text)) as T;
+          }
           case "mt": {
             const { isMt } = await import("converters/is/is-mt");
             return (await isMt(text)) as T;
@@ -5199,6 +6244,18 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
           case "hi": {
             const { itHi } = await import("converters/it/it-hi");
             return (await itHi(text)) as T;
+          }
+          case "bn": {
+            const { itBn } = await import("converters/it/it-bn");
+            return (await itBn(text)) as T;
+          }
+          case "ur": {
+            const { itUr } = await import("converters/it/it-ur");
+            return (await itUr(text)) as T;
+          }
+          case "fa": {
+            const { itFa } = await import("converters/it/it-fa");
+            return (await itFa(text)) as T;
           }
           case "ar": {
             const { itAr } = await import("converters/it/it-ar");
@@ -5312,6 +6369,10 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
             const { itLv } = await import("converters/it/it-lv");
             return (await itLv(text)) as T;
           }
+          case "ms": {
+            const { itMs } = await import("converters/it/it-ms");
+            return (await itMs(text)) as T;
+          }
           case "mt": {
             const { itMt } = await import("converters/it/it-mt");
             return (await itMt(text)) as T;
@@ -5383,6 +6444,18 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
           case "hi": {
             const { kkHi } = await import("converters/kk/kk-hi");
             return (await kkHi(text)) as T;
+          }
+          case "bn": {
+            const { kkBn } = await import("converters/kk/kk-bn");
+            return (await kkBn(text)) as T;
+          }
+          case "ur": {
+            const { kkUr } = await import("converters/kk/kk-ur");
+            return (await kkUr(text)) as T;
+          }
+          case "fa": {
+            const { kkFa } = await import("converters/kk/kk-fa");
+            return (await kkFa(text)) as T;
           }
           case "ar": {
             const { kkAr } = await import("converters/kk/kk-ar");
@@ -5496,6 +6569,10 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
             const { kkLv } = await import("converters/kk/kk-lv");
             return (await kkLv(text)) as T;
           }
+          case "ms": {
+            const { kkMs } = await import("converters/kk/kk-ms");
+            return (await kkMs(text)) as T;
+          }
           case "mt": {
             const { kkMt } = await import("converters/kk/kk-mt");
             return (await kkMt(text)) as T;
@@ -5567,6 +6644,18 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
           case "hi": {
             const { lbHi } = await import("converters/lb/lb-hi");
             return (await lbHi(text)) as T;
+          }
+          case "bn": {
+            const { lbBn } = await import("converters/lb/lb-bn");
+            return (await lbBn(text)) as T;
+          }
+          case "ur": {
+            const { lbUr } = await import("converters/lb/lb-ur");
+            return (await lbUr(text)) as T;
+          }
+          case "fa": {
+            const { lbFa } = await import("converters/lb/lb-fa");
+            return (await lbFa(text)) as T;
           }
           case "ar": {
             const { lbAr } = await import("converters/lb/lb-ar");
@@ -5680,6 +6769,10 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
             const { lbLv } = await import("converters/lb/lb-lv");
             return (await lbLv(text)) as T;
           }
+          case "ms": {
+            const { lbMs } = await import("converters/lb/lb-ms");
+            return (await lbMs(text)) as T;
+          }
           case "mt": {
             const { lbMt } = await import("converters/lb/lb-mt");
             return (await lbMt(text)) as T;
@@ -5751,6 +6844,18 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
           case "hi": {
             const { ltHi } = await import("converters/lt/lt-hi");
             return (await ltHi(text)) as T;
+          }
+          case "bn": {
+            const { ltBn } = await import("converters/lt/lt-bn");
+            return (await ltBn(text)) as T;
+          }
+          case "ur": {
+            const { ltUr } = await import("converters/lt/lt-ur");
+            return (await ltUr(text)) as T;
+          }
+          case "fa": {
+            const { ltFa } = await import("converters/lt/lt-fa");
+            return (await ltFa(text)) as T;
           }
           case "ar": {
             const { ltAr } = await import("converters/lt/lt-ar");
@@ -5864,6 +6969,10 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
             const { ltLv } = await import("converters/lt/lt-lv");
             return (await ltLv(text)) as T;
           }
+          case "ms": {
+            const { ltMs } = await import("converters/lt/lt-ms");
+            return (await ltMs(text)) as T;
+          }
           case "mt": {
             const { ltMt } = await import("converters/lt/lt-mt");
             return (await ltMt(text)) as T;
@@ -5935,6 +7044,18 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
           case "hi": {
             const { lvHi } = await import("converters/lv/lv-hi");
             return (await lvHi(text)) as T;
+          }
+          case "bn": {
+            const { lvBn } = await import("converters/lv/lv-bn");
+            return (await lvBn(text)) as T;
+          }
+          case "ur": {
+            const { lvUr } = await import("converters/lv/lv-ur");
+            return (await lvUr(text)) as T;
+          }
+          case "fa": {
+            const { lvFa } = await import("converters/lv/lv-fa");
+            return (await lvFa(text)) as T;
           }
           case "ar": {
             const { lvAr } = await import("converters/lv/lv-ar");
@@ -6048,6 +7169,10 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
             const { lvLt } = await import("converters/lv/lv-lt");
             return (await lvLt(text)) as T;
           }
+          case "ms": {
+            const { lvMs } = await import("converters/lv/lv-ms");
+            return (await lvMs(text)) as T;
+          }
           case "mt": {
             const { lvMt } = await import("converters/lv/lv-mt");
             return (await lvMt(text)) as T;
@@ -6102,6 +7227,206 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
           }
         }
         break;
+      case "ms":
+        switch (to) {
+          case "zh": {
+            const { msZh } = await import("converters/ms/ms-zh");
+            return (await msZh(text)) as T;
+          }
+          case "ja": {
+            const { msJa } = await import("converters/ms/ms-ja");
+            return (await msJa(text)) as T;
+          }
+          case "ko": {
+            const { msKo } = await import("converters/ms/ms-ko");
+            return (await msKo(text)) as T;
+          }
+          case "hi": {
+            const { msHi } = await import("converters/ms/ms-hi");
+            return (await msHi(text)) as T;
+          }
+          case "bn": {
+            const { msBn } = await import("converters/ms/ms-bn");
+            return (await msBn(text)) as T;
+          }
+          case "ur": {
+            const { msUr } = await import("converters/ms/ms-ur");
+            return (await msUr(text)) as T;
+          }
+          case "fa": {
+            const { msFa } = await import("converters/ms/ms-fa");
+            return (await msFa(text)) as T;
+          }
+          case "ar": {
+            const { msAr } = await import("converters/ms/ms-ar");
+            return (await msAr(text)) as T;
+          }
+          case "he": {
+            const { msHe } = await import("converters/ms/ms-he");
+            return (await msHe(text)) as T;
+          }
+          case "ka": {
+            const { msKa } = await import("converters/ms/ms-ka");
+            return (await msKa(text)) as T;
+          }
+          case "hy": {
+            const { msHy } = await import("converters/ms/ms-hy");
+            return (await msHy(text)) as T;
+          }
+          case "el": {
+            const { msEl } = await import("converters/ms/ms-el");
+            return (await msEl(text)) as T;
+          }
+          case "ru": {
+            const { msRu } = await import("converters/ms/ms-ru");
+            return (await msRu(text)) as T;
+          }
+          case "uk": {
+            const { msUk } = await import("converters/ms/ms-uk");
+            return (await msUk(text)) as T;
+          }
+          case "bg": {
+            const { msBg } = await import("converters/ms/ms-bg");
+            return (await msBg(text)) as T;
+          }
+          case "mk": {
+            const { msMk } = await import("converters/ms/ms-mk");
+            return (await msMk(text)) as T;
+          }
+          case "az": {
+            const { msAz } = await import("converters/ms/ms-az");
+            return (await msAz(text)) as T;
+          }
+          case "bs": {
+            const { msBs } = await import("converters/ms/ms-bs");
+            return (await msBs(text)) as T;
+          }
+          case "ca": {
+            const { msCa } = await import("converters/ms/ms-ca");
+            return (await msCa(text)) as T;
+          }
+          case "cs": {
+            const { msCs } = await import("converters/ms/ms-cs");
+            return (await msCs(text)) as T;
+          }
+          case "da": {
+            const { msDa } = await import("converters/ms/ms-da");
+            return (await msDa(text)) as T;
+          }
+          case "de": {
+            const { msDe } = await import("converters/ms/ms-de");
+            return (await msDe(text)) as T;
+          }
+          case "en": {
+            const { msEn } = await import("converters/ms/ms-en");
+            return (await msEn(text)) as T;
+          }
+          case "es": {
+            const { msEs } = await import("converters/ms/ms-es");
+            return (await msEs(text)) as T;
+          }
+          case "et": {
+            const { msEt } = await import("converters/ms/ms-et");
+            return (await msEt(text)) as T;
+          }
+          case "fi": {
+            const { msFi } = await import("converters/ms/ms-fi");
+            return (await msFi(text)) as T;
+          }
+          case "fr": {
+            const { msFr } = await import("converters/ms/ms-fr");
+            return (await msFr(text)) as T;
+          }
+          case "hr": {
+            const { msHr } = await import("converters/ms/ms-hr");
+            return (await msHr(text)) as T;
+          }
+          case "hu": {
+            const { msHu } = await import("converters/ms/ms-hu");
+            return (await msHu(text)) as T;
+          }
+          case "id": {
+            const { msId } = await import("converters/ms/ms-id");
+            return (await msId(text)) as T;
+          }
+          case "is": {
+            const { msIs } = await import("converters/ms/ms-is");
+            return (await msIs(text)) as T;
+          }
+          case "it": {
+            const { msIt } = await import("converters/ms/ms-it");
+            return (await msIt(text)) as T;
+          }
+          case "kk": {
+            const { msKk } = await import("converters/ms/ms-kk");
+            return (await msKk(text)) as T;
+          }
+          case "lb": {
+            const { msLb } = await import("converters/ms/ms-lb");
+            return (await msLb(text)) as T;
+          }
+          case "lt": {
+            const { msLt } = await import("converters/ms/ms-lt");
+            return (await msLt(text)) as T;
+          }
+          case "lv": {
+            const { msLv } = await import("converters/ms/ms-lv");
+            return (await msLv(text)) as T;
+          }
+          case "mt": {
+            const { msMt } = await import("converters/ms/ms-mt");
+            return (await msMt(text)) as T;
+          }
+          case "nl": {
+            const { msNl } = await import("converters/ms/ms-nl");
+            return (await msNl(text)) as T;
+          }
+          case "no": {
+            const { msNo } = await import("converters/ms/ms-no");
+            return (await msNo(text)) as T;
+          }
+          case "pl": {
+            const { msPl } = await import("converters/ms/ms-pl");
+            return (await msPl(text)) as T;
+          }
+          case "pt": {
+            const { msPt } = await import("converters/ms/ms-pt");
+            return (await msPt(text)) as T;
+          }
+          case "ro": {
+            const { msRo } = await import("converters/ms/ms-ro");
+            return (await msRo(text)) as T;
+          }
+          case "sk": {
+            const { msSk } = await import("converters/ms/ms-sk");
+            return (await msSk(text)) as T;
+          }
+          case "sl": {
+            const { msSl } = await import("converters/ms/ms-sl");
+            return (await msSl(text)) as T;
+          }
+          case "sq": {
+            const { msSq } = await import("converters/ms/ms-sq");
+            return (await msSq(text)) as T;
+          }
+          case "sr": {
+            const { msSr } = await import("converters/ms/ms-sr");
+            return (await msSr(text)) as T;
+          }
+          case "sv": {
+            const { msSv } = await import("converters/ms/ms-sv");
+            return (await msSv(text)) as T;
+          }
+          case "tr": {
+            const { msTr } = await import("converters/ms/ms-tr");
+            return (await msTr(text)) as T;
+          }
+          case "vi": {
+            const { msVi } = await import("converters/ms/ms-vi");
+            return (await msVi(text)) as T;
+          }
+        }
+        break;
       case "mt":
         switch (to) {
           case "zh": {
@@ -6119,6 +7444,18 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
           case "hi": {
             const { mtHi } = await import("converters/mt/mt-hi");
             return (await mtHi(text)) as T;
+          }
+          case "bn": {
+            const { mtBn } = await import("converters/mt/mt-bn");
+            return (await mtBn(text)) as T;
+          }
+          case "ur": {
+            const { mtUr } = await import("converters/mt/mt-ur");
+            return (await mtUr(text)) as T;
+          }
+          case "fa": {
+            const { mtFa } = await import("converters/mt/mt-fa");
+            return (await mtFa(text)) as T;
           }
           case "ar": {
             const { mtAr } = await import("converters/mt/mt-ar");
@@ -6236,6 +7573,10 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
             const { mtLv } = await import("converters/mt/mt-lv");
             return (await mtLv(text)) as T;
           }
+          case "ms": {
+            const { mtMs } = await import("converters/mt/mt-ms");
+            return (await mtMs(text)) as T;
+          }
           case "nl": {
             const { mtNl } = await import("converters/mt/mt-nl");
             return (await mtNl(text)) as T;
@@ -6303,6 +7644,18 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
           case "hi": {
             const { nlHi } = await import("converters/nl/nl-hi");
             return (await nlHi(text)) as T;
+          }
+          case "bn": {
+            const { nlBn } = await import("converters/nl/nl-bn");
+            return (await nlBn(text)) as T;
+          }
+          case "ur": {
+            const { nlUr } = await import("converters/nl/nl-ur");
+            return (await nlUr(text)) as T;
+          }
+          case "fa": {
+            const { nlFa } = await import("converters/nl/nl-fa");
+            return (await nlFa(text)) as T;
           }
           case "ar": {
             const { nlAr } = await import("converters/nl/nl-ar");
@@ -6420,6 +7773,10 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
             const { nlLv } = await import("converters/nl/nl-lv");
             return (await nlLv(text)) as T;
           }
+          case "ms": {
+            const { nlMs } = await import("converters/nl/nl-ms");
+            return (await nlMs(text)) as T;
+          }
           case "mt": {
             const { nlMt } = await import("converters/nl/nl-mt");
             return (await nlMt(text)) as T;
@@ -6487,6 +7844,18 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
           case "hi": {
             const { noHi } = await import("converters/no/no-hi");
             return (await noHi(text)) as T;
+          }
+          case "bn": {
+            const { noBn } = await import("converters/no/no-bn");
+            return (await noBn(text)) as T;
+          }
+          case "ur": {
+            const { noUr } = await import("converters/no/no-ur");
+            return (await noUr(text)) as T;
+          }
+          case "fa": {
+            const { noFa } = await import("converters/no/no-fa");
+            return (await noFa(text)) as T;
           }
           case "ar": {
             const { noAr } = await import("converters/no/no-ar");
@@ -6604,6 +7973,10 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
             const { noLv } = await import("converters/no/no-lv");
             return (await noLv(text)) as T;
           }
+          case "ms": {
+            const { noMs } = await import("converters/no/no-ms");
+            return (await noMs(text)) as T;
+          }
           case "mt": {
             const { noMt } = await import("converters/no/no-mt");
             return (await noMt(text)) as T;
@@ -6671,6 +8044,18 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
           case "hi": {
             const { plHi } = await import("converters/pl/pl-hi");
             return (await plHi(text)) as T;
+          }
+          case "bn": {
+            const { plBn } = await import("converters/pl/pl-bn");
+            return (await plBn(text)) as T;
+          }
+          case "ur": {
+            const { plUr } = await import("converters/pl/pl-ur");
+            return (await plUr(text)) as T;
+          }
+          case "fa": {
+            const { plFa } = await import("converters/pl/pl-fa");
+            return (await plFa(text)) as T;
           }
           case "ar": {
             const { plAr } = await import("converters/pl/pl-ar");
@@ -6788,6 +8173,10 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
             const { plLv } = await import("converters/pl/pl-lv");
             return (await plLv(text)) as T;
           }
+          case "ms": {
+            const { plMs } = await import("converters/pl/pl-ms");
+            return (await plMs(text)) as T;
+          }
           case "mt": {
             const { plMt } = await import("converters/pl/pl-mt");
             return (await plMt(text)) as T;
@@ -6855,6 +8244,18 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
           case "hi": {
             const { ptHi } = await import("converters/pt/pt-hi");
             return (await ptHi(text)) as T;
+          }
+          case "bn": {
+            const { ptBn } = await import("converters/pt/pt-bn");
+            return (await ptBn(text)) as T;
+          }
+          case "ur": {
+            const { ptUr } = await import("converters/pt/pt-ur");
+            return (await ptUr(text)) as T;
+          }
+          case "fa": {
+            const { ptFa } = await import("converters/pt/pt-fa");
+            return (await ptFa(text)) as T;
           }
           case "ar": {
             const { ptAr } = await import("converters/pt/pt-ar");
@@ -6972,6 +8373,10 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
             const { ptLv } = await import("converters/pt/pt-lv");
             return (await ptLv(text)) as T;
           }
+          case "ms": {
+            const { ptMs } = await import("converters/pt/pt-ms");
+            return (await ptMs(text)) as T;
+          }
           case "mt": {
             const { ptMt } = await import("converters/pt/pt-mt");
             return (await ptMt(text)) as T;
@@ -7039,6 +8444,18 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
           case "hi": {
             const { roHi } = await import("converters/ro/ro-hi");
             return (await roHi(text)) as T;
+          }
+          case "bn": {
+            const { roBn } = await import("converters/ro/ro-bn");
+            return (await roBn(text)) as T;
+          }
+          case "ur": {
+            const { roUr } = await import("converters/ro/ro-ur");
+            return (await roUr(text)) as T;
+          }
+          case "fa": {
+            const { roFa } = await import("converters/ro/ro-fa");
+            return (await roFa(text)) as T;
           }
           case "ar": {
             const { roAr } = await import("converters/ro/ro-ar");
@@ -7156,6 +8573,10 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
             const { roLv } = await import("converters/ro/ro-lv");
             return (await roLv(text)) as T;
           }
+          case "ms": {
+            const { roMs } = await import("converters/ro/ro-ms");
+            return (await roMs(text)) as T;
+          }
           case "mt": {
             const { roMt } = await import("converters/ro/ro-mt");
             return (await roMt(text)) as T;
@@ -7223,6 +8644,18 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
           case "hi": {
             const { skHi } = await import("converters/sk/sk-hi");
             return (await skHi(text)) as T;
+          }
+          case "bn": {
+            const { skBn } = await import("converters/sk/sk-bn");
+            return (await skBn(text)) as T;
+          }
+          case "ur": {
+            const { skUr } = await import("converters/sk/sk-ur");
+            return (await skUr(text)) as T;
+          }
+          case "fa": {
+            const { skFa } = await import("converters/sk/sk-fa");
+            return (await skFa(text)) as T;
           }
           case "ar": {
             const { skAr } = await import("converters/sk/sk-ar");
@@ -7340,6 +8773,10 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
             const { skLv } = await import("converters/sk/sk-lv");
             return (await skLv(text)) as T;
           }
+          case "ms": {
+            const { skMs } = await import("converters/sk/sk-ms");
+            return (await skMs(text)) as T;
+          }
           case "mt": {
             const { skMt } = await import("converters/sk/sk-mt");
             return (await skMt(text)) as T;
@@ -7407,6 +8844,18 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
           case "hi": {
             const { slHi } = await import("converters/sl/sl-hi");
             return (await slHi(text)) as T;
+          }
+          case "bn": {
+            const { slBn } = await import("converters/sl/sl-bn");
+            return (await slBn(text)) as T;
+          }
+          case "ur": {
+            const { slUr } = await import("converters/sl/sl-ur");
+            return (await slUr(text)) as T;
+          }
+          case "fa": {
+            const { slFa } = await import("converters/sl/sl-fa");
+            return (await slFa(text)) as T;
           }
           case "ar": {
             const { slAr } = await import("converters/sl/sl-ar");
@@ -7524,6 +8973,10 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
             const { slLv } = await import("converters/sl/sl-lv");
             return (await slLv(text)) as T;
           }
+          case "ms": {
+            const { slMs } = await import("converters/sl/sl-ms");
+            return (await slMs(text)) as T;
+          }
           case "mt": {
             const { slMt } = await import("converters/sl/sl-mt");
             return (await slMt(text)) as T;
@@ -7591,6 +9044,18 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
           case "hi": {
             const { sqHi } = await import("converters/sq/sq-hi");
             return (await sqHi(text)) as T;
+          }
+          case "bn": {
+            const { sqBn } = await import("converters/sq/sq-bn");
+            return (await sqBn(text)) as T;
+          }
+          case "ur": {
+            const { sqUr } = await import("converters/sq/sq-ur");
+            return (await sqUr(text)) as T;
+          }
+          case "fa": {
+            const { sqFa } = await import("converters/sq/sq-fa");
+            return (await sqFa(text)) as T;
           }
           case "ar": {
             const { sqAr } = await import("converters/sq/sq-ar");
@@ -7708,6 +9173,10 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
             const { sqLv } = await import("converters/sq/sq-lv");
             return (await sqLv(text)) as T;
           }
+          case "ms": {
+            const { sqMs } = await import("converters/sq/sq-ms");
+            return (await sqMs(text)) as T;
+          }
           case "mt": {
             const { sqMt } = await import("converters/sq/sq-mt");
             return (await sqMt(text)) as T;
@@ -7775,6 +9244,18 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
           case "hi": {
             const { srHi } = await import("converters/sr/sr-hi");
             return (await srHi(text)) as T;
+          }
+          case "bn": {
+            const { srBn } = await import("converters/sr/sr-bn");
+            return (await srBn(text)) as T;
+          }
+          case "ur": {
+            const { srUr } = await import("converters/sr/sr-ur");
+            return (await srUr(text)) as T;
+          }
+          case "fa": {
+            const { srFa } = await import("converters/sr/sr-fa");
+            return (await srFa(text)) as T;
           }
           case "ar": {
             const { srAr } = await import("converters/sr/sr-ar");
@@ -7892,6 +9373,10 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
             const { srLv } = await import("converters/sr/sr-lv");
             return (await srLv(text)) as T;
           }
+          case "ms": {
+            const { srMs } = await import("converters/sr/sr-ms");
+            return (await srMs(text)) as T;
+          }
           case "mt": {
             const { srMt } = await import("converters/sr/sr-mt");
             return (await srMt(text)) as T;
@@ -7959,6 +9444,18 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
           case "hi": {
             const { svHi } = await import("converters/sv/sv-hi");
             return (await svHi(text)) as T;
+          }
+          case "bn": {
+            const { svBn } = await import("converters/sv/sv-bn");
+            return (await svBn(text)) as T;
+          }
+          case "ur": {
+            const { svUr } = await import("converters/sv/sv-ur");
+            return (await svUr(text)) as T;
+          }
+          case "fa": {
+            const { svFa } = await import("converters/sv/sv-fa");
+            return (await svFa(text)) as T;
           }
           case "ar": {
             const { svAr } = await import("converters/sv/sv-ar");
@@ -8076,6 +9573,10 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
             const { svLv } = await import("converters/sv/sv-lv");
             return (await svLv(text)) as T;
           }
+          case "ms": {
+            const { svMs } = await import("converters/sv/sv-ms");
+            return (await svMs(text)) as T;
+          }
           case "mt": {
             const { svMt } = await import("converters/sv/sv-mt");
             return (await svMt(text)) as T;
@@ -8143,6 +9644,18 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
           case "hi": {
             const { trHi } = await import("converters/tr/tr-hi");
             return (await trHi(text)) as T;
+          }
+          case "bn": {
+            const { trBn } = await import("converters/tr/tr-bn");
+            return (await trBn(text)) as T;
+          }
+          case "ur": {
+            const { trUr } = await import("converters/tr/tr-ur");
+            return (await trUr(text)) as T;
+          }
+          case "fa": {
+            const { trFa } = await import("converters/tr/tr-fa");
+            return (await trFa(text)) as T;
           }
           case "ar": {
             const { trAr } = await import("converters/tr/tr-ar");
@@ -8260,6 +9773,10 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
             const { trLv } = await import("converters/tr/tr-lv");
             return (await trLv(text)) as T;
           }
+          case "ms": {
+            const { trMs } = await import("converters/tr/tr-ms");
+            return (await trMs(text)) as T;
+          }
           case "mt": {
             const { trMt } = await import("converters/tr/tr-mt");
             return (await trMt(text)) as T;
@@ -8327,6 +9844,18 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
           case "hi": {
             const { viHi } = await import("converters/vi/vi-hi");
             return (await viHi(text)) as T;
+          }
+          case "bn": {
+            const { viBn } = await import("converters/vi/vi-bn");
+            return (await viBn(text)) as T;
+          }
+          case "ur": {
+            const { viUr } = await import("converters/vi/vi-ur");
+            return (await viUr(text)) as T;
+          }
+          case "fa": {
+            const { viFa } = await import("converters/vi/vi-fa");
+            return (await viFa(text)) as T;
           }
           case "ar": {
             const { viAr } = await import("converters/vi/vi-ar");
@@ -8443,6 +9972,10 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
           case "lv": {
             const { viLv } = await import("converters/vi/vi-lv");
             return (await viLv(text)) as T;
+          }
+          case "ms": {
+            const { viMs } = await import("converters/vi/vi-ms");
+            return (await viMs(text)) as T;
           }
           case "mt": {
             const { viMt } = await import("converters/vi/vi-mt");

@@ -1,0 +1,21 @@
+import { Text } from "types";
+
+export const koBn = async (text: Text) => {
+  const { toIPA } = require("phonemize/all");
+  const { RBT } = await import("icu-transliterator");
+  const { ipaBnRules } = await import("constants/ipa-bn.rules");
+  const { wordSplitter } = await import("helpers/wordSplitter");
+
+  const transliterator = RBT.fromRules(ipaBnRules);
+
+  const convert = async (text: string) => {
+    const ipa = await wordSplitter(text, "ko", text => toIPA(text, { anyAscii: true }));
+    return transliterator.transliterate(ipa);
+  };
+
+  if (typeof text === "string") {
+    return await convert(text);
+  } else {
+    return Promise.all(text.map(convert));
+  }
+};

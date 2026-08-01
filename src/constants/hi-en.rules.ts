@@ -115,7 +115,7 @@ a् > ;
 
 ::Null;
 
-[:^Letter:] [bcdfghjklmnpqrstvwxyz] h h { a } [:^Letter:] > a;
+[:^Letter:] [bcdfghjklmnpqrstvwxyz] hh { a } [:^Letter:] > a;
 [:^Letter:] [bcdfghjklmnpqrstvwxyz] h { a } [:^Letter:] > a;
 [:^Letter:] [bcdfghjklmnpqrstvwxyz] { a } [:^Letter:] > a;
 [bcdfghjklmnpqrstvwxyz] y { a } [:^Letter:] > a;
@@ -149,15 +149,7 @@ ey { a } r > a;
 
 w { w > ;
 y { y > ;
-h { h > ;
-i { [iy] } [:^Letter:] > ;
-y { [iy] } [:^Letter:] > ;
 [:^Letter:] { c } k > ;
-
-::Null;
-
-k { k } h > ;
-g { g } h > ;
 
 ::Title;
 `;

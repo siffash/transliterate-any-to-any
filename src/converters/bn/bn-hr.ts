@@ -1,0 +1,15 @@
+import { Text } from "types";
+
+export const bnHr = async (text: Text) => {
+  const { RBT } = await import("icu-transliterator");
+  const { bnIpaRules } = await import("constants/bn-ipa.rules");
+  const { ipaHrRules } = await import("constants/ipa-hr.rules");
+
+  const transliterator = RBT.fromRules(bnIpaRules + ipaHrRules + "::Title;");
+
+  if (typeof text === "string") {
+    return transliterator.transliterate(text);
+  } else {
+    return text.map(text => transliterator.transliterate(text));
+  }
+};
