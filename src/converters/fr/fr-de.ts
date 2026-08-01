@@ -3,19 +3,16 @@ import { copyCase } from "helpers/copyCase";
 
 export const frDe = async (text: Text) => {
   const { RBT } = await import("icu-transliterator");
-  const { frIpaRules } = await import("constants/fr-ipa.rules");
+  const { frIpa } = await import("converters/fr/fr-ipa");
   const { ipaDeRules } = await import("constants/ipa-de.rules");
 
-  const transliterator = RBT.fromRules(frIpaRules + ipaDeRules);
-
-  const convert = (text: string) => {
-    const transliterated = transliterator.transliterate(text);
-    return copyCase(text, transliterated);
-  };
+  const transliterator = RBT.fromRules(ipaDeRules);
 
   if (typeof text === "string") {
-    return convert(text);
+    const ipa = await frIpa<string>(text);
+    return copyCase(text, transliterator.transliterate(ipa));
   } else {
-    return text.map(convert);
+    const ipaArray = await frIpa<string[]>(text);
+    return ipaArray.map((ipa, i) => copyCase(text[i], transliterator.transliterate(ipa)));
   }
 };
