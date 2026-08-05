@@ -9,19 +9,19 @@ Ch > X;
 CH > X;
 
 c > ts;
-C } [:Lower:] > Ts;
+C } [:Ll:] > Ts;
 C > TS;
 x > ks;
-X } [:Lower:] > Ks;
+X } [:Ll:] > Ks;
 X > KS;
 q > kv;
-Q } [:Lower:] > Kv;
+Q } [:Ll:] > Kv;
 Q > KV;
 ô > uo;
-Ô } [:Lower:] > Uo;
+Ô } [:Ll:] > Uo;
 Ô > UO;
 ř > rž;
-Ř } [:Lower:] > Rž;
+Ř } [:Ll:] > Rž;
 Ř > RŽ;
 
 ď > đ;

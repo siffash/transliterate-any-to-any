@@ -21,13 +21,13 @@ IJ > EJ;
 Ij > Ej;
 ij > ej;
 
-[:Upper:] { X > CH;
-X } [:Upper:] > CH;
+[:Lu:] { X > CH;
+X } [:Lu:] > CH;
 X > Ch;
 x > ch;
 
-[:Upper:] { Q > KV;
-Q } [:Upper:] > KV;
+[:Lu:] { Q > KV;
+Q } [:Lu:] > KV;
 Q > Kv;
 q > kv;
 
@@ -54,9 +54,6 @@ w > v;
 
 Ń } [iI] > N;
 ń } [iI] > n;
-
-[dDtTnN] { i > y;
-[dDtTnN] { I > Y;
 
 Ć > Ť;
 ć > ť;
@@ -104,7 +101,7 @@ UU > Ů;
 [:^Letter:] { ů > ú;
 [:^Letter:] { Ů > Ú;
 [:^Letter:] { ě > je;
-[:^Letter:] { Ě } [:Upper:] > JE;
+[:^Letter:] { Ě } [:Lu:] > JE;
 [:^Letter:] { Ě > Je;
 
 [cjřščžťďňCJŘŠČŽŤĎŇ] { y > i;

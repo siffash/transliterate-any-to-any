@@ -1,8 +1,8 @@
 export const ltLatnRules = `
 ::NFC;
 
-X } [:UppercaseLetter:] > KS;
-[:UppercaseLetter:] { X > KS;
+X } [:Lu:] > KS;
+[:Lu:] { X > KS;
 X > Ks;
 x > ks;
 
@@ -29,8 +29,8 @@ n } [EĘĖIĮYeęėiįy] > ń;
 N } [KkGg] > NG;
 n } [KkGg] > ng;
 
-C } [:UppercaseLetter:] > TS;
-[:UppercaseLetter:] { C > TS;
+C } [:Lu:] > TS;
+[:Lu:] { C > TS;
 C > Ts;
 c > ts;
 

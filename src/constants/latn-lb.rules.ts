@@ -9,12 +9,12 @@ export const latnLbRules = `
 [aäeiïoöuüÿAÄEIÏOÖUÜŸ] { S } [aäeiïoöuüÿAÄEIÏOÖUÜŸ] > SS;
 [aäeiïoöuüÿAÄEIÏOÖUÜŸ] { s } [aäeiïoöuüÿAÄEIÏOÖUÜŸ] > ss;
 
-DŽ } [:Lower:] > Dsch;
+DŽ } [:Ll:] > Dsch;
 DŽ > DSCH;
 Dž > Dsch;
 dž > dsch;
 
-DZ } [:Lower:] > Ds;
+DZ } [:Ll:] > Ds;
 DZ > DS;
 Dz > Ds;
 dz > ds;
@@ -39,27 +39,27 @@ IJ > EI;
 Ij > Ei;
 ij > ei;
 
-[ČĆ] } [:Lower:] > Tsch;
+[ČĆ] } [:Ll:] > Tsch;
 [ČĆ] > TSCH;
 [čć] > tsch;
 
-Đ } [:Lower:] > Dsch;
+Đ } [:Ll:] > Dsch;
 Đ > DSCH;
 đ > dsch;
 
-Š } [:Lower:] > Sch;
+Š } [:Ll:] > Sch;
 Š > SCH;
 š > sch;
 
-X } [:Lower:] > Ch;
+X } [:Ll:] > Ch;
 X > CH;
 x > ch;
 
-Ń } [:Lower:] > Nj;
+Ń } [:Ll:] > Nj;
 Ń > NJ;
 ń > nj;
 
-Ľ } [:Lower:] > Lj;
+Ľ } [:Ll:] > Lj;
 Ľ > LJ;
 ľ > lj;
 
@@ -103,8 +103,8 @@ z > s;
 [sS] { z > s;
 [sS] { Z > S;
 
-[:Upper:] { ß } [:Upper:] > SS;
-ß } [:Upper:] > SS;
+[:Lu:] { ß } [:Lu:] > SS;
+ß } [:Lu:] > SS;
 ß > ss;
 
 [cC] [hH] { [cC] [hH] > ;

@@ -6,15 +6,15 @@ dž > d͡ʒ;
 lj > ʎ;
 nj > ɲ;
 
-{ d } [sšcčć] > t;
-{ n } [kg] > ŋ;
-{ n } [bp] > m;
+d } [sšcčć] > t;
+n } [kg] > ŋ;
+n } [bp] > m;
 
 [^aeioujy] { r } [^aeioujy] > r̩;
 [:^Letter:] { r } [^aeioujy] > r̩;
 [^aeioujy] { r } [:^Letter:] > r̩;
 [:^Letter:] { r } [:^Letter:] > r̩;
-{ v } [ptksšcčćfh] > f;
+v } [ptksšcčćfh] > f;
 
 a > a;
 b > b;

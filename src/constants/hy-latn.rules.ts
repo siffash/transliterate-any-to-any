@@ -5,46 +5,46 @@ export const hyLatnRules = `
 Ու > U;
 ու > u;
 
-[:^Letter:] { Ե } [:Upper:] > YE;
-[:^Letter:] { Ե } > Ye;
-[:^Letter:] { ե } > ye;
+[:^Letter:] { Ե } [:Lu:] > YE;
+[:^Letter:] { Ե > Ye;
+[:^Letter:] { ե > ye;
 
-[:^Letter:] { Ո } [:Upper:] > VO;
-[:^Letter:] { Ո } > Vo;
-[:^Letter:] { ո } > vo;
+[:^Letter:] { Ո } [:Lu:] > VO;
+[:^Letter:] { Ո > Vo;
+[:^Letter:] { ո > vo;
 
-[:^Letter:] { և } > yev;
+[:^Letter:] { և > yev;
 և > ev;
 
 ::Null;
 
-[:Upper:] { Ծ } > TS;
-Ծ } [:Upper:] > TS;
+[:Lu:] { Ծ > TS;
+Ծ } [:Lu:] > TS;
 Ծ > Ts;
 ծ > ts;
 
-[:Upper:] { Ձ } > DZ;
-Ձ } [:Upper:] > DZ;
+[:Lu:] { Ձ > DZ;
+Ձ } [:Lu:] > DZ;
 Ձ > Dz;
 ձ > dz;
 
-[:Upper:] { Ղ } > GH;
-Ղ } [:Upper:] > GH;
+[:Lu:] { Ղ > GH;
+Ղ } [:Lu:] > GH;
 Ղ > Gh;
 ղ > gh;
 
-[:Upper:] { Ց } > TS;
-Ց } [:Upper:] > TS;
+[:Lu:] { Ց > TS;
+Ց } [:Lu:] > TS;
 Ց > Ts;
 ց > ts;
 
-[:Upper:] { Ջ } > DŽ;
-Ջ } [:Upper:] > DŽ;
+[:Lu:] { Ջ > DŽ;
+Ջ } [:Lu:] > DŽ;
 Ջ > Dž;
 ջ > dž;
 
-[:Upper:] { Թ } > TH;
-Թ } [:Upper:] > TH;
+[:Lu:] { Թ > TH;
+Թ } [:Lu:] > TH;
 Թ > Th;
 թ > th;
 

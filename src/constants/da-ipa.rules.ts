@@ -15,29 +15,29 @@ ii > iː;
 oo > oː;
 uu > uː;
 
-{ a } [bcdfghjklmnpqrstvwxz] [aeiouyæøåː] > ɑː;
-{ e } [bcdfghjklmnpqrstvwxz] [aeiouyæøåː] > eː;
-{ i } [bcdfghjklmnpqrstvwxz] [aeiouyæøåː] > iː;
-{ o } [bcdfghjklmnpqrstvwxz] [aeiouyæøåː] > oː;
-{ u } [bcdfghjklmnpqrstvwxz] [aeiouyæøåː] > uː;
-{ y } [bcdfghjklmnpqrstvwxz] [aeiouyæøåː] > yː;
-{ æ } [bcdfghjklmnpqrstvwxz] [aeiouyæøåː] > ɛː;
-{ ø } [bcdfghjklmnpqrstvwxz] [aeiouyæøåː] > øː;
-{ å } [bcdfghjklmnpqrstvwxz] [aeiouyæøåː] > ɔː;
+a } [bcdfghjklmnpqrstvwxz] [aeiouyæøåː] > ɑː;
+e } [bcdfghjklmnpqrstvwxz] [aeiouyæøåː] > eː;
+i } [bcdfghjklmnpqrstvwxz] [aeiouyæøåː] > iː;
+o } [bcdfghjklmnpqrstvwxz] [aeiouyæøåː] > oː;
+u } [bcdfghjklmnpqrstvwxz] [aeiouyæøåː] > uː;
+y } [bcdfghjklmnpqrstvwxz] [aeiouyæøåː] > yː;
+æ } [bcdfghjklmnpqrstvwxz] [aeiouyæøåː] > ɛː;
+ø } [bcdfghjklmnpqrstvwxz] [aeiouyæøåː] > øː;
+å } [bcdfghjklmnpqrstvwxz] [aeiouyæøåː] > ɔː;
 
-{ a } [:^Letter:] > ɑː;
-{ i } [:^Letter:] > iː;
-{ o } [:^Letter:] > oː;
-{ u } [:^Letter:] > uː;
-{ y } [:^Letter:] > yː;
-{ æ } [:^Letter:] > ɛː;
-{ ø } [:^Letter:] > øː;
-{ å } [:^Letter:] > ɔː;
+a } [:^Letter:] > ɑː;
+i } [:^Letter:] > iː;
+o } [:^Letter:] > oː;
+u } [:^Letter:] > uː;
+y } [:^Letter:] > yː;
+æ } [:^Letter:] > ɛː;
+ø } [:^Letter:] > øː;
+å } [:^Letter:] > ɔː;
 
-{ i } g [:^Letter:] > iː;
-{ e } g [:^Letter:] > eː;
+i } g [:^Letter:] > iː;
+e } g [:^Letter:] > eː;
 
-[{iː} {eː}] { g } [:^Letter:] > ;
+[{iː}{eː}] { g } [:^Letter:] > ;
 
 tion > sjon;
 th > t;
@@ -58,7 +58,7 @@ ng > ŋ;
 nk > ŋk;
 
 er } [:^Letter:] > ɐ;
-{ e } [:^Letter:] > ə;
+e } [:^Letter:] > ə;
 a [vf] n } [:^Letter:] > ɑʊ̯n;
 a [vf] } [:^Letter:] > ɑʊ̯;
 
@@ -69,7 +69,7 @@ a [vf] } [:^Letter:] > ɑʊ̯;
 [aeiouyæøåː] { d } [:^Letter:] > ð;
 [aeiouyæøåː] { t } [aeiouyæøåːɐ] > ð;
 
-{ j } eg > ɑɪ̯;
+j } eg > ɑɪ̯;
 eg > eːɡ;
 og > ɔʊ̯;
 øg > øj;
@@ -110,23 +110,23 @@ z > s;
 
 ::Null;
 
-k { k } > ;
-t { t } > ;
-l { l } > ;
-n { n } > ;
-m { m } > ;
-p { p } > ;
-s { s } > ;
-f { f } > ;
+k { k > ;
+t { t > ;
+l { l > ;
+n { n > ;
+m { m > ;
+p { p > ;
+s { s > ;
+f { f > ;
 
-[:^Letter:] { p } > pʰ;
-{ p } [aeiouyæøåːlrj] > pʰ;
+[:^Letter:] { p > pʰ;
+p } [aeiouyæøåːlrj] > pʰ;
 
-[:^Letter:] { t } > tʰ;
-{ t } [aeiouyæøåːlrj] > tʰ;
+[:^Letter:] { t > tʰ;
+t } [aeiouyæøåːlrj] > tʰ;
 
-[:^Letter:] { k } > kʰ;
-{ k } [aeiouyæøåːlrj] > kʰ;
+[:^Letter:] { k > kʰ;
+k } [aeiouyæøåːlrj] > kʰ;
 
 g > k;
 `;

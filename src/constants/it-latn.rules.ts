@@ -83,12 +83,12 @@ q > k;
 Q > K;
 
 x > ks;
-X } [:Lower:] > Ks;
+X } [:Ll:] > Ks;
 X } [:^Letter:] > KS;
 X > KS;
 
 z > ts;
-Z } [:Lower:] > Ts;
+Z } [:Ll:] > Ts;
 Z } [:^Letter:] > TS;
 Z > TS;
 

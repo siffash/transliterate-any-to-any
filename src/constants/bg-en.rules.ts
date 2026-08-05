@@ -6,38 +6,38 @@ export const bgEnRules = `
 ИЯ } [:^Letter:] > IA;
 иЯ } [:^Letter:] > iA;
 
-[:Upper:] { Ж > ZH;
-Ж } [:Upper:] > ZH;
+[:Lu:] { Ж > ZH;
+Ж } [:Lu:] > ZH;
 Ж > Zh;
 ж > zh;
 
-[:Upper:] { Ц > TS;
-Ц } [:Upper:] > TS;
+[:Lu:] { Ц > TS;
+Ц } [:Lu:] > TS;
 Ц > Ts;
 ц > ts;
 
-[:Upper:] { Ч > CH;
-Ч } [:Upper:] > CH;
+[:Lu:] { Ч > CH;
+Ч } [:Lu:] > CH;
 Ч > Ch;
 ч > ch;
 
-[:Upper:] { Ш > SH;
-Ш } [:Upper:] > SH;
+[:Lu:] { Ш > SH;
+Ш } [:Lu:] > SH;
 Ш > Sh;
 ш > sh;
 
-[:Upper:] { Щ > SHT;
-Щ } [:Upper:] > SHT;
+[:Lu:] { Щ > SHT;
+Щ } [:Lu:] > SHT;
 Щ > Sht;
 щ > sht;
 
-[:Upper:] { Ю > YU;
-Ю } [:Upper:] > YU;
+[:Lu:] { Ю > YU;
+Ю } [:Lu:] > YU;
 Ю > Yu;
 ю > yu;
 
-[:Upper:] { Я > YA;
-Я } [:Upper:] > YA;
+[:Lu:] { Я > YA;
+Я } [:Lu:] > YA;
 Я > Ya;
 я > ya;
 

@@ -69,8 +69,8 @@ CZ > TS;
 Cz > Ts;
 cz > ts;
 
-C } [:Upper:] > TS;
-[:Upper:] { C } [:^Letter:] > TS;
+C } [:Lu:] > TS;
+[:Lu:] { C } [:^Letter:] > TS;
 C > Ts;
 c > ts;
 

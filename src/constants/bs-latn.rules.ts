@@ -21,13 +21,13 @@ NJ > Ń;
 Nj > Ń;
 nj > ń;
 
-[A-ZĆČĐŠŽĽŃ] { X > KS;
-X } [A-ZĆČĐŠŽĽŃ] > KS;
+[:Lu:] { X > KS;
+X } [:Lu:] > KS;
 X > Ks;
 x > ks;
 
-[A-ZĆČĐŠŽĽŃ] { C > TS;
-C } [A-ZĆČĐŠŽĽŃ] > TS;
+[:Lu:] { C > TS;
+C } [:Lu:] > TS;
 C > Ts;
 c > ts;
 

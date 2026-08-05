@@ -41,7 +41,6 @@ s } [bvgğdzcjlmnry] > z;
 
 q } [pfktsşxçh] > x;
 q } [:^Letter:] > x;
-q } [aıoubvgğdzcjlmnry] > ɡ;
 q > ɡ;
 
 k } [eəiöü] > c;

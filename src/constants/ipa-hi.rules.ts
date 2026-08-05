@@ -1,8 +1,7 @@
 export const ipaHiRules = `
 ::Null;
 
-ˈ>;
-ˌ>;
+['’ˈˌ]>;
 \\.>;
 ˥>;
 ˦>;

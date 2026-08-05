@@ -2,11 +2,11 @@ export const csLatnRules = `
 ::NFC;
 
 x > ks;
-X } [:Lower:] > Ks;
+X } [:Ll:] > Ks;
 X > KS;
 
 q > kv;
-Q } [:Lower:] > Kv;
+Q } [:Ll:] > Kv;
 Q > KV;
 
 w > v;
@@ -18,7 +18,7 @@ cH > X;
 CH > X;
 
 [ptkfsšcčxťPTKFSŠCČXŤ] { ř > rš;
-[ptkfsšcčxťPTKFSŠCČXŤ] { Ř } [:Lower:] > Rš;
+[ptkfsšcčxťPTKFSŠCČXŤ] { Ř } [:Ll:] > Rš;
 [ptkfsšcčxťPTKFSŠCČXŤ] { Ř > RŠ;
 
 ř } [ptkfsšcčxťPTKFSŠCČXŤ] > rš;
@@ -26,15 +26,15 @@ CH > X;
 Ř } [PTKFSŠCČXŤ] > RŠ;
 
 ř } [:^Letter:] > rš;
-[:Upper:] { Ř } [:^Letter:] > RŠ;
+[:Lu:] { Ř } [:^Letter:] > RŠ;
 Ř } [:^Letter:] > Rš;
 
 ř > rž;
-Ř } [:Lower:] > Rž;
+Ř } [:Ll:] > Rž;
 Ř > RŽ;
 
 c > ts;
-C } [:Lower:] > Ts;
+C } [:Ll:] > Ts;
 C > TS;
 
 dě > đe;

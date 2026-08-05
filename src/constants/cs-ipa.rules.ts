@@ -17,9 +17,9 @@ pě > pjɛ;
 vě > vjɛ;
 fě > fjɛ;
 
-{ d } [ií] > ɟ;
-{ t } [ií] > c;
-{ n } [ií] > ɲ;
+d } [ií] > ɟ;
+t } [ií] > c;
+n } [ií] > ɲ;
 
 dž > d͡ʒ;
 dz > d͡z;
@@ -48,7 +48,7 @@ z } [ptťksšfcčx] > s;
 h } [ptťksšfcčx] > x;
 v } [ptťksšfcčx] > f;
 ř } [ptťksšfcčx] > r̝̊;
-[ptťksšfcčx] { ř } > r̝̊;
+[ptťksšfcčx] { ř > r̝̊;
 
 p } [bdďgzžɦh] > b;
 t } [bdďgzžɦh] > d;

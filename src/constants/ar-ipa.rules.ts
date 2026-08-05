@@ -127,5 +127,5 @@ aʔa > aː;
 [btθdðrzsʃʕɣfqklmnhħʒ] { j } [:^Letter:] > ijj;
 [btθdðrzsʃʕɣfqklmnhħʒ]ˤ { j } [:^Letter:] > ijj;
 
-[[:Arabic:]] > ;
+[:Arabic:] > ;
 `;

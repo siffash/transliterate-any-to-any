@@ -3,24 +3,24 @@ export const latnDaRules = `
 
 ['·] > ;
 
-[ĆČ] } [:Lower:] > Tj;
+[ĆČ] } [:Ll:] > Tj;
 [ĆČ] } [:^Letter:] > Tj;
 [ĆČ] > TJ;
 [ćč] > tj;
 
-DŽ } [:Lower:] > Dj;
+DŽ } [:Ll:] > Dj;
 DŽ } [:^Letter:] > Dj;
 DŽ > DJ;
 Dž > Dj;
 dž > dj;
 
-DZ } [:Lower:] > Ds;
+DZ } [:Ll:] > Ds;
 DZ } [:^Letter:] > Ds;
 DZ > DS;
 Dz > Ds;
 dz > ds;
 
-IJ } [:Lower:] > Ej;
+IJ } [:Ll:] > Ej;
 IJ } [:^Letter:] > Ej;
 IJ > EJ;
 Ij > Ej;
@@ -34,32 +34,32 @@ GH > G;
 Gh > G;
 gh > g;
 
-Đ } [:Lower:] > Dj;
+Đ } [:Ll:] > Dj;
 Đ } [:^Letter:] > Dj;
 Đ > DJ;
 đ > dj;
 
-Ľ } [:Lower:] > Lj;
+Ľ } [:Ll:] > Lj;
 Ľ } [:^Letter:] > Lj;
 Ľ > LJ;
 ľ > lj;
 
-Ń } [:Lower:] > Nj;
+Ń } [:Ll:] > Nj;
 Ń } [:^Letter:] > Nj;
 Ń > NJ;
 ń > nj;
 
-Š } [:Lower:] > Sj;
+Š } [:Ll:] > Sj;
 Š } [:^Letter:] > Sj;
 Š > SJ;
 š > sj;
 
-Ž } [:Lower:] > Zj;
+Ž } [:Ll:] > Zj;
 Ž } [:^Letter:] > Zj;
 Ž > ZJ;
 ž > zj;
 
-X } [:Lower:] > Kh;
+X } [:Ll:] > Kh;
 X } [:^Letter:] > Kh;
 X > KH;
 x > kh;

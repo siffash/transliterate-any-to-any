@@ -1,18 +1,18 @@
 export const mkLatnRules = `
 ::NFC;
 
-{ Ѕ } [:Upper:] > DZ;
-[:Upper:] { Ѕ } > DZ;
+Ѕ } [:Lu:] > DZ;
+[:Lu:] { Ѕ > DZ;
 Ѕ > Dz;
 ѕ > dz;
 
-{ Ц } [:Upper:] > TS;
-[:Upper:] { Ц } > TS;
+Ц } [:Lu:] > TS;
+[:Lu:] { Ц > TS;
 Ц > Ts;
 ц > ts;
 
-{ Џ } [:Upper:] > DŽ;
-[:Upper:] { Џ } > DŽ;
+Џ } [:Lu:] > DŽ;
+[:Lu:] { Џ > DŽ;
 Џ > Dž;
 џ > dž;
 

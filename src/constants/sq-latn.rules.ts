@@ -29,12 +29,12 @@ RR > R;
 Rr > R;
 rr > r;
 
-C } [:Lower:] > Ts;
+C } [:Ll:] > Ts;
 [:^Letter:] { C } [:^Letter:] > Ts;
 C > TS;
 c > ts;
 
-X } [:Lower:] > Dz;
+X } [:Ll:] > Dz;
 [:^Letter:] { X } [:^Letter:] > Dz;
 X > DZ;
 x > dz;

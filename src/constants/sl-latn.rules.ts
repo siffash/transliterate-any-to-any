@@ -9,8 +9,8 @@ LJ > Ľ;
 Lj > Ľ;
 lj > ľ;
 
-[:Upper:] { C > TS;
-C } [:Upper:] > TS;
+[:Lu:] { C > TS;
+C } [:Lu:] > TS;
 C > Ts;
 c > ts;
 

@@ -1,11 +1,6 @@
 export const mtIpaRules = `
 ::Lower;
 
-[:^Letter:] { m } [bcdfghjklmnpqrstvwxzċġħż] > im;
-[:^Letter:] { n } [bcdfghjklmnpqrstvwxzċġħż] > in;
-[:^Letter:] { s } [bcdfghjklmnpqrstvwxzċġħż] > is;
-[:^Letter:] { x } [bcdfghjklmnpqrstvwxzċġħż] > iʃ;
-
 għi > ɐɪ̯;
 għaj > ɐːɪ̯;
 għej > ɛɪ̯;
@@ -30,8 +25,8 @@ ph > f;
 sh > ʃ;
 th > t;
 għh > ħː;
-{ għ } [:^Letter:] > ħ;
-{ h } [:^Letter:] > ħ;
+għ } [:^Letter:] > ħ;
+h } [:^Letter:] > ħ;
 
 ah > ɐː;
 eh > ɛː;
@@ -87,14 +82,14 @@ jj > jː;
 zz > t͡sː;
 żż > zː;
 
-{ b } [:^Letter:] > p;
-{ d } [:^Letter:] > t;
-{ g } [e i y ɛ ɪ] > d͡ʒ;
-{ g } [:^Letter:] > k;
-{ ġ } [:^Letter:] > t͡ʃ;
-{ v } [:^Letter:] > f;
-{ ż } [:^Letter:] > s;
-{ z } [:^Letter:] > t͡s;
+b } [:^Letter:] > p;
+d } [:^Letter:] > t;
+g } [e i y ɛ ɪ] > d͡ʒ;
+g } [:^Letter:] > k;
+ġ } [:^Letter:] > t͡ʃ;
+v } [:^Letter:] > f;
+ż } [:^Letter:] > s;
+z } [:^Letter:] > t͡s;
 
 a > ɐ;
 e > ɛ;

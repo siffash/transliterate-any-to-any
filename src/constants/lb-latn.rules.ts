@@ -13,8 +13,8 @@ SCH > Š;
 Sch > Š;
 sch > š;
 
-[:Upper:] { X > KS;
-X } [:Upper:] > KS;
+[:Lu:] { X > KS;
+X } [:Lu:] > KS;
 X > Ks;
 x > ks;
 
@@ -61,7 +61,7 @@ q > k;
 [:^Letter:] { Sp > Šp;
 [:^Letter:] { sp > šp;
 
-[:Upper:] { C } [eéèêëiïyäöüEÉÈÊËIÏYÄÖÜ] > TS;
+[:Lu:] { C } [eéèêëiïyäöüEÉÈÊËIÏYÄÖÜ] > TS;
 C } [EÉÈÊËIÏYÄÖÜ] > TS;
 C } [eéèêëiïyäöü] > Ts;
 c } [eéèêëiïyäöüEÉÈÊËIÏYÄÖÜ] > ts;
@@ -73,8 +73,8 @@ TZ > TS;
 Tz > Ts;
 tz > ts;
 
-[:Upper:] { Z > TS;
-Z } [:Upper:] > TS;
+[:Lu:] { Z > TS;
+Z } [:Lu:] > TS;
 Z > Ts;
 z > ts;
 

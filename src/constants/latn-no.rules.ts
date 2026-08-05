@@ -24,42 +24,42 @@ gh > g;
 ï > i;
 
 [:^Letter:] { Ć } [:^Letter:] > Tsj;
-Ć } [:Lower:] > Tsj;
+Ć } [:Ll:] > Tsj;
 Ć > TSJ;
 ć > tsj;
 
 [:^Letter:] { Č } [:^Letter:] > Tsj;
-Č } [:Lower:] > Tsj;
+Č } [:Ll:] > Tsj;
 Č > TSJ;
 č > tsj;
 
 [:^Letter:] { Đ } [:^Letter:] > Dj;
-Đ } [:Lower:] > Dj;
+Đ } [:Ll:] > Dj;
 Đ > DJ;
 đ > dj;
 
 [:^Letter:] { Ľ } [:^Letter:] > Lj;
-Ľ } [:Lower:] > Lj;
+Ľ } [:Ll:] > Lj;
 Ľ > LJ;
 ľ > lj;
 
 [:^Letter:] { Ń } [:^Letter:] > Nj;
-Ń } [:Lower:] > Nj;
+Ń } [:Ll:] > Nj;
 Ń > NJ;
 ń > nj;
 
 [:^Letter:] { Š } [:^Letter:] > Sj;
-Š } [:Lower:] > Sj;
+Š } [:Ll:] > Sj;
 Š > SJ;
 š > sj;
 
 [:^Letter:] { Ž } [:^Letter:] > Sj;
-Ž } [:Lower:] > Sj;
+Ž } [:Ll:] > Sj;
 Ž > SJ;
 ž > sj;
 
 [:^Letter:] { X } [:^Letter:] > Kh;
-X } [:Lower:] > Kh;
+X } [:Ll:] > Kh;
 X > KH;
 x > kh;
 

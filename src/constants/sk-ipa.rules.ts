@@ -114,7 +114,7 @@ ie > ɪɛ;
 iu > ɪu;
 ou > ɔu;
 
-{ v } [:^Letter:] > u̯;
+v } [:^Letter:] > u̯;
 
 a > a;
 á > aː;

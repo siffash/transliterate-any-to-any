@@ -1,13 +1,13 @@
 export const ipaNoRules = `
 ::Null;
 
-[:^Letter:] { ʂ } > sj;
-[:^Letter:] { ʈ } > t;
-[:^Letter:] { ɖ } > d;
-[:^Letter:] { ɳ } > n;
-[:^Letter:] { ɭ } > l;
+[:^Letter:] { ʂ > sj;
+[:^Letter:] { ʈ > t;
+[:^Letter:] { ɖ > d;
+[:^Letter:] { ɳ > n;
+[:^Letter:] { ɭ > l;
 
-[͈̚ʔʕʰʱʲʷʼˈ̇ˌ̧ːˠˤ˥˧˩̝̟̥̩̪̯̃̊͡] > ;
+[͈̚ʔʕʰʱʲʷ'’ʼˈ̇ˌ̧ːˠˤ˥˧˩̝̟̥̩̪̯̃̊͡] > ;
 
 ::Null;
 

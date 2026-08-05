@@ -66,7 +66,7 @@ x > ch;
 [u ũ ư ɯ ʉ ʊ] > oe;
 [y ʏ] > u;
 [ø œ ɵ] > eu;
-[͈̚ ʔ ʕ ʰ ʱ ʲ ʷ ʼ ˈ ̇ ˌ ̧ ː ˠ ˤ ˥ ˧ ˩ ̝ ̟ ̥ ̩ ̪ ̯ ̃ ̊ ͡] > ;
+[͈̚ ʔ ʕ ʰ ʱ ʲ ʷ '’ʼ ˈ ̇ ˌ ̧ ː ˠ ˤ ˥ ˧ ˩ ̝ ̟ ̥ ̩ ̪ ̯ ̃ ̊ ͡] > ;
 
 ::Null;
 
@@ -74,17 +74,17 @@ a { a } [:^Letter:] > ;
 o { o } [:^Letter:] > ;
 u { u } [:^Letter:] > ;
 
-ch { ch } > ;
-sj { sj } > ;
-zj { zj } > ;
-ng { ng } > ;
+ch { ch > ;
+sj { sj > ;
+zj { zj > ;
+ng { ng > ;
 
-tsj { tsj } > ;
-dzj { dzj } > ;
+tsj { tsj > ;
+dzj { dzj > ;
 
-aa { a } > ;
-ee { e } > ;
-ii { i } > ;
-oo { o } > ;
-uu { u } > ;
+aa { a > ;
+ee { e > ;
+ii { i > ;
+oo { o > ;
+uu { u > ;
 `;

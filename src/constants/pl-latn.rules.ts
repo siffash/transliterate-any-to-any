@@ -38,15 +38,15 @@ z } [iI] > ž;
 Z } [iI] > Ž;
 
 c > ts;
-C } [:Lower:] > Ts;
+C } [:Ll:] > Ts;
 C > TS;
 
 ą > on;
-Ą } [:Lower:] > On;
+Ą } [:Ll:] > On;
 Ą > ON;
 
 ę > en;
-Ę } [:Lower:] > En;
+Ę } [:Ll:] > En;
 Ę > EN;
 
 j > y;

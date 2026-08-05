@@ -3,54 +3,54 @@ export const kkLatnRules = `
 
 [ЪЬъь] > ;
 
-[:^Letter:] { Е } [:Lower:] > Ye;
+[:^Letter:] { Е } [:Ll:] > Ye;
 [:^Letter:] { Е > YE;
 [:^Letter:] { е > ye;
 
-Щ } [:Lower:] > Šč;
+Щ } [:Ll:] > Šč;
 Щ > ŠČ;
 щ > šč;
 
-Я } [:Lower:] > Ya;
+Я } [:Ll:] > Ya;
 Я > YA;
 я > ya;
 
-Ю } [:Lower:] > Yu;
+Ю } [:Ll:] > Yu;
 Ю > YU;
 ю > yu;
 
-Ё } [:Lower:] > Yo;
+Ё } [:Ll:] > Yo;
 Ё > YO;
 ё > yo;
 
-[ҒĞǴ] } [:Lower:] > Gh;
+[ҒĞǴ] } [:Ll:] > Gh;
 [ҒĞǴ] > GH;
 [ғğǵ] > gh;
 
-Ң } [:Lower:] > Ng;
+Ң } [:Ll:] > Ng;
 Ң > NG;
 ң > ng;
 
-Sh } [:Lower:] > Š;
+Sh } [:Ll:] > Š;
 Sh > Š;
 SH > Š;
 sh > š;
 
-Ch } [:Lower:] > Č;
+Ch } [:Ll:] > Č;
 Ch > Č;
 CH > Č;
 ch > č;
 
-[ЦC] } [:Lower:] > Ts;
+[ЦC] } [:Ll:] > Ts;
 [ЦC] > TS;
 [цc] > ts;
 
-Zh } [:Lower:] > Ž;
+Zh } [:Ll:] > Ž;
 Zh > Ž;
 ZH > Ž;
 zh > ž;
 
-Kh } [:Lower:] > X;
+Kh } [:Ll:] > X;
 Kh > X;
 KH > X;
 kh > x;
@@ -119,7 +119,7 @@ y > ï;
 [шş] > š;
 [ЧÇ] > Č;
 [чç] > č;
-Ñ } [:Lower:] > Ng;
+Ñ } [:Ll:] > Ng;
 Ñ > NG;
 ñ > ng;
 

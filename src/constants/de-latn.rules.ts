@@ -18,7 +18,7 @@ Sch > Š;
 sCh > š;
 sch > š;
 
-X } [:Lowercase_Letter:] > Ks;
+X } [:Ll:] > Ks;
 X > KS;
 x > ks;
 
@@ -27,7 +27,7 @@ Ch > X;
 cH > x;
 ch > x;
 
-DSCH } [:Lowercase_Letter:] > Dž;
+DSCH } [:Ll:] > Dž;
 DSCH > DŽ;
 DSch > Dž;
 Dsch > Dž;
@@ -38,7 +38,7 @@ Tz > Ts;
 tZ > ts;
 tz > ts;
 
-Z } [:Lowercase_Letter:] > Ts;
+Z } [:Ll:] > Ts;
 Z > TS;
 z > ts;
 

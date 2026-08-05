@@ -77,7 +77,7 @@ export const elLatnRules = `
 ΜΠ } [:^Letter:] > B;
 Μπ } [:^Letter:] > b;
 μπ } [:^Letter:] > b;
-ΜΠ } [:Lower:] > Mb;
+ΜΠ } [:Ll:] > Mb;
 ΜΠ > MB;
 Μπ > Mb;
 μπ > mb;
@@ -88,7 +88,7 @@ export const elLatnRules = `
 ΝΤ } [:^Letter:] > D;
 Ντ } [:^Letter:] > d;
 ντ } [:^Letter:] > d;
-ΝΤ } [:Lower:] > Nd;
+ΝΤ } [:Ll:] > Nd;
 ΝΤ > ND;
 Ντ > Nd;
 ντ > nd;
@@ -99,34 +99,34 @@ export const elLatnRules = `
 ΓΚ } [:^Letter:] > G;
 Γκ } [:^Letter:] > g;
 γκ } [:^Letter:] > g;
-ΓΚ } [:Lower:] > Ng;
+ΓΚ } [:Ll:] > Ng;
 ΓΚ > NG;
 Γκ > Ng;
 γκ > ng;
 
-ΓΓ } [:Lower:] > Ng;
+ΓΓ } [:Ll:] > Ng;
 ΓΓ > NG;
 Γγ > Ng;
 γγ > ng;
 
-ΓΞ } [:Lower:] > Nks;
+ΓΞ } [:Ll:] > Nks;
 ΓΞ > NKS;
 Γξ > Nks;
 γξ > nks;
 
-ΓΧ } [:Lower:] > Nx;
+ΓΧ } [:Ll:] > Nx;
 ΓΧ > NX;
 Γχ > Nx;
 γχ > nx;
 
-ΤΣ } [:Lower:] > Ts;
+ΤΣ } [:Ll:] > Ts;
 ΤΣ > TS;
 Τσ > Ts;
 Τς > Ts;
 τσ > ts;
 τς > ts;
 
-ΤΖ } [:Lower:] > Dz;
+ΤΖ } [:Ll:] > Dz;
 ΤΖ > DZ;
 Τζ > Dz;
 τζ > dz;
@@ -135,7 +135,7 @@ export const elLatnRules = `
 α > a;
 Β > V;
 β > v;
-Γ } [:Lower:] > Gh;
+Γ } [:Ll:] > Gh;
 Γ > GH;
 γ > gh;
 Δ > D;
@@ -146,7 +146,7 @@ export const elLatnRules = `
 ζ > z;
 Η > I;
 η > i;
-Θ } [:Lower:] > Th;
+Θ } [:Ll:] > Th;
 Θ > TH;
 θ > th;
 Ι > I;
@@ -159,7 +159,7 @@ export const elLatnRules = `
 μ > m;
 Ν > N;
 ν > n;
-Ξ } [:Lower:] > Ks;
+Ξ } [:Ll:] > Ks;
 Ξ > KS;
 ξ > ks;
 Ο > O;
@@ -179,7 +179,7 @@ export const elLatnRules = `
 φ > f;
 Χ > X;
 χ > x;
-Ψ } [:Lower:] > Ps;
+Ψ } [:Ll:] > Ps;
 Ψ > PS;
 ψ > ps;
 Ω > O;

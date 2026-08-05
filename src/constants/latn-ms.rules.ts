@@ -40,23 +40,23 @@ th > s;
 Q > K;
 q > k;
 
-[:Uppercase:] { X > KH;
-X } [:Uppercase:] > KH;
+[:Lu:] { X > KH;
+X } [:Lu:] > KH;
 X > Kh;
 x > kh;
 
-[:Uppercase:] { Ľ > LY;
-Ľ } [:Uppercase:] > LY;
+[:Lu:] { Ľ > LY;
+Ľ } [:Lu:] > LY;
 Ľ > Ly;
 ľ > ly;
 
-[:Uppercase:] { Ń > NY;
-Ń } [:Uppercase:] > NY;
+[:Lu:] { Ń > NY;
+Ń } [:Lu:] > NY;
 Ń > Ny;
 ń > ny;
 
-[:Uppercase:] { Š > SY;
-Š } [:Uppercase:] > SY;
+[:Lu:] { Š > SY;
+Š } [:Lu:] > SY;
 Š > Sy;
 š > sy;
 
@@ -75,7 +75,7 @@ x > kh;
 
 [:^Letter:] { \\' > ;
 \\' } [AEIOUaeiou] > ;
-[:Uppercase:] { \\' } [:Uppercase:] > K;
-[:Uppercase:] { \\' } [:^Letter:] > K;
+[:Lu:] { \\' } [:Lu:] > K;
+[:Lu:] { \\' } [:^Letter:] > K;
 \\' > k;
 `;

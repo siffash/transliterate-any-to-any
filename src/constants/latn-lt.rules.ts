@@ -26,31 +26,31 @@ Ij > Ei;
 iJ > eI;
 ij > ei;
 
-[:^Letter:] { Ö } [:Upper:] > JO;
+[:^Letter:] { Ö } [:Lu:] > JO;
 [:^Letter:] { Ö > Jo;
 [:^Letter:] { ö > jo;
 
-[:Upper:] { Ö > IO;
-Ö } [:Upper:] > IO;
+[:Lu:] { Ö > IO;
+Ö } [:Lu:] > IO;
 Ö > Io;
 ö > io;
 
-[:^Letter:] { Ü } [:Upper:] > JU;
+[:^Letter:] { Ü } [:Lu:] > JU;
 [:^Letter:] { Ü > Ju;
 [:^Letter:] { ü > ju;
 
-[:Upper:] { Ü > IU;
-Ü } [:Upper:] > IU;
+[:Lu:] { Ü > IU;
+Ü } [:Lu:] > IU;
 Ü > Iu;
 ü > iu;
 
-[:Upper:] { Đ > DŽ;
-Đ } [:Upper:] > DŽ;
+[:Lu:] { Đ > DŽ;
+Đ } [:Lu:] > DŽ;
 Đ > Dž;
 đ > dž;
 
-[:Upper:] { X > CH;
-X } [:Upper:] > CH;
+[:Lu:] { X > CH;
+X } [:Lu:] > CH;
 X > Ch;
 x > ch;
 

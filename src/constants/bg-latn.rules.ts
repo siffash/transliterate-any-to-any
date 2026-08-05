@@ -1,23 +1,23 @@
 export const bgLatnRules = `
 ::NFC;
 
-[:Upper:] { Ц > TS;
-Ц } [:Upper:] > TS;
+[:Lu:] { Ц > TS;
+Ц } [:Lu:] > TS;
 Ц > Ts;
 ц > ts;
 
-[:Upper:] { Щ > ŠT;
-Щ } [:Upper:] > ŠT;
+[:Lu:] { Щ > ŠT;
+Щ } [:Lu:] > ŠT;
 Щ > Št;
 щ > št;
 
-[:Upper:] { Ю > YU;
-Ю } [:Upper:] > YU;
+[:Lu:] { Ю > YU;
+Ю } [:Lu:] > YU;
 Ю > Yu;
 ю > yu;
 
-[:Upper:] { Я > YA;
-Я } [:Upper:] > YA;
+[:Lu:] { Я > YA;
+Я } [:Lu:] > YA;
 Я > Ya;
 я > ya;
 

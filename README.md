@@ -1,48 +1,87 @@
-# transliterate-any-to-any
+# 🔄 transliterate-any-to-any
 
-A Node.js library for [transliteration](https://en.wikipedia.org/wiki/Transliteration) (not translation) from any language to any language (see the [list of the supported languages](#supported-languages)). Loads only specific libraries/mappings/rules needed for the given transliteration. Supports batching - you can pass an array of texts.
+A JavaScript/TypeScript library for [transliteration](https://en.wikipedia.org/wiki/Transliteration) (not translation) from any language to any language (see the [list of the supported languages](#supported-languages)).
 
-### Most suitable for transliteration of proper nouns:
+### Most suitable for transliteration of proper nouns
 
 - Place names, toponyms (e.g. names of cities, neighborhoods, towns, villages, streets, rivers, mountains, etc.)
 - Personal names, anthroponyms (e.g. first names, middle names, last names, nicknames, names of pets, etc.)
 - Business names (e.g. company or organization names, brand names, trademarks, etc.)
 
-## Examples
+### Features
+
+- Loads only the libraries/mappings/rules needed for the given transliteration
+- Supports batching - you can pass an array of strings
+- Transliterates even between languages of the same script (see [Maltese to Latvian example](#example-mt-to-lv))
+- Turbo mode available - [by installing icu4c](#turbo-mode)
+- Can work in browser (but not recommended because it's too heavy)
+
+## 💡 Examples
 
 ```typescript
-await transliterate("Λάρισα", { from: "el", to: "hy" }); // Լարիսա
-
-await transliterate("Копривщица", { from: "bg", to: "en" }); // Koprivshtitsa ???????
-
-await transliterate("上海", { from: "zh", to: "en" }); // Shanghai
-
-await transliterate(["上海", "广州"], { from: "zh", to: "bg" }); // ["Шанхай", "Гуанджоу"]
+// Greek -> Armenian
+await transliterate("Λάρισα", { from: "el", to: "hy" }); // -> Լարիսա
 ```
 
-## Prerequisites
+```typescript
+// Bulgarian -> Czech
+await transliterate("Копривщица", { from: "bg", to: "cs" }); // -> Koprivštica
+```
 
-- You need to have `pkg-config` (`brew install pkg-config`)
-- You need to have ICU (`brew install icu4c`)
-- You need to have ICU added to the `pkg-config` path (e.g. `echo 'export PKG_CONFIG_PATH="/opt/homebrew/opt/icu4c@78/lib/pkgconfig"' >> ~/.zshrc` for macOS)
+```typescript
+// French -> Russian
+await transliterate("Pierre Richard", { from: "fr", to: "ru" }); // -> Пьер Ришар
+```
 
-## API Reference
+<a id="example-mt-to-lv"></a>
+
+```typescript
+// Maltese -> Latvian
+await transliterate("Marsaxlokk", { from: "mt", to: "lv" }); // -> Marsašlok
+```
+
+```typescript
+// Japanese -> Arabic
+await transliterate("青森", { from: "ja", to: "ar" }); // -> اوموري
+```
+
+```typescript
+// Mandarin Chinese -> English
+await transliterate("上海", { from: "zh", to: "en" }); // -> Shanghai
+```
+
+```typescript
+// Mandarin Chinese -> Bulgarian
+await transliterate(["上海", "广州"], { from: "zh", to: "bg" }); // -> ["Шанхай", "Гуанджоу"]
+```
+
+## 📖 API Reference
 
 ### `transliterate(text, options): string | string[]`
 
-| Parameter | Type                 | Required | Description         |
-| --------- | -------------------- | -------- | ------------------- |
-| `text`    | `string \| string[]` | Yes      | Input text or texts |
-| `options` | `object`             | Yes      | Options - see below |
+| Parameter | Type                 | Required | Description             |
+| --------- | -------------------- | -------- | ----------------------- |
+| `text`    | `string \| string[]` | Yes      | Input string or strings |
+| `options` | `object`             | Yes      | Options - see below     |
 
-### Options
+#### Options
 
 | Object property | Type     | Required | Description                                                                  |
 | --------------- | -------- | -------- | ---------------------------------------------------------------------------- |
 | `from`          | `string` | Yes      | Input language in [BCP 47](https://en.wikipedia.org/wiki/IETF_language_tag)  |
 | `to`            | `string` | Yes      | Output language in [BCP 47](https://en.wikipedia.org/wiki/IETF_language_tag) |
 
-## Supported languages
+<a id="turbo-mode"></a>
+
+## 🚀️ Prerequisites for enabling Turbo mode
+
+- You need to have `pkg-config` (`brew install pkg-config`)
+- You need to have ICU (`brew install icu4c`)
+- You need to have ICU added to the `pkg-config` path (e.g. `echo 'export PKG_CONFIG_PATH="/opt/homebrew/opt/icu4c@78/lib/pkgconfig"' >> ~/.zshrc` for macOS)
+
+<a id="supported-languages"></a>
+
+## 🌍 Supported languages
 
 | English name     | [BCP 47](https://en.wikipedia.org/wiki/IETF_language_tag) | [ISO 15924 script](https://en.wikipedia.org/wiki/ISO_15924) | Countries where it's mostly used                                      |
 | ---------------- | --------------------------------------------------------- | ----------------------------------------------------------- | --------------------------------------------------------------------- |
@@ -50,6 +89,9 @@ await transliterate(["上海", "广州"], { from: "zh", to: "bg" }); // ["Шан
 | Japanese         | ja                                                        | Jpan (Hira+Kana+Han)                                        | Japan                                                                 |
 | Korean           | ko                                                        | Kore (Hangul)                                               | South Korea, North Korea                                              |
 | Hindi            | hi                                                        | Deva                                                        | India                                                                 |
+| Bengali          | bn                                                        | Beng                                                        | Bangladesh, India                                                     |
+| Urdu             | ur                                                        | Arab                                                        | Pakistan, India                                                       |
+| Persian          | fa                                                        | Arab                                                        | Iran, Afghanistan                                                     |
 | Arabic           | ar                                                        | Arab                                                        | Saudi Arabia, UAE, Egypt, many Middle Eastern/North African countries |
 | Hebrew           | he                                                        | Hebr                                                        | Israel                                                                |
 | Georgian         | ka                                                        | Geor                                                        | Georgia                                                               |
@@ -79,6 +121,7 @@ await transliterate(["上海", "广州"], { from: "zh", to: "bg" }); // ["Шан
 | Luxembourgish    | lb                                                        | Latn                                                        | Luxembourg                                                            |
 | Lithuanian       | lt                                                        | Latn                                                        | Lithuania                                                             |
 | Latvian          | lv                                                        | Latn                                                        | Latvia                                                                |
+| Malay            | ms                                                        | Latn                                                        | Malaysia, Brunei, Singapore                                           |
 | Maltese          | mt                                                        | Latn                                                        | Malta                                                                 |
 | Dutch            | nl                                                        | Latn                                                        | Netherlands, Belgium                                                  |
 | Norwegian        | no                                                        | Latn                                                        | Norway                                                                |
@@ -93,15 +136,15 @@ await transliterate(["上海", "广州"], { from: "zh", to: "bg" }); // ["Шан
 | Turkish          | tr                                                        | Latn                                                        | Turkey, Cyprus (Turkish community)                                    |
 | Vietnamese       | vi                                                        | Latn                                                        | Vietnam                                                               |
 
-## Third-party libraries used
+## 📦 Third-party libraries used
 
 - [ICU](https://icu.unicode.org/)'s [Transforms](https://unicode-org.github.io/icu/userguide/transforms/) through [icu-transliterator](https://github.com/longnow/node-icu-transliterator)
+- [pinyin-pro](https://github.com/zh-lx/pinyin-pro) for handling Pinyin (Chinese)
+- [opencc-js](https://github.com/nk2028/opencc-js) for handling Traditional & Simplified Chinese & Japanese Kanji (Shinjitai)
+- [kuroshiro](https://github.com/hexenq/kuroshiro) for handling Japanese Hiragana & Katakana
+- [kuroshiro-analyzer-kuromoji](https://github.com/hexenq/kuroshiro-analyzer-kuromoji) for handling Japanese Hiragana & Katakana
 - [aromanize](https://github.com/fujaru/aromanize-js) for handling Korean Hangul
 - [hangul-js](https://github.com/e-/Hangul.js) for handling Korean Hangul
-- [pinyin-pro](https://github.com/zh-lx/pinyin-pro) for handling Pinyin (Chinese)
-- [opencc-js](https://github.com/nk2028/opencc-js) for handling Traditional Chinese, Simplified Chinese and Japanese Kanji (Shinjitai)
-- [kuroshiro](https://github.com/hexenq/kuroshiro) for handling Japanese Hiragana and Katakana
-- [kuroshiro-analyzer-kuromoji](https://github.com/hexenq/kuroshiro-analyzer-kuromoji) for handling Japanese Hiragana and Katakana
 - [hanviet-pinyin-words](https://github.com/ph0ngp/hanviet-pinyin-words) for handling Vietnamese
 - [phonemize](https://github.com/hans00/phonemize) for converting some languages to IPA
 - [ipa-dict](https://github.com/open-dict-data/ipa-dict) for IPA dictionaries

@@ -4,46 +4,46 @@ export const latnBsRules = `
 [:^Letter:] { I } [AaÄäEeOoÖöUuÜüŸÿ] > J;
 [:^Letter:] { i } [AaÄäEeOoÖöUuÜüŸÿ] > j;
 
-[:Upper:] { Ľ > LJ;
-Ľ } [:Upper:] > LJ;
+[:Lu:] { Ľ > LJ;
+Ľ } [:Lu:] > LJ;
 Ľ > Lj;
 ľ > lj;
 
-[:Upper:] { Ń > NJ;
-Ń } [:Upper:] > NJ;
+[:Lu:] { Ń > NJ;
+Ń } [:Lu:] > NJ;
 Ń > Nj;
 ń > nj;
 
-[:Upper:] { IJ > EJ;
-IJ } [:Upper:] > EJ;
+[:Lu:] { IJ > EJ;
+IJ } [:Lu:] > EJ;
 IJ > Ej;
 Ij > Ej;
 iJ > ej;
 ij > ej;
 
-[:Upper:] { TS > C;
-TS } [:Upper:] > C;
+[:Lu:] { TS > C;
+TS } [:Lu:] > C;
 TS > C;
 Ts > C;
 tS > c;
 ts > c;
 
-[:Upper:] { TH > T;
-TH } [:Upper:] > T;
+[:Lu:] { TH > T;
+TH } [:Lu:] > T;
 TH > T;
 Th > T;
 tH > t;
 th > t;
 
-[:Upper:] { GH > G;
-GH } [:Upper:] > G;
+[:Lu:] { GH > G;
+GH } [:Lu:] > G;
 GH > G;
 Gh > G;
 gH > g;
 gh > g;
 
-[:Upper:] { KH > H;
-KH } [:Upper:] > H;
+[:Lu:] { KH > H;
+KH } [:Lu:] > H;
 KH > H;
 Kh > H;
 kH > h;

@@ -145,23 +145,23 @@ kH > х;
 KH > Х;
 
 đ > дж;
-Đ } [:Lower:] > Дж;
+Đ } [:Ll:] > Дж;
 Đ > ДЖ;
 
 ń > нь;
-Ń } [:Lower:] > Нь;
+Ń } [:Ll:] > Нь;
 Ń > НЬ;
 
 ľ > ль;
-Ľ } [:Lower:] > Ль;
+Ľ } [:Ll:] > Ль;
 Ľ > ЛЬ;
 
 [bcdfghjklmnpqrstvwxzBCDFGHJKLMNPQRSTVWXZľńšžđćčĽŃŠŽĐĆČбвгджзйклмнпрстфхцчшщБВГДЖЗЙКЛМНПРСТФХЦЧШЩ] { ö > ьо;
-[bcdfghjklmnpqrstvwxzBCDFGHJKLMNPQRSTVWXZľńšžđćčĽŃŠŽĐĆČбвгджзйклмнпрстфхцчшщБВГДЖЗЙКЛМНПРСТФХЦЧШЩ] { Ö } [:Lower:] > Ьо;
+[bcdfghjklmnpqrstvwxzBCDFGHJKLMNPQRSTVWXZľńšžđćčĽŃŠŽĐĆČбвгджзйклмнпрстфхцчшщБВГДЖЗЙКЛМНПРСТФХЦЧШЩ] { Ö } [:Ll:] > Ьо;
 [bcdfghjklmnpqrstvwxzBCDFGHJKLMNPQRSTVWXZľńšžđćčĽŃŠŽĐĆČбвгджзйклмнпрстфхцчшщБВГДЖЗЙКЛМНПРСТФХЦЧШЩ] { Ö > ЬО;
 
 ö > йо;
-Ö } [:Lower:] > Йо;
+Ö } [:Ll:] > Йо;
 Ö > ЙО;
 
 ä > е;

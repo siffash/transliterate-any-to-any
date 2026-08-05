@@ -26,13 +26,13 @@ Kh > Ch;
 kH > cH;
 kh > ch;
 
-X } [:Upper:] > CH;
-[:Upper:] { X > CH;
+X } [:Lu:] > CH;
+[:Lu:] { X > CH;
 X > Ch;
 x > ch;
 
-Q } [:Upper:] > KV;
-[:Upper:] { Q > KV;
+Q } [:Lu:] > KV;
+[:Lu:] { Q > KV;
 Q > Kv;
 q > kv;
 

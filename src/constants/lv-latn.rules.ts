@@ -24,7 +24,7 @@ Ch > X;
 cH > x;
 ch > x;
 
-C } [:Upper:] > TS;
+C } [:Lu:] > TS;
 C } [:^Letter:] > TS;
 C > Ts;
 c > ts;

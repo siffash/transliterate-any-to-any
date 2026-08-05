@@ -1,8 +1,9 @@
 export const fiIpaRules = `
 ::Lower;
+
 sch > ʃ;
 ch > ʃ;
-[a e i o u y ä ö å] { ng } [a e i o u y ä ö å] > ŋː;
+[aeiouyäöå] { ng } [aeiouyäöå] > ŋː;
 ng > ŋ;
 nk > ŋk;
 np > mp;

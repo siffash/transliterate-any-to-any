@@ -1,40 +1,40 @@
 export const ruLatnRules = `
 ::NFC;
 
-ДЖ } [:Upper:] > DŽ;
-[:Upper:] { ДЖ > DŽ;
+ДЖ } [:Lu:] > DŽ;
+[:Lu:] { ДЖ > DŽ;
 ДЖ > Dž;
 Дж > Dž;
 дж > dž;
 
-ДЗ } [:Upper:] > DZ;
-[:Upper:] { ДЗ > DZ;
+ДЗ } [:Lu:] > DZ;
+[:Lu:] { ДЗ > DZ;
 ДЗ > Dz;
 Дз > Dz;
 дз > dz;
 
-Щ } [:Upper:] > ŠČ;
-[:Upper:] { Щ > ŠČ;
+Щ } [:Lu:] > ŠČ;
+[:Lu:] { Щ > ŠČ;
 Щ > Šč;
 щ > šč;
 
-Ц } [:Upper:] > TS;
-[:Upper:] { Ц > TS;
+Ц } [:Lu:] > TS;
+[:Lu:] { Ц > TS;
 Ц > Ts;
 ц > ts;
 
-Ю } [:Upper:] > YU;
-[:Upper:] { Ю > YU;
+Ю } [:Lu:] > YU;
+[:Lu:] { Ю > YU;
 Ю > Yu;
 ю > yu;
 
-Я } [:Upper:] > YA;
-[:Upper:] { Я > YA;
+Я } [:Lu:] > YA;
+[:Lu:] { Я > YA;
 Я > Ya;
 я > ya;
 
-Ё } [:Upper:] > YO;
-[:Upper:] { Ё > YO;
+Ё } [:Lu:] > YO;
+[:Lu:] { Ё > YO;
 Ё > Yo;
 ё > yo;
 
@@ -50,11 +50,11 @@ export const ruLatnRules = `
 Дь > Đ;
 дь > đ;
 
-[:^Letter:] { Е } [:Upper:] > YE;
+[:^Letter:] { Е } [:Lu:] > YE;
 [:^Letter:] { Е > Ye;
 [:^Letter:] { е > ye;
 
-[АЕЁИОУЫЭЮЯаеёиоуыэюяAaEeIiOoUuYyÏïĽľŃńĐđ] { Е } [:Upper:] > YE;
+[АЕЁИОУЫЭЮЯаеёиоуыэюяAaEeIiOoUuYyÏïĽľŃńĐđ] { Е } [:Lu:] > YE;
 [АЕЁИОУЫЭЮЯAEIOUYÏĽŃĐ] { Е > YE;
 [АЕЁИОУЫЭЮЯаеёиоуыэюяAaEeIiOoUuYyÏïĽľŃńĐđ] { Е > Ye;
 [АЕЁИОУЫЭЮЯаеёиоуыэюяAaEeIiOoUuYyÏïĽľŃńĐđ] { е > ye;

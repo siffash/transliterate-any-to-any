@@ -1,13 +1,13 @@
 export const latnKkRules = `
 ::Null;
 
-Č } [:Lowercase:] > Tş;
+Č } [:Ll:] > Tş;
 Č > TŞ;
 č > tş;
-Ć } [:Lowercase:] > Tş;
+Ć } [:Ll:] > Tş;
 Ć > TŞ;
 ć > tş;
-Đ } [:Lowercase:] > Dj;
+Đ } [:Ll:] > Dj;
 Đ > DJ;
 đ > dj;
 IJ > İY;

@@ -8,10 +8,10 @@ export const trLatnRules = `
 Û > U;
 û > u;
 
-C } [:Upper:] > DŽ;
-[:Upper:] { C } [:^Letter:] > DŽ;
-[:Upper:] { C } [:Lower:] > Dž;
-[:Upper:] { C > DŽ;
+C } [:Lu:] > DŽ;
+[:Lu:] { C } [:^Letter:] > DŽ;
+[:Lu:] { C } [:Ll:] > Dž;
+[:Lu:] { C > DŽ;
 C > Dž;
 c > dž;
 
@@ -21,10 +21,10 @@ c > dž;
 [eiöüEIÖÜ] { Ğ > Y;
 [eiöüEIÖÜ] { ğ > y;
 
-Ğ } [:Upper:] > GH;
-[:Upper:] { Ğ } [:^Letter:] > GH;
-[:Upper:] { Ğ } [:Lower:] > Gh;
-[:Upper:] { Ğ > GH;
+Ğ } [:Lu:] > GH;
+[:Lu:] { Ğ } [:^Letter:] > GH;
+[:Lu:] { Ğ } [:Ll:] > Gh;
+[:Lu:] { Ğ > GH;
 Ğ > Gh;
 ğ > gh;
 

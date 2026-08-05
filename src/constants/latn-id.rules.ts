@@ -3,7 +3,7 @@ export const latnIdRules = `
 
 [:^Letter:] { \\' > ;
 
-I[Jj] } [:Lower:] > Ei;
+I[Jj] } [:Ll:] > Ei;
 IJ > EI;
 Ij > Ei;
 ij > ei;
@@ -27,15 +27,15 @@ GH > G;
 Gh > G;
 gh > g;
 
-X } [:Lower:] > Kh;
+X } [:Ll:] > Kh;
 X > KH;
 x > kh;
 
-Ń } [:Lower:] > Ny;
+Ń } [:Ll:] > Ny;
 Ń > NY;
 ń > ny;
 
-Š } [:Lower:] > Sy;
+Š } [:Ll:] > Sy;
 Š > SY;
 š > sy;
 

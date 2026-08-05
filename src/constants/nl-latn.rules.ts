@@ -94,8 +94,8 @@ c } [eéiíyýEÉIÍYÝ] > s;
 C > K;
 c > k;
 
-[:Uppercase:] { X > KS;
-X } [:Uppercase:] > KS;
+[:Lu:] { X > KS;
+X } [:Lu:] > KS;
 X > Ks;
 x > ks;
 

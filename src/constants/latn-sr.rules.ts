@@ -35,13 +35,13 @@ Ij > Ej;
 iJ > eJ;
 ij > ej;
 
-[:Upper:] { Ń > NJ;
-Ń } [:Upper:] > NJ;
+[:Lu:] { Ń > NJ;
+Ń } [:Lu:] > NJ;
 Ń > Nj;
 ń > nj;
 
-[:Upper:] { Ľ > LJ;
-Ľ } [:Upper:] > LJ;
+[:Lu:] { Ľ > LJ;
+Ľ } [:Lu:] > LJ;
 Ľ > Lj;
 ľ > lj;
 

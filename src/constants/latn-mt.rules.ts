@@ -29,11 +29,11 @@ IJ > EJ;
 Ij > Ej;
 ij > ej;
 
-Ľ } [:Upper:] > LJ;
+Ľ } [:Lu:] > LJ;
 Ľ > Lj;
 ľ > lj;
 
-Ń } [:Upper:] > NJ;
+Ń } [:Lu:] > NJ;
 Ń > Nj;
 ń > nj;
 
@@ -79,7 +79,7 @@ q > k;
 Ÿ > J;
 ÿ > j;
 
-\\' } [:Upper:] > Q;
+\\' } [:Lu:] > Q;
 \\' > q;
 
 · > ;

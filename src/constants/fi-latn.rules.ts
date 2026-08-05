@@ -23,14 +23,14 @@ c } [EIYÄÖeiyäö] > s;
 C > K;
 c > k;
 
-X } [:Lowercase:] > Ks;
-[:Lowercase:] { X > Ks;
+X } [:Ll:] > Ks;
+[:Ll:] { X > Ks;
 [:^Letter:] { X } [:^Letter:] > KS;
 X > KS;
 x > ks;
 
-Z } [:Lowercase:] > Ts;
-[:Lowercase:] { Z > Ts;
+Z } [:Ll:] > Ts;
+[:Ll:] { Z > Ts;
 [:^Letter:] { Z } [:^Letter:] > TS;
 Z > TS;
 z > ts;

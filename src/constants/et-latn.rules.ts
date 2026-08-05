@@ -23,11 +23,11 @@ Zh > Ž;
 ZH > Ž;
 zh > ž;
 
-X } [:Lower:] > Ks;
+X } [:Ll:] > Ks;
 X > KS;
 x > ks;
 
-C } [:Lower:] > Ts;
+C } [:Ll:] > Ts;
 C > TS;
 c > ts;
 

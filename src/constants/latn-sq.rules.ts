@@ -31,23 +31,23 @@ Ij > Ej;
 iJ > eJ;
 ij > ej;
 
-Š } [:Lower:] > Sh;
+Š } [:Ll:] > Sh;
 Š > SH;
 š > sh;
 
-Ž } [:Lower:] > Zh;
+Ž } [:Ll:] > Zh;
 Ž > ZH;
 ž > zh;
 
-Đ } [:Lower:] > Gj;
+Đ } [:Ll:] > Gj;
 Đ > GJ;
 đ > gj;
 
-Ń } [:Lower:] > Nj;
+Ń } [:Ll:] > Nj;
 Ń > NJ;
 ń > nj;
 
-Ľ } [:Lower:] > Lj;
+Ľ } [:Ll:] > Lj;
 Ľ > LJ;
 ľ > lj;
 

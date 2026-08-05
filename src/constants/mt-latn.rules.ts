@@ -53,11 +53,11 @@ v } [:^Letter:] > f;
 Ż } [:^Letter:] > S;
 ż } [:^Letter:] > s;
 
-Ġ } [:Upper:] > DŽ;
+Ġ } [:Lu:] > DŽ;
 Ġ > Dž;
 ġ > dž;
 
-Z } [:Upper:] > TS;
+Z } [:Lu:] > TS;
 Z > Ts;
 z > ts;
 

@@ -1,19 +1,19 @@
 export const latnFiRules = `
 ::Null;
 
-Č } [:Lower:] > Tš;
+Č } [:Ll:] > Tš;
 Č > TŠ;
 č > tš;
-Ć } [:Lower:] > Tš;
+Ć } [:Ll:] > Tš;
 Ć > TŠ;
 ć > tš;
-Đ } [:Lower:] > Dž;
+Đ } [:Ll:] > Dž;
 Đ > DŽ;
 đ > dž;
-Ń } [:Lower:] > Nj;
+Ń } [:Ll:] > Nj;
 Ń > NJ;
 ń > nj;
-Ľ } [:Lower:] > Lj;
+Ľ } [:Ll:] > Lj;
 Ľ > LJ;
 ľ > lj;
 IJ > EI;

@@ -21,35 +21,35 @@ IJ > EJ;
 Ij > Ej;
 ij > ej;
 
-Ć } [:Lower:] > Tj;
+Ć } [:Ll:] > Tj;
 Ć > TJ;
 ć > tj;
 
-Č } [:Lower:] > Ch;
+Č } [:Ll:] > Ch;
 Č > CH;
 č > ch;
 
-Đ } [:Lower:] > Dj;
+Đ } [:Ll:] > Dj;
 Đ > DJ;
 đ > dj;
 
-Ľ } [:Lower:] > Lj;
+Ľ } [:Ll:] > Lj;
 Ľ > LJ;
 ľ > lj;
 
-Ń } [:Lower:] > Nj;
+Ń } [:Ll:] > Nj;
 Ń > NJ;
 ń > nj;
 
-Š } [:Lower:] > Sj;
+Š } [:Ll:] > Sj;
 Š > SJ;
 š > sj;
 
-Ž } [:Lower:] > Zj;
+Ž } [:Ll:] > Zj;
 Ž > ZJ;
 ž > zj;
 
-X } [:Lower:] > Ch;
+X } [:Ll:] > Ch;
 X > CH;
 x > ch;
 

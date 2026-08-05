@@ -32,28 +32,28 @@ kh > h;
 X > H;
 x > h;
 
-[:Upper:] { Č > TŠ;
-Č } [:Upper:] > TŠ;
+[:Lu:] { Č > TŠ;
+Č } [:Lu:] > TŠ;
 Č > Tš;
 č > tš;
 
-[:Upper:] { Ć > TŠ;
-Ć } [:Upper:] > TŠ;
+[:Lu:] { Ć > TŠ;
+Ć } [:Lu:] > TŠ;
 Ć > Tš;
 ć > tš;
 
-[:Upper:] { Đ > DŽ;
-Đ } [:Upper:] > DŽ;
+[:Lu:] { Đ > DŽ;
+Đ } [:Lu:] > DŽ;
 Đ > Dž;
 đ > dž;
 
-[:Upper:] { Ń > NJ;
-Ń } [:Upper:] > NJ;
+[:Lu:] { Ń > NJ;
+Ń } [:Lu:] > NJ;
 Ń > Nj;
 ń > nj;
 
-[:Upper:] { Ľ > LJ;
-Ľ } [:Upper:] > LJ;
+[:Lu:] { Ľ > LJ;
+Ľ } [:Lu:] > LJ;
 Ľ > Lj;
 ľ > lj;
 

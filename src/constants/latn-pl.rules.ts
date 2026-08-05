@@ -41,8 +41,8 @@ kh > ch;
 đ } [AÄEÏOÖU] > dzI;
 Đ } [aäeïoöu] > Dzi;
 Đ } [AÄEÏOÖU] > DZI;
-Đ } [:Upper:] > DŹ;
-[:Upper:] { Đ > DŹ;
+Đ } [:Lu:] > DŹ;
+[:Lu:] { Đ > DŹ;
 Đ > Dź;
 đ > dź;
 
@@ -53,18 +53,18 @@ kh > ch;
 Ń } [aäeïoöu] > Ni;
 Ń } [AÄEÏOÖU] > NI;
 
-Š } [:Upper:] > SZ;
-[:Upper:] { Š > SZ;
+Š } [:Lu:] > SZ;
+[:Lu:] { Š > SZ;
 Š > Sz;
 š > sz;
 
-Č } [:Upper:] > CZ;
-[:Upper:] { Č > CZ;
+Č } [:Lu:] > CZ;
+[:Lu:] { Č > CZ;
 Č > Cz;
 č > cz;
 
-X } [:Upper:] > CH;
-[:Upper:] { X > CH;
+X } [:Lu:] > CH;
+[:Lu:] { X > CH;
 X > Ch;
 x > ch;
 

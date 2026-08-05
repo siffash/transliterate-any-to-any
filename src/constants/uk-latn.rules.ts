@@ -21,62 +21,62 @@ export const ukLatnRules = `
 [ĐĽŃđľń] { Є > E;
 [ĐĽŃđľń] { є > e;
 
-[AEIOUÏaeiouï] { Є } [:Upper:] > YE;
-[:^Letter:] { Є } [:Upper:] > YE;
+[AEIOUÏaeiouï] { Є } [:Lu:] > YE;
+[:^Letter:] { Є } [:Lu:] > YE;
 [AEIOUÏ] { Є > YE;
 [AEIOUÏaeiouï] { Є > Ye;
 [:^Letter:] { Є > Ye;
 [AEIOUÏaeiouï] { є > ye;
 [:^Letter:] { є > ye;
 
-[AEIOUÏaeiouï] { Ю } [:Upper:] > YU;
-[:^Letter:] { Ю } [:Upper:] > YU;
+[AEIOUÏaeiouï] { Ю } [:Lu:] > YU;
+[:^Letter:] { Ю } [:Lu:] > YU;
 [AEIOUÏ] { Ю > YU;
 [AEIOUÏaeiouï] { Ю > Yu;
 [:^Letter:] { Ю > Yu;
 [AEIOUÏaeiouï] { ю > yu;
 [:^Letter:] { ю > yu;
 
-[AEIOUÏaeiouï] { Я } [:Upper:] > YA;
-[:^Letter:] { Я } [:Upper:] > YA;
+[AEIOUÏaeiouï] { Я } [:Lu:] > YA;
+[:^Letter:] { Я } [:Lu:] > YA;
 [AEIOUÏ] { Я > YA;
 [AEIOUÏaeiouï] { Я > Ya;
 [:^Letter:] { Я > Ya;
 [AEIOUÏaeiouï] { я > ya;
 [:^Letter:] { я > ya;
 
-Ї } [:Upper:] > YI;
-[:Upper:] { Ї > YI;
+Ї } [:Lu:] > YI;
+[:Lu:] { Ї > YI;
 Ї > Yi;
 ї > yi;
 
-Й } [:Upper:] > Y;
-[:Upper:] { Й > Y;
+Й } [:Lu:] > Y;
+[:Lu:] { Й > Y;
 Й > Y;
 й > y;
 
-Є } [:Upper:] > IE;
-[:Upper:] { Є > IE;
+Є } [:Lu:] > IE;
+[:Lu:] { Є > IE;
 Є > Ie;
 є > ie;
 
-Ю } [:Upper:] > IU;
-[:Upper:] { Ю > IU;
+Ю } [:Lu:] > IU;
+[:Lu:] { Ю > IU;
 Ю > Iu;
 ю > iu;
 
-Я } [:Upper:] > IA;
-[:Upper:] { Я > IA;
+Я } [:Lu:] > IA;
+[:Lu:] { Я > IA;
 Я > Ia;
 я > ia;
 
-Щ } [:Upper:] > ŠČ;
-[:Upper:] { Щ > ŠČ;
+Щ } [:Lu:] > ŠČ;
+[:Lu:] { Щ > ŠČ;
 Щ > Šč;
 щ > šč;
 
-Ц } [:Upper:] > TS;
-[:Upper:] { Ц > TS;
+Ц } [:Lu:] > TS;
+[:Lu:] { Ц > TS;
 Ц > Ts;
 ц > ts;
 

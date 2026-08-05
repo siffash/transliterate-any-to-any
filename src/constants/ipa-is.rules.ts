@@ -1,20 +1,20 @@
 export const ipaIsRules = `
 ::Null;
 
-[͈̚ʔʰʱʼˈ̇ˌ̧ːˠˤ˥˧˩̝̟̥̩̪̯̃̊͡] > ;
+[͈̚ʔʰʱ'’ʼˈ̇ˌ̧ːˠˤ˥˧˩̝̟̥̩̪̯̃̊͡] > ;
 
 ::Null;
 
-[:^Letter:] { r ̥ } > hr;
-[:^Letter:] { l ̥ } > hl;
-[:^Letter:] { n ̥ } > hn;
-[:^Letter:] { m ̥ } > hm;
+[:^Letter:] { r ̥ > hr;
+[:^Letter:] { l ̥ > hl;
+[:^Letter:] { n ̥ > hn;
+[:^Letter:] { m ̥ > hm;
 
 a [uʊ] > á;
 o [uʊ] > ó;
 œ [yʏ] > au;
 a [iɪ] > æ;
-e { [iɪ] } > i;
+e { [iɪ] > i;
 j [eɛ] > é;
 pʰ > p;
 tʰ > t;

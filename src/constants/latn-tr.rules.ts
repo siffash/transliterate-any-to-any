@@ -17,16 +17,16 @@ KH > H;
 Kh > H;
 kh > h;
 
-IJ } [:Lower:] > Ey;
+IJ } [:Ll:] > Ey;
 IJ > EY;
 Ij > Ey;
 ij > ey;
 
-Ń } [:Lower:] > Ny;
+Ń } [:Ll:] > Ny;
 Ń > NY;
 ń > ny;
 
-Ľ } [:Lower:] > Ly;
+Ľ } [:Ll:] > Ly;
 Ľ > LY;
 ľ > ly;
 
