@@ -1,10 +1,10 @@
 import { Text } from "types";
 
 export const urEn = async <T = Text>(text: Text): Promise<T> => {
-  const { urIpaMap } = await import("constants/ur-ipa.map");
+  const { urIpaMap } = await import("data/ur-ipa.map");
   const { RBT } = await import("helpers/rbt-distributor");
-  const { ipaEnRules } = await import("constants/ipa-en.rules");
-  const { urEnRules } = await import("constants/ur-en.rules");
+  const { ipaEnRules } = await import("data/ipa-en.rules");
+  const { urEnRules } = await import("data/ur-en.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
 
   const transliteratorIpa = RBT.fromRules(ipaEnRules + "::Title;");

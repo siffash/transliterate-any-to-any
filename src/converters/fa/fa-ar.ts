@@ -2,7 +2,7 @@ import { Text } from "types";
 
 export const faAr = async (text: Text) => {
   const { RBT } = await import("helpers/rbt-distributor");
-  const { faArRules } = await import("constants/fa-ar.rules");
+  const { faArRules } = await import("data/fa-ar.rules");
 
   const transliterator = RBT.fromRules(faArRules);
 

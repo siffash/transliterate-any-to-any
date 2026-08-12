@@ -1,9 +1,9 @@
 import { Text } from "types";
 
 export const urIpa = async <T = Text>(text: Text): Promise<T> => {
-  const { urIpaMap } = await import("constants/ur-ipa.map");
+  const { urIpaMap } = await import("data/ur-ipa.map");
   const { RBT } = await import("helpers/rbt-distributor");
-  const { urIpaRules } = await import("constants/ur-ipa.rules");
+  const { urIpaRules } = await import("data/ur-ipa.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
 
   const transliterator = RBT.fromRules(urIpaRules);

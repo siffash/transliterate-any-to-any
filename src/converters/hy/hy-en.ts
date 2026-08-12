@@ -2,7 +2,7 @@ import { Text } from "types";
 
 export const hyEn = async (text: Text) => {
   const { RBT } = await import("helpers/rbt-distributor");
-  const { hyEnRules } = await import("constants/hy-en.rules");
+  const { hyEnRules } = await import("data/hy-en.rules");
 
   const transliterator = RBT.fromRules(hyEnRules);
 

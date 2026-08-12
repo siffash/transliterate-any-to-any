@@ -2,8 +2,8 @@ import { Text } from "types";
 
 export const caAr = async (text: Text) => {
   const { RBT } = await import("helpers/rbt-distributor");
-  const { caIpaRules } = await import("constants/ca-ipa.rules");
-  const { ipaArRules } = await import("constants/ipa-ar.rules");
+  const { caIpaRules } = await import("data/ca-ipa.rules");
+  const { ipaArRules } = await import("data/ipa-ar.rules");
 
   const transliterator = RBT.fromRules(caIpaRules + ipaArRules);
 

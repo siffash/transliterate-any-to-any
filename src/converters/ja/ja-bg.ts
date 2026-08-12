@@ -4,7 +4,7 @@ export const jaBg = async (text: Text) => {
   const { default: Kuroshiro } = await import("kuroshiro");
   const { default: KuromojiAnalyzer } = await import("kuroshiro-analyzer-kuromoji");
   const { RBT } = await import("helpers/rbt-distributor");
-  const { jaBgRules } = await import("constants/ja-bg.rules");
+  const { jaBgRules } = await import("data/ja-bg.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
 
   const kuroshiro = new Kuroshiro();

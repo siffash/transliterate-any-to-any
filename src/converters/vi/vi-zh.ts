@@ -1,10 +1,10 @@
 import { Text } from "types";
 
 export const viZh = async (text: Text) => {
-  const { compoundDictionary, singleDictionary } = await import("constants/vi-zh.map");
+  const { compoundDictionary, singleDictionary } = await import("data/vi-zh.map");
   const { RBT } = await import("helpers/rbt-distributor");
-  const { viIpaRules } = await import("constants/vi-ipa.rules");
-  const { ipaZhRules } = await import("constants/ipa-zh.rules");
+  const { viIpaRules } = await import("data/vi-ipa.rules");
+  const { ipaZhRules } = await import("data/ipa-zh.rules");
 
   const transliteratorToIpa = RBT.fromRules(viIpaRules);
   const transliteratorToZh = RBT.fromRules(ipaZhRules);

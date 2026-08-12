@@ -2,8 +2,8 @@ import { Text } from "types";
 
 export const elSk = async (text: Text) => {
   const { RBT } = await import("helpers/rbt-distributor");
-  const { elLatnRules } = await import("constants/el-latn.rules");
-  const { latnSkRules } = await import("constants/latn-sk.rules");
+  const { elLatnRules } = await import("data/el-latn.rules");
+  const { latnSkRules } = await import("data/latn-sk.rules");
 
   const transliterator = RBT.fromRules(elLatnRules + latnSkRules);
 

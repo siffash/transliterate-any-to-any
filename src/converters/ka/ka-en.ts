@@ -2,7 +2,7 @@ import { Text } from "types";
 
 export const kaEn = async (text: Text) => {
   const { RBT } = await import("helpers/rbt-distributor");
-  const { kaEnRules } = await import("constants/ka-en.rules");
+  const { kaEnRules } = await import("data/ka-en.rules");
 
   const transliterator = RBT.fromRules(kaEnRules);
 

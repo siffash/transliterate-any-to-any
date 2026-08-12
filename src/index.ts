@@ -10,7 +10,7 @@ export { type Script, type Language } from "./types";
 // import { RBT } from "helpers/rbt";
 // import { settings } from "helpers/rbt-distributor";
 import { prettyConvert } from "helpers/prettyConvert";
-import { ipaKaRules } from "constants/ipa-ka.rules";
+import { ipaKaRules } from "data/ipa-ka.rules";
 const test = async () => {
   console.log(
     await prettyConvert(

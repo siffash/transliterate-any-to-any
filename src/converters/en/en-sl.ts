@@ -4,7 +4,7 @@ import { copyCase } from "helpers/copyCase";
 export const enSl = async (text: Text) => {
   const { toIPA } = require("phonemize");
   const { RBT } = await import("helpers/rbt-distributor");
-  const { ipaSlRules } = await import("constants/ipa-sl.rules");
+  const { ipaSlRules } = await import("data/ipa-sl.rules");
 
   const transliterator = RBT.fromRules(ipaSlRules);
 

@@ -2,8 +2,8 @@ import { Text } from "types";
 
 export const elJa = async (text: Text) => {
   const { RBT } = await import("helpers/rbt-distributor");
-  const { elIpaRules } = await import("constants/el-ipa.rules");
-  const { ipaJaRules } = await import("constants/ipa-ja.rules");
+  const { elIpaRules } = await import("data/el-ipa.rules");
+  const { ipaJaRules } = await import("data/ipa-ja.rules");
 
   const transliterator = RBT.fromRules(elIpaRules + ipaJaRules);
 

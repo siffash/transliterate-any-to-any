@@ -3,7 +3,7 @@ import { Text } from "types";
 export const koFa = async (text: Text) => {
   const { toIPA } = require("phonemize/all");
   const { RBT } = await import("helpers/rbt-distributor");
-  const { ipaFaRules } = await import("constants/ipa-fa.rules");
+  const { ipaFaRules } = await import("data/ipa-fa.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
 
   const transliterator = RBT.fromRules(ipaFaRules);

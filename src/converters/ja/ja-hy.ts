@@ -5,8 +5,8 @@ export const jaHy = async (text: Text) => {
   const { default: KuromojiAnalyzer } = await import("kuroshiro-analyzer-kuromoji");
   const { toIPA } = require("phonemize/all");
   const { RBT } = await import("helpers/rbt-distributor");
-  const { jaIpaRules } = await import("constants/ja-ipa.rules");
-  const { ipaHyRules } = await import("constants/ipa-hy.rules");
+  const { jaIpaRules } = await import("data/ja-ipa.rules");
+  const { ipaHyRules } = await import("data/ipa-hy.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
 
   const kuroshiro = new Kuroshiro();

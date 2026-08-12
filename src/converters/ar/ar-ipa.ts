@@ -1,9 +1,9 @@
 import { Text } from "types";
 
 export const arIpa = async <T = Text>(text: Text): Promise<T> => {
-  const { arIpaMap, charMap } = await import("constants/ar-ipa.map");
+  const { arIpaMap, charMap } = await import("data/ar-ipa.map");
   const { RBT } = await import("helpers/rbt-distributor");
-  const { arIpaRules } = await import("constants/ar-ipa.rules");
+  const { arIpaRules } = await import("data/ar-ipa.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
 
   const transliterator = RBT.fromRules(arIpaRules);

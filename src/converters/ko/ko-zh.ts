@@ -2,7 +2,7 @@ import { Text } from "types";
 
 export const koZh = async (text: Text) => {
   const { B_MAP, BATCHIMS, DIRECT_MAP, INITIALS, IV_MAP, VOWELS } =
-    await import("constants/ko-zh.map");
+    await import("data/ko-zh.map");
 
   const convert = (text: string) => {
     let result = "";

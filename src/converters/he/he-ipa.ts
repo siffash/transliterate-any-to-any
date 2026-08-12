@@ -1,7 +1,7 @@
 import { Text } from "types";
 
 export const heIpa = async <T = Text>(text: Text): Promise<T> => {
-  const { heIpaMap, charMap } = await import("constants/he-ipa.map");
+  const { heIpaMap, charMap } = await import("data/he-ipa.map");
 
   const convert = (text: string) => {
     const SINGLE_PREFIXES = ["ו", "ב", "כ", "ל", "מ", "ה"];

@@ -4,7 +4,7 @@ export const jaKo = async (text: Text) => {
   const { default: Kuroshiro } = await import("kuroshiro");
   const { default: KuromojiAnalyzer } = await import("kuroshiro-analyzer-kuromoji");
   const { default: Hangul } = await import("hangul-js");
-  const { jaKoMap } = await import("constants/ja-ko.map");
+  const { jaKoMap } = await import("data/ja-ko.map");
   const { wordSplitter } = await import("helpers/wordSplitter");
 
   const sortedKeys = Object.keys(jaKoMap).sort((a, b) => b.length - a.length);

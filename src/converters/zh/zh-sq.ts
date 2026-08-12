@@ -3,7 +3,7 @@ import { Text } from "types";
 export const zhSq = async (text: Text) => {
   const { toIPA } = require("phonemize/all");
   const { RBT } = await import("helpers/rbt-distributor");
-  const { ipaSqRules } = await import("constants/ipa-sq.rules");
+  const { ipaSqRules } = await import("data/ipa-sq.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
 
   const transliterator = RBT.fromRules(ipaSqRules + "::Title;");

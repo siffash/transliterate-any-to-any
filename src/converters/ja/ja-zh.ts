@@ -2,7 +2,7 @@ import { Text } from "types";
 
 export const jaZh = async (text: Text) => {
   const OpenCC = await import("opencc-js");
-  const { jaZhMap } = await import("constants/ja-zh.map");
+  const { jaZhMap } = await import("data/ja-zh.map");
 
   const sortedKeys = Object.keys(jaZhMap).sort((a, b) => b.length - a.length);
   const pattern = new RegExp(sortedKeys.join("|"), "g");

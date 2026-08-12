@@ -3,8 +3,8 @@ import { Text } from "types";
 export const zhDa = async (text: Text) => {
   const { pinyin } = await import("pinyin-pro");
   const { RBT } = await import("helpers/rbt-distributor");
-  const { zhLatnRules } = await import("constants/zh-latn.rules");
-  const { latnDaRules } = await import("constants/latn-da.rules");
+  const { zhLatnRules } = await import("data/zh-latn.rules");
+  const { latnDaRules } = await import("data/latn-da.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
 
   const transliterator = RBT.fromRules(zhLatnRules + latnDaRules);

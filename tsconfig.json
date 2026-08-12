@@ -14,7 +14,7 @@
     "paths": {
       "*": ["./src/*"],
       "types/*": ["./src/types/*"],
-      "constants/*": ["./src/constants/*"],
+      "data/*": ["./src/data/*"],
       "converters/*": ["./src/converters/*"],
       "helpers/*": ["./src/helpers/*"]
     }

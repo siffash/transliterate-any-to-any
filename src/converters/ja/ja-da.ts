@@ -4,8 +4,8 @@ export const jaDa = async (text: Text) => {
   const { default: Kuroshiro } = await import("kuroshiro");
   const { default: KuromojiAnalyzer } = await import("kuroshiro-analyzer-kuromoji");
   const { RBT } = await import("helpers/rbt-distributor");
-  const { jaLatnRules } = await import("constants/ja-latn.rules");
-  const { latnDaRules } = await import("constants/latn-da.rules");
+  const { jaLatnRules } = await import("data/ja-latn.rules");
+  const { latnDaRules } = await import("data/latn-da.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
 
   const kuroshiro = new Kuroshiro();

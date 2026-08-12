@@ -3,7 +3,7 @@ import { Text } from "types";
 export const faUk = async (text: Text) => {
   const { RBT } = await import("helpers/rbt-distributor");
   const { faIpa } = await import("converters/fa/fa-ipa");
-  const { ipaUkRules } = await import("constants/ipa-uk.rules");
+  const { ipaUkRules } = await import("data/ipa-uk.rules");
 
   const transliterator = RBT.fromRules(ipaUkRules + "::Title;");
 
