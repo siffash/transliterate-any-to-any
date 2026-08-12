@@ -10,7 +10,7 @@ export const enCa = async (text: Text) => {
   const transliterator = RBT.fromRules(ipaCaRules);
 
   const convert = (text: string) => {
-    const ipa = filterIpa(toIPA(text));
+    const ipa = filterIpa(toIPA(text), text, "en");
     const transliterated = transliterator.transliterate(ipa);
     return copyCase(text, transliterated);
   };

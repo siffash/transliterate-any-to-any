@@ -13,7 +13,7 @@ export const faIpa = async <T = Text>(text: Text): Promise<T> => {
     await wordSplitter(
       text,
       "fa",
-      (word: string) => filterIpa(faIpaMap[word]) || transliterator.transliterate(word),
+      (word: string) => filterIpa(faIpaMap[word], word, "fa") || transliterator.transliterate(word),
     );
 
   if (typeof text === "string") {

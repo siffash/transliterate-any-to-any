@@ -11,8 +11,7 @@ const confirmLanguageByRegex = (regex: string, text: string) =>
  * @returns true if the text is written in the script of the language, false otherwise.
  */
 export const confirmLanguageByScript = (language: Language, text: Text): boolean => {
-  const { script } = languages[language];
-  const { regex } = scripts[script];
+  const { regex } = scripts[languages[language].script];
   if (typeof text === "string") {
     return confirmLanguageByRegex(regex, text);
   }

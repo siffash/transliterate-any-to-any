@@ -9,11 +9,11 @@ export const enJa = async (text: Text) => {
   const transliterator = RBT.fromRules(ipaJaRules);
 
   if (typeof text === "string") {
-    const ipa = filterIpa(toIPA(text));
+    const ipa = filterIpa(toIPA(text), text, "en");
     return transliterator.transliterate(ipa);
   } else {
     return text.map(text => {
-      const ipa = filterIpa(toIPA(text));
+      const ipa = filterIpa(toIPA(text), text, "en");
       return transliterator.transliterate(ipa);
     });
   }

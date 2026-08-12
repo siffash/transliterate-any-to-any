@@ -10,7 +10,9 @@ export const koAz = async (text: Text) => {
   const transliterator = RBT.fromRules(ipaAzRules + "::Title;");
 
   const convert = async (text: string) => {
-    const ipa = await wordSplitter(text, "ko", text => filterIpa(toIPA(text, { anyAscii: true })));
+    const ipa = await wordSplitter(text, "ko", text =>
+      filterIpa(toIPA(text, { anyAscii: true }), text, "ko"),
+    );
     return transliterator.transliterate(ipa);
   };
 

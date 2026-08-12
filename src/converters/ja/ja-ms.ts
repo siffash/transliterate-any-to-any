@@ -13,11 +13,13 @@ export const jaMs = async (text: Text) => {
   const kuroshiro = new Kuroshiro();
   await kuroshiro.init(new KuromojiAnalyzer());
   const transliterator = RBT.fromRules(jaIpaRules + ipaMsRules + "::Title;");
+  const exceptions = jaIpaRules.replace(/( ?> ?[^;]+;)|\[|]|\n/g, "");
 
   const convert = async (text: string) => {
-    const ipa = await wordSplitter(text, "ja", async text =>
-      filterIpa(toIPA(await kuroshiro.convert(text, { to: "hiragana" }))),
-    );
+    const ipa = await wordSplitter(text, "ja", async text => {
+      const hiragana = await kuroshiro.convert(text, { to: "hiragana" });
+      return filterIpa(toIPA(hiragana), hiragana, "ja", exceptions);
+    });
     return transliterator.transliterate(ipa);
   };
 

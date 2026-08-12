@@ -27,10 +27,17 @@ tʰbilisi, batʰumi, kʰutʰaisi, rustʰavi, ɡori, tʰelavi, zuɡdidi, pʰotʰi
     ),
   );*/
 
+  // console.log(
+  //   await transliterate(
+  //     "London, Tokyo, Nairobi, Vancouver, Rio de Janeiro, Istanbul, Sydney, Mumbai, Reykjavik, Buenos Aires, Casablanca, Edinburgh, Singapore, Kathmandu, Lisbon, Mexico City, Amsterdam, Stockholm, Vienna, Florence, James Alexander Sterling, Elizabeth Marie Montgomery, William Thomas Jefferson, Catherine Anne Sullivan, Robert Michael Henderson, Sophia Louise Richardson, David Christopher Wallace, Margaret Rose Fitzgerald, Benjamin Edward Thompson, Olivia Grace Patterson, Samuel Richard Harrison, Eleanor Jane Whittaker, Jonathan David Miller, Victoria Beatrice Thorne, Nicholas Arthur Sterling, Isabella Mary Crawford, Daniel Patrick O'Sullivan, Beatrice Alice Kensington, Henry Lawrence Faulkner, Penelope Diane Wentworth, Global Innovation Technologies, Silver Creek Manufacturing, Horizon Strategic Consulting, Radiant Energy Solutions, Emerald Valley Agriculture, Northern Star Logistics, Peak Performance Athletics, Blue Marble Aerospace, Golden Gate Software, Velvet Thread Textiles, Crystal Clear Communications, Iron Works Infrastructure, Harmony Health Systems, Midnight Sun Productions, Prairie Wind Renewables, Grand Vista Hospitality, Sterling Bridge Finance, Alpine Ridge Outdoor, Urban Pulse Media, Crimson Oak Furniture",
+  //     { from: "en", to: "ru" },
+  //   ),
+  // );
+
   console.log(
     await transliterate(
-      "Oslo, Bergen, Trondheim, Stavanger, Tromsø, Kristiansand, Ålesund, Bodø, Fredrikstad, Sandefjord, Hammerfest, Lillehammer, Molde, Haugesund, Arendal, Steinkjer, Narvik, Kongsberg, Moss, Larvik, Magnus Holger Nilsen, Ingrid Lovise Hansen, Erik Andreas Johansen, Sofia Marie Larsen, Anders Kristian Andersen, Astrid Helene Pedersen, Olav Henning Kristiansen, Mette Birgitte Olsen, Lars Jørgen Bakke, Anne Sofie Knutsen, Thomas Alexander Berg, Kari Merete Haugen, Jonas Emil Sandvik, Hilde Synnøve Moen, Geir Otto Eriksen, Elin Victoria Myhre, Bjørn Terje Holm, Monica Beate Foss, Stian Andre Ruud, Linda Kristin Dahl, Equinor, Kongsberg Gruppen, Orkla, Telenor, Norsk Hydro, Yara International, SpareBank En, Gjensidige Forsikring, Aker Solutions, Schibsted, Posten Norge, Vy Gruppen, Marine Harvest, Storebrand, DNB Bank, Statkraft, Veidekke, Borregaard, Tomra Systems, AF Gruppen",
-      { from: "no", to: "uk" },
+      "北京, 上海, 广州, 深圳, 成都, 杭州, 西安, 武汉, 南京, 重庆, 苏州, 天津, 长沙, 青岛, 昆明, 沈阳, 济南, 郑州, 福州, 厦门, 张伟杰, 李美玲, 王建国, 刘小龙, 陈志强, 杨淑珍, 赵子涵, 黄俊豪, 周嘉怡, 吴明辉, 徐婉莹, 孙博文, 马晓燕, 朱宇轩, 胡瑞麟, 郭梦琪, 何正平, 林依诺, 高振宇, 罗永康, 腾讯科技股份有限公司, 阿里巴巴集团控股有限公司, 华为技术有限公司, 百度在线网络技术有限公司, 京东集团股份有限公司, 美团点评技术有限公司, 字节跳动科技有限公司, 中国移动通信集团有限公司, 中国建设银行股份有限公司, 中国石油天然气集团有限公司, 中国平安保险集团股份有限公司, 小米科技有限责任公司, 联想集团有限公司, 比亚迪股份有限公司, 格力电器股份有限公司, 海尔智家股份有限公司, 万科企业股份有限公司, 贵州茅台酒股份有限公司, 宁德时代新能源科技股份有限公司, 携程计算机技术上海有限公司",
+      { from: "zh", to: "az" },
     ),
   );
 

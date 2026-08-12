@@ -6,7 +6,7 @@ export const frIpa = async <T = Text>(text: Text, isNormalized: boolean): Promis
   const { frIpaRules } = await import("data/fr-ipa.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
   const { filterIpa } = await import("helpers/filterIpa");
-  const { frIpaNormalizer } = await import("helpers/frIpaNormalizer");
+  const { normalizerFrIpa } = await import("helpers/normalizerFrIpa");
 
   const transliterator = RBT.fromRules(frIpaRules);
 
@@ -16,8 +16,8 @@ export const frIpa = async <T = Text>(text: Text, isNormalized: boolean): Promis
       "fr",
       (word: string) => {
         word = word.toLocaleLowerCase("fr");
-        const ipa = filterIpa(frIpaMap[word]) || transliterator.transliterate(word);
-        return isNormalized ? frIpaNormalizer(word, ipa) : ipa;
+        const ipa = filterIpa(frIpaMap[word], word, "fr") || transliterator.transliterate(word);
+        return isNormalized ? normalizerFrIpa(word, ipa) : ipa;
       },
       true,
     );

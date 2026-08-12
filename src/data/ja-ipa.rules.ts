@@ -32,7 +32,7 @@ export const jaIpaRules = `
 ウォ > wo;
 うぉ > wo;
 デュ > dʲu;
-[ヴゔ] > vu;
+[ヴゔ] > v;
 [ぁァ] > a;
 [ぃィ] > i;
 [ぅゥ] > u;

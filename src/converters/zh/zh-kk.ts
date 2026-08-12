@@ -10,7 +10,9 @@ export const zhKk = async (text: Text) => {
   const transliterator = RBT.fromRules(ipaKkRules + "::Title;");
 
   const convert = async (text: string) => {
-    const ipa = await wordSplitter(text, "zh", text => filterIpa(toIPA(text, { separator: "" })));
+    const ipa = await wordSplitter(text, "zh", text =>
+      filterIpa(toIPA(text, { separator: "" }), text, "zh"),
+    );
     return transliterator.transliterate(ipa);
   };
 

@@ -10,7 +10,9 @@ export const koUr = async (text: Text) => {
   const transliterator = RBT.fromRules(ipaUrRules);
 
   const convert = async (text: string) => {
-    const ipa = await wordSplitter(text, "ko", text => filterIpa(toIPA(text, { anyAscii: true })));
+    const ipa = await wordSplitter(text, "ko", text =>
+      filterIpa(toIPA(text, { anyAscii: true }), text, "ko"),
+    );
     return transliterator.transliterate(ipa);
   };
 

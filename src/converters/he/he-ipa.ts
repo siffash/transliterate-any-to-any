@@ -16,7 +16,7 @@ export const heIpa = async <T = Text>(text: Text): Promise<T> => {
 
       for (const key of multiWordKeys) {
         const regex = new RegExp(key, "g");
-        processedText = processedText.replace(regex, filterIpa(heIpaMap[key]));
+        processedText = processedText.replace(regex, filterIpa(heIpaMap[key], key, "he"));
       }
 
       const tokens = processedText.split(/([^\u0590-\u05FF]+)/);
@@ -34,7 +34,7 @@ export const heIpa = async <T = Text>(text: Text): Promise<T> => {
     const processWord = (word: string): string => {
       // Step 1: Direct Dictionary Match
       if (heIpaMap[word]) {
-        return filterIpa(heIpaMap[word]);
+        return filterIpa(heIpaMap[word], word, "he");
       }
 
       // Step 2: Double Prefix Check (e.g., "וב" - and in)
@@ -42,7 +42,7 @@ export const heIpa = async <T = Text>(text: Text): Promise<T> => {
         if (word.startsWith(prefix) && word.length > prefix.length) {
           const stem = word.slice(prefix.length);
           if (heIpaMap[stem]) {
-            return applyPrefix(prefix, filterIpa(heIpaMap[stem]), stem);
+            return applyPrefix(prefix, filterIpa(heIpaMap[stem], stem, "he"), stem);
           }
         }
       }
@@ -52,7 +52,7 @@ export const heIpa = async <T = Text>(text: Text): Promise<T> => {
         if (word.startsWith(prefix) && word.length > prefix.length) {
           const stem = word.slice(prefix.length);
           if (heIpaMap[stem]) {
-            return applyPrefix(prefix, filterIpa(heIpaMap[stem]), stem);
+            return applyPrefix(prefix, filterIpa(heIpaMap[stem], stem, "he"), stem);
           }
         }
       }

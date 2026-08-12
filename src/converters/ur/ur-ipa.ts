@@ -13,7 +13,7 @@ export const urIpa = async <T = Text>(text: Text): Promise<T> => {
     await wordSplitter(
       text,
       "ur",
-      (word: string) => filterIpa(urIpaMap[word]) || transliterator.transliterate(word),
+      (word: string) => filterIpa(urIpaMap[word], word, "ur") || transliterator.transliterate(word),
     );
 
   if (typeof text === "string") {
