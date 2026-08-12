@@ -26,6 +26,8 @@ Ij > Ei;
 iJ > eI;
 ij > ei;
 
+::Null;
+
 [:^Letter:] { Ö } [:Lu:] > JO;
 [:^Letter:] { Ö > Jo;
 [:^Letter:] { ö > jo;

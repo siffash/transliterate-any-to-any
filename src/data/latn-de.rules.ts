@@ -1,30 +1,39 @@
 export const latnDeRules = `
 ::Null;
 
-\\' > ;
-· > \\-;
-
 dž > dsch;
 Dž > Dsch;
 DŽ > DSCH;
+
 dz > ds;
 Dz > Ds;
 DZ > DS;
+
 ij > ei;
 Ij > Ei;
 IJ > EI;
+
 th > t;
 Th > T;
 TH > T;
+
 gh > g;
 Gh > G;
 GH > G;
+
 kh > ch;
 Kh > Ch;
 KH > CH;
+
 ts > z;
 Ts > Z;
 TS > Z;
+
+::Null;
+
+\\' > ;
+· > \\-;
+
 [:^Letter:] { š } [pPtT] > s;
 [:^Letter:] { Š } [pPtT] > S;
 [aäeiïoöuüÿAÄEIÏOÖUÜŸ] { s } [aäeiïoöuüÿAÄEIÏOÖUÜŸ] > ss;

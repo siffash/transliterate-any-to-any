@@ -26,6 +26,8 @@ Kh > Ch;
 kH > cH;
 kh > ch;
 
+::Null;
+
 X } [:Lu:] > CH;
 [:Lu:] { X > CH;
 X > Ch;

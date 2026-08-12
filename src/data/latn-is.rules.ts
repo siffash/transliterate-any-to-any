@@ -32,6 +32,8 @@ KH > K;
 Kh > K;
 kh > k;
 
+::Null;
+
 [:Lu:] { Ć > TSJ;
 Ć } [:Lu:] > TSJ;
 Ć > Tsj;

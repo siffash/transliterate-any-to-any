@@ -1,6 +1,32 @@
 export const latnEsRules = `
 ::Null;
 
+DŽ > Y;
+Dž > Y;
+dž > y;
+
+DZ > Z;
+Dz > Z;
+dz > z;
+
+TH > Z;
+Th > Z;
+th > z;
+
+GH > G;
+Gh > G;
+gh > g;
+
+KH > J;
+Kh > J;
+kh > j;
+
+IJ > EI;
+Ij > Ei;
+ij > ei;
+
+::Null;
+
 ['·] > ;
 
 Ä > E;
@@ -13,21 +39,12 @@ export const latnEsRules = `
 ï > i;
 Ÿ > I;
 ÿ > i;
-IJ > EI;
-Ij > Ei;
-ij > ei;
 Č } [:Ll:] > Ch;
 Č > CH;
 č > ch;
 Ć } [:Ll:] > Ch;
 Ć > CH;
 ć > ch;
-DŽ > Y;
-Dž > Y;
-dž > y;
-DZ > Z;
-Dz > Z;
-dz > z;
 Đ > Y;
 đ > y;
 Ľ } [:Ll:] > Ll;
@@ -41,15 +58,6 @@ dz > z;
 Ž } [:Ll:] > Zh;
 Ž > ZH;
 ž > zh;
-TH > Z;
-Th > Z;
-th > z;
-GH > G;
-Gh > G;
-gh > g;
-KH > J;
-Kh > J;
-kh > j;
 KS > X;
 Ks > X;
 kS > x;

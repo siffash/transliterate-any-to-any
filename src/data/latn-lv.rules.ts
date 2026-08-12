@@ -4,18 +4,25 @@ export const latnLvRules = `
 IJ > EI;
 Ij > Ei;
 ij > ei;
+
 TS > C;
 Ts > C;
 ts > c;
+
 TH > T;
 Th > T;
 th > t;
+
 GH > G;
 Gh > G;
 gh > g;
+
 KH > H;
 Kh > H;
 kh > h;
+
+::Null;
+
 [:Lu:] { Đ > DŽ;
 Đ } [:Lu:] > DŽ;
 Đ > Dž;

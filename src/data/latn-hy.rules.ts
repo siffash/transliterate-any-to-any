@@ -1,11 +1,6 @@
 export const latnHyRules = `
 ::Null;
 
-[:^Letter:] { E > Է;
-[:^Letter:] { e > է;
-[:^Letter:] { O > Օ;
-[:^Letter:] { o > օ;
-
 DŽ > Ջ;
 Dž > Ջ;
 dž > ջ;
@@ -37,6 +32,13 @@ th > թ;
 TS > Ց;
 Ts > Ց;
 ts > ց;
+
+::Null;
+
+[:^Letter:] { E > Է;
+[:^Letter:] { e > է;
+[:^Letter:] { O > Օ;
+[:^Letter:] { o > օ;
 
 [:Lu:] { U > ՈՒ;
 U } [:Lu:] > ՈՒ;

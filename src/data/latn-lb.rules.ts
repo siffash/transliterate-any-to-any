@@ -1,14 +1,6 @@
 export const latnLbRules = `
 ::Null;
 
-[:^Letter:] { Š } [Tt] > S;
-[:^Letter:] { š } [Tt] > s;
-[:^Letter:] { Š } [Pp] > S;
-[:^Letter:] { š } [Pp] > s;
-
-[aäeiïoöuüÿAÄEIÏOÖUÜŸ] { S } [aäeiïoöuüÿAÄEIÏOÖUÜŸ] > SS;
-[aäeiïoöuüÿAÄEIÏOÖUÜŸ] { s } [aäeiïoöuüÿAÄEIÏOÖUÜŸ] > ss;
-
 DŽ } [:Ll:] > Dsch;
 DŽ > DSCH;
 Dž > Dsch;
@@ -38,6 +30,16 @@ kh > ch;
 IJ > EI;
 Ij > Ei;
 ij > ei;
+
+::Null;
+
+[:^Letter:] { Š } [Tt] > S;
+[:^Letter:] { š } [Tt] > s;
+[:^Letter:] { Š } [Pp] > S;
+[:^Letter:] { š } [Pp] > s;
+
+[aäeiïoöuüÿAÄEIÏOÖUÜŸ] { S } [aäeiïoöuüÿAÄEIÏOÖUÜŸ] > SS;
+[aäeiïoöuüÿAÄEIÏOÖUÜŸ] { s } [aäeiïoöuüÿAÄEIÏOÖUÜŸ] > ss;
 
 [ČĆ] } [:Ll:] > Tsch;
 [ČĆ] > TSCH;

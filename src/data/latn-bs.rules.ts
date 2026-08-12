@@ -1,26 +1,6 @@
 export const latnBsRules = `
 ::Null;
 
-[:^Letter:] { I } [AaÄäEeOoÖöUuÜüŸÿ] > J;
-[:^Letter:] { i } [AaÄäEeOoÖöUuÜüŸÿ] > j;
-
-[:Lu:] { Ľ > LJ;
-Ľ } [:Lu:] > LJ;
-Ľ > Lj;
-ľ > lj;
-
-[:Lu:] { Ń > NJ;
-Ń } [:Lu:] > NJ;
-Ń > Nj;
-ń > nj;
-
-[:Lu:] { IJ > EJ;
-IJ } [:Lu:] > EJ;
-IJ > Ej;
-Ij > Ej;
-iJ > ej;
-ij > ej;
-
 [:Lu:] { TS > C;
 TS } [:Lu:] > C;
 TS > C;
@@ -48,6 +28,28 @@ KH > H;
 Kh > H;
 kH > h;
 kh > h;
+
+[:Lu:] { IJ > EJ;
+IJ } [:Lu:] > EJ;
+IJ > Ej;
+Ij > Ej;
+iJ > ej;
+ij > ej;
+
+::Null;
+
+[:^Letter:] { I } [AaÄäEeOoÖöUuÜüŸÿ] > J;
+[:^Letter:] { i } [AaÄäEeOoÖöUuÜüŸÿ] > j;
+
+[:Lu:] { Ľ > LJ;
+Ľ } [:Lu:] > LJ;
+Ľ > Lj;
+ľ > lj;
+
+[:Lu:] { Ń > NJ;
+Ń } [:Lu:] > NJ;
+Ń > Nj;
+ń > nj;
 
 i } [aAeEuU] > ij;
 I } [AEU] > IJ;

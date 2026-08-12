@@ -5,22 +5,29 @@ TS > C;
 Ts > C;
 tS > C;
 ts > c;
+
 TH > T;
 Th > T;
 tH > T;
 th > t;
+
 GH > G;
 Gh > G;
 gH > G;
 gh > g;
+
 KH > H;
 Kh > H;
 kH > H;
 kh > h;
+
 IJ > EJ;
 Ij > Ej;
 iJ > eJ;
 ij > ej;
+
+::Null;
+
 Ľ } [:Lu:] > LJ;
 [:Lu:] { Ľ } [:^Letter:] > LJ;
 Ľ > Lj;

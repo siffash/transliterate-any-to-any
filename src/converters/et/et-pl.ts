@@ -11,4 +11,5 @@ export const etPl = async (text: Text) => {
     return transliterator.transliterate(text);
   } else {
     return text.map(text => transliterator.transliterate(text));
-  
+  }
+};

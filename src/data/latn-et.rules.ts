@@ -1,8 +1,6 @@
 export const latnEtRules = `
 ::Null;
 
-['·] > ;
-
 IJ > EI;
 Ij > Ei;
 ij > ei;
@@ -24,6 +22,10 @@ gh > g;
 KH > H;
 Kh > H;
 kh > h;
+
+::Null;
+
+['·] > ;
 
 [AÄEIÏOÖUÜŸÕõaäeiïoöuüÿ] { X } [:^Letter:] > HH;
 [AÄEIÏOÖUÜŸÕõaäeiïoöuüÿ] { X } [AÄEIÏOÖUÜŸÕõaäeiïoöuüÿ] > HH;

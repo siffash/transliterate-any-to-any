@@ -22,6 +22,8 @@ IJ > EY;
 Ij > Ey;
 ij > ey;
 
+::Null;
+
 Ń } [:Ll:] > Ny;
 Ń > NY;
 ń > ny;

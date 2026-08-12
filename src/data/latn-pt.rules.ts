@@ -21,6 +21,8 @@ TH > T;
 Th > T;
 th > t;
 
+::Null;
+
 [:Lu:] { Ć } [:^Letter:] > TCH;
 Ć } [:Lu:] > TCH;
 Ć > Tch;

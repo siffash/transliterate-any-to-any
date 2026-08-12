@@ -21,6 +21,8 @@ IJ > EJ;
 Ij > Ej;
 ij > ej;
 
+::Null;
+
 [:Lu:] { X > CH;
 X } [:Lu:] > CH;
 X > Ch;

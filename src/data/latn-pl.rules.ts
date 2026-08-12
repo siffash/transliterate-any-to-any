@@ -27,6 +27,8 @@ KH > CH;
 Kh > Ch;
 kh > ch;
 
+::Null;
+
 ć } [iIüÜÿŸ] > c;
 Ć } [iIüÜÿŸ] > C;
 ć } [aäeïoöu] > ci;

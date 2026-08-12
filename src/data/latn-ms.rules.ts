@@ -26,6 +26,8 @@ Th > S;
 tH > s;
 th > s;
 
+::Null;
+
 Ä > E;
 ä > e;
 Ï > E;

@@ -1,6 +1,24 @@
 export const latnFiRules = `
 ::Null;
 
+IJ > EI;
+Ij > Ei;
+ij > ei;
+
+TH > T;
+Th > T;
+th > t;
+
+GH > G;
+Gh > G;
+gh > g;
+
+KH > H;
+Kh > H;
+kh > h;
+
+::Null;
+
 Č } [:Ll:] > Tš;
 Č > TŠ;
 č > tš;
@@ -16,24 +34,12 @@ export const latnFiRules = `
 Ľ } [:Ll:] > Lj;
 Ľ > LJ;
 ľ > lj;
-IJ > EI;
-Ij > Ei;
-ij > ei;
-TH > T;
-Th > T;
-th > t;
-GH > G;
-Gh > G;
-gh > g;
-KH > H;
-Kh > H;
-kh > h;
 X > H;
 x > h;
 Y > J;
 y > j;
-[Ü Ÿ] > Y;
-[ü ÿ] > y;
+[ÜŸ] > Y;
+[üÿ] > y;
 Ï > I;
 ï > i;
 Q > K;

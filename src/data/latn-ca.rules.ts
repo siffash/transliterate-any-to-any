@@ -5,24 +5,32 @@ KH } [:Lu:] > KH;
 KH > Kh;
 Kh > Kh;
 kh > kh;
+
 IJ } [:Lu:] > EI;
 IJ > Ei;
 Ij > Ei;
 ij > ei;
+
 GH > G;
 Gh > G;
 gh > g;
+
 TH > Z;
 Th > Z;
 th > z;
+
 DŽ } [:Lu:] > TJ;
 DŽ > Tj;
 Dž > Tj;
 dž > tj;
+
 DZ } [:Lu:] > TZ;
 DZ > Tz;
 Dz > Tz;
 dz > tz;
+
+::Null;
+
 Đ } [:Lu:] > TJ;
 Đ > Tj;
 đ > tj;

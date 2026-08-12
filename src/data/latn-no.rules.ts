@@ -4,12 +4,15 @@ export const latnNoRules = `
 IJ > EI;
 Ij > Ei;
 ij > ei;
+
 TH > T;
 Th > T;
 th > t;
+
 GH > G;
 Gh > G;
 gh > g;
+
 ['·] > ;
 
 ::Null;

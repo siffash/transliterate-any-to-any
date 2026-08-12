@@ -12,16 +12,10 @@ Dž > Gi;
 dž } [EIÏŸYeiïÿy] > g;
 dž > gi;
 
-Đ } [EIÏŸY] > G;
-Đ } [eiïÿy] > G;
-Đ } [:Lu:] > GI;
-Đ > Gi;
-đ } [EIÏŸYeiïÿy] > g;
-đ > gi;
-
 TS > Z;
 Ts > Z;
 ts > z;
+
 DZ > Z;
 Dz > Z;
 dz > z;
@@ -55,6 +49,15 @@ gh > g;
 IJ > EI;
 Ij > Ei;
 ij > ei;
+
+::Null;
+
+Đ } [EIÏŸY] > G;
+Đ } [eiïÿy] > G;
+Đ } [:Lu:] > GI;
+Đ > Gi;
+đ } [EIÏŸYeiïÿy] > g;
+đ > gi;
 
 [ČĆ] } [EIÏŸY] > C;
 [ČĆ] } [eiïÿy] > C;

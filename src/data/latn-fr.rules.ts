@@ -1,8 +1,6 @@
 export const latnFrRules = `
 ::Null;
 
-['·] > ;
-
 DZ > DZ; Dz > Dz; dz > dz;
 TS > TS; Ts > Ts; ts > ts;
 TH > TH; Th > Th; th > th;
@@ -18,6 +16,10 @@ NG > NG; Ng > Ng; ng > ng;
 IJ > EI;
 Ij > Ei;
 ij > ei;
+
+::Null;
+
+['·] > ;
 
 Š } [ABDEFGHIKLMNOPQRSTUVWXYZÄÏÖÜŸĆČĐĽŃŠŽJ] > CH;
 Š > Ch;

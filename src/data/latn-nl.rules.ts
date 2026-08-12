@@ -17,6 +17,8 @@ TH > T;
 Th > T;
 th > t;
 
+::Null;
+
 Š } [:Ll:] > Sj;
 Š > SJ;
 š > sj;

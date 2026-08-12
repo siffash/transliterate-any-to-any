@@ -1,13 +1,6 @@
 export const latnDaRules = `
 ::Null;
 
-['·] > ;
-
-[ĆČ] } [:Ll:] > Tj;
-[ĆČ] } [:^Letter:] > Tj;
-[ĆČ] > TJ;
-[ćč] > tj;
-
 DŽ } [:Ll:] > Dj;
 DŽ } [:^Letter:] > Dj;
 DŽ > DJ;
@@ -33,6 +26,15 @@ th > t;
 GH > G;
 Gh > G;
 gh > g;
+
+::Null;
+
+['·] > ;
+
+[ĆČ] } [:Ll:] > Tj;
+[ĆČ] } [:^Letter:] > Tj;
+[ĆČ] > TJ;
+[ćč] > tj;
 
 Đ } [:Ll:] > Dj;
 Đ } [:^Letter:] > Dj;

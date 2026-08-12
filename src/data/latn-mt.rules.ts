@@ -29,6 +29,8 @@ IJ > EJ;
 Ij > Ej;
 ij > ej;
 
+::Null;
+
 Ľ } [:Lu:] > LJ;
 Ľ > Lj;
 ľ > lj;

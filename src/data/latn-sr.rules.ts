@@ -35,6 +35,8 @@ Ij > Ej;
 iJ > eJ;
 ij > ej;
 
+::Null;
+
 [:Lu:] { Ń > NJ;
 Ń } [:Lu:] > NJ;
 Ń > Nj;

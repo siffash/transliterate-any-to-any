@@ -1,43 +1,53 @@
 export const latnMkRules = `
 ::Null;
 
+DŽ > Џ;
+Dž > Џ;
+dŽ > џ;
+dž > џ;
+
+DZ > Ѕ;
+Dz > Ѕ;
+dZ > ѕ;
+dz > ѕ;
+
+TS > Ц;
+Ts > Ц;
+ts > ц;
+
+IJ > ЕЈ;
+Ij > Еј;
+ij > еј;
+
+TH > Т;
+Th > Т;
+th > т;
+
+GH > Г;
+Gh > Г;
+gh > г;
+
+NG > НГ;
+Ng > Нг;
+ng > нг;
+
+KH > Х;
+Kh > Х;
+kh > х;
+
+::Null;
+
 ['·] > ;
 
 LY > Љ;
 Ly > Љ;
 lY > љ;
 ly > љ;
+
 NY > Њ;
 Ny > Њ;
 nY > њ;
 ny > њ;
-
-DŽ > Џ;
-Dž > Џ;
-dŽ > џ;
-dž > џ;
-DZ > Ѕ;
-Dz > Ѕ;
-dZ > ѕ;
-dz > ѕ;
-TS > Ц;
-Ts > Ц;
-ts > ц;
-IJ > ЕЈ;
-Ij > Еј;
-ij > еј;
-TH > Т;
-Th > Т;
-th > т;
-GH > Г;
-Gh > Г;
-gh > г;
-NG > НГ;
-Ng > Нг;
-ng > нг;
-KH > Х;
-Kh > Х;
-kh > х;
 
 Š > Ш;
 š > ш;

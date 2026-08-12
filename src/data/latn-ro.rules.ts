@@ -4,24 +4,33 @@ export const latnRoRules = `
 IJ > EI;
 Ij > Ei;
 ij > ei;
+
 DZ > Z;
 Dz > Z;
 dz > z;
+
 TH > T;
 Th > T;
 th > t;
+
 GH > H;
 Gh > H;
 gh > h;
+
 KH > H;
 Kh > H;
 kh > h;
+
 NG > N;
 Ng > N;
 ng > n;
+
 TS > Ț;
 Ts > Ț;
 ts > ț;
+
+::Null;
+
 Q > C;
 q > c;
 W > V;
