@@ -20,7 +20,7 @@ export const ipaDaRules = `
 č > tj;
 [ťʈθ] > t;
 [ďɖɗð] > d;
-[ɓβ] > b;
+ɓ > b;
 [ɡɢɣɰ] > g;
 [ħɦʕ] > h;
 [ɟɥʝ] > j;
@@ -32,7 +32,7 @@ export const ipaDaRules = `
 [ɹɽɾʀʁ] > r;
 [ɕʂç] > s;
 [žʃɧʒ] > sj;
-ʋ > v;
+[ʋβ] > v;
 ʎ > lj;
 [ʐʑ] > z;
 ɸ > f;

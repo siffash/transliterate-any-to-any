@@ -2,7 +2,7 @@ import { Text } from "types";
 
 export const koLt = async (text: Text) => {
   const { toIPA } = require("phonemize/all");
-  const { RBT } = await import("icu-transliterator");
+  const { RBT } = await import("helpers/rbt-distributor");
   const { ipaLtRules } = await import("constants/ipa-lt.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
 

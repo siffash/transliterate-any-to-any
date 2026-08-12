@@ -2,7 +2,7 @@ import { Text } from "types";
 
 export const faIpa = async <T = Text>(text: Text): Promise<T> => {
   const { faIpaMap } = await import("constants/fa-ipa.map");
-  const { RBT } = await import("icu-transliterator");
+  const { RBT } = await import("helpers/rbt-distributor");
   const { faIpaRules } = await import("constants/fa-ipa.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
 

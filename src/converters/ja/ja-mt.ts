@@ -4,7 +4,7 @@ export const jaMt = async (text: Text) => {
   const { default: Kuroshiro } = await import("kuroshiro");
   const { default: KuromojiAnalyzer } = await import("kuroshiro-analyzer-kuromoji");
   const { toIPA } = require("phonemize/all");
-  const { RBT } = await import("icu-transliterator");
+  const { RBT } = await import("helpers/rbt-distributor");
   const { jaIpaRules } = await import("constants/ja-ipa.rules");
   const { ipaMtRules } = await import("constants/ipa-mt.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");

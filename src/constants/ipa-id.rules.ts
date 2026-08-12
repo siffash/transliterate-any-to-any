@@ -1,6 +1,10 @@
 export const ipaIdRules = `
 ::Null;
 
+[̚'’͈ˈ̇ˌ̧ːˠˤ˥˧˩̝̟̥̩̪̯̃̊͡] > ;
+
+::Null;
+
 ŋ > ng;
 ɲ > ny;
 ʃ > sy;
@@ -8,12 +12,20 @@ export const ipaIdRules = `
 [χx] > kh;
 [:^Letter:] { [ʕʔ] > ;
 [ʕʔ] } [:^Letter:] > k;
+[aeiou] { [ʕʔ] } [âæăɐɑɒʌêøęœɘəɚɛɜɝẽĩɨɪʏyôõơɔɵɤũưɯʉʊaeiou] > \\';
 [ʕʔqʼ] > k;
 [jʲ] > y;
 [çɕθ] > s;
+t͡ʃ > c;
+tʃ > c;
+tɕ > c;
+ʈʂ > c;
+d͡ʒ > j;
+dʒ > j;
+dʑ > j;
 č > c;
 [ťʈ] > t;
-[ɓβ] > b;
+ɓ > b;
 [ɖɗďð] > d;
 [ɟʒʝ] > j;
 [ɡɢɣɰ] > g;
@@ -23,7 +35,7 @@ export const ipaIdRules = `
 ɱ > m;
 ɳ > n;
 [ɹɽɾʀʁ] > r;
-ʋ > v;
+[ʋβ] > v;
 [ʐʑž] > z;
 [âæăɐɑɒʌ] > a;
 [êøęœɘəɚɛɜɝẽ] > e;
@@ -31,16 +43,6 @@ export const ipaIdRules = `
 [ôõơɔɵɤ] > o;
 [ũưɯʉʊ] > u;
 ɸ > f;
-
-[̚'’͈ˈ̇ˌ̧ːˠˤ˥˧˩̝̟̥̩̪̯̃̊͡] > ;
-
-::Null;
-
-sh > sy;
-ch > c;
-ph > f;
-th > t;
-zh > z;
 
 ::Null;
 

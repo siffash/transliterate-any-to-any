@@ -1,8 +1,9 @@
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
+import { transliterate } from "transliterate";
 import { languages, scripts, supportedLanguages } from "helpers/constants";
 import { confirmLanguageByScript } from "helpers/confirmLanguageByScript";
+import { settings } from "helpers/rbt-distributor";
 import { examples } from "./examples";
-import { transliterate } from "../transliterate";
 
 describe("transliterate", () => {
   for (const from of supportedLanguages) {
@@ -36,6 +37,14 @@ describe("transliterate", () => {
         const transliteratedArray = transliterated.split(", ");
         const transliteratedArrayResult = await transliterate(exampleArray, { from, to });
         expect(transliteratedArrayResult).toEqual(transliteratedArray);
+
+        // Check the JS implementation of ICU RBT
+        settings.JS_IMPLEMENTATION = true;
+        const transliteratedJS = await transliterate(example, { from, to });
+        expect(transliteratedJS).toEqual(transliterated);
+        const transliteratedJSArrayResult = await transliterate(exampleArray, { from, to });
+        expect(transliteratedJSArrayResult).toEqual(transliteratedArrayResult);
+        settings.JS_IMPLEMENTATION = false;
       });
     }
   }

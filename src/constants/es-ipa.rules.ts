@@ -1,20 +1,22 @@
 export const esIpaRules = `
 ::Lower;
 
-[:^Letter:] { ps > s;
-[:^Letter:] { gn > n;
-[:^Letter:] { mn > n;
-[:^Letter:] { pt > t;
+m [ée] xic > mexik;
+
+[^[:Letter:][:Mark:]] { ps > s;
+[^[:Letter:][:Mark:]] { gn > n;
+[^[:Letter:][:Mark:]] { mn > n;
+[^[:Letter:][:Mark:]] { pt > t;
 
 ch > t͡ʃ;
 ll > ʎ;
 rr > r;
 qu } [eéií] > k;
-gu } [eéií] > ɡ;
-gü > ɡw;
+q > k;
+gu } [eéií] > ɣ;
+gü > ɣw;
 
-b > β;
-v > β;
+[bv] > β;
 c } [eéií] > θ;
 c > k;
 d > ð;
@@ -31,19 +33,20 @@ p > p;
 t > t;
 z > θ;
 
-[:^Letter:] { r > r;
+[^[:Letter:][:Mark:]] { r > r;
 [lns] { r > r;
-[r] } [:^Letter:] > ɾ;
 r > ɾ;
 
 s } [bβdðɡɣmnɲŋlʎrɾʝz] > z;
 s > s;
 x } [aáeéiíoóuúü] > ks;
+x } [^[:Letter:][:Mark:]] > ks;
 x > s;
 
 hi } [aáeéiíoóuúü] > ʝ;
 h > ;
 y } [aáeéiíoóuúü] > ʝ;
+[aáeéoó] { y > i̯;
 y > i;
 
 i } [aáeéiíoóuúü] > j;
@@ -59,25 +62,19 @@ u } [aáeéiíoó] > w;
 
 ::Null;
 
-n } [gɡɣkx] > ŋ;
+n } [bβpvm] > m;
+n } [f] > ɱ;
 n } [{t͡ʃ}ʎʝ] > ɲ;
-n } [dð] > n̪;
-n } [bβ] > m;
-n } [td] > n̪;
+n } [tdð] > n̪;
+n } [θ] > n̟;
+n } [gɡɣkx] > ŋ;
 
-[:^Letter:] { β > b;
+[^[:Letter:][:Mark:]] { β > b;
 [mnɲŋ] { β > b;
 
-[:^Letter:] { ð > d;
-[mnɲŋl] { ð > d;
+[^[:Letter:][:Mark:]] { ð > d;
+[mnɲŋl{n̪}] { ð > d;
 
-[:^Letter:] { ɣ > ɡ;
+[^[:Letter:][:Mark:]] { ɣ > ɡ;
 [mnɲŋ] { ɣ > ɡ;
-
-n } [pbvm] > m;
-n } [f] > ɱ;
-n } [td] > n̪;
-n } [θ] > n̟;
-n } [{t͡ʃ}ʎʝ] > ɲ;
-n } [kɡx] > ŋ;
 `;

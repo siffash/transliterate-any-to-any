@@ -5,13 +5,9 @@ export const zhJa = async (text: Text) => {
 
   const s2jp = OpenCC.Converter({ from: "cn", to: "jp" });
 
-  const convert = (text: string) => {
-    return s2jp(text);
-  };
-
   if (typeof text === "string") {
-    return convert(text);
+    return s2jp(text);
   } else {
-    return text.map(convert);
+    return text.map(s2jp);
   }
 };

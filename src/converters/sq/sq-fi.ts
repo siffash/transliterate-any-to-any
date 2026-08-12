@@ -1,7 +1,7 @@
 import { Text } from "types";
 
 export const sqFi = async (text: Text) => {
-  const { RBT } = await import("icu-transliterator");
+  const { RBT } = await import("helpers/rbt-distributor");
   const { sqLatnRules } = await import("constants/sq-latn.rules");
   const { latnFiRules } = await import("constants/latn-fi.rules");
 

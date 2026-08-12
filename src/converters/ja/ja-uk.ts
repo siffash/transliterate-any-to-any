@@ -3,7 +3,7 @@ import { Text } from "types";
 export const jaUk = async (text: Text) => {
   const { default: Kuroshiro } = await import("kuroshiro");
   const { default: KuromojiAnalyzer } = await import("kuroshiro-analyzer-kuromoji");
-  const { RBT } = await import("icu-transliterator");
+  const { RBT } = await import("helpers/rbt-distributor");
   const { jaUkRules } = await import("constants/ja-uk.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
 

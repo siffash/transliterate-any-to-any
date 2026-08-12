@@ -1,21 +1,15 @@
 import { Text } from "types";
-import { copyCase } from "helpers/copyCase";
 
 export const daSk = async (text: Text) => {
-  const { RBT } = await import("icu-transliterator");
-  const { daIpaRules } = await import("constants/da-ipa.rules");
-  const { ipaSkRules } = await import("constants/ipa-sk.rules");
+  const { RBT } = await import("helpers/rbt-distributor");
+  const { daLatnRules } = await import("constants/da-latn.rules");
+  const { latnSkRules } = await import("constants/latn-sk.rules");
 
-  const transliterator = RBT.fromRules(daIpaRules + ipaSkRules);
-
-  const convert = (text: string) => {
-    const transliterated = transliterator.transliterate(text);
-    return copyCase(text, transliterated);
-  };
+  const transliterator = RBT.fromRules(daLatnRules + latnSkRules);
 
   if (typeof text === "string") {
-    return convert(text);
+    return transliterator.transliterate(text);
   } else {
-    return text.map(convert);
+    return text.map(text => transliterator.transliterate(text));
   }
 };

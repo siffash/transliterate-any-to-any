@@ -1,7 +1,7 @@
 import { Text } from "types";
 
 export const hrHe = async (text: Text) => {
-  const { RBT } = await import("icu-transliterator");
+  const { RBT } = await import("helpers/rbt-distributor");
   const { hrIpaRules } = await import("constants/hr-ipa.rules");
   const { ipaHeRules } = await import("constants/ipa-he.rules");
 

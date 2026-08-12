@@ -51,6 +51,17 @@ q > k;
 
 ::Null;
 
+[aeoAEO] { i > j;
+[aeoAEO] { I > J;
+[iI] { a > ja;
+[iI] { A > JA;
+[iI] { e > je;
+[iI] { E > JE;
+[iI] { u > ju;
+[iI] { U > JU;
+
+::Null;
+
 [bB] { [bB] > ;
 [cC] { [cC] > ;
 [čČ] { [čČ] > ;
@@ -74,15 +85,6 @@ q > k;
 [zZ] { [zZ] > ;
 [žŽ] { [žŽ] > ;
 [dD][žŽ] { [dD][žŽ] > ;
-
-::Null;
-
-[iI] { a > ja;
-[iI] { A > JA;
-[iI] { e > je;
-[iI] { E > JE;
-[iI] { u > ju;
-[iI] { U > JU;
 
 ::Null;
 

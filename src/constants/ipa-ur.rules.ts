@@ -1,6 +1,5 @@
 export const ipaUrRules = `
 ::Null;
-::NFC;
 
 ẽ > e ̃;
 ĩ > i ̃;
@@ -11,14 +10,14 @@ export const ipaUrRules = `
 
 ::Null;
 
-[^[:Letter:][:Mark:]] { [eɛ] [ɪi] > اے;
+[^[:Letter:][:Mark:]] { [eɛ] [ɪi] > ای;
 [^[:Letter:][:Mark:]] { [oɔ] [ʊu] > او;
 [eɛ] [ɪi] } [^[:Letter:][:Mark:]] > ے;
 [eɛ] [ɪi] > ی;
 [oɔ] [ʊu] > و;
 [^[:Letter:][:Mark:]] { [iɪɨyʏ] > ای;
 [^[:Letter:][:Mark:]] { [uʊʉɯưoɔøɵơôœɤ] > او;
-[^[:Letter:][:Mark:]] { [eɛɜęêɘ] > اے;
+[^[:Letter:][:Mark:]] { [eɛɜęêɘ] > ای;
 [^[:Letter:][:Mark:]] { [aɑæɒâɐ] > آ;
 [^[:Letter:][:Mark:]] { [ɚɝ] > ار;
 [^[:Letter:][:Mark:]] { [əʌă] > ا;
@@ -53,7 +52,7 @@ q > ق;
 s > س;
 z > ز;
 [xχ] > خ;
-[ɣʁ] > غ;
+ɣ > غ;
 [ʃɕʂç] > ش;
 [ʒʐʑž] > ژ;
 [cč] > چ;
@@ -64,7 +63,7 @@ j > ی;
 [nɲɳ] > ن;
 ŋ } [kɡgɢq] > ن;
 ŋ > نگ;
-[rɾɹʀ] > ر;
+[rɾɹʀʁ] > ر;
 ɽ > ڑ;
 [lɫɭʎ] > ل;
 [fɸ] > ف;

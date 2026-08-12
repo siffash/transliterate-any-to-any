@@ -11,22 +11,26 @@ export const ipaCaRules = `
 [ôõøœơɔɵɤʌ] > o;
 [ũưʉʊɯʏɥy] > u;
 
-t [ʃʂɕχ] } [:^Letter:] > ig;
-t [ʃʂɕχ] > tx;
+::Null;
+
+t [ʃʂɕ] } [:^Letter:] > ig;
+t [ʃʂɕ] > tx;
 č } [:^Letter:] > ig;
 č > tx;
 
 d [ʒžʐʑ] } [ei] > tg;
+d [ʒžʐʑ] } [:^Letter:] > ig;
+[ʒžʐʑʝ] } [:^Letter:] > ig;
 d [ʒžʐʑ] > tj;
 
-[aeiou] { [ʃʂɕχx] > ix;
-[ʃʂɕχ] > x;
+[aeou] { [ʃʂɕ] > ix;
+[ʃʂɕ] > x;
 
 [ʒžʐʑʝ] } [ei] > g;
 [ʒžʐʑʝ] > j;
 
-k } [ei] > qu;
-k > c;
+[kcq] } [ei] > qu;
+[kcq] > c;
 
 [ɡɟɢɣɰ] } [ei] > gu;
 [ɡɟɢɣɰ] > g;
@@ -38,13 +42,15 @@ g } [ei] > gu;
 ŋ > ng;
 ɱ > m;
 
-[ɓβ] > b;
+ɓ > b;
 [ðɖɗď] > d;
 [ʈť] > t;
+[aeiou] { r } [aeiou] > rr;
 [ɹɽɾʀʁ] > r;
-ʋ > v;
+[ʋβ] > v;
 θ > z;
-[ħɦɧʔʕ] > h;
+[ħɦɧʔʕçχx] > h;
+[aeiou] { s } [aeiou] > ss;
 
 j > i;
 w > u;
@@ -57,36 +63,17 @@ m } [fv] > n;
 
 ::Null;
 
-[:^Letter:] { ç } [eiéíè] > c;
-[:^Letter:] { ç > s;
-ç } [eiéíè] > c;
-
-::Null;
-
 [:^Letter:] { ss > s;
 ss } [:^Letter:] > s;
 
 [:^Letter:] { rr > r;
 rr } [:^Letter:] > r;
 
-[:^Letter:] { l·l > l;
-l·l } [:^Letter:] > l;
-
-[:^Letter:] { l.l > l;
-l.l } [:^Letter:] > l;
-
-::Null;
-
-t { g } [aàoòóuúü] > j;
-t { j } [eéèiíï] > g;
+[:^Letter:] { l[·.]l > l;
+l[·.]l } [:^Letter:] > l;
 
 ::Null;
 
 [:^Letter:] { y > i;
 [^n] { y > i;
-
-::Null;
-
-[:^Letter:] { ix > x;
-[bcdfghjklmnpqrstvwxyzç] { ix > x;
 `;

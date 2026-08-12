@@ -1,7 +1,7 @@
 import { Text } from "types";
 
 export const ruBg = async (text: Text) => {
-  const { RBT } = await import("icu-transliterator");
+  const { RBT } = await import("helpers/rbt-distributor");
   const { ruBgRules } = await import("constants/ru-bg.rules");
 
   const transliterator = RBT.fromRules(ruBgRules);

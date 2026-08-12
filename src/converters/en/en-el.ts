@@ -3,7 +3,7 @@ import { copyCase } from "helpers/copyCase";
 
 export const enEl = async (text: Text) => {
   const { toIPA } = require("phonemize");
-  const { RBT } = await import("icu-transliterator");
+  const { RBT } = await import("helpers/rbt-distributor");
   const { ipaElRules } = await import("constants/ipa-el.rules");
 
   const transliterator = RBT.fromRules(ipaElRules);

@@ -11,11 +11,11 @@ export const hyIpaRules = `
 
 [:^Letter:] { և > jɛv;
 [աեէըիոօւև] { և > jɛv;
-և > ev;
+և > ɛv;
 
 [:^Letter:] { եւ > jɛv;
 [աեէըիոօւև] { եւ > jɛv;
-եւ > ev;
+եւ > ɛv;
 
 ու > u;
 
@@ -24,7 +24,6 @@ export const hyIpaRules = `
 ե > ɛ;
 
 [:^Letter:] { ո > vɔ;
-[աեէըիոօւև] { ո > vɔ;
 ո > ɔ;
 
 ա > ɑ;
@@ -43,7 +42,7 @@ export const hyIpaRules = `
 կ > k;
 հ > h;
 ձ > dz;
-ղ > ʁ;
+ղ > ɣ;
 ճ > tʃ;
 մ > m;
 յ > j;

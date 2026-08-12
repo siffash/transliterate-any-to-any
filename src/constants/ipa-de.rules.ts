@@ -5,7 +5,6 @@ export const ipaDeRules = `
 
 ::Null;
 
-[:^Letter:] { ʃ } [pt] > s;
 [âăɐɑɒʌ] > a;
 [æɛ] > ä;
 [êęẽɘəɜ] > e;
@@ -15,7 +14,7 @@ export const ipaDeRules = `
 [øœ] > ö;
 [ũưʉʊɯ] > u;
 [yʏ] > ü;
-[ɓβ] > b;
+ɓ > b;
 [cq] > k;
 [çxχ] > ch;
 [č] > tsch;
@@ -30,10 +29,10 @@ export const ipaDeRules = `
 [ɲ] > nj;
 [ŋ] > ng;
 [ɾʀʁɹɽ] > r;
-[zʐʑ] > s;
+z > s;
 [ťʈθ] > t;
-[vʋʷ] > w;
-[ɕɧʂʃʒž] > sch;
+[vʋʷβ] > w;
+[ɕɧʂʃʒžʐʑ] > sch;
 ts > z;
 ɸ > f;
 

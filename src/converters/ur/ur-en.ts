@@ -2,7 +2,7 @@ import { Text } from "types";
 
 export const urEn = async <T = Text>(text: Text): Promise<T> => {
   const { urIpaMap } = await import("constants/ur-ipa.map");
-  const { RBT } = await import("icu-transliterator");
+  const { RBT } = await import("helpers/rbt-distributor");
   const { ipaEnRules } = await import("constants/ipa-en.rules");
   const { urEnRules } = await import("constants/ur-en.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");

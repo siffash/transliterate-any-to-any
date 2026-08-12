@@ -2,7 +2,7 @@ import { Text } from "types";
 
 export const zhMk = async (text: Text) => {
   const { pinyin } = await import("pinyin-pro");
-  const { RBT } = await import("icu-transliterator");
+  const { RBT } = await import("helpers/rbt-distributor");
   const { zhMkRules } = await import("constants/zh-mk.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
 

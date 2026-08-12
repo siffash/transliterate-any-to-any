@@ -1,7 +1,7 @@
 import { Text } from "types";
 
 export const deAz = async (text: Text) => {
-  const { RBT } = await import("icu-transliterator");
+  const { RBT } = await import("helpers/rbt-distributor");
   const { deLatnRules } = await import("constants/de-latn.rules");
   const { latnAzRules } = await import("constants/latn-az.rules");
 

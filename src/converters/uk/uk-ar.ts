@@ -1,7 +1,7 @@
 import { Text } from "types";
 
 export const ukAr = async (text: Text) => {
-  const { RBT } = await import("icu-transliterator");
+  const { RBT } = await import("helpers/rbt-distributor");
   const { ukIpaRules } = await import("constants/uk-ipa.rules");
   const { ipaArRules } = await import("constants/ipa-ar.rules");
 

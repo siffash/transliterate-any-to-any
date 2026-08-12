@@ -2,7 +2,7 @@ import { Text } from "types";
 
 export const koVi = async (text: Text) => {
   const Aromanize = (await import("aromanize")).default;
-  const { RBT } = await import("icu-transliterator");
+  const { RBT } = await import("helpers/rbt-distributor");
   const { koLatnRules } = await import("constants/ko-latn.rules");
   const { latnViRules } = await import("constants/latn-vi.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");

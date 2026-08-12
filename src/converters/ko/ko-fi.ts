@@ -2,7 +2,7 @@ import { Text } from "types";
 
 export const koFi = async (text: Text) => {
   const { toIPA } = require("phonemize/all");
-  const { RBT } = await import("icu-transliterator");
+  const { RBT } = await import("helpers/rbt-distributor");
   const { ipaFiRules } = await import("constants/ipa-fi.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
 

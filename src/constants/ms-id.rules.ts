@@ -93,4 +93,32 @@ KE { WANG } AN > UANG;
 [:^Letter:] { Stesen > Stasiun;
 [:^Letter:] { stesen > stasiun;
 [:^Letter:] { STESEN > STASIUN;
+
+::Null;
+
+[bB] { [bB] > ;
+[cC] { [cC] > ;
+[dD] { [dD] > ;
+[fF] { [fF] > ;
+[gG] { [gG] > ;
+[hH] { [hH] > ;
+[jJ] { [jJ] > ;
+[kK] { [kK] > ;
+[lL] { [lL] > ;
+[mM] { [mM] > ;
+[nN] { [nN] > ;
+[pP] { [pP] > ;
+[qQ] { [qQ] > ;
+[rR] { [rR] > ;
+[sS] { [sS] > ;
+[tT] { [tT] > ;
+[vV] { [vV] > ;
+[wW] { [wW] > ;
+[xX] { [xX] > ;
+[yY] { [yY] > ;
+[zZ] { [zZ] > ;
+
+[sS] [yY] { [sS] [yY] > ;
+[kK] [hH] { [kK] [hH] > ;
+[nN] [yY] { [nN] [yY] > ;
 `;

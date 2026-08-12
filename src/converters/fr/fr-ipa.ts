@@ -2,7 +2,7 @@ import { Text } from "types";
 
 export const frIpa = async <T = Text>(text: Text, isNormalized: boolean): Promise<T> => {
   const { frIpaMap } = await import("constants/fr-ipa.map");
-  const { RBT } = await import("icu-transliterator");
+  const { RBT } = await import("helpers/rbt-distributor");
   const { frIpaRules } = await import("constants/fr-ipa.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
   const { frIpaNormalizer } = await import("helpers/frIpaNormalizer");

@@ -1,7 +1,7 @@
 import { Text } from "types";
 
 export const skKo = async (text: Text) => {
-  const { RBT } = await import("icu-transliterator");
+  const { RBT } = await import("helpers/rbt-distributor");
   const { skIpaRules } = await import("constants/sk-ipa.rules");
   const { ipaKoRules } = await import("constants/ipa-ko.rules");
 

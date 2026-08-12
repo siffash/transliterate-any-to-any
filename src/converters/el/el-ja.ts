@@ -1,7 +1,7 @@
 import { Text } from "types";
 
 export const elJa = async (text: Text) => {
-  const { RBT } = await import("icu-transliterator");
+  const { RBT } = await import("helpers/rbt-distributor");
   const { elIpaRules } = await import("constants/el-ipa.rules");
   const { ipaJaRules } = await import("constants/ipa-ja.rules");
 

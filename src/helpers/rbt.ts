@@ -55,29 +55,36 @@ export type CompiledPass =
   { kind: "rules"; rules: CompiledRule[] } | { kind: "transform"; name: GlobalTransformName };
 
 interface PosixClassSpec {
-  charPattern: string;
+  test: (ch: string) => boolean;
   matchesStartOfString: boolean;
   matchesEndOfString: boolean;
 }
-
-const POSIX_CLASSES: Readonly<Record<string, PosixClassSpec>> = {
-  Mark: { charPattern: "\\p{M}", matchesStartOfString: false, matchesEndOfString: false },
-  Mn: { charPattern: "\\p{Mn}", matchesStartOfString: false, matchesEndOfString: false },
-  Lu: { charPattern: "\\p{Lu}", matchesStartOfString: false, matchesEndOfString: false },
-  Ll: { charPattern: "\\p{Ll}", matchesStartOfString: false, matchesEndOfString: false },
-  Letter: { charPattern: "\\p{L}", matchesStartOfString: false, matchesEndOfString: false },
-  "^Letter": { charPattern: "\\P{L}", matchesStartOfString: true, matchesEndOfString: true },
-  Arabic: {
-    charPattern: "\\p{scx=Arabic}",
-    matchesStartOfString: false,
-    matchesEndOfString: false,
-  },
-};
 
 function makeCharTest(pattern: string): (ch: string) => boolean {
   const re = new RegExp(`^(?:${pattern})$`, "u");
   return (ch: string) => re.test(ch);
 }
+
+function makeRangeTest(startCodepoint: number, endCodepoint: number): (ch: string) => boolean {
+  return (ch: string) => {
+    const cp = ch.codePointAt(0);
+    return cp !== undefined && cp >= startCodepoint && cp <= endCodepoint;
+  };
+}
+
+const POSIX_CLASSES: Readonly<Record<string, PosixClassSpec>> = {
+  Mark: { test: makeCharTest("\\p{M}"), matchesStartOfString: false, matchesEndOfString: false },
+  Mn: { test: makeCharTest("\\p{Mn}"), matchesStartOfString: false, matchesEndOfString: false },
+  Lu: { test: makeCharTest("\\p{Lu}"), matchesStartOfString: false, matchesEndOfString: false },
+  Ll: { test: makeCharTest("\\p{Ll}"), matchesStartOfString: false, matchesEndOfString: false },
+  Letter: { test: makeCharTest("\\p{L}"), matchesStartOfString: false, matchesEndOfString: false },
+  "^Letter": { test: makeCharTest("\\P{L}"), matchesStartOfString: true, matchesEndOfString: true },
+  Arabic: {
+    test: makeCharTest("\\p{scx=Arabic}"),
+    matchesStartOfString: false,
+    matchesEndOfString: false,
+  },
+};
 
 const STRUCTURAL_CHARS = new Set([
   "{",
@@ -532,6 +539,23 @@ class Parser {
     return this.parseBracketSetBody();
   }
 
+  private readBracketSetLiteral(): string {
+    if (
+      !this.inQuote &&
+      !this.atEnd() &&
+      this.src[this.i] !== "-" &&
+      BACKSLASH_ESCAPABLE_CHARS.has(this.src[this.i])
+    ) {
+      const ch = this.src[this.i];
+      this.i++;
+      return ch;
+    }
+    const u = this.next();
+    if (u === null) this.fail("unterminated '[' character set, missing ']'");
+    if (u.type === "marker") this.fail(`unexpected '${u.char}' inside '[...]' character set`);
+    return u.char;
+  }
+
   private parseBracketSetBody(): SetAtom {
     let negate = false;
     this.skipRawWhitespace();
@@ -549,6 +573,10 @@ class Parser {
     for (;;) {
       if (!this.inQuote) {
         this.skipRawWhitespace();
+        if (!this.atEnd() && this.src[this.i] === "]") {
+          this.i++;
+          break;
+        }
         if (!this.atEnd() && this.src[this.i] === "[") {
           this.i++;
           const child = this.parseBracketExpression();
@@ -567,12 +595,34 @@ class Parser {
         }
       }
 
-      const u = this.next();
-      if (u === null) this.fail("unterminated '[' character set, missing ']'");
-      if (u.type === "marker" && u.char === "]") break;
-      if (u.type === "marker") this.fail(`unexpected '${u.char}' inside '[...]' character set`);
-      alternatives.push([u.char]);
+      const ch1 = this.readBracketSetLiteral();
       sawAnyMember = true;
+
+      let formedRange = false;
+      if (!this.inQuote) {
+        this.skipRawWhitespace();
+        if (!this.atEnd() && this.src[this.i] === "-") {
+          const dashPos = this.i;
+          this.i++;
+          this.skipRawWhitespace();
+          if (!this.atEnd() && this.src[this.i] !== "]") {
+            const ch2 = this.readBracketSetLiteral();
+            const startCp = ch1.codePointAt(0) as number;
+            const endCp = ch2.codePointAt(0) as number;
+            if (startCp > endCp) {
+              this.fail(
+                `invalid character range '${ch1}-${ch2}': the start (U+${startCp.toString(16).toUpperCase().padStart(4, "0")}) is greater than the end (U+${endCp.toString(16).toUpperCase().padStart(4, "0")})`,
+              );
+            }
+            charTests.push(makeRangeTest(startCp, endCp));
+            formedRange = true;
+          } else {
+            this.i = dashPos;
+          }
+        }
+      }
+
+      if (!formedRange) alternatives.push([ch1]);
     }
 
     if (!sawAnyMember) this.fail("character set '[]' must not be empty");
@@ -606,6 +656,12 @@ class Parser {
   private parseMultiCharStringBody(): string[] {
     const chars: string[] = [];
     for (;;) {
+      if (!this.inQuote && !this.atEnd() && BACKSLASH_ESCAPABLE_CHARS.has(this.src[this.i])) {
+        chars.push(this.src[this.i]);
+        this.i++;
+        continue;
+      }
+
       const u = this.next();
       if (u === null) this.fail("unterminated '{' multi-character string, missing '}'");
       if (u.type === "marker" && u.char === "}") break;
@@ -644,7 +700,7 @@ class Parser {
     return {
       kind: "set",
       alternatives: [],
-      charTests: [makeCharTest(spec.charPattern)],
+      charTests: [spec.test],
       matchesStartOfString: spec.matchesStartOfString,
       matchesEndOfString: spec.matchesEndOfString,
     };
@@ -670,7 +726,10 @@ const INLINE_FUNCTIONS: Readonly<Record<InlineFunctionName, (input: string) => s
   "Any-Lower": input => input.toLocaleLowerCase(),
 };
 
-function resolveSegment(segment: ReplacementSegment, captures: Map<number, string[]>): string[] {
+function resolveSegment(
+  segment: ReplacementSegment,
+  captures: ReadonlyMap<number, string[]>,
+): string[] {
   if (segment.kind === "literal") return [segment.value];
   if (segment.kind === "backref") return captures.get(segment.index) ?? [];
   const argText = resolveReplacement(segment.args, captures).join("");
@@ -679,7 +738,7 @@ function resolveSegment(segment: ReplacementSegment, captures: Map<number, strin
 
 function resolveReplacement(
   segments: ReplacementSegment[],
-  captures: Map<number, string[]>,
+  captures: ReadonlyMap<number, string[]>,
 ): string[] {
   const result: string[] = [];
   for (const segment of segments) {
@@ -691,13 +750,18 @@ function resolveReplacement(
 function resolveReplacementWithCursor(
   segments: ReplacementSegment[],
   cursorOffset: number | null,
-  captures: Map<number, string[]>,
+  captures: ReadonlyMap<number, string[]>,
 ): { chars: string[]; cursorOffset: number | null } {
   const chars: string[] = [];
   let resolvedCursorOffset: number | null = null;
   for (let i = 0; i < segments.length; i++) {
     if (cursorOffset === i) resolvedCursorOffset = chars.length;
-    chars.push(...resolveSegment(segments[i], captures));
+    const segment = segments[i];
+    if (segment.kind === "literal") {
+      chars.push(segment.value);
+    } else {
+      chars.push(...resolveSegment(segment, captures));
+    }
   }
   if (cursorOffset === segments.length) resolvedCursorOffset = chars.length;
   return { chars, cursorOffset: resolvedCursorOffset };
@@ -722,10 +786,11 @@ function titleCaseOneWord(word: string): string {
   return first.toLocaleUpperCase() + rest.join("").toLocaleLowerCase();
 }
 
+const TITLE_CASE_SEGMENTER = new Intl.Segmenter(undefined, { granularity: "word" });
+
 function applyTitleCase(input: string): string {
-  const segmenter = new Intl.Segmenter(undefined, { granularity: "word" });
   let result = "";
-  for (const { segment, isWordLike } of segmenter.segment(input)) {
+  for (const { segment, isWordLike } of TITLE_CASE_SEGMENTER.segment(input)) {
     result += isWordLike ? titleCaseOneWord(segment) : segment;
   }
   return result;
@@ -913,12 +978,16 @@ function matchSequenceForward(
   nodes: PatternNode[],
 ): MatchOutcome | null {
   let pos = startPos;
-  let captures = new Map<number, string[]>();
+  let captures: ReadonlyMap<number, string[]> = NO_CAPTURES;
   for (const node of nodes) {
     const outcome = matchNodeForward(node, text, pos);
     if (outcome === null) return null;
     pos += outcome.length;
-    for (const [index, value] of outcome.captures) captures.set(index, value);
+    if (outcome.captures.size > 0) {
+      const merged = captures === NO_CAPTURES ? new Map<number, string[]>() : new Map(captures);
+      for (const [index, value] of outcome.captures) merged.set(index, value);
+      captures = merged;
+    }
   }
   return { length: pos - startPos, captures };
 }
@@ -929,12 +998,16 @@ function matchSequenceBackward(
   nodes: PatternNode[],
 ): MatchOutcome | null {
   let pos = endPos;
-  let captures = new Map<number, string[]>();
+  let captures: ReadonlyMap<number, string[]> = NO_CAPTURES;
   for (let i = nodes.length - 1; i >= 0; i--) {
     const outcome = matchNodeBackward(nodes[i], text, pos);
     if (outcome === null) return null;
     pos -= outcome.length;
-    for (const [index, value] of outcome.captures) captures.set(index, value);
+    if (outcome.captures.size > 0) {
+      const merged = captures === NO_CAPTURES ? new Map<number, string[]>() : new Map(captures);
+      for (const [index, value] of outcome.captures) merged.set(index, value);
+      captures = merged;
+    }
   }
   return { length: endPos - pos, captures };
 }
@@ -942,7 +1015,7 @@ function matchSequenceBackward(
 interface MatchResult {
   rule: CompiledRule;
   keyConsumed: number;
-  captures: Map<number, string[]>;
+  captures: ReadonlyMap<number, string[]>;
 }
 
 function isBetterMatch(
@@ -983,10 +1056,18 @@ function findBestMatch(text: string[], cursor: number, rules: CompiledRule[]): M
 
     const keyConsumed = keyOutcome.length;
     if (best === null || isBetterMatch(rule, keyConsumed, best.rule, best.keyConsumed)) {
-      const captures = new Map<number, string[]>();
-      for (const [index, value] of anteOutcome.captures) captures.set(index, value);
-      for (const [index, value] of keyOutcome.captures) captures.set(index, value);
-      for (const [index, value] of postOutcome.captures) captures.set(index, value);
+      let captures: ReadonlyMap<number, string[]> = NO_CAPTURES;
+      if (
+        anteOutcome.captures.size > 0 ||
+        keyOutcome.captures.size > 0 ||
+        postOutcome.captures.size > 0
+      ) {
+        const merged = new Map<number, string[]>();
+        for (const [index, value] of anteOutcome.captures) merged.set(index, value);
+        for (const [index, value] of keyOutcome.captures) merged.set(index, value);
+        for (const [index, value] of postOutcome.captures) merged.set(index, value);
+        captures = merged;
+      }
       best = { rule, keyConsumed, captures };
     }
   }

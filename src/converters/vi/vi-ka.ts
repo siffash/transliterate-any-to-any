@@ -1,11 +1,11 @@
 import { Text } from "types";
 
 export const viKa = async (text: Text) => {
-  const { RBT } = await import("icu-transliterator");
-  const { viIpaRules } = await import("constants/vi-ipa.rules");
-  const { ipaKaRules } = await import("constants/ipa-ka.rules");
+  const { RBT } = await import("helpers/rbt-distributor");
+  const { viLatnRules } = await import("constants/vi-latn.rules");
+  const { latnKaRules } = await import("constants/latn-ka.rules");
 
-  const transliterator = RBT.fromRules(viIpaRules + ipaKaRules);
+  const transliterator = RBT.fromRules(viLatnRules + latnKaRules);
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);

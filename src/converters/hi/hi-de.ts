@@ -1,7 +1,7 @@
 import { Text } from "types";
 
 export const hiDe = async (text: Text) => {
-  const { RBT } = await import("icu-transliterator");
+  const { RBT } = await import("helpers/rbt-distributor");
   const { hiIpaRules } = await import("constants/hi-ipa.rules");
   const { ipaDeRules } = await import("constants/ipa-de.rules");
 

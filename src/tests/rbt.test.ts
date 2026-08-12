@@ -164,6 +164,71 @@ describe("escaping special characters by enclosing them in single quotes", () =>
   });
 });
 
+describe("inside a [set], the six escapable symbols are literal even when written bare, without a backslash", () => {
+  it("the exact example from the request: `['*@._-]` matches all six symbols literally with no escaping at all", () => {
+    expect(RBT.fromRules("['*@._-] > X;").transliterate("'*@._-")).toBe("XXXXXX");
+    expect(RBT.fromRules("['*@._-] > X;").transliterate("a'b*c@d.e_f-g")).toBe("aXbXcXdXeXfXg");
+  });
+
+  it.each([
+    { name: "bare quote", rules: "['] > X;", input: "'", expected: "X" },
+    {
+      name: "bare asterisk (structural everywhere else, as the '*' quantifier)",
+      rules: "[*] > X;",
+      input: "*",
+      expected: "X",
+    },
+    { name: "bare at-sign", rules: "[@] > X;", input: "@", expected: "X" },
+    { name: "bare dot", rules: "[.] > X;", input: ".", expected: "X" },
+    { name: "bare underscore", rules: "[_] > X;", input: "_", expected: "X" },
+  ])("$name is a valid, literal set member on its own", ({ rules, input, expected }) => {
+    expect(RBT.fromRules(rules).transliterate(input)).toBe(expected);
+  });
+
+  it("a bare hyphen with no other members has neither a left nor a right boundary, so it is unambiguously literal too; its full, context-dependent behavior (as a range operator between two characters) is covered in its own dedicated section below", () => {
+    expect(RBT.fromRules("[-] > X;").transliterate("-")).toBe("X");
+  });
+
+  it("backslash escaping still works inside a set too, exactly as before, and can be freely mixed with bare symbols", () => {
+    expect(RBT.fromRules("[\\'] > X;").transliterate("'")).toBe("X");
+    expect(RBT.fromRules("[\\*] > X;").transliterate("*")).toBe("X");
+    expect(RBT.fromRules("[a\\*'] > X;").transliterate("a*'")).toBe("XXX");
+  });
+
+  it("outside a set, these symbols still require backslash or quoting exactly as before — this change is scoped to inside [...] only", () => {
+    expect(RBT.fromRules("a' 'b > X;").transliterate("a b")).toBe("X");
+    expect(RBT.fromRules("\\' > X;").transliterate("'")).toBe("X");
+    expect(() => RBT.fromRules("* > X;")).toThrow(RBTParseError);
+  });
+
+  it("combines correctly with set negation, both for membership and for the leading '^' detection itself", () => {
+    expect(RBT.fromRules("[^'*@._-] > X;").transliterate("a'b")).toBe("X'X");
+    expect(RBT.fromRules("[^*] > X;").transliterate("*a")).toBe("*X");
+  });
+
+  it("a leading bare symbol that is not '^' is just an ordinary member, not a negation trigger", () => {
+    expect(RBT.fromRules("[*a] > X;").transliterate("*ab")).toBe("XXb");
+  });
+
+  it("combines correctly with nested brackets, POSIX classes, and multi-character strings", () => {
+    expect(RBT.fromRules("[[*@]bc] > X;").transliterate("*@bc")).toBe("XXXX");
+    expect(RBT.fromRules("[*[:Lu:]] > X;").transliterate("*A")).toBe("XX");
+    expect(RBT.fromRules("[{a*b}] > X;").transliterate("a*b")).toBe("X");
+  });
+
+  it("combines correctly with a \\uXXXX escape in the same set", () => {
+    expect(RBT.fromRules("[a*\\u0042._] > X;").transliterate("aB*._c")).toBe("XXXXXc");
+  });
+
+  it("whitespace around bare symbols inside a set is still ignored, consistent with the rest of the grammar", () => {
+    expect(RBT.fromRules("[ * @ ] > X;").transliterate("*@")).toBe("XX");
+  });
+
+  it("an unterminated set containing a bare symbol still raises a clear parse error", () => {
+    expect(() => RBT.fromRules("[*")).toThrow(RBTParseError);
+  });
+});
+
 describe("UnicodeSet character classes: `[abc] > d;`", () => {
   it.each([
     { name: "matches any member of the set", rules: "[abc] > d;", input: "abc", expected: "ddd" },
@@ -174,7 +239,7 @@ describe("UnicodeSet character classes: `[abc] > d;`", () => {
       expected: "xdddy",
     },
     {
-      name: "'-' is a literal set member (no ranges in this build)",
+      name: "a trailing '-' (right before ']') is a literal set member, not a range operator",
       rules: "[a-] > Z;",
       input: "a-b",
       expected: "ZZb",
@@ -187,6 +252,121 @@ describe("UnicodeSet character classes: `[abc] > d;`", () => {
     },
   ])("$name", ({ rules, input, expected }) => {
     expect(RBT.fromRules(rules).transliterate(input)).toBe(expected);
+  });
+});
+
+describe("the dash '-' as a range operator inside a [set]: `[b-d]`", () => {
+  it("the exact worked example: `[b-df-hj-np-tv-z]`, the standard idiom for ASCII lowercase consonants, chaining five ranges to exclude the vowels", () => {
+    expect(
+      RBT.fromRules("[b-df-hj-np-tv-z] > X;").transliterate("abcdefghijklmnopqrstuvwxyz"),
+    ).toBe("aXXXeXXXiXXXXXoXXXXXuXXXXX");
+  });
+
+  it.each([
+    {
+      name: "a simple range matches every character in the inclusive span",
+      rules: "[b-d] > X;",
+      input: "abcde",
+      expected: "aXXXe",
+    },
+    {
+      name: "a single-character range (start equals end) is valid, equivalent to a plain literal",
+      rules: "[a-a] > X;",
+      input: "ab",
+      expected: "Xb",
+    },
+  ])("$name", ({ rules, input, expected }) => {
+    expect(RBT.fromRules(rules).transliterate(input)).toBe(expected);
+  });
+
+  describe("escaping a literal dash inside a set, exactly as specified", () => {
+    it.each([
+      {
+        name: "a dash at the absolute beginning of the set is literal, since it has no left boundary",
+        rules: "[-abc] > X;",
+        input: "-abcd",
+        expected: "XXXXd",
+      },
+      {
+        name: "a dash at the absolute end of the set is literal, since it has no right boundary",
+        rules: "[abc-] > X;",
+        input: "abc-d",
+        expected: "XXXXd",
+      },
+      {
+        name: "a backslash-escaped dash is always literal, standalone",
+        rules: "[\\-] > X;",
+        input: "-",
+        expected: "X",
+      },
+      {
+        name: "a backslash-escaped dash between two letters is literal text, not a range, even though it sits between two characters",
+        rules: "[a\\-z] > X;",
+        input: "abz",
+        expected: "XbX",
+      },
+    ])("$name", ({ rules, input, expected }) => {
+      expect(RBT.fromRules(rules).transliterate(input)).toBe(expected);
+    });
+  });
+
+  describe("a negated range excludes every character in the span, via the same code-point complement used for literal members and POSIX classes", () => {
+    it.each([
+      {
+        name: "[^a-z] excludes the whole range and matches everything else",
+        rules: "[^a-z] > X;",
+        input: "abcXYZ123",
+        expected: "abcXXXXXX",
+      },
+      {
+        name: "negating the exact consonant-range idiom keeps consonants and replaces everything else, including the vowels",
+        rules: "[^b-df-hj-np-tv-z] > X;",
+        input: "cat",
+        expected: "cXt",
+      },
+    ])("$name", ({ rules, input, expected }) => {
+      expect(RBT.fromRules(rules).transliterate(input)).toBe(expected);
+    });
+  });
+
+  it("a range combines with a POSIX class, a multi-character string, and a nested bracket, each in the same set", () => {
+    expect(RBT.fromRules("[a-c[:Lu:]] > X;").transliterate("abcABCd")).toBe("XXXXXXd");
+    expect(RBT.fromRules("[a-c{de}] > X;").transliterate("abcde f")).toBe("XXXX f");
+    expect(RBT.fromRules("[[a-c]xy] > X;").transliterate("abcxyz")).toBe("XXXXXz");
+  });
+
+  it("a range-containing set can be quantified with '+' and '*' exactly like any other set", () => {
+    expect(RBT.fromRules("[a-c]+ > X;").transliterate("aabbccz")).toBe("Xz");
+    expect(RBT.fromRules("[a-c]*z > X;").transliterate("aabbccz")).toBe("X");
+  });
+
+  it("a backwards range, where the start code point is greater than the end, raises a clear parse error instead of silently misbehaving", () => {
+    expect(() => RBT.fromRules("[z-a] > X;")).toThrow(RBTParseError);
+    expect(() => RBT.fromRules("[a--z] > X;")).toThrow(RBTParseError);
+  });
+
+  it("either endpoint of a range may be written as a \\uXXXX escape", () => {
+    expect(RBT.fromRules("[\\u0061-c] > X;").transliterate("abcd")).toBe("XXXd");
+    expect(RBT.fromRules("[a-\\u0063] > X;").transliterate("abcd")).toBe("XXXd");
+  });
+
+  it("a range may span two of the six bare-escapable symbols too, since ranges operate purely on code point value", () => {
+    expect(RBT.fromRules("[.-@] > X;").transliterate(".0@A")).toBe("XXXA");
+  });
+
+  it("a range can span astral (surrogate-pair) code points", () => {
+    const start = String.fromCodePoint(0x10000);
+    const end = String.fromCodePoint(0x10005);
+    const mid = String.fromCodePoint(0x10002);
+    expect(RBT.fromRules(`[${start}-${end}] > X;`).transliterate(mid + "a")).toBe("Xa");
+  });
+
+  it("outside of a [set], a dash never carries range meaning and needs no escaping at all, exactly as before", () => {
+    expect(RBT.fromRules("a-b > X;").transliterate("a-b")).toBe("X");
+  });
+
+  it("whitespace around the range dash is ignored, consistent with the rest of the grammar", () => {
+    expect(RBT.fromRules("[a - c] > X;").transliterate("abcd")).toBe("XXXd");
   });
 });
 

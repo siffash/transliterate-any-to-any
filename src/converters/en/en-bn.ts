@@ -2,7 +2,7 @@ import { Text } from "types";
 
 export const enBn = async (text: Text) => {
   const { toIPA } = require("phonemize");
-  const { RBT } = await import("icu-transliterator");
+  const { RBT } = await import("helpers/rbt-distributor");
   const { ipaBnRules } = await import("constants/ipa-bn.rules");
 
   const transliterator = RBT.fromRules(ipaBnRules);

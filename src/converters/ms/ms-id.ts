@@ -1,7 +1,7 @@
 import { Text } from "types";
 
 export const msId = async (text: Text) => {
-  const { RBT } = await import("icu-transliterator");
+  const { RBT } = await import("helpers/rbt-distributor");
   const { msIdRules } = await import("constants/ms-id.rules");
 
   const transliterator = RBT.fromRules(msIdRules);
