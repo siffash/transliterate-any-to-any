@@ -3,7 +3,8 @@ import { Text } from "types";
 export const jaHe = async (text: Text) => {
   const { default: Kuroshiro } = await import("kuroshiro");
   const { default: KuromojiAnalyzer } = await import("kuroshiro-analyzer-kuromoji");
-  const { toIPA } = require("phonemize");
+  const { toIPA } = require("phonemize/all");
+  const { filterIpa } = await import("helpers/filterIpa");
   const { RBT } = await import("helpers/rbt-distributor");
   const { jaIpaRules } = await import("data/ja-ipa.rules");
   const { ipaHeRules } = await import("data/ipa-he.rules");
@@ -15,7 +16,7 @@ export const jaHe = async (text: Text) => {
 
   const convert = async (text: string) => {
     const ipa = await wordSplitter(text, "ja", async text =>
-      toIPA(await kuroshiro.convert(text, { to: "hiragana" })),
+      filterIpa(toIPA(await kuroshiro.convert(text, { to: "hiragana" }))),
     );
     return transliterator.transliterate(ipa);
   };

@@ -3,13 +3,14 @@ import { copyCase } from "helpers/copyCase";
 
 export const enHr = async (text: Text) => {
   const { toIPA } = require("phonemize");
+  const { filterIpa } = await import("helpers/filterIpa");
   const { RBT } = await import("helpers/rbt-distributor");
   const { ipaHrRules } = await import("data/ipa-hr.rules");
 
   const transliterator = RBT.fromRules(ipaHrRules);
 
   const convert = (text: string) => {
-    const ipa = toIPA(text);
+    const ipa = filterIpa(toIPA(text));
     const transliterated = transliterator.transliterate(ipa);
     return copyCase(text, transliterated);
   };

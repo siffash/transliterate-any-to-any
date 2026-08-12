@@ -5,6 +5,7 @@ export const arIpa = async <T = Text>(text: Text): Promise<T> => {
   const { RBT } = await import("helpers/rbt-distributor");
   const { arIpaRules } = await import("data/ar-ipa.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
+  const { filterIpa } = await import("helpers/filterIpa");
 
   const transliterator = RBT.fromRules(arIpaRules);
 
@@ -44,7 +45,7 @@ export const arIpa = async <T = Text>(text: Text): Promise<T> => {
     const word = normalize(rawWord);
 
     // 1. Full word - best accuracy (preserves sun-letter assimilation etc.)
-    const direct = arIpaMap[word];
+    const direct = filterIpa(arIpaMap[word]);
     if (direct) return direct;
 
     // 2. Prefix only
@@ -53,7 +54,7 @@ export const arIpa = async <T = Text>(text: Text): Promise<T> => {
       const stem = word.slice(pre.length);
       if (stem.length < MIN_STEM) continue;
 
-      const stemIPA = arIpaMap[stem];
+      const stemIPA = filterIpa(arIpaMap[stem]);
       if (stemIPA) return charFallback(pre) + stemIPA;
 
       // 3. Prefix + suffix
@@ -62,7 +63,7 @@ export const arIpa = async <T = Text>(text: Text): Promise<T> => {
         const core = stem.slice(0, stem.length - suf.length);
         if (core.length < MIN_STEM) continue;
 
-        const coreIPA = arIpaMap[core];
+        const coreIPA = filterIpa(arIpaMap[core]);
         if (coreIPA) return charFallback(pre) + coreIPA + charFallback(suf);
       }
     }
@@ -73,7 +74,7 @@ export const arIpa = async <T = Text>(text: Text): Promise<T> => {
       const stem = word.slice(0, word.length - suf.length);
       if (stem.length < MIN_STEM) continue;
 
-      const stemIPA = arIpaMap[stem];
+      const stemIPA = filterIpa(arIpaMap[stem]);
       if (stemIPA) return stemIPA + charFallback(suf);
     }
 
@@ -83,8 +84,8 @@ export const arIpa = async <T = Text>(text: Text): Promise<T> => {
       while (count <= word.length - MIN_STEM) {
         const wordHalf1 = word.slice(0, count);
         const wordHalf2 = word.slice(count);
-        const ipaHalf1 = arIpaMap[wordHalf1];
-        const ipaHalf2 = arIpaMap[wordHalf2];
+        const ipaHalf1 = filterIpa(arIpaMap[wordHalf1]);
+        const ipaHalf2 = filterIpa(arIpaMap[wordHalf2]);
         if (ipaHalf1 || ipaHalf2) {
           return (ipaHalf1 || wordToIPA(wordHalf1)) + (ipaHalf2 || wordToIPA(wordHalf2));
         }

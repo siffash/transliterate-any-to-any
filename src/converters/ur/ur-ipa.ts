@@ -5,6 +5,7 @@ export const urIpa = async <T = Text>(text: Text): Promise<T> => {
   const { RBT } = await import("helpers/rbt-distributor");
   const { urIpaRules } = await import("data/ur-ipa.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
+  const { filterIpa } = await import("helpers/filterIpa");
 
   const transliterator = RBT.fromRules(urIpaRules);
 
@@ -12,7 +13,7 @@ export const urIpa = async <T = Text>(text: Text): Promise<T> => {
     await wordSplitter(
       text,
       "ur",
-      (word: string) => urIpaMap[word] || transliterator.transliterate(word),
+      (word: string) => filterIpa(urIpaMap[word]) || transliterator.transliterate(word),
     );
 
   if (typeof text === "string") {

@@ -2,6 +2,7 @@ import { Text } from "types";
 
 export const koMt = async (text: Text) => {
   const { toIPA } = require("phonemize/all");
+  const { filterIpa } = await import("helpers/filterIpa");
   const { RBT } = await import("helpers/rbt-distributor");
   const { ipaMtRules } = await import("data/ipa-mt.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
@@ -9,7 +10,7 @@ export const koMt = async (text: Text) => {
   const transliterator = RBT.fromRules(ipaMtRules + "::Title;");
 
   const convert = async (text: string) => {
-    const ipa = await wordSplitter(text, "ko", text => toIPA(text, { anyAscii: true }));
+    const ipa = await wordSplitter(text, "ko", text => filterIpa(toIPA(text, { anyAscii: true })));
     return transliterator.transliterate(ipa);
   };
 

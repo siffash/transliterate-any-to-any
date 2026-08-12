@@ -2,6 +2,7 @@ import { Text } from "types";
 
 export const zhAr = async (text: Text) => {
   const { toIPA } = require("phonemize/all");
+  const { filterIpa } = await import("helpers/filterIpa");
   const { RBT } = await import("helpers/rbt-distributor");
   const { ipaArRules } = await import("data/ipa-ar.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
@@ -9,7 +10,7 @@ export const zhAr = async (text: Text) => {
   const transliterator = RBT.fromRules(ipaArRules);
 
   const convert = async (text: string) => {
-    const ipa = await wordSplitter(text, "zh", text => toIPA(text, { separator: "" }));
+    const ipa = await wordSplitter(text, "zh", text => filterIpa(toIPA(text, { separator: "" })));
     return transliterator.transliterate(ipa);
   };
 

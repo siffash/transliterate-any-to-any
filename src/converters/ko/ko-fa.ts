@@ -2,6 +2,7 @@ import { Text } from "types";
 
 export const koFa = async (text: Text) => {
   const { toIPA } = require("phonemize/all");
+  const { filterIpa } = await import("helpers/filterIpa");
   const { RBT } = await import("helpers/rbt-distributor");
   const { ipaFaRules } = await import("data/ipa-fa.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
@@ -9,7 +10,7 @@ export const koFa = async (text: Text) => {
   const transliterator = RBT.fromRules(ipaFaRules);
 
   const convert = async (text: string) => {
-    const ipa = await wordSplitter(text, "ko", text => toIPA(text, { anyAscii: true }));
+    const ipa = await wordSplitter(text, "ko", text => filterIpa(toIPA(text, { anyAscii: true })));
     return transliterator.transliterate(ipa);
   };
 

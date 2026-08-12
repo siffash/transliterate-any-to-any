@@ -2,6 +2,7 @@ import { Text } from "types";
 
 export const heIpa = async <T = Text>(text: Text): Promise<T> => {
   const { heIpaMap, charMap } = await import("data/he-ipa.map");
+  const { filterIpa } = await import("helpers/filterIpa");
 
   const convert = (text: string) => {
     const SINGLE_PREFIXES = ["ו", "ב", "כ", "ל", "מ", "ה"];
@@ -15,7 +16,7 @@ export const heIpa = async <T = Text>(text: Text): Promise<T> => {
 
       for (const key of multiWordKeys) {
         const regex = new RegExp(key, "g");
-        processedText = processedText.replace(regex, heIpaMap[key]);
+        processedText = processedText.replace(regex, filterIpa(heIpaMap[key]));
       }
 
       const tokens = processedText.split(/([^\u0590-\u05FF]+)/);
@@ -33,7 +34,7 @@ export const heIpa = async <T = Text>(text: Text): Promise<T> => {
     const processWord = (word: string): string => {
       // Step 1: Direct Dictionary Match
       if (heIpaMap[word]) {
-        return heIpaMap[word];
+        return filterIpa(heIpaMap[word]);
       }
 
       // Step 2: Double Prefix Check (e.g., "וב" - and in)
@@ -41,7 +42,7 @@ export const heIpa = async <T = Text>(text: Text): Promise<T> => {
         if (word.startsWith(prefix) && word.length > prefix.length) {
           const stem = word.slice(prefix.length);
           if (heIpaMap[stem]) {
-            return applyPrefix(prefix, heIpaMap[stem], stem);
+            return applyPrefix(prefix, filterIpa(heIpaMap[stem]), stem);
           }
         }
       }
@@ -51,7 +52,7 @@ export const heIpa = async <T = Text>(text: Text): Promise<T> => {
         if (word.startsWith(prefix) && word.length > prefix.length) {
           const stem = word.slice(prefix.length);
           if (heIpaMap[stem]) {
-            return applyPrefix(prefix, heIpaMap[stem], stem);
+            return applyPrefix(prefix, filterIpa(heIpaMap[stem]), stem);
           }
         }
       }
