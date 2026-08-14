@@ -60,17 +60,20 @@ export const normalizerEnIpa = (originalWord: string, ipaWord: string): string =
     // Restore "x"
     { ipaCharToBeReplaced: "ɡz", lettersToRestore: { x: "ks" } },
     // Restore "ar"
-    { ipaCharToBeReplaced: "ɝ", lettersToRestore: { ar: "ɑɹ" } },
+    { ipaCharToBeReplaced: ["ɝ", "ɚ"], lettersToRestore: { ar: "ɑɹ" } },
     // Restore "or"
-    { ipaCharToBeReplaced: "ɝ", lettersToRestore: { or: "oɹ" } },
+    { ipaCharToBeReplaced: ["ɝ", "ɚ"], lettersToRestore: { or: "oɹ" } },
+    // Restore "ir"
+    { ipaCharToBeReplaced: ["aɝ", "aɚ"], lettersToRestore: { yr: "ɪɹ" } },
     // Restore "ro"
-    { ipaCharToBeReplaced: "ɝ", lettersToRestore: { ro: "ɹo" } },
+    { ipaCharToBeReplaced: ["ɝ", "ɚ"], lettersToRestore: { ro: "ɹo" } },
     // Restore "nju"
     { ipaCharToBeReplaced: "nu", lettersToRestore: { new: "nju" } },
     // Restore "mery"
     { ipaCharToBeReplaced: "mɹi", lettersToRestore: { mery: "meɹi" } },
-    // remove "ɹ" after "ɝ" to avoid doubling of "r"
+    // remove "ɹ" after "ɝ"/"ɚ to avoid doubling of "r"
     { ipaCharToBeReplaced: "ɝɹ", lettersToRestore: { er: "ɝ" } },
+    { ipaCharToBeReplaced: "ɚɹ", lettersToRestore: { er: "ɚ" } },
     // Restore "ng"
     { ipaCharToBeReplaced: "ŋ", lettersToRestore: { ng: "ng" } },
     // Restore "lk"
@@ -81,5 +84,6 @@ export const normalizerEnIpa = (originalWord: string, ipaWord: string): string =
     { ipaCharToBeReplaced: "sɔf", lettersToRestore: { soft: "sɔft" } },
     // Restore "burgh"
     { ipaCharToBeReplaced: "bɝoʊ", lettersToRestore: { burgh: "bɝɣ" } },
+    { ipaCharToBeReplaced: "bɚoʊ", lettersToRestore: { burgh: "bɚɣ" } },
   ]);
 };
