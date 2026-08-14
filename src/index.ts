@@ -5,12 +5,11 @@ export { type Script, type Language } from "./types";
 
 // *** EXPERIMENTS ***
 
-import { transliterate } from "./transliterate";
+// import { transliterate } from "./transliterate";
 // import { RBT } from "icu-transliterator";
 // import { RBT } from "helpers/rbt";
 // import { settings } from "helpers/rbt-distributor";
-import { prettyConvert } from "helpers/prettyConvert";
-import { ipaKaRules } from "data/ipa-ka.rules";
+// import { prettyConvert } from "helpers/prettyConvert";
 const test = async () => {
   /*console.log(
     await prettyConvert(
@@ -26,21 +25,6 @@ tʰbilisi, batʰumi, kʰutʰaisi, rustʰavi, ɡori, tʰelavi, zuɡdidi, pʰotʰi
       40,
     ),
   );*/
-
-  // console.log(
-  //   await transliterate(
-  //     "London, Tokyo, Nairobi, Vancouver, Rio de Janeiro, Istanbul, Sydney, Mumbai, Reykjavik, Buenos Aires, Casablanca, Edinburgh, Singapore, Kathmandu, Lisbon, Mexico City, Amsterdam, Stockholm, Vienna, Florence, James Alexander Sterling, Elizabeth Marie Montgomery, William Thomas Jefferson, Catherine Anne Sullivan, Robert Michael Henderson, Sophia Louise Richardson, David Christopher Wallace, Margaret Rose Fitzgerald, Benjamin Edward Thompson, Olivia Grace Patterson, Samuel Richard Harrison, Eleanor Jane Whittaker, Jonathan David Miller, Victoria Beatrice Thorne, Nicholas Arthur Sterling, Isabella Mary Crawford, Daniel Patrick O'Sullivan, Beatrice Alice Kensington, Henry Lawrence Faulkner, Penelope Diane Wentworth, Global Innovation Technologies, Silver Creek Manufacturing, Horizon Strategic Consulting, Radiant Energy Solutions, Emerald Valley Agriculture, Northern Star Logistics, Peak Performance Athletics, Blue Marble Aerospace, Golden Gate Software, Velvet Thread Textiles, Crystal Clear Communications, Iron Works Infrastructure, Harmony Health Systems, Midnight Sun Productions, Prairie Wind Renewables, Grand Vista Hospitality, Sterling Bridge Finance, Alpine Ridge Outdoor, Urban Pulse Media, Crimson Oak Furniture",
-  //     { from: "en", to: "ru" },
-  //   ),
-  // );
-
-  console.log(
-    await transliterate(
-      "北京, 上海, 广州, 深圳, 成都, 杭州, 西安, 武汉, 南京, 重庆, 苏州, 天津, 长沙, 青岛, 昆明, 沈阳, 济南, 郑州, 福州, 厦门, 张伟杰, 李美玲, 王建国, 刘小龙, 陈志强, 杨淑珍, 赵子涵, 黄俊豪, 周嘉怡, 吴明辉, 徐婉莹, 孙博文, 马晓燕, 朱宇轩, 胡瑞麟, 郭梦琪, 何正平, 林依诺, 高振宇, 罗永康, 腾讯科技股份有限公司, 阿里巴巴集团控股有限公司, 华为技术有限公司, 百度在线网络技术有限公司, 京东集团股份有限公司, 美团点评技术有限公司, 字节跳动科技有限公司, 中国移动通信集团有限公司, 中国建设银行股份有限公司, 中国石油天然气集团有限公司, 中国平安保险集团股份有限公司, 小米科技有限责任公司, 联想集团有限公司, 比亚迪股份有限公司, 格力电器股份有限公司, 海尔智家股份有限公司, 万科企业股份有限公司, 贵州茅台酒股份有限公司, 宁德时代新能源科技股份有限公司, 携程计算机技术上海有限公司",
-      { from: "zh", to: "az" },
-    ),
-  );
-
   // console.log(
   //   RBT.fromRules(esIpaRules).transliterate(
   //     "Santiago de Compostela, Sierra Nevada, Islas Canarias, Picos de Europa, Costa Brava, San Sebastián, Puerto del Rosario, Valle de Arán, Los Alcázares, Castellar de la Frontera, Arganda del Rey, Alcalá de Henares, Jerez de la Frontera, Molina de Segura, Talavera de la Reina, Santa Cruz de Tenerife, Vitoria Gasteiz, Mérida, Cuenca, Logroño, Alejandro Gabriel Rodríguez García, María Fernanda Martínez López, Juan Carlos Sánchez Ramírez, Elena Beatriz Torres Morales, Francisco Javier Ruiz Herrera, Claudia Isabel Jiménez Castro, Ricardo Andrés Ortiz Vargas, Sofía Alejandra Navarro Reyes, Gabriel Antonio Castro Paredes, Lucía Valentina Romero Méndez, Manuel Eduardo Flores Delgado, Adriana Patricia Silva Guerrero, Jorge Luis Mendoza Ibáñez, Natalia Victoria Peralta Soto, Roberto Sebastián Núñez Vega, Daniela Estefanía Ortega Rojas, Miguel Ángel Ramos Villanueva, Rosa María Campos Gallegos, Fernando Agustín Medina Suero, Silvia Raquel Aguilar Espinoza, Telefónica de España, Banco Santander Central Hispano, Petróleos Mexicanos, Construcciones y Auxiliar de Ferrocarriles, Ferrovial Construcción, Iberia Líneas Aéreas de España, Mapfre Seguros Generales, Inditex Industrias de Diseño Textil, Repsol Petróleo, Aceros de México, Transportes Aéreos Portugueses, Alimentos del Mediterráneo, Editorial Planeta, Seguros Catalana Occidente, Inmobiliaria Colonial, Cervecería Cuauhtémoc Moctezuma, Distribuidora Internacional de Alimentación, Gas Natural Fenosa, Abengoa Energía Solar, Logística de Transportes Ferroviarios",

@@ -9,7 +9,7 @@ export const wordSplitter = async (
   skipSegmenter?: boolean,
 ): Promise<string> => {
   const { script } = languages[language];
-  const re = new RegExp(`[${scripts[script].regex}]+`, "gu");
+  const re = new RegExp(`[${scripts[script].regex}\\p{L}]+`, "gu");
   const segmenter = new Segmenter(language, { granularity: "word" });
   const parts: string[] = [];
   let cursor = 0;

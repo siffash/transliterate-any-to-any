@@ -1,21 +1,15 @@
 import { restoreLettersInIpa } from "helpers/restoreLettersInIpa";
 
 export const normalizerFrIpa = (originalWord: string, ipaWord: string): string => {
-  let result = ipaWord;
-
-  // Restore "g" in "bourg"
-  if (originalWord.endsWith("bourg") && !/[gɡɠɢɣɰ]$/.test(result)) {
-    result = result + "ɡ";
-  }
-
-  // Restore "n"/"m" instead of tilde
-  result = restoreLettersInIpa(originalWord, result, "̃", { n: "n", m: "m" });
-
-  // Restore "u" instead of "w"
-  result = restoreLettersInIpa(originalWord, result, "w", { u: "u", oi: "u" });
-
-  // Restore "ɛl" instead of "ɛj"
-  result = restoreLettersInIpa(originalWord, result, "ɛj", { eil: "ɛl", eille: "ɛl" });
-
-  return result;
+  return restoreLettersInIpa(originalWord, ipaWord, [
+    // Restore "g" in "bourg"
+    { ipaCharToBeReplaced: ["buʁɡ", "buʁg", "buʁɠ", "buʁɢ"], lettersToRestore: { bourg: "buʁɡ" } },
+    { ipaCharToBeReplaced: "buʁ", lettersToRestore: { bourg: "buʁɡ" } },
+    // Restore "n"/"m" instead of tilde
+    { ipaCharToBeReplaced: "̃", lettersToRestore: { n: "n", m: "m" } },
+    // Restore "u" instead of "w"
+    { ipaCharToBeReplaced: "w", lettersToRestore: { u: "u", oi: "u" } },
+    // Restore "ɛl" instead of "ɛj"
+    { ipaCharToBeReplaced: "ɛj", lettersToRestore: { eil: "ɛl", eille: "ɛl" } },
+  ]);
 };

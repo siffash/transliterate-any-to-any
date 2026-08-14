@@ -2,22 +2,17 @@ import { Text } from "types";
 import { copyCase } from "helpers/copyCase";
 
 export const enVi = async (text: Text) => {
-  const { toIPA } = require("phonemize");
-  const { filterIpa } = await import("helpers/filterIpa");
   const { RBT } = await import("helpers/rbt-distributor");
+  const { enIpa } = await import("converters/en/en-ipa");
   const { ipaViRules } = await import("data/ipa-vi.rules");
 
   const transliterator = RBT.fromRules(ipaViRules);
 
-  const convert = (text: string) => {
-    const ipa = filterIpa(toIPA(text), text, "en");
-    const transliterated = transliterator.transliterate(ipa);
-    return copyCase(text, transliterated);
-  };
-
   if (typeof text === "string") {
-    return convert(text);
+    const ipa = await enIpa<string>(text, true);
+    return copyCase(text, transliterator.transliterate(ipa));
   } else {
-    return text.map(convert);
+    const ipaArray = await enIpa<string[]>(text, true);
+    return ipaArray.map((ipa, i) => copyCase(text[i], transliterator.transliterate(ipa)));
   }
 };
