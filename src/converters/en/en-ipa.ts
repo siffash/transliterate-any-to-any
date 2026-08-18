@@ -1,7 +1,8 @@
 import { Text } from "types";
 
 export const enIpa = async <T = Text>(text: Text, isNormalized: boolean): Promise<T> => {
-  const { toIPA } = require("phonemize");
+  const { getPhonemize } = await import("helpers/getPhonemize");
+  const { toIPA } = await getPhonemize();
   const { filterIpa } = await import("helpers/filterIpa");
   const { wordSplitter } = await import("helpers/wordSplitter");
   const { normalizerEnIpa } = await import("helpers/normalizerEnIpa");

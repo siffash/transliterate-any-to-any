@@ -1,9 +1,12 @@
 import { Text } from "types";
 
 export const jaLv = async (text: Text) => {
-  const { default: Kuroshiro } = await import("kuroshiro");
-  const { default: KuromojiAnalyzer } = await import("kuroshiro-analyzer-kuromoji");
-  const { toIPA } = require("phonemize/all");
+  const { resolveCjsDefault } = await import("helpers/resolveCjsDefault");
+  const Kuroshiro = resolveCjsDefault(await import("kuroshiro"));
+  const KuromojiAnalyzer = resolveCjsDefault(await import("kuroshiro-analyzer-kuromoji"));
+  const { isNode, isDeno, isBun } = await import("browser-or-node");
+  const { getPhonemizeAll } = await import("helpers/getPhonemize");
+  const { toIPA } = await getPhonemizeAll();
   const { filterIpa } = await import("helpers/filterIpa");
   const { RBT } = await import("helpers/rbt-distributor");
   const { jaIpaRules } = await import("data/ja-ipa.rules");
@@ -11,7 +14,12 @@ export const jaLv = async (text: Text) => {
   const { wordSplitter } = await import("helpers/wordSplitter");
 
   const kuroshiro = new Kuroshiro();
-  await kuroshiro.init(new KuromojiAnalyzer());
+  await kuroshiro.init(
+    new KuromojiAnalyzer({
+      dictPath:
+        isNode || isDeno || isBun ? undefined : "https://cdn.jsdelivr.net/npm/kuromoji@0.1.2/dict/",
+    }),
+  );
   const transliterator = RBT.fromRules(jaIpaRules + ipaLvRules + "::Title;");
   const exceptions = jaIpaRules.replace(/( ?> ?[^;]+;)|\[|]|\n/g, "");
 

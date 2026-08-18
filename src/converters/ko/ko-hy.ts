@@ -1,7 +1,8 @@
 import { Text } from "types";
 
 export const koHy = async (text: Text) => {
-  const { toIPA } = require("phonemize/all");
+  const { getPhonemizeAll } = await import("helpers/getPhonemize");
+  const { toIPA } = await getPhonemizeAll();
   const { filterIpa } = await import("helpers/filterIpa");
   const { RBT } = await import("helpers/rbt-distributor");
   const { ipaHyRules } = await import("data/ipa-hy.rules");

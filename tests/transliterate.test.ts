@@ -1,6 +1,11 @@
-import { Language } from "types";
+import { describe, expect, it } from "vitest";
+import { transliterate } from "../src/transliterate";
+import { languages, scripts, supportedLanguages } from "../src/helpers/constants";
+import { confirmLanguageByScript } from "../src/helpers/confirmLanguageByScript";
+import { settings } from "../src/helpers/rbt-distributor";
+import { Language } from "../src/types";
 
-export const examples: Record<Language, string> = {
+const examples: Record<Language, string> = {
   zh: "北京, 上海, 广州, 深圳, 成都, 杭州, 西安, 武汉, 南京, 重庆, 苏州, 天津, 长沙, 青岛, 昆明, 沈阳, 济南, 郑州, 福州, 厦门, 张伟杰, 李美玲, 王建国, 刘小龙, 陈志强, 杨淑珍, 赵子涵, 黄俊豪, 周嘉怡, 吴明辉, 徐婉莹, 孙博文, 马晓燕, 朱宇轩, 胡瑞麟, 郭梦琪, 何正平, 林依诺, 高振宇, 罗永康, 腾讯科技股份有限公司, 阿里巴巴集团控股有限公司, 华为技术有限公司, 百度在线网络技术有限公司, 京东集团股份有限公司, 美团点评技术有限公司, 字节跳动科技有限公司, 中国移动通信集团有限公司, 中国建设银行股份有限公司, 中国石油天然气集团有限公司, 中国平安保险集团股份有限公司, 小米科技有限责任公司, 联想集团有限公司, 比亚迪股份有限公司, 格力电器股份有限公司, 海尔智家股份有限公司, 万科企业股份有限公司, 贵州茅台酒股份有限公司, 宁德时代新能源科技股份有限公司, 携程计算机技术上海有限公司",
   ja: "北海道, 青森県, 東京都, 神奈川県, 大阪府, 京都府, 広島県, 福岡県, 沖縄県, 富士山, 琵琶湖, 信濃川, 瀬戸内海, 秩父多摩甲斐国立公園, 知床半島, 石狩平野, 関東地方, 飛騨山脈, 鹿児島湾, 小笠原諸島, 佐藤・アレクサンダー・太郎, 鈴木・エリザベス・花子, 高橋・ウィリアム・健一, 田中・キャサリン・洋子, 伊藤・ベンジャミン・直樹, 渡辺・マーガレット・和美, 山本・セバスチャン・修, 中村・ヴィクトリア・真一, 小林・ニコラス・恵子, 加藤・イザベラ・剛, 吉田・ジョナサン・明子, 山田・クリスティーナ・一郎, 佐々木・フレデリック・春香, 山口・ジェニファー・健太, 松本・アンソニー・美紀, 井上・パトリシア・大輔, 木村・マシュー・彩, 林・ステファニー・裕太, 斎藤・クリストファー・結衣, 清水・ナタリー・大輝, トヨタ自動車株式会社, ソニーグループ株式会社, 任天堂株式会社, パナソニックホールディングス株式会社, ソフトバンクグループ株式会社, 三菱商事株式会社, 三井物産株式会社, 本田技研工業株式会社, 株式会社日立製作所, 日本電信電話株式会社, 株式会社ファーストリテイリング, 株式会社リクルートホールディングス, 株式会社キーエンス, 武田薬品工業株式会社, キヤノン株式会社, 東日本旅客鉄道株式会社, 日本航空株式会社, 全日本空輸株式会社, 株式会社資生堂, 株式会社セブン＆アイ・ホールディングス",
   ko: "서울, 부산, 대구, 인천, 광주, 대전, 울산, 세종, 경주, 전주, 제주, 평창, 여수, 독도, 한라산, 낙동강, 설악산, 강화도, 수원, 남산, 김철수, 이영희, 박지민, 정민준, 최서연, 강도윤, 조하윤, 윤지후, 임서윤, 한주원, 오지유, 서준호, 권다은, 황현우, 안지민, 송예준, 전하은, 홍지훈, 유서진, 양민재, 삼성전자, 현대자동차, 에스케이하이닉스, 엘지전자, 네이버, 카카오, 포스코, 대한항공, 아모레퍼시픽, 케이티, 신세계, 넷마블, 엔씨소프트, 쿠팡, 오뚜기, 농심, 한화솔루션, 씨제이제일제당, 이마트, 하이브",
@@ -52,3 +57,48 @@ export const examples: Record<Language, string> = {
   tr: "İstanbul, Ankara, İzmir, Bursa, Antalya, Eskişehir, Gaziantep, Şanlıurfa, Mardin, Nevşehir, Amasya, Çanakkale, Trabzon, Erzurum, Konya, Balıkesir, Muğla, Kastamonu, Edirne, Artvin, Ahmet Yavuz Yılmaz, Ayşe Nur Demir, Mehmet Emin Kaya, Fatma Zehra Şahin, Mustafa Kemal Aydın, Elif Su Yıldız, İbrahim Halil Çelik, Zeynep Ece Arslan, Ömer Faruk Özkan, Hatice Kübra Polat, Yusuf Selim Koç, Merve Gül Doğan, Ali Rıza Güneş, Sevgi Can Bulut, Hasan Basri Aksoy, Deniz Ada Korkmaz, Murat Can Tekin, Sibel Naz Yavuz, Kadir Mert Erdem, Selinay Eda Çetin, Türk Hava Yolları, Koç Holding Anonim Şirketi, Arçelik Pazarlama Şirketi, Türkiye İş Bankası, ASELSAN Elektronik Sanayi, Turkcell İletişim Hizmetleri, Akbank Türk Anonim Şirketi, Anadolu Grubu Holding, Pegasus Hava Taşımacılığı, Erdemir Demir Çelik, Şişecam Cam Fabrikaları, Tofaş Türk Otomobil Fabrikası, Migros Ticaret Anonim Şirketi, Sabancı Finansal Hizmetler, Türk Telekomünikasyon Şirketi, Vakıfbank Türk Anonim Ortaklığı, Petkim Petrokimya Holding, Yıldız Holding Pazarlama, Enka İnşaat Sanayi, Doğuş Holding Anonim Şirketi",
   vi: "Hà Nội, Thành phố Hồ Chí Minh, Hải Phòng, Đà Nẵng, Cần Thơ, Biên Hòa, Vũng Tàu, Nha Trang, Buôn Ma Thuột, Quy Nhơn, Huế, Long Xuyên, Phan Thiết, Rạch Giá, Thủ Dầu Một, Nam Định, Bạc Liêu, Cà Mau, Ninh Bình, Thái Nguyên, Nguyễn Phan Anh Thư, Trần Minh Hoàng Nam, Lê Thị Kim Ngân, Phạm Hồng Quang Dũng, Võ Văn Đức Trọng, Đặng Thùy Minh Châu, Bùi Hữu Phước Lộc, Ngô Mỹ Ngọc Huyền, Đỗ Tuấn Khải Hoàn, Hoàng Bảo Khánh An, Phan Thanh Trường Giang, Vũ Diệu Linh Chi, Cao Xuân Nhật Minh, Mai Thu Phương Thảo, Trịnh Quốc Bảo Lâm, Lý Thụy Vân Anh, Đinh Gia Thế Vinh, Đoàn Thục Thùy Dương, Lâm Vĩnh Tiến Đạt, Quách Kiến Tường Vy, Tập đoàn Công nghiệp Viễn thông Quân đội, Tổng công ty Hàng không Việt Nam, Ngân hàng Thương mại Cổ phần Ngoại thương, Công ty Sữa Việt Nam, Tập đoàn Xăng dầu Việt Nam, Tổng công ty Bưu điện Việt Nam, Công ty Cổ phần Thế giới Di động, Tập đoàn Hòa Phát, Công ty Cổ phần, Ngân hàng Nông nghiệp và Phát triển Nông thôn, Tập đoàn Dầu khí Quốc gia, Tổng công ty Đường sắt Việt Nam, Công ty Cổ phần Vinamilk, Tập đoàn Masan, Công ty Cổ phần, Tổng công ty Thăm dò Khai thác Dầu khí, Ngân hàng Công thương Việt Nam, Công ty Cổ phần Bánh kẹo Kinh Đô, Tổng công ty Bảo hiểm Bảo Việt, Công ty Cổ phần Đầu tư Thế giới Di động",
 };
+
+describe("transliterate", () => {
+  for (const from of supportedLanguages) {
+    for (const to of supportedLanguages.filter(l => l !== from)) {
+      it(`from ${languages[from].name} to ${languages[to].name}`, async () => {
+        const example = examples[from as Language];
+        const transliterated = await transliterate(example, { from, to });
+
+        // Check if output is generated without errors
+        expect(transliterated).toBeTypeOf("string");
+
+        // Check if output is in the correct script
+        const outputScriptConfirmed = confirmLanguageByScript(to, transliterated);
+        expect(outputScriptConfirmed).toBe(true);
+
+        // Check if output has correct cases (skip Georgian because usually it doesn't have cases, yet Unicode contains Georgian uppercase letters)
+        const { cases } = scripts[languages[to].script];
+        if (to !== "ka") {
+          if (cases) {
+            const hasBothCases = /\p{Ll}/u.test(transliterated) && /\p{Lu}/u.test(transliterated);
+            expect(hasBothCases).toBe(true);
+          } else {
+            const hasCaselessLetters =
+              /\p{L}/u.test(transliterated) && !/[\p{Ll}\p{Lu}]/u.test(transliterated);
+            expect(hasCaselessLetters).toBe(true);
+          }
+        }
+
+        // Check if the output is the same if we pass each word separately in an array
+        const exampleArray = example.split(", ");
+        const transliteratedArray = transliterated.split(", ");
+        const transliteratedArrayResult = await transliterate(exampleArray, { from, to });
+        expect(transliteratedArrayResult).toEqual(transliteratedArray);
+
+        // Check the JS implementation of ICU RBT
+        settings.JS_IMPLEMENTATION = true;
+        const transliteratedJS = await transliterate(example, { from, to });
+        expect(transliteratedJS).toEqual(transliterated);
+        const transliteratedJSArrayResult = await transliterate(exampleArray, { from, to });
+        expect(transliteratedJSArrayResult).toEqual(transliteratedArrayResult);
+        settings.JS_IMPLEMENTATION = false;
+      });
+    }
+  }
+});

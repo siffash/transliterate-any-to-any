@@ -1,10 +1,9 @@
-const pluginChaiFriendly = require("eslint-plugin-chai-friendly");
 const pluginNoOnlyTests = require("eslint-plugin-no-only-tests");
-const prettier = require("eslint-plugin-prettier");
 const globals = require("globals");
 const js = require("@eslint/js");
 const typescriptEslint = require("@typescript-eslint/eslint-plugin");
 const tsParser = require("@typescript-eslint/parser");
+const eslintConfigPrettier = require("eslint-config-prettier");
 
 module.exports = [
   js.configs.recommended,
@@ -12,8 +11,6 @@ module.exports = [
     files: ["**/*.{ts,tsx,js,jsx}"],
     plugins: {
       "@typescript-eslint": typescriptEslint,
-      prettier,
-      "chai-friendly": pluginChaiFriendly,
       "no-only-tests": pluginNoOnlyTests,
     },
     languageOptions: {
@@ -35,10 +32,9 @@ module.exports = [
       "@typescript-eslint/no-require-imports": "off",
       "@typescript-eslint/no-empty-object-type": "off",
       "no-unused-expressions": "off",
-      "@typescript-eslint/no-unused-expressions": "off",
-      "chai-friendly/no-unused-expressions": "error",
+      "@typescript-eslint/no-unused-expressions": "error",
       "no-only-tests/no-only-tests": "error",
-      "prettier/prettier": "error",
     },
   },
+  eslintConfigPrettier,
 ];

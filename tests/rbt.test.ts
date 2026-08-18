@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { RBT, RBTParseError, RBTRuntimeError } from "helpers/rbt";
+import { RBT, RBTParseError, RBTRuntimeError } from "../src/helpers/rbt";
 
 describe("RBT.fromRules — the exact usage example from the prompt", () => {
   it('transliterates "Example" to "Exemple" with the rule `a > e;`', () => {

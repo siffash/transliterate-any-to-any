@@ -78,22 +78,7 @@ export const arIpa = async <T = Text>(text: Text): Promise<T> => {
       if (stemIPA) return stemIPA + charFallback(suf);
     }
 
-    // 5. If it's a long word - try to split it in different parts, and check each half
-    if (word.length >= MIN_STEM * 2) {
-      let count = MIN_STEM;
-      while (count <= word.length - MIN_STEM) {
-        const wordHalf1 = word.slice(0, count);
-        const wordHalf2 = word.slice(count);
-        const ipaHalf1 = filterIpa(arIpaMap[wordHalf1], wordHalf1, "ar");
-        const ipaHalf2 = filterIpa(arIpaMap[wordHalf2], wordHalf2, "ar");
-        if (ipaHalf1 || ipaHalf2) {
-          return (ipaHalf1 || wordToIPA(wordHalf1)) + (ipaHalf2 || wordToIPA(wordHalf2));
-        }
-        count++;
-      }
-    }
-
-    // 6. Character-by-character fallback
+    // 5. Character-by-character fallback
     return charFallback(word);
   };
 

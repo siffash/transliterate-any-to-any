@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { restoreLettersInIpa, type RestoreIpaRule } from "helpers/restoreLettersInIpa";
+import { restoreLettersInIpa, type RestoreIpaRule } from "../src/helpers/restoreLettersInIpa";
 
 describe("restoreLettersInIpa", () => {
   describe("basic replacement (single rule)", () => {
@@ -39,10 +39,31 @@ describe("restoreLettersInIpa", () => {
     });
   });
 
+  describe("word matching is case-insensitive", () => {
+    // originalWord is lowercased internally, so callers can pass capitalized
+    // words (proper nouns, sentence-initial words, etc.) without pre-processing.
+    // lettersToRestore keys are matched as-given and are expected to be lowercase.
+    it("matches a rule key against a word regardless of the word's casing", () => {
+      const result = restoreLettersInIpa("Rr", "X", {
+        ipaCharToBeReplaced: "X",
+        lettersToRestore: { rr: "Y" },
+      });
+      expect(result).toBe("Y");
+    });
+
+    it("lets a lowercase key match a capitalized first letter of the word", () => {
+      const result = restoreLettersInIpa("Axyz", "Bxyz", {
+        ipaCharToBeReplaced: "B",
+        lettersToRestore: { a: "C" },
+      });
+      expect(result).toBe("Cxyz");
+    });
+  });
+
   describe("does not force a match when nothing plausible is nearby", () => {
-    // These two are real bug reports: an earlier version always replaced
-    // whichever candidate was closest, even when it was actually too far
-    // away to plausibly correspond to the requested letters.
+    // Real bug reports: an earlier version always replaced whichever
+    // candidate was closest, even when it was too far away to plausibly
+    // correspond to the requested letters.
     it("leaves the ipa unchanged when the candidate found actually corresponds to a different letter (Florence)", () => {
       // The "ə" in "ˈfɫɔɹəns" corresponds to the "e" in Florence, not the
       // "o" -- the "o" is already correctly "ɔ" and needs no restoring.
@@ -73,20 +94,21 @@ describe("restoreLettersInIpa", () => {
   });
 
   describe("search window scales with candidate width, capped at 3", () => {
-    // These use synthetic words/ipa so the exact required shift distance is
-    // known and controlled, rather than depending on real IPA quirks.
+    // Synthetic words/ipa so the exact required shift distance is known and
+    // controlled. Keys are lowercase throughout (see "word matching is
+    // case-insensitive" above for why that now matters).
     it("a 2-character candidate searches up to 2 letters away", () => {
-      const result = restoreLettersInIpa("pppppKEqqqqqqq", "aaaaaXYaaa", {
+      const result = restoreLettersInIpa("pppppkeqqqqqqq", "aaaaaXYaaa", {
         ipaCharToBeReplaced: ["XY"],
-        lettersToRestore: { KE: "done2" },
+        lettersToRestore: { ke: "done2" },
       });
       expect(result).toBe("aaaaadone2aaa");
     });
 
     it("a 3-character candidate searches up to 3 letters away", () => {
-      const result = restoreLettersInIpa("pppppKEYqqqqqqqq", "aaaaaXYZaa", {
+      const result = restoreLettersInIpa("pppppkeyqqqqqqqq", "aaaaaXYZaa", {
         ipaCharToBeReplaced: ["XYZ"],
-        lettersToRestore: { KEY: "done3" },
+        lettersToRestore: { key: "done3" },
       });
       expect(result).toBe("aaaaadone3aa");
     });
@@ -95,9 +117,9 @@ describe("restoreLettersInIpa", () => {
       // The matching word content is 4 letters away from the anchor -- one
       // further than the cap allows -- so this must NOT match, even though
       // the candidate is wider than 3 characters.
-      const result = restoreLettersInIpa("aaTESTaaaaaa", "aaaaaaWXYZaa", {
+      const result = restoreLettersInIpa("aatestaaaaaa", "aaaaaaWXYZaa", {
         ipaCharToBeReplaced: ["WXYZ"],
-        lettersToRestore: { TEST: "done4" },
+        lettersToRestore: { test: "done4" },
       });
       expect(result).toBe("aaaaaaWXYZaa");
     });
@@ -199,9 +221,9 @@ describe("restoreLettersInIpa", () => {
 
   describe("replacement can delete a matched span", () => {
     it("removes the matched IPA span entirely when the replacement is an empty string", () => {
-      const result = restoreLettersInIpa("abXcd", "abYcd", {
+      const result = restoreLettersInIpa("abxcd", "abYcd", {
         ipaCharToBeReplaced: "Y",
-        lettersToRestore: { X: "" },
+        lettersToRestore: { x: "" },
       });
       expect(result).toBe("abcd");
     });
@@ -235,14 +257,6 @@ describe("restoreLettersInIpa", () => {
     it("returns the ipa unchanged for an empty rules array", () => {
       const result = restoreLettersInIpa("harry", "ˈhɛɹi", []);
       expect(result).toBe("ˈhɛɹi");
-    });
-
-    it("matches case-sensitively", () => {
-      const result = restoreLettersInIpa("Rr", "X", {
-        ipaCharToBeReplaced: "X",
-        lettersToRestore: { rr: "Y" },
-      });
-      expect(result).toBe("X");
     });
   });
 

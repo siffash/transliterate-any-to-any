@@ -1,14 +1,21 @@
 import { Text } from "types";
 
 export const jaRu = async (text: Text) => {
-  const { default: Kuroshiro } = await import("kuroshiro");
-  const { default: KuromojiAnalyzer } = await import("kuroshiro-analyzer-kuromoji");
+  const { resolveCjsDefault } = await import("helpers/resolveCjsDefault");
+  const Kuroshiro = resolveCjsDefault(await import("kuroshiro"));
+  const KuromojiAnalyzer = resolveCjsDefault(await import("kuroshiro-analyzer-kuromoji"));
+  const { isNode, isDeno, isBun } = await import("browser-or-node");
   const { RBT } = await import("helpers/rbt-distributor");
   const { jaRuRules } = await import("data/ja-ru.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
 
   const kuroshiro = new Kuroshiro();
-  await kuroshiro.init(new KuromojiAnalyzer());
+  await kuroshiro.init(
+    new KuromojiAnalyzer({
+      dictPath:
+        isNode || isDeno || isBun ? undefined : "https://cdn.jsdelivr.net/npm/kuromoji@0.1.2/dict/",
+    }),
+  );
 
   const transliterator = RBT.fromRules(jaRuRules);
 
