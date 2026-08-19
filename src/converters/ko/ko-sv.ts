@@ -3,8 +3,8 @@ import { Text } from "types";
 export const koSv = async (text: Text) => {
   const Aromanize = (await import("aromanize")).default;
   const { RBT } = await import("helpers/rbt-distributor");
-  const { koLatnRules } = await import("data/ko-latn.rules");
-  const { latnSvRules } = await import("data/latn-sv.rules");
+  const { koLatnRules } = await import("data/ko/ko-latn.rules");
+  const { latnSvRules } = await import("data/latn/latn-sv.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
 
   const transliterator = RBT.fromRules(koLatnRules + latnSvRules);

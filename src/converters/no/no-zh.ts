@@ -2,8 +2,8 @@ import { Text } from "types";
 
 export const noZh = async (text: Text) => {
   const { RBT } = await import("helpers/rbt-distributor");
-  const { noIpaRules } = await import("data/no-ipa.rules");
-  const { ipaZhRules } = await import("data/ipa-zh.rules");
+  const { noIpaRules } = await import("data/no/no-ipa.rules");
+  const { ipaZhRules } = await import("data/ipa/ipa-zh.rules");
 
   const transliterator = RBT.fromRules(noIpaRules + ipaZhRules);
 

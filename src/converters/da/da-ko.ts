@@ -2,8 +2,8 @@ import { Text } from "types";
 
 export const daKo = async (text: Text) => {
   const { RBT } = await import("helpers/rbt-distributor");
-  const { daIpaRules } = await import("data/da-ipa.rules");
-  const { ipaKoRules } = await import("data/ipa-ko.rules");
+  const { daIpaRules } = await import("data/da/da-ipa.rules");
+  const { ipaKoRules } = await import("data/ipa/ipa-ko.rules");
 
   const transliterator = RBT.fromRules(daIpaRules + ipaKoRules);
 

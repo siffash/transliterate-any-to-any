@@ -2,7 +2,7 @@ import { Text } from "types";
 
 export const zhKo = async (text: Text) => {
   const { pinyin } = await import("pinyin-pro");
-  const { CHO, HANJA_TO_HANGUL, JONG, JUNG, PINYIN_TO_JAMO } = await import("data/zh-ko.map");
+  const { CHO, HANJA_TO_HANGUL, JONG, JUNG, PINYIN_TO_JAMO } = await import("data/zh/zh-ko.map");
 
   const assembleHangul = (cho: string, jung: string, jong: string = ""): string => {
     const cIdx = CHO.indexOf(cho);

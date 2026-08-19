@@ -3,7 +3,7 @@ import { Text } from "types";
 export const enZh = async (text: Text) => {
   const { RBT } = await import("helpers/rbt-distributor");
   const { enIpa } = await import("converters/en/en-ipa");
-  const { ipaZhRules } = await import("data/ipa-zh.rules");
+  const { ipaZhRules } = await import("data/ipa/ipa-zh.rules");
 
   const transliterator = RBT.fromRules(ipaZhRules);
 

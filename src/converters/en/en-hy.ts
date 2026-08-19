@@ -4,7 +4,7 @@ import { copyCase } from "helpers/copyCase";
 export const enHy = async (text: Text) => {
   const { RBT } = await import("helpers/rbt-distributor");
   const { enIpa } = await import("converters/en/en-ipa");
-  const { ipaHyRules } = await import("data/ipa-hy.rules");
+  const { ipaHyRules } = await import("data/ipa/ipa-hy.rules");
 
   const transliterator = RBT.fromRules(ipaHyRules);
 

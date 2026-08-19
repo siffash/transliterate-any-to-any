@@ -2,8 +2,8 @@ import { Text } from "types";
 
 export const elBn = async (text: Text) => {
   const { RBT } = await import("helpers/rbt-distributor");
-  const { elIpaRules } = await import("data/el-ipa.rules");
-  const { ipaBnRules } = await import("data/ipa-bn.rules");
+  const { elIpaRules } = await import("data/el/el-ipa.rules");
+  const { ipaBnRules } = await import("data/ipa/ipa-bn.rules");
 
   const transliterator = RBT.fromRules(elIpaRules + ipaBnRules);
 

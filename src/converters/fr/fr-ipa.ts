@@ -1,9 +1,9 @@
 import { Text } from "types";
 
 export const frIpa = async <T = Text>(text: Text, isNormalized: boolean): Promise<T> => {
-  const { frIpaMap } = await import("data/fr-ipa.map");
+  const { frIpaMap } = await import("data/fr/fr-ipa.map");
   const { RBT } = await import("helpers/rbt-distributor");
-  const { frIpaRules } = await import("data/fr-ipa.rules");
+  const { frIpaRules } = await import("data/fr/fr-ipa.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
   const { filterIpa } = await import("helpers/filterIpa");
   const { normalizerFrIpa } = await import("helpers/normalizerFrIpa");

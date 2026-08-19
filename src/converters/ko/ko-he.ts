@@ -5,7 +5,7 @@ export const koHe = async (text: Text) => {
   const { toIPA } = await getPhonemizeAll();
   const { filterIpa } = await import("helpers/filterIpa");
   const { RBT } = await import("helpers/rbt-distributor");
-  const { ipaHeRules } = await import("data/ipa-he.rules");
+  const { ipaHeRules } = await import("data/ipa/ipa-he.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
 
   const transliterator = RBT.fromRules(ipaHeRules);

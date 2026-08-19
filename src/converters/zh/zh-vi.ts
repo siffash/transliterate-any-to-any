@@ -4,7 +4,7 @@ export const zhVi = async (text: Text) => {
   const OpenCC = await import("opencc-js");
   const { pinyin } = await import("pinyin-pro");
   const { getHanviet } = await import("hanviet-pinyin-words");
-  const { ZH_VI_MAP } = await import("data/zh-vi.map");
+  const { ZH_VI_MAP } = await import("data/zh/zh-vi.map");
 
   const converter = OpenCC.Converter({ from: "cn", to: "t" });
 

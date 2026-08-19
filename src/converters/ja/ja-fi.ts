@@ -9,8 +9,8 @@ export const jaFi = async (text: Text) => {
   const { toIPA } = await getPhonemizeAll();
   const { filterIpa } = await import("helpers/filterIpa");
   const { RBT } = await import("helpers/rbt-distributor");
-  const { jaIpaRules } = await import("data/ja-ipa.rules");
-  const { ipaFiRules } = await import("data/ipa-fi.rules");
+  const { jaIpaRules } = await import("data/ja/ja-ipa.rules");
+  const { ipaFiRules } = await import("data/ipa/ipa-fi.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
 
   const kuroshiro = new Kuroshiro();

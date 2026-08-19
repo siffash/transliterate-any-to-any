@@ -5,7 +5,7 @@ export const zhFa = async (text: Text) => {
   const { toIPA } = await getPhonemizeAll();
   const { filterIpa } = await import("helpers/filterIpa");
   const { RBT } = await import("helpers/rbt-distributor");
-  const { ipaFaRules } = await import("data/ipa-fa.rules");
+  const { ipaFaRules } = await import("data/ipa/ipa-fa.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
 
   const transliterator = RBT.fromRules(ipaFaRules);

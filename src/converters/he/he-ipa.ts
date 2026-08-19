@@ -1,7 +1,7 @@
 import { Text } from "types";
 
 export const heIpa = async <T = Text>(text: Text): Promise<T> => {
-  const { heIpaMap, charMap } = await import("data/he-ipa.map");
+  const { heIpaMap, charMap } = await import("data/he/he-ipa.map");
   const { filterIpa } = await import("helpers/filterIpa");
 
   const convert = (text: string) => {

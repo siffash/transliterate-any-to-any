@@ -6,7 +6,7 @@ export const jaUk = async (text: Text) => {
   const KuromojiAnalyzer = resolveCjsDefault(await import("kuroshiro-analyzer-kuromoji"));
   const { isNode, isDeno, isBun } = await import("browser-or-node");
   const { RBT } = await import("helpers/rbt-distributor");
-  const { jaUkRules } = await import("data/ja-uk.rules");
+  const { jaUkRules } = await import("data/ja/ja-uk.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
 
   const kuroshiro = new Kuroshiro();

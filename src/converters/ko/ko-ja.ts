@@ -16,7 +16,7 @@ interface NonHangulSyllable {
 type Syllable = HangulSyllable | NonHangulSyllable;
 
 export const koJa = async (text: Text) => {
-  const { BATCHIMS, INITIALS, KANA_ROWS, VOWEL_TO_IDX, VOWELS } = await import("data/ko-ja.map");
+  const { BATCHIMS, INITIALS, KANA_ROWS, VOWEL_TO_IDX, VOWELS } = await import("data/ko/ko-ja.map");
 
   const convert = (text: string) => {
     const syllables: Syllable[] = [];

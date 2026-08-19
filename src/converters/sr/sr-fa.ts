@@ -2,8 +2,8 @@ import { Text } from "types";
 
 export const srFa = async (text: Text) => {
   const { RBT } = await import("helpers/rbt-distributor");
-  const { srIpaRules } = await import("data/sr-ipa.rules");
-  const { ipaFaRules } = await import("data/ipa-fa.rules");
+  const { srIpaRules } = await import("data/sr/sr-ipa.rules");
+  const { ipaFaRules } = await import("data/ipa/ipa-fa.rules");
 
   const transliterator = RBT.fromRules(srIpaRules + ipaFaRules);
 

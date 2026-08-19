@@ -5,7 +5,7 @@ export const zhRo = async (text: Text) => {
   const { toIPA } = await getPhonemizeAll();
   const { filterIpa } = await import("helpers/filterIpa");
   const { RBT } = await import("helpers/rbt-distributor");
-  const { ipaRoRules } = await import("data/ipa-ro.rules");
+  const { ipaRoRules } = await import("data/ipa/ipa-ro.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
 
   const transliterator = RBT.fromRules(ipaRoRules + "::Title;");

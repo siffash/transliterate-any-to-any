@@ -5,7 +5,7 @@ export const koFi = async (text: Text) => {
   const { toIPA } = await getPhonemizeAll();
   const { filterIpa } = await import("helpers/filterIpa");
   const { RBT } = await import("helpers/rbt-distributor");
-  const { ipaFiRules } = await import("data/ipa-fi.rules");
+  const { ipaFiRules } = await import("data/ipa/ipa-fi.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
 
   const transliterator = RBT.fromRules(ipaFiRules + "::Title;");
