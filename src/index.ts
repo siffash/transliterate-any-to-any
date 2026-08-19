@@ -5,15 +5,29 @@ export { confirmLanguageByScript } from "helpers/confirmLanguageByScript";
 
 // *** EXPERIMENTS ***
 
-import { transliterate } from "./transliterate";
+// import { transliterate } from "./transliterate";
 // import { RBT } from "icu-transliterator";
 // import { RBT } from "helpers/rbt";
-// import { settings } from "helpers/rbt-distributor";
+import { RBT, settings } from "helpers/rbt-distributor";
+import { viLatnRules } from "data/vi-latn.rules";
+import { latnBgRules } from "data/latn-bg.rules";
 // import { prettyConvert } from "helpers/prettyConvert";
-// import { ipaJaRules } from "data/ipa-ja.rules";
 const test = async () => {
-  console.log(await transliterate("L'Oréal", { from: "fr", to: "vi" }));
-
+  console.log(
+    RBT.fromRules(viLatnRules + latnBgRules).transliterate("Hà Nội,"),
+    RBT.fromRules(viLatnRules + latnBgRules).transliterate("Hà Nội"),
+  );
+  settings.JS_IMPLEMENTATION = false;
+  console.log(
+    RBT.fromRules(viLatnRules + latnBgRules).transliterate("Hà Nội,"),
+    RBT.fromRules(viLatnRules + latnBgRules).transliterate("Hà Nội"),
+  );
+  // console.log(
+  //   await transliterate(
+  //     "Hà Nội, Thành phố Hồ Chí Minh, Hải Phòng, Đà Nẵng, Cần Thơ, Biên Hòa, Vũng Tàu, Nha Trang, Buôn Ma Thuột, Quy Nhơn, Huế, Long Xuyên, Phan Thiết, Rạch Giá, Thủ Dầu Một, Nam Định, Bạc Liêu, Cà Mau, Ninh Bình, Thái Nguyên, Nguyễn Phan Anh Thư, Trần Minh Hoàng Nam, Lê Thị Kim Ngân, Phạm Hồng Quang Dũng, Võ Văn Đức Trọng, Đặng Thùy Minh Châu, Bùi Hữu Phước Lộc, Ngô Mỹ Ngọc Huyền, Đỗ Tuấn Khải Hoàn, Hoàng Bảo Khánh An, Phan Thanh Trường Giang, Vũ Diệu Linh Chi, Cao Xuân Nhật Minh, Mai Thu Phương Thảo, Trịnh Quốc Bảo Lâm, Lý Thụy Vân Anh, Đinh Gia Thế Vinh, Đoàn Thục Thùy Dương, Lâm Vĩnh Tiến Đạt, Quách Kiến Tường Vy, Tập đoàn Công nghiệp Viễn thông Quân đội, Tổng công ty Hàng không Việt Nam, Ngân hàng Thương mại Cổ phần Ngoại thương, Công ty Sữa Việt Nam, Tập đoàn Xăng dầu Việt Nam, Tổng công ty Bưu điện Việt Nam, Công ty Cổ phần Thế giới Di động, Tập đoàn Hòa Phát, Công ty Cổ phần, Ngân hàng Nông nghiệp và Phát triển Nông thôn, Tập đoàn Dầu khí Quốc gia, Tổng công ty Đường sắt Việt Nam, Công ty Cổ phần Vinamilk, Tập đoàn Masan, Công ty Cổ phần, Tổng công ty Thăm dò Khai thác Dầu khí, Ngân hàng Công thương Việt Nam, Công ty Cổ phần Bánh kẹo Kinh Đô, Tổng công ty Bảo hiểm Bảo Việt, Công ty Cổ phần Đầu tư Thế giới Di động",
+  //     { from: "vi", to: "ru" },
+  //   ),
+  // );
   //   console.log(
   //     await prettyConvert(
   //       ipaJaRules,

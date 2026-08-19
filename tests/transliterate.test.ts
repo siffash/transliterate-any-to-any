@@ -62,6 +62,7 @@ describe("transliterate", () => {
   for (const from of supportedLanguages) {
     for (const to of supportedLanguages.filter(l => l !== from)) {
       it(`from ${languages[from].name} to ${languages[to].name}`, async () => {
+        settings.JS_IMPLEMENTATION = false;
         const example = examples[from as Language];
         const transliterated = await transliterate(example, { from, to });
 
