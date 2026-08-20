@@ -29,7 +29,7 @@ export const RBT = new Proxy({} as RbtApi, {
       activeImpl = nativeCache = require("icu-transliterator").RBT;
     }
 
-    // 4. Blazing fast direct property access
+    // 4. Direct property access
     return activeImpl[prop as keyof RbtApi];
   },
 });

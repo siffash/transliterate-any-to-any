@@ -203,7 +203,7 @@ describe("inside a [set], the six escapable symbols are literal even when writte
 
   it("combines correctly with set negation, both for membership and for the leading '^' detection itself", () => {
     expect(RBT.fromRules("[^'*@._-] > X;").transliterate("a'b")).toBe("X'X");
-    expect(RBT.fromRules("[^*] > X;").transliterate("*a")).toBe("*X");
+    expect(RBT.fromRules("[^*] > X;").transliterate("a*")).toBe("X*");
   });
 
   it("a leading bare symbol that is not '^' is just an ordinary member, not a negation trigger", () => {
@@ -315,14 +315,14 @@ describe("the dash '-' as a range operator inside a [set]: `[b-d]`", () => {
       {
         name: "[^a-z] excludes the whole range and matches everything else",
         rules: "[^a-z] > X;",
-        input: "abcXYZ123",
-        expected: "abcXXXXXX",
+        input: "XYZ123abc",
+        expected: "XXXXXXabc",
       },
       {
         name: "negating the exact consonant-range idiom keeps consonants and replaces everything else, including the vowels",
         rules: "[^b-df-hj-np-tv-z] > X;",
-        input: "cat",
-        expected: "cXt",
+        input: "arm",
+        expected: "Xrm",
       },
     ])("$name", ({ rules, input, expected }) => {
       expect(RBT.fromRules(rules).transliterate(input)).toBe(expected);
@@ -375,14 +375,14 @@ describe("negated character sets: `[^abc]`", () => {
     {
       name: "matches any character not listed",
       rules: "[^abc] > X;",
-      input: "abcdef",
-      expected: "abcXXX",
+      input: "xyzabc",
+      expected: "XXXabc",
     },
     {
       name: "matches digits, punctuation, and letters outside the set alike",
       rules: "[^a] > X;",
-      input: "a1 b!",
-      expected: "aXXXX",
+      input: "1 b!a",
+      expected: "XXXXa",
     },
   ])("$name", ({ rules, input, expected }) => {
     expect(RBT.fromRules(rules).transliterate(input)).toBe(expected);
@@ -607,14 +607,14 @@ describe("unicode escapes: `\\uXXXX`", () => {
 
 describe("combinations of negation, POSIX classes, and nested sets", () => {
   it("the example from the spec: [^[:Letter:][:Mark:]] matches anything that is neither a letter nor a mark", () => {
-    expect(RBT.fromRules("[^[:Letter:][:Mark:]] > X;").transliterate("a1 e\u0301")).toBe(
-      "aXXe\u0301",
+    expect(RBT.fromRules("[^[:Letter:][:Mark:]] > X;").transliterate("5a1 e\u0301")).toBe(
+      "XaXXe\u0301",
     );
   });
 
   it("letters and marks are correctly left untouched by that same negated union", () => {
-    expect(RBT.fromRules("[^[:Letter:][:Mark:]] > X;").transliterate("ab e\u0301f")).toBe(
-      "abXe\u0301f",
+    expect(RBT.fromRules("[^[:Letter:][:Mark:]] > X;").transliterate("5ab e\u0301f")).toBe(
+      "XabXe\u0301f",
     );
   });
 
@@ -623,7 +623,7 @@ describe("combinations of negation, POSIX classes, and nested sets", () => {
   });
 
   it("a nested negated bracket set combines via De Morgan's law with the parent's own members", () => {
-    expect(RBT.fromRules("[[^ab]cd] > X;").transliterate("abcdez")).toBe("abXXXX");
+    expect(RBT.fromRules("[[^ab]cd] > X;").transliterate("zabcde")).toBe("XabXXX");
   });
 
   it("negating an outer bracket that contains a single POSIX class is a valid, different way to negate it", () => {
@@ -745,8 +745,8 @@ describe("multi-character strings in sets: `[abc{de}f]`", () => {
       {
         name: "the single-character members are still correctly excluded",
         rules: "[^abc{de}f] > X;",
-        input: "abcf",
-        expected: "abcf",
+        input: "zabcf",
+        expected: "Xabcf",
       },
       {
         name: "everything else still matches normally",

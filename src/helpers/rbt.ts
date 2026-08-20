@@ -648,8 +648,8 @@ class Parser {
       kind: "set",
       alternatives: [],
       charTests: [negatedTest],
-      matchesStartOfString,
-      matchesEndOfString,
+      matchesStartOfString: true,
+      matchesEndOfString: true,
     };
   }
 
