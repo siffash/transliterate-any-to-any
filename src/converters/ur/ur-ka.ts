@@ -5,7 +5,7 @@ export const urKa = async (text: Text) => {
   const { urIpa } = await import("converters/ur/ur-ipa");
   const { ipaKaRules } = await import("data/ipa/ipa-ka.rules");
 
-  const transliterator = RBT.fromRules(ipaKaRules + "::Title;");
+  const transliterator = RBT.fromRules(ipaKaRules);
 
   if (typeof text === "string") {
     const ipa = await urIpa<string>(text);

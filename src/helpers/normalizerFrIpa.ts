@@ -9,7 +9,11 @@ export const normalizerFrIpa = (originalWord: string, ipaWord: string): string =
     { ipaCharToBeReplaced: "̃", lettersToRestore: { n: "n", m: "m" } },
     // Restore "u" instead of "w"
     { ipaCharToBeReplaced: "w", lettersToRestore: { u: "u", oi: "u" } },
+    // Restore "ɛ" instead of "ø"
+    { ipaCharToBeReplaced: "ø", lettersToRestore: { eu: "ɛ" } },
     // Restore "ɛl" instead of "ɛj"
     { ipaCharToBeReplaced: "ɛj", lettersToRestore: { eil: "ɛl", eille: "ɛl" } },
+    // Restore "il" instead of "ij"
+    { ipaCharToBeReplaced: "ij", lettersToRestore: { ille: "il" } },
   ]);
 };

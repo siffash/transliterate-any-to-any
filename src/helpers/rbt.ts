@@ -1018,26 +1018,22 @@ interface MatchResult {
   captures: ReadonlyMap<number, string[]>;
 }
 
-function isBetterMatch(
-  candidateRule: CompiledRule,
-  candidateKeyConsumed: number,
-  currentRule: CompiledRule,
-  currentKeyConsumed: number,
-): boolean {
-  if (candidateKeyConsumed !== currentKeyConsumed) {
-    return candidateKeyConsumed > currentKeyConsumed;
-  }
-  const candidateContext = candidateRule.ante.length + candidateRule.post.length;
-  const currentContext = currentRule.ante.length + currentRule.post.length;
-  if (candidateContext !== currentContext) {
-    return candidateContext > currentContext;
-  }
-  return false;
-}
-
-function findBestMatch(text: string[], cursor: number, rules: CompiledRule[]): MatchResult | null {
-  let best: MatchResult | null = null;
-
+// ICU's RuleBasedTransliterator documentation is explicit that "if multiple
+// rules may match at some point, the first matching rule is applied." Rule
+// precedence at a given cursor position is therefore governed entirely by
+// declaration order - never by which candidate would consume more text or
+// carries more ante/post context. It is the rule author's job to place more
+// specific (typically longer) rules before more general (typically shorter)
+// fallback rules if that ordering is what they want; this function must not
+// second-guess that by picking a "better" match further down the list.
+//
+// ICU *does* apply longest-match logic elsewhere, but only in two narrower
+// places that are unrelated to this function: (1) UnicodeSet alternatives
+// such as [a b {ch} {ll}], handled by atomMatchLengthForward/Backward above,
+// where the longest alternative within a *single* set is preferred, and
+// (2) charset conversion tables, which this transliteration engine does not
+// implement. Neither extends to the order in which standalone rules match.
+function findFirstMatch(text: string[], cursor: number, rules: CompiledRule[]): MatchResult | null {
   for (const rule of rules) {
     const keyOutcome = matchSequenceForward(text, cursor, rule.key);
     if (keyOutcome === null) continue;
@@ -1054,25 +1050,22 @@ function findBestMatch(text: string[], cursor: number, rules: CompiledRule[]): M
         : matchSequenceForward(text, cursor + keyOutcome.length, rule.post);
     if (postOutcome === null) continue;
 
-    const keyConsumed = keyOutcome.length;
-    if (best === null || isBetterMatch(rule, keyConsumed, best.rule, best.keyConsumed)) {
-      let captures: ReadonlyMap<number, string[]> = NO_CAPTURES;
-      if (
-        anteOutcome.captures.size > 0 ||
-        keyOutcome.captures.size > 0 ||
-        postOutcome.captures.size > 0
-      ) {
-        const merged = new Map<number, string[]>();
-        for (const [index, value] of anteOutcome.captures) merged.set(index, value);
-        for (const [index, value] of keyOutcome.captures) merged.set(index, value);
-        for (const [index, value] of postOutcome.captures) merged.set(index, value);
-        captures = merged;
-      }
-      best = { rule, keyConsumed, captures };
+    let captures: ReadonlyMap<number, string[]> = NO_CAPTURES;
+    if (
+      anteOutcome.captures.size > 0 ||
+      keyOutcome.captures.size > 0 ||
+      postOutcome.captures.size > 0
+    ) {
+      const merged = new Map<number, string[]>();
+      for (const [index, value] of anteOutcome.captures) merged.set(index, value);
+      for (const [index, value] of keyOutcome.captures) merged.set(index, value);
+      for (const [index, value] of postOutcome.captures) merged.set(index, value);
+      captures = merged;
     }
+    return { rule, keyConsumed: keyOutcome.length, captures };
   }
 
-  return best;
+  return null;
 }
 
 function runPass(input: string, rules: CompiledRule[]): string {
@@ -1093,7 +1086,7 @@ function runPass(input: string, rules: CompiledRule[]): string {
       );
     }
 
-    const found = findBestMatch(text, cursor, rules);
+    const found = findFirstMatch(text, cursor, rules);
     if (found) {
       const { rule, keyConsumed, captures } = found;
       const { chars: replacementChars, cursorOffset: resolvedCursorOffset } =

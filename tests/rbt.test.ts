@@ -686,9 +686,17 @@ describe("multi-character strings in sets: `[abc{de}f]`", () => {
       expect(RBT.fromRules("[d{de}] > X;").transliterate("dx")).toBe("Xx");
     });
 
-    it("this preference is visible across competing rules too, since it is reflected in how many characters the key actually consumed", () => {
+    it("this per-set preference does not extend into a cross-rule 'longest match wins' policy: which RULE fires is still decided purely by declaration order", () => {
+      // Both rules below are individually capable of matching "de": the first rule's set
+      // still internally prefers its own longer {de} alternative over a lone "d". But ICU's
+      // RuleBasedTransliterator docs state plainly that "if multiple rules may match at some
+      // point, the first matching rule is applied" - so it is declaration order, not either
+      // rule's key length, that decides the winner here.
       expect(RBT.fromRules("[{de}] > LONG; d > SHORT;").transliterate("de")).toBe("LONG");
       expect(RBT.fromRules("[{de}] > LONG; d > SHORT;").transliterate("dx")).toBe("SHORTx");
+      // Proof it's declaration order and not key length: swap which rule comes first and the
+      // shorter, single-character rule now wins, even though "de" would satisfy the longer key.
+      expect(RBT.fromRules("d > SHORT; [{de}] > LONG;").transliterate("de")).toBe("SHORTe");
     });
   });
 
@@ -895,8 +903,13 @@ describe("quantifiers: `?`, `*`, `+`, and `(...)` grouping", () => {
     expect(RBT.fromRules("[{de}]+ > X;").transliterate("dedede")).toBe("X");
   });
 
-  it("quantified keys still participate normally in maximal-munch rule precedence, since it is based on characters actually consumed", () => {
+  it("a quantified key that would greedily consume more text still only wins because it was declared first - not because its match is longer", () => {
     expect(RBT.fromRules("[ab]+ > LONG; a > SHORT;").transliterate("aab")).toBe("LONG");
+    // Reverse the declaration order and the plain, single-character rule wins instead, one
+    // character at a time, even though "[ab]+" could have greedily matched "aa" as a unit.
+    // ICU does not compare candidate rules by how much they'd consume; whichever rule is
+    // declared first and matches at the cursor is applied immediately.
+    expect(RBT.fromRules("a > SHORT; [ab]+ > LONG;").transliterate("aab")).toBe("SHORTSHORTLONG");
   });
 
   describe("ICU transliterator quantifiers are greedy with no backtracking (this engine follows ICU's own documented behavior here: 'only greedy quantifiers, no backup')", () => {
@@ -1207,12 +1220,20 @@ describe("combinations across features", () => {
   });
 
   describe("rule precedence remains correct once quantifiers and groups are in the mix", () => {
-    it("a quantified group's longer real match still beats a plain rule with a shorter key", () => {
+    it("a quantified group that matches more text still only wins because it is declared first, not because its match is longer", () => {
       expect(RBT.fromRules("(ab)+ > LONG; a > SHORT;").transliterate("abab")).toBe("LONG");
+      // Reversed order: the plain rule now wins each time it applies, since it is checked
+      // first, even though "(ab)+" would have matched a longer run starting from an "a".
+      expect(RBT.fromRules("a > SHORT; (ab)+ > LONG;").transliterate("abab")).toBe("SHORTbSHORTb");
     });
 
-    it("at a single position, a real (non-zero-width) match from one rule always beats a vacuous zero-width match from another, per longest-match-wins", () => {
-      expect(RBT.fromRules("(ab)* > LONG; x > SHORT;").transliterate("x")).toBe("SHORT");
+    it("declaration order is absolute: even a vacuous, zero-width match from an earlier rule pre-empts a real match a later rule would have made at the same position", () => {
+      // "(ab)*" can match zero repetitions - a valid, empty match - and per ICU that still
+      // counts as "the first matching rule" if it is declared first. It fires (inserting
+      // "LONG" and leaving "x" untouched), so "x > SHORT;" never gets a chance to run here.
+      expect(RBT.fromRules("(ab)* > LONG; x > SHORT;").transliterate("x")).toBe("LONGx");
+      // With the order swapped, "x > SHORT;" is checked first, matches for real, and wins.
+      expect(RBT.fromRules("x > SHORT; (ab)* > LONG;").transliterate("x")).toBe("SHORT");
     });
   });
 
@@ -1488,41 +1509,61 @@ describe("ante-context: `a { b > c;`", () => {
   });
 });
 
+// ICU's RuleBasedTransliterator documentation states plainly: "If multiple rules may match
+// at some point, the first matching rule is applied." Unlike a regex engine hunting for the
+// longest overall match, ICU does not auto-sort rules by length or specificity - it is the
+// rule author's job to place specific/longer rules before general/shorter fallback rules if
+// that's the precedence they want. Every pair of cases below holds key length, context, or
+// specificity constant across two declaration orders to show that only the order changes the
+// outcome. (ICU *does* use longest-match logic in two other, narrower places - a single
+// UnicodeSet's own string alternatives, covered above, and charset conversion tables, which
+// this engine doesn't implement - but neither of those is "the order rules are declared in".)
 describe("rule precedence when several rules could match at the same position", () => {
   it.each([
     {
-      name: "a longer key wins even when the shorter rule is declared first",
+      name: "the first declared rule wins even when a later rule's key would match more text",
       rules: "c > C; ch > CH;",
       input: "ch",
-      expected: "CH",
+      expected: "Ch",
     },
     {
-      name: "a longer key wins even when the shorter rule is declared second",
+      name: "declaring the longer, more specific rule first is how you make it take priority instead",
       rules: "ch > CH; c > C;",
       input: "ch",
       expected: "CH",
     },
     {
-      name: "with equal key length, more context (the more specific rule) wins",
+      name: "a context-free rule wins immediately when declared first, even though a later rule is more specific about its surroundings",
       rules: "a > X; a } b > Y;",
+      input: "ab",
+      expected: "Xb",
+    },
+    {
+      name: "declaring the context-requiring rule first instead lets it correctly take priority over the context-free fallback",
+      rules: "a } b > Y; a > X;",
       input: "ab",
       expected: "Yb",
     },
     {
-      name: "with equal key length and context, the earlier declaration wins",
+      name: "with two otherwise-identical rules, the earlier declaration wins",
       rules: "a > X; a > Y;",
       input: "a",
       expected: "X",
     },
+    {
+      name: "a rule whose key starts with a zero-width anchor atom still only wins because it is declared first, not because it has more atoms",
+      rules: "[:^Letter:]a > B; a > A;",
+      input: "a",
+      expected: "B",
+    },
+    {
+      name: "the same zero-width-anchor rule loses to an earlier, shorter rule once reordered, just like any other rule would",
+      rules: "a > A; [:^Letter:]a > B;",
+      input: "a",
+      expected: "A",
+    },
   ])("$name", ({ rules, input, expected }) => {
     expect(RBT.fromRules(rules).transliterate(input)).toBe(expected);
-  });
-
-  describe("precedence is based on actual characters consumed, not atom count", () => {
-    it("a 2-atom key that consumes only 1 character (via a zero-width match) does not automatically beat a 1-atom key", () => {
-      expect(RBT.fromRules("[:^Letter:]a > B; a > A;").transliterate("a")).toBe("B");
-      expect(RBT.fromRules("a > A; [:^Letter:]a > B;").transliterate("a")).toBe("A");
-    });
   });
 });
 
