@@ -13,7 +13,6 @@ A JavaScript/TypeScript library for [transliteration](https://en.wikipedia.org/w
 - Loads only the libraries/mappings/rules needed for the given transliteration
 - Supports batching - you can pass an array of strings
 - Transliterates even between languages of the same script (see [Maltese to Latvian example](#example-mt-to-lv))
-- Turbo mode available - [by installing icu4c](#turbo-mode)
 - Can work in browser (but not recommended because it's too heavy)
 
 ## 💡 Examples
@@ -70,14 +69,6 @@ await transliterate(["上海", "广州"], { from: "zh", to: "bg" }); // -> ["Ш�
 | --------------- | -------- | -------- | ---------------------------------------------------------------------------- |
 | `from`          | `string` | Yes      | Input language in [BCP 47](https://en.wikipedia.org/wiki/IETF_language_tag)  |
 | `to`            | `string` | Yes      | Output language in [BCP 47](https://en.wikipedia.org/wiki/IETF_language_tag) |
-
-<a id="turbo-mode"></a>
-
-## 🚀️ Prerequisites for enabling Turbo mode
-
-- You need to have `pkg-config` (`brew install pkg-config`)
-- You need to have ICU (`brew install icu4c`)
-- You need to have ICU added to the `pkg-config` path (e.g. `echo 'export PKG_CONFIG_PATH="/opt/homebrew/opt/icu4c@78/lib/pkgconfig"' >> ~/.zshrc` for macOS)
 
 <a id="supported-languages"></a>
 

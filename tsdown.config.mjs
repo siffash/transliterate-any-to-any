@@ -13,5 +13,32 @@ export default defineConfig({
   deps: {
     alwaysBundle: ["kuromoji", "kuroshiro", "kuroshiro-analyzer-kuromoji", "zlibjs", "fflate"],
   },
-  plugins: [nodePolyfills()],
+  plugins: [
+    nodePolyfills(),
+    {
+      name: "minify-icu-rules",
+      transform(code, id) {
+        if (!id.endsWith(".rules.ts")) {
+          return null;
+        }
+
+        const regex = /(export\s+const\s+\w+\s*=\s*)`([^`]*)`/g;
+
+        const minifiedCode = code.replace(regex, (match, declaration, rulesContent) => {
+          const minified = rulesContent.replace(/'[^']*'|\s+/g, m => {
+            if (m.startsWith("'")) {
+              return m; // keep the single-quoted string exactly as is
+            }
+            return ""; // strip everything else (spaces, tabs, newlines)
+          });
+          return `${declaration}\`${minified}\``;
+        });
+
+        return {
+          code: minifiedCode,
+          map: null,
+        };
+      },
+    },
+  ],
 });
