@@ -1,7 +1,7 @@
 import { Text } from "types";
 
 export const skTr = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt-distributor");
+  const { RBT } = await import("helpers/rbt");
   const { skLatnRules } = await import("data/sk/sk-latn.rules");
   const { latnTrRules } = await import("data/latn/latn-tr.rules");
 

@@ -1,7 +1,7 @@
 import { Text } from "types";
 
 export const bgMk = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt-distributor");
+  const { RBT } = await import("helpers/rbt");
   const { bgMkRules } = await import("data/bg/bg-mk.rules");
 
   const transliterator = RBT.fromRules(bgMkRules);

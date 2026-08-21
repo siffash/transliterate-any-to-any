@@ -1,7 +1,7 @@
 import { Text } from "types";
 
 export const elEn = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt-distributor");
+  const { RBT } = await import("helpers/rbt");
   const { elEnRules } = await import("data/el/el-en.rules");
 
   const transliterator = RBT.fromRules(elEnRules);

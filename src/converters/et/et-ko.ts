@@ -1,7 +1,7 @@
 import { Text } from "types";
 
 export const etKo = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt-distributor");
+  const { RBT } = await import("helpers/rbt");
   const { etIpaRules } = await import("data/et/et-ipa.rules");
   const { ipaKoRules } = await import("data/ipa/ipa-ko.rules");
 

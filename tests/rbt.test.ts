@@ -1,9 +1,9 @@
 import { describe, it, expect } from "vitest";
-import { RBT, RBTParseError, RBTRuntimeError } from "../src/helpers/rbt";
+import { RBT_JS, RBTParseError, RBTRuntimeError } from "../src/helpers/rbt";
 
 describe("RBT.fromRules — the exact usage example from the prompt", () => {
   it('transliterates "Example" to "Exemple" with the rule `a > e;`', () => {
-    const transliterator = RBT.fromRules("a > e;");
+    const transliterator = RBT_JS.fromRules("a > e;");
     expect(transliterator.transliterate("Example")).toBe("Exemple");
   });
 });
@@ -30,7 +30,7 @@ describe("context-free substitution: `a > b;`", () => {
       expected: "bnn",
     },
   ])("$name", ({ rules, input, expected }) => {
-    expect(RBT.fromRules(rules).transliterate(input)).toBe(expected);
+    expect(RBT_JS.fromRules(rules).transliterate(input)).toBe(expected);
   });
 });
 
@@ -85,7 +85,7 @@ describe("whitespace is ignored during compilation unless quoted", () => {
       expected: "XX1",
     },
   ])("$name", ({ rules, input, expected }) => {
-    expect(RBT.fromRules(rules).transliterate(input)).toBe(expected);
+    expect(RBT_JS.fromRules(rules).transliterate(input)).toBe(expected);
   });
 });
 
@@ -98,40 +98,40 @@ describe("escaping special characters with a backslash", () => {
     { name: "\\_ escapes a literal underscore", rules: "\\_ > X;", input: "_", expected: "X" },
     { name: "\\- escapes a literal hyphen", rules: "\\- > X;", input: "-", expected: "X" },
   ])("$name", ({ rules, input, expected }) => {
-    expect(RBT.fromRules(rules).transliterate(input)).toBe(expected);
+    expect(RBT_JS.fromRules(rules).transliterate(input)).toBe(expected);
   });
 
   it("a backslash escape works in replacement text", () => {
-    expect(RBT.fromRules("a > \\*;").transliterate("a")).toBe("*");
+    expect(RBT_JS.fromRules("a > \\*;").transliterate("a")).toBe("*");
   });
 
   it("a backslash escape works as a member inside a [set]", () => {
-    expect(RBT.fromRules("[\\*\\@] > X;").transliterate("*@b")).toBe("XXb");
+    expect(RBT_JS.fromRules("[\\*\\@] > X;").transliterate("*@b")).toBe("XXb");
   });
 
   it("a backslash escape works in ante-context", () => {
-    expect(RBT.fromRules("a\\.{b>c;").transliterate("a.b")).toBe("a.c");
-    expect(RBT.fromRules("a\\.{b>c;").transliterate("axb")).toBe("axb");
+    expect(RBT_JS.fromRules("a\\.{b>c;").transliterate("a.b")).toBe("a.c");
+    expect(RBT_JS.fromRules("a\\.{b>c;").transliterate("axb")).toBe("axb");
   });
 
   it("a backslash escape works in post-context", () => {
-    expect(RBT.fromRules("a}\\.>c;").transliterate("a.")).toBe("c.");
+    expect(RBT_JS.fromRules("a}\\.>c;").transliterate("a.")).toBe("c.");
   });
 
   it("a backslash escape can be followed immediately by `|` cursor placement", () => {
-    expect(RBT.fromRules("a > \\*|b; b > c;").transliterate("a")).toBe("*c");
+    expect(RBT_JS.fromRules("a > \\*|b; b > c;").transliterate("a")).toBe("*c");
   });
 
   it("a backslash-escaped character keeps working across a `::Null;` pass boundary", () => {
-    expect(RBT.fromRules("a > \\_; ::Null; \\_ > Z;").transliterate("a")).toBe("Z");
+    expect(RBT_JS.fromRules("a > \\_; ::Null; \\_ > Z;").transliterate("a")).toBe("Z");
   });
 
   it("a backslash immediately followed by a character outside this set falls back to a literal, matchable backslash rather than being silently dropped", () => {
-    expect(RBT.fromRules("\\q > X;").transliterate("\\q")).toBe("X");
+    expect(RBT_JS.fromRules("\\q > X;").transliterate("\\q")).toBe("X");
   });
 
   it("a bare, unescaped occurrence of one of these characters now has quantifier/grouping meaning instead, and errors clearly if used that way", () => {
-    expect(() => RBT.fromRules("* > X;")).toThrow(RBTParseError);
+    expect(() => RBT_JS.fromRules("* > X;")).toThrow(RBTParseError);
   });
 });
 
@@ -149,21 +149,21 @@ describe("that same backslash-escape mechanism now covers nine more characters: 
   ])(
     "$name escapes a literal character directly in a pattern, with no [...] involved at all — none of these nine are usable bare in this position",
     ({ rules, input, expected }) => {
-      expect(RBT.fromRules(rules).transliterate(input)).toBe(expected);
+      expect(RBT_JS.fromRules(rules).transliterate(input)).toBe(expected);
     },
   );
 
   it("and in replacement text, without colliding with existing '|' cursor placement, '$N' backreferences, or '&Name(...)' calls", () => {
-    expect(RBT.fromRules("a > \\|;").transliterate("a")).toBe("|");
-    expect(RBT.fromRules("a > \\$;").transliterate("a")).toBe("$");
-    expect(RBT.fromRules("a > \\&;").transliterate("a")).toBe("&");
-    expect(RBT.fromRules("(a) > $1$1;").transliterate("a")).toBe("aa");
-    expect(RBT.fromRules("(a) > &Any-Upper($1);").transliterate("a")).toBe("A");
+    expect(RBT_JS.fromRules("a > \\|;").transliterate("a")).toBe("|");
+    expect(RBT_JS.fromRules("a > \\$;").transliterate("a")).toBe("$");
+    expect(RBT_JS.fromRules("a > \\&;").transliterate("a")).toBe("&");
+    expect(RBT_JS.fromRules("(a) > $1$1;").transliterate("a")).toBe("aa");
+    expect(RBT_JS.fromRules("(a) > &Any-Upper($1);").transliterate("a")).toBe("A");
   });
 
   it("as with the original six symbols, a leading backslash from the input that the escape itself doesn't consume is left in place, untouched", () => {
-    expect(RBT.fromRules("\\| > c;").transliterate("\\|")).toBe("\\c");
-    expect(RBT.fromRules("\\& > c;").transliterate("\\&")).toBe("\\c");
+    expect(RBT_JS.fromRules("\\| > c;").transliterate("\\|")).toBe("\\c");
+    expect(RBT_JS.fromRules("\\& > c;").transliterate("\\&")).toBe("\\c");
   });
 
   it.each([
@@ -178,18 +178,18 @@ describe("that same backslash-escape mechanism now covers nine more characters: 
   ])(
     "$name also works as a single-character member inside a [set], with the same leading-backslash-passes-through behavior",
     ({ rules, input, expected }) => {
-      expect(RBT.fromRules(rules).transliterate(input)).toBe(expected);
+      expect(RBT_JS.fromRules(rules).transliterate(input)).toBe(expected);
     },
   );
 });
 
 describe("escaping special characters by enclosing them in single quotes", () => {
   it("the exact example from the prompt: '_a_' matches underscore, a, underscore literally", () => {
-    expect(RBT.fromRules("'_a_' > X;").transliterate("_a_")).toBe("X");
+    expect(RBT_JS.fromRules("'_a_' > X;").transliterate("_a_")).toBe("X");
   });
 
   it("that same quoted sequence does not match a partial prefix", () => {
-    expect(RBT.fromRules("'_a_' > X;").transliterate("_a")).toBe("_a");
+    expect(RBT_JS.fromRules("'_a_' > X;").transliterate("_a")).toBe("_a");
   });
 
   it.each([
@@ -199,23 +199,23 @@ describe("escaping special characters by enclosing them in single quotes", () =>
     { name: "'_'", rules: "'_' > X;", input: "_", expected: "X" },
     { name: "'-'", rules: "'-' > X;", input: "-", expected: "X" },
   ])("$name quotes that single character literally", ({ rules, input, expected }) => {
-    expect(RBT.fromRules(rules).transliterate(input)).toBe(expected);
+    expect(RBT_JS.fromRules(rules).transliterate(input)).toBe(expected);
   });
 
   it("an escaped quote can be embedded inside a larger quoted region without ending it early", () => {
-    expect(RBT.fromRules("'a\\'b' > X;").transliterate("a'b")).toBe("X");
+    expect(RBT_JS.fromRules("'a\\'b' > X;").transliterate("a'b")).toBe("X");
   });
 
   it("the backslash form and the quote form of the same character are interchangeable", () => {
-    expect(RBT.fromRules("\\- > D;").transliterate("a-b")).toBe("aDb");
-    expect(RBT.fromRules("'-' > D;").transliterate("a-b")).toBe("aDb");
+    expect(RBT_JS.fromRules("\\- > D;").transliterate("a-b")).toBe("aDb");
+    expect(RBT_JS.fromRules("'-' > D;").transliterate("a-b")).toBe("aDb");
   });
 });
 
 describe("inside a [set], the six escapable symbols are literal even when written bare, without a backslash", () => {
   it("the exact example from the request: `['*@._-]` matches all six symbols literally with no escaping at all", () => {
-    expect(RBT.fromRules("['*@._-] > X;").transliterate("'*@._-")).toBe("XXXXXX");
-    expect(RBT.fromRules("['*@._-] > X;").transliterate("a'b*c@d.e_f-g")).toBe("aXbXcXdXeXfXg");
+    expect(RBT_JS.fromRules("['*@._-] > X;").transliterate("'*@._-")).toBe("XXXXXX");
+    expect(RBT_JS.fromRules("['*@._-] > X;").transliterate("a'b*c@d.e_f-g")).toBe("aXbXcXdXeXfXg");
   });
 
   it.each([
@@ -230,50 +230,50 @@ describe("inside a [set], the six escapable symbols are literal even when writte
     { name: "bare dot", rules: "[.] > X;", input: ".", expected: "X" },
     { name: "bare underscore", rules: "[_] > X;", input: "_", expected: "X" },
   ])("$name is a valid, literal set member on its own", ({ rules, input, expected }) => {
-    expect(RBT.fromRules(rules).transliterate(input)).toBe(expected);
+    expect(RBT_JS.fromRules(rules).transliterate(input)).toBe(expected);
   });
 
   it("a bare hyphen with no other members has neither a left nor a right boundary, so it is unambiguously literal too; its full, context-dependent behavior (as a range operator between two characters) is covered in its own dedicated section below", () => {
-    expect(RBT.fromRules("[-] > X;").transliterate("-")).toBe("X");
+    expect(RBT_JS.fromRules("[-] > X;").transliterate("-")).toBe("X");
   });
 
   it("backslash escaping still works inside a set too, exactly as before, and can be freely mixed with bare symbols", () => {
-    expect(RBT.fromRules("[\\'] > X;").transliterate("'")).toBe("X");
-    expect(RBT.fromRules("[\\*] > X;").transliterate("*")).toBe("X");
-    expect(RBT.fromRules("[a\\*'] > X;").transliterate("a*'")).toBe("XXX");
+    expect(RBT_JS.fromRules("[\\'] > X;").transliterate("'")).toBe("X");
+    expect(RBT_JS.fromRules("[\\*] > X;").transliterate("*")).toBe("X");
+    expect(RBT_JS.fromRules("[a\\*'] > X;").transliterate("a*'")).toBe("XXX");
   });
 
   it("outside a set, these symbols still require backslash or quoting exactly as before — this change is scoped to inside [...] only", () => {
-    expect(RBT.fromRules("a' 'b > X;").transliterate("a b")).toBe("X");
-    expect(RBT.fromRules("\\' > X;").transliterate("'")).toBe("X");
-    expect(() => RBT.fromRules("* > X;")).toThrow(RBTParseError);
+    expect(RBT_JS.fromRules("a' 'b > X;").transliterate("a b")).toBe("X");
+    expect(RBT_JS.fromRules("\\' > X;").transliterate("'")).toBe("X");
+    expect(() => RBT_JS.fromRules("* > X;")).toThrow(RBTParseError);
   });
 
   it("combines correctly with set negation, both for membership and for the leading '^' detection itself", () => {
-    expect(RBT.fromRules("[^'*@._-] > X;").transliterate("a'b")).toBe("X'X");
-    expect(RBT.fromRules("[^*] > X;").transliterate("a*")).toBe("X*");
+    expect(RBT_JS.fromRules("[^'*@._-] > X;").transliterate("a'b")).toBe("X'X");
+    expect(RBT_JS.fromRules("[^*] > X;").transliterate("a*")).toBe("X*");
   });
 
   it("a leading bare symbol that is not '^' is just an ordinary member, not a negation trigger", () => {
-    expect(RBT.fromRules("[*a] > X;").transliterate("*ab")).toBe("XXb");
+    expect(RBT_JS.fromRules("[*a] > X;").transliterate("*ab")).toBe("XXb");
   });
 
   it("combines correctly with nested brackets, POSIX classes, and multi-character strings", () => {
-    expect(RBT.fromRules("[[*@]bc] > X;").transliterate("*@bc")).toBe("XXXX");
-    expect(RBT.fromRules("[*[:Lu:]] > X;").transliterate("*A")).toBe("XX");
-    expect(RBT.fromRules("[{a*b}] > X;").transliterate("a*b")).toBe("X");
+    expect(RBT_JS.fromRules("[[*@]bc] > X;").transliterate("*@bc")).toBe("XXXX");
+    expect(RBT_JS.fromRules("[*[:Lu:]] > X;").transliterate("*A")).toBe("XX");
+    expect(RBT_JS.fromRules("[{a*b}] > X;").transliterate("a*b")).toBe("X");
   });
 
   it("combines correctly with a \\uXXXX escape in the same set", () => {
-    expect(RBT.fromRules("[a*\\u0042._] > X;").transliterate("aB*._c")).toBe("XXXXXc");
+    expect(RBT_JS.fromRules("[a*\\u0042._] > X;").transliterate("aB*._c")).toBe("XXXXXc");
   });
 
   it("whitespace around bare symbols inside a set is still ignored, consistent with the rest of the grammar", () => {
-    expect(RBT.fromRules("[ * @ ] > X;").transliterate("*@")).toBe("XX");
+    expect(RBT_JS.fromRules("[ * @ ] > X;").transliterate("*@")).toBe("XX");
   });
 
   it("an unterminated set containing a bare symbol still raises a clear parse error", () => {
-    expect(() => RBT.fromRules("[*")).toThrow(RBTParseError);
+    expect(() => RBT_JS.fromRules("[*")).toThrow(RBTParseError);
   });
 });
 
@@ -312,45 +312,45 @@ describe("the seven additional structural characters `| > ; ( ) ? +` are also li
       expected: "X",
     },
   ])("$name is a valid, literal set member on its own", ({ rules, input, expected }) => {
-    expect(RBT.fromRules(rules).transliterate(input)).toBe(expected);
+    expect(RBT_JS.fromRules(rules).transliterate(input)).toBe(expected);
   });
 
   it("all seven combine together in the same set, alongside an ordinary letter that correctly stays untouched", () => {
-    expect(RBT.fromRules("[|>;()?+] > X;").transliterate("za|b>c;d(e)f?g+h")).toBe(
+    expect(RBT_JS.fromRules("[|>;()?+] > X;").transliterate("za|b>c;d(e)f?g+h")).toBe(
       "zaXbXcXdXeXfXgXh",
     );
   });
 
   it("outside a set, these symbols keep their existing structural meaning exactly as before — this relaxation is scoped to inside [...] only", () => {
-    expect(() => RBT.fromRules("| > X;")).toThrow(RBTParseError);
-    expect(() => RBT.fromRules("; > X;")).toThrow(RBTParseError);
-    expect(RBT.fromRules("(a)? > X;").transliterate("a")).toBe("X");
+    expect(() => RBT_JS.fromRules("| > X;")).toThrow(RBTParseError);
+    expect(() => RBT_JS.fromRules("; > X;")).toThrow(RBTParseError);
+    expect(RBT_JS.fromRules("(a)? > X;").transliterate("a")).toBe("X");
   });
 
   it("works as a range endpoint too, via the exact same mechanism used for any other bare set member", () => {
-    expect(RBT.fromRules("[!-+] > X;").transliterate("!,+")).toBe("X,X");
+    expect(RBT_JS.fromRules("[!-+] > X;").transliterate("!,+")).toBe("X,X");
   });
 });
 
 describe("'&' is deliberately excluded from that relaxation: it remains reserved bare inside a [set]", () => {
   it("a bare, unescaped '&' still raises the exact same parse error as before this fix", () => {
-    expect(() => RBT.fromRules("[&] > c;")).toThrow(RBTParseError);
+    expect(() => RBT_JS.fromRules("[&] > c;")).toThrow(RBTParseError);
   });
 
   it("a backslash-escaped '\\&' works as a literal set member, exactly like the other escapable symbols", () => {
-    expect(RBT.fromRules("[\\&] > c;").transliterate("&")).toBe("c");
+    expect(RBT_JS.fromRules("[\\&] > c;").transliterate("&")).toBe("c");
   });
 
   it("wrapping it as a single-character {&} multi-character string is the other way in", () => {
-    expect(RBT.fromRules("[{&}] > c;").transliterate("&")).toBe("c");
+    expect(RBT_JS.fromRules("[{&}] > c;").transliterate("&")).toBe("c");
   });
 
   it("so the original reported rule now fails clearly on '&' specifically, once '|' no longer masks it", () => {
-    expect(() => RBT.fromRules("[|&] > c;")).toThrow(RBTParseError);
+    expect(() => RBT_JS.fromRules("[|&] > c;")).toThrow(RBTParseError);
   });
 
   it("the working equivalent, using {&} in place of the bare '&', returns the originally expected result", () => {
-    expect(RBT.fromRules("[|{&}] > c;").transliterate("a|b&")).toBe("acbc");
+    expect(RBT_JS.fromRules("[|{&}] > c;").transliterate("a|b&")).toBe("acbc");
   });
 });
 
@@ -361,25 +361,25 @@ describe("a bare, unescaped '$' is reserved (ICU's 'aether' concept) rather than
   ])(
     "$name: '$' parses without error but matches nothing at all — not a literal '$', not zero-width anywhere — so the input passes through completely untouched (and the set is not rejected as the empty '[]' set)",
     ({ rules, input }) => {
-      expect(RBT.fromRules(rules).transliterate(input)).toBe(input);
+      expect(RBT_JS.fromRules(rules).transliterate(input)).toBe(input);
     },
   );
 
   it("a literal, matchable '$' is still available via a backslash escape or as a {$} string", () => {
-    expect(RBT.fromRules("\\$ > c;").transliterate("$")).toBe("c");
-    expect(RBT.fromRules("[{$}] > c;").transliterate("$")).toBe("c");
+    expect(RBT_JS.fromRules("\\$ > c;").transliterate("$")).toBe("c");
+    expect(RBT_JS.fromRules("[{$}] > c;").transliterate("$")).toBe("c");
   });
 
   it("mixed into a set alongside a real member, it contributes nothing — the set behaves exactly as if '$' were not there at all", () => {
-    expect(RBT.fromRules("[a$] > X;").transliterate("a$")).toBe("X$");
+    expect(RBT_JS.fromRules("[a$] > X;").transliterate("a$")).toBe("X$");
   });
 
   it("negating a set containing only '$' matches every real character, including a literal '$' in the input, since '$' itself contributed no positive members to negate", () => {
-    expect(RBT.fromRules("[^$] > X;").transliterate("q$")).toBe("XX");
+    expect(RBT_JS.fromRules("[^$] > X;").transliterate("q$")).toBe("XX");
   });
 
   it("bare inside a (...) group too, for consistency with every other atom position", () => {
-    expect(RBT.fromRules("($) > c;").transliterate("$")).toBe("$");
+    expect(RBT_JS.fromRules("($) > c;").transliterate("$")).toBe("$");
   });
 });
 
@@ -405,14 +405,14 @@ describe("UnicodeSet character classes: `[abc] > d;`", () => {
       expected: "ZZZb",
     },
   ])("$name", ({ rules, input, expected }) => {
-    expect(RBT.fromRules(rules).transliterate(input)).toBe(expected);
+    expect(RBT_JS.fromRules(rules).transliterate(input)).toBe(expected);
   });
 });
 
 describe("the dash '-' as a range operator inside a [set]: `[b-d]`", () => {
   it("the exact worked example: `[b-df-hj-np-tv-z]`, the standard idiom for ASCII lowercase consonants, chaining five ranges to exclude the vowels", () => {
     expect(
-      RBT.fromRules("[b-df-hj-np-tv-z] > X;").transliterate("abcdefghijklmnopqrstuvwxyz"),
+      RBT_JS.fromRules("[b-df-hj-np-tv-z] > X;").transliterate("abcdefghijklmnopqrstuvwxyz"),
     ).toBe("aXXXeXXXiXXXXXoXXXXXuXXXXX");
   });
 
@@ -430,7 +430,7 @@ describe("the dash '-' as a range operator inside a [set]: `[b-d]`", () => {
       expected: "Xb",
     },
   ])("$name", ({ rules, input, expected }) => {
-    expect(RBT.fromRules(rules).transliterate(input)).toBe(expected);
+    expect(RBT_JS.fromRules(rules).transliterate(input)).toBe(expected);
   });
 
   describe("escaping a literal dash inside a set, exactly as specified", () => {
@@ -460,7 +460,7 @@ describe("the dash '-' as a range operator inside a [set]: `[b-d]`", () => {
         expected: "XbX",
       },
     ])("$name", ({ rules, input, expected }) => {
-      expect(RBT.fromRules(rules).transliterate(input)).toBe(expected);
+      expect(RBT_JS.fromRules(rules).transliterate(input)).toBe(expected);
     });
   });
 
@@ -479,48 +479,48 @@ describe("the dash '-' as a range operator inside a [set]: `[b-d]`", () => {
         expected: "Xrm",
       },
     ])("$name", ({ rules, input, expected }) => {
-      expect(RBT.fromRules(rules).transliterate(input)).toBe(expected);
+      expect(RBT_JS.fromRules(rules).transliterate(input)).toBe(expected);
     });
   });
 
   it("a range combines with a POSIX class, a multi-character string, and a nested bracket, each in the same set", () => {
-    expect(RBT.fromRules("[a-c[:Lu:]] > X;").transliterate("abcABCd")).toBe("XXXXXXd");
-    expect(RBT.fromRules("[a-c{de}] > X;").transliterate("abcde f")).toBe("XXXX f");
-    expect(RBT.fromRules("[[a-c]xy] > X;").transliterate("abcxyz")).toBe("XXXXXz");
+    expect(RBT_JS.fromRules("[a-c[:Lu:]] > X;").transliterate("abcABCd")).toBe("XXXXXXd");
+    expect(RBT_JS.fromRules("[a-c{de}] > X;").transliterate("abcde f")).toBe("XXXX f");
+    expect(RBT_JS.fromRules("[[a-c]xy] > X;").transliterate("abcxyz")).toBe("XXXXXz");
   });
 
   it("a range-containing set can be quantified with '+' and '*' exactly like any other set", () => {
-    expect(RBT.fromRules("[a-c]+ > X;").transliterate("aabbccz")).toBe("Xz");
-    expect(RBT.fromRules("[a-c]*z > X;").transliterate("aabbccz")).toBe("X");
+    expect(RBT_JS.fromRules("[a-c]+ > X;").transliterate("aabbccz")).toBe("Xz");
+    expect(RBT_JS.fromRules("[a-c]*z > X;").transliterate("aabbccz")).toBe("X");
   });
 
   it("a backwards range, where the start code point is greater than the end, raises a clear parse error instead of silently misbehaving", () => {
-    expect(() => RBT.fromRules("[z-a] > X;")).toThrow(RBTParseError);
-    expect(() => RBT.fromRules("[a--z] > X;")).toThrow(RBTParseError);
+    expect(() => RBT_JS.fromRules("[z-a] > X;")).toThrow(RBTParseError);
+    expect(() => RBT_JS.fromRules("[a--z] > X;")).toThrow(RBTParseError);
   });
 
   it("either endpoint of a range may be written as a \\uXXXX escape", () => {
-    expect(RBT.fromRules("[\\u0061-c] > X;").transliterate("abcd")).toBe("XXXd");
-    expect(RBT.fromRules("[a-\\u0063] > X;").transliterate("abcd")).toBe("XXXd");
+    expect(RBT_JS.fromRules("[\\u0061-c] > X;").transliterate("abcd")).toBe("XXXd");
+    expect(RBT_JS.fromRules("[a-\\u0063] > X;").transliterate("abcd")).toBe("XXXd");
   });
 
   it("a range may span two of the six bare-escapable symbols too, since ranges operate purely on code point value", () => {
-    expect(RBT.fromRules("[.-@] > X;").transliterate(".0@A")).toBe("XXXA");
+    expect(RBT_JS.fromRules("[.-@] > X;").transliterate(".0@A")).toBe("XXXA");
   });
 
   it("a range can span astral (surrogate-pair) code points", () => {
     const start = String.fromCodePoint(0x10000);
     const end = String.fromCodePoint(0x10005);
     const mid = String.fromCodePoint(0x10002);
-    expect(RBT.fromRules(`[${start}-${end}] > X;`).transliterate(mid + "a")).toBe("Xa");
+    expect(RBT_JS.fromRules(`[${start}-${end}] > X;`).transliterate(mid + "a")).toBe("Xa");
   });
 
   it("outside of a [set], a dash never carries range meaning and needs no escaping at all, exactly as before", () => {
-    expect(RBT.fromRules("a-b > X;").transliterate("a-b")).toBe("X");
+    expect(RBT_JS.fromRules("a-b > X;").transliterate("a-b")).toBe("X");
   });
 
   it("whitespace around the range dash is ignored, consistent with the rest of the grammar", () => {
-    expect(RBT.fromRules("[a - c] > X;").transliterate("abcd")).toBe("XXXd");
+    expect(RBT_JS.fromRules("[a - c] > X;").transliterate("abcd")).toBe("XXXd");
   });
 });
 
@@ -539,11 +539,11 @@ describe("negated character sets: `[^abc]`", () => {
       expected: "XXXXa",
     },
   ])("$name", ({ rules, input, expected }) => {
-    expect(RBT.fromRules(rules).transliterate(input)).toBe(expected);
+    expect(RBT_JS.fromRules(rules).transliterate(input)).toBe(expected);
   });
 
   it("an empty negated set body '[^]' is still a parse error", () => {
-    expect(() => RBT.fromRules("[^] > X;")).toThrow(RBTParseError);
+    expect(() => RBT_JS.fromRules("[^] > X;")).toThrow(RBTParseError);
   });
 });
 
@@ -604,7 +604,7 @@ describe("POSIX-style property classes: `[:Name:]`", () => {
       expected: "aXb",
     },
   ])("$name", ({ rules, input, expected }) => {
-    expect(RBT.fromRules(rules).transliterate(input)).toBe(expected);
+    expect(RBT_JS.fromRules(rules).transliterate(input)).toBe(expected);
   });
 
   describe("`[:^Letter:]` — matches a non-letter character, or zero-width at the start/end of the string", () => {
@@ -629,7 +629,7 @@ describe("POSIX-style property classes: `[:Name:]`", () => {
           expected: "ba",
         },
       ])("$name", ({ rules, input, expected }) => {
-        expect(RBT.fromRules(rules).transliterate(input)).toBe(expected);
+        expect(RBT_JS.fromRules(rules).transliterate(input)).toBe(expected);
       });
     });
 
@@ -654,7 +654,7 @@ describe("POSIX-style property classes: `[:Name:]`", () => {
           expected: "ab",
         },
       ])("$name", ({ rules, input, expected }) => {
-        expect(RBT.fromRules(rules).transliterate(input)).toBe(expected);
+        expect(RBT_JS.fromRules(rules).transliterate(input)).toBe(expected);
       });
     });
 
@@ -679,21 +679,23 @@ describe("POSIX-style property classes: `[:Name:]`", () => {
           expected: "Xab",
         },
       ])("$name", ({ rules, input, expected }) => {
-        expect(RBT.fromRules(rules).transliterate(input)).toBe(expected);
+        expect(RBT_JS.fromRules(rules).transliterate(input)).toBe(expected);
       });
     });
 
     describe("used directly as a key", () => {
       it("consumes a matching non-letter character normally, since a real character takes priority over the zero-width alternative", () => {
-        expect(RBT.fromRules("[:^Letter:] > X;").transliterate("5")).toBe("X");
+        expect(RBT_JS.fromRules("[:^Letter:] > X;").transliterate("5")).toBe("X");
       });
 
       it("falls back to a zero-width match at the true start when the character there is a letter", () => {
-        expect(RBT.fromRules("[:^Letter:] > X;").transliterate("A")).toBe("XA");
+        expect(RBT_JS.fromRules("[:^Letter:] > X;").transliterate("A")).toBe("XA");
       });
 
       it("a zero-width match pinned in place by `|` is caught by the step-budget guard rather than looping forever", () => {
-        expect(() => RBT.fromRules("[:^Letter:] >| ;").transliterate("A")).toThrow(RBTRuntimeError);
+        expect(() => RBT_JS.fromRules("[:^Letter:] >| ;").transliterate("A")).toThrow(
+          RBTRuntimeError,
+        );
       });
     });
   });
@@ -707,8 +709,8 @@ describe("POSIX-style property classes: `[:Name:]`", () => {
       { name: "[:^Arabic:]", rules: "[:^Arabic:] > x;" },
       { name: "[:Bogus:]", rules: "[:Bogus:] > x;" },
     ])("$name is not implemented and errors clearly", ({ rules }) => {
-      expect(() => RBT.fromRules(rules)).toThrow(RBTParseError);
-      expect(() => RBT.fromRules(rules)).toThrow("unknown POSIX class token");
+      expect(() => RBT_JS.fromRules(rules)).toThrow(RBTParseError);
+      expect(() => RBT_JS.fromRules(rules)).toThrow("unknown POSIX class token");
     });
   });
 });
@@ -746,7 +748,7 @@ describe("unicode escapes: `\\uXXXX`", () => {
       expected: "X",
     },
   ])("$name", ({ rules, input, expected }) => {
-    expect(RBT.fromRules(rules).transliterate(input)).toBe(expected);
+    expect(RBT_JS.fromRules(rules).transliterate(input)).toBe(expected);
   });
 
   it.each([
@@ -754,38 +756,38 @@ describe("unicode escapes: `\\uXXXX`", () => {
     { name: "a non-hex character among the digits", rules: "\\u12g4 > x;" },
     { name: "truncated at end of source", rules: "\\u1" },
   ])("$name raises a clear parse error", ({ rules }) => {
-    expect(() => RBT.fromRules(rules)).toThrow(RBTParseError);
-    expect(() => RBT.fromRules(rules)).toThrow("\\u escape");
+    expect(() => RBT_JS.fromRules(rules)).toThrow(RBTParseError);
+    expect(() => RBT_JS.fromRules(rules)).toThrow("\\u escape");
   });
 });
 
 describe("combinations of negation, POSIX classes, and nested sets", () => {
   it("the example from the spec: [^[:Letter:][:Mark:]] matches anything that is neither a letter nor a mark", () => {
-    expect(RBT.fromRules("[^[:Letter:][:Mark:]] > X;").transliterate("5a1 e\u0301")).toBe(
+    expect(RBT_JS.fromRules("[^[:Letter:][:Mark:]] > X;").transliterate("5a1 e\u0301")).toBe(
       "XaXXe\u0301",
     );
   });
 
   it("letters and marks are correctly left untouched by that same negated union", () => {
-    expect(RBT.fromRules("[^[:Letter:][:Mark:]] > X;").transliterate("5ab e\u0301f")).toBe(
+    expect(RBT_JS.fromRules("[^[:Letter:][:Mark:]] > X;").transliterate("5ab e\u0301f")).toBe(
       "XabXe\u0301f",
     );
   });
 
   it("a nested bracket set without any POSIX class unions its members into the parent", () => {
-    expect(RBT.fromRules("[[ab]cd] > X;").transliterate("abcdez")).toBe("XXXXez");
+    expect(RBT_JS.fromRules("[[ab]cd] > X;").transliterate("abcdez")).toBe("XXXXez");
   });
 
   it("a nested negated bracket set combines via De Morgan's law with the parent's own members", () => {
-    expect(RBT.fromRules("[[^ab]cd] > X;").transliterate("zabcde")).toBe("XabXXX");
+    expect(RBT_JS.fromRules("[[^ab]cd] > X;").transliterate("zabcde")).toBe("XabXXX");
   });
 
   it("negating an outer bracket that contains a single POSIX class is a valid, different way to negate it", () => {
-    expect(RBT.fromRules("[^[:Mark:]] > X;").transliterate("e\u0301")).toBe("X\u0301");
+    expect(RBT_JS.fromRules("[^[:Mark:]] > X;").transliterate("e\u0301")).toBe("X\u0301");
   });
 
   it("three-way combination: literal member, POSIX class, and nested bracket all unioned together", () => {
-    expect(RBT.fromRules("[z[:Lu:][ab]] > X;").transliterate("zAaBb c")).toBe("XXXXX c");
+    expect(RBT_JS.fromRules("[z[:Lu:][ab]] > X;").transliterate("zAaBb c")).toBe("XXXXX c");
   });
 });
 
@@ -828,16 +830,16 @@ describe("multi-character strings in sets: `[abc{de}f]`", () => {
       expected: "e",
     },
   ])("$name", ({ rules, input, expected }) => {
-    expect(RBT.fromRules(rules).transliterate(input)).toBe(expected);
+    expect(RBT_JS.fromRules(rules).transliterate(input)).toBe(expected);
   });
 
   describe("the longest possible match always wins, matching ICU's own documented UnicodeSet matcher behavior", () => {
     it("a multi-character string is preferred over a shorter single-character member with the same prefix", () => {
-      expect(RBT.fromRules("[d{de}] > X;").transliterate("de")).toBe("X");
+      expect(RBT_JS.fromRules("[d{de}] > X;").transliterate("de")).toBe("X");
     });
 
     it("falls back to the single-character member when the string alternative does not apply here", () => {
-      expect(RBT.fromRules("[d{de}] > X;").transliterate("dx")).toBe("Xx");
+      expect(RBT_JS.fromRules("[d{de}] > X;").transliterate("dx")).toBe("Xx");
     });
 
     it("this per-set preference does not extend into a cross-rule 'longest match wins' policy: which RULE fires is still decided purely by declaration order", () => {
@@ -846,48 +848,48 @@ describe("multi-character strings in sets: `[abc{de}f]`", () => {
       // RuleBasedTransliterator docs state plainly that "if multiple rules may match at some
       // point, the first matching rule is applied" - so it is declaration order, not either
       // rule's key length, that decides the winner here.
-      expect(RBT.fromRules("[{de}] > LONG; d > SHORT;").transliterate("de")).toBe("LONG");
-      expect(RBT.fromRules("[{de}] > LONG; d > SHORT;").transliterate("dx")).toBe("SHORTx");
+      expect(RBT_JS.fromRules("[{de}] > LONG; d > SHORT;").transliterate("de")).toBe("LONG");
+      expect(RBT_JS.fromRules("[{de}] > LONG; d > SHORT;").transliterate("dx")).toBe("SHORTx");
       // Proof it's declaration order and not key length: swap which rule comes first and the
       // shorter, single-character rule now wins, even though "de" would satisfy the longer key.
-      expect(RBT.fromRules("d > SHORT; [{de}] > LONG;").transliterate("de")).toBe("SHORTe");
+      expect(RBT_JS.fromRules("d > SHORT; [{de}] > LONG;").transliterate("de")).toBe("SHORTe");
     });
   });
 
   it("a set may contain more than one multi-character string", () => {
-    expect(RBT.fromRules("[{ab}{cd}] > X;").transliterate("abcdxy")).toBe("XXxy");
+    expect(RBT_JS.fromRules("[{ab}{cd}] > X;").transliterate("abcdxy")).toBe("XXxy");
   });
 
   it("a multi-character string may be longer than two characters", () => {
-    expect(RBT.fromRules("[{def}] > X;").transliterate("defg")).toBe("Xg");
+    expect(RBT_JS.fromRules("[{def}] > X;").transliterate("defg")).toBe("Xg");
   });
 
   it("works as an ante-context atom", () => {
-    expect(RBT.fromRules("[{de}]{f>g;").transliterate("defdf")).toBe("degdf");
+    expect(RBT_JS.fromRules("[{de}]{f>g;").transliterate("defdf")).toBe("degdf");
   });
 
   it("works as a post-context atom", () => {
-    expect(RBT.fromRules("a}[{bc}]>X;").transliterate("abcabd")).toBe("Xbcabd");
+    expect(RBT_JS.fromRules("a}[{bc}]>X;").transliterate("abcabd")).toBe("Xbcabd");
   });
 
   it("existing character escapes (backslash and quoting) work inside the braces", () => {
-    expect(RBT.fromRules("[{d\\u0065}] > X;").transliterate("de")).toBe("X");
+    expect(RBT_JS.fromRules("[{d\\u0065}] > X;").transliterate("de")).toBe("X");
   });
 
   it("astral (surrogate-pair) characters are handled correctly inside a multi-character string", () => {
-    expect(RBT.fromRules("[{a\ud83d\udc4db}] > X;").transliterate("a\ud83d\udc4dbc")).toBe("Xc");
+    expect(RBT_JS.fromRules("[{a\ud83d\udc4db}] > X;").transliterate("a\ud83d\udc4dbc")).toBe("Xc");
   });
 
   it("a nested bracket's own multi-character string is flattened into the parent set", () => {
-    expect(RBT.fromRules("[[{ab}]cd] > X;").transliterate("abcde")).toBe("XXXe");
+    expect(RBT_JS.fromRules("[[{ab}]cd] > X;").transliterate("abcde")).toBe("XXXe");
   });
 
   it("combines with a POSIX class inside the same set", () => {
-    expect(RBT.fromRules("[{de}[:Lu:]] > X;").transliterate("deAb")).toBe("XXb");
+    expect(RBT_JS.fromRules("[{de}[:Lu:]] > X;").transliterate("deAb")).toBe("XXb");
   });
 
   it("can appear together with ante- and post-context in a single rule", () => {
-    expect(RBT.fromRules("x{[{de}]}y > Z;").transliterate("xdey xde")).toBe("xZy xde");
+    expect(RBT_JS.fromRules("x{[{de}]}y > Z;").transliterate("xdey xde")).toBe("xZy xde");
   });
 
   describe("negating a set containing multi-character strings drops the strings entirely, per ICU's documented 'code point complement' behavior (removeAllStrings)", () => {
@@ -917,7 +919,7 @@ describe("multi-character strings in sets: `[abc{de}f]`", () => {
         expected: "XXX",
       },
     ])("$name", ({ rules, input, expected }) => {
-      expect(RBT.fromRules(rules).transliterate(input)).toBe(expected);
+      expect(RBT_JS.fromRules(rules).transliterate(input)).toBe(expected);
     });
   });
 
@@ -926,7 +928,7 @@ describe("multi-character strings in sets: `[abc{de}f]`", () => {
       { name: "an empty '{}'", rules: "[{}] > X;" },
       { name: "an unterminated '{' with no closing '}'", rules: "[a{bc] > X;" },
     ])("$name", ({ rules }) => {
-      expect(() => RBT.fromRules(rules)).toThrow(RBTParseError);
+      expect(() => RBT_JS.fromRules(rules)).toThrow(RBTParseError);
     });
   });
 
@@ -944,12 +946,12 @@ describe("multi-character strings in sets: `[abc{de}f]`", () => {
     ])(
       "$name as a single-character {...} string is equivalent to that same character specified any other way",
       ({ rules, input, expected }) => {
-        expect(RBT.fromRules(rules).transliterate(input)).toBe(expected);
+        expect(RBT_JS.fromRules(rules).transliterate(input)).toBe(expected);
       },
     );
 
     it("combines with a bare ordinary member and a real multi-character string in the same set, with the longest match still winning where they overlap", () => {
-      expect(RBT.fromRules("[|{&}{de}] > c;").transliterate(">|;()?+&de")).toBe(">c;()?+cc");
+      expect(RBT_JS.fromRules("[|{&}{de}] > c;").transliterate(">|;()?+&de")).toBe(">c;()?+cc");
     });
   });
 });
@@ -976,7 +978,7 @@ describe("quantifiers: `?`, `*`, `+`, and `(...)` grouping", () => {
         expected: "aX",
       },
     ])("$name", ({ rules, input, expected }) => {
-      expect(RBT.fromRules(rules).transliterate(input)).toBe(expected);
+      expect(RBT_JS.fromRules(rules).transliterate(input)).toBe(expected);
     });
   });
 
@@ -996,12 +998,12 @@ describe("quantifiers: `?`, `*`, `+`, and `(...)` grouping", () => {
         expected: "XXc",
       },
     ])("$name", ({ rules, input, expected }) => {
-      expect(RBT.fromRules(rules).transliterate(input)).toBe(expected);
+      expect(RBT_JS.fromRules(rules).transliterate(input)).toBe(expected);
     });
 
     it("as a standalone key, `*` vacuously matches every remaining gap once its greedy run ends, exactly like a real regex engine's global replace with a nullable pattern", () => {
-      expect(RBT.fromRules("[ab]* > X;").transliterate("cde")).toBe("XcXdXe");
-      expect(RBT.fromRules("[ab]* > X;").transliterate("c")).toBe("Xc");
+      expect(RBT_JS.fromRules("[ab]* > X;").transliterate("cde")).toBe("XcXdXe");
+      expect(RBT_JS.fromRules("[ab]* > X;").transliterate("c")).toBe("Xc");
     });
   });
 
@@ -1016,13 +1018,13 @@ describe("quantifiers: `?`, `*`, `+`, and `(...)` grouping", () => {
         expected: "X",
       },
     ])("$name", ({ rules, input, expected }) => {
-      expect(RBT.fromRules(rules).transliterate(input)).toBe(expected);
+      expect(RBT_JS.fromRules(rules).transliterate(input)).toBe(expected);
     });
   });
 
   describe("`(...)` grouping", () => {
     it("an unquantified group behaves identically to its contents written inline", () => {
-      expect(RBT.fromRules("(ab) > X;").transliterate("ab")).toBe("X");
+      expect(RBT_JS.fromRules("(ab) > X;").transliterate("ab")).toBe("X");
     });
 
     it.each([
@@ -1052,69 +1054,71 @@ describe("quantifiers: `?`, `*`, `+`, and `(...)` grouping", () => {
         expected: "abX",
       },
     ])("$name", ({ rules, input, expected }) => {
-      expect(RBT.fromRules(rules).transliterate(input)).toBe(expected);
+      expect(RBT_JS.fromRules(rules).transliterate(input)).toBe(expected);
     });
 
     it("groups may be nested to any depth", () => {
-      expect(RBT.fromRules("((ab)+c)* > X;").transliterate("abcababc")).toBe("X");
+      expect(RBT_JS.fromRules("((ab)+c)* > X;").transliterate("abcababc")).toBe("X");
     });
   });
 
   describe("quantifiers and groups work in ante- and post-context too, via the same backward/forward matching used for a single atom", () => {
     it("a quantified group as ante-context", () => {
-      expect(RBT.fromRules("(ab)+{c>Z;").transliterate("ababc")).toBe("ababZ");
-      expect(RBT.fromRules("(ab)+{c>Z;").transliterate("abac")).toBe("abac");
+      expect(RBT_JS.fromRules("(ab)+{c>Z;").transliterate("ababc")).toBe("ababZ");
+      expect(RBT_JS.fromRules("(ab)+{c>Z;").transliterate("abac")).toBe("abac");
     });
 
     it("a quantified group as ante-context, zero-or-more variant", () => {
-      expect(RBT.fromRules("(ab)*{c>Z;").transliterate("c")).toBe("Z");
+      expect(RBT_JS.fromRules("(ab)*{c>Z;").transliterate("c")).toBe("Z");
     });
 
     it("`?` as ante-context", () => {
-      expect(RBT.fromRules("x?{c>Z;").transliterate("xc")).toBe("xZ");
-      expect(RBT.fromRules("x?{c>Z;").transliterate("c")).toBe("Z");
+      expect(RBT_JS.fromRules("x?{c>Z;").transliterate("xc")).toBe("xZ");
+      expect(RBT_JS.fromRules("x?{c>Z;").transliterate("c")).toBe("Z");
     });
   });
 
   it("a multi-character string set member can itself be quantified", () => {
-    expect(RBT.fromRules("[{de}]+ > X;").transliterate("dedede")).toBe("X");
+    expect(RBT_JS.fromRules("[{de}]+ > X;").transliterate("dedede")).toBe("X");
   });
 
   it("a quantified key that would greedily consume more text still only wins because it was declared first - not because its match is longer", () => {
-    expect(RBT.fromRules("[ab]+ > LONG; a > SHORT;").transliterate("aab")).toBe("LONG");
+    expect(RBT_JS.fromRules("[ab]+ > LONG; a > SHORT;").transliterate("aab")).toBe("LONG");
     // Reverse the declaration order and the plain, single-character rule wins instead, one
     // character at a time, even though "[ab]+" could have greedily matched "aa" as a unit.
     // ICU does not compare candidate rules by how much they'd consume; whichever rule is
     // declared first and matches at the cursor is applied immediately.
-    expect(RBT.fromRules("a > SHORT; [ab]+ > LONG;").transliterate("aab")).toBe("SHORTSHORTLONG");
+    expect(RBT_JS.fromRules("a > SHORT; [ab]+ > LONG;").transliterate("aab")).toBe(
+      "SHORTSHORTLONG",
+    );
   });
 
   describe("ICU transliterator quantifiers are greedy with no backtracking (this engine follows ICU's own documented behavior here: 'only greedy quantifiers, no backup')", () => {
     it("a greedy `*` that over-consumes does not backtrack to let a later, overlapping atom match, even though a less-greedy match would have succeeded", () => {
-      expect(RBT.fromRules("[abc]*[abc] > X;").transliterate("abc")).toBe("abc");
+      expect(RBT_JS.fromRules("[abc]*[abc] > X;").transliterate("abc")).toBe("abc");
     });
 
     it("contrast: this is not a problem when the trailing atom does not overlap with what the quantifier can match", () => {
-      expect(RBT.fromRules("[abc]*d > X;").transliterate("abcd")).toBe("X");
+      expect(RBT_JS.fromRules("[abc]*d > X;").transliterate("abcd")).toBe("X");
     });
   });
 
   describe("a key that can match with zero width via a quantifier does not degenerate into an infinite insertion loop", () => {
     it("the default (no explicit `|`) cursor advance is forced past at least one real character after a zero-width match, exactly as it already was for the pre-existing zero-width anchor feature", () => {
-      expect(RBT.fromRules("[ab]* > X;").transliterate("cde")).toBe("XcXdXe");
+      expect(RBT_JS.fromRules("[ab]* > X;").transliterate("cde")).toBe("XcXdXe");
     });
 
     it("an explicit `|` that pins the cursor in place is still caught by the step-budget guard, since that safety net is unrelated to the automatic-advance fix above", () => {
-      expect(() => RBT.fromRules("[ab]* >| ;").transliterate("c")).toThrow(RBTRuntimeError);
+      expect(() => RBT_JS.fromRules("[ab]* >| ;").transliterate("c")).toThrow(RBTRuntimeError);
     });
 
     it("the same thing happens with a quantified '$' (see AETHER_ATOM), and for the same reason: '?' and '*' both fall back to a zero-width success when the atom underneath can't match for real, and '$' can never match for real at any position", () => {
-      expect(RBT.fromRules("$? > c;").transliterate("ab")).toBe("cacb");
-      expect(RBT.fromRules("$* > c;").transliterate("ab")).toBe("cacb");
+      expect(RBT_JS.fromRules("$? > c;").transliterate("ab")).toBe("cacb");
+      expect(RBT_JS.fromRules("$* > c;").transliterate("ab")).toBe("cacb");
     });
 
     it("by contrast, '+' requires at least one real occurrence, which '$' can never provide, so a quantified '$+' never matches at all — unlike '?' and '*' above", () => {
-      expect(RBT.fromRules("$+ > c;").transliterate("ab")).toBe("ab");
+      expect(RBT_JS.fromRules("$+ > c;").transliterate("ab")).toBe("ab");
     });
   });
 
@@ -1125,35 +1129,39 @@ describe("quantifiers: `?`, `*`, `+`, and `(...)` grouping", () => {
       { name: "an unterminated '(' group", rules: "(ab > X;" },
       { name: "two quantifiers in a row", rules: "a?? > X;" },
     ])("$name", ({ rules }) => {
-      expect(() => RBT.fromRules(rules)).toThrow(RBTParseError);
+      expect(() => RBT_JS.fromRules(rules)).toThrow(RBTParseError);
     });
   });
 
   it("the exact worked example from the prompt", () => {
     const rules =
       "\u0254 } ([k\u0261\u014b{t\u0283}{d\u0292}\u0288\u0256\u027d\u0288tdnpbmjrl\u0283h] [\u02b0\u02b1\u031e]*)+ [iu] > o;";
-    expect(RBT.fromRules(rules).transliterate("\u0254ki")).toBe("oki");
-    expect(RBT.fromRules(rules).transliterate("\u0254kpu")).toBe("okpu");
-    expect(RBT.fromRules(rules).transliterate("\u0254t\u0283i")).toBe("ot\u0283i");
-    expect(RBT.fromRules(rules).transliterate("\u0254k\u02b0i")).toBe("ok\u02b0i");
-    expect(RBT.fromRules(rules).transliterate("\u0254ka")).toBe("\u0254ka");
-    expect(RBT.fromRules(rules).transliterate("\u0254i")).toBe("\u0254i");
+    expect(RBT_JS.fromRules(rules).transliterate("\u0254ki")).toBe("oki");
+    expect(RBT_JS.fromRules(rules).transliterate("\u0254kpu")).toBe("okpu");
+    expect(RBT_JS.fromRules(rules).transliterate("\u0254t\u0283i")).toBe("ot\u0283i");
+    expect(RBT_JS.fromRules(rules).transliterate("\u0254k\u02b0i")).toBe("ok\u02b0i");
+    expect(RBT_JS.fromRules(rules).transliterate("\u0254ka")).toBe("\u0254ka");
+    expect(RBT_JS.fromRules(rules).transliterate("\u0254i")).toBe("\u0254i");
   });
 });
 
 describe("capturing groups, backreferences, and inline transliterator function calls", () => {
   it("the exact worked example from the prompt: delete-and-capitalize", () => {
     const rules = "H ([:Letter:]) >| &Any-Upper($1);";
-    expect(RBT.fromRules(rules).transliterate("Ha")).toBe("A");
-    expect(RBT.fromRules(rules).transliterate("xHay")).toBe("xAy");
+    expect(RBT_JS.fromRules(rules).transliterate("Ha")).toBe("A");
+    expect(RBT_JS.fromRules(rules).transliterate("xHay")).toBe("xAy");
   });
 
   it("the `|` cursor placement lets a subsequent rule immediately target the newly produced uppercase letter", () => {
-    expect(RBT.fromRules("H ([:Letter:]) >| &Any-Upper($1); A > Z;").transliterate("Ha")).toBe("Z");
+    expect(RBT_JS.fromRules("H ([:Letter:]) >| &Any-Upper($1); A > Z;").transliterate("Ha")).toBe(
+      "Z",
+    );
   });
 
   it("contrast: without `|`, the cascaded rule does not get a chance in the same pass", () => {
-    expect(RBT.fromRules("H ([:Letter:]) > &Any-Upper($1); A > Z;").transliterate("Ha")).toBe("A");
+    expect(RBT_JS.fromRules("H ([:Letter:]) > &Any-Upper($1); A > Z;").transliterate("Ha")).toBe(
+      "A",
+    );
   });
 
   describe("`$N` backreferences can be used directly in the replacement, without a function call", () => {
@@ -1171,60 +1179,60 @@ describe("capturing groups, backreferences, and inline transliterator function c
         expected: "abab",
       },
     ])("$name", ({ rules, input, expected }) => {
-      expect(RBT.fromRules(rules).transliterate(input)).toBe(expected);
+      expect(RBT_JS.fromRules(rules).transliterate(input)).toBe(expected);
     });
   });
 
   describe("multiple capture groups are numbered left to right by their opening '('", () => {
     it("two sibling groups, referenced out of order", () => {
-      expect(RBT.fromRules("(a)(b) > $2$1;").transliterate("ab")).toBe("ba");
+      expect(RBT_JS.fromRules("(a)(b) > $2$1;").transliterate("ab")).toBe("ba");
     });
 
     it("nested groups: the outer group gets the lower number", () => {
-      expect(RBT.fromRules("((a)(b)) > $1-$2-$3;").transliterate("ab")).toBe("ab-a-b");
+      expect(RBT_JS.fromRules("((a)(b)) > $1-$2-$3;").transliterate("ab")).toBe("ab-a-b");
     });
   });
 
   it("`&Any-Lower(...)` lowercases the captured text", () => {
-    expect(RBT.fromRules("H ([:Letter:]) > &Any-Lower($1);").transliterate("HA")).toBe("a");
+    expect(RBT_JS.fromRules("H ([:Letter:]) > &Any-Lower($1);").transliterate("HA")).toBe("a");
   });
 
   it("a function's argument can mix literal text with backreferences", () => {
-    expect(RBT.fromRules("(a) > &Any-Upper(x$1y);").transliterate("a")).toBe("XAY");
+    expect(RBT_JS.fromRules("(a) > &Any-Upper(x$1y);").transliterate("a")).toBe("XAY");
   });
 
   it("function calls can be nested inside another function call's argument", () => {
-    expect(RBT.fromRules("(a) > &Any-Upper(&Any-Lower($1));").transliterate("A")).toBe("A");
+    expect(RBT_JS.fromRules("(a) > &Any-Upper(&Any-Lower($1));").transliterate("A")).toBe("A");
   });
 
   it("a quantified group's capture reflects only its last repetition", () => {
-    expect(RBT.fromRules("(ab)+ > '['$1']';").transliterate("ababab")).toBe("[ab]");
+    expect(RBT_JS.fromRules("(ab)+ > '['$1']';").transliterate("ababab")).toBe("[ab]");
   });
 
   it("a failed final repetition of a quantified group must not corrupt an inner group's capture from the repetitions that did succeed", () => {
-    expect(RBT.fromRules("((a)(b))+(c) > $2-$3;").transliterate("ababc")).toBe("a-b");
+    expect(RBT_JS.fromRules("((a)(b))+(c) > $2-$3;").transliterate("ababc")).toBe("a-b");
   });
 
   describe("capture groups work in ante- and post-context too, using the same backward/forward matching as everywhere else", () => {
     it("a captured group from ante-context, referenced verbatim (ante text itself is never modified)", () => {
-      expect(RBT.fromRules("(x){a > $1;").transliterate("xa")).toBe("xx");
+      expect(RBT_JS.fromRules("(x){a > $1;").transliterate("xa")).toBe("xx");
     });
 
     it("a captured group from ante-context, passed through a function", () => {
-      expect(RBT.fromRules("(h){a > &Any-Upper($1);").transliterate("ha")).toBe("hH");
+      expect(RBT_JS.fromRules("(h){a > &Any-Upper($1);").transliterate("ha")).toBe("hH");
     });
 
     it("a captured group from post-context, referenced verbatim (post text itself is never modified)", () => {
-      expect(RBT.fromRules("a}(x) > $1;").transliterate("ax")).toBe("xx");
+      expect(RBT_JS.fromRules("a}(x) > $1;").transliterate("ax")).toBe("xx");
     });
 
     it("a captured group from post-context, passed through a function", () => {
-      expect(RBT.fromRules("a}(h) > &Any-Upper($1);").transliterate("ah")).toBe("Hh");
+      expect(RBT_JS.fromRules("a}(h) > &Any-Upper($1);").transliterate("ah")).toBe("Hh");
     });
   });
 
   it("a backreference to a group that never matched (inside an unmatched `?`) resolves to empty text", () => {
-    expect(RBT.fromRules("(x)?a > '['$1']';").transliterate("a")).toBe("[]");
+    expect(RBT_JS.fromRules("(x)?a > '['$1']';").transliterate("a")).toBe("[]");
   });
 
   describe("malformed capture/backreference/function syntax raises a clear parse error", () => {
@@ -1241,7 +1249,7 @@ describe("capturing groups, backreferences, and inline transliterator function c
         rules: "(a) > &Any-Upper($1|);",
       },
     ])("$name", ({ rules }) => {
-      expect(() => RBT.fromRules(rules)).toThrow(RBTParseError);
+      expect(() => RBT_JS.fromRules(rules)).toThrow(RBTParseError);
     });
   });
 });
@@ -1292,7 +1300,7 @@ describe("combinations across features", () => {
         expected: "Xz",
       },
     ])("$name", ({ rules, input, expected }) => {
-      expect(RBT.fromRules(rules).transliterate(input)).toBe(expected);
+      expect(RBT_JS.fromRules(rules).transliterate(input)).toBe(expected);
     });
   });
 
@@ -1335,33 +1343,33 @@ describe("combinations across features", () => {
         expected: "[.]",
       },
     ])("$name", ({ rules, input, expected }) => {
-      expect(RBT.fromRules(rules).transliterate(input)).toBe(expected);
+      expect(RBT_JS.fromRules(rules).transliterate(input)).toBe(expected);
     });
 
     it("a bare '{...}' directly inside a group (not wrapped in '[...]') is a clear parse error, since multi-character strings are a UnicodeSet-only construct, not a general grouping construct", () => {
-      expect(() => RBT.fromRules("({de})+ > X;")).toThrow(RBTParseError);
+      expect(() => RBT_JS.fromRules("({de})+ > X;")).toThrow(RBTParseError);
     });
 
     it("when several groups appear together and only some of them match, the unmatched ones resolve to empty text while the matched ones resolve normally", () => {
-      expect(RBT.fromRules("(x)?(a) > '['$1']['$2']';").transliterate("a")).toBe("[][a]");
+      expect(RBT_JS.fromRules("(x)?(a) > '['$1']['$2']';").transliterate("a")).toBe("[][a]");
     });
 
     it("an unmatched capturing group passed through an inline function resolves to an empty argument rather than an error", () => {
-      expect(RBT.fromRules("(x)?a > &Any-Upper($1);").transliterate("a")).toBe("");
+      expect(RBT_JS.fromRules("(x)?a > &Any-Upper($1);").transliterate("a")).toBe("");
     });
 
     it("an entirely empty function-call argument is valid syntax and resolves to empty text", () => {
-      expect(RBT.fromRules("a > &Any-Upper();").transliterate("a")).toBe("");
+      expect(RBT_JS.fromRules("a > &Any-Upper();").transliterate("a")).toBe("");
     });
 
     it("the same captured group can be passed through two different inline functions in one replacement", () => {
-      expect(RBT.fromRules("(a) > &Any-Upper($1)' '&Any-Lower($1);").transliterate("a")).toBe(
+      expect(RBT_JS.fromRules("(a) > &Any-Upper($1)' '&Any-Lower($1);").transliterate("a")).toBe(
         "A a",
       );
     });
 
     it("multiple levels of nested, independently quantified groups all capture correctly at once", () => {
-      expect(RBT.fromRules("((a+)(b*)c?)+ > $1'|'$2'|'$3;").transliterate("aabbc")).toBe(
+      expect(RBT_JS.fromRules("((a+)(b*)c?)+ > $1'|'$2'|'$3;").transliterate("aabbc")).toBe(
         "aabbc|aa|bb",
       );
     });
@@ -1388,7 +1396,7 @@ describe("combinations across features", () => {
         expected: "A",
       },
     ])("$name", ({ rules, input, expected }) => {
-      expect(RBT.fromRules(rules).transliterate(input)).toBe(expected);
+      expect(RBT_JS.fromRules(rules).transliterate(input)).toBe(expected);
     });
 
     it.each([
@@ -1401,36 +1409,38 @@ describe("combinations across features", () => {
         rules: "(a) > & Any-Upper($1);",
       },
     ])("$name", ({ rules }) => {
-      expect(() => RBT.fromRules(rules)).toThrow(RBTParseError);
+      expect(() => RBT_JS.fromRules(rules)).toThrow(RBTParseError);
     });
   });
 
   describe("rule precedence remains correct once quantifiers and groups are in the mix", () => {
     it("a quantified group that matches more text still only wins because it is declared first, not because its match is longer", () => {
-      expect(RBT.fromRules("(ab)+ > LONG; a > SHORT;").transliterate("abab")).toBe("LONG");
+      expect(RBT_JS.fromRules("(ab)+ > LONG; a > SHORT;").transliterate("abab")).toBe("LONG");
       // Reversed order: the plain rule now wins each time it applies, since it is checked
       // first, even though "(ab)+" would have matched a longer run starting from an "a".
-      expect(RBT.fromRules("a > SHORT; (ab)+ > LONG;").transliterate("abab")).toBe("SHORTbSHORTb");
+      expect(RBT_JS.fromRules("a > SHORT; (ab)+ > LONG;").transliterate("abab")).toBe(
+        "SHORTbSHORTb",
+      );
     });
 
     it("declaration order is absolute: even a vacuous, zero-width match from an earlier rule pre-empts a real match a later rule would have made at the same position", () => {
       // "(ab)*" can match zero repetitions - a valid, empty match - and per ICU that still
       // counts as "the first matching rule" if it is declared first. It fires (inserting
       // "LONG" and leaving "x" untouched), so "x > SHORT;" never gets a chance to run here.
-      expect(RBT.fromRules("(ab)* > LONG; x > SHORT;").transliterate("x")).toBe("LONGx");
+      expect(RBT_JS.fromRules("(ab)* > LONG; x > SHORT;").transliterate("x")).toBe("LONGx");
       // With the order swapped, "x > SHORT;" is checked first, matches for real, and wins.
-      expect(RBT.fromRules("x > SHORT; (ab)* > LONG;").transliterate("x")).toBe("SHORT");
+      expect(RBT_JS.fromRules("x > SHORT; (ab)* > LONG;").transliterate("x")).toBe("SHORT");
     });
   });
 
   it("captures from an earlier pass do not leak into a later pass, even when that pass declares different, unrelated capture groups", () => {
-    expect(RBT.fromRules("(a)(b) > $2$1; ::Null; (x) > '['$1']';").transliterate("abx")).toBe(
+    expect(RBT_JS.fromRules("(a)(b) > $2$1; ::Null; (x) > '['$1']';").transliterate("abx")).toBe(
       "ba[x]",
     );
   });
 
   it("a semantic global transform between two separate capturing rules does not disturb either rule's own captures", () => {
-    expect(RBT.fromRules("(A)(B) > $2$1; ::Lower; (x)(y) > $2$1;").transliterate("ABxy")).toBe(
+    expect(RBT_JS.fromRules("(A)(B) > $2$1; ::Lower; (x)(y) > $2$1;").transliterate("ABxy")).toBe(
       "bayx",
     );
   });
@@ -1438,19 +1448,19 @@ describe("combinations across features", () => {
 
 describe("cursor placement with `>|`", () => {
   it("rescans the freshly produced text in the same cycle, letting a second rule cascade immediately", () => {
-    expect(RBT.fromRules("a >| b; b > c;").transliterate("a")).toBe("c");
+    expect(RBT_JS.fromRules("a >| b; b > c;").transliterate("a")).toBe("c");
   });
 
   it("contrast: without `|`, the cascaded rule does not get a chance in the same pass", () => {
-    expect(RBT.fromRules("a > b; b > c;").transliterate("a")).toBe("b");
+    expect(RBT_JS.fromRules("a > b; b > c;").transliterate("a")).toBe("b");
   });
 
   it("`|` may sit anywhere inside the replacement, not only right after `>`", () => {
-    expect(RBT.fromRules("a > bc|d; d > e;").transliterate("a")).toBe("bce");
+    expect(RBT_JS.fromRules("a > bc|d; d > e;").transliterate("a")).toBe("bce");
   });
 
   it("used on its own, `|` just leaves the produced text in place once no further rule matches it", () => {
-    expect(RBT.fromRules("a >| b;").transliterate("banana")).toBe("bbnbnb");
+    expect(RBT_JS.fromRules("a >| b;").transliterate("banana")).toBe("bbnbnb");
   });
 });
 
@@ -1475,15 +1485,15 @@ describe("multi-pass architecture via `::` directives", () => {
       expected: "d",
     },
   ])("$name", ({ rules, input, expected }) => {
-    expect(RBT.fromRules(rules).transliterate(input)).toBe(expected);
+    expect(RBT_JS.fromRules(rules).transliterate(input)).toBe(expected);
   });
 
   it("without a directive, rules stay in one pass and the cursor simply keeps moving forward", () => {
-    expect(RBT.fromRules("a > b; b > c;").transliterate("ba")).toBe("cb");
+    expect(RBT_JS.fromRules("a > b; b > c;").transliterate("ba")).toBe("cb");
   });
 
   it("contrast: `::Lower;` is one of the four directives with real semantics, so it actually transforms the buffer mid-pipeline", () => {
-    expect(RBT.fromRules("a > B; ::Lower; b > X;").transliterate("a")).toBe("X");
+    expect(RBT_JS.fromRules("a > B; ::Lower; b > X;").transliterate("a")).toBe("X");
   });
 });
 
@@ -1516,7 +1526,7 @@ describe("ICU semantic global transforms: `::Lower;`, `::Title;`, `::NFC;`, `::N
       },
       { name: "an empty string is unchanged", rules: "::Lower;", input: "", expected: "" },
     ])("$name", ({ rules, input, expected }) => {
-      expect(RBT.fromRules(rules).transliterate(input)).toBe(expected);
+      expect(RBT_JS.fromRules(rules).transliterate(input)).toBe(expected);
     });
   });
 
@@ -1578,7 +1588,7 @@ describe("ICU semantic global transforms: `::Lower;`, `::Title;`, `::NFC;`, `::N
       },
       { name: "an empty string is unchanged", rules: "::Title;", input: "", expected: "" },
     ])("$name", ({ rules, input, expected }) => {
-      expect(RBT.fromRules(rules).transliterate(input)).toBe(expected);
+      expect(RBT_JS.fromRules(rules).transliterate(input)).toBe(expected);
     });
   });
 
@@ -1586,36 +1596,36 @@ describe("ICU semantic global transforms: `::Lower;`, `::Title;`, `::NFC;`, `::N
     it("`::NFC;` composes a decomposed base+combining-mark sequence into a single precomposed character", () => {
       const decomposed = "cafe\u0301";
       expect(decomposed.length).toBe(5);
-      expect(RBT.fromRules("::NFC;").transliterate(decomposed)).toBe("caf\u00e9");
+      expect(RBT_JS.fromRules("::NFC;").transliterate(decomposed)).toBe("caf\u00e9");
     });
 
     it("`::NFD;` decomposes a precomposed character into its base letter plus a combining mark", () => {
       const composed = "caf\u00e9";
       expect(composed.length).toBe(4);
-      expect(RBT.fromRules("::NFD;").transliterate(composed)).toBe("cafe\u0301");
+      expect(RBT_JS.fromRules("::NFD;").transliterate(composed)).toBe("cafe\u0301");
     });
 
     it("`::NFC;` is idempotent on text that is already fully composed", () => {
-      expect(RBT.fromRules("::NFC;").transliterate("caf\u00e9")).toBe("caf\u00e9");
+      expect(RBT_JS.fromRules("::NFC;").transliterate("caf\u00e9")).toBe("caf\u00e9");
     });
 
     it("`::NFD;` is idempotent on text that is already fully decomposed", () => {
-      expect(RBT.fromRules("::NFD;").transliterate("cafe\u0301")).toBe("cafe\u0301");
+      expect(RBT_JS.fromRules("::NFD;").transliterate("cafe\u0301")).toBe("cafe\u0301");
     });
 
     it("an empty string is unchanged by either normalization", () => {
-      expect(RBT.fromRules("::NFC;").transliterate("")).toBe("");
-      expect(RBT.fromRules("::NFD;").transliterate("")).toBe("");
+      expect(RBT_JS.fromRules("::NFC;").transliterate("")).toBe("");
+      expect(RBT_JS.fromRules("::NFD;").transliterate("")).toBe("");
     });
   });
 
   describe("interoperability: a semantic transform pass genuinely changes what surrounding rule passes can match", () => {
     it("::NFC; composes text produced by an earlier rule pass, exposing it to a later rule that only matches the precomposed character", () => {
-      expect(RBT.fromRules("a > e\u0301; ::NFC; \u00e9 > X;").transliterate("a")).toBe("X");
+      expect(RBT_JS.fromRules("a > e\u0301; ::NFC; \u00e9 > X;").transliterate("a")).toBe("X");
     });
 
     it("::NFD; decomposes precomposed input, exposing its base letter to a rule that could not otherwise see it", () => {
-      expect(RBT.fromRules("::NFD; e > E;").transliterate("caf\u00e9")).toBe("cafE\u0301");
+      expect(RBT_JS.fromRules("::NFD; e > E;").transliterate("caf\u00e9")).toBe("cafE\u0301");
     });
   });
 
@@ -1640,14 +1650,14 @@ describe("ICU semantic global transforms: `::Lower;`, `::Title;`, `::NFC;`, `::N
         expected: "HELLO",
       },
     ])("$name", ({ rules, input, expected }) => {
-      expect(RBT.fromRules(rules).transliterate(input)).toBe(expected);
+      expect(RBT_JS.fromRules(rules).transliterate(input)).toBe(expected);
     });
   });
 });
 
 describe("post-context: `a } b > c;`", () => {
   it("matches the key only when the post-context follows, and leaves the post-context text unmodified in the buffer", () => {
-    expect(RBT.fromRules("a } b > c;").transliterate("ab")).toBe("cb");
+    expect(RBT_JS.fromRules("a } b > c;").transliterate("ab")).toBe("cb");
   });
 
   it.each([
@@ -1664,13 +1674,13 @@ describe("post-context: `a } b > c;`", () => {
       expected: "a",
     },
   ])("$name", ({ rules, input, expected }) => {
-    expect(RBT.fromRules(rules).transliterate(input)).toBe(expected);
+    expect(RBT_JS.fromRules(rules).transliterate(input)).toBe(expected);
   });
 });
 
 describe("ante-context: `a { b > c;`", () => {
   it("matches the key only when the ante-context precedes, and leaves the ante-context text unmodified in the buffer", () => {
-    expect(RBT.fromRules("a { b > c;").transliterate("ab")).toBe("ac");
+    expect(RBT_JS.fromRules("a { b > c;").transliterate("ab")).toBe("ac");
   });
 
   it.each([
@@ -1687,11 +1697,11 @@ describe("ante-context: `a { b > c;`", () => {
       expected: "b",
     },
   ])("$name", ({ rules, input, expected }) => {
-    expect(RBT.fromRules(rules).transliterate(input)).toBe(expected);
+    expect(RBT_JS.fromRules(rules).transliterate(input)).toBe(expected);
   });
 
   it("can see text produced earlier in the same pass", () => {
-    expect(RBT.fromRules("a > x; x{b}>c;").transliterate("ab")).toBe("xc");
+    expect(RBT_JS.fromRules("a > x; x{b}>c;").transliterate("ab")).toBe("xc");
   });
 });
 
@@ -1749,7 +1759,7 @@ describe("rule precedence when several rules could match at the same position", 
       expected: "A",
     },
   ])("$name", ({ rules, input, expected }) => {
-    expect(RBT.fromRules(rules).transliterate(input)).toBe(expected);
+    expect(RBT_JS.fromRules(rules).transliterate(input)).toBe(expected);
   });
 });
 
@@ -1757,31 +1767,31 @@ describe("parse and runtime errors are raised clearly for malformed input", () =
   it.each([
     {
       name: "an unterminated '[' character set",
-      fn: () => RBT.fromRules("[abc"),
+      fn: () => RBT_JS.fromRules("[abc"),
       errorClass: RBTParseError,
       mustInclude: "unterminated",
     },
     {
       name: "a second '{' in the same rule",
-      fn: () => RBT.fromRules("a{b{c}>d;"),
+      fn: () => RBT_JS.fromRules("a{b{c}>d;"),
       errorClass: RBTParseError,
       mustInclude: "at most one '{'",
     },
     {
       name: "a rule missing its terminating ';'",
-      fn: () => RBT.fromRules("a > b"),
+      fn: () => RBT_JS.fromRules("a > b"),
       errorClass: RBTParseError,
       mustInclude: "missing ';'",
     },
     {
       name: "a rule with an empty key",
-      fn: () => RBT.fromRules("a{}>b;"),
+      fn: () => RBT_JS.fromRules("a{}>b;"),
       errorClass: RBTParseError,
       mustInclude: "empty key",
     },
     {
       name: "a `|` placement that never makes forward progress, instead of hanging forever",
-      fn: () => RBT.fromRules("a >| a;").transliterate("a"),
+      fn: () => RBT_JS.fromRules("a >| a;").transliterate("a"),
       errorClass: RBTRuntimeError,
       mustInclude: "step budget",
     },
@@ -1832,6 +1842,6 @@ describe("additional edge cases worth documenting", () => {
     { name: "an empty rule source is a no-op", rules: "", input: "hello", expected: "hello" },
     { name: "matching is case-sensitive by default", rules: "a > X;", input: "aA", expected: "XA" },
   ])("$name", ({ rules, input, expected }) => {
-    expect(RBT.fromRules(rules).transliterate(input)).toBe(expected);
+    expect(RBT_JS.fromRules(rules).transliterate(input)).toBe(expected);
   });
 });

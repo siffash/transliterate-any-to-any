@@ -138,7 +138,6 @@ await transliterate(["上海", "广州"], { from: "zh", to: "bg" }); // -> ["Ш�
 
 ## 📦 Third-party libraries used
 
-- [ICU](https://icu.unicode.org/)'s [Transforms](https://unicode-org.github.io/icu/userguide/transforms/) through [icu-transliterator](https://github.com/longnow/node-icu-transliterator)
 - [pinyin-pro](https://github.com/zh-lx/pinyin-pro) for handling Pinyin (Chinese)
 - [opencc-js](https://github.com/nk2028/opencc-js) for handling Traditional & Simplified Chinese & Japanese Kanji (Shinjitai)
 - [kuroshiro](https://github.com/hexenq/kuroshiro) for handling Japanese Hiragana & Katakana
@@ -148,3 +147,4 @@ await transliterate(["上海", "广州"], { from: "zh", to: "bg" }); // -> ["Ш�
 - [hanviet-pinyin-words](https://github.com/ph0ngp/hanviet-pinyin-words) for handling Vietnamese
 - [phonemize](https://github.com/hans00/phonemize) for converting some languages to IPA
 - [ipa-dict](https://github.com/open-dict-data/ipa-dict) for IPA dictionaries
+- [ICU](https://icu.unicode.org/)'s [Transforms](https://unicode-org.github.io/icu/userguide/transforms/) through [icu-transliterator](https://github.com/longnow/node-icu-transliterator)

@@ -1,7 +1,7 @@
 import { Text } from "types";
 
 export const faLv = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt-distributor");
+  const { RBT } = await import("helpers/rbt");
   const { faIpa } = await import("converters/fa/fa-ipa");
   const { ipaLvRules } = await import("data/ipa/ipa-lv.rules");
 

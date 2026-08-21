@@ -2,7 +2,7 @@ import { Text } from "types";
 
 export const viZh = async (text: Text) => {
   const { compoundDictionary, singleDictionary } = await import("data/vi/vi-zh.map");
-  const { RBT } = await import("helpers/rbt-distributor");
+  const { RBT } = await import("helpers/rbt");
   const { viIpaRules } = await import("data/vi/vi-ipa.rules");
   const { ipaZhRules } = await import("data/ipa/ipa-zh.rules");
 

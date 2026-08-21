@@ -2,7 +2,7 @@ import { Text } from "types";
 
 export const koBg = async (text: Text) => {
   const Aromanize = (await import("aromanize")).default;
-  const { RBT } = await import("helpers/rbt-distributor");
+  const { RBT } = await import("helpers/rbt");
   const { koBgRules } = await import("data/ko/ko-bg.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
 

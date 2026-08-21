@@ -1169,18 +1169,18 @@ function runPass(input: string, rules: CompiledRule[]): string {
   return text.join("");
 }
 
-export class RBT {
+export class RBT_JS {
   private readonly passes: CompiledPass[];
 
   private constructor(passes: CompiledPass[]) {
     this.passes = passes;
   }
 
-  static fromRules(source: string): RBT {
+  static fromRules(source: string): RBT_JS {
     if (typeof source !== "string") {
       throw new TypeError("RBT.fromRules(source): source must be a string");
     }
-    return new RBT(parseRuleSource(source));
+    return new RBT_JS(parseRuleSource(source));
   }
 
   transliterate(input: string): string {
@@ -1198,4 +1198,38 @@ export class RBT {
   }
 }
 
-export default RBT;
+// EXPORT
+
+type RbtApi = typeof RBT_JS;
+
+// 1. Default to JS implementation, which is already loaded
+let isJsImpl = true;
+let activeImpl: RbtApi = RBT_JS;
+let nativeCache: RbtApi;
+
+export const settings = {
+  get JS_IMPLEMENTATION() {
+    return isJsImpl;
+  },
+  set JS_IMPLEMENTATION(value: boolean) {
+    if (isJsImpl === value) return;
+    isJsImpl = value;
+
+    // 2. If JS, switch immediately.
+    // If Native, apply the cache (which is `undefined` on first run).
+    activeImpl = value ? RBT_JS : nativeCache;
+  },
+};
+
+export const RBT = new Proxy({} as RbtApi, {
+  get(_target, prop) {
+    // 3. HOT PATH: Completely bypassed if using JS or already loaded native!
+    // This only executes once: the very first time Native is accessed.
+    if (!activeImpl) {
+      activeImpl = nativeCache = require("icu-transliterator").RBT;
+    }
+
+    // 4. Direct property access
+    return activeImpl[prop as keyof RbtApi];
+  },
+});

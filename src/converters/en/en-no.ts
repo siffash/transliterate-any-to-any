@@ -2,7 +2,7 @@ import { Text } from "types";
 import { copyCase } from "helpers/copyCase";
 
 export const enNo = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt-distributor");
+  const { RBT } = await import("helpers/rbt");
   const { enIpa } = await import("converters/en/en-ipa");
   const { ipaNoRules } = await import("data/ipa/ipa-no.rules");
 

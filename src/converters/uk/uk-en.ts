@@ -1,7 +1,7 @@
 import { Text } from "types";
 
 export const ukEn = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt-distributor");
+  const { RBT } = await import("helpers/rbt");
   const { ukEnRules } = await import("data/uk/uk-en.rules");
 
   const transliterator = RBT.fromRules(ukEnRules);

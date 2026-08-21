@@ -1,7 +1,7 @@
 import { Text } from "types";
 
 export const urAr = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt-distributor");
+  const { RBT } = await import("helpers/rbt");
   const { urArRules } = await import("data/ur/ur-ar.rules");
 
   const transliterator = RBT.fromRules(urArRules);

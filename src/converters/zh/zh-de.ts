@@ -4,7 +4,7 @@ export const zhDe = async (text: Text) => {
   const { getPhonemizeAll } = await import("helpers/getPhonemize");
   const { toIPA } = await getPhonemizeAll();
   const { filterIpa } = await import("helpers/filterIpa");
-  const { RBT } = await import("helpers/rbt-distributor");
+  const { RBT } = await import("helpers/rbt");
   const { ipaDeRules } = await import("data/ipa/ipa-de.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
 

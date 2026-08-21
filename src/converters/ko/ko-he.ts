@@ -4,7 +4,7 @@ export const koHe = async (text: Text) => {
   const { getPhonemizeAll } = await import("helpers/getPhonemize");
   const { toIPA } = await getPhonemizeAll();
   const { filterIpa } = await import("helpers/filterIpa");
-  const { RBT } = await import("helpers/rbt-distributor");
+  const { RBT } = await import("helpers/rbt");
   const { ipaHeRules } = await import("data/ipa/ipa-he.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
 

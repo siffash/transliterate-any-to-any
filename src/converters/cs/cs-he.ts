@@ -1,7 +1,7 @@
 import { Text } from "types";
 
 export const csHe = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt-distributor");
+  const { RBT } = await import("helpers/rbt");
   const { csIpaRules } = await import("data/cs/cs-ipa.rules");
   const { ipaHeRules } = await import("data/ipa/ipa-he.rules");
 

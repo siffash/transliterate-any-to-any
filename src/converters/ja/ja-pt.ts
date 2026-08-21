@@ -5,7 +5,7 @@ export const jaPt = async (text: Text) => {
   const Kuroshiro = resolveCjsDefault(await import("kuroshiro"));
   const KuromojiAnalyzer = resolveCjsDefault(await import("kuroshiro-analyzer-kuromoji"));
   const { isNode, isDeno, isBun } = await import("browser-or-node");
-  const { RBT } = await import("helpers/rbt-distributor");
+  const { RBT } = await import("helpers/rbt");
   const { jaLatnRules } = await import("data/ja/ja-latn.rules");
   const { latnPtRules } = await import("data/latn/latn-pt.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");

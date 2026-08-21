@@ -8,7 +8,7 @@ export const jaSk = async (text: Text) => {
   const { getPhonemizeAll } = await import("helpers/getPhonemize");
   const { toIPA } = await getPhonemizeAll();
   const { filterIpa } = await import("helpers/filterIpa");
-  const { RBT } = await import("helpers/rbt-distributor");
+  const { RBT } = await import("helpers/rbt");
   const { jaIpaRules } = await import("data/ja/ja-ipa.rules");
   const { ipaSkRules } = await import("data/ipa/ipa-sk.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");

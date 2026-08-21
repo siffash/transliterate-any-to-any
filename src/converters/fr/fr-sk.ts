@@ -2,7 +2,7 @@ import { Text } from "types";
 import { copyCase } from "helpers/copyCase";
 
 export const frSk = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt-distributor");
+  const { RBT } = await import("helpers/rbt");
   const { frIpa } = await import("converters/fr/fr-ipa");
   const { ipaSkRules } = await import("data/ipa/ipa-sk.rules");
 

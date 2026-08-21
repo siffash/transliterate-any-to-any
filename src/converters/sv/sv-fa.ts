@@ -1,7 +1,7 @@
 import { Text } from "types";
 
 export const svFa = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt-distributor");
+  const { RBT } = await import("helpers/rbt");
   const { svIpaRules } = await import("data/sv/sv-ipa.rules");
   const { ipaFaRules } = await import("data/ipa/ipa-fa.rules");
 

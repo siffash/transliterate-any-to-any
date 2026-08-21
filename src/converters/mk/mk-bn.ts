@@ -1,7 +1,7 @@
 import { Text } from "types";
 
 export const mkBn = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt-distributor");
+  const { RBT } = await import("helpers/rbt");
   const { mkIpaRules } = await import("data/mk/mk-ipa.rules");
   const { ipaBnRules } = await import("data/ipa/ipa-bn.rules");
 

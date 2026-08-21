@@ -1,7 +1,7 @@
 import { Text } from "types";
 
 export const ruAr = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt-distributor");
+  const { RBT } = await import("helpers/rbt");
   const { ruIpaRules } = await import("data/ru/ru-ipa.rules");
   const { ipaArRules } = await import("data/ipa/ipa-ar.rules");
 

@@ -1,7 +1,7 @@
 import { Text } from "types";
 
 export const bgAr = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt-distributor");
+  const { RBT } = await import("helpers/rbt");
   const { bgIpaRules } = await import("data/bg/bg-ipa.rules");
   const { ipaArRules } = await import("data/ipa/ipa-ar.rules");
 

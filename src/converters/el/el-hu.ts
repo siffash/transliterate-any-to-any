@@ -1,7 +1,7 @@
 import { Text } from "types";
 
 export const elHu = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt-distributor");
+  const { RBT } = await import("helpers/rbt");
   const { elLatnRules } = await import("data/el/el-latn.rules");
   const { latnHuRules } = await import("data/latn/latn-hu.rules");
 

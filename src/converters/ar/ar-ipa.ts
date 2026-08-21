@@ -2,7 +2,7 @@ import { Text } from "types";
 
 export const arIpa = async <T = Text>(text: Text): Promise<T> => {
   const { arIpaMap, charMap } = await import("data/ar/ar-ipa.map");
-  const { RBT } = await import("helpers/rbt-distributor");
+  const { RBT } = await import("helpers/rbt");
   const { arIpaRules } = await import("data/ar/ar-ipa.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
   const { filterIpa } = await import("helpers/filterIpa");

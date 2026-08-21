@@ -2,7 +2,7 @@ import { Text } from "types";
 
 export const frIpa = async <T = Text>(text: Text, isNormalized: boolean): Promise<T> => {
   const { frIpaMap } = await import("data/fr/fr-ipa.map");
-  const { RBT } = await import("helpers/rbt-distributor");
+  const { RBT } = await import("helpers/rbt");
   const { frIpaRules } = await import("data/fr/fr-ipa.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
   const { filterIpa } = await import("helpers/filterIpa");

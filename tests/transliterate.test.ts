@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { transliterate } from "../src/transliterate";
 import { languages, scripts, supportedLanguages } from "../src/helpers/constants";
 import { confirmLanguageByScript } from "../src/helpers/confirmLanguageByScript";
-import { settings } from "../src/helpers/rbt-distributor";
+import { settings } from "../src/helpers/rbt";
 import { Language } from "../src/types";
 
 const examples: Record<Language, string> = {
