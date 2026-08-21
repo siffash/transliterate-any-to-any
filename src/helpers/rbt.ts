@@ -103,7 +103,57 @@ const STRUCTURAL_CHARS = new Set([
   "$",
 ]);
 
-const BACKSLASH_ESCAPABLE_CHARS = new Set(["'", "*", "@", ".", "_", "-"]);
+// Characters that '\X' turns into a literal X anywhere in the grammar
+// (pattern, replacement, inside '[...]', inside '{...}'), and that are also
+// literal when written bare - without a backslash - inside a '{...}'
+// multi-character string. The only characters excluded from this list are
+// '{ } [ ]', which keep real structural meaning everywhere (multi-character
+// strings and nested/POSIX sets), including behind a backslash.
+const BACKSLASH_ESCAPABLE_CHARS = new Set([
+  "'",
+  "*",
+  "@",
+  ".",
+  "_",
+  "-",
+  "|",
+  ">",
+  ";",
+  "(",
+  ")",
+  "?",
+  "+",
+  "&",
+  "$",
+]);
+
+// The subset of BACKSLASH_ESCAPABLE_CHARS that is *also* literal when
+// written bare - without a backslash - directly inside a '[...]' set (not
+// inside a nested '{...}' string). This excludes '&' and '$': both remain
+// reserved when bare at this level - '&' still raises a parse error (see
+// readBracketSetLiteral) and '$' parses but matches nothing (see
+// AETHER_ATOM) - even though both are literal via '\&' / '\$', and both are
+// literal when bare inside '{...}'.
+const BRACKET_BARE_LITERAL_CHARS = new Set(
+  [...BACKSLASH_ESCAPABLE_CHARS].filter(ch => ch !== "&" && ch !== "$"),
+);
+
+// A bare, unescaped '$' - whether alone in a pattern or alone inside
+// '[...]' - is reserved for what ICU calls "aether": a zero-width match at
+// the true start/end of the string (see e.g. `[0-9$]` in ICU's own
+// documentation). This engine does not implement that concept. Rather than
+// raise a parse error, '$' compiles to an atom that matches nothing at all -
+// not a literal '$', not zero-width anywhere - so rules using it compile
+// today and would simply gain real matching behavior if aether support is
+// added later, without a breaking change. A literal, matchable '$' is still
+// available via '\$' (anywhere), or as a '{$}' member inside a set.
+const AETHER_ATOM: SetAtom = {
+  kind: "set",
+  alternatives: [],
+  charTests: [],
+  matchesStartOfString: false,
+  matchesEndOfString: false,
+};
 
 type Unit = { type: "literal"; char: string } | { type: "marker"; char: string };
 
@@ -344,6 +394,9 @@ class Parser {
             }),
           );
           break;
+        case "$":
+          nodes.push(this.attachQuantifier({ kind: "atom", atom: AETHER_ATOM, quantifier: "one" }));
+          break;
         case "(": {
           this.groupCount++;
           const captureIndex = this.groupCount;
@@ -418,6 +471,9 @@ class Parser {
           );
           break;
         }
+        case "$":
+          nodes.push(this.attachQuantifier({ kind: "atom", atom: AETHER_ATOM, quantifier: "one" }));
+          break;
         case "?":
         case "*":
         case "+":
@@ -544,7 +600,7 @@ class Parser {
       !this.inQuote &&
       !this.atEnd() &&
       this.src[this.i] !== "-" &&
-      BACKSLASH_ESCAPABLE_CHARS.has(this.src[this.i])
+      BRACKET_BARE_LITERAL_CHARS.has(this.src[this.i])
     ) {
       const ch = this.src[this.i];
       this.i++;
@@ -590,6 +646,14 @@ class Parser {
         if (!this.atEnd() && this.src[this.i] === "{") {
           this.i++;
           alternatives.push(this.parseMultiCharStringBody());
+          sawAnyMember = true;
+          continue;
+        }
+        if (!this.atEnd() && this.src[this.i] === "$") {
+          // See AETHER_ATOM: a bare '$' inside a set counts as a member (so
+          // e.g. '[$]' alone isn't rejected as an empty set) but contributes
+          // no alternative and no charTest, so it never actually matches.
+          this.i++;
           sawAnyMember = true;
           continue;
         }

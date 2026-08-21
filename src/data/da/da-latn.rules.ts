@@ -57,7 +57,7 @@ Th > T;
 th > t;
 J > Y;
 j > y;
-X } [:LowercaseLetter:] > Ks;
+X } [:Ll:] > Ks;
 X > KS;
 x > ks;
 `;

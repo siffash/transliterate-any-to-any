@@ -135,6 +135,54 @@ describe("escaping special characters with a backslash", () => {
   });
 });
 
+describe("that same backslash-escape mechanism now covers nine more characters: `| > ; ( ) ? +`, plus `&` and `$`", () => {
+  it.each([
+    { name: "\\|", rules: "\\| > c;", input: "|", expected: "c" },
+    { name: "\\>", rules: "\\> > c;", input: ">", expected: "c" },
+    { name: "\\;", rules: "\\; > c;", input: ";", expected: "c" },
+    { name: "\\(", rules: "\\( > c;", input: "(", expected: "c" },
+    { name: "\\)", rules: "\\) > c;", input: ")", expected: "c" },
+    { name: "\\?", rules: "\\? > c;", input: "?", expected: "c" },
+    { name: "\\+", rules: "\\+ > c;", input: "+", expected: "c" },
+    { name: "\\&", rules: "\\& > c;", input: "&", expected: "c" },
+    { name: "\\$", rules: "\\$ > c;", input: "$", expected: "c" },
+  ])(
+    "$name escapes a literal character directly in a pattern, with no [...] involved at all — none of these nine are usable bare in this position",
+    ({ rules, input, expected }) => {
+      expect(RBT.fromRules(rules).transliterate(input)).toBe(expected);
+    },
+  );
+
+  it("and in replacement text, without colliding with existing '|' cursor placement, '$N' backreferences, or '&Name(...)' calls", () => {
+    expect(RBT.fromRules("a > \\|;").transliterate("a")).toBe("|");
+    expect(RBT.fromRules("a > \\$;").transliterate("a")).toBe("$");
+    expect(RBT.fromRules("a > \\&;").transliterate("a")).toBe("&");
+    expect(RBT.fromRules("(a) > $1$1;").transliterate("a")).toBe("aa");
+    expect(RBT.fromRules("(a) > &Any-Upper($1);").transliterate("a")).toBe("A");
+  });
+
+  it("as with the original six symbols, a leading backslash from the input that the escape itself doesn't consume is left in place, untouched", () => {
+    expect(RBT.fromRules("\\| > c;").transliterate("\\|")).toBe("\\c");
+    expect(RBT.fromRules("\\& > c;").transliterate("\\&")).toBe("\\c");
+  });
+
+  it.each([
+    { name: "\\|", rules: "[\\|] > c;", input: "\\|", expected: "\\c" },
+    { name: "\\>", rules: "[\\>] > c;", input: "\\>", expected: "\\c" },
+    { name: "\\;", rules: "[\\;] > c;", input: "\\;", expected: "\\c" },
+    { name: "\\(", rules: "[\\(] > c;", input: "\\(", expected: "\\c" },
+    { name: "\\)", rules: "[\\)] > c;", input: "\\)", expected: "\\c" },
+    { name: "\\?", rules: "[\\?] > c;", input: "\\?", expected: "\\c" },
+    { name: "\\+", rules: "[\\+] > c;", input: "\\+", expected: "\\c" },
+    { name: "\\&", rules: "[\\&] > c;", input: "\\&", expected: "\\c" },
+  ])(
+    "$name also works as a single-character member inside a [set], with the same leading-backslash-passes-through behavior",
+    ({ rules, input, expected }) => {
+      expect(RBT.fromRules(rules).transliterate(input)).toBe(expected);
+    },
+  );
+});
+
 describe("escaping special characters by enclosing them in single quotes", () => {
   it("the exact example from the prompt: '_a_' matches underscore, a, underscore literally", () => {
     expect(RBT.fromRules("'_a_' > X;").transliterate("_a_")).toBe("X");
@@ -226,6 +274,112 @@ describe("inside a [set], the six escapable symbols are literal even when writte
 
   it("an unterminated set containing a bare symbol still raises a clear parse error", () => {
     expect(() => RBT.fromRules("[*")).toThrow(RBTParseError);
+  });
+});
+
+describe("the seven additional structural characters `| > ; ( ) ? +` are also literal when written bare inside a [set]", () => {
+  it.each([
+    {
+      name: "bare pipe (the cursor-placement marker everywhere else)",
+      rules: "[|] > X;",
+      input: "|",
+      expected: "X",
+    },
+    {
+      name: "bare greater-than (the replacement arrow everywhere else)",
+      rules: "[>] > X;",
+      input: ">",
+      expected: "X",
+    },
+    {
+      name: "bare semicolon (the rule terminator everywhere else)",
+      rules: "[;] > X;",
+      input: ";",
+      expected: "X",
+    },
+    { name: "bare open paren", rules: "[(] > X;", input: "(", expected: "X" },
+    { name: "bare close paren", rules: "[)] > X;", input: ")", expected: "X" },
+    {
+      name: "bare question mark (the '?' quantifier everywhere else)",
+      rules: "[?] > X;",
+      input: "?",
+      expected: "X",
+    },
+    {
+      name: "bare plus (the '+' quantifier everywhere else)",
+      rules: "[+] > X;",
+      input: "+",
+      expected: "X",
+    },
+  ])("$name is a valid, literal set member on its own", ({ rules, input, expected }) => {
+    expect(RBT.fromRules(rules).transliterate(input)).toBe(expected);
+  });
+
+  it("all seven combine together in the same set, alongside an ordinary letter that correctly stays untouched", () => {
+    expect(RBT.fromRules("[|>;()?+] > X;").transliterate("za|b>c;d(e)f?g+h")).toBe(
+      "zaXbXcXdXeXfXgXh",
+    );
+  });
+
+  it("outside a set, these symbols keep their existing structural meaning exactly as before — this relaxation is scoped to inside [...] only", () => {
+    expect(() => RBT.fromRules("| > X;")).toThrow(RBTParseError);
+    expect(() => RBT.fromRules("; > X;")).toThrow(RBTParseError);
+    expect(RBT.fromRules("(a)? > X;").transliterate("a")).toBe("X");
+  });
+
+  it("works as a range endpoint too, via the exact same mechanism used for any other bare set member", () => {
+    expect(RBT.fromRules("[!-+] > X;").transliterate("!,+")).toBe("X,X");
+  });
+});
+
+describe("'&' is deliberately excluded from that relaxation: it remains reserved bare inside a [set]", () => {
+  it("a bare, unescaped '&' still raises the exact same parse error as before this fix", () => {
+    expect(() => RBT.fromRules("[&] > c;")).toThrow(RBTParseError);
+  });
+
+  it("a backslash-escaped '\\&' works as a literal set member, exactly like the other escapable symbols", () => {
+    expect(RBT.fromRules("[\\&] > c;").transliterate("&")).toBe("c");
+  });
+
+  it("wrapping it as a single-character {&} multi-character string is the other way in", () => {
+    expect(RBT.fromRules("[{&}] > c;").transliterate("&")).toBe("c");
+  });
+
+  it("so the original reported rule now fails clearly on '&' specifically, once '|' no longer masks it", () => {
+    expect(() => RBT.fromRules("[|&] > c;")).toThrow(RBTParseError);
+  });
+
+  it("the working equivalent, using {&} in place of the bare '&', returns the originally expected result", () => {
+    expect(RBT.fromRules("[|{&}] > c;").transliterate("a|b&")).toBe("acbc");
+  });
+});
+
+describe("a bare, unescaped '$' is reserved (ICU's 'aether' concept) rather than being made literal by this fix", () => {
+  it.each([
+    { name: "alone in a pattern, with no [...] involved at all", rules: "$ > c;", input: "$" },
+    { name: "alone inside a [set]", rules: "[$] > c;", input: "$" },
+  ])(
+    "$name: '$' parses without error but matches nothing at all — not a literal '$', not zero-width anywhere — so the input passes through completely untouched (and the set is not rejected as the empty '[]' set)",
+    ({ rules, input }) => {
+      expect(RBT.fromRules(rules).transliterate(input)).toBe(input);
+    },
+  );
+
+  it("a literal, matchable '$' is still available via a backslash escape or as a {$} string", () => {
+    expect(RBT.fromRules("\\$ > c;").transliterate("$")).toBe("c");
+    expect(RBT.fromRules("[{$}] > c;").transliterate("$")).toBe("c");
+  });
+
+  it("mixed into a set alongside a real member, it contributes nothing — the set behaves exactly as if '$' were not there at all", () => {
+    expect(RBT.fromRules("[a$] > X;").transliterate("a$")).toBe("X$");
+  });
+
+  it("negating a set containing only '$' matches every real character, including a literal '$' in the input, since '$' itself contributed no positive members to negate", () => {
+    expect(RBT.fromRules("[^$] > X;").transliterate("q$")).toBe("XX");
+  });
+
+  it("bare inside a (...) group too, for consistency with every other atom position", () => {
+    expect(RBT.fromRules("($) > c;").transliterate("$")).toBe("$");
   });
 });
 
@@ -775,6 +929,29 @@ describe("multi-character strings in sets: `[abc{de}f]`", () => {
       expect(() => RBT.fromRules(rules)).toThrow(RBTParseError);
     });
   });
+
+  describe("the nine characters reserved when bare directly inside [...] (`| > ; ( ) ? + & $`) are all literal when written bare inside a {...} string here", () => {
+    it.each([
+      { name: "'|'", rules: "[{|}] > c;", input: "|", expected: "c" },
+      { name: "'>'", rules: "[{>}] > c;", input: ">", expected: "c" },
+      { name: "';'", rules: "[{;}] > c;", input: ";", expected: "c" },
+      { name: "'('", rules: "[{(}] > c;", input: "(", expected: "c" },
+      { name: "')'", rules: "[{)}] > c;", input: ")", expected: "c" },
+      { name: "'?'", rules: "[{?}] > c;", input: "?", expected: "c" },
+      { name: "'+'", rules: "[{+}] > c;", input: "+", expected: "c" },
+      { name: "'&'", rules: "[{&}] > c;", input: "&", expected: "c" },
+      { name: "'$'", rules: "[{$}] > c;", input: "$", expected: "c" },
+    ])(
+      "$name as a single-character {...} string is equivalent to that same character specified any other way",
+      ({ rules, input, expected }) => {
+        expect(RBT.fromRules(rules).transliterate(input)).toBe(expected);
+      },
+    );
+
+    it("combines with a bare ordinary member and a real multi-character string in the same set, with the longest match still winning where they overlap", () => {
+      expect(RBT.fromRules("[|{&}{de}] > c;").transliterate(">|;()?+&de")).toBe(">c;()?+cc");
+    });
+  });
 });
 
 describe("quantifiers: `?`, `*`, `+`, and `(...)` grouping", () => {
@@ -929,6 +1106,15 @@ describe("quantifiers: `?`, `*`, `+`, and `(...)` grouping", () => {
 
     it("an explicit `|` that pins the cursor in place is still caught by the step-budget guard, since that safety net is unrelated to the automatic-advance fix above", () => {
       expect(() => RBT.fromRules("[ab]* >| ;").transliterate("c")).toThrow(RBTRuntimeError);
+    });
+
+    it("the same thing happens with a quantified '$' (see AETHER_ATOM), and for the same reason: '?' and '*' both fall back to a zero-width success when the atom underneath can't match for real, and '$' can never match for real at any position", () => {
+      expect(RBT.fromRules("$? > c;").transliterate("ab")).toBe("cacb");
+      expect(RBT.fromRules("$* > c;").transliterate("ab")).toBe("cacb");
+    });
+
+    it("by contrast, '+' requires at least one real occurrence, which '$' can never provide, so a quantified '$+' never matches at all — unlike '?' and '*' above", () => {
+      expect(RBT.fromRules("$+ > c;").transliterate("ab")).toBe("ab");
     });
   });
 
