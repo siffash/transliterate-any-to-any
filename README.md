@@ -137,5 +137,4 @@ await transliterate(["上海", "广州"], { from: "zh", to: "bg" }); // -> ["Ш�
 - [hangul-js](https://github.com/e-/Hangul.js) for handling Korean Hangul
 - [hanviet-pinyin-words](https://github.com/ph0ngp/hanviet-pinyin-words) for handling Vietnamese
 - [phonemize](https://github.com/hans00/phonemize) for converting some languages to IPA
-- [ipa-dict](https://github.com/open-dict-data/ipa-dict) for IPA dictionaries
 - [ICU](https://icu.unicode.org/)'s [Transforms](https://unicode-org.github.io/icu/userguide/transforms/) through [icu-transliterator](https://github.com/longnow/node-icu-transliterator)

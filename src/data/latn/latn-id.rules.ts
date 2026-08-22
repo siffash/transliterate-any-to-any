@@ -28,6 +28,7 @@ gh > g;
 ::Null;
 
 [:^Letter:] { \\' > ;
+\\' } [:^Letter:] > ;
 
 X } [:Ll:] > Kh;
 X > KH;

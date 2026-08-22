@@ -147,6 +147,14 @@ ey { a } r > a;
 ::NFC;
 ::Null;
 
+ā > a;
+ī > i;
+ū > u;
+ŏ > o;
+ĕ > e;
+
+::Null;
+
 w { w > ;
 y { y > ;
 [:^Letter:] { c } k > ;

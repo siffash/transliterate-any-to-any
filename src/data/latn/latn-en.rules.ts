@@ -6,6 +6,9 @@ Dž > J;
 dŽ > j;
 dž > j;
 
+Đ > J;
+đ > j;
+
 DZ > Z;
 Dz > Z;
 dZ > z;
@@ -13,10 +16,12 @@ dz > z;
 
 IJ } [:^Letter:] > AY;
 Ij } [:^Letter:] > Ay;
+iJ } [:^Letter:] > aY;
 ij } [:^Letter:] > ay;
-IJ > AI;
-Ij > Ai;
-ij > ai;
+IJ > EI;
+Ij > Ei;
+iJ > eI;
+ij > ei;
 
 ::Null;
 
@@ -42,11 +47,6 @@ ij > ai;
 Č } [:Lu:] > CH;
 Č > Ch;
 č > ch;
-
-[:Lu:] { Đ > DJ;
-Đ } [:Lu:] > DJ;
-Đ > Dj;
-đ > dj;
 
 [:Lu:] { Š > SH;
 Š } [:Lu:] > SH;

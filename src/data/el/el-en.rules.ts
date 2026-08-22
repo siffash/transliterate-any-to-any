@@ -202,6 +202,10 @@ export const elEnRules = `
 Ω > O;
 ω > o;
 
+::Null;
+
+́ > ;
+
 ::NFC;
 ::Null;
 

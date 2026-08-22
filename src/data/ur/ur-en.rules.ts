@@ -154,6 +154,17 @@ export const urEnRules = `
 ::Null;
 
 [:^Letter:] { \\' > ;
+\\' } [:^Letter:] > ;
+
+ā > a;
+ē > e;
+ī > i;
+ō > o;
+ū > u;
+ṭ > t;
+ḍ > d;
+ṛ > r;
+ñ > n;
 
 ::Null;
 
