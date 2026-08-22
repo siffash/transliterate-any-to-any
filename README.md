@@ -10,12 +10,24 @@ A JavaScript/TypeScript library for [transliteration](https://en.wikipedia.org/w
 
 ### Features
 
-- Loads only the libraries/mappings/rules needed for the given transliteration
+- Loads only the libraries/mappings/rules needed for the given language pair
 - Supports batching - you can pass an array of strings
-- Transliterates even between languages of the same script (see [Maltese to Latvian example](#example-mt-to-lv))
-- Can work in browser (but not recommended because it's too heavy)
+- Transliterates even between languages of the same script (see [Maltese to Latvian example](#examples))
+- Can work in browser (but not recommended due to the size of the library)
+
+<a id="examples"></a>
 
 ## 💡 Examples
+
+```typescript
+// Maltese -> Latvian
+await transliterate("Marsaxlokk", { from: "mt", to: "lv" }); // -> Marsašlok
+```
+
+```typescript
+// French -> Russian
+await transliterate("Pierre Richard", { from: "fr", to: "ru" }); // -> Пьер Ришар
+```
 
 ```typescript
 // Greek -> Armenian
@@ -28,30 +40,23 @@ await transliterate("Копривщица", { from: "bg", to: "cs" }); // -> Kop
 ```
 
 ```typescript
-// French -> Russian
-await transliterate("Pierre Richard", { from: "fr", to: "ru" }); // -> Пьер Ришар
-```
-
-<a id="example-mt-to-lv"></a>
-
-```typescript
-// Maltese -> Latvian
-await transliterate("Marsaxlokk", { from: "mt", to: "lv" }); // -> Marsašlok
-```
-
-```typescript
 // Japanese -> Arabic
 await transliterate("青森", { from: "ja", to: "ar" }); // -> اوموري
 ```
 
 ```typescript
-// Mandarin Chinese -> English
-await transliterate("上海", { from: "zh", to: "en" }); // -> Shanghai
+// Korean -> English
+await transliterate(["서울", "부산"], { from: "ko", to: "en" }); // -> ["Seoul", "Busan"]
 ```
 
 ```typescript
 // Mandarin Chinese -> Bulgarian
 await transliterate(["上海", "广州"], { from: "zh", to: "bg" }); // -> ["Шанхай", "Гуанджоу"]
+```
+
+```typescript
+// Hindi -> Hebrew
+await transliterate(["मुंबई", "कोलकाता"], { from: "hi", to: "he" }); // -> ["מומבאי" ,"קולקטה"]
 ```
 
 ## 📖 API Reference
@@ -137,4 +142,4 @@ await transliterate(["上海", "广州"], { from: "zh", to: "bg" }); // -> ["Ш�
 - [hangul-js](https://github.com/e-/Hangul.js) for handling Korean Hangul
 - [hanviet-pinyin-words](https://github.com/ph0ngp/hanviet-pinyin-words) for handling Vietnamese
 - [phonemize](https://github.com/hans00/phonemize) for converting some languages to IPA
-- [ICU](https://icu.unicode.org/)'s [Transforms](https://unicode-org.github.io/icu/userguide/transforms/) through [icu-transliterator](https://github.com/longnow/node-icu-transliterator)
+- [ICU](https://icu.unicode.org/)'s [Transforms](https://unicode-org.github.io/icu/userguide/transforms/) through [icu-transliterator](https://github.com/longnow/node-icu-transliterator) (for verifying the JS implementation of ICU's RuleBasedTransliterator - RBT)
