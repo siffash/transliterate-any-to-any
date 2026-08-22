@@ -1,4 +1,4 @@
-// Optimized Phonetic Map for Mandarin Transliteration
+// Optimized Phonetic Map for Chinese Transliteration
 export const IV_MAP: Record<string, string> = {
   ga: "加",
   na: "娜",

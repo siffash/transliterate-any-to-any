@@ -36,5 +36,13 @@ module.exports = [
       "no-only-tests/no-only-tests": "error",
     },
   },
+  {
+    files: ["**/*.worker.{ts,tsx,js,jsx}"],
+    languageOptions: {
+      globals: {
+        ...globals.worker,
+      },
+    },
+  },
   eslintConfigPrettier,
 ];

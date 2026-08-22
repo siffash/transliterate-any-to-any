@@ -1,0 +1,28 @@
+{
+  "name": "transliterate-any-to-any-demo",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.13.0",
+    "@emotion/styled": "^11.13.0",
+    "@mui/icons-material": "^9.3.1",
+    "@mui/material": "^9.3.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "transliterate-any-to-any": "file:.."
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^6.1.0",
+    "typescript": "^5.9.0",
+    "vite": "^8.2.0",
+    "vite-tsconfig-paths": "^5.1.4"
+  }
+}

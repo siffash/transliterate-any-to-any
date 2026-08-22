@@ -81,8 +81,8 @@ export const viZh = async (text: Text) => {
         else {
           try {
             const ipa = transliteratorToIpa.transliterate(token);
-            const mandarinChar = transliteratorToZh.transliterate(ipa);
-            result += mandarinChar;
+            const chineseChar = transliteratorToZh.transliterate(ipa);
+            result += chineseChar;
           } catch (e) {
             console.error(e);
             result += token;

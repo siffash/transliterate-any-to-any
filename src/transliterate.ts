@@ -1,28 +1,30 @@
-import { supportedLanguages } from "helpers/constants";
+import { languages, supportedLanguages } from "helpers/constants";
 import { Options, Text } from "types";
 import { confirmLanguageByScript } from "helpers/confirmLanguageByScript";
 
 export const transliterate = async <T extends Text>(text: T, { from, to }: Options): Promise<T> => {
   if (Array.isArray(text) ? text.length === 0 : !text) {
-    throw new Error("Input text is empty.");
+    throw new Error("Source text is empty.");
   }
   if (!from) {
-    throw new Error('Language "from" is not specified.');
+    throw new Error('Source language ("from") is not specified.');
   }
   if (!to) {
-    throw new Error('Language "to" is not specified.');
+    throw new Error('Target language ("to") is not specified.');
   }
   if (!supportedLanguages.includes(from)) {
-    throw new Error(`Unsupported language "from": "${from}".`);
+    throw new Error(`Unsupported source language ("from"): ${from}.`);
   }
   if (!supportedLanguages.includes(to)) {
-    throw new Error(`Unsupported language "to": "${to}".`);
+    throw new Error(`Unsupported target language ("to"): ${to}.`);
   }
   if (from === to) {
-    throw new Error(`Languages "from" and "to" are the same: "${to}".`);
+    throw new Error(
+      `Source and target languages ("from" and "to") are the same: ${languages[from].name}.`,
+    );
   }
   if (!confirmLanguageByScript(from, text)) {
-    throw new Error(`Input text does not match language "from": "${from}".`);
+    throw new Error(`Source text does not match ${languages[from].name}.`);
   }
 
   try {

@@ -55,7 +55,7 @@ export const zhKo = async (text: Text) => {
       let kJung;
       let kJong = "";
 
-      // Vowel/Batchim logic for Mandarin sounds
+      // Vowel/Batchim logic for Chinese sounds
       if (rest.includes("ang")) {
         kJung = "ㅏ";
         kJong = "ㅇ";

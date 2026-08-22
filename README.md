@@ -50,7 +50,7 @@ await transliterate(["서울", "부산"], { from: "ko", to: "en" }); // -> ["Seo
 ```
 
 ```typescript
-// Mandarin Chinese -> Bulgarian
+// Chinese -> Bulgarian
 await transliterate(["上海", "广州"], { from: "zh", to: "bg" }); // -> ["Шанхай", "Гуанджоу"]
 ```
 
@@ -63,74 +63,74 @@ await transliterate(["मुंबई", "कोलकाता"], { from: "hi", 
 
 ### `transliterate(text, options): string | string[]`
 
-| Parameter | Type                 | Required | Description             |
-| --------- | -------------------- | -------- | ----------------------- |
-| `text`    | `string \| string[]` | Yes      | Input string or strings |
-| `options` | `object`             | Yes      | Options - see below     |
+| Parameter | Type                 | Required | Description                              |
+| --------- | -------------------- | -------- | ---------------------------------------- |
+| `text`    | `string \| string[]` | Yes      | Source text - string or array of strings |
+| `options` | `object`             | Yes      | Options - see below                      |
 
 #### Options
 
 | Object property | Type     | Required | Description                                                                  |
 | --------------- | -------- | -------- | ---------------------------------------------------------------------------- |
-| `from`          | `string` | Yes      | Input language in [BCP 47](https://en.wikipedia.org/wiki/IETF_language_tag)  |
-| `to`            | `string` | Yes      | Output language in [BCP 47](https://en.wikipedia.org/wiki/IETF_language_tag) |
+| `from`          | `string` | Yes      | Source language in [BCP 47](https://en.wikipedia.org/wiki/IETF_language_tag) |
+| `to`            | `string` | Yes      | Target language in [BCP 47](https://en.wikipedia.org/wiki/IETF_language_tag) |
 
 <a id="supported-languages"></a>
 
 ## 🌍 Supported languages
 
-| English name     | [BCP 47](https://en.wikipedia.org/wiki/IETF_language_tag) | [ISO 15924 script](https://en.wikipedia.org/wiki/ISO_15924) | Countries where it's mostly used                                      |
-| ---------------- | --------------------------------------------------------- | ----------------------------------------------------------- | --------------------------------------------------------------------- |
-| Mandarin Chinese | zh                                                        | Hani (Hanzi+Kanji+Hanja)                                    | China, Taiwan, Singapore                                              |
-| Japanese         | ja                                                        | Jpan (Hira+Kana+Han)                                        | Japan                                                                 |
-| Korean           | ko                                                        | Kore (Hangul)                                               | South Korea, North Korea                                              |
-| Hindi            | hi                                                        | Deva                                                        | India                                                                 |
-| Bengali          | bn                                                        | Beng                                                        | Bangladesh, India                                                     |
-| Urdu             | ur                                                        | Arab                                                        | Pakistan, India                                                       |
-| Persian          | fa                                                        | Arab                                                        | Iran, Afghanistan                                                     |
-| Arabic           | ar                                                        | Arab                                                        | Saudi Arabia, UAE, Egypt, many Middle Eastern/North African countries |
-| Hebrew           | he                                                        | Hebr                                                        | Israel                                                                |
-| Georgian         | ka                                                        | Geor                                                        | Georgia                                                               |
-| Armenian         | hy                                                        | Armn                                                        | Armenia, Russia, Georgia, France                                      |
-| Greek            | el                                                        | Grek                                                        | Greece, Cyprus                                                        |
-| Russian          | ru                                                        | Cyrl                                                        | Russia, Belarus, Kazakhstan, Kyrgyzstan, Ukraine                      |
-| Ukrainian        | uk                                                        | Cyrl                                                        | Ukraine                                                               |
-| Bulgarian        | bg                                                        | Cyrl                                                        | Bulgaria                                                              |
-| Macedonian       | mk                                                        | Cyrl                                                        | North Macedonia                                                       |
-| Azerbaijani      | az                                                        | Latn                                                        | Azerbaijan, Russia, Georgia                                           |
-| Bosnian          | bs                                                        | Latn                                                        | Bosnia and Herzegovina                                                |
-| Catalan          | ca                                                        | Latn                                                        | Spain (Catalonia, Valencia, Balearic Islands), Andorra                |
-| Czech            | cs                                                        | Latn                                                        | Czech Republic                                                        |
-| Danish           | da                                                        | Latn                                                        | Denmark                                                               |
-| German           | de                                                        | Latn                                                        | Germany, Austria, Switzerland, Belgium, Luxembourg, Liechtenstein     |
-| English          | en                                                        | Latn                                                        | United Kingdom, Ireland, Malta                                        |
-| Spanish          | es                                                        | Latn                                                        | Spain, Andorra                                                        |
-| Estonian         | et                                                        | Latn                                                        | Estonia                                                               |
-| Finnish          | fi                                                        | Latn                                                        | Finland                                                               |
-| French           | fr                                                        | Latn                                                        | France, Belgium, Switzerland, Luxembourg                              |
-| Croatian         | hr                                                        | Latn                                                        | Croatia, Bosnia and Herzegovina                                       |
-| Hungarian        | hu                                                        | Latn                                                        | Hungary                                                               |
-| Indonesian       | id                                                        | Latn                                                        | Indonesia                                                             |
-| Icelandic        | is                                                        | Latn                                                        | Iceland                                                               |
-| Italian          | it                                                        | Latn                                                        | Italy, Switzerland, San Marino, Vatican City                          |
-| Kazakh           | kk                                                        | Latn                                                        | Kazakhstan (European part), Russia                                    |
-| Luxembourgish    | lb                                                        | Latn                                                        | Luxembourg                                                            |
-| Lithuanian       | lt                                                        | Latn                                                        | Lithuania                                                             |
-| Latvian          | lv                                                        | Latn                                                        | Latvia                                                                |
-| Malay            | ms                                                        | Latn                                                        | Malaysia, Brunei, Singapore                                           |
-| Maltese          | mt                                                        | Latn                                                        | Malta                                                                 |
-| Dutch            | nl                                                        | Latn                                                        | Netherlands, Belgium                                                  |
-| Norwegian        | no                                                        | Latn                                                        | Norway                                                                |
-| Polish           | pl                                                        | Latn                                                        | Poland                                                                |
-| Portuguese       | pt                                                        | Latn                                                        | Portugal                                                              |
-| Romanian         | ro                                                        | Latn                                                        | Romania, Moldova                                                      |
-| Slovak           | sk                                                        | Latn                                                        | Slovakia                                                              |
-| Slovene          | sl                                                        | Latn                                                        | Slovenia                                                              |
-| Albanian         | sq                                                        | Latn                                                        | Albania, Kosovo, North Macedonia                                      |
-| Serbian          | sr                                                        | Latn                                                        | Serbia, Bosnia and Herzegovina, Montenegro, Kosovo                    |
-| Swedish          | sv                                                        | Latn                                                        | Sweden, Finland                                                       |
-| Turkish          | tr                                                        | Latn                                                        | Turkey, Cyprus (Turkish community)                                    |
-| Vietnamese       | vi                                                        | Latn                                                        | Vietnam                                                               |
+| English name  | [BCP 47](https://en.wikipedia.org/wiki/IETF_language_tag) | [ISO 15924 script](https://en.wikipedia.org/wiki/ISO_15924) | Countries where it's mostly used                                      |
+| ------------- | --------------------------------------------------------- | ----------------------------------------------------------- | --------------------------------------------------------------------- |
+| Chinese       | zh                                                        | Hani (Hanzi+Kanji+Hanja)                                    | China, Taiwan, Singapore                                              |
+| Japanese      | ja                                                        | Jpan (Hira+Kana+Han)                                        | Japan                                                                 |
+| Korean        | ko                                                        | Kore (Hangul)                                               | South Korea, North Korea                                              |
+| Hindi         | hi                                                        | Deva                                                        | India                                                                 |
+| Bengali       | bn                                                        | Beng                                                        | Bangladesh, India                                                     |
+| Urdu          | ur                                                        | Arab                                                        | Pakistan, India                                                       |
+| Persian       | fa                                                        | Arab                                                        | Iran, Afghanistan                                                     |
+| Arabic        | ar                                                        | Arab                                                        | Saudi Arabia, UAE, Egypt, many Middle Eastern/North African countries |
+| Hebrew        | he                                                        | Hebr                                                        | Israel                                                                |
+| Georgian      | ka                                                        | Geor                                                        | Georgia                                                               |
+| Armenian      | hy                                                        | Armn                                                        | Armenia, Russia, Georgia, France                                      |
+| Greek         | el                                                        | Grek                                                        | Greece, Cyprus                                                        |
+| Russian       | ru                                                        | Cyrl                                                        | Russia, Belarus, Kazakhstan, Kyrgyzstan, Ukraine                      |
+| Ukrainian     | uk                                                        | Cyrl                                                        | Ukraine                                                               |
+| Bulgarian     | bg                                                        | Cyrl                                                        | Bulgaria                                                              |
+| Macedonian    | mk                                                        | Cyrl                                                        | North Macedonia                                                       |
+| Azerbaijani   | az                                                        | Latn                                                        | Azerbaijan, Russia, Georgia                                           |
+| Bosnian       | bs                                                        | Latn                                                        | Bosnia and Herzegovina                                                |
+| Catalan       | ca                                                        | Latn                                                        | Spain (Catalonia, Valencia, Balearic Islands), Andorra                |
+| Czech         | cs                                                        | Latn                                                        | Czech Republic                                                        |
+| Danish        | da                                                        | Latn                                                        | Denmark                                                               |
+| German        | de                                                        | Latn                                                        | Germany, Austria, Switzerland, Belgium, Luxembourg, Liechtenstein     |
+| English       | en                                                        | Latn                                                        | United Kingdom, Ireland, Malta                                        |
+| Spanish       | es                                                        | Latn                                                        | Spain, Andorra                                                        |
+| Estonian      | et                                                        | Latn                                                        | Estonia                                                               |
+| Finnish       | fi                                                        | Latn                                                        | Finland                                                               |
+| French        | fr                                                        | Latn                                                        | France, Belgium, Switzerland, Luxembourg                              |
+| Croatian      | hr                                                        | Latn                                                        | Croatia, Bosnia and Herzegovina                                       |
+| Hungarian     | hu                                                        | Latn                                                        | Hungary                                                               |
+| Indonesian    | id                                                        | Latn                                                        | Indonesia                                                             |
+| Icelandic     | is                                                        | Latn                                                        | Iceland                                                               |
+| Italian       | it                                                        | Latn                                                        | Italy, Switzerland, San Marino, Vatican City                          |
+| Kazakh        | kk                                                        | Latn                                                        | Kazakhstan (European part), Russia                                    |
+| Luxembourgish | lb                                                        | Latn                                                        | Luxembourg                                                            |
+| Lithuanian    | lt                                                        | Latn                                                        | Lithuania                                                             |
+| Latvian       | lv                                                        | Latn                                                        | Latvia                                                                |
+| Malay         | ms                                                        | Latn                                                        | Malaysia, Brunei, Singapore                                           |
+| Maltese       | mt                                                        | Latn                                                        | Malta                                                                 |
+| Dutch         | nl                                                        | Latn                                                        | Netherlands, Belgium                                                  |
+| Norwegian     | no                                                        | Latn                                                        | Norway                                                                |
+| Polish        | pl                                                        | Latn                                                        | Poland                                                                |
+| Portuguese    | pt                                                        | Latn                                                        | Portugal                                                              |
+| Romanian      | ro                                                        | Latn                                                        | Romania, Moldova                                                      |
+| Slovak        | sk                                                        | Latn                                                        | Slovakia                                                              |
+| Slovene       | sl                                                        | Latn                                                        | Slovenia                                                              |
+| Albanian      | sq                                                        | Latn                                                        | Albania, Kosovo, North Macedonia                                      |
+| Serbian       | sr                                                        | Latn                                                        | Serbia, Bosnia and Herzegovina, Montenegro, Kosovo                    |
+| Swedish       | sv                                                        | Latn                                                        | Sweden, Finland                                                       |
+| Turkish       | tr                                                        | Latn                                                        | Turkey, Cyprus (Turkish community)                                    |
+| Vietnamese    | vi                                                        | Latn                                                        | Vietnam                                                               |
 
 ## 📦 Third-party libraries used
 
