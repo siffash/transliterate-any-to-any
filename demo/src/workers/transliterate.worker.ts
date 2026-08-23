@@ -1,12 +1,12 @@
 /// <reference lib="webworker" />
 
-import { transliterate } from "transliterate-any-to-any";
+import { Language, transliterate } from "transliterate-any-to-any";
 
 export interface WorkerRequest {
   id: number;
   text: string;
-  from: string;
-  to: string;
+  from: Language;
+  to: Language;
 }
 
 export type WorkerResponse = { id: number; result: string } | { id: number; error: string };

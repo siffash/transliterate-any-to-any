@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef } from "react";
+import { Language } from "transliterate-any-to-any";
 import type { WorkerRequest, WorkerResponse } from "../workers/transliterate.worker";
 
 interface PendingRequest {
@@ -43,7 +44,7 @@ export function useTransliterateWorker() {
     };
   }, []);
 
-  const run = useCallback((text: string, from: string, to: string) => {
+  const run = useCallback((text: string, from: Language, to: Language) => {
     return new Promise<string>((resolve, reject) => {
       const worker = workerRef.current;
       if (!worker) {
