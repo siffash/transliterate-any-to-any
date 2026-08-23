@@ -7,7 +7,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
   plugins: [react()],
-  base: "/transliterate-any-to-any/",
+  base: "/",
   resolve: {
     alias: {
       "transliterate-any-to-any": path.resolve(__dirname, "../dist/index.mjs"),

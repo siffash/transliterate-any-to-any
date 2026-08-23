@@ -150,6 +150,7 @@ export const TransliteratorCard = () => {
     } else {
       setFromLang(lang as Language);
     }
+    setTargetText("");
     setErrorMsg(null);
   };
 
@@ -159,6 +160,7 @@ export const TransliteratorCard = () => {
     } else {
       setToLang(lang as Language);
     }
+    setTargetText("");
     setErrorMsg(null);
   };
 
