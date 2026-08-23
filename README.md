@@ -1,4 +1,4 @@
-<div style="text-align: center;">
+<div align="center">
 
 # transliterate-any-to-any
 
@@ -12,16 +12,16 @@ A TypeScript library for [transliteration](https://en.wikipedia.org/wiki/Transli
 
 ### Most suitable for transliteration of proper nouns:
 
-- Place names, toponyms (e.g. names of cities, neighborhoods, towns, villages, streets, rivers, mountains, etc.)
-- Personal names, anthroponyms (e.g. first names, middle names, last names, nicknames, names of pets, etc.)
-- Business names (e.g. company or organization names, brand names, trademarks, etc.)
+- Place names, toponyms (e.g. names of cities, neighborhoods, towns, villages, streets, rivers, mountains, etc.).
+- Personal names, anthroponyms (e.g. first names, middle names, last names, nicknames, names of pets, etc.).
+- Business names (e.g. company or organization names, brand names, trademarks, etc.).
 
 ### Features:
 
-- Loads only the libraries/mappings/rules needed for the given language pair
-- Supports batching - you can pass an array of strings
-- Transliterates even between languages of the same script (see [Maltese to Latvian example](#examples))
-- Can work in browser - but not recommended due to the size of the library, consider using a Web Worker (see the [demo implementation](https://github.com/siffash/transliterate-any-to-any/tree/main/demo))
+- Loads only the libraries/mappings/rules needed for the given language pair.
+- Supports batching - you can pass an array of strings.
+- Transliterates even between languages of the same script (see [Maltese to Latvian example](#examples)).
+- Can work in browser - but not recommended due to the size of the library, consider using a Web Worker (see the [demo implementation](https://github.com/siffash/transliterate-any-to-any/tree/main/demo)).
 
 ---
 
