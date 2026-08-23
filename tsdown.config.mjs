@@ -11,7 +11,14 @@ export default defineConfig({
   clean: true,
   minify: true,
   deps: {
-    alwaysBundle: ["kuromoji", "kuroshiro", "kuroshiro-analyzer-kuromoji", "zlibjs", "fflate"],
+    alwaysBundle: [
+      "aromanize",
+      "kuromoji",
+      "kuroshiro",
+      "kuroshiro-analyzer-kuromoji",
+      "zlibjs",
+      "fflate",
+    ],
   },
   plugins: [
     nodePolyfills(),

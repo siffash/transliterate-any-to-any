@@ -24,7 +24,13 @@ ctx.onmessage = async (event: MessageEvent<WorkerRequest>) => {
     const result = await transliterate(text, { from, to });
     ctx.postMessage({ id, result } satisfies WorkerResponse);
   } catch (err) {
-    const message = err instanceof Error ? err.message : "Transliteration failed.";
+    console.error(err);
+    const message =
+      err instanceof Error
+        ? err.message !== "{}"
+          ? err.message
+          : "Transliteration failed."
+        : "Transliteration failed.";
     ctx.postMessage({ id, error: message } satisfies WorkerResponse);
   }
 };

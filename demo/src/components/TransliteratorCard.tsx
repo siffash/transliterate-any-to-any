@@ -90,8 +90,15 @@ export const TransliteratorCard = () => {
     return () => clearTimeout(timer);
   }, [sourceText, fromLang, toLang, run]);
 
+  useEffect(() => {
+    if (errorMsg) {
+      setTargetText("");
+    }
+  }, [errorMsg]);
+
   const handleSourceChange = (value: string) => {
     setSourceText(value.slice(0, MAX_CHARS));
+    setErrorMsg(null);
   };
 
   const handleSwap = () => {
@@ -143,6 +150,7 @@ export const TransliteratorCard = () => {
     } else {
       setFromLang(lang as Language);
     }
+    setErrorMsg(null);
   };
 
   const handleToLang = (lang: string) => {
@@ -151,6 +159,7 @@ export const TransliteratorCard = () => {
     } else {
       setToLang(lang as Language);
     }
+    setErrorMsg(null);
   };
 
   const charCount = sourceText.length;
