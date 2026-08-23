@@ -58,7 +58,7 @@
     "format:check": "prettier --check src --config ./.prettierrc",
     "test": "vitest",
     "test:run": "vitest run",
-    "prepare": "husky"
+    "prepare": "husky || true"
   },
   "lint-staged": {
     "*.ts": [
