@@ -5,6 +5,7 @@ import {
   Container,
   CssBaseline,
   IconButton,
+  Link,
   Stack,
   ThemeProvider,
   Tooltip,
@@ -37,8 +38,15 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Box sx={{ minHeight: "100vh", bgcolor: "background.default" }}>
-        <Container maxWidth="md" sx={{ py: { xs: 6, sm: 10 } }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          minHeight: "100vh",
+          bgcolor: "background.default",
+        }}
+      >
+        <Container component="main" maxWidth="md" sx={{ py: { xs: 6, sm: 10 } }}>
           <Tooltip title={mode === "dark" ? "Switch to light mode" : "Switch to dark mode"}>
             <IconButton
               onClick={() => setMode(m => (m === "dark" ? "light" : "dark"))}
@@ -143,6 +151,30 @@ export default function App() {
 
           <TransliteratorCard />
         </Container>
+
+        <Box component="footer" sx={{ mt: "auto", py: 3, textAlign: "center" }}>
+          <Typography
+            variant="caption"
+            color="text.secondary"
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexWrap: "wrap",
+              gap: 1,
+            }}
+          >
+            <Link
+              href="https://www.linkedin.com/in/siffash/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Anton Sivashtenko
+            </Link>
+            <Box>©</Box>
+            <Box>{new Date().getFullYear()}</Box>
+          </Typography>
+        </Box>
       </Box>
     </ThemeProvider>
   );

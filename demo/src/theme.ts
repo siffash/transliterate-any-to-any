@@ -56,6 +56,9 @@ export function getTheme(mode: "light" | "dark"): Theme {
       MuiButton: {
         styleOverrides: { root: { borderRadius: 999 } },
       },
+      MuiLink: {
+        styleOverrides: { root: { textDecoration: "none" } },
+      },
       MuiChip: {
         styleOverrides: {
           root: ({ theme: t }) => ({

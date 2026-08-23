@@ -13,10 +13,10 @@ export const SCATTER: { char: string; top: string; left: string; rot: number }[]
   { char: "한", top: "52%", left: "85%", rot: -5 }, // Korean
   { char: "अ", top: "0%", left: "83%", rot: 8 }, // Hindi
   { char: "অ", top: "53%", left: "69%", rot: 5 }, // Bengali
-  { char: "ن", top: "2%", left: "70%", rot: 8 }, // Urdu
+  { char: "ن", top: "40%", left: "21%", rot: -10 }, // Urdu
   { char: "ی", top: "53%", left: "4%", rot: 10 }, // Persian
-  { char: "ل", top: "18%", left: "88%", rot: 6 }, // Arabic
-  { char: "א", top: "40%", left: "21%", rot: -10 }, // Hebrew
+  { char: "ت", top: "18%", left: "88%", rot: 6 }, // Arabic
+  { char: "א", top: "2%", left: "70%", rot: 8 }, // Hebrew
   { char: "ლ", top: "30%", left: "2%", rot: -12 }, // Georgian
   { char: "Թ", top: "2%", left: "96%", rot: -6 }, // Armenian
   { char: "Ω", top: "40%", left: "92%", rot: 12 }, // Greek
