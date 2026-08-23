@@ -18,6 +18,8 @@
     "transliterate-any-to-any": "file:.."
   },
   "devDependencies": {
+    "@types/dom-speech-recognition": "^0.0.12",
+    "@types/node": "^26.2.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "@vitejs/plugin-react": "^6.1.0",

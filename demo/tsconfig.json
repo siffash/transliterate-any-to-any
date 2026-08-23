@@ -15,10 +15,12 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
+    "types": ["node", "dom-speech-recognition"],
     "baseUrl": ".",
     "paths": {
       "transliterate-any-to-any": ["../src/index.ts"],
       "helpers/*": ["../src/helpers/*"],
+      "types": ["../src/types/index.ts"],
       "types/*": ["../src/types/*"],
       "data/*": ["../src/data/*"],
       "converters/*": ["../src/converters/*"]
