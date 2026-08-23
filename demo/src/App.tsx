@@ -10,41 +10,14 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import ArticleIcon from "@mui/icons-material/Article";
+import MenuBookIcon from "@mui/icons-material/MenuBook";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import Inventory2Icon from "@mui/icons-material/Inventory2";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import { getTheme } from "./theme";
-import TransliteratorCard from "./components/TransliteratorCard";
-
-const LINKS = {
-  github: "https://github.com/siffash/transliterate-any-to-any",
-  npm: "https://www.npmjs.com/package/transliterate-any-to-any",
-  devto: "https://dev.to/siffash/transliterate-any-to-any",
-};
-
-// A faint scatter of glyphs from scripts this library actually covers
-const SCATTER: { char: string; top: string; left: string; rot: number }[] = [
-  { char: "字", top: "5%", left: "39%", rot: -4 }, // Chinese
-  { char: "あ", top: "52%", left: "27%", rot: 7 }, // Japanese
-  { char: "한", top: "52%", left: "85%", rot: -5 }, // Korean
-  { char: "अ", top: "0%", left: "83%", rot: 8 }, // Hindi
-  { char: "অ", top: "53%", left: "69%", rot: 5 }, // Bengali
-  { char: "ن", top: "2%", left: "70%", rot: 8 }, // Urdu
-  { char: "ی", top: "53%", left: "4%", rot: 10 }, // Persian
-  { char: "ل", top: "18%", left: "88%", rot: 6 }, // Arabic
-  { char: "א", top: "40%", left: "21%", rot: -10 }, // Hebrew
-  { char: "ლ", top: "30%", left: "2%", rot: -12 }, // Georgian
-  { char: "Թ", top: "2%", left: "96%", rot: -6 }, // Armenian
-  { char: "Ω", top: "40%", left: "92%", rot: 12 }, // Greek
-  { char: "Є", top: "0%", left: "55%", rot: -7 }, // Ukrainian
-  { char: "Ъ", top: "3%", left: "6%", rot: -8 }, // Bulgarian
-  { char: "Š", top: "0%", left: "25%", rot: -3 }, // Serbian
-  { char: "Ħ", top: "45%", left: "12%", rot: 4 }, // Maltese
-  { char: "ß", top: "15%", left: "14%", rot: -9 }, // German
-  { char: "ñ", top: "45%", left: "78%", rot: 6 }, // Spanish
-];
+import { TransliteratorCard } from "./components/TransliteratorCard";
+import { LINKS, SCATTER } from "./constants";
 
 function getInitialMode(): "light" | "dark" {
   if (typeof window === "undefined") return "light";
@@ -66,6 +39,16 @@ export default function App() {
       <CssBaseline />
       <Box sx={{ minHeight: "100vh", bgcolor: "background.default" }}>
         <Container maxWidth="md" sx={{ py: { xs: 6, sm: 10 } }}>
+          <Tooltip title={mode === "dark" ? "Switch to light mode" : "Switch to dark mode"}>
+            <IconButton
+              onClick={() => setMode(m => (m === "dark" ? "light" : "dark"))}
+              sx={{ position: "absolute", top: 0, right: 0, zIndex: 1, m: 2 }}
+              aria-label="Toggle color mode"
+            >
+              {mode === "dark" ? <LightModeIcon /> : <DarkModeIcon />}
+            </IconButton>
+          </Tooltip>
+
           <Stack
             component="div"
             spacing={2}
@@ -103,16 +86,6 @@ export default function App() {
               ))}
             </Box>
 
-            <Tooltip title={mode === "dark" ? "Switch to light mode" : "Switch to dark mode"}>
-              <IconButton
-                onClick={() => setMode(m => (m === "dark" ? "light" : "dark"))}
-                sx={{ position: "absolute", top: 0, right: 0, zIndex: 1 }}
-                aria-label="Toggle color mode"
-              >
-                {mode === "dark" ? <LightModeIcon /> : <DarkModeIcon />}
-              </IconButton>
-            </Tooltip>
-
             <Typography
               variant="h1"
               sx={{ fontSize: { xs: "2.1rem", sm: "3rem" }, position: "relative", zIndex: 1 }}
@@ -137,32 +110,32 @@ export default function App() {
             >
               <Chip
                 component="a"
-                href={LINKS.github}
+                href={LINKS.sourceCode}
                 target="_blank"
                 rel="noopener noreferrer"
                 clickable
                 icon={<GitHubIcon />}
-                label="GitHub"
+                label="Source code"
                 variant="outlined"
               />
               <Chip
                 component="a"
-                href={LINKS.npm}
+                href={LINKS.package}
                 target="_blank"
                 rel="noopener noreferrer"
                 clickable
                 icon={<Inventory2Icon />}
-                label="npm"
+                label="npm package"
                 variant="outlined"
               />
               <Chip
                 component="a"
-                href={LINKS.devto}
+                href={LINKS.article}
                 target="_blank"
                 rel="noopener noreferrer"
                 clickable
-                icon={<ArticleIcon />}
-                label="DEV.to article"
+                icon={<MenuBookIcon />}
+                label="Read the article"
                 variant="outlined"
               />
             </Stack>

@@ -4,18 +4,12 @@ import {
   Box,
   Card,
   CardContent,
-  Chip,
   CircularProgress,
-  FormControl,
   IconButton,
-  InputLabel,
-  MenuItem,
-  Select,
   Stack,
   TextField,
   Tooltip,
   Typography,
-  type SelectChangeEvent,
 } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import ClearIcon from "@mui/icons-material/Clear";
@@ -27,61 +21,11 @@ import { Language, languages } from "transliterate-any-to-any";
 import { multilingualTextStack } from "../theme";
 import { useTransliterateWorker } from "../hooks/useTransliterateWorker";
 import { useSpeechRecognition } from "../hooks/useSpeechRecognition";
+import { DEBOUNCE_MS, MAX_CHARS } from "../constants";
+import { LanguageSelect } from "./LanguageSelect";
+import { CodeBadge } from "./CodeBadge";
 
-const MAX_CHARS = 5000;
-const DEBOUNCE_MS = 350;
-
-function LanguageSelect({
-  id,
-  label,
-  value,
-  onChange,
-}: {
-  id: string;
-  label: string;
-  value: string;
-  onChange: (code: Language) => void;
-}) {
-  return (
-    <FormControl size="small" sx={{ minWidth: 180 }}>
-      <InputLabel id={`${id}-label`}>{label}</InputLabel>
-      <Select
-        labelId={`${id}-label`}
-        id={id}
-        value={value}
-        label={label}
-        onChange={(e: SelectChangeEvent) => onChange(e.target.value as Language)}
-        sx={{ position: "relative", bgcolor: "background.paper" }}
-      >
-        {[...(Object.keys(languages) as Language[])]
-          .sort((a, b) => languages[a].name.localeCompare(languages[b].name))
-          .map((code: Language) => (
-            <MenuItem key={code} value={code}>
-              {languages[code].name}
-            </MenuItem>
-          ))}
-      </Select>
-    </FormControl>
-  );
-}
-
-function CodeBadge({ code }: { code: string }) {
-  return (
-    <Chip
-      size="small"
-      label={code}
-      variant="outlined"
-      sx={{
-        fontFamily: '"IBM Plex Mono", ui-monospace, monospace',
-        fontSize: "0.7rem",
-        height: 22,
-        letterSpacing: "0.02em",
-      }}
-    />
-  );
-}
-
-export default function TransliteratorCard() {
+export const TransliteratorCard = () => {
   const [fromLang, setFromLang] = useState<Language>("en");
   const [toLang, setToLang] = useState<Language>("bg");
   const [sourceText, setSourceText] = useState("");
@@ -391,4 +335,4 @@ export default function TransliteratorCard() {
       </CardContent>
     </Card>
   );
-}
+};

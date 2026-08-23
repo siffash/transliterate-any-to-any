@@ -1,19 +1,29 @@
-# 🔄 transliterate-any-to-any
+<div style="text-align: center;">
 
-A JavaScript/TypeScript library for [transliteration](https://en.wikipedia.org/wiki/Transliteration) (not translation) from any language to any language (see the [list of the supported languages](#supported-languages)).
+# transliterate-any-to-any
 
-### Most suitable for transliteration of proper nouns
+A TypeScript library for [transliteration](https://en.wikipedia.org/wiki/Transliteration) (not translation) between [50 supported languages](#supported-languages)
+
+###### 🚀 [Playground](https://transliterate-any-to-any.js.org) · 📦 [npm package](https://www.npmjs.com/package/transliterate-any-to-any) · 📖 [Read the article](https://dev.to/siffash/transliterate-any-to-any)
+
+</div>
+
+---
+
+### Most suitable for transliteration of proper nouns:
 
 - Place names, toponyms (e.g. names of cities, neighborhoods, towns, villages, streets, rivers, mountains, etc.)
 - Personal names, anthroponyms (e.g. first names, middle names, last names, nicknames, names of pets, etc.)
 - Business names (e.g. company or organization names, brand names, trademarks, etc.)
 
-### Features
+### Features:
 
 - Loads only the libraries/mappings/rules needed for the given language pair
 - Supports batching - you can pass an array of strings
 - Transliterates even between languages of the same script (see [Maltese to Latvian example](#examples))
-- Can work in browser (but not recommended due to the size of the library)
+- Can work in browser - but not recommended due to the size of the library, consider using a Web Worker (see the [demo implementation](https://github.com/siffash/transliterate-any-to-any/tree/main/demo))
+
+---
 
 <a id="examples"></a>
 
@@ -59,7 +69,9 @@ await transliterate(["上海", "广州"], { from: "zh", to: "bg" }); // -> ["Ш�
 await transliterate(["मुंबई", "कोलकाता"], { from: "hi", to: "he" }); // -> ["מומבאי" ,"קולקטה"]
 ```
 
-## 📖 API Reference
+---
+
+## 🛠️ API Reference
 
 ### `transliterate(text, options): string | string[]`
 
@@ -74,6 +86,8 @@ await transliterate(["मुंबई", "कोलकाता"], { from: "hi", 
 | --------------- | -------- | -------- | ---------------------------------------------------------------------------- |
 | `from`          | `string` | Yes      | Source language in [BCP 47](https://en.wikipedia.org/wiki/IETF_language_tag) |
 | `to`            | `string` | Yes      | Target language in [BCP 47](https://en.wikipedia.org/wiki/IETF_language_tag) |
+
+---
 
 <a id="supported-languages"></a>
 
@@ -131,6 +145,8 @@ await transliterate(["मुंबई", "कोलकाता"], { from: "hi", 
 | Swedish       | sv                                                        | Latn                                                        | Sweden, Finland                                                       |
 | Turkish       | tr                                                        | Latn                                                        | Turkey, Cyprus (Turkish community)                                    |
 | Vietnamese    | vi                                                        | Latn                                                        | Vietnam                                                               |
+
+---
 
 ## 📦 Third-party libraries used
 
