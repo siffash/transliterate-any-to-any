@@ -27,13 +27,21 @@ jobs:
         with:
           node-version: 22
           cache: npm
-          cache-dependency-path: demo/package-lock.json
+          cache-dependency-path: |
+            package-lock.json
+            demo/package-lock.json
 
-      - name: Install dependencies
+      - name: Install library dependencies
+        run: npm ci
+
+      - name: Build library
+        run: npm run build
+
+      - name: Install demo dependencies
         working-directory: demo
         run: npm ci
 
-      - name: Build
+      - name: Build demo
         working-directory: demo
         run: npm run build
 

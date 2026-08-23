@@ -16,7 +16,7 @@ export default defineConfig({
   base: "/transliterate-any-to-any/",
   resolve: {
     alias: {
-      "transliterate-any-to-any": path.resolve(__dirname, "../src/index.ts"),
+      "transliterate-any-to-any": path.resolve(__dirname, "../dist/index.mjs"),
     },
   },
   worker: {
