@@ -21,10 +21,6 @@ KH > H;
 Kh > H;
 kh > h;
 
-NG > N;
-Ng > N;
-ng > n;
-
 TS > Ț;
 Ts > Ț;
 ts > ț;
@@ -33,19 +29,28 @@ ts > ț;
 
 Q > C;
 q > c;
+
 W > V;
 w > v;
+
 X > H;
 x > h;
+
 [YŸ] > I;
 [yÿ] > i;
+
 Ä > Ă;
 ä > ă;
+
 Ö > O;
 ö > o;
+
 Ü > U;
 ü > u;
-['·] > ;
+
+[:^Letter:] { \\' > ;
+\\' } [:^Letter:] > ;
+· > ;
 
 ::Null;
 
@@ -54,9 +59,11 @@ K } [ei] > Ch;
 k } [EeIi] > ch;
 K > C;
 k > c;
+
 G } [EI] > GH;
 G } [ei] > Gh;
 g } [EeIi] > gh;
+
 DŽ } [EeIi] > G;
 Dž } [EeIi] > G;
 dž } [EeIi] > g;
@@ -64,28 +71,29 @@ DŽ > GI;
 Dž } [:Ll:] > Gi;
 Dž > GI;
 dž > gi;
+
 Đ } [EeIi] > G;
 đ } [EeIi] > g;
 Đ } [:Ll:] > Gi;
 Đ > GI;
 đ > gi;
-Č } [EeIi] > C;
-č } [EeIi] > c;
-Č } [:Ll:] > Ci;
-Č > CI;
-č > ci;
-Ć } [EeIi] > C;
-ć } [EeIi] > c;
-Ć } [:Ll:] > Ci;
-Ć > CI;
-ć > ci;
+
+[ČĆ] } [EeIi] > C;
+[čć] } [EeIi] > c;
+[ČĆ] } [:Ll:] > Ci;
+[ČĆ] > CI;
+[čć] > ci;
+
 Š > Ș;
 š > ș;
+
 Ž > J;
 ž > j;
+
 Ľ } [:Ll:] > Li;
 Ľ > LI;
 ľ > li;
+
 Ń } [:Ll:] > Ni;
 Ń > NI;
 ń > ni;

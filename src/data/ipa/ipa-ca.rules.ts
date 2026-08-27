@@ -77,4 +77,9 @@ l[·.]l } [:^Letter:] > l;
 
 [:^Letter:] { y > i;
 [^n] { y > i;
+
+::Null;
+
+[:^Letter:] { ['·] > ;
+['·] } [:^Letter:] > ;
 `;

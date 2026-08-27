@@ -1,6 +1,19 @@
 export const huLatnRules = `
 ::NFC;
 
+Á > A;
+á > a;
+É > E;
+é > e;
+Í > I;
+í > i;
+[ÓŐ] > O;
+[óő] > o;
+[ÚŰ] > U;
+[úű] > u;
+
+::Null;
+
 C } CS > Č;
 C } Cs > Č;
 c } cs > č;
@@ -12,10 +25,6 @@ d } dzs > dž;
 D } DZ > DZ;
 D } Dz > Dz;
 d } dz > dz;
-
-G } GY > Đ;
-G } Gy > Đ;
-g } gy > đ;
 
 L } LY > Ľ;
 L } Ly > Ľ;
@@ -41,17 +50,13 @@ CS > Č;
 Cs > Č;
 cs > č;
 
-GY > Đ;
-Gy > Đ;
-gy > đ;
+LY } [^aeiouAEIOU] > Ľ;
+Ly } [^aeiouAEIOU] > Ľ;
+ly } [^aeiouAEIOU] > ľ;
 
-LY > Ľ;
-Ly > Ľ;
-ly > ľ;
-
-NY > Ń;
-Ny > Ń;
-ny > ń;
+NY } [^aeiouAEIOU] > Ń;
+Ny } [^aeiouAEIOU] > Ń;
+ny } [^aeiouAEIOU] > ń;
 
 SZ > S;
 Sz > S;
@@ -74,24 +79,14 @@ C } [:Lu:] > TS;
 C > Ts;
 c > ts;
 
+[:Lu:] { X > KS;
+X } [:Lu:] > KS;
+X > Ks;
+x > ks;
+
 J > Y;
 j > y;
 
 S > Š;
 s > š;
-
-Á > A;
-á > a;
-É > E;
-é > e;
-Í > I;
-í > i;
-Ó > O;
-ó > o;
-Ő > Ö;
-ő > ö;
-Ú > U;
-ú > u;
-Ű > Ü;
-ű > ü;
 `;

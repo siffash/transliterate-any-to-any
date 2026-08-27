@@ -13,7 +13,9 @@ GH > G;
 Gh > G;
 gh > g;
 
-['·] > ;
+[:^Letter:] { \\' > ;
+\\' } [:^Letter:] > ;
+· > ;
 
 ::Null;
 
@@ -26,15 +28,10 @@ gh > g;
 Ï > I;
 ï > i;
 
-[:^Letter:] { Ć } [:^Letter:] > Tsj;
-Ć } [:Ll:] > Tsj;
-Ć > TSJ;
-ć > tsj;
-
-[:^Letter:] { Č } [:^Letter:] > Tsj;
-Č } [:Ll:] > Tsj;
-Č > TSJ;
-č > tsj;
+[:^Letter:] { [ČĆ] } [:^Letter:] > Tsj;
+[ČĆ] } [:Ll:] > Tsj;
+[ČĆ] > TSJ;
+[čć] > tsj;
 
 [:^Letter:] { Đ } [:^Letter:] > Dj;
 Đ } [:Ll:] > Dj;

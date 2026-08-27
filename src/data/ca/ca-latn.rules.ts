@@ -57,9 +57,6 @@ ss > s;
 Ss > S;
 SS > S;
 
-[aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] { s } [aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] > z;
-[aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] { S } [aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] > Z;
-
 [aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] { x } [aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] > ks;
 [AEIOUÀÈÉÍÒÓÚÏÜ] { X } [AEIOUÀÈÉÍÒÓÚÏÜ] > KS;
 [aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] { X } [aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] > Ks;

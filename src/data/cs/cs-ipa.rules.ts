@@ -90,7 +90,7 @@ n > n;
 o > o;
 ó > oː;
 p > p;
-q > kv;
+q > k;
 r > r;
 ř > r̝;
 s > s;

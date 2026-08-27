@@ -11,15 +11,17 @@ CH > X;
 c > ts;
 C } [:Ll:] > Ts;
 C > TS;
+
 x > ks;
 X } [:Ll:] > Ks;
 X > KS;
-q > kv;
-Q } [:Ll:] > Kv;
-Q > KV;
-ô > uo;
-Ô } [:Ll:] > Uo;
-Ô > UO;
+
+q > k;
+Q > K;
+
+ô > o;
+Ô > O;
+
 ř > rž;
 Ř } [:Ll:] > Rž;
 Ř > RŽ;
@@ -34,16 +36,12 @@ j > y;
 J > Y;
 w > v;
 W > V;
-ý > i;
-Ý > I;
-y > i;
-Y > I;
 á > a;
 Á > A;
 é > e;
 É > E;
-í > i;
-Í > I;
+[íýy] > i;
+[ÍÝY] > I;
 ó > o;
 Ó > O;
 ú > u;

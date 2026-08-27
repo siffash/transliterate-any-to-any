@@ -1,6 +1,11 @@
 export const ltLatnRules = `
 ::NFC;
 
+[aA] { i } [tT] [ėeĖE] > y;
+[aA] { I } [tT] [ėeĖE] > Y;
+[:^Letter:] { i } [ėeęouųūaąĖEĘOUŲŪAĄ] > y;
+[:^Letter:] { I } [ėeęouųūaąĖEĘOUŲŪAĄ] > Y;
+
 X } [:Lu:] > KS;
 [:Lu:] { X > KS;
 X > Ks;
@@ -19,15 +24,6 @@ ch > x;
 DZ } [EĘĖIĮYeęėiįy] > Đ;
 Dz } [EĘĖIĮYeęėiįy] > Đ;
 dz } [EĘĖIĮYeęėiįy] > đ;
-
-L } [EĘĖIĮYeęėiįy] > Ľ;
-l } [EĘĖIĮYeęėiįy] > ľ;
-
-N } [EĘĖIĮYeęėiįy] > Ń;
-n } [EĘĖIĮYeęėiįy] > ń;
-
-N } [KkGg] > NG;
-n } [KkGg] > ng;
 
 C } [:Lu:] > TS;
 [:Lu:] { C > TS;

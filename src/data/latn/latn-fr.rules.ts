@@ -1,53 +1,39 @@
 export const latnFrRules = `
 ::Null;
 
-DZ > DZ; Dz > Dz; dz > dz;
-TS > TS; Ts > Ts; ts > ts;
-TH > TH; Th > Th; th > th;
-KH > KH; Kh > Kh; kh > kh;
-GH > GH; Gh > Gh; gh > gh;
-
-NG } [EIYÖÏ] > NGU;
-NG } [eiyöï] > NGu;
-Ng } [EIYÖÏeiyöï] > Ngu;
-ng } [EIYÖÏeiyöï] > ngu;
-NG > NG; Ng > Ng; ng > ng;
-
 IJ > EI;
 Ij > Ei;
 ij > ei;
 
 ::Null;
 
-['·] > ;
+[:^Letter:] { \\' > ;
+\\' } [:^Letter:] > ;
+· > ;
 
-Š } [ABDEFGHIKLMNOPQRSTUVWXYZÄÏÖÜŸĆČĐĽŃŠŽJ] > CH;
+Š } [:Lu:] > CH;
 Š > Ch;
 š > ch;
 
-Č } [ABDEFGHIKLMNOPQRSTUVWXYZÄÏÖÜŸĆČĐĽŃŠŽJ] > TCH;
-Č > Tch;
-č > tch;
+[ČĆ] } [:Lu:] > TCH;
+[ČĆ] > Tch;
+[čć] > tch;
 
-Ć } [ABDEFGHIKLMNOPQRSTUVWXYZÄÏÖÜŸĆČĐĽŃŠŽJ] > TCH;
-Ć > Tch;
-ć > tch;
-
-Đ } [ABDEFGHIKLMNOPQRSTUVWXYZÄÏÖÜŸĆČĐĽŃŠŽJ] > DJ;
+Đ } [:Lu:] > DJ;
 Đ > Dj;
 đ > dj;
 
 Ľ } [:^Letter:] > ILLE;
 ľ } [:^Letter:] > ille;
-Ľ } [ABDEFGHIKLMNOPQRSTUVWXYZÄÏÖÜŸĆČĐĽŃŠŽJ] > LI;
+Ľ } [:Lu:] > LI;
 Ľ > Li;
 ľ > li;
 
-Ń } [ABDEFGHIKLMNOPQRSTUVWXYZÄÏÖÜŸĆČĐĽŃŠŽJ] > GN;
+Ń } [:Lu:] > GN;
 Ń > Gn;
 ń > gn;
 
-X } [ABDEFGHIKLMNOPQRSTUVWXYZÄÏÖÜŸĆČĐĽŃŠŽJ] > KH;
+X } [:Lu:] > KH;
 X > Kh;
 x > kh;
 
@@ -65,23 +51,20 @@ G } [EIYÖÏ] > GU;
 G } [eiyöï] > Gu;
 g } [EIYÖÏeiyöï] > gu;
 
-Ä } [ABDEFGHIKLMNOPQRSTUVWXYZÄÏÖÜŸĆČĐĽŃŠŽJ] > AE;
+Ä } [:Lu:] > AE;
 Ä > Ae;
 ä > ae;
 
-Ö } [ABDEFGHIKLMNOPQRSTUVWXYZÄÏÖÜŸĆČĐĽŃŠŽJ] > EU;
+Ö } [:Lu:] > EU;
 Ö > Eu;
 ö > eu;
 
-U } [ABDEFGHIKLMNOPQRSTUVWXYZÄÏÖÜŸĆČĐĽŃŠŽJ] > OU;
+U } [:Lu:] > OU;
 U > Ou;
 u > ou;
 
-Ü > U;
-ü > u;
-
-Ÿ > U;
-ÿ > u;
+[ÜŸ] > U;
+[üÿ] > u;
 
 Ï > I;
 ï > i;

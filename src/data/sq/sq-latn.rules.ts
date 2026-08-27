@@ -21,13 +21,8 @@ NJ > Ń;
 Nj > Ń;
 nj > ń;
 
-LL > L;
-Ll > L;
-ll > l;
-
-RR > R;
-Rr > R;
-rr > r;
+[lL] { [lL] > ;
+[rR] { [rR] > ;
 
 C } [:Ll:] > Ts;
 [:^Letter:] { C } [:^Letter:] > Ts;
@@ -51,6 +46,6 @@ y > ü;
 J > Y;
 j > y;
 
-Ë > Ï;
-ë > ï;
+Ë > E;
+ë > e;
 `;

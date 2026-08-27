@@ -23,9 +23,9 @@ GH > Γ;
 Gh > Γ;
 gh > γ;
 
-NG > ΓΓ;
-Ng > Γγ;
-ng > γγ;
+[:Letter:] { NG } [:Letter:] > ΓΓ;
+[:Letter:] { Ng } [:Letter:] > Γγ;
+[:Letter:] { ng } [:Letter:] > γγ;
 
 KH > Χ;
 Kh > Χ;
@@ -110,7 +110,8 @@ R > Ρ;
 t > τ;
 T > Τ;
 
-\\' > ;
+[:^Letter:] { \\' > ;
+\\' } [:^Letter:] > ;
 
 ::Null;
 

@@ -18,11 +18,11 @@ import Inventory2Icon from "@mui/icons-material/Inventory2";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import { getTheme } from "./theme";
 import { TransliteratorCard } from "./components/TransliteratorCard";
-import { LINKS, SCATTER } from "./constants";
+import { LINKS, LOCAL_STORAGE_KEYS, SCATTER } from "./constants";
 
 function getInitialMode(): "light" | "dark" {
   if (typeof window === "undefined") return "light";
-  const stored = window.localStorage.getItem("color-mode");
+  const stored = window.localStorage.getItem(LOCAL_STORAGE_KEYS.colorMode);
   if (stored === "light" || stored === "dark") return stored;
   return window.matchMedia?.("(prefers-color-scheme: light)").matches ? "light" : "dark";
 }
@@ -32,7 +32,7 @@ export default function App() {
   const theme = useMemo(() => getTheme(mode), [mode]);
 
   useEffect(() => {
-    window.localStorage.setItem("color-mode", mode);
+    window.localStorage.setItem(LOCAL_STORAGE_KEYS.colorMode, mode);
   }, [mode]);
 
   return (

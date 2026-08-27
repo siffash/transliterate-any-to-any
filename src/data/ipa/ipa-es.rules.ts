@@ -56,8 +56,7 @@ j > y;
 ::Null;
 
 b { b > ;
-c { c } [aáoóuúübcdfghjklmnñpqrstvwxyz] > ;
-c { c } [:^Letter:] > ;
+c { c } [^eéií] > ;
 d { d > ;
 f { f > ;
 g { g > ;
@@ -89,4 +88,5 @@ q } [bcdfghjklmnñpqrstvwxyz] > c;
 q } [:^Letter:] > c;
 
 [bcdfghjklmnñpqrstvwxyz] { y } [:^Letter:] > i;
+[aeo] { y } y > i;
 `;

@@ -1,6 +1,34 @@
-// ICAO system Doc 9303 "Machine Readable Travel Documents, Part 3"
+// Wikipedia romanization of Russian
 
 export const ruEnRules = `
+[ыи] й } [:^Letter:] > y;
+[ЫИ] й } [:^Letter:] > Y;
+[ЫИ] Й } [:^Letter:] > Y;
+
+ые } [:^Letter:] > ye;
+Ые } [:^Letter:] > Ye;
+ЫЕ } [:^Letter:] > YE;
+
+[:^Letter:] { Е } [:Lu:] > YE;
+[:^Letter:] { Е > Ye;
+[:^Letter:] { е > ye;
+
+[АЕЁИОУЫЭЮЯаеёиоуыэюя] { Е } [:Lu:] > YE;
+[АЕЁИОУЫЭЮЯ] { Е > YE;
+[аеёиоуыэюя] { Е > Ye;
+[АЕЁИОУЫЭЮЯаеёиоуыэюя] { е > ye;
+
+[ЪЬ] Е } [:Lu:] > YE;
+[ЪЬ] Е > YE;
+[ЪЬ] е > Ye;
+[ъь] Е } [:Lu:] > YE;
+[ъь] Е > Ye;
+[ъь] е > ye;
+
+[ЪЬ] } [АИОУЫЭаиоуыэ] > Y;
+[ъь] } [АИОУЫЭаиоуыэ] > y;
+[ЪъЬь] > ;
+
 А > A;
 а > a;
 Б > B;
@@ -11,10 +39,14 @@ export const ruEnRules = `
 г > g;
 Д > D;
 д > d;
+Е } [:Lu:] > E;
+[:Lu:] { Е > E;
 Е > E;
 е > e;
-Ё > E;
-ё > e;
+Ё } [:Lu:] > YO;
+[:Lu:] { Ё > YO;
+Ё > Yo;
+ё > yo;
 Ж } [:Lu:] > ZH;
 [:Lu:] { Ж > ZH;
 Ж > Zh;
@@ -23,8 +55,8 @@ export const ruEnRules = `
 з > z;
 И > I;
 и > i;
-Й > I;
-й > i;
+Й > Y;
+й > y;
 К > K;
 к > k;
 Л > L;
@@ -67,24 +99,18 @@ export const ruEnRules = `
 [:Lu:] { Щ > SHCH;
 Щ > Shch;
 щ > shch;
-Ъ } [:Lu:] > IE;
-[:Lu:] { Ъ > IE;
-Ъ > Ie;
-ъ > ie;
 Ы > Y;
 ы > y;
-Ь > ;
-ь > ;
 Э > E;
 э > e;
-Ю } [:Lu:] > IU;
-[:Lu:] { Ю > IU;
-Ю > Iu;
-ю > iu;
-Я } [:Lu:] > IA;
-[:Lu:] { Я > IA;
-Я > Ia;
-я > ia;
+Ю } [:Lu:] > YU;
+[:Lu:] { Ю > YU;
+Ю > Yu;
+ю > yu;
+Я } [:Lu:] > YA;
+[:Lu:] { Я > YA;
+Я > Ya;
+я > ya;
 
 ::Null;
 

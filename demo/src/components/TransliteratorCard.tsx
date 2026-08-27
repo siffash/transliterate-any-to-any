@@ -21,13 +21,27 @@ import { Language, languages } from "transliterate-any-to-any";
 import { multilingualTextStack } from "../theme";
 import { useTransliterateWorker } from "../hooks/useTransliterateWorker";
 import { useSpeechRecognition } from "../hooks/useSpeechRecognition";
-import { DEBOUNCE_MS, MAX_CHARS } from "../constants";
+import { DEBOUNCE_MS, DEFAULT_LANGS, LOCAL_STORAGE_KEYS, MAX_CHARS } from "../constants";
 import { LanguageSelect } from "./LanguageSelect";
 import { CodeBadge } from "./CodeBadge";
 
+function getInitialLangFrom(): Language {
+  if (typeof window === "undefined") return DEFAULT_LANGS.langFrom;
+  const stored = window.localStorage.getItem(LOCAL_STORAGE_KEYS.langFrom);
+  if (stored) return stored as Language;
+  return DEFAULT_LANGS.langFrom;
+}
+
+function getInitialLangTo(): Language {
+  if (typeof window === "undefined") return DEFAULT_LANGS.langTo;
+  const stored = window.localStorage.getItem(LOCAL_STORAGE_KEYS.langTo);
+  if (stored) return stored as Language;
+  return DEFAULT_LANGS.langTo;
+}
+
 export const TransliteratorCard = () => {
-  const [fromLang, setFromLang] = useState<Language>("en");
-  const [toLang, setToLang] = useState<Language>("bg");
+  const [langFrom, setLangFrom] = useState<Language>(getInitialLangFrom);
+  const [langTo, setLangTo] = useState<Language>(getInitialLangTo);
   const [sourceText, setSourceText] = useState("");
   const [targetText, setTargetText] = useState("");
   const [loading, setLoading] = useState(false);
@@ -36,6 +50,7 @@ export const TransliteratorCard = () => {
   const [swapRotation, setSwapRotation] = useState(0);
 
   const { run } = useTransliterateWorker();
+  const sourceTextInputRef = useRef<HTMLInputElement>(null);
   const requestIdRef = useRef(0);
   const baseTextRef = useRef("");
 
@@ -46,7 +61,7 @@ export const TransliteratorCard = () => {
     stop: stopListening,
   } = useSpeechRecognition();
 
-  const fromLocale = useMemo(() => languages[fromLang]?.speechLocale ?? "en-US", [fromLang]);
+  const fromLocale = useMemo(() => languages[langFrom]?.speechLocale ?? "en-US", [langFrom]);
 
   // Debounced transliteration: fires MAX_CHARS/DEBOUNCE_MS after the last keystroke or language change,
   // and ignores a response that arrives after a newer request has already been fired
@@ -57,7 +72,7 @@ export const TransliteratorCard = () => {
       setLoading(false);
       return;
     }
-    if (fromLang === toLang) {
+    if (langFrom === langTo) {
       setTargetText(sourceText);
       setErrorMsg(null);
       setLoading(false);
@@ -68,7 +83,7 @@ export const TransliteratorCard = () => {
     setLoading(true);
 
     const timer = setTimeout(() => {
-      run(sourceText, fromLang, toLang)
+      run(sourceText, langFrom, langTo)
         .then(result => {
           if (thisId === requestIdRef.current) {
             setTargetText(result);
@@ -88,7 +103,15 @@ export const TransliteratorCard = () => {
     }, DEBOUNCE_MS);
 
     return () => clearTimeout(timer);
-  }, [sourceText, fromLang, toLang, run]);
+  }, [sourceText, langFrom, langTo, run]);
+
+  useEffect(() => {
+    window.localStorage.setItem(LOCAL_STORAGE_KEYS.langFrom, langFrom);
+  }, [langFrom]);
+
+  useEffect(() => {
+    window.localStorage.setItem(LOCAL_STORAGE_KEYS.langTo, langTo);
+  }, [langTo]);
 
   useEffect(() => {
     if (errorMsg) {
@@ -103,8 +126,8 @@ export const TransliteratorCard = () => {
 
   const handleSwap = () => {
     setSwapRotation(r => r + 180);
-    setFromLang(toLang);
-    setToLang(fromLang);
+    setLangFrom(langTo);
+    setLangTo(langFrom);
     setSourceText(targetText);
   };
 
@@ -113,6 +136,7 @@ export const TransliteratorCard = () => {
     setTargetText("");
     setErrorMsg(null);
     if (isListening) stopListening();
+    sourceTextInputRef.current?.focus();
   };
 
   const handleCopy = async () => {
@@ -145,20 +169,20 @@ export const TransliteratorCard = () => {
   };
 
   const handleFromLang = (lang: string) => {
-    if (lang === toLang) {
+    if (lang === langTo) {
       handleSwap();
     } else {
-      setFromLang(lang as Language);
+      setLangFrom(lang as Language);
     }
     setTargetText("");
     setErrorMsg(null);
   };
 
   const handleToLang = (lang: string) => {
-    if (lang === fromLang) {
+    if (lang === langFrom) {
       handleSwap();
     } else {
-      setToLang(lang as Language);
+      setLangTo(lang as Language);
     }
     setTargetText("");
     setErrorMsg(null);
@@ -189,7 +213,7 @@ export const TransliteratorCard = () => {
           spacing={2}
           sx={{ alignItems: "center", justifyContent: "center", flexWrap: "wrap", mb: 3 }}
         >
-          <LanguageSelect id="from-lang" label="From" value={fromLang} onChange={handleFromLang} />
+          <LanguageSelect id="from-lang" label="From" value={langFrom} onChange={handleFromLang} />
           <Tooltip title="Swap languages">
             <IconButton
               onClick={handleSwap}
@@ -204,7 +228,7 @@ export const TransliteratorCard = () => {
               <SwapHorizIcon />
             </IconButton>
           </Tooltip>
-          <LanguageSelect id="to-lang" label="To" value={toLang} onChange={handleToLang} />
+          <LanguageSelect id="to-lang" label="To" value={langTo} onChange={handleToLang} />
         </Stack>
 
         <Stack direction={{ xs: "column", md: "row" }} spacing={2.5}>
@@ -222,7 +246,7 @@ export const TransliteratorCard = () => {
             }}
           >
             <Box sx={{ px: 2, pt: 1.5 }}>
-              <CodeBadge code={fromLang} />
+              <CodeBadge code={langFrom} />
             </Box>
             <TextField
               multiline
@@ -237,6 +261,7 @@ export const TransliteratorCard = () => {
                 htmlInput: { maxLength: MAX_CHARS, "aria-label": "Source text" },
               }}
               sx={textAreaSx}
+              inputRef={sourceTextInputRef}
             />
             <Stack
               component="div"
@@ -296,7 +321,7 @@ export const TransliteratorCard = () => {
             }}
           >
             <Box sx={{ px: 2, pt: 1.5 }}>
-              <CodeBadge code={toLang} />
+              <CodeBadge code={langTo} />
             </Box>
             <TextField
               multiline

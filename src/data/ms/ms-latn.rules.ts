@@ -1,10 +1,10 @@
 export const msLatnRules = `
 ::NFC;
 
-SY > Š;
-Sy > Š;
-sY > š;
-sy > š;
+S [YH] > Š;
+S [yh] > Š;
+s [YH] > š;
+s [yh] > š;
 
 NY > Ń;
 Ny > Ń;
@@ -27,6 +27,4 @@ c > č;
 J } [:Lu:] > DŽ;
 J > Dž;
 j > dž;
-
-[aeiouAEIOU] { [Kk] } [:^Letter:] > \\';
 `;

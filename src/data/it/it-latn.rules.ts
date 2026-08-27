@@ -54,6 +54,9 @@ gi } [aouAOU] > dž;
 Gi } [aouAOU] > Dž;
 GI } [AOU] > DŽ;
 
+gn } [aeiouAEIOU] > ny;
+Gn } [aeiouAEIOU] > Ny;
+GN } [aeiouAEIOU] > NY;
 gn > ń;
 Gn > Ń;
 GN > Ń;
@@ -66,10 +69,6 @@ gh > g;
 Gh > G;
 GH > G;
 
-qu > kw;
-Qu > Kw;
-QU > KW;
-
 c } [eiEI] > č;
 C } [eiEI] > Č;
 
@@ -78,9 +77,6 @@ G } [eiEI] > Dž;
 
 c > k;
 C > K;
-
-q > k;
-Q > K;
 
 x > ks;
 X } [:Ll:] > Ks;

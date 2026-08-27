@@ -1,22 +1,18 @@
 export const latnHuRules = `
 ::Null;
 
-DŽDŽ } [:Ll:] > Ddzs;
 DŽDŽ > DDZS;
 Dždž > Ddzs;
 dždž > ddzs;
 
-DZDZ } [:Ll:] > Ddz;
 DZDZ > DDZ;
 Dzdz > Ddz;
 dzdz > ddz;
 
-NGNG } [:Ll:] > Nng;
 NGNG > NNG;
 Ngng > Nng;
 ngng > nng;
 
-KHKH } [:Ll:] > Chch;
 KHKH > CHCH;
 Khkh > Chch;
 khkh > chch;
@@ -25,15 +21,10 @@ TSTS > CC;
 Tsts > Cc;
 tsts > cc;
 
-NG > NG;
-Ng > Ng;
-ng > ng;
-
 DZ > DZ;
 Dz > Dz;
 dz > dz;
 
-DŽ } [:Ll:] > Dzs;
 DŽ > DZS;
 Dž > Dzs;
 dž > dzs;
@@ -60,57 +51,45 @@ ij > ej;
 
 ::Null;
 
-ČČ } [:Ll:] > Ccs;
 ČČ > CCS;
 Čč > Ccs;
 čč > ccs;
 
-ŽŽ } [:Ll:] > Zzs;
+ĆĆ > CCS;
+Ćć > Ccs;
+ćć > ccs;
+
 ŽŽ > ZZS;
 Žž > Zzs;
 žž > zzs;
 
-SS } [:Ll:] > Ssz;
 SS > SSZ;
 Ss > Ssz;
 ss > ssz;
 
-ĆĆ } [:Ll:] > Tty;
-ĆĆ > TTY;
-Ćć > Tty;
-ćć > tty;
-
-ĐĐ } [:Ll:] > Ggy;
 ĐĐ > GGY;
 Đđ > Ggy;
 đđ > ggy;
 
-XX } [:Ll:] > Chch;
 XX > CHCH;
 Xx > Chch;
 xx > chch;
 
-ŃŃ } [:Ll:] > Nny;
 ŃŃ > NNY;
 Ńń > Nny;
 ńń > nny;
 
-ĽĽ } [:Ll:] > Lly;
 ĽĽ > LLY;
 Ľľ > Lly;
 ľľ > lly;
 
-Č } [:Ll:] > Cs;
-Č > CS;
-č > cs;
+[ČĆ] } [:Ll:] > Cs;
+[ČĆ] > CS;
+[čć] > cs;
 
 Ž } [:Ll:] > Zs;
 Ž > ZS;
 ž > zs;
-
-Ć } [:Ll:] > Ty;
-Ć > TY;
-ć > ty;
 
 Đ } [:Ll:] > Gy;
 Đ > GY;
@@ -153,7 +132,9 @@ y > j;
 Ÿ > Ü;
 ÿ > ü;
 
-['·] > ;
+[:^Letter:] { \\' > ;
+\\' } [:^Letter:] > ;
+· > ;
 
 ::Null;
 

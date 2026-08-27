@@ -1,12 +1,10 @@
 export const latnLbRules = `
 ::Null;
 
-DŽ } [:Ll:] > Dsch;
 DŽ > DSCH;
 Dž > Dsch;
 dž > dsch;
 
-DZ } [:Ll:] > Ds;
 DZ > DS;
 Dz > Ds;
 dz > ds;
@@ -83,7 +81,9 @@ z > s;
 [ÏŸ] > I;
 [ïÿ] > i;
 
-['·] > ;
+[:^Letter:] { \\' > ;
+\\' } [:^Letter:] > ;
+· > ;
 
 ::Null;
 

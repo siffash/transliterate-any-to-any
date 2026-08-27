@@ -1,7 +1,6 @@
 export const latnIdRules = `
 ::Null;
 
-I[Jj] } [:Ll:] > Ei;
 IJ > EI;
 Ij > Ei;
 ij > ei;
@@ -26,9 +25,6 @@ Gh > G;
 gh > g;
 
 ::Null;
-
-[:^Letter:] { \\' > ;
-\\' } [:^Letter:] > ;
 
 X } [:Ll:] > Kh;
 X > KH;
@@ -62,6 +58,8 @@ q > k;
 Ľ > L;
 ľ > l;
 
+[:^Letter:] { ['·] > ;
+['·] } [:^Letter:] > ;
 · > \\-;
 
 ::Null;

@@ -1,7 +1,9 @@
 export const latnPlRules = `
 ::Null;
 
-['·] > ;
+[:^Letter:] { \\' > ;
+\\' } [:^Letter:] > ;
+· > ;
 
 IJ > EJ;
 Ij > Ej;
@@ -72,22 +74,28 @@ x > ch;
 
 ž > ż;
 Ž > Ż;
+
 ľ > l;
 Ľ > L;
+
 y > j;
 Y > J;
+
 w > ł;
 W > Ł;
+
 v > w;
 V > W;
+
 ï > y;
 Ï > Y;
+
 q > k;
 Q > K;
-ä > e;
-Ä > E;
-ö > e;
-Ö > E;
+
+[äö] > e;
+[ÄÖ] > E;
+
 [üÿ] > i;
 [ÜŸ] > I;
 

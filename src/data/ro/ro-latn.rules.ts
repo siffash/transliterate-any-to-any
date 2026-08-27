@@ -1,22 +1,23 @@
 export const roLatnRules = `
 ::NFC;
 
-chi } [aouăâîAOUĂÂÎ] > ky;
-Chi } [aouăâîAOUĂÂÎ] > Ky;
-CHi } [aouăâîAOUĂÂÎ] > Ky;
-CHI } [aouăâîAOUĂÂÎ] > KY;
-ghi } [aouăâîAOUĂÂÎ] > gy;
-Ghi } [aouăâîAOUĂÂÎ] > Gy;
-GHi } [aouăâîAOUĂÂÎ] > Gy;
-GHI } [aouăâîAOUĂÂÎ] > GY;
+[:^Letter:] { i } [aoueiAOUEI] > y;
+[:^Letter:] { I } [aoueiAOUEI] > Y;
 
-ci } [ouăâîOUĂÂÎ] > č;
-Ci } [ouăâîOUĂÂÎ] > Č;
-CI } [ouăâîOUĂÂÎ] > Č;
+ch } [iI] [aouăâîAOUĂÂÎ] > k;
+Ch } [iI] [aouăâîAOUĂÂÎ] > K;
+CH } [iI] [aouăâîAOUĂÂÎ] > K;
+CH } [iI] [aouăâîAOUĂÂÎ] > K;
 
-gi } [ouăâîOUĂÂÎ] > dž;
-Gi } [ouăâîOUĂÂÎ] > Dž;
-GI } [ouăâîOUĂÂÎ] > DŽ;
+[gG] { [hH] } [iI] [aouăâîAOUĂÂÎ] > ;
+
+ci } [oueăâîOUEĂÂÎ] > č;
+Ci } [oueăâîOUEĂÂÎ] > Č;
+CI } [oueăâîOUEĂÂÎ] > Č;
+
+gi } [oueăâîOUEĂÂÎ] > dž;
+Gi } [oueăâîOUEĂÂÎ] > Dž;
+GI } [oueăâîOUEĂÂÎ] > DŽ;
 
 ce } [aouăâîAOUĂÂÎ] > č;
 Ce } [aouăâîAOUĂÂÎ] > Č;
@@ -43,25 +44,27 @@ G } [EIY] > DŽ;
 
 c > k;
 C > K;
-ș > š;
-Ș > Š;
-ş > š;
-Ş > Š;
-ț > ts;
-Ț } [:Ll:] > Ts;
-Ț > TS;
-ţ > ts;
-Ţ } [:Ll:] > Ts;
-Ţ > TS;
+
+[șş] > š;
+[ȘŞ] > Š;
+
+[țţ] > ts;
+[ȚŢ] } [:Ll:] > Ts;
+[ȚŢ] > TS;
+
 j > ž;
 J > Ž;
+
 x > ks;
 X } [:Ll:] > Ks;
 X > KS;
+
 ă > a;
 Ă > A;
+
 â > ï;
 Â > Ï;
+
 î > ï;
 Î > Ï;
 `;

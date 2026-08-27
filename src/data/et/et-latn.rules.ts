@@ -1,20 +1,6 @@
 export const etLatnRules = `
 ::NFC;
 
-N } k > Ng;
-N } K > NG;
-n } [kK] > ng;
-
-[AEIOUÕÄÖÜYaeiouõäöüy] { S } [AEIOUÕÄÖÜYaeiouõäöüy] > Z;
-[AEIOUÕÄÖÜYaeiouõäöüy] { s } [AEIOUÕÄÖÜYaeiouõäöüy] > z;
-
-B } [:^Letter:] > P;
-b } [:^Letter:] > p;
-D } [:^Letter:] > T;
-d } [:^Letter:] > t;
-G } [:^Letter:] > K;
-g } [:^Letter:] > k;
-
 Sh > Š;
 SH > Š;
 sh > š;

@@ -14,11 +14,6 @@ export const lvLatnRules = `
 
 ::Null;
 
-E } [BCDFGHKLMNPRSTVZbcdfghklmnprstvz] [AOUaou] > Ä;
-E } [BCDFGHKLMNPRSTVZbcdfghklmnprstvz] [BCDFGHKLMNPRSTVZbcdfghklmnprstvz] [AOUaou] > Ä;
-e } [BCDFGHKLMNPRSTVZbcdfghklmnprstvz] [AOUaou] > ä;
-e } [BCDFGHKLMNPRSTVZbcdfghklmnprstvz] [BCDFGHKLMNPRSTVZbcdfghklmnprstvz] [AOUaou] > ä;
-
 CH > X;
 Ch > X;
 cH > x;

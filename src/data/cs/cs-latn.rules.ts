@@ -5,9 +5,13 @@ x > ks;
 X } [:Ll:] > Ks;
 X > KS;
 
-q > kv;
-Q } [:Ll:] > Kv;
-Q > KV;
+qu } [aeiouáéěíóúůyýAEIOUÁÉĚÍÓÚŮYÝ] > kv;
+qU } [aeiouáéěíóúůyýAEIOUÁÉĚÍÓÚŮYÝ] > kV;
+Qu } [aeiouáéěíóúůyýAEIOUÁÉĚÍÓÚŮYÝ] > Kv;
+QU } [aeiouáéěíóúůyýAEIOUÁÉĚÍÓÚŮYÝ] > KV;
+
+q > k;
+Q > K;
 
 w > v;
 W > V;

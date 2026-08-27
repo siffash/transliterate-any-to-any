@@ -33,10 +33,8 @@ X } [:Lu:] > CH;
 X > Ch;
 x > ch;
 
-Q } [:Lu:] > KV;
-[:Lu:] { Q > KV;
-Q > Kv;
-q > kv;
+Q > K;
+q > k;
 
 W > V;
 w > v;
@@ -71,7 +69,9 @@ y > j;
 Ľ } [eEiI] > L;
 ľ } [eEiI] > l;
 
-['·] > ;
+[:^Letter:] { \\' > ;
+\\' } [:^Letter:] > ;
+· > ;
 
 ::Null;
 

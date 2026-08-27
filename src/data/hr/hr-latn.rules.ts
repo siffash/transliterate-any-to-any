@@ -1,6 +1,11 @@
 export const hrLatnRules = `
 ::NFC;
 
+J } [aeiouAEIOU] > Y;
+j } [aeiouAEIOU] > y;
+
+::Null;
+
 LJ > Ľ;
 Lj > Ľ;
 lJ > Ľ;
@@ -18,6 +23,9 @@ c > ts;
 
 H > X;
 h > x;
+
+Ć > Č;
+ć > č;
 
 J > Y;
 j > y;

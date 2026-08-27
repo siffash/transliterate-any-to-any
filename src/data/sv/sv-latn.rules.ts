@@ -3,64 +3,57 @@ export const svLatnRules = `
 
 [Nn] { G > G;
 [Nn] { g > g;
-SKJ > Š;
-Skj > Š;
-skj > š;
-STJ > Š;
-Stj > Š;
-stj > š;
+
+S [KT] J > Š;
+S [kt] j > Š;
+s [kt] j > š;
+
 SCH > Š;
 Sch > Š;
 sch > š;
-SH > Š;
-Sh > Š;
-sh > š;
-SJ > Š;
-Sj > Š;
-sj > š;
-TJ > Ć;
-Tj > Ć;
-tj > ć;
-KJ > Ć;
-Kj > Ć;
-kj > ć;
+
+S [HJ] > Š;
+S [hj] > Š;
+s [hj] > š;
+
+[TK] J > Ć;
+[TK] j > Ć;
+[tk] j > ć;
+
 CHR > KR;
 Chr > Kr;
 chr > kr;
+
 MICH > MIK;
 Mich > Mik;
 mich > mik;
+
 CH > Š;
 Ch > Š;
 ch > š;
+
 CK > K;
 Ck > K;
 ck > k;
+
 QU > KV;
 Qu > Kv;
 qu > kv;
+
 TION > ŠON;
 Tion > Šon;
 tion > šon;
+
 TH > T;
 Th > T;
 th > t;
+
 PH > F;
 Ph > F;
 ph > f;
 
-[^[:Letter:][:Mark:]] { DJ > J;
-[^[:Letter:][:Mark:]] { Dj > J;
-[^[:Letter:][:Mark:]] { dj > j;
-[^[:Letter:][:Mark:]] { GJ > J;
-[^[:Letter:][:Mark:]] { Gj > J;
-[^[:Letter:][:Mark:]] { gj > j;
-[^[:Letter:][:Mark:]] { HJ > J;
-[^[:Letter:][:Mark:]] { Hj > J;
-[^[:Letter:][:Mark:]] { hj > j;
-[^[:Letter:][:Mark:]] { LJ > J;
-[^[:Letter:][:Mark:]] { Lj > J;
-[^[:Letter:][:Mark:]] { lj > j;
+[^[:Letter:][:Mark:]] { [DGHL] ([Jj]) > &Any-Upper($1);
+[^[:Letter:][:Mark:]] { [dghl] ([Jj]) > &Any-Lower($1);
 
 [Ff] [Aa] [Ll] { K } [Ee] [Nn] > K;
 [Ff] [Aa] [Ll] { k } [Ee] [Nn] > k;
@@ -81,16 +74,10 @@ ph > f;
 [Rr] { g } [AOUÅaouå] > g;
 [Ll] { G } [AOUÅaouå] > G;
 [Ll] { g } [AOUÅaouå] > g;
-[Rr] { G > J;
-[Rr] { g > j;
-[Ll] { G > J;
-[Ll] { g > j;
 
 SK } [EIYÄÖÆØeiyäöæø] > Š;
 Sk } [EIYÄÖÆØeiyäöæø] > Š;
 sk } [EIYÄÖÆØeiyäöæø] > š;
-G } [EIYÄÖÆØeiyäöæø] > J;
-g } [EIYÄÖÆØeiyäöæø] > j;
 C } [EIYÄÖÆØeiyäöæø] > S;
 c } [EIYÄÖÆØeiyäöæø] > s;
 

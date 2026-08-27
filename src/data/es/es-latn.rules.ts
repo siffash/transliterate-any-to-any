@@ -1,60 +1,6 @@
 export const esLatnRules = `
 ::NFC;
 
-ch > č;
-Ch > Č;
-CH > Č;
-
-ll > ľ;
-Ll > Ľ;
-LL > Ľ;
-
-qu } [eéiíEÉIÍ] > k;
-Qu } [eéiíEÉIÍ] > K;
-QU } [eéiíEÉIÍ] > K;
-
-gu } [eéiíEÉIÍ] > g;
-Gu } [eéiíEÉIÍ] > G;
-GU } [eéiíEÉIÍ] > G;
-
-gü } [eéiíEÉIÍ] > gu;
-Gü } [eéiíEÉIÍ] > Gu;
-GÜ } [eéiíEÉIÍ] > GU;
-
-c } [eéiíEÉIÍ] > s;
-C } [eéiíEÉIÍ] > S;
-
-g } [eéiíEÉIÍ] > x;
-G } [eéiíEÉIÍ] > X;
-
-[:^Letter:] { x > s;
-[:^Letter:] { X > S;
-
-y } [:^Letter:] > i;
-Y } [:^Letter:] > I;
-
-x > ks;
-X > Ks;
-
-[cq] > k;
-[CQ] > K;
-
-j > x;
-J > X;
-
-z > s;
-Z > S;
-
-ñ > ń;
-Ñ > Ń;
-
-v > b;
-V > B;
-
-h > ;
-H ([:Letter:]) >| &Any-Upper($1);
-H > ;
-
 á > a;
 Á > A;
 é > e;
@@ -65,4 +11,74 @@ H > ;
 Ó > O;
 [úü] > u;
 [ÚÜ] > U;
+
+::Null;
+
+[mM] [eE] { x } [iI] [cC] [oO] > x;
+[mM] [eE] { X } [iI] [cC] [oO] > X;
+[mM] [eE] { x } [iI] [cC] [aA] [nN] [aoAO] > x;
+[mM] [eE] { X } [iI] [cC] [aA] [nN] [aoAO] > X;
+[tT] [eE] { x } [aA] [sS] > x;
+[tT] [eE] { X } [aA] [sS] > X;
+[oO] [aA] { x } [aA] [cC] [aA] > x;
+[oO] [aA] { X } [aA] [cC] [aA] > X;
+x } [aA] [lL] [aA] [pP] [aA] > x;
+X } [aA] [lL] [aA] [pP] [aA] > X;
+x } [aA] [vV] [iI] [eE] [rR] > x;
+X } [aA] [vV] [iI] [eE] [rR] > X;
+x } [iI] [mM] [eE] [nN] [aA] > x;
+X } [iI] [mM] [eE] [nN] [aA] > X;
+x } [oO] [cC] [hH] [iI] [mM] [iI] [lL] [cC] [oO] > s;
+X } [oO] [cC] [hH] [iI] [mM] [iI] [lL] [cC] [oO] > S;
+
+[:^Letter:] { x > s;
+[:^Letter:] { X > S;
+
+x > ks;
+X > Ks;
+
+ch > č;
+Ch > Č;
+CH > Č;
+
+ll > ľ;
+Ll > Ľ;
+LL > Ľ;
+
+qu } [eiEI] > k;
+Qu } [eiEI] > K;
+QU } [eiEI] > K;
+
+gu } [eiEI] > g;
+Gu } [eiEI] > G;
+GU } [eiEI] > G;
+
+gü } [eiEI] > gu;
+Gü } [eiEI] > Gu;
+GÜ } [eiEI] > GU;
+
+y } [:^Letter:] > i;
+Y } [:^Letter:] > I;
+
+c } [eiEI] > s;
+C } [eiEI] > S;
+
+g } [eiEI] > x;
+G } [eiEI] > X;
+
+j > x;
+J > X;
+
+[cq] > k;
+[CQ] > K;
+
+z > s;
+Z > S;
+
+ñ > ń;
+Ñ > Ń;
+
+h > ;
+H ([:Letter:]) >| &Any-Upper($1);
+H > ;
 `;

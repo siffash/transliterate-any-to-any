@@ -31,48 +31,56 @@ TS > Z;
 
 ::Null;
 
-\\' > ;
+[:^Letter:] { ['·] > ;
+['·] } [:^Letter:] > ;
 · > \\-;
 
 [:^Letter:] { š } [pPtT] > s;
 [:^Letter:] { Š } [pPtT] > S;
+
 [aäeiïoöuüÿAÄEIÏOÖUÜŸ] { s } [aäeiïoöuüÿAÄEIÏOÖUÜŸ] > ss;
 [aäeiïoöuüÿAÄEIÏOÖUÜŸ] { S } [aäeiïoöuüÿ] > Ss;
 [aäeiïoöuüÿAÄEIÏOÖUÜŸ] { S } [AÄEIÏOÖUÜŸ] > SS;
+
 đ > dsch;
 Đ } [:Ll:] > Dsch;
 Đ > DSCH;
-č > tsch;
-Č } [:Ll:] > Tsch;
-Č > TSCH;
-ć > tsch;
-Ć } [:Ll:] > Tsch;
-Ć > TSCH;
-š > sch;
-Š } [:Ll:] > Sch;
-Š > SCH;
-ž > sch;
-Ž } [:Ll:] > Sch;
-Ž > SCH;
+
+[čć] > tsch;
+[ČĆ] } [:Ll:] > Tsch;
+[ČĆ] > TSCH;
+
+[šž] > sch;
+[ŠŽ] } [:Ll:] > Sch;
+[ŠŽ] > SCH;
+
 x > ch;
 X } [:Ll:] > Ch;
 X > CH;
+
 ń > nj;
 Ń } [:Ll:] > Nj;
 Ń > NJ;
+
 ľ > lj;
 Ľ } [:Ll:] > Lj;
 Ľ > LJ;
+
 q > k;
 Q > K;
+
 v > w;
 V > W;
+
 y > j;
 Y > J;
+
 z > s;
 Z > S;
+
 ï > i;
 Ï > I;
+
 ÿ > ü;
 Ÿ > Ü;
 

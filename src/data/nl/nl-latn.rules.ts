@@ -1,17 +1,13 @@
 export const nlLatnRules = `
 ::NFC;
 
-TSJ > Č;
-Tsj > Č;
-tsj > č;
-
 SCH } [:^Letter:] > S;
 Sch } [:^Letter:] > S;
 sch } [:^Letter:] > s;
 
-SCH > SX;
-Sch > Sx;
-sch > sx;
+SCH > SKH;
+Sch > Skh;
+sch > skh;
 
 TIE } [:^Letter:] > TSI;
 Tie } [:^Letter:] > Tsi;
@@ -40,10 +36,6 @@ zh > ž;
 NJ > Ń;
 Nj > Ń;
 nj > ń;
-
-QU > KW;
-Qu > Kw;
-qu > kw;
 
 TH > T;
 Th > T;

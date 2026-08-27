@@ -1,7 +1,20 @@
+import { Language } from "transliterate-any-to-any";
+
 export const LINKS = {
   sourceCode: "https://github.com/siffash/transliterate-any-to-any",
   package: "https://www.npmjs.com/package/transliterate-any-to-any",
   article: "https://dev.to/siffash/transliterate-any-to-any",
+};
+
+export const DEFAULT_LANGS: { langFrom: Language; langTo: Language } = {
+  langFrom: "en",
+  langTo: "bg",
+};
+
+export const LOCAL_STORAGE_KEYS = {
+  colorMode: "color-mode",
+  langFrom: "lang-from",
+  langTo: "lang-to",
 };
 
 export const MAX_CHARS = 5000;

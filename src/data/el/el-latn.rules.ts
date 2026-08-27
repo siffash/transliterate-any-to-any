@@ -99,7 +99,6 @@ export const elLatnRules = `
 ΓΚ } [:^Letter:] > G;
 Γκ } [:^Letter:] > g;
 γκ } [:^Letter:] > g;
-ΓΚ } [:Ll:] > Ng;
 ΓΚ > NG;
 Γκ > Ng;
 γκ > ng;

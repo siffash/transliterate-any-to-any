@@ -2,7 +2,7 @@
 
 # transliterate-any-to-any
 
-A TypeScript library for [transliteration](https://en.wikipedia.org/wiki/Transliteration) (not translation) between [50 supported languages](#supported-languages)
+A TypeScript library for [transliteration](https://en.wikipedia.org/wiki/Transliteration) (not translation) between [50 languages](#supported-languages)
 
 ###### 🚀 [Playground](https://transliterate-any-to-any.js.org) · 📦 [npm package](https://www.npmjs.com/package/transliterate-any-to-any) · 📖 [Read the article](https://dev.to/siffash/transliterate-any-to-any)
 
@@ -18,10 +18,12 @@ A TypeScript library for [transliteration](https://en.wikipedia.org/wiki/Transli
 
 ### Features:
 
-- Loads only the libraries/mappings/rules needed for the given language pair.
+- Transliterates any language pair from the [supported languages list](#supported-languages).
+- Transliterates even between languages of same script (see [Maltese to Latvian example](#examples)).
+- Based on rules & dictionaries, no machine learning overhead.
+- Dynamically imports only the libraries/mappings/rules needed for the given language pair.
 - Supports batching - you can pass an array of strings.
-- Transliterates even between languages of the same script (see [Maltese to Latvian example](#examples)).
-- Can work in browser - but not recommended due to the size of the library, consider using a Web Worker (see the [demo implementation](https://github.com/siffash/transliterate-any-to-any/tree/main/demo)).
+- Can work in browser - but it's recommended to be used in a Web Worker (see the [demo implementation](https://github.com/siffash/transliterate-any-to-any/tree/main/demo)).
 
 ---
 
@@ -30,43 +32,31 @@ A TypeScript library for [transliteration](https://en.wikipedia.org/wiki/Transli
 ## 💡 Examples
 
 ```typescript
+import { transliterate } from "transliterate-any-to-any";
+
 // Maltese -> Latvian
 await transliterate("Marsaxlokk", { from: "mt", to: "lv" }); // -> Marsašlok
-```
 
-```typescript
 // French -> Russian
 await transliterate("Pierre Richard", { from: "fr", to: "ru" }); // -> Пьер Ришар
-```
 
-```typescript
 // Greek -> Armenian
 await transliterate("Λάρισα", { from: "el", to: "hy" }); // -> Լարիսա
-```
 
-```typescript
 // Bulgarian -> Czech
 await transliterate("Копривщица", { from: "bg", to: "cs" }); // -> Koprivštica
-```
 
-```typescript
 // Japanese -> Arabic
 await transliterate("青森", { from: "ja", to: "ar" }); // -> اوموري
-```
 
-```typescript
 // Korean -> English
 await transliterate(["서울", "부산"], { from: "ko", to: "en" }); // -> ["Seoul", "Busan"]
-```
 
-```typescript
 // Chinese -> Bulgarian
 await transliterate(["上海", "广州"], { from: "zh", to: "bg" }); // -> ["Шанхай", "Гуанджоу"]
-```
 
-```typescript
 // Hindi -> Hebrew
-await transliterate(["मुंबई", "कोलकाता"], { from: "hi", to: "he" }); // -> ["מומבאי" ,"קולקטה"]
+await transliterate(["मुंबई", "कोलकाता"], { from: "hi", to: "he" }); // -> ["קולקטה" ,"מומבאי"]
 ```
 
 ---
@@ -78,7 +68,7 @@ await transliterate(["मुंबई", "कोलकाता"], { from: "hi", 
 | Parameter | Type                 | Required | Description                              |
 | --------- | -------------------- | -------- | ---------------------------------------- |
 | `text`    | `string \| string[]` | Yes      | Source text - string or array of strings |
-| `options` | `object`             | Yes      | Options - see below                      |
+| `options` | `object`             | Yes      | Options object - see below               |
 
 #### Options
 
@@ -89,9 +79,43 @@ await transliterate(["मुंबई", "कोलकाता"], { from: "hi", 
 
 ---
 
+## 🔍 Detect Language's Script
+
+By default, the library transforms the source text even if the source & target languages are of same script (see [Maltese to Latvian example](#examples)). If you want to prevent such cases, you can compare the languages' scripts before transliteration:
+
+```typescript
+import { languages } from "transliterate-any-to-any";
+
+if (languages[languageFrom]?.script !== languages[languageTo]?.script) {
+  await transliterate(text, { from: languageFrom, to: languageTo });
+}
+```
+
+---
+
+## ✅ Validate Language By Script
+
+By default, the library validates the source text against the source language by checking the language's script:
+
+```typescript
+await transliterate("ლევან", { from: "en", to: "fr" }); // -> throws an error
+```
+
+If you need to do it yourself, you can use this function:
+
+```typescript
+import { validateLanguageByScript, languages } from "transliterate-any-to-any";
+
+if (!validateLanguageByScript(language, text)) {
+  throw new Error(`The text does not match ${languages[language].name}.`);
+}
+```
+
+---
+
 <a id="supported-languages"></a>
 
-## 🌍 Supported languages
+## 🌍 Supported Languages
 
 | English name  | [BCP 47](https://en.wikipedia.org/wiki/IETF_language_tag) | [ISO 15924 script](https://en.wikipedia.org/wiki/ISO_15924) | Countries where it's mostly used                                      |
 | ------------- | --------------------------------------------------------- | ----------------------------------------------------------- | --------------------------------------------------------------------- |
@@ -148,14 +172,14 @@ await transliterate(["मुंबई", "कोलकाता"], { from: "hi", 
 
 ---
 
-## 📦 Third-party libraries used
+## 📦 Third-Party Libraries Used
 
 - [pinyin-pro](https://github.com/zh-lx/pinyin-pro) for handling Pinyin (Chinese)
 - [opencc-js](https://github.com/nk2028/opencc-js) for handling Traditional & Simplified Chinese & Japanese Kanji (Shinjitai)
 - [kuroshiro](https://github.com/hexenq/kuroshiro) for handling Japanese Hiragana & Katakana
-- [kuroshiro-analyzer-kuromoji](https://github.com/hexenq/kuroshiro-analyzer-kuromoji) for handling Japanese Hiragana & Katakana
-- [aromanize](https://github.com/fujaru/aromanize-js) for handling Korean Hangul
+- [kuroshiro-analyzer-kuromoji](https://github.com/hexenq/kuroshiro-analyzer-kuromoji) for handling Japanese Hiragana & Katakana (patched for browser compatibility)
+- [aromanize](https://github.com/fujaru/aromanize-js) for handling Korean Hangul (patched for browser compatibility)
 - [hangul-js](https://github.com/e-/Hangul.js) for handling Korean Hangul
 - [hanviet-pinyin-words](https://github.com/ph0ngp/hanviet-pinyin-words) for handling Vietnamese
 - [phonemize](https://github.com/hans00/phonemize) for converting some languages to IPA
-- [ICU](https://icu.unicode.org/)'s [Transforms](https://unicode-org.github.io/icu/userguide/transforms/) through [icu-transliterator](https://github.com/longnow/node-icu-transliterator) (for verifying the JS implementation of ICU's RuleBasedTransliterator - RBT)
+- [icu-transliterator](https://github.com/longnow/node-icu-transliterator) for verifying our JS implementation of [ICU](https://icu.unicode.org/)'s [RuleBasedTransliterator (RBT)](https://unicode-org.github.io/icu/userguide/transforms/)

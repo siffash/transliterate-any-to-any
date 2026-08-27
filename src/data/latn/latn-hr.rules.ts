@@ -32,29 +32,39 @@ ij > ej;
 [:Lu:] { Ľ } [:^Letter:] > LJ;
 Ľ > Lj;
 ľ > lj;
+
 Ń } [:Lu:] > NJ;
 [:Lu:] { Ń } [:^Letter:] > NJ;
 Ń > Nj;
 ń > nj;
+
 W > V;
 w > v;
+
 X > H;
 x > h;
+
 Y > J;
 y > j;
+
 Q > K;
 q > k;
+
 Ä > E;
 ä > e;
-Ï > I;
-ï > i;
+
+[ÏŸ] > I;
+[ïÿ] > i;
+
 Ö > O;
 ö > o;
+
 Ü > U;
 ü > u;
-Ÿ > I;
-ÿ > i;
-['·] > ;
+
+[:^Letter:] { \\' > ;
+\\' } [:^Letter:] > ;
+· > ;
 
 ::Null;
 

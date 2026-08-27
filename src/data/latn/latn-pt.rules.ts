@@ -23,15 +23,10 @@ th > t;
 
 ::Null;
 
-[:Lu:] { Ć } [:^Letter:] > TCH;
-Ć } [:Lu:] > TCH;
-Ć > Tch;
-ć > tch;
-
-[:Lu:] { Č } [:^Letter:] > TCH;
-Č } [:Lu:] > TCH;
-Č > Tch;
-č > tch;
+[:Lu:] { [ČĆ] } [:^Letter:] > TCH;
+[ČĆ] } [:Lu:] > TCH;
+[ČĆ] > Tch;
+[čć] > tch;
 
 [:Lu:] { Đ } [:^Letter:] > DJ;
 Đ } [:Lu:] > DJ;
@@ -90,6 +85,8 @@ w > v;
 Ü > U;
 ü > u;
 
+[:^Letter:] { ['·] > ;
+['·] } [:^Letter:] > ;
 · > \\-;
 
 ::Null;

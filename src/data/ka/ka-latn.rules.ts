@@ -7,9 +7,9 @@ export const kaLatnRules = `
 დჟ > d·ž;
 დჰ > d·h;
 ნგ > n·g;
-[თტ]ს > t·s;
-[თტ]ჰ > t·h;
-[კქ]ჰ > k·h;
+[თტ] ს > t·s;
+[თტ] ჰ > t·h;
+[კქ] ჰ > k·h;
 
 ა > a;
 ბ > b;

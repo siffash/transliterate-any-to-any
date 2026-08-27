@@ -10,7 +10,7 @@ const confirmLanguageByRegex = (regex: string, text: string) =>
  * @param text - The text to check (string or array of strings).
  * @returns true if the text is written in the script of the language, false otherwise.
  */
-export const confirmLanguageByScript = (language: Language, text: Text): boolean => {
+export const validateLanguageByScript = (language: Language, text: Text): boolean => {
   const { regex } = scripts[languages[language].script];
   if (typeof text === "string") {
     return confirmLanguageByRegex(regex, text);
