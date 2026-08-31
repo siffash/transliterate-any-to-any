@@ -28,7 +28,7 @@ export const ipaEtRules = `
 [x] > ks;
 [ʐʑʒ] > ž;
 č > tš;
-[:^Letter:] { ŋ > n;
+[^[:L:][:M:]] { ŋ > n;
 ŋ > ng;
 ɸ > f;
 
@@ -68,8 +68,8 @@ v { ː > v;
 ::Null;
 
 i { j } [aeiouõäöü] > ;
-i { j } [:^Letter:] > ;
-õ { j } [:^Letter:] > i;
+i { j } [^[:L:][:M:]] > ;
+õ { j } [^[:L:][:M:]] > i;
 i { j } [bcdfghjklmnprstvwxzžš] > i;
 [šž] { j > ;
 [bcdfghjklmnprstvwxzžš] { šš > š;

@@ -35,8 +35,8 @@ x > ks;
 ʎ > lj;
 ɸ > f;
 
-[:^Letter:] { ʔ > ;
-ʔ } [:^Letter:] > ;
+[^[:L:][:M:]] { ʔ > ;
+ʔ } [^[:L:][:M:]] > ;
 [aeiouyäö] { ʔ } [aeiouyäö] > \\';
 ʔ > ;
 
@@ -48,5 +48,5 @@ x > ks;
 ::Null;
 
 j } [bcdfghklmnpqrstvwxzšž] > i;
-j } [:^Letter:] > i;
+j } [^[:L:][:M:]] > i;
 `;

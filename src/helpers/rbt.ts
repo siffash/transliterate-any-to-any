@@ -73,16 +73,145 @@ function makeRangeTest(startCodepoint: number, endCodepoint: number): (ch: strin
 }
 
 const POSIX_CLASSES: Readonly<Record<string, PosixClassSpec>> = {
-  Mark: { test: makeCharTest("\\p{M}"), matchesStartOfString: false, matchesEndOfString: false },
+  M: { test: makeCharTest("\\p{M}"), matchesStartOfString: false, matchesEndOfString: false },
+  "^M": { test: makeCharTest("\\P{M}"), matchesStartOfString: true, matchesEndOfString: true },
   Mn: { test: makeCharTest("\\p{Mn}"), matchesStartOfString: false, matchesEndOfString: false },
+  "^Mn": { test: makeCharTest("\\P{Mn}"), matchesStartOfString: true, matchesEndOfString: true },
   Lu: { test: makeCharTest("\\p{Lu}"), matchesStartOfString: false, matchesEndOfString: false },
+  "^Lu": { test: makeCharTest("\\P{Lu}"), matchesStartOfString: true, matchesEndOfString: true },
   Ll: { test: makeCharTest("\\p{Ll}"), matchesStartOfString: false, matchesEndOfString: false },
-  Letter: { test: makeCharTest("\\p{L}"), matchesStartOfString: false, matchesEndOfString: false },
-  "^Letter": { test: makeCharTest("\\P{L}"), matchesStartOfString: true, matchesEndOfString: true },
+  "^Ll": { test: makeCharTest("\\P{Ll}"), matchesStartOfString: true, matchesEndOfString: true },
+  L: { test: makeCharTest("\\p{L}"), matchesStartOfString: false, matchesEndOfString: false },
+  "^L": { test: makeCharTest("\\P{L}"), matchesStartOfString: true, matchesEndOfString: true },
+  Han: {
+    test: makeCharTest("\\p{scx=Han}"),
+    matchesStartOfString: false,
+    matchesEndOfString: false,
+  },
+  "^Han": {
+    test: makeCharTest("\\P{scx=Han}"),
+    matchesStartOfString: true,
+    matchesEndOfString: true,
+  },
+  Hiragana: {
+    test: makeCharTest("\\p{scx=Hiragana}"),
+    matchesStartOfString: false,
+    matchesEndOfString: false,
+  },
+  "^Hiragana": {
+    test: makeCharTest("\\P{scx=Hiragana}"),
+    matchesStartOfString: true,
+    matchesEndOfString: true,
+  },
+  Katakana: {
+    test: makeCharTest("\\p{scx=Katakana}"),
+    matchesStartOfString: false,
+    matchesEndOfString: false,
+  },
+  "^Katakana": {
+    test: makeCharTest("\\P{scx=Katakana}"),
+    matchesStartOfString: true,
+    matchesEndOfString: true,
+  },
+  Hangul: {
+    test: makeCharTest("\\p{scx=Hangul}"),
+    matchesStartOfString: false,
+    matchesEndOfString: false,
+  },
+  "^Hangul": {
+    test: makeCharTest("\\P{scx=Hangul}"),
+    matchesStartOfString: true,
+    matchesEndOfString: true,
+  },
+  Devanagari: {
+    test: makeCharTest("\\p{scx=Devanagari}"),
+    matchesStartOfString: false,
+    matchesEndOfString: false,
+  },
+  "^Devanagari": {
+    test: makeCharTest("\\P{scx=Devanagari}"),
+    matchesStartOfString: true,
+    matchesEndOfString: true,
+  },
+  Bengali: {
+    test: makeCharTest("\\p{scx=Bengali}"),
+    matchesStartOfString: false,
+    matchesEndOfString: false,
+  },
+  "^Bengali": {
+    test: makeCharTest("\\P{scx=Bengali}"),
+    matchesStartOfString: true,
+    matchesEndOfString: true,
+  },
   Arabic: {
     test: makeCharTest("\\p{scx=Arabic}"),
     matchesStartOfString: false,
     matchesEndOfString: false,
+  },
+  "^Arabic": {
+    test: makeCharTest("\\P{scx=Arabic}"),
+    matchesStartOfString: true,
+    matchesEndOfString: true,
+  },
+  Hebrew: {
+    test: makeCharTest("\\p{scx=Hebrew}"),
+    matchesStartOfString: false,
+    matchesEndOfString: false,
+  },
+  "^Hebrew": {
+    test: makeCharTest("\\P{scx=Hebrew}"),
+    matchesStartOfString: true,
+    matchesEndOfString: true,
+  },
+  Georgian: {
+    test: makeCharTest("\\p{scx=Georgian}"),
+    matchesStartOfString: false,
+    matchesEndOfString: false,
+  },
+  "^Georgian": {
+    test: makeCharTest("\\P{scx=Georgian}"),
+    matchesStartOfString: true,
+    matchesEndOfString: true,
+  },
+  Armenian: {
+    test: makeCharTest("\\p{scx=Armenian}"),
+    matchesStartOfString: false,
+    matchesEndOfString: false,
+  },
+  "^Armenian": {
+    test: makeCharTest("\\P{scx=Armenian}"),
+    matchesStartOfString: true,
+    matchesEndOfString: true,
+  },
+  Greek: {
+    test: makeCharTest("\\p{scx=Greek}"),
+    matchesStartOfString: false,
+    matchesEndOfString: false,
+  },
+  "^Greek": {
+    test: makeCharTest("\\P{scx=Greek}"),
+    matchesStartOfString: true,
+    matchesEndOfString: true,
+  },
+  Cyrillic: {
+    test: makeCharTest("\\p{scx=Cyrillic}"),
+    matchesStartOfString: false,
+    matchesEndOfString: false,
+  },
+  "^Cyrillic": {
+    test: makeCharTest("\\P{scx=Cyrillic}"),
+    matchesStartOfString: true,
+    matchesEndOfString: true,
+  },
+  Latin: {
+    test: makeCharTest("\\p{scx=Latin}"),
+    matchesStartOfString: false,
+    matchesEndOfString: false,
+  },
+  "^Latin": {
+    test: makeCharTest("\\P{scx=Latin}"),
+    matchesStartOfString: true,
+    matchesEndOfString: true,
   },
 };
 
@@ -757,7 +886,7 @@ class Parser {
     const spec = POSIX_CLASSES[key];
     if (spec === undefined) {
       this.fail(
-        `unknown POSIX class token '[:${key}:]' - supported tokens are [:Mark:], [:Mn:], [:Lu:], [:Ll:], [:Letter:], [:^Letter:], [:Arabic:]`,
+        `unknown POSIX class token '[:${key}:]' - supported tokens are [:M:], [:Mn:], [:Lu:], [:Ll:], [:L:], [:^L:], [:Arabic:]`,
       );
     }
 

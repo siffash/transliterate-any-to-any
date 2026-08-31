@@ -3,15 +3,15 @@ export const deIpaRules = `
 
 ch } arlotte > ʃ;
 
-ng } [:^Letter:] > ŋ;
-ig } [:^Letter:] > ɪç;
-er } [:^Letter:] > ɐ;
-en } [:^Letter:] > ən;
-el } [:^Letter:] > ə;
-e } [:^Letter:] > ə;
-g } [:^Letter:] > k;
-b } [:^Letter:] > p;
-d } [:^Letter:] > t;
+ng } [^[:L:][:M:]] > ŋ;
+ig } [^[:L:][:M:]] > ɪç;
+er } [^[:L:][:M:]] > ɐ;
+en } [^[:L:][:M:]] > ən;
+el } [^[:L:][:M:]] > ə;
+e } [^[:L:][:M:]] > ə;
+g } [^[:L:][:M:]] > k;
+b } [^[:L:][:M:]] > p;
+d } [^[:L:][:M:]] > t;
 
 o } tt > '_ɔ_';
 a } tt > '_a_';
@@ -80,8 +80,8 @@ chr > kʁ;
 ch } [aou] > x;
 ch > ç;
 sch > ʃ;
-[:^Letter:] { sp > ʃp;
-[:^Letter:] { st > ʃt;
+[^[:L:][:M:]] { sp > ʃp;
+[^[:L:][:M:]] { st > ʃt;
 ng > ŋ;
 nk > ŋk;
 ck > k;
@@ -90,8 +90,8 @@ qu > kv;
 ph > f;
 th > t;
 
-i } k [:^Letter:] > ɪ;
-a } l [:^Letter:] > a;
+i } k [^[:L:][:M:]] > ɪ;
+a } l [^[:L:][:M:]] > a;
 
 er } [iɪ] > əʁ;
 en } [bcdfghjklmnpqrstvwxz] > ən;
@@ -102,7 +102,7 @@ b } [ptkçxfsʃ] > p;
 d } [ptkçxfsʃ] > t;
 
 a } [bcdfghjklmnpqrstvwxz] [bcdfghjklmnpqrstvwxz] > a;
-a } [bcdfghjklmnpqrstvwxz] [:^Letter:] > a;
+a } [bcdfghjklmnpqrstvwxz] [^[:L:][:M:]] > a;
 a } [bcdfghjklmnpqrstvwxz] [aäeéiíoöuúüyə] > aː;
 a > a;
 ä } [bcdfghjklmnpqrstvwxz] [bcdfghjklmnpqrstvwxz] > ɛ;

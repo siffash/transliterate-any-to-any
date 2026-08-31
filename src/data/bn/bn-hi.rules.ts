@@ -2,7 +2,7 @@ export const bnHiRules = `
 ::NFC;
 
 য় > य;
-[^[:Letter:][:Mark:]] { য > ज;
+[^[:L:][:M:]] { য > ज;
 ् { ব > व;
 অ > अ;
 আ > आ;
@@ -88,12 +88,12 @@ export const bnHiRules = `
 
 ::Null;
 
-् } [:^Letter:] > ;
+् } [^[:L:][:M:]] > ;
 
 ::Null;
 
-[^[:Letter:][:Mark:]] { ड़ > ड;
-[^[:Letter:][:Mark:]] { ढ़ > ढ;
+[^[:L:][:M:]] { ड़ > ड;
+[^[:L:][:M:]] { ढ़ > ढ;
 ड़ } ् > ड;
 ड़ } ् > ड;
 ढ़ } ् > ढ;

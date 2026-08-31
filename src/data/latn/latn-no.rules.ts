@@ -13,8 +13,8 @@ GH > G;
 Gh > G;
 gh > g;
 
-[:^Letter:] { \\' > ;
-\\' } [:^Letter:] > ;
+[^[:L:][:M:]] { \\' > ;
+\\' } [^[:L:][:M:]] > ;
 · > ;
 
 ::Null;
@@ -31,37 +31,37 @@ gh > g;
 Ï > I;
 ï > i;
 
-[:^Letter:] { [ČĆ] } [:^Letter:] > Tsj;
+[^[:L:][:M:]] { [ČĆ] } [^[:L:][:M:]] > Tsj;
 [ČĆ] } [:Ll:] > Tsj;
 [ČĆ] > TSJ;
 [čć] > tsj;
 
-[:^Letter:] { Đ } [:^Letter:] > Dj;
+[^[:L:][:M:]] { Đ } [^[:L:][:M:]] > Dj;
 Đ } [:Ll:] > Dj;
 Đ > DJ;
 đ > dj;
 
-[:^Letter:] { Ľ } [:^Letter:] > Lj;
+[^[:L:][:M:]] { Ľ } [^[:L:][:M:]] > Lj;
 Ľ } [:Ll:] > Lj;
 Ľ > LJ;
 ľ > lj;
 
-[:^Letter:] { Ń } [:^Letter:] > Nj;
+[^[:L:][:M:]] { Ń } [^[:L:][:M:]] > Nj;
 Ń } [:Ll:] > Nj;
 Ń > NJ;
 ń > nj;
 
-[:^Letter:] { Š } [:^Letter:] > Sj;
+[^[:L:][:M:]] { Š } [^[:L:][:M:]] > Sj;
 Š } [:Ll:] > Sj;
 Š > SJ;
 š > sj;
 
-[:^Letter:] { Ž } [:^Letter:] > Sj;
+[^[:L:][:M:]] { Ž } [^[:L:][:M:]] > Sj;
 Ž } [:Ll:] > Sj;
 Ž > SJ;
 ž > sj;
 
-[:^Letter:] { X } [:^Letter:] > Kh;
+[^[:L:][:M:]] { X } [^[:L:][:M:]] > Kh;
 X } [:Ll:] > Kh;
 X > KH;
 x > kh;

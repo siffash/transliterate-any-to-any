@@ -53,14 +53,14 @@ q > k;
 W > V;
 w > v;
 
-[:^Letter:] { ['·] > ;
-['·] } [:^Letter:] > ;
+[^[:L:][:M:]] { ['·] > ;
+['·] } [^[:L:][:M:]] > ;
 · > \\-;
 
 ::Null;
 
 j } [bcdfghklmnpqrstvwxzšžBCDFGHKLMNPQRSTVWXZŠŽ] > i;
 J } [bcdfghklmnpqrstvwxzšžBCDFGHKLMNPQRSTVWXZŠŽ] > I;
-j } [:^Letter:] > i;
-J } [:^Letter:] > I;
+j } [^[:L:][:M:]] > i;
+J } [^[:L:][:M:]] > I;
 `;

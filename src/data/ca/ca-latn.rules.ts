@@ -10,16 +10,16 @@ L·l > Ll;
 L·L > LL;
 
 h > ;
-H ([:Letter:]) >| &Any-Upper($1);
+H ([:L:]) >| &Any-Upper($1);
 H > ;
 
-[aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] { ig } [:^Letter:] > č;
-[aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] { Ig } [:^Letter:] > Č;
-[aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] { IG } [:^Letter:] > Č;
+[aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] { ig } [^[:L:][:M:]] > č;
+[aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] { Ig } [^[:L:][:M:]] > Č;
+[aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] { IG } [^[:L:][:M:]] > Č;
 
-i { g } [:^Letter:] > č;
-I { g } [:^Letter:] > Č;
-I { G } [:^Letter:] > Č;
+i { g } [^[:L:][:M:]] > č;
+I { g } [^[:L:][:M:]] > Č;
+I { G } [^[:L:][:M:]] > Č;
 
 [aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] { ix > š;
 [aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] { Ix > Š;

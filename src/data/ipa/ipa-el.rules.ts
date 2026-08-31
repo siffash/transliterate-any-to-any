@@ -29,6 +29,6 @@ export const ipaElRules = `
 
 ::Null;
 
-ς } [:Letter:] > σ;
-σ } [:^Letter:] > ς;
+ς } [:L:] > σ;
+σ } [^[:L:][:M:]] > ς;
 `;

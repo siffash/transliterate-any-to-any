@@ -1,5 +1,5 @@
 export const faIpaRules = `
-[:^Letter:] { ا > ʔ;
+[^[:L:][:M:]] { ا > ʔ;
 ا > ɒ;
 آ > ʔɒ;
 ً > æn;
@@ -7,8 +7,8 @@ export const faIpaRules = `
 ِ > e;
 ُ > o;
 ّ > ;
-[ɒu] { ه } [:^Letter:] > h;
-ه } [:^Letter:] > e;
+[ɒu] { ه } [^[:L:][:M:]] > h;
+ه } [^[:L:][:M:]] > e;
 ه > h;
 ة > e;
 x { و } [اآ] > ;

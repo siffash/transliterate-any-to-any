@@ -5,7 +5,7 @@ export const ipaDaRules = `
 
 ::Null;
 
-ɐ } [:^Letter:] > er;
+ɐ } [^[:L:][:M:]] > er;
 ɐ > a;
 [ɚɝ] > er;
 [ɑɒâăʌ] > a;

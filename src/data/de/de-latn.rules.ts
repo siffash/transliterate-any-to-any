@@ -1,12 +1,12 @@
 export const deLatnRules = `
 ::NFC;
 
-[:^Letter:] { S } T > Š;
-[:^Letter:] { S } t > Š;
-[:^Letter:] { s } t > š;
-[:^Letter:] { S } P > Š;
-[:^Letter:] { S } p > Š;
-[:^Letter:] { s } p > š;
+[^[:L:][:M:]] { S } T > Š;
+[^[:L:][:M:]] { S } t > Š;
+[^[:L:][:M:]] { s } t > š;
+[^[:L:][:M:]] { S } P > Š;
+[^[:L:][:M:]] { S } p > Š;
+[^[:L:][:M:]] { s } p > š;
 
 TSCH > Č;
 TSch > Č;
@@ -42,8 +42,8 @@ Z } [:Ll:] > Ts;
 Z > TS;
 z > ts;
 
-[:^Letter:] { S } [AEIOUÄÖÜYaeiouäöüy] > Z;
-[:^Letter:] { s } [AEIOUÄÖÜYaeiouäöüy] > z;
+[^[:L:][:M:]] { S } [AEIOUÄÖÜYaeiouäöüy] > Z;
+[^[:L:][:M:]] { s } [AEIOUÄÖÜYaeiouäöüy] > z;
 [AEIOUÄÖÜYaeiouäöüy] { S } [AEIOUÄÖÜYaeiouäöüy] > Z;
 [AEIOUÄÖÜYaeiouäöüy] { s } [AEIOUÄÖÜYaeiouäöüy] > z;
 

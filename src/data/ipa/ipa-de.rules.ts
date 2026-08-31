@@ -38,8 +38,8 @@ ts > z;
 
 ::Null;
 
-[:^Letter:] { ß > ss;
-[:^Letter:] { ck > k;
+[^[:L:][:M:]] { ß > ss;
+[^[:L:][:M:]] { ck > k;
 
 ::Null;
 
@@ -54,7 +54,7 @@ ts > z;
 ::Null;
 
 q } [^u] > k;
-q } [:^Letter:] > k;
+q } [^[:L:][:M:]] > k;
 
 ::Null;
 

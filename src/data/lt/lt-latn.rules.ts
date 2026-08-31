@@ -3,8 +3,8 @@ export const ltLatnRules = `
 
 [aA] { i } [tT] [ėeĖE] > y;
 [aA] { I } [tT] [ėeĖE] > Y;
-[:^Letter:] { i } [ėeęouųūaąĖEĘOUŲŪAĄ] > y;
-[:^Letter:] { I } [ėeęouųūaąĖEĘOUŲŪAĄ] > Y;
+[^[:L:][:M:]] { i } [ėeęouųūaąĖEĘOUŲŪAĄ] > y;
+[^[:L:][:M:]] { I } [ėeęouųūaąĖEĘOUŲŪAĄ] > Y;
 
 X } [:Lu:] > KS;
 [:Lu:] { X > KS;

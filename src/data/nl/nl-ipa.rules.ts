@@ -5,16 +5,16 @@ export const nlIpaRules = `
 
 ::Null;
 
-{lijken} [:^Letter:] > ləkən;
-{lijks} [:^Letter:] > ləks;
-{lijke} [:^Letter:] > ləkə;
-{lijk} [:^Letter:] > lək;
-{ische} [:^Letter:] > ɪsə;
-{isch} [:^Letter:] > ɪs;
-{ige} [:^Letter:] > əɣə;
-{ig} [:^Letter:] > əx;
-{ties} [:^Letter:] > tsis;
-{tie} [:^Letter:] > tsi;
+{lijken} [^[:L:][:M:]] > ləkən;
+{lijks} [^[:L:][:M:]] > ləks;
+{lijke} [^[:L:][:M:]] > ləkə;
+{lijk} [^[:L:][:M:]] > lək;
+{ische} [^[:L:][:M:]] > ɪsə;
+{isch} [^[:L:][:M:]] > ɪs;
+{ige} [^[:L:][:M:]] > əɣə;
+{ig} [^[:L:][:M:]] > əx;
+{ties} [^[:L:][:M:]] > tsis;
+{tie} [^[:L:][:M:]] > tsi;
 
 eeuw > eːu;
 ieuw > iu;
@@ -22,7 +22,7 @@ aai > aːi;
 ooi > oːi;
 oei > ui;
 
-{sch} [:^Letter:] > s;
+{sch} [^[:L:][:M:]] > s;
 sch > sx;
 ch > x;
 ng > ŋ;
@@ -78,8 +78,8 @@ vv > v;
 ww > ʋ;
 zz > z;
 
-{en} [:^Letter:] > ən;
-{e} [:^Letter:] > ə;
+{en} [^[:L:][:M:]] > ən;
+{e} [^[:L:][:M:]] > ə;
 
 {b} [c f h k p s t] > p;
 {d} [c f h k p s t] > t;
@@ -87,14 +87,14 @@ zz > z;
 {z} [st] > s;
 {g} [st] > x;
 
-{a} [:^Letter:] > aː;
-{o} [:^Letter:] > oː;
-{u} [:^Letter:] > yː;
-{b} [:^Letter:] > p;
-{d} [:^Letter:] > t;
-{v} [:^Letter:] > f;
-{z} [:^Letter:] > s;
-{g} [:^Letter:] > x;
+{a} [^[:L:][:M:]] > aː;
+{o} [^[:L:][:M:]] > oː;
+{u} [^[:L:][:M:]] > yː;
+{b} [^[:L:][:M:]] > p;
+{d} [^[:L:][:M:]] > t;
+{v} [^[:L:][:M:]] > f;
+{z} [^[:L:][:M:]] > s;
+{g} [^[:L:][:M:]] > x;
 
 b > b;
 d > d;

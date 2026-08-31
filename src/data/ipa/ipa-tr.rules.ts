@@ -5,11 +5,11 @@ export const ipaTrRules = `
 
 ::Null;
 
-[:^Letter:] { [ɣɰ] > g;
-[bɓ] } [:^Letter:] > p;
-[dɖɗďð] } [:^Letter:] > t;
-[gɡɢɟ] } [:^Letter:] > k;
-[dɖ] [ʒʐʑž] } [:^Letter:] > ç;
+[^[:L:][:M:]] { [ɣɰ] > g;
+[bɓ] } [^[:L:][:M:]] > p;
+[dɖɗďð] } [^[:L:][:M:]] > t;
+[gɡɢɟ] } [^[:L:][:M:]] > k;
+[dɖ] [ʒʐʑž] } [^[:L:][:M:]] > ç;
 
 [tʈ] [ʂʃɕč] > ç;
 [dɖ] [ʒʐʑž] > c;
@@ -46,6 +46,6 @@ export const ipaTrRules = `
 
 ::Null;
 
-[:^Letter:] { ğ > g;
+[^[:L:][:M:]] { ğ > g;
 [bcçdfgğhjklmnprsştvyz] { ğ > g;
 `;

@@ -15,7 +15,7 @@ export const arFaRules = `
 
 ::Null;
 
-ا { ء } [:^Letter:] > ;
-ة } [:^Letter:] > ه;
+ا { ء } [^[:L:][:M:]] > ;
+ة } [^[:L:][:M:]] > ه;
 ة > ت;
 `;

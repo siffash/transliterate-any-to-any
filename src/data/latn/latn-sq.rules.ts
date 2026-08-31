@@ -83,14 +83,14 @@ y > j;
 Ö > O;
 ö > o;
 
-[:^Letter:] { \\' > ;
-\\' } [:^Letter:] > ;
+[^[:L:][:M:]] { \\' > ;
+\\' } [^[:L:][:M:]] > ;
 · > ;
 
 ::Null;
 
-[:^Letter:] { I } [aAeEëËiIoOuUyY] > J;
-[:^Letter:] { i } [aAeEëËiIoOuUyY] > j;
+[^[:L:][:M:]] { I } [aAeEëËiIoOuUyY] > J;
+[^[:L:][:M:]] { i } [aAeEëËiIoOuUyY] > j;
 
 [bB] { [bB] > ;
 [cC] { [cC] > ;

@@ -1,17 +1,17 @@
 // Wikipedia romanization of Russian
 
 export const ruEnRules = `
-[ыи] й } [:^Letter:] > y;
-[ЫИ] й } [:^Letter:] > Y;
-[ЫИ] Й } [:^Letter:] > Y;
+[ыи] й } [^[:L:][:M:]] > y;
+[ЫИ] й } [^[:L:][:M:]] > Y;
+[ЫИ] Й } [^[:L:][:M:]] > Y;
 
-ые } [:^Letter:] > ye;
-Ые } [:^Letter:] > Ye;
-ЫЕ } [:^Letter:] > YE;
+ые } [^[:L:][:M:]] > ye;
+Ые } [^[:L:][:M:]] > Ye;
+ЫЕ } [^[:L:][:M:]] > YE;
 
-[:^Letter:] { Е } [:Lu:] > YE;
-[:^Letter:] { Е > Ye;
-[:^Letter:] { е > ye;
+[^[:L:][:M:]] { Е } [:Lu:] > YE;
+[^[:L:][:M:]] { Е > Ye;
+[^[:L:][:M:]] { е > ye;
 
 [АЕЁИОУЫЭЮЯаеёиоуыэюя] { Е } [:Lu:] > YE;
 [АЕЁИОУЫЭЮЯ] { Е > YE;
@@ -117,9 +117,9 @@ export const ruEnRules = `
 [wW] { [wW] > ;
 [yY] { [yY] > ;
 [hH] { [hH] > ;
-[iI] { [iIyY] } [:^Letter:] > ;
-[yY] { [iIyY] } [:^Letter:] > ;
-[:^Letter:] { [cC] } [kK] > ;
+[iI] { [iIyY] } [^[:L:][:M:]] > ;
+[yY] { [iIyY] } [^[:L:][:M:]] > ;
+[^[:L:][:M:]] { [cC] } [kK] > ;
 
 ::Null;
 

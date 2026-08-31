@@ -108,20 +108,20 @@ a् > ;
 ं}bh > m;
 ं}b > m;
 ं}m > m;
-ं} [:^Letter:] > m;
+ं} [^[:L:][:M:]] > m;
 ं > n;
 ँ > m̐;
 ः > h;
 
 ::Null;
 
-[:^Letter:] [bcdfghjklmnpqrstvwxyz] hh { a } [:^Letter:] > a;
-[:^Letter:] [bcdfghjklmnpqrstvwxyz] h { a } [:^Letter:] > a;
-[:^Letter:] [bcdfghjklmnpqrstvwxyz] { a } [:^Letter:] > a;
-[bcdfghjklmnpqrstvwxyz] y { a } [:^Letter:] > a;
-[bcdfghjklmnpqrstvwxyz] r { a } [:^Letter:] > a;
-[bcdfghjklmnpqrstvwxyz] v { a } [:^Letter:] > a;
-[bcdfghjklmnpqrstvwxyz] { a } [:^Letter:] > ;
+[^[:L:][:M:]] [bcdfghjklmnpqrstvwxyz] hh { a } [^[:L:][:M:]] > a;
+[^[:L:][:M:]] [bcdfghjklmnpqrstvwxyz] h { a } [^[:L:][:M:]] > a;
+[^[:L:][:M:]] [bcdfghjklmnpqrstvwxyz] { a } [^[:L:][:M:]] > a;
+[bcdfghjklmnpqrstvwxyz] y { a } [^[:L:][:M:]] > a;
+[bcdfghjklmnpqrstvwxyz] r { a } [^[:L:][:M:]] > a;
+[bcdfghjklmnpqrstvwxyz] v { a } [^[:L:][:M:]] > a;
+[bcdfghjklmnpqrstvwxyz] { a } [^[:L:][:M:]] > ;
 
 ::Null;
 
@@ -157,7 +157,7 @@ ey { a } r > a;
 
 w { w > ;
 y { y > ;
-[:^Letter:] { c } k > ;
+[^[:L:][:M:]] { c } k > ;
 
 ::Title;
 `;

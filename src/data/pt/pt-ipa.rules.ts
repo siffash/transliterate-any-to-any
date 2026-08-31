@@ -16,9 +16,9 @@ qu } [aáàãâoóõôuú] > kw;
 gu } [eéêiíî] > g;
 gu } [aáàãâoóõôuú] > gw;
 
-[:^Letter:] { ex } [aáàãâeéêiíîoóõôuú] > iz;
-[:^Letter:] { ex } [bcdfgjklmnpqrstvwxyzçɲʎʃʒʁɾ] > iʃ;
-[:^Letter:] { x > ʃ;
+[^[:L:][:M:]] { ex } [aáàãâeéêiíîoóõôuú] > iz;
+[^[:L:][:M:]] { ex } [bcdfgjklmnpqrstvwxyzçɲʎʃʒʁɾ] > iʃ;
+[^[:L:][:M:]] { x > ʃ;
 x > ʃ;
 
 [aáàâeéêiíîoóôuú] { s } [aáàãâeéêiíîoóõôuú] > z;
@@ -30,25 +30,25 @@ g } [eéêiíî] > ʒ;
 
 j > ʒ;
 
-[:^Letter:] { r > ʁ;
+[^[:L:][:M:]] { r > ʁ;
 r > ɾ;
 
 ãe > ɐ̃j̃;
 ão > ɐ̃w̃;
 õe > õj̃;
 
-én } s [:^Letter:] > ˈɐ̃j̃;
-en } s [:^Letter:] > ɐ̃j̃;
-en } [:^Letter:] > ẽj̃;
-em } [:^Letter:] > ɐ̃j̃;
-ém } [:^Letter:] > ˈɐ̃j̃;
-am } [:^Letter:] > ɐ̃w̃;
-im } [:^Letter:] > ĩ;
-in } [:^Letter:] > ĩ;
-om } [:^Letter:] > õ;
-on } [:^Letter:] > õ;
-um } [:^Letter:] > ũ;
-un } [:^Letter:] > ũ;
+én } s [^[:L:][:M:]] > ˈɐ̃j̃;
+en } s [^[:L:][:M:]] > ɐ̃j̃;
+en } [^[:L:][:M:]] > ẽj̃;
+em } [^[:L:][:M:]] > ɐ̃j̃;
+ém } [^[:L:][:M:]] > ˈɐ̃j̃;
+am } [^[:L:][:M:]] > ɐ̃w̃;
+im } [^[:L:][:M:]] > ĩ;
+in } [^[:L:][:M:]] > ĩ;
+om } [^[:L:][:M:]] > õ;
+on } [^[:L:][:M:]] > õ;
+um } [^[:L:][:M:]] > ũ;
+un } [^[:L:][:M:]] > ũ;
 
 âm } [bcdfgjklmnpqrstvwxyzçɲʎʃʒʁɾ] > ˈɐ̃;
 ân } [bcdfgjklmnpqrstvwxyzçɲʎʃʒʁɾ] > ˈɐ̃;
@@ -103,25 +103,25 @@ oi > oj;
 ô > ˈo;
 ú > ˈu;
 
-a } s [:^Letter:] > ɐ;
-e } s [:^Letter:] > ɨ;
-o } s [:^Letter:] > u;
-a } [lzʃ] [:^Letter:] > a;
-a } [:^Letter:] > ɐ;
-e } [lzʃ] [:^Letter:] > ɛ;
-e } [:^Letter:] > ɨ;
-o } [lzʃ] [:^Letter:] > ɔ;
-o } [:^Letter:] > u;
+a } s [^[:L:][:M:]] > ɐ;
+e } s [^[:L:][:M:]] > ɨ;
+o } s [^[:L:][:M:]] > u;
+a } [lzʃ] [^[:L:][:M:]] > a;
+a } [^[:L:][:M:]] > ɐ;
+e } [lzʃ] [^[:L:][:M:]] > ɛ;
+e } [^[:L:][:M:]] > ɨ;
+o } [lzʃ] [^[:L:][:M:]] > ɔ;
+o } [^[:L:][:M:]] > u;
 
 i } [ˈaáàãâeéêiíîoóõôuúɐɛɨɔõẽĩũɐ̃] > j;
 u } [ˈaáàãâeéêiíîoóõôuúɐɛɨɔõẽĩũɐ̃] > w;
 
 a } tɾ [ií] > ɐ;
 a } [mnɲ] > ɐ;
-[:^Letter:] { a > ɐ;
+[^[:L:][:M:]] { a > ɐ;
 a > a;
-[:^Letter:] { e > ɨ;
-[:^Letter:] { o > u;
+[^[:L:][:M:]] { e > ɨ;
+[^[:L:][:M:]] { o > u;
 e > e;
 i } ɲ > ĩ;
 i > i;
@@ -129,12 +129,12 @@ o > o;
 u > u;
 
 l } [bcdfgjklmnpqrstvwxyzçɲʎʃʒʁɾ] > ɫ;
-l } [:^Letter:] > ɫ;
+l } [^[:L:][:M:]] > ɫ;
 
-[sz] } [:^Letter:] [aáàãâeéêiíîoóõôuúɐ̃ẽĩõũɐɛɨɔjwˈ] > z;
-[sz] } [:^Letter:] [bdgvmnɲlɫʎʁɾʒzj] > ʒ;
+[sz] } [^[:L:][:M:]] [aáàãâeéêiíîoóõôuúɐ̃ẽĩõũɐɛɨɔjwˈ] > z;
+[sz] } [^[:L:][:M:]] [bdgvmnɲlɫʎʁɾʒzj] > ʒ;
 [sz] } [bdgvmnɲlɫʎʁɾʒzj] > ʒ;
-[sz] } [:^Letter:] > ʃ;
+[sz] } [^[:L:][:M:]] > ʃ;
 [sz] } [ptkfsʃcqçx] > ʃ;
 s > s;
 z > z;

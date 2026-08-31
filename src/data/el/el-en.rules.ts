@@ -114,12 +114,12 @@ export const elEnRules = `
 Γκ > Gk;
 γκ > gk;
 
-[:^Letter:] { ΜΠ > B;
-[:^Letter:] { Μπ > B;
-ΜΠ } [:^Letter:] > B;
-Μπ } [:^Letter:] > b;
-μπ } [:^Letter:] > b;
-[:^Letter:] { μπ > b;
+[^[:L:][:M:]] { ΜΠ > B;
+[^[:L:][:M:]] { Μπ > B;
+ΜΠ } [^[:L:][:M:]] > B;
+Μπ } [^[:L:][:M:]] > b;
+μπ } [^[:L:][:M:]] > b;
+[^[:L:][:M:]] { μπ > b;
 
 ΜΠ } [:Ll:] > Mp;
 ΜΠ > MP;
@@ -212,9 +212,9 @@ export const elEnRules = `
 [wW] { [wW] > ;
 [yY] { [yY] > ;
 [hH] { [hH] > ;
-[iI] { [iIyY] } [:^Letter:] > ;
-[yY] { [iIyY] } [:^Letter:] > ;
-[:^Letter:] { [cC] } [kK] > ;
+[iI] { [iIyY] } [^[:L:][:M:]] > ;
+[yY] { [iIyY] } [^[:L:][:M:]] > ;
+[^[:L:][:M:]] { [cC] } [kK] > ;
 
 ::Null;
 

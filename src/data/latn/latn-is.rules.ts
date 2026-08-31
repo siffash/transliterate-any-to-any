@@ -89,15 +89,15 @@ y > j;
 Z > S;
 z > s;
 
-[:^Letter:] { \\' > ;
-\\' } [:^Letter:] > ;
+[^[:L:][:M:]] { \\' > ;
+\\' } [^[:L:][:M:]] > ;
 · > ;
 
 ::Null;
 
 [kKgGhH] { [jJ] } [eEéÉiIíÍyYýÝæÆ] > ;
-[:^Letter:] { ð > d;
-[:^Letter:] { Ð > D;
+[^[:L:][:M:]] { ð > d;
+[^[:L:][:M:]] { Ð > D;
 
 qu } [aeiouyáéíóúýæööAEIOUYÁÉÍÓÚÝÆÖÖ] > kv;
 Qu } [aeiouyáéíóúýæööAEIOUYÁÉÍÓÚÝÆÖÖ] > Kv;

@@ -5,15 +5,15 @@ export const hyLatnRules = `
 Ու > U;
 ու > u;
 
-[:^Letter:] { Ե } [:Lu:] > YE;
-[:^Letter:] { Ե > Ye;
-[:^Letter:] { ե > ye;
+[^[:L:][:M:]] { Ե } [:Lu:] > YE;
+[^[:L:][:M:]] { Ե > Ye;
+[^[:L:][:M:]] { ե > ye;
 
-[:^Letter:] { Ո } [:Lu:] > VO;
-[:^Letter:] { Ո > Vo;
-[:^Letter:] { ո > vo;
+[^[:L:][:M:]] { Ո } [:Lu:] > VO;
+[^[:L:][:M:]] { Ո > Vo;
+[^[:L:][:M:]] { ո > vo;
 
-[:^Letter:] { և > yev;
+[^[:L:][:M:]] { և > yev;
 և > ev;
 
 ::Null;

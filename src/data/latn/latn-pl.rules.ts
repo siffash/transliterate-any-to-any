@@ -1,8 +1,8 @@
 export const latnPlRules = `
 ::Null;
 
-[:^Letter:] { \\' > ;
-\\' } [:^Letter:] > ;
+[^[:L:][:M:]] { \\' > ;
+\\' } [^[:L:][:M:]] > ;
 · > ;
 
 IJ > EJ;

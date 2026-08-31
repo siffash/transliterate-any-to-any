@@ -1,13 +1,13 @@
 export const ipaNlRules = `
 ::Null;
 
-b } [:^Letter:] > p;
+b } [^[:L:][:M:]] > p;
 d͡ʒ > dj;
 d͡z > dz;
 d̪ > t;
-d } [:^Letter:] > t;
-v } [:^Letter:] > f;
-z } [:^Letter:] > s;
+d } [^[:L:][:M:]] > t;
+v } [^[:L:][:M:]] > f;
+z } [^[:L:][:M:]] > s;
 ẽ > en;
 ĩ > in;
 õ > on;
@@ -58,9 +58,9 @@ y } [aâæăɐɑʌeêęẽɘəɛɜiĩɨɪoôõɒɔɤơuũưɯʉʊyʏøœɵ] > j;
 
 ::Null;
 
-a { a } [:^Letter:] > ;
-o { o } [:^Letter:] > ;
-u { u } [:^Letter:] > ;
+a { a } [^[:L:][:M:]] > ;
+o { o } [^[:L:][:M:]] > ;
+u { u } [^[:L:][:M:]] > ;
 
 ch { ch > ;
 sj { sj > ;

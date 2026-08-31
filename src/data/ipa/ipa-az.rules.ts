@@ -5,8 +5,8 @@ export const ipaAzRules = `
 
 ::Null;
 
-[:^Letter:] { ʔ > ;
-ʔ } [:^Letter:] > ;
+[^[:L:][:M:]] { ʔ > ;
+ʔ } [^[:L:][:M:]] > ;
 ʔ > \\';
 
 c > k;
@@ -43,8 +43,8 @@ c > k;
 
 ::Null;
 
-[:^Letter:] { ı > i;
-[:^Letter:] { ğ > q;
+[^[:L:][:M:]] { ı > i;
+[^[:L:][:M:]] { ğ > q;
 [aıou] { q } [aıou] > ğ;
 [eəiöü] { k } [eəiöü] > y;
 `;

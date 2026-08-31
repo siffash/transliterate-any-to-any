@@ -23,8 +23,8 @@ export const faUrRules = `
 
 ::Null;
 
-ے } [:Letter:] > ی;
-ں } [:Letter:] > ن;
-[^[:Letter:][:Mark:]] { ھ > ہ;
+ے } [:L:] > ی;
+ں } [:L:] > ن;
+[^[:L:][:M:]] { ھ > ہ;
 [اآویے] { ھ > ہ;
 `;

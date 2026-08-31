@@ -1,21 +1,21 @@
 export const roIpaRules = `
 ::Lower;
 
-[:^Letter:] {eu} [:^Letter:] > jeu;
-[:^Letter:] {el} [:^Letter:] > jel;
-[:^Letter:] {ei} [:^Letter:] > jej;
-[:^Letter:] {ele} [:^Letter:] > jele;
-[:^Letter:] {ea} [:^Letter:] > ja;
-[:^Letter:] {este} [:^Letter:] > jeste;
-[:^Letter:] {ești} [:^Letter:] > jeʃtʲ;
-[:^Letter:] {eram} [:^Letter:] > jeram;
-[:^Letter:] {erai} [:^Letter:] > jeraj;
-[:^Letter:] {era} [:^Letter:] > jera;
-[:^Letter:] {erați} [:^Letter:] > jerat͡sʲ;
-[:^Letter:] {erau} [:^Letter:] > jerau;
+[^[:L:][:M:]] {eu} [^[:L:][:M:]] > jeu;
+[^[:L:][:M:]] {el} [^[:L:][:M:]] > jel;
+[^[:L:][:M:]] {ei} [^[:L:][:M:]] > jej;
+[^[:L:][:M:]] {ele} [^[:L:][:M:]] > jele;
+[^[:L:][:M:]] {ea} [^[:L:][:M:]] > ja;
+[^[:L:][:M:]] {este} [^[:L:][:M:]] > jeste;
+[^[:L:][:M:]] {ești} [^[:L:][:M:]] > jeʃtʲ;
+[^[:L:][:M:]] {eram} [^[:L:][:M:]] > jeram;
+[^[:L:][:M:]] {erai} [^[:L:][:M:]] > jeraj;
+[^[:L:][:M:]] {era} [^[:L:][:M:]] > jera;
+[^[:L:][:M:]] {erați} [^[:L:][:M:]] > jerat͡sʲ;
+[^[:L:][:M:]] {erau} [^[:L:][:M:]] > jerau;
 
-[:^Letter:] e {x} [aăâeîiou] > gz;
-[:^Letter:] e {x} h [aăâeîiou] > gz;
+[^[:L:][:M:]] e {x} [aăâeîiou] > gz;
+[^[:L:][:M:]] e {x} h [aăâeîiou] > gz;
 x > ks;
 
 {n} c > ŋ;
@@ -35,10 +35,10 @@ x > ks;
 {gio} > d͡ʒo;
 {giu} > d͡ʒu;
 
-{ci} [:^Letter:] > t͡ʃʲ;
-{gi} [:^Letter:] > d͡ʒʲ;
-{chi} [:^Letter:] > kʲ;
-{ghi} [:^Letter:] > gʲ;
+{ci} [^[:L:][:M:]] > t͡ʃʲ;
+{gi} [^[:L:][:M:]] > d͡ʒʲ;
+{chi} [^[:L:][:M:]] > kʲ;
+{ghi} [^[:L:][:M:]] > gʲ;
 
 {cheo} > ke̯o;
 {gheo} > ge̯o;
@@ -63,10 +63,10 @@ eea > eja;
 {e} a > e̯;
 {o} a > o̯;
 
-i {i} [:^Letter:] > j;
-[bdfhjklmnprstvwxzșțkgŋ] r {i} [:^Letter:] > i;
-[bdfhjklmnprstvwxzșțkgŋ] l {i} [:^Letter:] > i;
-[bdfhjklmnprstvwxzșțkgŋ] {i} [:^Letter:] > ʲ;
+i {i} [^[:L:][:M:]] > j;
+[bdfhjklmnprstvwxzșțkgŋ] r {i} [^[:L:][:M:]] > i;
+[bdfhjklmnprstvwxzșțkgŋ] l {i} [^[:L:][:M:]] > i;
+[bdfhjklmnprstvwxzșțkgŋ] {i} [^[:L:][:M:]] > ʲ;
 
 ă > ə;
 â > ɨ;

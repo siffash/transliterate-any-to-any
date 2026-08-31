@@ -17,28 +17,28 @@ export const ukLatnRules = `
 [ьЬ] [оО] > ö;
 
 [AEIOUÏaeiouï] { Є } [:Lu:] > YE;
-[:^Letter:] { Є } [:Lu:] > YE;
+[^[:L:][:M:]] { Є } [:Lu:] > YE;
 [AEIOUÏ] { Є > YE;
 [AEIOUÏaeiouï] { Є > Ye;
-[:^Letter:] { Є > Ye;
+[^[:L:][:M:]] { Є > Ye;
 [AEIOUÏaeiouï] { є > ye;
-[:^Letter:] { є > ye;
+[^[:L:][:M:]] { є > ye;
 
 [AEIOUÏaeiouï] { Ю } [:Lu:] > YU;
-[:^Letter:] { Ю } [:Lu:] > YU;
+[^[:L:][:M:]] { Ю } [:Lu:] > YU;
 [AEIOUÏ] { Ю > YU;
 [AEIOUÏaeiouï] { Ю > Yu;
-[:^Letter:] { Ю > Yu;
+[^[:L:][:M:]] { Ю > Yu;
 [AEIOUÏaeiouï] { ю > yu;
-[:^Letter:] { ю > yu;
+[^[:L:][:M:]] { ю > yu;
 
 [AEIOUÏaeiouï] { Я } [:Lu:] > YA;
-[:^Letter:] { Я } [:Lu:] > YA;
+[^[:L:][:M:]] { Я } [:Lu:] > YA;
 [AEIOUÏ] { Я > YA;
 [AEIOUÏaeiouï] { Я > Ya;
-[:^Letter:] { Я > Ya;
+[^[:L:][:M:]] { Я > Ya;
 [AEIOUÏaeiouï] { я > ya;
-[:^Letter:] { я > ya;
+[^[:L:][:M:]] { я > ya;
 
 Ї } [:Lu:] > YI;
 [:Lu:] { Ї > YI;

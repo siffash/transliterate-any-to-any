@@ -23,42 +23,42 @@ gh > g;
 
 ::Null;
 
-[:^Letter:] { \\' > ;
-\\' } [:^Letter:] > ;
+[^[:L:][:M:]] { \\' > ;
+\\' } [^[:L:][:M:]] > ;
 · > ;
 
 [ĆČ] } [:Ll:] > Tj;
-[ĆČ] } [:^Letter:] > Tj;
+[ĆČ] } [^[:L:][:M:]] > Tj;
 [ĆČ] > TJ;
 [ćč] > tj;
 
 Đ } [:Ll:] > Dj;
-Đ } [:^Letter:] > Dj;
+Đ } [^[:L:][:M:]] > Dj;
 Đ > DJ;
 đ > dj;
 
 Ľ } [:Ll:] > Lj;
-Ľ } [:^Letter:] > Lj;
+Ľ } [^[:L:][:M:]] > Lj;
 Ľ > LJ;
 ľ > lj;
 
 Ń } [:Ll:] > Nj;
-Ń } [:^Letter:] > Nj;
+Ń } [^[:L:][:M:]] > Nj;
 Ń > NJ;
 ń > nj;
 
 Š } [:Ll:] > Sj;
-Š } [:^Letter:] > Sj;
+Š } [^[:L:][:M:]] > Sj;
 Š > SJ;
 š > sj;
 
 Ž } [:Ll:] > Zj;
-Ž } [:^Letter:] > Zj;
+Ž } [^[:L:][:M:]] > Zj;
 Ž > ZJ;
 ž > zj;
 
 X } [:Ll:] > Kh;
-X } [:^Letter:] > Kh;
+X } [^[:L:][:M:]] > Kh;
 X > KH;
 x > kh;
 

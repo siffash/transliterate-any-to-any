@@ -1,7 +1,7 @@
 export const arIpaRules = `
-[:^Letter:] { \u0627 } \u064E >;
-[:^Letter:] { \u0627 } \u0650 >;
-[:^Letter:] { \u0627 } \u064F >;
+[^[:L:][:M:]] { \u0627 } \u064E >;
+[^[:L:][:M:]] { \u0627 } \u0650 >;
+[^[:L:][:M:]] { \u0627 } \u064F >;
 
 \u0629 \u064B > atan;
 \u0629 \u064D > atin;
@@ -10,7 +10,7 @@ export const arIpaRules = `
 \u064B \u0627 > an;
 \u0627 \u064B > an;
 \u0627 \u0629 > aː;
-[:^Letter:] { \u0627 > a;
+[^[:L:][:M:]] { \u0627 > a;
 \u064B > an;
 \u064D > in;
 \u064C > un;
@@ -74,58 +74,58 @@ aʔa > aː;
 
 ::Null;
 
-[:^Letter:] { aːl > al;
-[:^Letter:] { ali > al;
-[:^Letter:] { ʔala > al;
-[:^Letter:] { lili > lil;
-[:^Letter:] { waːl > wal;
+[^[:L:][:M:]] { aːl > al;
+[^[:L:][:M:]] { ali > al;
+[^[:L:][:M:]] { ʔala > al;
+[^[:L:][:M:]] { lili > lil;
+[^[:L:][:M:]] { waːl > wal;
 
 ::Null;
 
-[:^Letter:] { al } tˤ > atˤ;
-[:^Letter:] { al } t > at;
-[:^Letter:] { al } dˤ > adˤ;
-[:^Letter:] { al } d > ad;
-[:^Letter:] { al } r > ar;
-[:^Letter:] { al } zˤ > azˤ;
-[:^Letter:] { al } z > az;
-[:^Letter:] { al } sˤ > asˤ;
-[:^Letter:] { al } s > as;
-[:^Letter:] { al } ʃ > aʃ;
-[:^Letter:] { al } n > an;
-[:^Letter:] { al } θ > aθ;
-[:^Letter:] { al } ð > að;
+[^[:L:][:M:]] { al } tˤ > atˤ;
+[^[:L:][:M:]] { al } t > at;
+[^[:L:][:M:]] { al } dˤ > adˤ;
+[^[:L:][:M:]] { al } d > ad;
+[^[:L:][:M:]] { al } r > ar;
+[^[:L:][:M:]] { al } zˤ > azˤ;
+[^[:L:][:M:]] { al } z > az;
+[^[:L:][:M:]] { al } sˤ > asˤ;
+[^[:L:][:M:]] { al } s > as;
+[^[:L:][:M:]] { al } ʃ > aʃ;
+[^[:L:][:M:]] { al } n > an;
+[^[:L:][:M:]] { al } θ > aθ;
+[^[:L:][:M:]] { al } ð > að;
 
-[:^Letter:] { lil } tˤ > litˤ;
-[:^Letter:] { lil } t > lit;
-[:^Letter:] { lil } dˤ > lidˤ;
-[:^Letter:] { lil } d > lid;
-[:^Letter:] { lil } r > lir;
-[:^Letter:] { lil } zˤ > lizˤ;
-[:^Letter:] { lil } z > liz;
-[:^Letter:] { lil } sˤ > lisˤ;
-[:^Letter:] { lil } s > lis;
-[:^Letter:] { lil } ʃ > liʃ;
-[:^Letter:] { lil } n > lin;
-[:^Letter:] { lil } θ > liθ;
-[:^Letter:] { lil } ð > lið;
+[^[:L:][:M:]] { lil } tˤ > litˤ;
+[^[:L:][:M:]] { lil } t > lit;
+[^[:L:][:M:]] { lil } dˤ > lidˤ;
+[^[:L:][:M:]] { lil } d > lid;
+[^[:L:][:M:]] { lil } r > lir;
+[^[:L:][:M:]] { lil } zˤ > lizˤ;
+[^[:L:][:M:]] { lil } z > liz;
+[^[:L:][:M:]] { lil } sˤ > lisˤ;
+[^[:L:][:M:]] { lil } s > lis;
+[^[:L:][:M:]] { lil } ʃ > liʃ;
+[^[:L:][:M:]] { lil } n > lin;
+[^[:L:][:M:]] { lil } θ > liθ;
+[^[:L:][:M:]] { lil } ð > lið;
 
-[:^Letter:] { wal } tˤ > watˤ;
-[:^Letter:] { wal } t > wat;
-[:^Letter:] { wal } dˤ > wadˤ;
-[:^Letter:] { wal } d > wad;
-[:^Letter:] { wal } r > war;
-[:^Letter:] { wal } zˤ > wazˤ;
-[:^Letter:] { wal } z > waz;
-[:^Letter:] { wal } sˤ > wasˤ;
-[:^Letter:] { wal } s > was;
-[:^Letter:] { wal } ʃ > waʃ;
-[:^Letter:] { wal } n > wan;
-[:^Letter:] { wal } θ > waθ;
-[:^Letter:] { wal } ð > wað;
+[^[:L:][:M:]] { wal } tˤ > watˤ;
+[^[:L:][:M:]] { wal } t > wat;
+[^[:L:][:M:]] { wal } dˤ > wadˤ;
+[^[:L:][:M:]] { wal } d > wad;
+[^[:L:][:M:]] { wal } r > war;
+[^[:L:][:M:]] { wal } zˤ > wazˤ;
+[^[:L:][:M:]] { wal } z > waz;
+[^[:L:][:M:]] { wal } sˤ > wasˤ;
+[^[:L:][:M:]] { wal } s > was;
+[^[:L:][:M:]] { wal } ʃ > waʃ;
+[^[:L:][:M:]] { wal } n > wan;
+[^[:L:][:M:]] { wal } θ > waθ;
+[^[:L:][:M:]] { wal } ð > wað;
 
-[btθdðrzsʃʕɣfqklmnhħʒ] { j } [:^Letter:] > ijj;
-[btθdðrzsʃʕɣfqklmnhħʒ]ˤ { j } [:^Letter:] > ijj;
+[btθdðrzsʃʕɣfqklmnhħʒ] { j } [^[:L:][:M:]] > ijj;
+[btθdðrzsʃʕɣfqklmnhħʒ]ˤ { j } [^[:L:][:M:]] > ijj;
 
 [:Arabic:] > ;
 `;

@@ -8,44 +8,44 @@ export const ukEnRules = `
 зГ > zGH;
 зг > zgh;
 
-[:^Letter:] { Є } [:Lu:] > YE;
-[:^Letter:] { Є > Ye;
+[^[:L:][:M:]] { Є } [:Lu:] > YE;
+[^[:L:][:M:]] { Є > Ye;
 [:Lu:] { Є > IE;
 Є } [:Lu:] > IE;
 Є > Ie;
-[:^Letter:] { є > ye;
+[^[:L:][:M:]] { є > ye;
 є > ie;
 
-[:^Letter:] { Ю } [:Lu:] > YU;
-[:^Letter:] { Ю > Yu;
+[^[:L:][:M:]] { Ю } [:Lu:] > YU;
+[^[:L:][:M:]] { Ю > Yu;
 [:Lu:] { Ю > IU;
 Ю } [:Lu:] > IU;
 Ю > Iu;
-[:^Letter:] { ю > yu;
+[^[:L:][:M:]] { ю > yu;
 ю > iu;
 
-[:^Letter:] { Я } [:Lu:] > YA;
-[:^Letter:] { Я > Ya;
+[^[:L:][:M:]] { Я } [:Lu:] > YA;
+[^[:L:][:M:]] { Я > Ya;
 [:Lu:] { Я > IA;
 Я } [:Lu:] > IA;
 Я > Ia;
-[:^Letter:] { я > ya;
+[^[:L:][:M:]] { я > ya;
 я > ia;
 
-[:^Letter:] { Ї } [:Lu:] > YI;
-[:^Letter:] { Ї > Yi;
+[^[:L:][:M:]] { Ї } [:Lu:] > YI;
+[^[:L:][:M:]] { Ї > Yi;
 [:Lu:] { Ї > I;
 Ї } [:Lu:] > I;
 Ї > I;
-[:^Letter:] { ї > yi;
+[^[:L:][:M:]] { ї > yi;
 ї > i;
 
-[:^Letter:] { Й } [:Lu:] > Y;
-[:^Letter:] { Й > Y;
+[^[:L:][:M:]] { Й } [:Lu:] > Y;
+[^[:L:][:M:]] { Й > Y;
 [:Lu:] { Й > I;
 Й } [:Lu:] > I;
 Й > I;
-[:^Letter:] { й > y;
+[^[:L:][:M:]] { й > y;
 й > i;
 
 [:Lu:] { Щ > SHCH;
@@ -128,9 +128,9 @@ export const ukEnRules = `
 [wW] { [wW] > ;
 [yY] { [yY] > ;
 [hH] { [hH] > ;
-[iI] { [iIyY] } [:^Letter:] > ;
-[yY] { [iIyY] } [:^Letter:] > ;
-[:^Letter:] { [cC] } [kK] > ;
+[iI] { [iIyY] } [^[:L:][:M:]] > ;
+[yY] { [iIyY] } [^[:L:][:M:]] > ;
+[^[:L:][:M:]] { [cC] } [kK] > ;
 
 ::Null;
 

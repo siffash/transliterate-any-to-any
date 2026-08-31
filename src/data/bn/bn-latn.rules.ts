@@ -61,7 +61,7 @@ export const bnLatnRules = `
 
 ::Null;
 
-· } [:^Letter:] > ;
+· } [^[:L:][:M:]] > ;
 · > a;
 
 ::Title;

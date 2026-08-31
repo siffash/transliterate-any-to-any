@@ -9,7 +9,7 @@ export const trLatnRules = `
 û > u;
 
 C } [:Lu:] > DŽ;
-[:Lu:] { C } [:^Letter:] > DŽ;
+[:Lu:] { C } [^[:L:][:M:]] > DŽ;
 [:Lu:] { C } [:Ll:] > Dž;
 [:Lu:] { C > DŽ;
 C > Dž;
@@ -22,7 +22,7 @@ c > dž;
 [eiöüEIÖÜ] { ğ > y;
 
 Ğ } [:Lu:] > GH;
-[:Lu:] { Ğ } [:^Letter:] > GH;
+[:Lu:] { Ğ } [^[:L:][:M:]] > GH;
 [:Lu:] { Ğ } [:Ll:] > Gh;
 [:Lu:] { Ğ > GH;
 Ğ > Gh;

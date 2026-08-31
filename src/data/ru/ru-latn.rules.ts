@@ -50,9 +50,9 @@ export const ruLatnRules = `
 Дь > Đ;
 дь > đ;
 
-[:^Letter:] { Е } [:Lu:] > YE;
-[:^Letter:] { Е > Ye;
-[:^Letter:] { е > ye;
+[^[:L:][:M:]] { Е } [:Lu:] > YE;
+[^[:L:][:M:]] { Е > Ye;
+[^[:L:][:M:]] { е > ye;
 
 [АЕЁИОУЫЭЮЯаеёиоуыэюяAaEeIiOoUuYyÏïĽľŃńĐđ] { Е } [:Lu:] > YE;
 [АЕЁИОУЫЭЮЯAEIOUYÏĽŃĐ] { Е > YE;

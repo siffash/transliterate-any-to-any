@@ -1,8 +1,8 @@
 export const skLatnRules = `
 ::NFC;
 
-rne } [:^Letter:] > rńe;
-RNE } [:^Letter:] > RŃE;
+rne } [^[:L:][:M:]] > rńe;
+RNE } [^[:L:][:M:]] > RŃE;
 
 ch > x;
 Ch > X;

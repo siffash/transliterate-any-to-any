@@ -7,8 +7,8 @@ X > KS;
 
 [aáeéiíoóuúyýæöAÁEÉIÍOÓUÚYÝÆÖrRlL] { g } [^gG] > gh;
 [aáeéiíoóuúyýæöAÁEÉIÍOÓUÚYÝÆÖrRlL] { G } [^gG] > Gh;
-[aáeéiíoóuúyýæöAÁEÉIÍOÓUÚYÝÆÖrRlL] { g } [:^Letter:] > gh;
-[aáeéiíoóuúyýæöAÁEÉIÍOÓUÚYÝÆÖrRlL] { G } [:^Letter:] > Gh;
+[aáeéiíoóuúyýæöAÁEÉIÍOÓUÚYÝÆÖrRlL] { g } [^[:L:][:M:]] > gh;
+[aáeéiíoóuúyýæöAÁEÉIÍOÓUÚYÝÆÖrRlL] { G } [^[:L:][:M:]] > Gh;
 
 [aáeéiíoóuúyýæöAÁEÉIÍOÓUÚYÝÆÖrRlL] { f } [lnLN] > p;
 [aáeéiíoóuúyýæöAÁEÉIÍOÓUÚYÝÆÖrRlL] { F } [lnLN] > P;

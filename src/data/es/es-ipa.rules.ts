@@ -3,10 +3,10 @@ export const esIpaRules = `
 
 m [ée] xic > mexik;
 
-[^[:Letter:][:Mark:]] { ps > s;
-[^[:Letter:][:Mark:]] { gn > n;
-[^[:Letter:][:Mark:]] { mn > n;
-[^[:Letter:][:Mark:]] { pt > t;
+[^[:L:][:M:]] { ps > s;
+[^[:L:][:M:]] { gn > n;
+[^[:L:][:M:]] { mn > n;
+[^[:L:][:M:]] { pt > t;
 
 ch > t͡ʃ;
 ll > ʎ;
@@ -33,14 +33,14 @@ p > p;
 t > t;
 z > θ;
 
-[^[:Letter:][:Mark:]] { r > r;
+[^[:L:][:M:]] { r > r;
 [lns] { r > r;
 r > ɾ;
 
 s } [bβdðɡɣmnɲŋlʎrɾʝz] > z;
 s > s;
 x } [aáeéiíoóuúü] > ks;
-x } [^[:Letter:][:Mark:]] > ks;
+x } [^[:L:][:M:]] > ks;
 x > s;
 
 hi } [aáeéiíoóuúü] > ʝ;
@@ -69,12 +69,12 @@ n } [tdð] > n̪;
 n } [θ] > n̟;
 n } [gɡɣkx] > ŋ;
 
-[^[:Letter:][:Mark:]] { β > b;
+[^[:L:][:M:]] { β > b;
 [mnɲŋ] { β > b;
 
-[^[:Letter:][:Mark:]] { ð > d;
+[^[:L:][:M:]] { ð > d;
 [mnɲŋl{n̪}] { ð > d;
 
-[^[:Letter:][:Mark:]] { ɣ > ɡ;
+[^[:L:][:M:]] { ɣ > ɡ;
 [mnɲŋ] { ɣ > ɡ;
 `;

@@ -6,13 +6,13 @@ export const hyEnRules = `
 ՈՒ > U;
 Ու > U;
 ու > u;
-[:^Letter:] { Ե } [:Lu:] > YE;
-[:^Letter:] { Ե > Ye;
-[:^Letter:] { ե > ye;
-[:^Letter:] { Ո } [:Lu:] > VO;
-[:^Letter:] { Ո > Vo;
-[:^Letter:] { ո > vo;
-[:^Letter:] { և > yev;
+[^[:L:][:M:]] { Ե } [:Lu:] > YE;
+[^[:L:][:M:]] { Ե > Ye;
+[^[:L:][:M:]] { ե > ye;
+[^[:L:][:M:]] { Ո } [:Lu:] > VO;
+[^[:L:][:M:]] { Ո > Vo;
+[^[:L:][:M:]] { ո > vo;
+[^[:L:][:M:]] { և > yev;
 և > ev;
 
 ::Null;
@@ -118,9 +118,9 @@ export const hyEnRules = `
 [wW] { [wW] > ;
 [yY] { [yY] > ;
 [hH] { [hH] > ;
-[iI] { [iIyY] } [:^Letter:] > ;
-[yY] { [iIyY] } [:^Letter:] > ;
-[:^Letter:] { [cC] } [kK] > ;
+[iI] { [iIyY] } [^[:L:][:M:]] > ;
+[yY] { [iIyY] } [^[:L:][:M:]] > ;
+[^[:L:][:M:]] { [cC] } [kK] > ;
 
 ::Null;
 

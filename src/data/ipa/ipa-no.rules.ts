@@ -6,11 +6,11 @@ export const ipaNoRules = `
 ::Null;
 
 [ʈt] [ʂɕ] > tsj;
-[:^Letter:] { ʂ > sj;
-[:^Letter:] { ʈ > t;
-[:^Letter:] { ɖ > d;
-[:^Letter:] { ɳ > n;
-[:^Letter:] { ɭ > l;
+[^[:L:][:M:]] { ʂ > sj;
+[^[:L:][:M:]] { ʈ > t;
+[^[:L:][:M:]] { ɖ > d;
+[^[:L:][:M:]] { ɳ > n;
+[^[:L:][:M:]] { ɭ > l;
 
 [âăɐɑɒʌ] > a;
 ɓ > b;

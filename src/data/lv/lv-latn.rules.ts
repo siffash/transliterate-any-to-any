@@ -20,7 +20,7 @@ cH > x;
 ch > x;
 
 C } [:Lu:] > TS;
-C } [:^Letter:] > TS;
+C } [^[:L:][:M:]] > TS;
 C > Ts;
 c > ts;
 

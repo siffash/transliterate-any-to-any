@@ -79,7 +79,7 @@ export const bnIpaRules = `
 ::Null;
 
 { ɔ } [eæ] > ;
-[aeiouɔæ] [̃]? [kɡŋ{tʃ}{dʒ}ʈɖɽtdnpbmjrlʃh] [ʰʱ̪]* { ɔ } [:^Letter:] > ;
+[aeiouɔæ] [̃]? [kɡŋ{tʃ}{dʒ}ʈɖɽtdnpbmjrlʃh] [ʰʱ̪]* { ɔ } [^[:L:][:M:]] > ;
 
 ::Null;
 

@@ -11,9 +11,9 @@ n } [kg] > ŋ;
 n } [bp] > m;
 
 [^aeioujy] { r } [^aeioujy] > r̩;
-[:^Letter:] { r } [^aeioujy] > r̩;
-[^aeioujy] { r } [:^Letter:] > r̩;
-[:^Letter:] { r } [:^Letter:] > r̩;
+[^[:L:][:M:]] { r } [^aeioujy] > r̩;
+[^aeioujy] { r } [^[:L:][:M:]] > r̩;
+[^[:L:][:M:]] { r } [^[:L:][:M:]] > r̩;
 v } [ptksšcčćfh] > f;
 
 a > a;

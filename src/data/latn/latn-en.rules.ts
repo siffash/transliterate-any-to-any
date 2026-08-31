@@ -9,10 +9,10 @@ dž > j;
 Đ > J;
 đ > j;
 
-IJ } [:^Letter:] > AY;
-Ij } [:^Letter:] > Ay;
-iJ } [:^Letter:] > aY;
-ij } [:^Letter:] > ay;
+IJ } [^[:L:][:M:]] > AY;
+Ij } [^[:L:][:M:]] > Ay;
+iJ } [^[:L:][:M:]] > aY;
+ij } [^[:L:][:M:]] > ay;
 IJ > EY;
 Ij > Ey;
 iJ > eY;
@@ -70,8 +70,8 @@ Ks > X;
 kS > x;
 ks > x;
 
-[:^Letter:] { \\' > ;
-\\' } [:^Letter:] > ;
+[^[:L:][:M:]] { \\' > ;
+\\' } [^[:L:][:M:]] > ;
 · > ;
 
 ::Null;
@@ -79,9 +79,9 @@ ks > x;
 [wW] { [wW] > ;
 [yY] { [yY] > ;
 [hH] { [hH] > ;
-[iI] { [iIyY] } [:^Letter:] > ;
-[yY] { [iIyY] } [:^Letter:] > ;
-[:^Letter:] { [cC] } [kK] > ;
+[iI] { [iIyY] } [^[:L:][:M:]] > ;
+[yY] { [iIyY] } [^[:L:][:M:]] > ;
+[^[:L:][:M:]] { [cC] } [kK] > ;
 
 ::Null;
 

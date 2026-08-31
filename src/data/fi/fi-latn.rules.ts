@@ -25,13 +25,13 @@ c > k;
 
 X } [:Ll:] > Ks;
 [:Ll:] { X > Ks;
-[:^Letter:] { X } [:^Letter:] > KS;
+[^[:L:][:M:]] { X } [^[:L:][:M:]] > KS;
 X > KS;
 x > ks;
 
 Z } [:Ll:] > Ts;
 [:Ll:] { Z > Ts;
-[:^Letter:] { Z } [:^Letter:] > TS;
+[^[:L:][:M:]] { Z } [^[:L:][:M:]] > TS;
 Z > TS;
 z > ts;
 

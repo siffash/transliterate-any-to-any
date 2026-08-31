@@ -23,32 +23,32 @@ th > t;
 
 ::Null;
 
-[:Lu:] { [ČĆ] } [:^Letter:] > TCH;
+[:Lu:] { [ČĆ] } [^[:L:][:M:]] > TCH;
 [ČĆ] } [:Lu:] > TCH;
 [ČĆ] > Tch;
 [čć] > tch;
 
-[:Lu:] { Đ } [:^Letter:] > DJ;
+[:Lu:] { Đ } [^[:L:][:M:]] > DJ;
 Đ } [:Lu:] > DJ;
 Đ > Dj;
 đ > dj;
 
-[:Lu:] { Ľ } [:^Letter:] > LH;
+[:Lu:] { Ľ } [^[:L:][:M:]] > LH;
 Ľ } [:Lu:] > LH;
 Ľ > Lh;
 ľ > lh;
 
-[:Lu:] { Ń } [:^Letter:] > NH;
+[:Lu:] { Ń } [^[:L:][:M:]] > NH;
 Ń } [:Lu:] > NH;
 Ń > Nh;
 ń > nh;
 
-[:Lu:] { Š } [:^Letter:] > CH;
+[:Lu:] { Š } [^[:L:][:M:]] > CH;
 Š } [:Lu:] > CH;
 Š > Ch;
 š > ch;
 
-[:Lu:] { X } [:^Letter:] > KH;
+[:Lu:] { X } [^[:L:][:M:]] > KH;
 X } [:Lu:] > KH;
 X > Kh;
 x > kh;
@@ -85,8 +85,8 @@ w > v;
 [ÜŸ] > U;
 [üÿ] > u;
 
-[:^Letter:] { ['·] > ;
-['·] } [:^Letter:] > ;
+[^[:L:][:M:]] { ['·] > ;
+['·] } [^[:L:][:M:]] > ;
 · > \\-;
 
 ::Null;
@@ -97,19 +97,19 @@ w > v;
 Ç } [bBcCdDfFgGhHjJkKlLmMnNpPqQrRsStTvVwWxXzZ] > S;
 [bBcCdDfFgGhHjJkKlLmMnNpPqQrRsStTvVwWxXzZ] { ç > s;
 [bBcCdDfFgGhHjJkKlLmMnNpPqQrRsStTvVwWxXzZ] { Ç > S;
-[:^Letter:] { ç > s;
-[:^Letter:] { Ç > S;
-ç } [:^Letter:] > s;
-Ç } [:^Letter:] > S;
+[^[:L:][:M:]] { ç > s;
+[^[:L:][:M:]] { Ç > S;
+ç } [^[:L:][:M:]] > s;
+Ç } [^[:L:][:M:]] > S;
 
-[:^Letter:] { rr > r;
-[:^Letter:] { Rr > R;
-[:^Letter:] { rR > R;
-[:^Letter:] { RR > R;
-rr } [:^Letter:] > r;
-Rr } [:^Letter:] > r;
-rR } [:^Letter:] > R;
-RR } [:^Letter:] > R;
+[^[:L:][:M:]] { rr > r;
+[^[:L:][:M:]] { Rr > R;
+[^[:L:][:M:]] { rR > R;
+[^[:L:][:M:]] { RR > R;
+rr } [^[:L:][:M:]] > r;
+Rr } [^[:L:][:M:]] > r;
+rR } [^[:L:][:M:]] > R;
+RR } [^[:L:][:M:]] > R;
 [bBcCdDfFgGhHjJkKlLmMnNpPqQsStTvVwWxXzZ] { rr > r;
 [bBcCdDfFgGhHjJkKlLmMnNpPqQsStTvVwWxXzZ] { Rr > R;
 [bBcCdDfFgGhHjJkKlLmMnNpPqQsStTvVwWxXzZ] { rR > R;
@@ -119,14 +119,14 @@ Rr } [bBcCdDfFgGhHjJkKlLmMnNpPqQsStTvVwWxXzZ] > r;
 rR } [bBcCdDfFgGhHjJkKlLmMnNpPqQsStTvVwWxXzZ] > R;
 RR } [bBcCdDfFgGhHjJkKlLmMnNpPqQsStTvVwWxXzZ] > R;
 
-[:^Letter:] { ss > s;
-[:^Letter:] { Ss > S;
-[:^Letter:] { sS > S;
-[:^Letter:] { SS > S;
-ss } [:^Letter:] > s;
-Ss } [:^Letter:] > s;
-sS } [:^Letter:] > S;
-SS } [:^Letter:] > S;
+[^[:L:][:M:]] { ss > s;
+[^[:L:][:M:]] { Ss > S;
+[^[:L:][:M:]] { sS > S;
+[^[:L:][:M:]] { SS > S;
+ss } [^[:L:][:M:]] > s;
+Ss } [^[:L:][:M:]] > s;
+sS } [^[:L:][:M:]] > S;
+SS } [^[:L:][:M:]] > S;
 [bBcCdDfFgGhHjJkKlLmMnNpPqQrRtTvVwWxXzZ] { ss > s;
 [bBcCdDfFgGhHjJkKlLmMnNpPqQrRtTvVwWxXzZ] { Ss > S;
 [bBcCdDfFgGhHjJkKlLmMnNpPqQrRtTvVwWxXzZ] { sS > S;

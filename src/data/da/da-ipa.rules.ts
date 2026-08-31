@@ -2,10 +2,10 @@ export const daIpaRules = `
 ::Lower;
 
 aa { r } [^aeiouyæøåː] > ;
-[:Letter:] [ouå] { g } [:^Letter:] > w;
-[ar] { g } [:^Letter:] > ;
-jeg } [:^Letter:] > jɑj;
-mig } [:^Letter:] > mɑj;
+[:L:] [ouå] { g } [^[:L:][:M:]] > w;
+[ar] { g } [^[:L:][:M:]] > ;
+jeg } [^[:L:][:M:]] > jɑj;
+mig } [^[:L:][:M:]] > mɑj;
 
 ::Null;
 
@@ -25,19 +25,19 @@ y } [bcdfghjklmnpqrstvwxz] [aeiouyæøåː] > yː;
 ø } [bcdfghjklmnpqrstvwxz] [aeiouyæøåː] > øː;
 å } [bcdfghjklmnpqrstvwxz] [aeiouyæøåː] > ɔː;
 
-a } [:^Letter:] > ɑː;
-i } [:^Letter:] > iː;
-o } [:^Letter:] > oː;
-u } [:^Letter:] > uː;
-y } [:^Letter:] > yː;
-æ } [:^Letter:] > ɛː;
-ø } [:^Letter:] > øː;
-å } [:^Letter:] > ɔː;
+a } [^[:L:][:M:]] > ɑː;
+i } [^[:L:][:M:]] > iː;
+o } [^[:L:][:M:]] > oː;
+u } [^[:L:][:M:]] > uː;
+y } [^[:L:][:M:]] > yː;
+æ } [^[:L:][:M:]] > ɛː;
+ø } [^[:L:][:M:]] > øː;
+å } [^[:L:][:M:]] > ɔː;
 
-i } g [:^Letter:] > iː;
-e } g [:^Letter:] > eː;
+i } g [^[:L:][:M:]] > iː;
+e } g [^[:L:][:M:]] > eː;
 
-[{iː}{eː}] { g } [:^Letter:] > ;
+[{iː}{eː}] { g } [^[:L:][:M:]] > ;
 
 tion > sjon;
 th > t;
@@ -57,23 +57,23 @@ ch > ɕ;
 ng > ŋ;
 nk > ŋk;
 
-er } [:^Letter:] > ɐ;
-e } [:^Letter:] > ə;
-a [vf] n } [:^Letter:] > ɑʊ̯n;
-a [vf] } [:^Letter:] > ɑʊ̯;
+er } [^[:L:][:M:]] > ɐ;
+e } [^[:L:][:M:]] > ə;
+a [vf] n } [^[:L:][:M:]] > ɑʊ̯n;
+a [vf] } [^[:L:][:M:]] > ɑʊ̯;
 
 [aeiouyæøåː] { r } [^aeiouyæøåː] > ɐ̯;
-[aeiouyæøåː] { r } [:^Letter:] > ɐ̯;
+[aeiouyæøåː] { r } [^[:L:][:M:]] > ɐ̯;
 
 [aeiouyæøåː] { d } [aeiouyæøåːlrn] > ð;
-[aeiouyæøåː] { d } [:^Letter:] > ð;
+[aeiouyæøåː] { d } [^[:L:][:M:]] > ð;
 [aeiouyæøåː] { t } [aeiouyæøåːɐ] > ð;
 
 j } eg > ɑɪ̯;
 eg > eːɡ;
 og > ɔʊ̯;
 øg > øj;
-en } [:^Letter:] > n̩;
+en } [^[:L:][:M:]] > n̩;
 
 c } [eiyæø] > s;
 c > k;
@@ -119,13 +119,13 @@ p { p > ;
 s { s > ;
 f { f > ;
 
-[:^Letter:] { p > pʰ;
+[^[:L:][:M:]] { p > pʰ;
 p } [aeiouyæøåːlrj] > pʰ;
 
-[:^Letter:] { t > tʰ;
+[^[:L:][:M:]] { t > tʰ;
 t } [aeiouyæøåːlrj] > tʰ;
 
-[:^Letter:] { k > kʰ;
+[^[:L:][:M:]] { k > kʰ;
 k } [aeiouyæøåːlrj] > kʰ;
 
 g > k;

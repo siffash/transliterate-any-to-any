@@ -43,7 +43,7 @@ nj > ɲ;
 č > t͡ʃ;
 š > ʃ;
 ž > ʒ;
-[c] } [:^Letter:] > t͡s;
+[c] } [^[:L:][:M:]] > t͡s;
 c > t͡s;
 ou > u;
 ai > aj;
@@ -67,17 +67,17 @@ s } [bgdzž{dž}đ{d͡ʒ}{d͡ʑ}] > z;
 t͡ɕ } [bgdzž{dž}đ{d͡ʒ}{d͡ʑ}] > d͡ʑ;
 t͡ʃ } [bgdzž{dž}đ{d͡ʒ}{d͡ʑ}] > d͡ʒ;
 
-b } [:^Letter:] > p;
-d } [:^Letter:] > t;
-g } [:^Letter:] > k;
-v } [:^Letter:] > f;
-z } [:^Letter:] > s;
-ʒ } [:^Letter:] > ʃ;
-d͡ʑ } [:^Letter:] > t͡ɕ;
-d͡ʒ } [:^Letter:] > t͡ʃ;
+b } [^[:L:][:M:]] > p;
+d } [^[:L:][:M:]] > t;
+g } [^[:L:][:M:]] > k;
+v } [^[:L:][:M:]] > f;
+z } [^[:L:][:M:]] > s;
+ʒ } [^[:L:][:M:]] > ʃ;
+d͡ʑ } [^[:L:][:M:]] > t͡ɕ;
+d͡ʒ } [^[:L:][:M:]] > t͡ʃ;
 
 [^aeiouɛɔ] { r } [^aeiouɛɔ] > r̩;
-[:^Letter:] { r } [^aeiouɛɔ] > r̩;
+[^[:L:][:M:]] { r } [^aeiouɛɔ] > r̩;
 
 a > a;
 b > b;

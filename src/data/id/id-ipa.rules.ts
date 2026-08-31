@@ -19,7 +19,7 @@ n } g > ŋ;
 n } q > ŋ;
 n } x > ŋ;
 
-[aiueo] { k } [:^Letter:] > ʔ;
+[aiueo] { k } [^[:L:][:M:]] > ʔ;
 [aiueo] { k } [bcdfghjklmnpqrstvwxyz] > ʔ;
 
 ai > aɪ;

@@ -25,12 +25,12 @@ nj > ń;
 [rR] { [rR] > ;
 
 C } [:Ll:] > Ts;
-[:^Letter:] { C } [:^Letter:] > Ts;
+[^[:L:][:M:]] { C } [^[:L:][:M:]] > Ts;
 C > TS;
 c > ts;
 
 X } [:Ll:] > Dz;
-[:^Letter:] { X } [:^Letter:] > Dz;
+[^[:L:][:M:]] { X } [^[:L:][:M:]] > Dz;
 X > DZ;
 x > dz;
 

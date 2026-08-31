@@ -1,17 +1,17 @@
 export const nlLatnRules = `
 ::NFC;
 
-SCH } [:^Letter:] > S;
-Sch } [:^Letter:] > S;
-sch } [:^Letter:] > s;
+SCH } [^[:L:][:M:]] > S;
+Sch } [^[:L:][:M:]] > S;
+sch } [^[:L:][:M:]] > s;
 
 SCH > SKH;
 Sch > Skh;
 sch > skh;
 
-TIE } [:^Letter:] > TSI;
-Tie } [:^Letter:] > Tsi;
-tie } [:^Letter:] > tsi;
+TIE } [^[:L:][:M:]] > TSI;
+Tie } [^[:L:][:M:]] > Tsi;
+tie } [^[:L:][:M:]] > tsi;
 
 SJ > Š;
 Sj > Š;
@@ -96,18 +96,18 @@ X } [:Lu:] > KS;
 X > Ks;
 x > ks;
 
-[:^Letter:] { U > Ÿ;
-[:^Letter:] { u > ÿ;
+[^[:L:][:M:]] { U > Ÿ;
+[^[:L:][:M:]] { u > ÿ;
 [^AaOoÁáÓó] { U > Ÿ;
 [^AaOoÁáÓó] { u > ÿ;
 
-[:^Letter:] { G > Gh;
-[:^Letter:] { g > gh;
+[^[:L:][:M:]] { G > Gh;
+[^[:L:][:M:]] { g > gh;
 [^Nn] { G > Gh;
 [^Nn] { g > gh;
 
-[:^Letter:] { J > Y;
-[:^Letter:] { j > y;
+[^[:L:][:M:]] { J > Y;
+[^[:L:][:M:]] { j > y;
 [^IiÍí] { J > Y;
 [^IiÍí] { j > y;
 `;

@@ -1,10 +1,10 @@
 // Streamlined System with -ia-exception (2009 Transliteration Act)
 
 export const bgEnRules = `
-ия } [:^Letter:] > ia;
-Ия } [:^Letter:] > Ia;
-ИЯ } [:^Letter:] > IA;
-иЯ } [:^Letter:] > iA;
+ия } [^[:L:][:M:]] > ia;
+Ия } [^[:L:][:M:]] > Ia;
+ИЯ } [^[:L:][:M:]] > IA;
+иЯ } [^[:L:][:M:]] > iA;
 
 [:Lu:] { Ж > ZH;
 Ж } [:Lu:] > ZH;
@@ -95,9 +95,9 @@ export const bgEnRules = `
 [wW] { [wW] > ;
 [yY] { [yY] > ;
 [hH] { [hH] > ;
-[iI] { [iIyY] } [:^Letter:] > ;
-[yY] { [iIyY] } [:^Letter:] > ;
-[:^Letter:] { [cC] } [kK] > ;
+[iI] { [iIyY] } [^[:L:][:M:]] > ;
+[yY] { [iIyY] } [^[:L:][:M:]] > ;
+[^[:L:][:M:]] { [cC] } [kK] > ;
 
 ::Null;
 

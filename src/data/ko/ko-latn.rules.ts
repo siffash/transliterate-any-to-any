@@ -2,7 +2,7 @@ export const koLatnRules = `
 ::Lower;
 ::NFC;
 
-[:^Letter:] { ng > ;
+[^[:L:][:M:]] { ng > ;
 
 wae > wä;
 yae > yä;

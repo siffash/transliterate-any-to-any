@@ -79,8 +79,8 @@ describe("whitespace is ignored during compilation unless quoted", () => {
       expected: "hello",
     },
     {
-      name: "whitespace is tolerated around a POSIX class name, so '[: Letter :]' means the same as '[:Letter:]'",
-      rules: "[: Letter :] > X;",
+      name: "whitespace is tolerated around a POSIX class name, so '[: L :]' means the same as '[:L:]'",
+      rules: "[: L :] > X;",
       input: "aA1",
       expected: "XX1",
     },
@@ -550,8 +550,8 @@ describe("negated character sets: `[^abc]`", () => {
 describe("POSIX-style property classes: `[:Name:]`", () => {
   it.each([
     {
-      name: "[:Mark:] matches combining marks (nonspacing and spacing alike)",
-      rules: "[:Mark:] > X;",
+      name: "[:M:] matches combining marks (nonspacing and spacing alike)",
+      rules: "[:M:] > X;",
       input: "e\u0301e",
       expected: "eXe",
     },
@@ -562,14 +562,14 @@ describe("POSIX-style property classes: `[:Name:]`", () => {
       expected: "eX",
     },
     {
-      name: "[:Mn:] does NOT match a spacing combining mark (Devanagari vowel sign AA), unlike [:Mark:]",
+      name: "[:Mn:] does NOT match a spacing combining mark (Devanagari vowel sign AA), unlike [:M:]",
       rules: "[:Mn:] > X;",
       input: "k\u093e",
       expected: "k\u093e",
     },
     {
-      name: "[:Mark:] DOES match that same spacing combining mark",
-      rules: "[:Mark:] > X;",
+      name: "[:M:] DOES match that same spacing combining mark",
+      rules: "[:M:] > X;",
       input: "k\u093e",
       expected: "kX",
     },
@@ -592,8 +592,8 @@ describe("POSIX-style property classes: `[:Name:]`", () => {
       expected: "xy",
     },
     {
-      name: "[:Letter:] matches letters from any script and rejects digits and spaces",
-      rules: "[:Letter:] > X;",
+      name: "[:L:] matches letters from any script and rejects digits and spaces",
+      rules: "[:L:] > X;",
       input: "a1 \u0628 2",
       expected: "X1 X 2",
     },
@@ -607,24 +607,24 @@ describe("POSIX-style property classes: `[:Name:]`", () => {
     expect(RBT_JS.fromRules(rules).transliterate(input)).toBe(expected);
   });
 
-  describe("`[:^Letter:]` — matches a non-letter character, or zero-width at the start/end of the string", () => {
+  describe("`[:^L:]` — matches a non-letter character, or zero-width at the start/end of the string", () => {
     describe("as ante-context (start-of-string behavior)", () => {
       it.each([
         {
           name: "fires at the true start of the string",
-          rules: "[:^Letter:] { a > A;",
+          rules: "[:^L:] { a > A;",
           input: "a",
           expected: "A",
         },
         {
           name: "fires when preceded by an ordinary non-letter character",
-          rules: "[:^Letter:] { a > A;",
+          rules: "[:^L:] { a > A;",
           input: "5a",
           expected: "5A",
         },
         {
           name: "does not fire when preceded by a letter",
-          rules: "[:^Letter:] { a > A;",
+          rules: "[:^L:] { a > A;",
           input: "ba",
           expected: "ba",
         },
@@ -637,19 +637,19 @@ describe("POSIX-style property classes: `[:Name:]`", () => {
       it.each([
         {
           name: "fires at the true end of the string",
-          rules: "a } [:^Letter:] > A;",
+          rules: "a } [:^L:] > A;",
           input: "a",
           expected: "A",
         },
         {
           name: "fires when followed by an ordinary non-letter character",
-          rules: "a } [:^Letter:] > A;",
+          rules: "a } [:^L:] > A;",
           input: "a5",
           expected: "A5",
         },
         {
           name: "does not fire when followed by a letter",
-          rules: "a } [:^Letter:] > A;",
+          rules: "a } [:^L:] > A;",
           input: "ab",
           expected: "ab",
         },
@@ -662,19 +662,19 @@ describe("POSIX-style property classes: `[:Name:]`", () => {
       it.each([
         {
           name: "matches at the true start followed by the literal atom",
-          rules: "[:^Letter:]a{b>c;",
+          rules: "[:^L:]a{b>c;",
           input: "ab",
           expected: "ac",
         },
         {
           name: "matches after a non-letter followed by the literal atom",
-          rules: "[:^Letter:]a{b>c;",
+          rules: "[:^L:]a{b>c;",
           input: "5ab",
           expected: "5ac",
         },
         {
           name: "does not match when a letter precedes the literal atom",
-          rules: "[:^Letter:]a{b>c;",
+          rules: "[:^L:]a{b>c;",
           input: "Xab",
           expected: "Xab",
         },
@@ -685,28 +685,22 @@ describe("POSIX-style property classes: `[:Name:]`", () => {
 
     describe("used directly as a key", () => {
       it("consumes a matching non-letter character normally, since a real character takes priority over the zero-width alternative", () => {
-        expect(RBT_JS.fromRules("[:^Letter:] > X;").transliterate("5")).toBe("X");
+        expect(RBT_JS.fromRules("[:^L:] > X;").transliterate("5")).toBe("X");
       });
 
       it("falls back to a zero-width match at the true start when the character there is a letter", () => {
-        expect(RBT_JS.fromRules("[:^Letter:] > X;").transliterate("A")).toBe("XA");
+        expect(RBT_JS.fromRules("[:^L:] > X;").transliterate("A")).toBe("XA");
       });
 
       it("a zero-width match pinned in place by `|` is caught by the step-budget guard rather than looping forever", () => {
-        expect(() => RBT_JS.fromRules("[:^Letter:] >| ;").transliterate("A")).toThrow(
-          RBTRuntimeError,
-        );
+        expect(() => RBT_JS.fromRules("[:^L:] >| ;").transliterate("A")).toThrow(RBTRuntimeError);
       });
     });
   });
 
   describe("unsupported POSIX forms raise a clear parse error rather than guessing at semantics", () => {
     it.each([
-      { name: "[:^Mark:]", rules: "[:^Mark:] > x;" },
-      { name: "[:^Mn:]", rules: "[:^Mn:] > x;" },
-      { name: "[:^Lu:]", rules: "[:^Lu:] > x;" },
-      { name: "[:^Ll:]", rules: "[:^Ll:] > x;" },
-      { name: "[:^Arabic:]", rules: "[:^Arabic:] > x;" },
+      { name: "[:Ethiopic:]", rules: "[:Ethiopic:] > x;" },
       { name: "[:Bogus:]", rules: "[:Bogus:] > x;" },
     ])("$name is not implemented and errors clearly", ({ rules }) => {
       expect(() => RBT_JS.fromRules(rules)).toThrow(RBTParseError);
@@ -762,14 +756,12 @@ describe("unicode escapes: `\\uXXXX`", () => {
 });
 
 describe("combinations of negation, POSIX classes, and nested sets", () => {
-  it("the example from the spec: [^[:Letter:][:Mark:]] matches anything that is neither a letter nor a mark", () => {
-    expect(RBT_JS.fromRules("[^[:Letter:][:Mark:]] > X;").transliterate("5a1 e\u0301")).toBe(
-      "XaXXe\u0301",
-    );
+  it("the example from the spec: [^[:L:][:M:]] matches anything that is neither a letter nor a mark", () => {
+    expect(RBT_JS.fromRules("[^[:L:][:M:]] > X;").transliterate("5a1 e\u0301")).toBe("XaXXe\u0301");
   });
 
   it("letters and marks are correctly left untouched by that same negated union", () => {
-    expect(RBT_JS.fromRules("[^[:Letter:][:Mark:]] > X;").transliterate("5ab e\u0301f")).toBe(
+    expect(RBT_JS.fromRules("[^[:L:][:M:]] > X;").transliterate("5ab e\u0301f")).toBe(
       "XabXe\u0301f",
     );
   });
@@ -783,7 +775,7 @@ describe("combinations of negation, POSIX classes, and nested sets", () => {
   });
 
   it("negating an outer bracket that contains a single POSIX class is a valid, different way to negate it", () => {
-    expect(RBT_JS.fromRules("[^[:Mark:]] > X;").transliterate("e\u0301")).toBe("X\u0301");
+    expect(RBT_JS.fromRules("[^[:M:]] > X;").transliterate("e\u0301")).toBe("X\u0301");
   });
 
   it("three-way combination: literal member, POSIX class, and nested bracket all unioned together", () => {
@@ -1147,21 +1139,17 @@ describe("quantifiers: `?`, `*`, `+`, and `(...)` grouping", () => {
 
 describe("capturing groups, backreferences, and inline transliterator function calls", () => {
   it("the exact worked example from the prompt: delete-and-capitalize", () => {
-    const rules = "H ([:Letter:]) >| &Any-Upper($1);";
+    const rules = "H ([:L:]) >| &Any-Upper($1);";
     expect(RBT_JS.fromRules(rules).transliterate("Ha")).toBe("A");
     expect(RBT_JS.fromRules(rules).transliterate("xHay")).toBe("xAy");
   });
 
   it("the `|` cursor placement lets a subsequent rule immediately target the newly produced uppercase letter", () => {
-    expect(RBT_JS.fromRules("H ([:Letter:]) >| &Any-Upper($1); A > Z;").transliterate("Ha")).toBe(
-      "Z",
-    );
+    expect(RBT_JS.fromRules("H ([:L:]) >| &Any-Upper($1); A > Z;").transliterate("Ha")).toBe("Z");
   });
 
   it("contrast: without `|`, the cascaded rule does not get a chance in the same pass", () => {
-    expect(RBT_JS.fromRules("H ([:Letter:]) > &Any-Upper($1); A > Z;").transliterate("Ha")).toBe(
-      "A",
-    );
+    expect(RBT_JS.fromRules("H ([:L:]) > &Any-Upper($1); A > Z;").transliterate("Ha")).toBe("A");
   });
 
   describe("`$N` backreferences can be used directly in the replacement, without a function call", () => {
@@ -1194,7 +1182,7 @@ describe("capturing groups, backreferences, and inline transliterator function c
   });
 
   it("`&Any-Lower(...)` lowercases the captured text", () => {
-    expect(RBT_JS.fromRules("H ([:Letter:]) > &Any-Lower($1);").transliterate("HA")).toBe("a");
+    expect(RBT_JS.fromRules("H ([:L:]) > &Any-Lower($1);").transliterate("HA")).toBe("a");
   });
 
   it("a function's argument can mix literal text with backreferences", () => {
@@ -1258,14 +1246,14 @@ describe("combinations across features", () => {
   describe("quantifiers combined with character-class features", () => {
     it.each([
       {
-        name: "[:Letter:]+ matches a run of letters, POSIX class combined with '+'",
-        rules: "[:Letter:]+ > X;",
+        name: "[:L:]+ matches a run of letters, POSIX class combined with '+'",
+        rules: "[:L:]+ > X;",
         input: "abc123",
         expected: "X123",
       },
       {
-        name: "[:Letter:]* matches zero letters, POSIX class combined with '*'",
-        rules: "[:Letter:]*1 > X;",
+        name: "[:L:]* matches zero letters, POSIX class combined with '*'",
+        rules: "[:L:]*1 > X;",
         input: "1",
         expected: "X",
       },
@@ -1308,7 +1296,7 @@ describe("combinations across features", () => {
     it.each([
       {
         name: "captures a variable-length run matched by a quantified POSIX class",
-        rules: "([:Letter:]+) > '['$1']';",
+        rules: "([:L:]+) > '['$1']';",
         input: "abc123",
         expected: "[abc]123",
       },
@@ -1748,13 +1736,13 @@ describe("rule precedence when several rules could match at the same position", 
     },
     {
       name: "a rule whose key starts with a zero-width anchor atom still only wins because it is declared first, not because it has more atoms",
-      rules: "[:^Letter:]a > B; a > A;",
+      rules: "[:^L:]a > B; a > A;",
       input: "a",
       expected: "B",
     },
     {
       name: "the same zero-width-anchor rule loses to an earlier, shorter rule once reordered, just like any other rule would",
-      rules: "a > A; [:^Letter:]a > B;",
+      rules: "a > A; [:^L:]a > B;",
       input: "a",
       expected: "A",
     },

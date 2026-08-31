@@ -75,7 +75,7 @@ Cz > Ts;
 cz > ts;
 
 C } [:Lu:] > TS;
-[:Lu:] { C } [:^Letter:] > TS;
+[:Lu:] { C } [^[:L:][:M:]] > TS;
 C > Ts;
 c > ts;
 

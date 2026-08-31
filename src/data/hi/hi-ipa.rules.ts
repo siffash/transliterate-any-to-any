@@ -160,14 +160,14 @@ export const hiIpaRules = `
 
 ::Null;
 
-[əaɪiʊueoɛæɔː̃] t͡ʃ [̪ʰʱ͡]* { ə } [:^Letter:] > ;
-[əaɪiʊueoɛæɔː̃] d͡ʒ [̪ʰʱ͡]* { ə } [:^Letter:] > ;
+[əaɪiʊueoɛæɔː̃] t͡ʃ [̪ʰʱ͡]* { ə } [^[:L:][:M:]] > ;
+[əaɪiʊueoɛæɔː̃] d͡ʒ [̪ʰʱ͡]* { ə } [^[:L:][:M:]] > ;
 
-[əaɪiʊueoɛæɔː̃] [kɡŋɲʈɖɳnpbmjɾlʋʃʂsɦqxɣzʒɽfɭtd] [̪ʰʱ͡]* { ə } [:^Letter:] > ;
+[əaɪiʊueoɛæɔː̃] [kɡŋɲʈɖɳnpbmjɾlʋʃʂsɦqxɣzʒɽfɭtd] [̪ʰʱ͡]* { ə } [^[:L:][:M:]] > ;
 
-[kɡŋɲʈɖɳnpbmjɾlʋʃʂsɦqxɣzʒɽfɭtd] [̪ʰʱ͡]* [kɡŋɲʈɖɳnpbʃʂsɦqxɣzʒɽftd] [̪ʰʱ͡]* { ə } [:^Letter:] > ;
-[kɡŋɲʈɖɳnpbmjɾlʋʃʂsɦqxɣzʒɽfɭtd] [̪ʰʱ͡]* t͡ʃ [̪ʰʱ͡]* { ə } [:^Letter:] > ;
-[kɡŋɲʈɖɳnpbmjɾlʋʃʂsɦqxɣzʒɽfɭtd] [̪ʰʱ͡]* d͡ʒ [̪ʰʱ͡]* { ə } [:^Letter:] > ;
+[kɡŋɲʈɖɳnpbmjɾlʋʃʂsɦqxɣzʒɽfɭtd] [̪ʰʱ͡]* [kɡŋɲʈɖɳnpbʃʂsɦqxɣzʒɽftd] [̪ʰʱ͡]* { ə } [^[:L:][:M:]] > ;
+[kɡŋɲʈɖɳnpbmjɾlʋʃʂsɦqxɣzʒɽfɭtd] [̪ʰʱ͡]* t͡ʃ [̪ʰʱ͡]* { ə } [^[:L:][:M:]] > ;
+[kɡŋɲʈɖɳnpbmjɾlʋʃʂsɦqxɣzʒɽfɭtd] [̪ʰʱ͡]* d͡ʒ [̪ʰʱ͡]* { ə } [^[:L:][:M:]] > ;
 
 ::Null;
 

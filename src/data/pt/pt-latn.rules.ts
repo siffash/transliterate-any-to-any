@@ -58,13 +58,13 @@ j > ž;
 [AEIOUaeiou] { S } [AEIOUaeiou] > Z;
 [AEIOUaeiou] { s } [AEIOUaeiou] > z;
 
-[SZ] } [^[:Letter:][:Mark:]] > Š;
-[sz] } [^[:Letter:][:Mark:]] > š;
+[SZ] } [^[:L:][:M:]] > Š;
+[sz] } [^[:L:][:M:]] > š;
 
-[^[:Letter:][:Mark:]] E { X } [AEIOUaeiou] [:Letter:] > Z;
-[^[:Letter:][:Mark:]] E { x } [AEIOUaeiou] [:Letter:] > z;
-[^[:Letter:][:Mark:]] e { X } [AEIOUaeiou] [:Letter:] > Z;
-[^[:Letter:][:Mark:]] e { x } [AEIOUaeiou] [:Letter:] > z;
+[^[:L:][:M:]] E { X } [AEIOUaeiou] [:L:] > Z;
+[^[:L:][:M:]] E { x } [AEIOUaeiou] [:L:] > z;
+[^[:L:][:M:]] e { X } [AEIOUaeiou] [:L:] > Z;
+[^[:L:][:M:]] e { x } [AEIOUaeiou] [:L:] > z;
 
 X > Š;
 x > š;

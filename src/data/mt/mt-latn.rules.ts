@@ -31,18 +31,18 @@ Qu } [aeiouAEIOU] > Kw;
 qU } [aeiouAEIOU] > kW;
 qu } [aeiouAEIOU] > kw;
 
-G [Ħħ] } [:^Letter:] > H;
-għ } [:^Letter:] > h;
+G [Ħħ] } [^[:L:][:M:]] > H;
+għ } [^[:L:][:M:]] > h;
 
-G [Ħħ] ([:Letter:]) >| &Any-Upper($1);
+G [Ħħ] ([:L:]) >| &Any-Upper($1);
 [Gg] [Ħħ] > ;
 
 Ħ > H;
 ħ > h;
 
-H ([:Letter:]) >| &Any-Upper($1);
-H } [:Letter:] > ;
-h } [:Letter:] > ;
+H ([:L:]) >| &Any-Upper($1);
+H } [:L:] > ;
+h } [:L:] > ;
 
 CH > K;
 Ch > K;
@@ -73,7 +73,7 @@ c } [eEiIyY] > č;
 C > K;
 c > k;
 
-Q ([:Letter:]) >| \\' &Any-Upper($1);
+Q ([:L:]) >| \\' &Any-Upper($1);
 Q > \\';
 q > \\';
 `;

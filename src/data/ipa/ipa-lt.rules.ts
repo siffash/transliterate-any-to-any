@@ -32,7 +32,7 @@ q > k;
 ::Null;
 
 j { i } [aąouųū] > ;
-[:^Letter:] { i } [aąouųū] > j;
+[^[:L:][:M:]] { i } [aąouųū] > j;
 j } [bcčdfghklmnprsštvzž] > i;
 [aąeęėiįouųūy] { y > i;
 

@@ -62,14 +62,14 @@ w > v;
 Q > K;
 q > k;
 
-[:^Letter:] { \\' > ;
-\\' } [:^Letter:] > ;
+[^[:L:][:M:]] { \\' > ;
+\\' } [^[:L:][:M:]] > ;
 · > ;
 
 ::Null;
 
-[:^Letter:] { ğ > g;
-[:^Letter:] { Ğ > G;
+[^[:L:][:M:]] { ğ > g;
+[^[:L:][:M:]] { Ğ > G;
 [bcçdfgğhjklmnprsştvyzBCÇDFGĞHJKLMNPRSŞTVYZ] { ğ > g;
 [bcçdfgğhjklmnprsştvyzBCÇDFGĞHJKLMNPRSŞTVYZ] { Ğ > G;
 `;

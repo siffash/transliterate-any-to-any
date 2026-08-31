@@ -5,8 +5,8 @@ export const ipaLbRules = `
 
 ::Null;
 
-[:^Letter:] { ŋ > n;
-ɲ } [:^Letter:] > n;
+[^[:L:][:M:]] { ŋ > n;
+ɲ } [^[:L:][:M:]] > n;
 ɲ > nj;
 ŋ > ng;
 [cq] > k;
@@ -54,5 +54,5 @@ ch { ch > ;
 sch { sch > ;
 ng { ng > ;
 
-[:^Letter:] { sch } [pt] > s;
+[^[:L:][:M:]] { sch } [pt] > s;
 `;

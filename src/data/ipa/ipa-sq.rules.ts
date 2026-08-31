@@ -59,7 +59,7 @@ q > k;
 
 ::Null;
 
-[:^Letter:] { i } [aeëiouy] > j;
+[^[:L:][:M:]] { i } [aeëiouy] > j;
 
 b { b > ;
 c { c > ;

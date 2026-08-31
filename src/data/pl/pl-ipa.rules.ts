@@ -42,7 +42,7 @@ i } [aąeęioóuy] > j;
 ę } sz > ɛ̃;
 ę } ch > ɛ̃;
 ę } rz > ɛ̃;
-ę } [:^Letter:] > ɛ;
+ę } [^[:L:][:M:]] > ɛ;
 ę > ɛ̃w̃;
 
 chrz > xʂ;
@@ -57,7 +57,7 @@ t͡ʂ { w > f;
 ʂ { w > f;
 [ptkcfsśćx] { w > f;
 w } [ptkcfsśćx] > f;
-w } [:^Letter:] > f;
+w } [^[:L:][:M:]] > f;
 w > v;
 
 cz } [bdgzźż] > d͡ʐ;
@@ -83,10 +83,10 @@ z } [ptkcfsśćx] > s;
 ź } [ptkcfsśćx] > ɕ;
 ż } [ptkcfsśćx] > ʂ;
 
-dź } [:^Letter:] > t͡ɕ;
-dż } [:^Letter:] > t͡ʂ;
-dz } [:^Letter:] > t͡s;
-rz } [:^Letter:] > ʂ;
+dź } [^[:L:][:M:]] > t͡ɕ;
+dż } [^[:L:][:M:]] > t͡ʂ;
+dz } [^[:L:][:M:]] > t͡s;
+rz } [^[:L:][:M:]] > ʂ;
 
 cz > t͡ʂ;
 dź > d͡ʑ;
@@ -96,12 +96,12 @@ sz > ʂ;
 rz > ʐ;
 ch > x;
 
-b } [:^Letter:] > p;
-d } [:^Letter:] > t;
-g } [:^Letter:] > k;
-z } [:^Letter:] > s;
-ź } [:^Letter:] > ɕ;
-ż } [:^Letter:] > ʂ;
+b } [^[:L:][:M:]] > p;
+d } [^[:L:][:M:]] > t;
+g } [^[:L:][:M:]] > k;
+z } [^[:L:][:M:]] > s;
+ź } [^[:L:][:M:]] > ɕ;
+ż } [^[:L:][:M:]] > ʂ;
 
 a > a;
 b > b;

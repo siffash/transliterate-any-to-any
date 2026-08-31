@@ -8,7 +8,7 @@ export const ipaEnRules = `
 dʒ > j;
 tʃ > ch;
 
-[:^Letter:] { [ʔʕ] > ;
+[^[:L:][:M:]] { [ʔʕ] > ;
 [ʔʕʼ] > \\';
 
 [ʲʏjʝ] > y;
@@ -48,5 +48,5 @@ tʃ > ch;
 
 w { w > ;
 y { y > ;
-[:^Letter:] { c } k > ;
+[^[:L:][:M:]] { c } k > ;
 `;

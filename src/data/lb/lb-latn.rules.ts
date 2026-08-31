@@ -42,9 +42,9 @@ DJ > DŽ;
 Dj > Dž;
 dj > dž;
 
-QUE } [:^Letter:] > K;
-Que } [:^Letter:] > K;
-que } [:^Letter:] > k;
+QUE } [^[:L:][:M:]] > K;
+Que } [^[:L:][:M:]] > K;
+que } [^[:L:][:M:]] > k;
 
 QU > KV;
 Qu > Kv;
@@ -53,13 +53,13 @@ qu > kv;
 Q > K;
 q > k;
 
-[:^Letter:] { ST > ŠT;
-[:^Letter:] { St > Št;
-[:^Letter:] { st > št;
+[^[:L:][:M:]] { ST > ŠT;
+[^[:L:][:M:]] { St > Št;
+[^[:L:][:M:]] { st > št;
 
-[:^Letter:] { SP > ŠP;
-[:^Letter:] { Sp > Šp;
-[:^Letter:] { sp > šp;
+[^[:L:][:M:]] { SP > ŠP;
+[^[:L:][:M:]] { Sp > Šp;
+[^[:L:][:M:]] { sp > šp;
 
 [:Lu:] { C } [eéèêëiïyäöüEÉÈÊËIÏYÄÖÜ] > TS;
 C } [EÉÈÊËIÏYÄÖÜ] > TS;

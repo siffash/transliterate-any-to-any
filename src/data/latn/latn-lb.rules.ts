@@ -31,10 +31,10 @@ ij > ei;
 
 ::Null;
 
-[:^Letter:] { Š } [Tt] > S;
-[:^Letter:] { š } [Tt] > s;
-[:^Letter:] { Š } [Pp] > S;
-[:^Letter:] { š } [Pp] > s;
+[^[:L:][:M:]] { Š } [Tt] > S;
+[^[:L:][:M:]] { š } [Tt] > s;
+[^[:L:][:M:]] { Š } [Pp] > S;
+[^[:L:][:M:]] { š } [Pp] > s;
 
 [aäeiïoöuüÿAÄEIÏOÖUÜŸ] { S } [aäeiïoöuüÿAÄEIÏOÖUÜŸ] > SS;
 [aäeiïoöuüÿAÄEIÏOÖUÜŸ] { s } [aäeiïoöuüÿAÄEIÏOÖUÜŸ] > ss;
@@ -84,8 +84,8 @@ z > s;
 Ÿ > U;
 ÿ > u;
 
-[:^Letter:] { \\' > ;
-\\' } [:^Letter:] > ;
+[^[:L:][:M:]] { \\' > ;
+\\' } [^[:L:][:M:]] > ;
 · > ;
 
 ::Null;
@@ -116,7 +116,7 @@ z > s;
 [sS] [cC] [hH] { [sS] [cC] [hH] > ;
 [nN] [gG] { [nN] [gG] > ;
 
-[:^Letter:] { sch } [pPtT] > s;
-[:^Letter:] { Sch } [pPtT] > S;
-[:^Letter:] { SCH } [pPtT] > S;
+[^[:L:][:M:]] { sch } [pPtT] > s;
+[^[:L:][:M:]] { Sch } [pPtT] > S;
+[^[:L:][:M:]] { SCH } [pPtT] > S;
 `;

@@ -35,15 +35,15 @@ z } [ptťcčkfsšʃx] > s;
 h } [ptťcčkfsšʃx] > x;
 v } [ptťcčkfsšʃx] > f;
 
-b } [:^Letter:] > p;
-d } [:^Letter:] > t;
-ď } [:^Letter:] > ť;
-dz } [:^Letter:] > c;
-dž } [:^Letter:] > č;
-g } [:^Letter:] > k;
-z } [:^Letter:] > s;
-ž } [:^Letter:] > ʃ;
-h } [:^Letter:] > x;
+b } [^[:L:][:M:]] > p;
+d } [^[:L:][:M:]] > t;
+ď } [^[:L:][:M:]] > ť;
+dz } [^[:L:][:M:]] > c;
+dž } [^[:L:][:M:]] > č;
+g } [^[:L:][:M:]] > k;
+z } [^[:L:][:M:]] > s;
+ž } [^[:L:][:M:]] > ʃ;
+h } [^[:L:][:M:]] > x;
 
 p } [bdďgzžʒhɦ] > b;
 t } [bdďgzžʒhɦ] > d;
@@ -114,7 +114,7 @@ ie > ɪɛ;
 iu > ɪu;
 ou > ɔu;
 
-v } [:^Letter:] > u̯;
+v } [^[:L:][:M:]] > u̯;
 
 a > a;
 á > aː;

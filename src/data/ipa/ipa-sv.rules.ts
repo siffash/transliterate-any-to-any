@@ -1,7 +1,7 @@
 export const ipaSvRules = `
 ::Null;
 
-[:^Letter:] { ŋ > n;
+[^[:L:][:M:]] { ŋ > n;
 ŋ > ng;
 [âɐɑăʌ] > a;
 [æɛ] > ä;

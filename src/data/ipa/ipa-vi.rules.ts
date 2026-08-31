@@ -13,11 +13,11 @@ export const ipaViRules = `
 [kq] } [wʷuʊũ] > q;
 [kq] } [ʰʱ] > k;
 [kq] > c;
-[:^Letter:] { [jʝ] } [iɪɨĩʲ] > g;
-[:^Letter:] { [jʝ] > gi;
+[^[:L:][:M:]] { [jʝ] } [iɪɨĩʲ] > g;
+[^[:L:][:M:]] { [jʝ] > gi;
 [jʝ] > y;
 q { [wɥ] > u;
-[:^Letter:] { [wɥ] > v;
+[^[:L:][:M:]] { [wɥ] > v;
 [wɥ] > o;
 [ɑɐæ] > a;
 [ɛęẽ] > e;

@@ -31,8 +31,8 @@ X } [iI] [mM] [eE] [nN] [aA] > X;
 x } [oO] [cC] [hH] [iI] [mM] [iI] [lL] [cC] [oO] > s;
 X } [oO] [cC] [hH] [iI] [mM] [iI] [lL] [cC] [oO] > S;
 
-[:^Letter:] { x > s;
-[:^Letter:] { X > S;
+[^[:L:][:M:]] { x > s;
+[^[:L:][:M:]] { X > S;
 
 x > ks;
 X > Ks;
@@ -65,8 +65,8 @@ GU } [aoAO] > GW;
 Gu } [aoAO] > Gw;
 gu } [aoAO] > gw;
 
-y } [:^Letter:] > i;
-Y } [:^Letter:] > I;
+y } [^[:L:][:M:]] > i;
+Y } [^[:L:][:M:]] > I;
 
 c } [eiEI] > s;
 C } [eiEI] > S;
@@ -87,6 +87,6 @@ Z > S;
 Ñ > Ń;
 
 h > ;
-H ([:Letter:]) >| &Any-Upper($1);
+H ([:L:]) >| &Any-Upper($1);
 H > ;
 `;

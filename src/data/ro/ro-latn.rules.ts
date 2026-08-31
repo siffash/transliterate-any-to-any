@@ -1,8 +1,8 @@
 export const roLatnRules = `
 ::NFC;
 
-[:^Letter:] { i } [aoueiAOUEI] > y;
-[:^Letter:] { I } [aoueiAOUEI] > Y;
+[^[:L:][:M:]] { i } [aoueiAOUEI] > y;
+[^[:L:][:M:]] { I } [aoueiAOUEI] > Y;
 
 ch } [iI] [aouăâîAOUĂÂÎ] > k;
 Ch } [iI] [aouăâîAOUĂÂÎ] > K;

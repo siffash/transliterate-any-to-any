@@ -7,8 +7,8 @@ ij > ei;
 
 ::Null;
 
-[:^Letter:] { \\' > ;
-\\' } [:^Letter:] > ;
+[^[:L:][:M:]] { \\' > ;
+\\' } [^[:L:][:M:]] > ;
 · > ;
 
 Š } [:Lu:] > CH;
@@ -23,8 +23,8 @@ ij > ei;
 Đ > Dj;
 đ > dj;
 
-Ľ } [:^Letter:] > ILLE;
-ľ } [:^Letter:] > ille;
+Ľ } [^[:L:][:M:]] > ILLE;
+ľ } [^[:L:][:M:]] > ille;
 Ľ } [:Lu:] > LI;
 Ľ > Li;
 ľ > li;
@@ -44,8 +44,8 @@ x > kh;
 [AEIOUYÄÏÖÜŸaeiouyäïöüÿ] { S } [aeiouyäïöüÿ] > Ss;
 [AEIOUYÄÏÖÜŸaeiouyäïöüÿ] { s } [AEIOUYÄÏÖÜŸaeiouyäïöüÿ] > ss;
 
-S } [:^Letter:] > SSE;
-s } [:^Letter:] > sse;
+S } [^[:L:][:M:]] > SSE;
+s } [^[:L:][:M:]] > sse;
 
 G } [EIYÖÏ] > GU;
 G } [eiyöï] > Gu;

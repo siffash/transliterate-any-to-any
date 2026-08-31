@@ -5,10 +5,10 @@ export const ipaIsRules = `
 
 ::Null;
 
-[:^Letter:] { r ̥ > hr;
-[:^Letter:] { l ̥ > hl;
-[:^Letter:] { n ̥ > hn;
-[:^Letter:] { m ̥ > hm;
+[^[:L:][:M:]] { r ̥ > hr;
+[^[:L:][:M:]] { l ̥ > hl;
+[^[:L:][:M:]] { n ̥ > hn;
+[^[:L:][:M:]] { m ̥ > hm;
 
 a [uʊ] > á;
 o [uʊ] > ó;
@@ -59,7 +59,7 @@ y > ý;
 ::Null;
 
 [kgh] { j } [eéiíyýæ] > ;
-[:^Letter:] { ð > d;
+[^[:L:][:M:]] { ð > d;
 qu } [aeiouyáéíóúýæöö] > kv;
 q > k;
 c } [eéiíyýæ] > s;

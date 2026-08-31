@@ -12,15 +12,15 @@ export const ipaPtRules = `
 [kq] > c;
 
 ẽ } [pbɓmɱ] > em;
-ẽ } [:^Letter:] > em;
+ẽ } [^[:L:][:M:]] > em;
 ẽ > en;
 
 ĩ } [pbɓmɱ] > im;
-ĩ } [:^Letter:] > im;
+ĩ } [^[:L:][:M:]] > im;
 ĩ > in;
 
 ũ } [pbɓmɱ] > um;
-ũ } [:^Letter:] > um;
+ũ } [^[:L:][:M:]] > um;
 ũ > un;
 
 [aeiouâêôõæøăęĩœũơưɐɑɒɔɘəɚɛɜɝɨɪɯɵʉʊʌʏẽywɤɥjʝ] { [sθ] } [aeiouâêôõæøăęĩœũơưɐɑɒɔɘəɚɛɜɝɨɪɯɵʉʊʌʏẽywɤɥjʝ] > ss;
@@ -57,16 +57,16 @@ export const ipaPtRules = `
 ç } [eéêiíy] > c;
 ç } [bcdfghjklmnpqrstvwxz] > s;
 [bcdfghjklmnpqrstvwxz] { ç > s;
-[:^Letter:] { ç > s;
-ç } [:^Letter:] > s;
+[^[:L:][:M:]] { ç > s;
+ç } [^[:L:][:M:]] > s;
 
-[:^Letter:] { rr > r;
-rr } [:^Letter:] > r;
+[^[:L:][:M:]] { rr > r;
+rr } [^[:L:][:M:]] > r;
 [bcdfghjklmnpqstvwxz] { rr > r;
 rr } [bcdfghjklmnpqstvwxz] > r;
 
-[:^Letter:] { ss > s;
-ss } [:^Letter:] > s;
+[^[:L:][:M:]] { ss > s;
+ss } [^[:L:][:M:]] > s;
 [bcdfghjklmnpqrtvwxz] { ss > s;
 ss } [bcdfghjklmnpqrtvwxz] > s;
 `;

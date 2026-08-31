@@ -1,10 +1,10 @@
 export const noIpaRules = `
 ::Lower;
 
-ige } [:^Letter:] > iə;
-ig } [:^Letter:] > i;
-et } [:^Letter:] > ɛ;
-er } [:^Letter:] > əɾ;
+ige } [^[:L:][:M:]] > iə;
+ig } [^[:L:][:M:]] > i;
+et } [^[:L:][:M:]] > ɛ;
+er } [^[:L:][:M:]] > əɾ;
 
 hv > ʋ;
 hj > j;

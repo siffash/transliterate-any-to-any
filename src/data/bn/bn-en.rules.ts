@@ -106,10 +106,10 @@ export const bnEnRules = `
 
 ::Null;
 
-\\* [b-df-hj-np-tv-z] { \\@ } [:^Letter:] > a;
-\\* [b-df-hj-np-tv-z][b-df-hj-np-tv-z] { \\@ } [:^Letter:] > a;
-\\* [b-df-hj-np-tv-z][b-df-hj-np-tv-z][b-df-hj-np-tv-z] { \\@ } [:^Letter:] > a;
-\\@ } [:^Letter:] > ;
+\\* [b-df-hj-np-tv-z] { \\@ } [^[:L:][:M:]] > a;
+\\* [b-df-hj-np-tv-z][b-df-hj-np-tv-z] { \\@ } [^[:L:][:M:]] > a;
+\\* [b-df-hj-np-tv-z][b-df-hj-np-tv-z][b-df-hj-np-tv-z] { \\@ } [^[:L:][:M:]] > a;
+\\@ } [^[:L:][:M:]] > ;
 \\@ > a;
 
 ::Null;
@@ -120,7 +120,7 @@ export const bnEnRules = `
 
 w { w > ;
 y { y > ;
-[:^Letter:] { c } k > ;
+[^[:L:][:M:]] { c } k > ;
 
 ::Title;
 `;

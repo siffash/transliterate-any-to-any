@@ -14,14 +14,14 @@ export const ipaCaRules = `
 
 ::Null;
 
-t [ʃʂɕ] } [:^Letter:] > ig;
+t [ʃʂɕ] } [^[:L:][:M:]] > ig;
 t [ʃʂɕ] > tx;
-č } [:^Letter:] > ig;
+č } [^[:L:][:M:]] > ig;
 č > tx;
 
 d [ʒžʐʑ] } [ei] > tg;
-d [ʒžʐʑ] } [:^Letter:] > ig;
-[ʒžʐʑʝ] } [:^Letter:] > ig;
+d [ʒžʐʑ] } [^[:L:][:M:]] > ig;
+[ʒžʐʑʝ] } [^[:L:][:M:]] > ig;
 d [ʒžʐʑ] > tj;
 
 [aeou] { [ʃʂɕ] > ix;
@@ -64,22 +64,22 @@ m } [fv] > n;
 
 ::Null;
 
-[:^Letter:] { ss > s;
-ss } [:^Letter:] > s;
+[^[:L:][:M:]] { ss > s;
+ss } [^[:L:][:M:]] > s;
 
-[:^Letter:] { rr > r;
-rr } [:^Letter:] > r;
+[^[:L:][:M:]] { rr > r;
+rr } [^[:L:][:M:]] > r;
 
-[:^Letter:] { l[·.]l > l;
-l[·.]l } [:^Letter:] > l;
+[^[:L:][:M:]] { l[·.]l > l;
+l[·.]l } [^[:L:][:M:]] > l;
 
 ::Null;
 
-[:^Letter:] { y > i;
+[^[:L:][:M:]] { y > i;
 [^n] { y > i;
 
 ::Null;
 
-[:^Letter:] { ['·] > ;
-['·] } [:^Letter:] > ;
+[^[:L:][:M:]] { ['·] > ;
+['·] } [^[:L:][:M:]] > ;
 `;

@@ -80,18 +80,18 @@ C > K;
 
 x > ks;
 X } [:Ll:] > Ks;
-X } [:^Letter:] > KS;
+X } [^[:L:][:M:]] > KS;
 X > KS;
 
 z > ts;
 Z } [:Ll:] > Ts;
-Z } [:^Letter:] > TS;
+Z } [^[:L:][:M:]] > TS;
 Z > TS;
 
 j > y;
 J > Y;
 
 h > ;
-H ([:Letter:]) >| &Any-Upper($1);
+H ([:L:]) >| &Any-Upper($1);
 H > ;
 `;

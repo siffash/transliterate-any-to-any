@@ -46,7 +46,7 @@ export const jaLatnRules = `
 うぇ > we;
 ウォ > wo;
 うぉ > wo;
-[:^Letter:] { [ヴゔ] } [:^Letter:] > vu;
+[^[:L:][:M:]] { [ヴゔ] } [^[:L:][:M:]] > vu;
 [ヴゔ] > v;
 [ぁァ] > a;
 [ぃィ] > i;
@@ -59,8 +59,8 @@ export const jaLatnRules = `
 
 ::Null;
 
-[:^Letter:] { ['’‘\`´ʼ] > ;
-['’‘\`´ʼ] } [:^Letter:] > ;
+[^[:L:][:M:]] { ['’‘\`´ʼ] > ;
+['’‘\`´ʼ] } [^[:L:][:M:]] > ;
 
 [āâ] > a;
 [īî] > i;

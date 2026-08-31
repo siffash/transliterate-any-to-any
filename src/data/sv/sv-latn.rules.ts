@@ -52,8 +52,8 @@ PH > F;
 Ph > F;
 ph > f;
 
-[^[:Letter:][:Mark:]] { [DGHL] ([Jj]) > &Any-Upper($1);
-[^[:Letter:][:Mark:]] { [dghl] ([Jj]) > &Any-Lower($1);
+[^[:L:][:M:]] { [DGHL] ([Jj]) > &Any-Upper($1);
+[^[:L:][:M:]] { [dghl] ([Jj]) > &Any-Lower($1);
 
 [Ff] [Aa] [Ll] { K } [Ee] [Nn] > K;
 [Ff] [Aa] [Ll] { k } [Ee] [Nn] > k;

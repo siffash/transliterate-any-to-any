@@ -49,7 +49,7 @@ dʐ > dž;
 
 ::Null;
 
-[:^Letter:] { i } [aeou] > j;
+[^[:L:][:M:]] { i } [aeou] > j;
 [aeou] { i > j;
 
 ::Null;
