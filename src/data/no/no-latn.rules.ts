@@ -18,18 +18,19 @@ SKJ > Š;
 Skj > Š;
 skj > š;
 
+TSJ > Č;
+Tsj > Č;
+tsJ > Č;
+tsj > č;
+
 SJ > Š;
 Sj > Š;
 sJ > Š;
 sj > š;
 
-KJ > Ć;
-Kj > Ć;
-kj > ć;
-
-TJ > Ć;
-Tj > Ć;
-tj > ć;
+[KT] J > Ć;
+[KT] j > Ć;
+[kt] j > ć;
 
 [GHL] J > J;
 [GHL] j > J;

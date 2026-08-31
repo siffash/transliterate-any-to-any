@@ -98,7 +98,7 @@ if (languages[languageFrom]?.script !== languages[languageTo]?.script) {
 By default, the library validates the source text against the source language by checking the language's script:
 
 ```typescript
-await transliterate("ლევან", { from: "en", to: "fr" }); // -> throws an error
+await transliterate("ლევან", { from: "en", to: "zh" }); // -> throws an error
 ```
 
 If you need to do it yourself, you can use this function:

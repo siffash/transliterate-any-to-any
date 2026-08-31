@@ -23,17 +23,13 @@ th > t;
 Š > SJ;
 š > sj;
 
-Č } [:Ll:] > Tsj;
-Č > TSJ;
-č > tsj;
+[ČĆ] } [:Ll:] > Tsj;
+[ČĆ] > TSJ;
+[čć] > tsj;
 
 Ž } [:Ll:] > Zj;
 Ž > ZJ;
 ž > zj;
-
-Ć } [:Ll:] > Tj;
-Ć > TJ;
-ć > tj;
 
 Đ } [:Ll:] > Dj;
 Đ > DJ;
