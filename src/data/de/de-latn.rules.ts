@@ -58,10 +58,10 @@ v > f;
 W > V;
 w > v;
 
-QU > KV;
-Qu > Kv;
-qU > kv;
-qu > kv;
+QU } [aeiouäöüyAEIOUÄÖÜY] > KV;
+Qu } [aeiouäöüyAEIOUÄÖÜY] > Kv;
+qU } [aeiouäöüyAEIOUÄÖÜY] > kV;
+qu } [aeiouäöüyAEIOUÄÖÜY] > kv;
 
 CK > K;
 Ck > K;

@@ -60,7 +60,7 @@ y > ý;
 
 [kgh] { j } [eéiíyýæ] > ;
 [:^Letter:] { ð > d;
-qu > kv;
+qu } [aeiouyáéíóúýæöö] > kv;
 q > k;
 c } [eéiíyýæ] > s;
 c > k;

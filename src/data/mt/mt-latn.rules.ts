@@ -26,6 +26,11 @@ PH > F;
 Ph > F;
 ph > f;
 
+QU } [aeiouAEIOU] > KW;
+Qu } [aeiouAEIOU] > Kw;
+qU } [aeiouAEIOU] > kW;
+qu } [aeiouAEIOU] > kw;
+
 G [Ħħ] } [:^Letter:] > H;
 għ } [:^Letter:] > h;
 

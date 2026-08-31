@@ -28,9 +28,17 @@ QU } [EIei] > K;
 Qu } [EIei] > K;
 qu } [EIei] > k;
 
+QU } [AOao] > KW;
+Qu } [AOao] > Kw;
+qu } [AOao] > kw;
+
 GU } [EIei] > G;
 Gu } [EIei] > G;
 gu } [EIei] > g;
+
+GU } [AOao] > GW;
+Gu } [AOao] > Gw;
+gu } [AOao] > gw;
 
 Q > K;
 q > k;

@@ -57,10 +57,10 @@ d > z;
 Đ > D;
 đ > d;
 
-Qu > Kw;
-QU > KW;
-qu > kw;
-qU > kW;
+Qu } [AĂÂEÊIOÔƠUƯYaăâeêioôơuưy] > Kw;
+QU } [AĂÂEÊIOÔƠUƯYaăâeêioôơuưy] > KW;
+qu } [AĂÂEÊIOÔƠUƯYaăâeêioôơuưy] > kw;
+qU } [AĂÂEÊIOÔƠUƯYaăâeêioôơuưy] > kW;
 
 [QC] > K;
 [qc] > k;

@@ -45,6 +45,11 @@ PH > F;
 Ph > F;
 ph > f;
 
+QU } [aeiouAEIOU] > KW;
+Qu } [aeiouAEIOU] > Kw;
+qU } [aeiouAEIOU] > kW;
+qu } [aeiouAEIOU] > kw;
+
 EAU > O;
 Eau > O;
 eau > o;

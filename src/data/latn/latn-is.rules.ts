@@ -59,14 +59,23 @@ kh > k;
 
 Ä > Æ;
 ä > æ;
+
 Ï > Í;
 ï > í;
+
 U > Ú;
 u > ú;
+
 Ü > Y;
 ü > y;
+
 Ÿ > U;
 ÿ > u;
+
+QU } [aeiouyáéíóúýæööäïüÿAEIOUYÁÉÍÓÚÝÆÖÖÄÏÜŸ] > KV;
+Qu } [aeiouyáéíóúýæööäïüÿAEIOUYÁÉÍÓÚÝÆÖÖÄÏÜŸ] > Kv;
+qU } [aeiouyáéíóúýæööäïüÿAEIOUYÁÉÍÓÚÝÆÖÖÄÏÜŸ] > kV;
+qu } [aeiouyáéíóúýæööäïüÿAEIOUYÁÉÍÓÚÝÆÖÖÄÏÜŸ] > kv;
 
 [QX] > K;
 [qx] > k;
@@ -89,6 +98,11 @@ z > s;
 [kKgGhH] { [jJ] } [eEéÉiIíÍyYýÝæÆ] > ;
 [:^Letter:] { ð > d;
 [:^Letter:] { Ð > D;
+
+qu } [aeiouyáéíóúýæööAEIOUYÁÉÍÓÚÝÆÖÖ] > kv;
+Qu } [aeiouyáéíóúýæööAEIOUYÁÉÍÓÚÝÆÖÖ] > Kv;
+qU } [aeiouyáéíóúýæööAEIOUYÁÉÍÓÚÝÆÖÖ] > kV;
+QU } [aeiouyáéíóúýæööAEIOUYÁÉÍÓÚÝÆÖÖ] > KV;
 
 c } [eEéÉiIíÍyYýÝæÆ] > s;
 C } [eEéÉiIíÍyYýÝæÆ] > S;

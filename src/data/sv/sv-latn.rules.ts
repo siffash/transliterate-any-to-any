@@ -36,9 +36,9 @@ CK > K;
 Ck > K;
 ck > k;
 
-QU > KV;
-Qu > Kv;
-qu > kv;
+QU } [aouåäöAOUÅÄÖ] > KV;
+Qu } [aouåäöAOUÅÄÖ] > Kv;
+qu } [aouåäöAOUÅÄÖ] > kv;
 
 TION > ŠON;
 Tion > Šon;

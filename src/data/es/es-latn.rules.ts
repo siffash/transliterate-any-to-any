@@ -49,6 +49,10 @@ qu } [eiEI] > k;
 Qu } [eiEI] > K;
 QU } [eiEI] > K;
 
+QU } [aoAO] > KW;
+Qu } [aoAO] > Kw;
+qu } [aoAO] > kw;
+
 gu } [eiEI] > g;
 Gu } [eiEI] > G;
 GU } [eiEI] > G;
@@ -56,6 +60,10 @@ GU } [eiEI] > G;
 gü } [eiEI] > gu;
 Gü } [eiEI] > Gu;
 GÜ } [eiEI] > GU;
+
+GU } [aoAO] > GW;
+Gu } [aoAO] > Gw;
+gu } [aoAO] > gw;
 
 y } [:^Letter:] > i;
 Y } [:^Letter:] > I;
