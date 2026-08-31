@@ -1,15 +1,15 @@
 export const latnItRules = `
 ::Null;
 
-DŽ } [EIÏŸY] > G;
-DŽ } [eiïÿy] > G;
+DŽ } [EIÏY] > G;
+DŽ } [eiïy] > G;
 DŽ } [:Lu:] > GI;
 DŽ > Gi;
-Dž } [EIÏŸY] > G;
-Dž } [eiïÿy] > G;
+Dž } [EIÏY] > G;
+Dž } [eiïy] > G;
 Dž } [:Lu:] > Gi;
 Dž > Gi;
-dž } [EIÏŸYeiïÿy] > g;
+dž } [EIÏYeiïy] > g;
 dž > gi;
 
 TS > Z;
@@ -24,26 +24,26 @@ TH > T;
 Th > T;
 th > t;
 
-KH } [EIÏŸY] > CH;
-KH } [eiïÿy] > CH;
+KH } [EIÏY] > CH;
+KH } [eiïy] > CH;
 KH } [:Lu:] > C;
 KH > C;
-Kh } [EIÏŸY] > Ch;
-Kh } [eiïÿy] > Ch;
+Kh } [EIÏY] > Ch;
+Kh } [eiïy] > Ch;
 Kh } [:Lu:] > C;
 Kh > C;
-kh } [EIÏŸYeiïÿy] > ch;
+kh } [EIÏYeiïy] > ch;
 kh > c;
 
-GH } [EIÏŸY] > GH;
-GH } [eiïÿy] > Gh;
+GH } [EIÏY] > GH;
+GH } [eiïy] > Gh;
 GH } [:Lu:] > G;
 GH > G;
-Gh } [EIÏŸY] > Gh;
-Gh } [eiïÿy] > Gh;
+Gh } [EIÏY] > Gh;
+Gh } [eiïy] > Gh;
 Gh } [:Lu:] > G;
 Gh > G;
-gh } [EIÏŸYeiïÿy] > gh;
+gh } [EIÏYeiïy] > gh;
 gh > g;
 
 IJ > EI;
@@ -52,43 +52,43 @@ ij > ei;
 
 ::Null;
 
-Đ } [EIÏŸY] > G;
-Đ } [eiïÿy] > G;
+Đ } [EIÏY] > G;
+Đ } [eiïy] > G;
 Đ } [:Lu:] > GI;
 Đ > Gi;
-đ } [EIÏŸYeiïÿy] > g;
+đ } [EIÏYeiïy] > g;
 đ > gi;
 
-[ČĆ] } [EIÏŸY] > C;
-[ČĆ] } [eiïÿy] > C;
+[ČĆ] } [EIÏY] > C;
+[ČĆ] } [eiïy] > C;
 [ČĆ] } [:Lu:] > CI;
 [ČĆ] > Ci;
-[čć] } [EIÏŸYeiïÿy] > c;
+[čć] } [EIÏYeiïy] > c;
 [čć] > ci;
 
-Š } [EIÏŸY] > SC;
-Š } [eiïÿy] > Sc;
+Š } [EIÏY] > SC;
+Š } [eiïy] > Sc;
 Š } [:Lu:] > SCI;
 Š > Sci;
-š } [EIÏŸYeiïÿy] > sc;
+š } [EIÏYeiïy] > sc;
 š > sci;
 
-Ľ } [IÏŸY] > GL;
-Ľ } [iïÿy] > Gl;
+Ľ } [IÏY] > GL;
+Ľ } [iïy] > Gl;
 Ľ } [:Lu:] > GLI;
 Ľ > Gli;
-ľ } [IÏŸYiïÿy] > gl;
+ľ } [IÏYiïy] > gl;
 ľ > gli;
 
-[KQX] } [EIÏŸY] > CH;
-[KQX] } [eiïÿy] > Ch;
+[KQX] } [EIÏY] > CH;
+[KQX] } [eiïy] > Ch;
 [KQX] > C;
-[kqx] } [EIÏŸYeiïÿy] > ch;
+[kqx] } [EIÏYeiïy] > ch;
 [kqx] > c;
 
-G } [EIÏŸY] > GH;
-G } [eiïÿy] > Gh;
-g } [EIÏŸYeiïÿy] > gh;
+G } [EIÏY] > GH;
+G } [eiïy] > Gh;
+g } [EIÏYeiïy] > gh;
 
 Ń } [:Lu:] > GN;
 Ń > Gn;
@@ -107,14 +107,14 @@ h > ;
 H ([:Letter:]) >| &Any-Upper($1);
 H > ;
 
-[YÏŸ] > I;
-[yïÿ] > i;
+[YÏ] > I;
+[yï] > i;
 Ä > A;
 ä > a;
 Ö > O;
 ö > o;
-Ü > U;
-ü > u;
+[ÜŸ] > U;
+[üÿ] > u;
 
 [:^Letter:] { \\' > ;
 \\' } [:^Letter:] > ;
@@ -122,7 +122,7 @@ H > ;
 
 ::Null;
 
-[cCgG] { [iI] } [eEèéÈÉiIìíÌÍyYïÏÿŸ] > ;
+[cCgG] { [iI] } [eEèéÈÉiIìíÌÍyYïÏ] > ;
 [gG] [nN] { [iI] } [aAàáÀÁeEèéÈÉiIìíÌÍoOòóÒÓuUùúÙÚyYïÏÿŸäÄöÖüÜ] > ;
-[gG] [lL] { [iI] } [iIìíÌÍyYïÏÿŸ] > ;
+[gG] [lL] { [iI] } [iIìíÌÍyYïÏ] > ;
 `;

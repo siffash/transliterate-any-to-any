@@ -37,14 +37,14 @@ ij > ei;
 Ö > Io;
 ö > io;
 
-[:^Letter:] { Ü } [:Lu:] > JU;
-[:^Letter:] { Ü > Ju;
-[:^Letter:] { ü > ju;
+[:^Letter:] { [ÜŸ] } [:Lu:] > JU;
+[:^Letter:] { [ÜŸ] > Ju;
+[:^Letter:] { [üÿ] > ju;
 
-[:Lu:] { Ü > IU;
-Ü } [:Lu:] > IU;
-Ü > Iu;
-ü > iu;
+[:Lu:] { [ÜŸ] > IU;
+[ÜŸ] } [:Lu:] > IU;
+[ÜŸ] > Iu;
+[üÿ] > iu;
 
 [:Lu:] { Đ > DŽ;
 Đ } [:Lu:] > DŽ;
@@ -70,9 +70,6 @@ x > ch;
 
 Ï > Y;
 ï > y;
-
-Ÿ > I;
-ÿ > i;
 
 Q > K;
 q > k;

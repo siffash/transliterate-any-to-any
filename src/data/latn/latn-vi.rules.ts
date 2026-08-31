@@ -30,23 +30,23 @@ IJ > Ay;
 Ij > Ay;
 ij > ay;
 
-NG } [eäiÿy] > Ngh;
-NG } [EÄIŸY] > NGH;
-Ng } [EeÄäIiŸÿYy] > Ngh;
-ng } [EeÄäIiŸÿYy] > ngh;
+NG } [eäiy] > Ngh;
+NG } [EÄIY] > NGH;
+Ng } [EeÄäIiYy] > Ngh;
+ng } [EeÄäIiYy] > ngh;
 
-GH } [EeÄäIiŸÿYy] > GH;
-Gh } [EeÄäIiŸÿYy] > Gh;
-gH } [EeÄäIiŸÿYy] > gH;
-gh } [EeÄäIiŸÿYy] > gh;
+GH } [EeÄäIiYy] > GH;
+Gh } [EeÄäIiYy] > Gh;
+gH } [EeÄäIiYy] > gH;
+gh } [EeÄäIiYy] > gh;
 GH > G;
 Gh > G;
 gH > g;
 gh > g;
 
-G } [eäiÿy] > Gh;
-G } [EÄIŸY] > GH;
-g } [EeÄäIiŸÿYy] > gh;
+G } [eäiy] > Gh;
+G } [EÄIY] > GH;
+g } [EeÄäIiYy] > gh;
 
 KH } [:Lu:] > KH;
 KH > Kh;
@@ -61,13 +61,13 @@ k } [Ww] > q;
 
 Q } [Ww] > Q;
 q } [Ww] > q;
-Q } [EeÄäIiŸÿYy] > K;
-q } [EeÄäIiŸÿYy] > k;
+Q } [EeÄäIiYy] > K;
+q } [EeÄäIiYy] > k;
 Q > C;
 q > c;
 
-K } [EeÄäIiŸÿYy] > K;
-k } [EeÄäIiŸÿYy] > k;
+K } [EeÄäIiYy] > K;
+k } [EeÄäIiYy] > k;
 K > C;
 k > c;
 
@@ -105,9 +105,9 @@ X } [:Lu:] > KH;
 X > Kh;
 x > kh;
 
-Ü } [:Lu:] > UY;
-Ü > Uy;
-ü > uy;
+[ÜŸ] } [:Lu:] > UY;
+[ÜŸ] > Uy;
+[üÿ] > uy;
 
 Y } [AaÄäEeIiÏïOoÖöUuÜüŸÿ] > Y;
 y } [AaÄäEeIiÏïOoÖöUuÜüŸÿ] > y;
@@ -137,9 +137,6 @@ w > v;
 
 Ö > Ơ;
 ö > ơ;
-
-Ÿ > Y;
-ÿ > y;
 
 Ľ > L;
 ľ > l;

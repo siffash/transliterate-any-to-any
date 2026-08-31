@@ -9,9 +9,9 @@ KH > KH;
 Kh > Kh;
 kh > kh;
 
-GH } [EIYÏŸ] > GU;
-Gh } [eiyïÿ] > Gu;
-gh } [eiyïÿ] > gu;
+GH } [EIYÏ] > GU;
+Gh } [eiyï] > Gu;
+gh } [eiyï] > gu;
 
 GH > G;
 Gh > G;
@@ -56,16 +56,16 @@ x > kh;
 Ž > J;
 ž > j;
 
-[KQ] } [EIYÏŸ] > QU;
-[KQ] } [eiyïÿ] > Qu;
-[kq] } [eiyïÿ] > qu;
+[KQ] } [EIYÏ] > QU;
+[KQ] } [eiyï] > Qu;
+[kq] } [eiyï] > qu;
 
 [KQ] > C;
 [kq] > c;
 
-G } [EIYÏŸ] > GU;
-G } [eiyïÿ] > Gu;
-g } [eiyïÿ] > gu;
+G } [EIYÏ] > GU;
+G } [eiyï] > Gu;
+g } [eiyï] > gu;
 
 [AEIOUYÄÏÖÜŸaeiouyäïöüÿ] { S } [AEIOUYÄÏÖÜŸaeiouyäïöüÿ] > SS;
 [AEIOUYÄÏÖÜŸaeiouyäïöüÿ] { s } [AEIOUYÄÏÖÜŸaeiouyäïöüÿ] > ss;
@@ -73,8 +73,8 @@ g } [eiyïÿ] > gu;
 W > V;
 w > v;
 
-[YŸÏ] > I;
-[yÿï] > i;
+[YÏ] > I;
+[yï] > i;
 
 Ä > A;
 ä > a;
@@ -82,8 +82,8 @@ w > v;
 Ö > O;
 ö > o;
 
-Ü > U;
-ü > u;
+[ÜŸ] > U;
+[üÿ] > u;
 
 [:^Letter:] { ['·] > ;
 ['·] } [:^Letter:] > ;
