@@ -245,7 +245,7 @@ export const TransliteratorCard = () => {
               position: "relative",
             }}
           >
-            <Box sx={{ px: 2, pt: 1.5 }}>
+            <Box sx={{ px: 2, pt: 2 }}>
               <CodeBadge code={langFrom} />
             </Box>
             <TextField
@@ -320,7 +320,7 @@ export const TransliteratorCard = () => {
               position: "relative",
             }}
           >
-            <Box sx={{ px: 2, pt: 1.5 }}>
+            <Box sx={{ px: 2, pt: 2 }}>
               <CodeBadge code={langTo} />
             </Box>
             <TextField

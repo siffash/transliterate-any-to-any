@@ -14,6 +14,7 @@ import {
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import GitHubIcon from "@mui/icons-material/GitHub";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import Inventory2Icon from "@mui/icons-material/Inventory2";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import { getTheme } from "./theme";
@@ -69,7 +70,6 @@ export default function App() {
                 inset: "-40px -16px auto -16px",
                 height: 320,
                 overflow: "hidden",
-                pointerEvents: "none",
                 zIndex: 0,
               }}
             >
@@ -87,7 +87,24 @@ export default function App() {
                     opacity: theme => (theme.palette.mode === "dark" ? 0.08 : 0.12),
                     transform: `rotate(${g.rot}deg)`,
                     lineHeight: 1,
+                    cursor: "default",
+                    transition: "opacity 0.3s ease-out",
+                    animation: "animation 1000ms ease-out",
+                    "@keyframes animation": {
+                      "50%": {
+                        opacity: 0.75,
+                      },
+                      "100%": {
+                        opacity: theme => (theme.palette.mode === "dark" ? 0.08 : 0.12),
+                      },
+                    },
+                    "&:hover, &:focus": {
+                      opacity: 1,
+                    },
                   }}
+                  tabIndex={-1}
+                  aria-label={g.char}
+                  title={g.lang}
                 >
                   {g.char}
                 </Box>
@@ -104,10 +121,10 @@ export default function App() {
             <Stack
               component="div"
               direction="row"
-              spacing={1.5}
               sx={{
                 flexWrap: "wrap",
                 justifyContent: "center",
+                gap: 1.5,
                 position: "relative",
                 zIndex: 1,
                 "& .MuiChip-root": {
@@ -144,6 +161,16 @@ export default function App() {
                 clickable
                 icon={<MenuBookIcon />}
                 label="Read the article"
+                variant="outlined"
+              />
+              <Chip
+                component="a"
+                href={LINKS.support}
+                target="_blank"
+                rel="noopener noreferrer"
+                clickable
+                icon={<FavoriteIcon />}
+                label="Support"
                 variant="outlined"
               />
             </Stack>
