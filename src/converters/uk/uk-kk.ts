@@ -2,10 +2,9 @@ import { Text } from "types";
 
 export const ukKk = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
-  const { ukLatnRules } = await import("data/uk/uk-latn.rules");
-  const { latnKkRules } = await import("data/latn/latn-kk.rules");
+  const { ukKkRules } = await import("data/uk/uk-kk.rules");
 
-  const transliterator = RBT.fromRules(ukLatnRules + latnKkRules);
+  const transliterator = RBT.fromRules(ukKkRules);
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);

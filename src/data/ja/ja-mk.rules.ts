@@ -7,6 +7,8 @@ export const jaMkRules = `
 ふぇ > fe;
 フォ > fo;
 ふぉ > fo;
+フュ > fyu;
+ふゅ > fyu;
 ヴァ > va;
 ゔぁ > va;
 ヴィ > vi;
@@ -15,10 +17,20 @@ export const jaMkRules = `
 ゔぇ > ve;
 ヴォ > vo;
 ゔぉ > vo;
+ヴュ > vyu;
+ゔゅ > vyu;
 ティ > ti;
 てぃ > ti;
+トゥ > tu;
+とぅ > tu;
+テュ > tyu;
+てゅ > tyu;
 ディ > di;
 でぃ > di;
+ドゥ > du;
+どぅ > du;
+デュ > dyu;
+でゅ > dyu;
 ジェ > je;
 じぇ > je;
 チェ > che;
@@ -31,21 +43,21 @@ export const jaMkRules = `
 うぇ > we;
 ウォ > wo;
 うぉ > wo;
-デュ > dyu;
-[ヴゔ] > vu;
+[^[:L:][:M:]] { [ヴゔ] } [^[:L:][:M:]] > vu;
+[ヴゔ] > v;
 [ぁァ] > a;
 [ぃィ] > i;
 [ぅゥ] > u;
 [ぇェ] > e;
 [ぉォ] > o;
-ャ > ya;
-ュ > yu;
-ョ > yo;
+[ャゃ] > ya;
+[ュゅ] > yu;
+[ョょ] > yo;
 
 ::Null;
 
-tōkyōto > токио;
-kyōtofu > киото;
+tōkyō > токио;
+kyōto > киото;
 
 [aāâɑɐæ] [iīî] } [^[:L:][:M:]] > ај;
 [eēê] [iīî] } [^[:L:][:M:]] > еј;

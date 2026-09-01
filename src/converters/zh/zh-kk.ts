@@ -1,20 +1,16 @@
 import { Text } from "types";
 
 export const zhKk = async (text: Text) => {
-  const { getPhonemizeAll } = await import("helpers/getPhonemize");
-  const { toIPA } = await getPhonemizeAll();
-  const { filterIpa } = await import("helpers/filterIpa");
+  const { pinyin } = await import("pinyin-pro");
   const { RBT } = await import("helpers/rbt");
-  const { ipaKkRules } = await import("data/ipa/ipa-kk.rules");
+  const { zhKkRules } = await import("data/zh/zh-kk.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
 
-  const transliterator = RBT.fromRules(ipaKkRules + "::Title;");
+  const transliterator = RBT.fromRules(zhKkRules);
 
   const convert = async (text: string) => {
-    const ipa = await wordSplitter(text, "zh", text =>
-      filterIpa(toIPA(text, { separator: "" }), text, "zh"),
-    );
-    return transliterator.transliterate(ipa);
+    const romanized = await wordSplitter(text, "zh", text => pinyin(text, { separator: "" }));
+    return transliterator.transliterate(romanized);
   };
 
   if (typeof text === "string") {

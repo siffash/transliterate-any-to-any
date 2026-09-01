@@ -101,13 +101,13 @@ By default, the library validates the source text against the source language by
 await transliterate("ლევან", { from: "en", to: "zh" }); // -> throws an error
 ```
 
-If you need to do it yourself, you can use this function:
+If you need to do it yourself, you can use `validateLanguageByScript` function:
 
 ```typescript
 import { validateLanguageByScript, languages } from "transliterate-any-to-any";
 
-if (!validateLanguageByScript(language, text)) {
-  throw new Error(`The text does not match ${languages[language].name}.`);
+if (!validateLanguageByScript("en", "ლევან")) {
+  throw new Error(`The text does not match ${languages["en"].name}.`);
 }
 ```
 
@@ -132,6 +132,7 @@ if (!validateLanguageByScript(language, text)) {
 | Armenian      | hy                                                        | Armn                                                        | Armenia, Russia, Georgia, France                                      |
 | Greek         | el                                                        | Grek                                                        | Greece, Cyprus                                                        |
 | Russian       | ru                                                        | Cyrl                                                        | Russia, Belarus, Kazakhstan, Kyrgyzstan, Ukraine                      |
+| Kazakh        | kk                                                        | Cyrl                                                        | Kazakhstan (European part), Russia                                    |
 | Ukrainian     | uk                                                        | Cyrl                                                        | Ukraine                                                               |
 | Bulgarian     | bg                                                        | Cyrl                                                        | Bulgaria                                                              |
 | Macedonian    | mk                                                        | Cyrl                                                        | North Macedonia                                                       |
@@ -151,7 +152,6 @@ if (!validateLanguageByScript(language, text)) {
 | Indonesian    | id                                                        | Latn                                                        | Indonesia                                                             |
 | Icelandic     | is                                                        | Latn                                                        | Iceland                                                               |
 | Italian       | it                                                        | Latn                                                        | Italy, Switzerland, San Marino, Vatican City                          |
-| Kazakh        | kk                                                        | Latn                                                        | Kazakhstan (European part), Russia                                    |
 | Luxembourgish | lb                                                        | Latn                                                        | Luxembourg                                                            |
 | Lithuanian    | lt                                                        | Latn                                                        | Lithuania                                                             |
 | Latvian       | lv                                                        | Latn                                                        | Latvia                                                                |
@@ -174,7 +174,7 @@ if (!validateLanguageByScript(language, text)) {
 
 ## 📦 Third-Party Libraries Used
 
-- [pinyin-pro](https://github.com/zh-lx/pinyin-pro) for handling Pinyin (Chinese)
+- [pinyin-pro](https://github.com/zh-lx/pinyin-pro) for handling Chinese Pinyin
 - [opencc-js](https://github.com/nk2028/opencc-js) for handling Traditional & Simplified Chinese & Japanese Kanji (Shinjitai)
 - [kuroshiro](https://github.com/hexenq/kuroshiro) for handling Japanese Hiragana & Katakana
 - [kuroshiro-analyzer-kuromoji](https://github.com/hexenq/kuroshiro-analyzer-kuromoji) for handling Japanese Hiragana & Katakana (patched for browser compatibility)
@@ -182,4 +182,4 @@ if (!validateLanguageByScript(language, text)) {
 - [hangul-js](https://github.com/e-/Hangul.js) for handling Korean Hangul
 - [hanviet-pinyin-words](https://github.com/ph0ngp/hanviet-pinyin-words) for handling Vietnamese
 - [phonemize](https://github.com/hans00/phonemize) for converting some languages to IPA
-- [icu-transliterator](https://github.com/longnow/node-icu-transliterator) for verifying our JS implementation of [ICU](https://icu.unicode.org/)'s [RuleBasedTransliterator (RBT)](https://unicode-org.github.io/icu/userguide/transforms/)
+- [icu-transliterator](https://github.com/longnow/node-icu-transliterator) for verifying the JS implementation of [ICU](https://icu.unicode.org/)'s [RuleBasedTransliterator (RBT)](https://unicode-org.github.io/icu/userguide/transforms/)

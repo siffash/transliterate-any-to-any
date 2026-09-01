@@ -75,7 +75,8 @@ export const normalizerEnIpa = (originalWord: string, ipaWord: string): string =
     { ipaCharToBeReplaced: "ɝɹ", lettersToRestore: { er: "ɝ" } },
     { ipaCharToBeReplaced: "ɚɹ", lettersToRestore: { er: "ɚ" } },
     // Restore "ng"
-    { ipaCharToBeReplaced: "ŋ", lettersToRestore: { ng: "ng" } },
+    { ipaCharToBeReplaced: ["ŋɡ", "ŋg"], lettersToRestore: { ng: "nɡ" } },
+    { ipaCharToBeReplaced: "ŋ", lettersToRestore: { ng: "nɡ" } },
     // Restore "lk"
     { ipaCharToBeReplaced: ["ɫk", "lk"], lettersToRestore: { lk: "ɫk" } },
     { ipaCharToBeReplaced: "k", lettersToRestore: { lk: "ɫk" } },

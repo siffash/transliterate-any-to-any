@@ -2,10 +2,9 @@ import { Text } from "types";
 
 export const kkRu = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
-  const { kkLatnRules } = await import("data/kk/kk-latn.rules");
-  const { latnRuRules } = await import("data/latn/latn-ru.rules");
+  const { kkRuRules } = await import("data/kk/kk-ru.rules");
 
-  const transliterator = RBT.fromRules(kkLatnRules + latnRuRules);
+  const transliterator = RBT.fromRules(kkRuRules);
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);

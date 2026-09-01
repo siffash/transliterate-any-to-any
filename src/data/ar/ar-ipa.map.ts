@@ -3025,6 +3025,7 @@ export const arIpaMap: Record<string, string> = {
   يمين: "jamˈmiːn",
   ينبوع: "janbuːʕ",
   ينساب: "jansaːb",
+  مصنع: "masˤnaʕ",
   آسيا: "ʔaːsija",
   آسية: "ʔaːsija",
   آلاء: "ʔaːlaːʔ",

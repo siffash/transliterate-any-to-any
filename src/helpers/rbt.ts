@@ -886,7 +886,7 @@ class Parser {
     const spec = POSIX_CLASSES[key];
     if (spec === undefined) {
       this.fail(
-        `unknown POSIX class token '[:${key}:]' - supported tokens are [:M:], [:Mn:], [:Lu:], [:Ll:], [:L:], [:^L:], [:Arabic:]`,
+        `unknown POSIX class token '[:${key}:]' - supported tokens are [:L:], [:^L:], [:Lu:], [:^Lu:], [:Ll:], [:^Ll:], [:M:], [:^M:], [:Mn:], [:^Mn:]`,
       );
     }
 
