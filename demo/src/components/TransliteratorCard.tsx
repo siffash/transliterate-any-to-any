@@ -21,6 +21,7 @@ import { Language, languages } from "transliterate-any-to-any";
 import { multilingualTextStack } from "../theme";
 import { useTransliterateWorker } from "../hooks/useTransliterateWorker";
 import { useSpeechRecognition } from "../hooks/useSpeechRecognition";
+import { useQueryParams } from "../hooks/useQueryParams.ts";
 import { DEBOUNCE_MS, DEFAULT_LANGS, LOCAL_STORAGE_KEYS, MAX_CHARS } from "../constants";
 import { LanguageSelect } from "./LanguageSelect";
 import { CodeBadge } from "./CodeBadge";
@@ -53,6 +54,9 @@ export const TransliteratorCard = () => {
   const sourceTextInputRef = useRef<HTMLInputElement>(null);
   const requestIdRef = useRef(0);
   const baseTextRef = useRef("");
+  const isFirstLoadRef = useRef(true);
+  const isHistoryReplacedRef = useRef(false);
+  const isQueryParamsRef = useRef(false);
 
   const {
     isSupported: micSupported,
@@ -83,6 +87,17 @@ export const TransliteratorCard = () => {
     setLoading(true);
 
     const timer = setTimeout(() => {
+      if (isQueryParamsRef.current && !isHistoryReplacedRef.current) {
+        isQueryParamsRef.current = false;
+      } else {
+        const params = new URLSearchParams({
+          from: langFrom,
+          to: langTo,
+          text: sourceText,
+        });
+        history.pushState({}, "", `/?${params.toString()}`);
+      }
+
       run(sourceText, langFrom, langTo)
         .then(result => {
           if (thisId === requestIdRef.current) {
@@ -112,6 +127,36 @@ export const TransliteratorCard = () => {
   useEffect(() => {
     window.localStorage.setItem(LOCAL_STORAGE_KEYS.langTo, langTo);
   }, [langTo]);
+
+  const params = useQueryParams();
+
+  useEffect(() => {
+    if (isFirstLoadRef.current) {
+      isFirstLoadRef.current = false;
+    }
+    if (isHistoryReplacedRef.current) {
+      isHistoryReplacedRef.current = false;
+    } else {
+      isQueryParamsRef.current = true;
+    }
+
+    const from = params.get("from");
+    const to = params.get("to");
+    const text = params.get("text");
+    if (from && to) {
+      setLangFrom(from as Language);
+      setLangTo(to as Language);
+      setSourceText(text || "");
+    } else {
+      const params = new URLSearchParams({
+        from: langFrom,
+        to: langTo,
+        text: sourceText,
+      });
+      history.replaceState({}, "", `/?${params.toString()}`);
+      isHistoryReplacedRef.current = true;
+    }
+  }, [params]);
 
   useEffect(() => {
     if (errorMsg) {
