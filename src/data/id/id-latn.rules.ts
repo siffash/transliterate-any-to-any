@@ -1,15 +1,15 @@
 export const idLatnRules = `
 ::NFC;
 
-S [YH] > Š;
-S [yh] > Š;
-s [YH] > š;
-s [yh] > š;
+S [YHJ] > Š;
+S [yhj] > Š;
+s [YHJ] > š;
+s [yhj] > š;
 
-NY > Ń;
-Ny > Ń;
-nY > ń;
-ny > ń;
+N [YJ] > Ń;
+N [yj] > Ń;
+n [YJ] > ń;
+n [yj] > ń;
 
 KH > X;
 Kh > X;
@@ -22,6 +22,16 @@ cH > č;
 ch > č;
 C > Č;
 c > č;
+
+TJ > Č;
+Tj > Č;
+tJ > č;
+tj > č;
+
+DJ > DŽ;
+Dj > DŽ;
+dJ > dž;
+dj > dž;
 
 [:Lu:] { J > DŽ;
 J } [:Lu:] > DŽ;
