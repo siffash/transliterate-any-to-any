@@ -24,11 +24,19 @@ ij > ey;
 
 ::Null;
 
-Ń > N;
-ń > n;
-
+Ľ } [AOUÏ] > LY;
+Ľ } [aouï] > Ly;
+ľ } [AOUÏ] > lY;
+ľ } [aouï] > ly;
 Ľ > L;
 ľ > l;
+
+Ń } [AOUÏ] > NY;
+Ń } [aouï] > Ny;
+ń } [AOUÏ] > nY;
+ń } [aouï] > ny;
+Ń > N;
+ń > n;
 
 Š > Ş;
 š > ş;
