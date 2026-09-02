@@ -5,12 +5,9 @@ export const jaMs = async (text: Text) => {
   const Kuroshiro = resolveCjsDefault(await import("kuroshiro"));
   const KuromojiAnalyzer = resolveCjsDefault(await import("kuroshiro-analyzer-kuromoji"));
   const { isNode, isDeno, isBun } = await import("browser-or-node");
-  const { getPhonemizeAll } = await import("helpers/getPhonemize");
-  const { toIPA } = await getPhonemizeAll();
-  const { filterIpa } = await import("helpers/filterIpa");
   const { RBT } = await import("helpers/rbt");
-  const { jaIpaRules } = await import("data/ja/ja-ipa.rules");
-  const { ipaMsRules } = await import("data/ipa/ipa-ms.rules");
+  const { jaLatnRules } = await import("data/ja/ja-latn.rules");
+  const { latnMsRules } = await import("data/latn/latn-ms.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
 
   const kuroshiro = new Kuroshiro();
@@ -20,15 +17,15 @@ export const jaMs = async (text: Text) => {
         isNode || isDeno || isBun ? undefined : "https://cdn.jsdelivr.net/npm/kuromoji@0.1.2/dict/",
     }),
   );
-  const transliterator = RBT.fromRules(jaIpaRules + ipaMsRules + "::Title;");
-  const exceptions = jaIpaRules.replace(/( ?> ?[^;]+;)|\[|]|\n/g, "");
+  const transliterator = RBT.fromRules(jaLatnRules + latnMsRules);
 
   const convert = async (text: string) => {
-    const ipa = await wordSplitter(text, "ja", async text => {
-      const hiragana = await kuroshiro.convert(text, { to: "hiragana" });
-      return filterIpa(toIPA(hiragana), hiragana, "ja", exceptions);
-    });
-    return transliterator.transliterate(ipa);
+    const romanized = await wordSplitter(
+      text,
+      "ja",
+      async text => await kuroshiro.convert(text, { to: "romaji" }),
+    );
+    return transliterator.transliterate(romanized);
   };
 
   if (typeof text === "string") {

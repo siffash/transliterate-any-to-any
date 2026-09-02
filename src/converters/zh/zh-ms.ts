@@ -1,20 +1,17 @@
 import { Text } from "types";
 
 export const zhMs = async (text: Text) => {
-  const { getPhonemizeAll } = await import("helpers/getPhonemize");
-  const { toIPA } = await getPhonemizeAll();
-  const { filterIpa } = await import("helpers/filterIpa");
+  const { pinyin } = await import("pinyin-pro");
   const { RBT } = await import("helpers/rbt");
-  const { ipaMsRules } = await import("data/ipa/ipa-ms.rules");
+  const { zhLatnRules } = await import("data/zh/zh-latn.rules");
+  const { latnMsRules } = await import("data/latn/latn-ms.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
 
-  const transliterator = RBT.fromRules(ipaMsRules + "::Title;");
+  const transliterator = RBT.fromRules(zhLatnRules + latnMsRules);
 
   const convert = async (text: string) => {
-    const ipa = await wordSplitter(text, "zh", text =>
-      filterIpa(toIPA(text, { separator: "" }), text, "zh"),
-    );
-    return transliterator.transliterate(ipa);
+    const romanized = await wordSplitter(text, "zh", text => pinyin(text, { separator: "" }));
+    return transliterator.transliterate(romanized);
   };
 
   if (typeof text === "string") {

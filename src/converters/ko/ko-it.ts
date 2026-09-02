@@ -1,20 +1,17 @@
 import { Text } from "types";
 
 export const koIt = async (text: Text) => {
-  const { getPhonemizeAll } = await import("helpers/getPhonemize");
-  const { toIPA } = await getPhonemizeAll();
-  const { filterIpa } = await import("helpers/filterIpa");
+  const Aromanize = (await import("aromanize")).default;
   const { RBT } = await import("helpers/rbt");
-  const { ipaItRules } = await import("data/ipa/ipa-it.rules");
+  const { koLatnRules } = await import("data/ko/ko-latn.rules");
+  const { latnItRules } = await import("data/latn/latn-it.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
 
-  const transliterator = RBT.fromRules(ipaItRules + "::Title;");
+  const transliterator = RBT.fromRules(koLatnRules + latnItRules);
 
   const convert = async (text: string) => {
-    const ipa = await wordSplitter(text, "ko", text =>
-      filterIpa(toIPA(text, { anyAscii: true }), text, "ko"),
-    );
-    return transliterator.transliterate(ipa);
+    const romanized = await wordSplitter(text, "ko", text => Aromanize.romanize(text));
+    return transliterator.transliterate(romanized);
   };
 
   if (typeof text === "string") {
