@@ -74,40 +74,39 @@ export default function App() {
               }}
             >
               {SCATTER.map((g, i) => (
-                <Box
-                  key={i}
-                  component="span"
-                  sx={{
-                    position: "absolute",
-                    top: g.top,
-                    left: g.left,
-                    fontSize: 32,
-                    fontFamily: '"IBM Plex Sans", system-ui, sans-serif',
-                    color: "primary.main",
-                    opacity: theme => (theme.palette.mode === "dark" ? 0.08 : 0.12),
-                    transform: `rotate(${g.rot}deg)`,
-                    lineHeight: 1,
-                    cursor: "default",
-                    transition: "opacity 0.3s ease-out",
-                    animation: "animation 1000ms ease-out",
-                    "@keyframes animation": {
-                      "50%": {
-                        opacity: 0.75,
+                <Tooltip key={i} title={g.lang}>
+                  <Box
+                    component="span"
+                    sx={{
+                      position: "absolute",
+                      top: g.top,
+                      left: g.left,
+                      fontSize: 32,
+                      fontFamily: '"IBM Plex Sans", system-ui, sans-serif',
+                      color: "primary.main",
+                      opacity: theme => (theme.palette.mode === "dark" ? 0.08 : 0.12),
+                      transform: `rotate(${g.rot}deg)`,
+                      lineHeight: 1,
+                      cursor: "default",
+                      transition: "opacity 0.3s ease-out",
+                      animation: "animation 1000ms ease-out",
+                      "@keyframes animation": {
+                        "50%": {
+                          opacity: 0.5,
+                        },
+                        "100%": {
+                          opacity: theme => (theme.palette.mode === "dark" ? 0.08 : 0.12),
+                        },
                       },
-                      "100%": {
-                        opacity: theme => (theme.palette.mode === "dark" ? 0.08 : 0.12),
+                      "&:hover": {
+                        opacity: 1,
                       },
-                    },
-                    "&:hover, &:focus": {
-                      opacity: 1,
-                    },
-                  }}
-                  tabIndex={-1}
-                  aria-label={g.char}
-                  title={g.lang}
-                >
-                  {g.char}
-                </Box>
+                    }}
+                    aria-label={g.char}
+                  >
+                    {g.char}
+                  </Box>
+                </Tooltip>
               ))}
             </Box>
 
@@ -115,7 +114,9 @@ export default function App() {
               variant="h1"
               sx={{ fontSize: { xs: "2.1rem", sm: "3rem" }, position: "relative", zIndex: 1 }}
             >
-              transliterate-any-to-any
+              transliterate‑
+              <wbr />
+              any‑to‑any
             </Typography>
 
             <Stack

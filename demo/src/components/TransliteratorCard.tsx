@@ -207,11 +207,16 @@ export const TransliteratorCard = () => {
       sx={{ borderRadius: 4, border: "1px solid", borderColor: "divider", position: "relative" }}
     >
       <CardContent sx={{ p: { xs: 2, sm: 3 } }}>
-        <Stack
-          component="div"
-          direction="row"
-          spacing={2}
-          sx={{ alignItems: "center", justifyContent: "center", flexWrap: "wrap", mb: 3 }}
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "column", sm: "row" },
+            alignItems: "center",
+            justifyContent: "center",
+            flexWrap: "wrap",
+            gap: 2,
+            mb: 3,
+          }}
         >
           <LanguageSelect id="from-lang" label="From" value={langFrom} onChange={handleFromLang} />
           <Tooltip title="Swap languages">
@@ -229,7 +234,7 @@ export const TransliteratorCard = () => {
             </IconButton>
           </Tooltip>
           <LanguageSelect id="to-lang" label="To" value={langTo} onChange={handleToLang} />
-        </Stack>
+        </Box>
 
         <Stack direction={{ xs: "column", md: "row" }} spacing={2.5}>
           {/* Source panel */}
