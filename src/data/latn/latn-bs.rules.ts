@@ -41,11 +41,15 @@ ij > ej;
 [^[:L:][:M:]] { I } [AaÄäEeOoÖöUuÜüŸÿ] > J;
 [^[:L:][:M:]] { i } [AaÄäEeOoÖöUuÜüŸÿ] > j;
 
+Ľ } [Jj] > L;
+ľ } [Jj] > l;
 [:Lu:] { Ľ > LJ;
 Ľ } [:Lu:] > LJ;
 Ľ > Lj;
 ľ > lj;
 
+Ń } [Jj] > N;
+ń } [Jj] > n;
 [:Lu:] { Ń > NJ;
 Ń } [:Lu:] > NJ;
 Ń > Nj;

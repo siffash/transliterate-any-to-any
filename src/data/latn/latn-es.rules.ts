@@ -48,6 +48,8 @@ ij > ei;
 Đ > CH;
 đ > ch;
 
+Ľ } [Ll] > L;
+ľ } [Ll] > l;
 Ľ } [:Ll:] > Ll;
 Ľ > LL;
 ľ > ll;
