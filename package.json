@@ -49,7 +49,7 @@
   },
   "scripts": {
     "dev": "tsx watch --include ./src src/index.ts",
-    "prebuild": "node ./src/helpers/patch-aromanize.js && node ./src/helpers/patch-zlib.js",
+    "prebuild": "node ./src/helpers/patch-aromanize.js && node ./src/helpers/patch-zlib.js && node ./src/helpers/patch-kuromoji.js",
     "build": "rimraf dist && tsdown",
     "type-check": "tsc --noEmit --pretty",
     "lint": "eslint src --max-warnings=0",

@@ -23,7 +23,7 @@ function patchDir(dir) {
   for (const file of files) {
     if (file.endsWith(".js")) {
       fs.writeFileSync(path.join(dir, file), fflateShim, "utf8");
-      console.log("✅ Patched:", path.join(dir, file));
+      console.log("✅ Patched zlib:", path.join(dir, file));
     }
   }
 }
@@ -33,6 +33,7 @@ try {
   const hoisted = require.resolve("zlibjs/bin/gunzip.min.js");
   patchDir(path.dirname(hoisted));
 } catch (e) {
+  console.error("❌ Not patched zlib: /node_modules/zlibjs/bin/gunzip.min.js");
   console.error(e);
 }
 

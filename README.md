@@ -174,12 +174,11 @@ if (!validateLanguageByScript("en", "ლევან")) {
 
 ## 📦 Third-Party Libraries Used
 
-- [pinyin-pro](https://github.com/zh-lx/pinyin-pro) for handling Chinese Pinyin
-- [opencc-js](https://github.com/nk2028/opencc-js) for handling Traditional & Simplified Chinese & Japanese Kanji (Shinjitai)
-- [kuroshiro](https://github.com/hexenq/kuroshiro) for handling Japanese Hiragana & Katakana
-- [kuroshiro-analyzer-kuromoji](https://github.com/hexenq/kuroshiro-analyzer-kuromoji) for handling Japanese Hiragana & Katakana (patched for browser compatibility)
-- [aromanize](https://github.com/fujaru/aromanize-js) for handling Korean Hangul (patched for browser compatibility)
-- [hangul-js](https://github.com/e-/Hangul.js) for handling Korean Hangul
-- [hanviet-pinyin-words](https://github.com/ph0ngp/hanviet-pinyin-words) for handling Vietnamese
-- [phonemize](https://github.com/hans00/phonemize) for converting some languages to IPA
-- [icu-transliterator](https://github.com/longnow/node-icu-transliterator) for verifying the JS implementation of [ICU](https://icu.unicode.org/)'s [RuleBasedTransliterator (RBT)](https://unicode-org.github.io/icu/userguide/transforms/)
+- [pinyin-pro](https://github.com/zh-lx/pinyin-pro) - for handling Chinese Pinyin
+- [opencc-js](https://github.com/nk2028/opencc-js) - for handling Traditional & Simplified Chinese & Japanese Kanji (Shinjitai)
+- [kuroshiro](https://github.com/hexenq/kuroshiro), [kuroshiro-analyzer-kuromoji](https://github.com/hexenq/kuroshiro-analyzer-kuromoji), [kuromoji](https://github.com/takuyaa/kuromoji.js) - for handling Japanese Hiragana & Katakana (patched for browser compatibility)
+- [aromanize](https://github.com/fujaru/aromanize-js) - for handling Korean Hangul (patched for browser compatibility)
+- [hangul-js](https://github.com/e-/Hangul.js) - for handling Korean Hangul
+- [hanviet-pinyin-words](https://github.com/ph0ngp/hanviet-pinyin-words) - for handling Vietnamese
+- [phonemize](https://github.com/hans00/phonemize) - for converting some languages to IPA
+- [icu-transliterator](https://github.com/longnow/node-icu-transliterator) - for verifying the JS implementation of [ICU](https://icu.unicode.org/)'s [RuleBasedTransliterator (RBT)](https://unicode-org.github.io/icu/userguide/transforms/)
