@@ -4,7 +4,7 @@
 
 A TypeScript library for [transliteration](https://en.wikipedia.org/wiki/Transliteration) (not translation) between [50 languages](#supported-languages)
 
-###### 🚀 [Playground](https://transliterate-any-to-any.js.org) · 📦 [npm package](https://www.npmjs.com/package/transliterate-any-to-any) · 📖 [Read the article](https://dev.to/siffash/transliterate-any-to-any)
+###### 🚀 [Playground](https://transliterate-any-to-any.js.org) · 📦 [npm package](https://www.npmjs.com/package/transliterate-any-to-any) · 📖 [Read the article](https://realpandablog.wordpress.com/2026/09/03/transliterate-any-to-any/)
 
 </div>
 
