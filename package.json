@@ -1,7 +1,7 @@
 {
   "name": "transliterate-any-to-any",
   "version": "1.0.0",
-  "description": "Transliterate from any language to any language",
+  "description": "A JS/TS Node.js & cross-browser library for bidirectional transliterations between 50 most popular languages (2450 combinations)",
   "keywords": [
     "transliteration",
     "transliterate",
@@ -20,13 +20,13 @@
     "International Components for Unicode",
     "ICU"
   ],
-  "homepage": "https://github.com/siffash/transliterate-any-to-any#readme",
-  "bugs": {
-    "url": "https://github.com/siffash/transliterate-any-to-any/issues"
-  },
+  "homepage": "https://transliterate-any-to-any.js.org",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/siffash/transliterate-any-to-any.git"
+  },
+  "bugs": {
+    "url": "https://github.com/siffash/transliterate-any-to-any/issues"
   },
   "license": "Apache-2.0",
   "author": "Anton Sivashtenko",
@@ -47,6 +47,11 @@
       "default": "./dist/index.js"
     }
   },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "dev": "tsx watch --include ./src src/index.ts",
     "prebuild": "node ./src/helpers/patch-aromanize.js && node ./src/helpers/patch-zlib.js && node ./src/helpers/patch-kuromoji.js",
@@ -58,7 +63,8 @@
     "format:check": "prettier --check src --config ./.prettierrc",
     "test": "vitest",
     "test:run": "vitest run",
-    "prepare": "husky || true"
+    "prepare": "husky || true",
+    "prepublishOnly": "npm run format:check && npm run lint && npm run type-check && npm run test:run && npm run build"
   },
   "lint-staged": {
     "*.ts": [
@@ -66,9 +72,6 @@
       "prettier --write"
     ]
   },
-  "files": [
-    "dist"
-  ],
   "dependencies": {
     "aromanize": "^0.1.5",
     "browser-or-node": "^3.0.0",
