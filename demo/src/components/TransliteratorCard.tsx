@@ -54,7 +54,6 @@ export const TransliteratorCard = () => {
   const sourceTextInputRef = useRef<HTMLInputElement>(null);
   const requestIdRef = useRef(0);
   const baseTextRef = useRef("");
-  const isFirstLoadRef = useRef(true);
   const isHistoryReplacedRef = useRef(false);
   const isQueryParamsRef = useRef(false);
 
@@ -131,9 +130,6 @@ export const TransliteratorCard = () => {
   const params = useQueryParams();
 
   useEffect(() => {
-    if (isFirstLoadRef.current) {
-      isFirstLoadRef.current = false;
-    }
     if (isHistoryReplacedRef.current) {
       isHistoryReplacedRef.current = false;
     } else {
