@@ -3001,6 +3001,7 @@ export const frIpaMap: Record<string, string> = {
   émilie: "emili",
   épinay: "epinɛ",
   érigné: "eʁiɲe",
+  green: "gʁiːn",
   abobo: "abobo",
   abymes: "abim",
   acton: "aktən",
