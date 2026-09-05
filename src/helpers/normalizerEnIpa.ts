@@ -31,7 +31,7 @@ export const normalizerEnIpa = (originalWord: string, ipaWord: string): string =
     { ipaCharToBeReplaced: "oʊ", lettersToRestore: { o: "ɔ" } },
     { ipaCharToBeReplaced: ["ɑ", "ʌ", "ə"], lettersToRestore: { o: "ɔ" } },
     // Restore "a"
-    { ipaCharToBeReplaced: ["æ", "ɛ", "ə", "o"], lettersToRestore: { a: "a" } },
+    { ipaCharToBeReplaced: ["ɛ", "ə", "o"], lettersToRestore: { a: "a" } },
     // Restore "el"
     { ipaCharToBeReplaced: "ɪɫ", lettersToRestore: { el: "eɫ" } },
     // Restore "et"
@@ -64,6 +64,7 @@ export const normalizerEnIpa = (originalWord: string, ipaWord: string): string =
     // Restore "or"
     { ipaCharToBeReplaced: ["ɝ", "ɚ"], lettersToRestore: { or: "oɹ" } },
     // Restore "ir"
+    { ipaCharToBeReplaced: ["ɝ", "ɚ"], lettersToRestore: { ir: "ɪɹ" } },
     { ipaCharToBeReplaced: ["aɝ", "aɚ"], lettersToRestore: { yr: "ɪɹ" } },
     // Restore "ro"
     { ipaCharToBeReplaced: ["ɝ", "ɚ"], lettersToRestore: { ro: "ɹo" } },
@@ -71,12 +72,15 @@ export const normalizerEnIpa = (originalWord: string, ipaWord: string): string =
     { ipaCharToBeReplaced: "nu", lettersToRestore: { new: "nju" } },
     // Restore "mery"
     { ipaCharToBeReplaced: "mɹi", lettersToRestore: { mery: "meɹi" } },
-    // remove "ɹ" after "ɝ"/"ɚ to avoid doubling of "r"
+    // Remove "ɹ" after "ɝ"/"ɚ" to avoid doubling of "r"
     { ipaCharToBeReplaced: "ɝɹ", lettersToRestore: { er: "ɝ" } },
     { ipaCharToBeReplaced: "ɚɹ", lettersToRestore: { er: "ɚ" } },
     // Restore "ng"
+    { ipaCharToBeReplaced: "ŋh", lettersToRestore: { ngh: "nɡ" } },
     { ipaCharToBeReplaced: ["ŋɡ", "ŋg"], lettersToRestore: { ng: "nɡ" } },
     { ipaCharToBeReplaced: "ŋ", lettersToRestore: { ng: "nɡ" } },
+    // Remove "h" after "g"
+    { ipaCharToBeReplaced: ["ɡh", "gh"], lettersToRestore: { gh: "ɡ" } },
     // Restore "lk"
     { ipaCharToBeReplaced: ["ɫk", "lk"], lettersToRestore: { lk: "ɫk" } },
     { ipaCharToBeReplaced: "k", lettersToRestore: { lk: "ɫk" } },
