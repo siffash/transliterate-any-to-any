@@ -27,16 +27,28 @@ import { LanguageSelect } from "./LanguageSelect";
 import { CodeBadge } from "./CodeBadge";
 
 function getInitialLangFrom(): Language {
+  // try to get from URL
+  const params = new URLSearchParams(window.location.search);
+  const paramFrom = params.get("from");
+  if (paramFrom) return paramFrom as Language;
+  // try to get from localStorage
   if (typeof window === "undefined") return DEFAULT_LANGS.langFrom;
   const stored = window.localStorage.getItem(LOCAL_STORAGE_KEYS.langFrom);
   if (stored) return stored as Language;
+  // fallback to default
   return DEFAULT_LANGS.langFrom;
 }
 
 function getInitialLangTo(): Language {
+  // try to get from URL
+  const params = new URLSearchParams(window.location.search);
+  const paramTo = params.get("to");
+  if (paramTo) return paramTo as Language;
+  // try to get from localStorage
   if (typeof window === "undefined") return DEFAULT_LANGS.langTo;
   const stored = window.localStorage.getItem(LOCAL_STORAGE_KEYS.langTo);
   if (stored) return stored as Language;
+  // fallback to default
   return DEFAULT_LANGS.langTo;
 }
 
@@ -54,8 +66,13 @@ export const TransliteratorCard = () => {
   const sourceTextInputRef = useRef<HTMLInputElement>(null);
   const requestIdRef = useRef(0);
   const baseTextRef = useRef("");
-  const isHistoryReplacedRef = useRef(false);
-  const isQueryParamsRef = useRef(false);
+  const dontPushToHistory = useRef(false);
+
+  const {
+    params: { paramFrom, paramTo, paramText },
+    paramsChanged,
+    setParamsChanged,
+  } = useQueryParams();
 
   const {
     isSupported: micSupported,
@@ -86,8 +103,8 @@ export const TransliteratorCard = () => {
     setLoading(true);
 
     const timer = setTimeout(() => {
-      if (isQueryParamsRef.current && !isHistoryReplacedRef.current) {
-        isQueryParamsRef.current = false;
+      if (dontPushToHistory.current) {
+        dontPushToHistory.current = false;
       } else {
         const params = new URLSearchParams({
           from: langFrom,
@@ -127,32 +144,48 @@ export const TransliteratorCard = () => {
     window.localStorage.setItem(LOCAL_STORAGE_KEYS.langTo, langTo);
   }, [langTo]);
 
-  const params = useQueryParams();
-
   useEffect(() => {
-    if (isHistoryReplacedRef.current) {
-      isHistoryReplacedRef.current = false;
-    } else {
-      isQueryParamsRef.current = true;
-    }
-
-    const from = params.get("from");
-    const to = params.get("to");
-    const text = params.get("text");
-    if (from && to) {
-      setLangFrom(from as Language);
-      setLangTo(to as Language);
-      setSourceText(text || "");
-    } else {
+    const params = new URLSearchParams(window.location.search);
+    const paramFrom = params.get("from");
+    const paramTo = params.get("to");
+    if (!paramFrom || !paramTo) {
       const params = new URLSearchParams({
         from: langFrom,
         to: langTo,
         text: sourceText,
       });
       history.replaceState({}, "", `/?${params.toString()}`);
-      isHistoryReplacedRef.current = true;
+      return;
     }
-  }, [params]);
+
+    if (sourceText) {
+      return;
+    }
+
+    if (dontPushToHistory.current) {
+      dontPushToHistory.current = false;
+    } else {
+      const params = new URLSearchParams({
+        from: langFrom,
+        to: langTo,
+        text: sourceText,
+      });
+      history.pushState({}, "", `/?${params.toString()}`);
+    }
+  }, [sourceText, langFrom, langTo]);
+
+  useEffect(() => {
+    if (paramsChanged) {
+      setParamsChanged(false);
+      dontPushToHistory.current = true;
+    }
+
+    if (paramFrom && paramTo) {
+      setLangFrom(paramFrom);
+      setLangTo(paramTo);
+      setSourceText(paramText);
+    }
+  }, [paramFrom, paramTo, paramText, paramsChanged]);
 
   useEffect(() => {
     if (errorMsg) {
