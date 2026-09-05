@@ -23,9 +23,7 @@ A TypeScript library for [transliteration](https://en.wikipedia.org/wiki/Transli
 - Based on rules & dictionaries, no machine learning overhead.
 - Dynamically imports only the libraries/mappings/rules needed for the given language pair.
 - Supports batching - you can pass an array of strings.
-- Can work in browser - but it's recommended to be used in a Web Worker (see the [demo implementation](https://github.com/siffash/transliterate-any-to-any/tree/main/demo)).
-
----
+- Works in browser - but it's recommended to be used in a Web Worker (see the [demo implementation](https://github.com/siffash/transliterate-any-to-any/tree/main/demo)).
 
 <a id="examples"></a>
 
@@ -59,8 +57,6 @@ await transliterate(["上海", "广州"], { from: "zh", to: "bg" }); // -> ["Ш�
 await transliterate(["मुंबई", "कोलकाता"], { from: "hi", to: "he" }); // -> ["קולקטה" ,"מומבאי"]
 ```
 
----
-
 ## 🛠️ API Reference
 
 ### `transliterate(text, options): string | string[]`
@@ -77,8 +73,6 @@ await transliterate(["मुंबई", "कोलकाता"], { from: "hi", 
 | `from`          | `string` | Yes      | Source language in [BCP 47](https://en.wikipedia.org/wiki/IETF_language_tag) |
 | `to`            | `string` | Yes      | Target language in [BCP 47](https://en.wikipedia.org/wiki/IETF_language_tag) |
 
----
-
 ## 🔍 Detect Language's Script
 
 By default, the library transforms the source text even if the source & target languages are of same script (see [Maltese to Latvian example](#examples)). If you want to prevent such cases, you can compare the languages' scripts before transliteration:
@@ -90,8 +84,6 @@ if (languages[languageFrom]?.script !== languages[languageTo]?.script) {
   await transliterate(text, { from: languageFrom, to: languageTo });
 }
 ```
-
----
 
 ## ✅ Validate Language By Script
 
@@ -110,8 +102,6 @@ if (!validateLanguageByScript("en", "ლევან")) {
   throw new Error(`The text does not match ${languages["en"].name}.`);
 }
 ```
-
----
 
 <a id="supported-languages"></a>
 
@@ -169,8 +159,6 @@ if (!validateLanguageByScript("en", "ლევან")) {
 | Swedish       | sv                                                        | Latn                                                        | Sweden, Finland                                                       |
 | Turkish       | tr                                                        | Latn                                                        | Turkey, Cyprus (Turkish community)                                    |
 | Vietnamese    | vi                                                        | Latn                                                        | Vietnam                                                               |
-
----
 
 ## 📦 Third-Party Libraries Used
 

@@ -18,7 +18,10 @@
     "t13n",
     "i18n",
     "International Components for Unicode",
-    "ICU"
+    "ICU",
+    "JavaScript",
+    "TypeScript",
+    "Node.js"
   ],
   "homepage": "https://transliterate-any-to-any.js.org",
   "repository": {
