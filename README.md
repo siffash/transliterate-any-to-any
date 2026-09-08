@@ -38,6 +38,9 @@ await transliterate("Marsaxlokk", { from: "mt", to: "lv" }); // -> Marsašlok
 // French -> Russian
 await transliterate("Pierre Richard", { from: "fr", to: "ru" }); // -> Пьер Ришар
 
+// English -> Korean
+await transliterate("Sean Penn", { from: "en", to: "ko" }); // -> 숀 펜
+
 // Greek -> Armenian
 await transliterate("Λάρισα", { from: "el", to: "hy" }); // -> Լարիսա
 
