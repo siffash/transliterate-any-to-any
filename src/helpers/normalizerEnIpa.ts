@@ -32,6 +32,8 @@ export const normalizerEnIpa = (originalWord: string, ipaWord: string): string =
     { ipaCharToBeReplaced: ["ɑ", "ʌ", "ə"], lettersToRestore: { o: "ɔ" } },
     // Restore "a"
     { ipaCharToBeReplaced: ["ɛ", "ə", "o"], lettersToRestore: { a: "a" } },
+    // Restore "e"
+    { ipaCharToBeReplaced: ["eɪ", "ɛɪ"], lettersToRestore: { e: "ɛ" } },
     // Restore "el"
     { ipaCharToBeReplaced: "ɪɫ", lettersToRestore: { el: "eɫ" } },
     // Restore "et"
