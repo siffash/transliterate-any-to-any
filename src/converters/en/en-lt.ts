@@ -9,10 +9,10 @@ export const enLt = async (text: Text) => {
   const transliterator = RBT.fromRules(ipaLtRules);
 
   if (typeof text === "string") {
-    const ipa = await enIpa<string>(text, true);
+    const ipa = await enIpa<string>(text);
     return copyCase(text, transliterator.transliterate(ipa));
   } else {
-    const ipaArray = await enIpa<string[]>(text, true);
+    const ipaArray = await enIpa<string[]>(text);
     return ipaArray.map((ipa, i) => copyCase(text[i], transliterator.transliterate(ipa)));
   }
 };

@@ -8,10 +8,10 @@ export const frKa = async (text: Text) => {
   const transliterator = RBT.fromRules(ipaKaRules);
 
   if (typeof text === "string") {
-    const ipa = await frIpa<string>(text, true);
+    const ipa = await frIpa<string>(text);
     return transliterator.transliterate(ipa);
   } else {
-    const ipaArray = await frIpa<string[]>(text, true);
+    const ipaArray = await frIpa<string[]>(text);
     return ipaArray.map(ipa => transliterator.transliterate(ipa));
   }
 };

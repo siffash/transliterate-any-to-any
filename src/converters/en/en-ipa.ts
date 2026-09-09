@@ -1,6 +1,6 @@
 import { Text } from "types";
 
-export const enIpa = async <T = Text>(text: Text, isNormalized: boolean): Promise<T> => {
+export const enIpa = async <T = Text>(text: Text): Promise<T> => {
   const { getPhonemize } = await import("helpers/getPhonemize");
   const { toIPA } = await getPhonemize();
   const { filterIpa } = await import("helpers/filterIpa");
@@ -10,7 +10,7 @@ export const enIpa = async <T = Text>(text: Text, isNormalized: boolean): Promis
   const convert = async (text: string) =>
     await wordSplitter(text, "en", (word: string) => {
       const ipa = filterIpa(toIPA(word), word, "en");
-      return isNormalized ? normalizerEnIpa(word, ipa) : ipa;
+      return normalizerEnIpa(word, ipa);
     });
 
   if (typeof text === "string") {

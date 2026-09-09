@@ -1,6 +1,6 @@
 import { Text } from "types";
 
-export const frIpa = async <T = Text>(text: Text, isNormalized: boolean): Promise<T> => {
+export const frIpa = async <T = Text>(text: Text): Promise<T> => {
   const { frIpaMap } = await import("data/fr/fr-ipa.map");
   const { RBT } = await import("helpers/rbt");
   const { frIpaRules } = await import("data/fr/fr-ipa.rules");
@@ -17,7 +17,7 @@ export const frIpa = async <T = Text>(text: Text, isNormalized: boolean): Promis
       (word: string) => {
         word = word.toLocaleLowerCase("fr");
         const ipa = filterIpa(frIpaMap[word], word, "fr") || transliterator.transliterate(word);
-        return isNormalized ? normalizerFrIpa(word, ipa) : ipa;
+        return normalizerFrIpa(word, ipa);
       },
       true,
     );
