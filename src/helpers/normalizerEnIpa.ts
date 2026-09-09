@@ -25,22 +25,23 @@ export const normalizerEnIpa = (originalWord: string, ipaWord: string): string =
     { ipaCharToBeReplaced: "z", lettersToRestore: { zz: "zz" } },
     // Restore "oa"
     { ipaCharToBeReplaced: "oʊ", lettersToRestore: { oa: "oa" } },
-    // Keep "ʃən" for "tion"
+    // Preserve "ʃən" for "tion"
     { ipaCharToBeReplaced: "ʃən", lettersToRestore: { tion: "ʃən" } },
     // Restore "o"
     { ipaCharToBeReplaced: "oʊ", lettersToRestore: { o: "ɔ" } },
     { ipaCharToBeReplaced: ["ɑ", "ʌ", "ə"], lettersToRestore: { o: "ɔ" } },
     // Restore "a"
     { ipaCharToBeReplaced: ["ɛ", "ə", "o"], lettersToRestore: { a: "a" } },
+    // Preserve "ei" and "ey"
+    { ipaCharToBeReplaced: ["eɪ", "ɛɪ"], lettersToRestore: { ei: "ɛɪ", ey: "ɛɪ" } },
+    // Restore "ei"
+    { ipaCharToBeReplaced: ["e", "ɛ"], lettersToRestore: { ei: "ɛɪ", ey: "ɛɪ" } },
     // Restore "e"
     { ipaCharToBeReplaced: ["eɪ", "ɛɪ"], lettersToRestore: { e: "ɛ" } },
     // Restore "el"
     { ipaCharToBeReplaced: "ɪɫ", lettersToRestore: { el: "eɫ" } },
     // Restore "et"
     { ipaCharToBeReplaced: "ɪt", lettersToRestore: { et: "et" } },
-    // Restore "ei"
-    { ipaCharToBeReplaced: "eɪ", lettersToRestore: { ei: "ɛɪ", ey: "ɛɪ" } },
-    { ipaCharToBeReplaced: "ɛ", lettersToRestore: { ei: "ɛɪ", ey: "ɛɪ" } },
     // Restore "ie"
     { ipaCharToBeReplaced: "jə", lettersToRestore: { ie: "ɪɛ" } },
     // Restore "ia"
