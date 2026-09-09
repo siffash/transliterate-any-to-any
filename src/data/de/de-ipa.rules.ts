@@ -2,6 +2,7 @@ export const deIpaRules = `
 ::Lower;
 
 ch } arlotte > ʃ;
+s } tadt > ʃ;
 
 ng } [^[:L:][:M:]] > ŋ;
 ig } [^[:L:][:M:]] > ɪç;

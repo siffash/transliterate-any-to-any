@@ -1,6 +1,12 @@
 export const deLatnRules = `
 ::NFC;
 
+C [hH] } [aA] [rR] [lL] [oO] [tT] [tT] [eE] > Š;
+c [hH] } [aA] [rR] [lL] [oO] [tT] [tT] [eE] > š;
+
+S } [tT] [aA] [dD] [tT] > Š;
+s } [tT] [aA] [dD] [tT] > š;
+
 [^[:L:][:M:]] { S } T > Š;
 [^[:L:][:M:]] { S } t > Š;
 [^[:L:][:M:]] { s } t > š;
