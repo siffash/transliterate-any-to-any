@@ -2,15 +2,9 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 type ResultCallback = (finalTranscript: string, interimTranscript: string) => void;
 
-/**
- * Thin wrapper around SpeechRecognition. `start()` re-scans the full result
- * list on every event (rather than only the newly-changed `resultIndex`
- * onward) and reports finalized vs. in-progress text separately, so the
- * caller can render "committed so far + what's being said right now"
- * without juggling incremental state itself.
- */
 export function useSpeechRecognition() {
   const recognitionRef = useRef<SpeechRecognition | null>(null);
+  const finalizedCountRef = useRef(0);
   const [isListening, setIsListening] = useState(false);
   const [isSupported] = useState(
     () =>
@@ -29,18 +23,28 @@ export function useSpeechRecognition() {
       recognition.continuous = true;
       recognition.interimResults = true;
 
+      finalizedCountRef.current = 0;
+
       recognition.onresult = event => {
-        let finalTranscript = "";
+        let newFinalText = "";
         let interimTranscript = "";
+
         for (let i = 0; i < event.results.length; i++) {
           const result = event.results[i];
           if (result.isFinal) {
-            finalTranscript += result[0].transcript;
+            if (i >= finalizedCountRef.current) {
+              newFinalText += result[0].transcript;
+            }
           } else {
             interimTranscript += result[0].transcript;
           }
         }
-        onResult(finalTranscript, interimTranscript);
+
+        let i = finalizedCountRef.current;
+        while (i < event.results.length && event.results[i].isFinal) i++;
+        finalizedCountRef.current = i;
+
+        onResult(newFinalText, interimTranscript);
       };
 
       recognition.onerror = event => {
