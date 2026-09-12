@@ -7,13 +7,15 @@ export const normalizerFrIpa = (originalWord: string, ipaWord: string): string =
     { ipaCharToBeReplaced: "buʁ", lettersToRestore: { bourg: "buʁɡ" } },
     // Restore "n"/"m" instead of tilde
     { ipaCharToBeReplaced: "̃", lettersToRestore: { n: "n", m: "m" } },
-    // Restore "u" instead of "w"
+    // Restore "u"
     { ipaCharToBeReplaced: "w", lettersToRestore: { u: "u", oi: "u" } },
-    // Restore "ɛ" instead of "ø"
+    // Restore "o"
+    { ipaCharToBeReplaced: "w", lettersToRestore: { o: "o" } },
+    // Restore "ɛ"
     { ipaCharToBeReplaced: "ø", lettersToRestore: { eu: "ɛ" } },
-    // Restore "ɛl" instead of "ɛj"
+    // Restore "ɛl"
     { ipaCharToBeReplaced: "ɛj", lettersToRestore: { eil: "ɛl", eille: "ɛl" } },
-    // Restore "il" instead of "ij"
+    // Restore "il"
     { ipaCharToBeReplaced: "ij", lettersToRestore: { ille: "il" } },
   ]);
 };
