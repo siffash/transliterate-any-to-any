@@ -84,10 +84,12 @@ export const normalizerEnIpa = (originalWord: string, ipaWord: string): string =
     { ipaCharToBeReplaced: "ŋ", lettersToRestore: { ng: "nɡ" } },
     // Remove "h" after "g"
     { ipaCharToBeReplaced: ["ɡh", "gh"], lettersToRestore: { gh: "ɡ" } },
+    // Restore "h"
+    { ipaCharToBeReplaced: "^", lettersToRestore: { h: "h" } },
     // Restore "lk"
     { ipaCharToBeReplaced: ["ɫk", "lk"], lettersToRestore: { lk: "ɫk" } },
     { ipaCharToBeReplaced: "k", lettersToRestore: { lk: "ɫk" } },
-    // Restore tch
+    // Restore "tch"
     { ipaCharToBeReplaced: "tʃ", lettersToRestore: { tch: "ttʃ" } },
     // Restore "soft"
     { ipaCharToBeReplaced: "sɔft", lettersToRestore: { soft: "sɔft" } },

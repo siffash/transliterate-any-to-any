@@ -269,4 +269,122 @@ describe("restoreLettersInIpa", () => {
       expect(() => restoreLettersInIpa("harry", "ˈhɛɹi", [rule])).not.toThrow();
     });
   });
+
+  describe("anchors", () => {
+    describe("^ (bare start anchor)", () => {
+      it("inserts the replacement after a leading primary stress mark when it's missing", () => {
+        const result = restoreLettersInIpa("Houston", "ˈjustən", [
+          { ipaCharToBeReplaced: "^", lettersToRestore: { h: "x" } },
+        ]);
+        expect(result).toBe("ˈxjustən");
+      });
+
+      it("inserts the replacement after a leading secondary stress mark when it's missing", () => {
+        const result = restoreLettersInIpa("Houston", "ˌjustən", [
+          { ipaCharToBeReplaced: "^", lettersToRestore: { h: "x" } },
+        ]);
+        expect(result).toBe("ˌxjustən");
+      });
+
+      it("inserts at index 0 when there is no leading stress mark to skip", () => {
+        const result = restoreLettersInIpa("Houston", "justən", [
+          { ipaCharToBeReplaced: "^", lettersToRestore: { h: "x" } },
+        ]);
+        expect(result).toBe("xjustən");
+      });
+
+      it("is a no-op when the ipa already starts with the replacement", () => {
+        const result = restoreLettersInIpa("Houston", "ˈxjustən", [
+          { ipaCharToBeReplaced: "^", lettersToRestore: { h: "x" } },
+        ]);
+        expect(result).toBe("ˈxjustən");
+      });
+
+      it("does nothing when the word doesn't start with the given letters", () => {
+        const result = restoreLettersInIpa("stop", "stɑp", [
+          { ipaCharToBeReplaced: "^", lettersToRestore: { h: "x" } },
+        ]);
+        expect(result).toBe("stɑp");
+      });
+    });
+
+    describe("$ (bare end anchor)", () => {
+      it("appends the replacement when the ipa doesn't already end with it", () => {
+        const result = restoreLettersInIpa("bach", "ba", [
+          { ipaCharToBeReplaced: "$", lettersToRestore: { h: "x" } },
+        ]);
+        expect(result).toBe("bax");
+      });
+
+      it("is a no-op when the ipa already ends with the replacement", () => {
+        const result = restoreLettersInIpa("bach", "bax", [
+          { ipaCharToBeReplaced: "$", lettersToRestore: { h: "x" } },
+        ]);
+        expect(result).toBe("bax");
+      });
+
+      it("does nothing when the word doesn't end with the given letters", () => {
+        const result = restoreLettersInIpa("stop", "stɑp", [
+          { ipaCharToBeReplaced: "$", lettersToRestore: { h: "x" } },
+        ]);
+        expect(result).toBe("stɑp");
+      });
+    });
+
+    describe("^a (start anchor + literal)", () => {
+      it("replaces the literal when the ipa already starts with it", () => {
+        const result = restoreLettersInIpa("apple", "aepl", [
+          { ipaCharToBeReplaced: "^a", lettersToRestore: { a: "æ" } },
+        ]);
+        expect(result).toBe("æepl");
+      });
+
+      it("does NOT insert when the ipa doesn't start with the literal (no fallback insert)", () => {
+        const result = restoreLettersInIpa("apple", "epl", [
+          { ipaCharToBeReplaced: "^a", lettersToRestore: { a: "æ" } },
+        ]);
+        expect(result).toBe("epl");
+      });
+
+      it("does nothing when the word doesn't start with the given letters, even if the ipa starts with the literal", () => {
+        const result = restoreLettersInIpa("banana", "anana", [
+          { ipaCharToBeReplaced: "^a", lettersToRestore: { xx: "æ" } },
+        ]);
+        expect(result).toBe("anana");
+      });
+    });
+
+    describe("a$ (end anchor + literal)", () => {
+      it("replaces the literal when the ipa already ends with it", () => {
+        const result = restoreLettersInIpa("banana", "bənɑna", [
+          { ipaCharToBeReplaced: "a$", lettersToRestore: { a: "ə" } },
+        ]);
+        expect(result).toBe("bənɑnə");
+      });
+
+      it("does NOT insert when the ipa doesn't end with the literal (no fallback insert)", () => {
+        const result = restoreLettersInIpa("banana", "bənɑn", [
+          { ipaCharToBeReplaced: "a$", lettersToRestore: { a: "ə" } },
+        ]);
+        expect(result).toBe("bənɑn");
+      });
+
+      it("does nothing when the word doesn't end with the given letters, even if the ipa ends with the literal", () => {
+        const result = restoreLettersInIpa("banana", "bənɑna", [
+          { ipaCharToBeReplaced: "a$", lettersToRestore: { xx: "ə" } },
+        ]);
+        expect(result).toBe("bənɑna");
+      });
+    });
+
+    describe("^ and $ together", () => {
+      it("applies a start-anchored rule and an end-anchored rule in the same call without interfering", () => {
+        const result = restoreLettersInIpa("abach", "ba", [
+          { ipaCharToBeReplaced: "^", lettersToRestore: { a: "ə" } },
+          { ipaCharToBeReplaced: "$", lettersToRestore: { h: "x" } },
+        ]);
+        expect(result).toBe("əbax");
+      });
+    });
+  });
 });
