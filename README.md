@@ -2,7 +2,7 @@
 
 # transliterate-any-to-any
 
-A TypeScript library for [transliteration](https://en.wikipedia.org/wiki/Transliteration) (not translation) between [50 languages](#supported-languages)
+A TypeScript library for [orthographic transcription](https://en.wikipedia.org/wiki/Orthographic_transcription) between [50 languages](#supported-languages)
 
 ###### 🚀 [Playground](https://transliterate-any-to-any.js.org) · 📦 [npm package](https://www.npmjs.com/package/transliterate-any-to-any) · 📖 [Read the article](https://realpandablog.wordpress.com/2026/09/03/transliterate-any-to-any/)
 
@@ -10,7 +10,7 @@ A TypeScript library for [transliteration](https://en.wikipedia.org/wiki/Transli
 
 ---
 
-### Most suitable for transliteration of proper nouns:
+### Most suitable for proper nouns:
 
 - Place names, toponyms (e.g. names of cities, neighborhoods, towns, villages, streets, rivers, mountains, etc.).
 - Personal names, anthroponyms (e.g. first names, middle names, last names, nicknames, names of pets, etc.).
@@ -18,8 +18,7 @@ A TypeScript library for [transliteration](https://en.wikipedia.org/wiki/Transli
 
 ### Features:
 
-- Transliterates any language pair from the [supported languages list](#supported-languages).
-- Transliterates even between languages of same script (see [Maltese to Latvian example](#examples)).
+- Supports any language pair from the [supported languages list](#supported-languages). This includes converting between languages of same script (see [Maltese to Latvian example](#examples)).
 - Based on rules & dictionaries, no machine learning overhead.
 - Dynamically imports only the libraries/mappings/rules needed for the given language pair.
 - Supports batching - you can pass an array of strings.
@@ -78,7 +77,7 @@ await transliterate(["मुंबई", "कोलकाता"], { from: "hi", 
 
 ## 🔍 Detect Language's Script
 
-By default, the library transforms the source text even if the source & target languages are of same script (see [Maltese to Latvian example](#examples)). If you want to prevent such cases, you can compare the languages' scripts before transliteration:
+By default, the library transforms the source text even if the source & target languages are of same script (see [Maltese to Latvian example](#examples)). If you want to prevent such cases, you can compare the languages' scripts before the transforming:
 
 ```typescript
 import { languages } from "transliterate-any-to-any";
