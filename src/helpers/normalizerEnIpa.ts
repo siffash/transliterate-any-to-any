@@ -28,7 +28,6 @@ export const normalizerEnIpa = (originalWord: string, ipaWord: string): string =
     // Preserve "ʃən" for "tion"
     { ipaCharToBeReplaced: "ʃən", lettersToRestore: { tion: "ʃən" } },
     // Restore "o"
-    { ipaCharToBeReplaced: "oʊ", lettersToRestore: { o: "ɔ" } },
     { ipaCharToBeReplaced: ["ɑ", "ʌ", "ə"], lettersToRestore: { o: "ɔ" } },
     // Restore "a"
     { ipaCharToBeReplaced: ["ɛ", "ə", "o"], lettersToRestore: { a: "a" } },
