@@ -61,6 +61,7 @@ const isMark = (ch: string): boolean => /[\p{M}'’‘`´ʼ]/u.test(ch);
 const getWordCase = (word: string): CaseType => {
   const letters = [...word].filter(isLetter);
   if (!letters.length) return "lower";
+  if (letters.length === 1) return isUpper(letters[0]) ? "title" : "lower";
   if (letters.every(isUpper)) return "upper";
   if (letters.every(isLower)) return "lower";
   if (isUpper(letters[0])) return "title";

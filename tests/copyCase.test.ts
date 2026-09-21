@@ -58,8 +58,12 @@ describe("copyCase", () => {
     expect(copyCase("HELLO", "wo")).toBe("WO");
   });
 
-  it("applies a title-case pattern", () => {
+  it("applies a title-case pattern for multi-letter words", () => {
     expect(copyCase("Hello", "wo")).toBe("Wo");
+  });
+
+  it("applies a title-case pattern for 1-letter words", () => {
+    expect(copyCase("J. K. Rowling", "джей. кей. ролинг")).toBe("Джей. Кей. Ролинг");
   });
 
   it("classifies a mixed-case word starting with a lowercase letter as title case", () => {
