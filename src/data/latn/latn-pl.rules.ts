@@ -6,26 +6,26 @@ export const latnPlRules = `
 · > ;
 
 IJ > EJ;
+iJ > eJ;
 Ij > Ej;
 ij > ej;
 
-TS > C;
-Ts > C;
-ts > c;
+T [sS] > C;
+t [sS] > c;
 
 DŽ > DŻ;
+dŽ > dŻ;
 Dž > Dż;
 dž > dż;
 
-TH > T;
-Th > T;
-th > t;
+T [hH] > T;
+t [hH] > t;
 
-GH > G;
-Gh > G;
-gh > g;
+G [hH] > G;
+g [hH] > g;
 
 KH > CH;
+kH > cH;
 Kh > Ch;
 kh > ch;
 

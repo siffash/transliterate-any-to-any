@@ -1,5 +1,3 @@
-// BGN/PCGN romanization system
-
 export const kaEnRules = `
 ::NFD;
 

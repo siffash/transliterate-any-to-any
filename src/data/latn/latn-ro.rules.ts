@@ -2,28 +2,24 @@ export const latnRoRules = `
 ::Null;
 
 IJ > EI;
+iJ > eI;
 Ij > Ei;
 ij > ei;
 
-DZ > Z;
-Dz > Z;
-dz > z;
+D [zZ] > Z;
+d [zZ] > z;
 
-TH > T;
-Th > T;
-th > t;
+T [hH] > T;
+t [hH] > t;
 
-GH > H;
-Gh > H;
-gh > h;
+G [hH] > H;
+g [hH] > h;
 
-KH > H;
-Kh > H;
-kh > h;
+K [hH] > H;
+k [hH] > h;
 
-TS > Ț;
-Ts > Ț;
-ts > ț;
+T [sS] > Ț;
+t [sS] > ț;
 
 ::Null;
 
@@ -56,32 +52,35 @@ y > i;
 
 K } [EI] > CH;
 K } [ei] > Ch;
-k } [EeIi] > ch;
+k } [EI] > cH;
+k } [ei] > ch;
 K > C;
 k > c;
 
 G } [EI] > GH;
 G } [ei] > Gh;
-g } [EeIi] > gh;
+g } [EI] > gH;
+g } [ei] > gh;
 
-DŽ } [EeIi] > G;
-Dž } [EeIi] > G;
-dž } [EeIi] > g;
+D [žŽ] } [EeIi] > G;
+d [žŽ] } [EeIi] > g;
 DŽ > GI;
-Dž } [:Ll:] > Gi;
-Dž > GI;
+Dž > Gi;
+dŽ > gI;
 dž > gi;
 
 Đ } [EeIi] > G;
 đ } [EeIi] > g;
-Đ } [:Ll:] > Gi;
-Đ > GI;
+[:Lu:] { Đ > GI;
+Đ } [:Lu:] > GI;
+Đ > Gi;
 đ > gi;
 
 [ČĆ] } [EeIi] > C;
 [čć] } [EeIi] > c;
-[ČĆ] } [:Ll:] > Ci;
-[ČĆ] > CI;
+[:Lu:] { [ČĆ] > CI;
+[ČĆ] } [:Lu:] > CI;
+[ČĆ] > Ci;
 [čć] > ci;
 
 Š > Ș;
@@ -94,16 +93,18 @@ dž > gi;
 ľ } [^[:L:][:M:]] > l;
 Ľ } [Ii] > L;
 ľ } [Ii] > l;
-Ľ } [:Ll:] > Li;
-Ľ > LI;
+[:Lu:] { Ľ > LI;
+Ľ } [:Lu:] > LI;
+Ľ > Li;
 ľ > li;
 
 Ń } [^[:L:][:M:]] > N;
 ń } [^[:L:][:M:]] > n;
 Ń } [Ii] > N;
 ń } [Ii] > n;
-Ń } [:Ll:] > Ni;
-Ń > NI;
+[:Lu:] { Ń > NI;
+Ń } [:Lu:] > NI;
+Ń > Ni;
 ń > ni;
 
 ::Null;

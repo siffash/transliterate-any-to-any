@@ -1,25 +1,22 @@
 export const latnAzRules = `
 ::Null;
 
-DŽ > C;
-Dž > C;
-dž > c;
+D [Žž] > C;
+d [Žž] > c;
 
 IJ > EY;
+iJ > eY;
 Ij > Ey;
 ij > ey;
 
-TH > T;
-Th > T;
-th > t;
+T [Hh] > T;
+t [Hh] > t;
 
-GH > Ğ;
-Gh > Ğ;
-gh > ğ;
+G [Hh] > Ğ;
+g [Hh] > ğ;
 
-KH > X;
-Kh > X;
-kh > x;
+K [Hh] > X;
+k [Hh] > x;
 
 ::Null;
 

@@ -1,25 +1,17 @@
 export const latnHrRules = `
 ::Null;
 
-TS > C;
-Ts > C;
-tS > C;
-ts > c;
+T [sS] > C;
+t [sS] > c;
 
-TH > T;
-Th > T;
-tH > T;
-th > t;
+T [hH] > T;
+t [hH] > t;
 
-GH > G;
-Gh > G;
-gH > G;
-gh > g;
+G [hH] > G;
+g [hH] > g;
 
-KH > H;
-Kh > H;
-kH > H;
-kh > h;
+K [hH] > H;
+k [hH] > h;
 
 IJ > EJ;
 Ij > Ej;
@@ -30,15 +22,15 @@ ij > ej;
 
 Ľ } [Jj] > L;
 ľ } [Jj] > l;
+[:Lu:] { Ľ > LJ;
 Ľ } [:Lu:] > LJ;
-[:Lu:] { Ľ } [^[:L:][:M:]] > LJ;
 Ľ > Lj;
 ľ > lj;
 
 Ń } [Jj] > N;
 ń } [Jj] > n;
+[:Lu:] { Ń > NJ;
 Ń } [:Lu:] > NJ;
-[:Lu:] { Ń } [^[:L:][:M:]] > NJ;
 Ń > Nj;
 ń > nj;
 

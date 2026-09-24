@@ -6,20 +6,14 @@ Ij > Ej;
 iJ > eJ;
 ij > ej;
 
-TS > C;
-Ts > C;
-tS > c;
-ts > c;
+T [sS] > C;
+t [sS] > c;
 
-TH > T;
-Th > T;
-tH > t;
-th > t;
+T [hH] > T;
+t [hH] > t;
 
-GH > G;
-Gh > G;
-gH > g;
-gh > g;
+G [hH] > G;
+g [hH] > g;
 
 KH > CH;
 Kh > Ch;

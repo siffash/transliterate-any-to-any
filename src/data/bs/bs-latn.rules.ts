@@ -13,13 +13,11 @@ export const bsLatnRules = `
 ǋ > Ń;
 ǌ > ń;
 
-LJ > Ľ;
-Lj > Ľ;
-lj > ľ;
+L [jJ] > Ľ;
+l [jJ] > ľ;
 
-NJ > Ń;
-Nj > Ń;
-nj > ń;
+N [jJ] > Ń;
+n [jJ] > ń;
 
 [:Lu:] { X > KS;
 X } [:Lu:] > KS;

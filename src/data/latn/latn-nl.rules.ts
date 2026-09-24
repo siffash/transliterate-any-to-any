@@ -2,68 +2,77 @@ export const latnNlRules = `
 ::Null;
 
 DŽ > DJ;
+dŽ > dJ;
 Dž > Dj;
 dž > dj;
 
-GH > G;
-Gh > G;
-gh > g;
+G [hH] > G;
+g [hH] > g;
 
 KH > CH;
+kH > cH;
 Kh > Ch;
 kh > ch;
 
-TH > T;
-Th > T;
-th > t;
+T [hH] > T;
+t [hH] > t;
 
 ::Null;
 
-Š } [:Ll:] > Sj;
-Š > SJ;
+[:Lu:] { Š > SJ;
+Š } [:Lu:] > SJ;
+Š > Sj;
 š > sj;
 
-[ČĆ] } [:Ll:] > Tsj;
-[ČĆ] > TSJ;
+[:Lu:] { [ČĆ] > TSJ;
+[ČĆ] } [:Lu:] > TSJ;
+[ČĆ] > Tsj;
 [čć] > tsj;
 
-Ž } [:Ll:] > Zj;
-Ž > ZJ;
+[:Lu:] { Ž > ZJ;
+Ž } [:Lu:] > ZJ;
+Ž > Zj;
 ž > zj;
 
-Đ } [:Ll:] > Dj;
-Đ > DJ;
+[:Lu:] { Đ > DJ;
+Đ } [:Lu:] > DJ;
+Đ > Dj;
 đ > dj;
 
-X } [:Ll:] > Ch;
-X > CH;
+[:Lu:] { X > CH;
+X } [:Lu:] > CH;
+X > Ch;
 x > ch;
 
 Ń } [^[:L:][:M:]] > N;
 ń } [^[:L:][:M:]] > n;
 Ń } [Jj] > N;
 ń } [Jj] > n;
-Ń } [:Ll:] > Nj;
-Ń > NJ;
+[:Lu:] { Ń > NJ;
+Ń } [:Lu:] > NJ;
+Ń > Nj;
 ń > nj;
 
 Ľ } [^[:L:][:M:]] > L;
 ľ } [^[:L:][:M:]] > l;
 Ľ } [Jj] > L;
 ľ } [Jj] > l;
-Ľ } [:Ll:] > Lj;
-Ľ > LJ;
+[:Lu:] { Ľ > LJ;
+Ľ } [:Lu:] > LJ;
+Ľ > Lj;
 ľ > lj;
 
 Q > K;
 q > k;
 
-U } [:Ll:] > Oe;
-U > OE;
+[:Lu:] { U > OE;
+U } [:Lu:] > OE;
+U > Oe;
 u > oe;
 
-Ö } [:Ll:] > Eu;
-Ö > EU;
+[:Lu:] { Ö > EU;
+Ö } [:Lu:] > EU;
+Ö > Eu;
 ö > eu;
 
 [ŸÜ] > U;

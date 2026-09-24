@@ -1,42 +1,43 @@
 export const ptLatnRules = `
 [ÁÀÂÃ] > A;
 [áàâã] > a;
+
 [ÉÊ] > E;
 [éê] > e;
+
 Í > I;
 í > i;
+
 [ÓÔÕ] > O;
 [óôõ] > o;
+
 [ÚÜ] > U;
 [úü] > u;
 
 ::Null;
 
-CH > Š;
-Ch > Š;
-ch > š;
+C [hH] > Š;
+c [hH] > š;
 
-LH > Ľ;
-Lh > Ľ;
-lh > ľ;
+L [hH] > Ľ;
+l [hH] > ľ;
 
-NH > Ń;
-Nh > Ń;
-nh > ń;
+N [hH] > Ń;
+n [hH] > ń;
 
-QU } [EIei] > K;
-Qu } [EIei] > K;
-qu } [EIei] > k;
+Q [Uu] } [EIei] > K;
+q [Uu] } [EIei] > k;
 
 QU } [AOao] > KW;
+qU } [AOao] > kW;
 Qu } [AOao] > Kw;
 qu } [AOao] > kw;
 
-GU } [EIei] > G;
-Gu } [EIei] > G;
-gu } [EIei] > g;
+G [Uu] } [EIei] > G;
+g [Uu] } [EIei] > g;
 
 GU } [AOao] > GW;
+gU } [AOao] > gW;
 Gu } [AOao] > Gw;
 gu } [AOao] > gw;
 
@@ -45,13 +46,15 @@ q > k;
 
 C } [EIei] > S;
 c } [EIei] > s;
-Ç > S;
-ç > s;
 C > K;
 c > k;
 
+Ç > S;
+ç > s;
+
 G } [EIei] > Ž;
 g } [EIei] > ž;
+
 J > Ž;
 j > ž;
 
@@ -61,10 +64,8 @@ j > ž;
 [SZ] } [^[:L:][:M:]] > Š;
 [sz] } [^[:L:][:M:]] > š;
 
-[^[:L:][:M:]] E { X } [AEIOUaeiou] [:L:] > Z;
-[^[:L:][:M:]] E { x } [AEIOUaeiou] [:L:] > z;
-[^[:L:][:M:]] e { X } [AEIOUaeiou] [:L:] > Z;
-[^[:L:][:M:]] e { x } [AEIOUaeiou] [:L:] > z;
+[^[:L:][:M:]] [Ee] { X } [AEIOUaeiou] [:L:] > Z;
+[^[:L:][:M:]] [Ee] { x } [AEIOUaeiou] [:L:] > z;
 
 X > Š;
 x > š;

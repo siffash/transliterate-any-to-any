@@ -1,17 +1,14 @@
 export const srLatnRules = `
 ::NFC;
 
-LJ > Ľ;
-Lj > Ľ;
-lj > ľ;
+L [jJ] > Ľ;
+l [jJ] > ľ;
 
-NJ > Ń;
-Nj > Ń;
-nj > ń;
+N [jJ] > Ń;
+n [jJ] > ń;
 
-DJ > Đ;
-Dj > Đ;
-dj > đ;
+D [jJ] > Đ;
+d [jJ] > đ;
 
 [ЦC] } [:Lu:] > TS;
 [:Lu:] { [ЦC] > TS;

@@ -1,21 +1,16 @@
 export const fiLatnRules = `
 ::NFC;
 
-SCH > Š;
-SCh > Š;
-Sch > Š;
-sch > š;
-SH > Š;
-Sh > Š;
-sh > š;
+S [cC] [hH] > Š;
+s [cC] [hH] > š;
+S [hH] > Š;
+s [hH] > š;
 
-ZH > Ž;
-Zh > Ž;
-zh > ž;
+Z [hH] > Ž;
+z [hH] > ž;
 
-CH > Č;
-Ch > Č;
-ch > č;
+C [hH] > Č;
+c [hH] > č;
 
 C } [EIYÄÖeiyäö] > S;
 c } [EIYÄÖeiyäö] > s;
@@ -23,26 +18,28 @@ c } [EIYÄÖeiyäö] > s;
 C > K;
 c > k;
 
-X } [:Ll:] > Ks;
-[:Ll:] { X > Ks;
-[^[:L:][:M:]] { X } [^[:L:][:M:]] > KS;
-X > KS;
+X } [:Lu:] > KS;
+[:Lu:] { X > KS;
+X > Ks;
 x > ks;
 
-Z } [:Ll:] > Ts;
-[:Ll:] { Z > Ts;
-[^[:L:][:M:]] { Z } [^[:L:][:M:]] > TS;
-Z > TS;
+Z } [:Lu:] > TS;
+[:Lu:] { Z > TS;
+Z > Ts;
 z > ts;
 
 Q > K;
 q > k;
+
 W > V;
 w > v;
+
 Å > O;
 å > o;
+
 Y > Ü;
 y > ü;
+
 J > Y;
 j > y;
 `;

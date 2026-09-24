@@ -1,36 +1,26 @@
 export const idLatnRules = `
 ::NFC;
 
-S [YHJ] > Š;
-S [yhj] > Š;
-s [YHJ] > š;
-s [yhj] > š;
+S [yhjYHJ] > Š;
+s [yhjYHJ] > š;
 
-N [YJ] > Ń;
-N [yj] > Ń;
-n [YJ] > ń;
-n [yj] > ń;
+N [yjYJ] > Ń;
+n [yjYJ] > ń;
 
-KH > X;
-Kh > X;
-kH > x;
-kh > x;
+K [hH] > X;
+k [hH] > x;
 
-CH > Č;
-Ch > Č;
-cH > č;
-ch > č;
+C [hH] > Č;
+c [hH] > č;
 C > Č;
 c > č;
 
-TJ > Č;
-Tj > Č;
-tJ > č;
-tj > č;
+T [jJ] > Č;
+t [jJ] > č;
 
 DJ > DŽ;
-Dj > DŽ;
-dJ > dž;
+Dj > Dž;
+dJ > dŽ;
 dj > dž;
 
 [:Lu:] { J > DŽ;

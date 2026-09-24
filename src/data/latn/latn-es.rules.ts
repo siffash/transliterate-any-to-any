@@ -2,26 +2,24 @@ export const latnEsRules = `
 ::Null;
 
 DŽ > CH;
+dŽ > cH;
 Dž > Ch;
 dž > ch;
 
-DZ > Z;
-Dz > Z;
-dz > z;
+D [zZ] > Z;
+d [zZ] > z;
 
-TH > Z;
-Th > Z;
-th > z;
+T [hH] > Z;
+t [hH] > z;
 
-GH > G;
-Gh > G;
-gh > g;
+G [hH] > G;
+g [hH] > g;
 
-KH > J;
-Kh > J;
-kh > j;
+K [hH] > J;
+k [hH] > j;
 
 IJ > EI;
+iJ > eI;
 Ij > Ei;
 ij > ei;
 
@@ -40,18 +38,21 @@ ij > ei;
 Ï > I;
 ï > i;
 
-[ČĆ] } [:Ll:] > Ch;
-[ČĆ] > CH;
+[:Lu:] { [ČĆ] > CH;
+[ČĆ] } [:Lu:] > CH;
+[ČĆ] > Ch;
 [čć] > ch;
 
-Đ } [:Ll:] > Ch;
-Đ > CH;
+[:Lu:] { Đ > CH;
+Đ } [:Lu:] > CH;
+Đ > Ch;
 đ > ch;
 
 Ľ } [Ll] > L;
 ľ } [Ll] > l;
-Ľ } [:Ll:] > Ll;
-Ľ > LL;
+[:Lu:] { Ľ > LL;
+Ľ } [:Lu:] > LL;
+Ľ > Ll;
 ľ > ll;
 
 Ń > Ñ;
@@ -60,14 +61,13 @@ ij > ei;
 Š > S;
 š > s;
 
-Ž } [:Ll:] > Zh;
-Ž > ZH;
+[:Lu:] { Ž > ZH;
+Ž } [:Lu:] > ZH;
+Ž > Zh;
 ž > zh;
 
-KS > X;
-Ks > X;
-kS > x;
-ks > x;
+K [sS] > X;
+k [sS] > x;
 
 Q > K;
 q > k;
@@ -84,13 +84,15 @@ q > k;
 
 K } [EI] > QU;
 K } [ei] > Qu;
-k } [EIei] > qu;
+k } [EI] > qU;
+k } [ei] > qu;
 K > C;
 k > c;
 
 G } [EI] > GU;
 G } [ei] > Gu;
-g } [EIei] > gu;
+g } [EI] > gU;
+g } [ei] > gu;
 
 ::Null;
 
@@ -121,7 +123,8 @@ M } [vV] > N;
 
 Q } [EÉIÍ] > QU;
 Q } [eéií] > Qu;
-q } [eéEÉiíIÍ] > qu;
+q } [EÉIÍ] > qU;
+q } [eéií] > qu;
 q } [üÜ] [eéEÉiíIÍ] > c;
 Q } [üÜ] [eéEÉiíIÍ] > C;
 q } [uúüÜUÚ] [aáAÁoóOÓuúUÚ] > c;

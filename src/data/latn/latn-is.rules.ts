@@ -2,33 +2,33 @@ export const latnIsRules = `
 ::Null;
 
 IJ > EI;
+iJ > eI;
 Ij > Ei;
 ij > ei;
 
-DŽ > Dsj;
+DŽ > DSJ;
+dŽ > dSJ;
 Dž > Dsj;
 dž > dsj;
 
 DZ > DS;
+dZ > dS;
 Dz > Ds;
 dz > ds;
 
-TH > Þ;
-Th > Þ;
-th > þ;
+T [hH] > Þ;
+t [hH] > þ;
 
 NGH > NGH;
 NGh > NGh;
 Ngh > Ngh;
 ngh > ngh;
 
-GH > G;
-Gh > G;
-gh > g;
+G [hH] > G;
+g [hH] > g;
 
-KH > K;
-Kh > K;
-kh > k;
+K [hH] > K;
+k [hH] > k;
 
 ::Null;
 
@@ -124,30 +124,18 @@ W > V;
 z > s;
 Z > S;
 
-aa > á;
-aA > Á;
-Aa > Á;
-AA > Á;
-ee > é;
-eE > É;
-Ee > É;
-EE > É;
-ii > í;
-iI > Í;
-Ii > Í;
-II > Í;
-oo > ó;
-oO > Ó;
-Oo > Ó;
-OO > Ó;
-uu > ú;
-uU > Ú;
-Uu > Ú;
-UU > Ú;
-yy > ý;
-yY > Ý;
-Yy > Ý;
-YY > Ý;
+a [aA] > á;
+A [aA] > Á;
+e [eE] > é;
+E [eE] > É;
+i [iI] > í;
+I [iI] > Í;
+o [oO] > ó;
+O [oO] > Ó;
+u [uU] > ú;
+U [uU] > Ú;
+y [yY] > ý;
+Y [yY] > Ý;
 
 [öÖ] { [öÖ] > ;
 [æÆ] { [æÆ] > ;

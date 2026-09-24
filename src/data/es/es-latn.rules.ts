@@ -3,12 +3,16 @@ export const esLatnRules = `
 
 á > a;
 Á > A;
+
 é > e;
 É > E;
+
 í > i;
 Í > I;
+
 ó > o;
 Ó > O;
+
 [úü] > u;
 [ÚÜ] > U;
 
@@ -34,34 +38,35 @@ X } [oO] [cC] [hH] [iI] [mM] [iI] [lL] [cC] [oO] > S;
 [^[:L:][:M:]] { x > s;
 [^[:L:][:M:]] { X > S;
 
-x > ks;
+[:Lu:] { X > KS;
+X } [:Lu:] > KS;
 X > Ks;
+x > ks;
 
-ch > č;
-Ch > Č;
-CH > Č;
+c [hH] > č;
+C [hH] > Č;
 
-ll > ľ;
-Ll > Ľ;
-LL > Ľ;
+l [lL] > ľ;
+L [lL] > Ľ;
 
-qu } [eiEI] > k;
-Qu } [eiEI] > K;
-QU } [eiEI] > K;
+q [uU] } [eiEI] > k;
+Q [uU] } [eiEI] > K;
 
 QU } [aoAO] > KW;
+qU } [aoAO] > kW;
 Qu } [aoAO] > Kw;
 qu } [aoAO] > kw;
 
-gu } [eiEI] > g;
-Gu } [eiEI] > G;
-GU } [eiEI] > G;
+g [uU] } [eiEI] > g;
+G [uU] } [eiEI] > G;
 
 gü } [eiEI] > gu;
 Gü } [eiEI] > Gu;
+gÜ } [eiEI] > gU;
 GÜ } [eiEI] > GU;
 
 GU } [aoAO] > GW;
+gU } [aoAO] > gW;
 Gu } [aoAO] > Gw;
 gu } [aoAO] > gw;
 

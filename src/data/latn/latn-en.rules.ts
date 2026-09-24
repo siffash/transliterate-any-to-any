@@ -1,10 +1,8 @@
 export const latnEnRules = `
 ::Null;
 
-DŽ > J;
-Dž > J;
-dŽ > j;
-dž > j;
+D [žŽ] > J;
+d [žŽ] > j;
 
 Đ > J;
 đ > j;
@@ -65,10 +63,8 @@ S { X > KH;
 X > H;
 x > h;
 
-KS > X;
-Ks > X;
-kS > x;
-ks > x;
+K [sS] > X;
+k [sS] > x;
 
 [^[:L:][:M:]] { \\' > ;
 \\' } [^[:L:][:M:]] > ;

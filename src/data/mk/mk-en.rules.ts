@@ -1,5 +1,3 @@
-// Digraph system ICAO Doc 9303
-
 export const mkEnRules = `
 Ѓ } [:Lu:] > GJ;
 [:Lu:] { Ѓ > GJ;

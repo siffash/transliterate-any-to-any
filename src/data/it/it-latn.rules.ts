@@ -57,36 +57,35 @@ GI } [AOU] > DŽ;
 gn } [aeiouAEIOU] > ny;
 Gn } [aeiouAEIOU] > Ny;
 GN } [aeiouAEIOU] > NY;
-gn > ń;
-Gn > Ń;
-GN > Ń;
+g [nN] > ń;
+G [nN] > Ń;
 
-ch > k;
-Ch > K;
-CH > K;
+c [hH] > k;
+C [hH] > K;
 
-gh > g;
-Gh > G;
-GH > G;
+g [hH] > g;
+G [hH] > G;
 
 c } [eiEI] > č;
 C } [eiEI] > Č;
 
-g } [eiEI] > dž;
-G } [eiEI] > Dž;
+g } [ei] > dž;
+g } [EI] > dŽ;
+G } [EI] > DŽ;
+G } [ei] > Dž;
 
 c > k;
 C > K;
 
+[:Lu:] { X > KS;
+X } [:Lu:] > KS;
+X > Ks;
 x > ks;
-X } [:Ll:] > Ks;
-X } [^[:L:][:M:]] > KS;
-X > KS;
 
+[:Lu:] { Z > TS;
+Z } [:Lu:] > TS;
+Z > Ts;
 z > ts;
-Z } [:Ll:] > Ts;
-Z } [^[:L:][:M:]] > TS;
-Z > TS;
 
 j > y;
 J > Y;

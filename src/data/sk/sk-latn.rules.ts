@@ -1,20 +1,21 @@
 export const skLatnRules = `
 ::NFC;
 
-rne } [^[:L:][:M:]] > rńe;
-RNE } [^[:L:][:M:]] > RŃE;
+[rR] { n } [eE] [^[:L:][:M:]] > ń;
+[rR] { N } [eE] [^[:L:][:M:]] > Ń;
 
-ch > x;
-Ch > X;
-CH > X;
+c [hH] > x;
+C [hH] > X;
 
+[:Lu:] { C > TS;
+C } [:Lu:] > TS;
+C > Ts;
 c > ts;
-C } [:Ll:] > Ts;
-C > TS;
 
+[:Lu:] { X > KS;
+X } [:Lu:] > KS;
+X > Ks;
 x > ks;
-X } [:Ll:] > Ks;
-X > KS;
 
 q > k;
 Q > K;
@@ -22,32 +23,44 @@ Q > K;
 ô > o;
 Ô > O;
 
+[:Lu:] { Ř > RŽ;
+Ř } [:Lu:] > RŽ;
+Ř > Rž;
 ř > rž;
-Ř } [:Ll:] > Rž;
-Ř > RŽ;
 
 ď > đ;
 Ď > Đ;
+
 ť > ć;
 Ť > Ć;
+
 ň > ń;
 Ň > Ń;
+
 j > y;
 J > Y;
+
 w > v;
 W > V;
+
 á > a;
 Á > A;
+
 é > e;
 É > E;
+
 [íýy] > i;
 [ÍÝY] > I;
+
 ó > o;
 Ó > O;
+
 ú > u;
 Ú > U;
+
 ĺ > l;
 Ĺ > L;
+
 ŕ > r;
 Ŕ > R;
 `;

@@ -1,29 +1,23 @@
 export const plLatnRules = `
 ::NFC;
 
-dź > đ;
-Dź > Đ;
-DŹ > Đ;
+d [źŹ] > đ;
+D [źŹ] > Đ;
 
-dz } [iI] > đ;
-Dz } [iI] > Đ;
-DZ } [iI] > Đ;
+d [zZ] } [iI] > đ;
+D [zZ] } [iI] > Đ;
 
-ch > x;
-Ch > X;
-CH > X;
+c [hH] > x;
+C [hH] > X;
 
-cz > č;
-Cz > Č;
-CZ > Č;
+c [zZ] > č;
+C [zZ] > Č;
 
-rz > ž;
-Rz > Ž;
-RZ > Ž;
+r [zZ] > ž;
+R [zZ] > Ž;
 
-sz > š;
-Sz > Š;
-SZ > Š;
+s [zZ] > š;
+S [zZ] > Š;
 
 c } [iI] > ć;
 C } [iI] > Ć;
@@ -37,21 +31,24 @@ S } [iI] > Š;
 z } [iI] > ž;
 Z } [iI] > Ž;
 
+[:Lu:] { C > TS;
+C } [:Lu:] > TS;
+C > Ts;
 c > ts;
-C } [:Ll:] > Ts;
-C > TS;
 
 [šćđžńŠĆĐŽŃ] { [iI] } [eE] > ;
 [pbmwvPBMWV] { i } [eE] > y;
 [pbmwvPBMWV] { I } [eE] > Y;
 
+[:Lu:] { Ą > ON;
+Ą } [:Lu:] > ON;
+Ą > On;
 ą > on;
-Ą } [:Ll:] > On;
-Ą > ON;
 
+[:Lu:] { Ę > EN;
+Ę } [:Lu:] > EN;
+Ę > En;
 ę > en;
-Ę } [:Ll:] > En;
-Ę > EN;
 
 j > y;
 J > Y;

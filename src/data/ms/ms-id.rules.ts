@@ -12,12 +12,10 @@ export const msIdRules = `
 [aA]rsi { b > p;
 [aA]RSI { B > P;
 
-f } aham > p;
-F } aham > P;
-F } AHAM > P;
-f } ikir > p;
-F } ikir > P;
-F } IKIR > P;
+f } [aA] [hH] [aA] [mM] > p;
+F } [aA] [hH] [aA] [mM] > P;
+f } [iI] [kK] [iI] [rR] > p;
+F } [iI] [kK] [iI] [rR] > P;
 
 bilik } ' ' [mM]andi > kamar;
 Bilik } ' ' [mM]andi > Kamar;

@@ -14,68 +14,62 @@ export const huLatnRules = `
 
 ::Null;
 
-C } CS > Č;
-C } Cs > Č;
-c } cs > č;
+C } [cC] [sS] > Č;
+c } [cC] [sS] > č;
 
 D } DZS > DŽ;
-D } Dzs > Dž;
-d } dzs > dž;
+d } DZS > dŽ;
+D } [dD] [zZ] [sS] > Dž;
+d } [dD] [zZ] [sS] > dž;
 
 D } DZ > DZ;
-D } Dz > Dz;
-d } dz > dz;
+d } DZ > dZ;
+D } [dD] [zZ] > Dz;
+d } [dD] [zZ] > dz;
 
-L } LY > Ľ;
-L } Ly > Ľ;
-l } ly > ľ;
+L } [lL] [yY] > Ľ;
+l } [lL] [yY] > ľ;
 
-N } NY > Ń;
-N } Ny > Ń;
-n } ny > ń;
+N } [nN] [yY] > Ń;
+n } [nN] [yY] > ń;
 
-S } SZ > S;
-S } Sz > S;
-s } sz > s;
+S } [sS] [zZ] > S;
+s } [sS] [zZ] > s;
 
-Z } ZS > Ž;
-Z } Zs > Ž;
-z } zs > ž;
+Z } [zZ] [sS] > Ž;
+z } [zZ] [sS] > ž;
 
 DZS > DŽ;
-Dzs > Dž;
-dzs > dž;
+D [zZ] [sS] > Dž;
+d [zZ] [sS] > dž;
 
-CS > Č;
-Cs > Č;
-cs > č;
+C [sS] > Č;
+c [sS] > č;
 
-LY } [^aeiouAEIOU] > Ľ;
-Ly } [^aeiouAEIOU] > Ľ;
-ly } [^aeiouAEIOU] > ľ;
+L [yY] } [^aeiouAEIOU] > Ľ;
+l [yY] } [^aeiouAEIOU] > ľ;
 
-NY } [^aeiouAEIOU] > Ń;
-Ny } [^aeiouAEIOU] > Ń;
-ny } [^aeiouAEIOU] > ń;
+N [yY] } [^aeiouAEIOU] > Ń;
+n [yY] } [^aeiouAEIOU] > ń;
 
-SZ > S;
-Sz > S;
-sz > s;
+S [zZ] > S;
+s [zZ] > s;
 
-ZS > Ž;
-Zs > Ž;
-zs > ž;
+Z [sS] > Ž;
+z [sS] > ž;
 
 C } CZ > TS;
-C } Cz > TS;
-c } cz > ts;
+c } CZ > tS;
+C } [cC] [zZ] > Ts;
+c } [cC] [zZ] > ts;
 
 CZ > TS;
+cZ > tS;
 Cz > Ts;
 cz > ts;
 
 C } [:Lu:] > TS;
-[:Lu:] { C } [^[:L:][:M:]] > TS;
+[:Lu:] { C > TS;
 C > Ts;
 c > ts;
 

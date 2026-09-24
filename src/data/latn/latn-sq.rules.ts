@@ -6,25 +6,17 @@ Dž > Xh;
 dŽ > xH;
 dž > xh;
 
-DZ > X;
-Dz > X;
-dZ > x;
-dz > x;
+D [zZ] > X;
+d [zZ] > x;
 
-TS > C;
-Ts > C;
-tS > c;
-ts > c;
+T [sS] > C;
+t [sS] > c;
 
-KH > H;
-Kh > H;
-kH > h;
-kh > h;
+K [hH] > H;
+k [hH] > h;
 
-GH > G;
-Gh > G;
-gH > g;
-gh > g;
+G [hH] > G;
+g [hH] > g;
 
 IJ > EJ;
 Ij > Ej;
@@ -33,16 +25,19 @@ ij > ej;
 
 ::Null;
 
-Š } [:Ll:] > Sh;
-Š > SH;
+[:Lu:] { Š > SH;
+Š } [:Lu:] > SH;
+Š > Sh;
 š > sh;
 
-Ž } [:Ll:] > Zh;
-Ž > ZH;
+[:Lu:] { Ž > ZH;
+Ž } [:Lu:] > ZH;
+Ž > Zh;
 ž > zh;
 
-Đ } [:Ll:] > Gj;
-Đ > GJ;
+[:Lu:] { Đ > GJ;
+Đ } [:Lu:] > GJ;
+Đ > Gj;
 đ > gj;
 
 Ń } [^[:L:][:M:]] > N;

@@ -3,14 +3,14 @@ export const trLatnRules = `
 
 Â > A;
 â > a;
+
 Î > I;
 î > i;
+
 Û > U;
 û > u;
 
 C } [:Lu:] > DŽ;
-[:Lu:] { C } [^[:L:][:M:]] > DŽ;
-[:Lu:] { C } [:Ll:] > Dž;
 [:Lu:] { C > DŽ;
 C > Dž;
 c > dž;
@@ -22,8 +22,6 @@ c > dž;
 [eiöüEIÖÜ] { ğ > y;
 
 Ğ } [:Lu:] > GH;
-[:Lu:] { Ğ } [^[:L:][:M:]] > GH;
-[:Lu:] { Ğ } [:Ll:] > Gh;
 [:Lu:] { Ğ > GH;
 Ğ > Gh;
 ğ > gh;

@@ -6,25 +6,17 @@ Ij > Ai;
 iJ > aI;
 ij > ai;
 
-DŽ > J;
-Dž > J;
-dŽ > j;
-dž > j;
+D [žŽ] > J;
+d [žŽ] > j;
 
-DZ > Z;
-Dz > Z;
-dZ > z;
-dz > z;
+D [zZ] > Z;
+d [zZ] > z;
 
-TS > S;
-Ts > S;
-tS > s;
-ts > s;
+T [sS] > S;
+t [sS] > s;
 
-TH > S;
-Th > S;
-tH > s;
-th > s;
+T [hH] > S;
+t [hH] > s;
 
 ::Null;
 

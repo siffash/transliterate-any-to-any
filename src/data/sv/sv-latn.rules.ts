@@ -4,53 +4,46 @@ export const svLatnRules = `
 [Nn] { G > G;
 [Nn] { g > g;
 
-S [KT] J > Š;
-S [kt] j > Š;
-s [kt] j > š;
+S [ktKT] [jJ] > Š;
+s [ktKT] [jJ] > š;
 
-SCH > Š;
-Sch > Š;
-sch > š;
+S [cC] [hH] > Š;
+s [cC] [hH] > š;
 
-S [HJ] > Š;
-S [hj] > Š;
-s [hj] > š;
+S [hjHJ] > Š;
+s [hjHJ] > š;
 
-[TK] J > Ć;
-[TK] j > Ć;
-[tk] j > ć;
+[TK] [jJ] > Ć;
+[tk] [jJ] > ć;
 
 CHR > KR;
 Chr > Kr;
-chr > kr;
+c [hH] [rR] > kr;
 
 MICH > MIK;
 Mich > Mik;
-mich > mik;
+m [iI] [cC] [hH] > mik;
 
-CH > Š;
-Ch > Š;
-ch > š;
+C [hH] > Š;
+c [hH] > š;
 
-CK > K;
-Ck > K;
-ck > k;
+C [kK] > K;
+c [kK] > k;
 
 QU } [aouåäöAOUÅÄÖ] > KV;
+qU } [aouåäöAOUÅÄÖ] > kV;
 Qu } [aouåäöAOUÅÄÖ] > Kv;
 qu } [aouåäöAOUÅÄÖ] > kv;
 
 TION > ŠON;
 Tion > Šon;
-tion > šon;
+t [iI] [oO] [nN] > šon;
 
-TH > T;
-Th > T;
-th > t;
+T [hH] > T;
+t [hH] > t;
 
-PH > F;
-Ph > F;
-ph > f;
+P [hH] > F;
+p [hH] > f;
 
 [^[:L:][:M:]] { [DGHL] ([Jj]) > &Any-Upper($1);
 [^[:L:][:M:]] { [dghl] ([Jj]) > &Any-Lower($1);
@@ -66,18 +59,13 @@ ph > f;
 [Åå] { K } [Ee] > K;
 [Åå] { k } [Ee] > k;
 
-[Rr] { G } [Rr] > G;
-[Rr] { g } [Rr] > g;
-[Ll] { G } [Rr] > G;
-[Ll] { g } [Rr] > g;
-[Rr] { G } [AOUÅaouå] > G;
-[Rr] { g } [AOUÅaouå] > g;
-[Ll] { G } [AOUÅaouå] > G;
-[Ll] { g } [AOUÅaouå] > g;
+[Rr] { G } [AOUÅRaouår] > G;
+[Rr] { g } [AOUÅRaouår] > g;
+[Ll] { G } [AOUÅRaouår] > G;
+[Ll] { g } [AOUÅRaouår] > g;
 
-SK } [EIYÄÖÆØeiyäöæø] > Š;
-Sk } [EIYÄÖÆØeiyäöæø] > Š;
-sk } [EIYÄÖÆØeiyäöæø] > š;
+S [kK] } [EIYÄÖÆØeiyäöæø] > Š;
+s [kK] } [EIYÄÖÆØeiyäöæø] > š;
 C } [EIYÄÖÆØeiyäöæø] > S;
 c } [EIYÄÖÆØeiyäöæø] > s;
 
@@ -85,35 +73,42 @@ c } [EIYÄÖÆØeiyäöæø] > s;
 
 [AaEeOo] { Y > Y;
 [AaEeOo] { y > y;
+
 Å > O;
 å > o;
+
 Y > Ü;
 y > ü;
+
 Æ > Ä;
 æ > ä;
+
 Ø > Ö;
 ø > ö;
-X } [:Ll:] > Ks;
-X > KS;
+
+[:Lu:] { X > KS;
+X } [:Lu:] > KS;
+X > Ks;
 x > ks;
+
 Z > S;
 z > s;
+
 W > V;
 w > v;
-Q > K;
-q > k;
-C > K;
-c > k;
+
+[QC] > K;
+[qc] > k;
+
 J > Y;
 j > y;
 
 EIJ > IJ;
 Eij > Ij;
-eij > ij;
-EJ > IJ;
-Ej > Ij;
-ej > ij;
-EI > IJ;
-Ei > Ij;
-ei > ij;
+e [iI] [jJ] > ij;
+
+E [JI] > IJ;
+e [JI] > iJ;
+E [ji] > Ij;
+e [ji] > ij;
 `;

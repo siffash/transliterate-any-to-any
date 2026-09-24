@@ -1,24 +1,23 @@
 export const latnCsRules = `
 ::Null;
 
-TS > C;
-Ts > C;
-ts > c;
+T [sS] > C;
+t [sS] > c;
 
-TH > T;
-Th > T;
-th > t;
+T [hH] > T;
+t [hH] > t;
 
-GH > G;
-Gh > G;
-gh > g;
+G [hH] > G;
+g [hH] > g;
 
 KH > CH;
 Kh > Ch;
+kH > cH;
 kh > ch;
 
 IJ > EJ;
 Ij > Ej;
+iJ > eJ;
 ij > ej;
 
 ::Null;
@@ -36,14 +35,17 @@ w > v;
 
 ĆE > TĚ;
 Će > Tě;
+ćE > tĚ;
 će > tě;
 
 ĐE > DĚ;
 Đe > Dě;
+đE > dĚ;
 đe > dě;
 
 ŃE > NĚ;
 Ńe > Ně;
+ńE > nĚ;
 ńe > ně;
 
 Ć } [iI] > T;
@@ -88,20 +90,16 @@ y > j;
 
 ::Null;
 
-[^[:L:][:M:]] { uu > ú;
-[^[:L:][:M:]] { Uu > Ú;
-[^[:L:][:M:]] { uU > Ú;
-[^[:L:][:M:]] { UU > Ú;
-uu > ů;
-Uu > Ů;
-uU > Ů;
-UU > Ů;
+[^[:L:][:M:]] { u [uU] > ú;
+[^[:L:][:M:]] { U [uU] > Ú;
+u [uU] > ů;
+U [uU] > Ů;
 
 [^[:L:][:M:]] { ů > ú;
 [^[:L:][:M:]] { Ů > Ú;
-[^[:L:][:M:]] { ě > je;
 [^[:L:][:M:]] { Ě } [:Lu:] > JE;
 [^[:L:][:M:]] { Ě > Je;
+[^[:L:][:M:]] { ě > je;
 
 [cjřščžťďňCJŘŠČŽŤĎŇ] { y > i;
 [cjřščžťďňCJŘŠČŽŤĎŇ] { Y > I;

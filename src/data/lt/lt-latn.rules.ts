@@ -17,13 +17,11 @@ q > k;
 W > V;
 w > v;
 
-CH > X;
-Ch > X;
-ch > x;
+C [hH] > X;
+c [hH] > x;
 
-DZ } [EĘĖIĮYeęėiįy] > Đ;
-Dz } [EĘĖIĮYeęėiįy] > Đ;
-dz } [EĘĖIĮYeęėiįy] > đ;
+D [zZ] } [EĘĖIĮYeęėiįy] > Đ;
+d [zZ] } [EĘĖIĮYeęėiįy] > đ;
 
 C } [:Lu:] > TS;
 [:Lu:] { C > TS;
@@ -37,6 +35,7 @@ J > Y;
 j > y;
 
 EI > IJ;
+eI > iJ;
 Ei > Ij;
 ei > ij;
 

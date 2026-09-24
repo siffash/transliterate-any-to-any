@@ -1,13 +1,11 @@
 export const slLatnRules = `
 ::NFC;
 
-NJ > Ń;
-Nj > Ń;
-nj > ń;
+N [jJ] > Ń;
+n [jJ] > ń;
 
-LJ > Ľ;
-Lj > Ľ;
-lj > ľ;
+L [jJ] > Ľ;
+l [jJ] > ľ;
 
 [:Lu:] { C > TS;
 C } [:Lu:] > TS;

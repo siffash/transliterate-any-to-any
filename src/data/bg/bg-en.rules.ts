@@ -1,5 +1,3 @@
-// Streamlined System with -ia-exception (2009 Transliteration Act)
-
 export const bgEnRules = `
 ия } [^[:L:][:M:]] > ia;
 Ия } [^[:L:][:M:]] > Ia;

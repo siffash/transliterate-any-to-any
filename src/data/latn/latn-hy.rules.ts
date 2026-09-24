@@ -1,37 +1,33 @@
 export const latnHyRules = `
 ::Null;
 
-DŽ > Ջ;
-Dž > Ջ;
-dž > ջ;
+D [žŽ] > Ջ;
+d [žŽ] > ջ;
 
-DZ > Ձ;
-Dz > Ձ;
-dz > ձ;
+D [zZ] > Ձ;
+d [zZ] > ձ;
 
-GH > Ղ;
-Gh > Ղ;
-gh > ղ;
+G [hH] > Ղ;
+g [hH] > ղ;
 
 IJ > ԷՅ;
+iJ > էՅ;
 Ij > Էյ;
 ij > էյ;
 
-KH > Խ;
-Kh > Խ;
-kh > խ;
+K [hH] > Խ;
+k [hH] > խ;
 
 NG > ՆԳ;
+nG > նԳ;
 Ng > Նգ;
 ng > նգ;
 
-TH > Թ;
-Th > Թ;
-th > թ;
+T [hH] > Թ;
+t [hH] > թ;
 
-TS > Ց;
-Ts > Ց;
-ts > ց;
+T [sS] > Ց;
+t [sS] > ց;
 
 ::Null;
 

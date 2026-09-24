@@ -1,20 +1,20 @@
 export const etLatnRules = `
 ::NFC;
 
-Sh > Š;
-SH > Š;
-sh > š;
+S [hH] > Š;
+s [hH] > š;
 
-Zh > Ž;
-ZH > Ž;
-zh > ž;
+Z [hH] > Ž;
+z [hH] > ž;
 
-X } [:Ll:] > Ks;
-X > KS;
+[:Lu:] { X > KS;
+X } [:Lu:] > KS;
+X > Ks;
 x > ks;
 
-C } [:Ll:] > Ts;
-C > TS;
+[:Lu:] { C > TS;
+C } [:Lu:] > TS;
+C > Ts;
 c > ts;
 
 W > V;

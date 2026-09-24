@@ -2,26 +2,26 @@ export const latnEtRules = `
 ::Null;
 
 IJ > EI;
+iJ > eI;
 Ij > Ei;
 ij > ei;
 
-TH > T;
-Th > T;
-th > t;
+T [hH] > T;
+t [hH] > t;
 
-GH > G;
-Gh > G;
-gh > g;
+G [hH] > G;
+g [hH] > g;
 
-[AÄEIÏOÖUÜŸÕõaäeiïoöuüÿ] { KH } [^[:L:][:M:]] > HH;
-[AÄEIÏOÖUÜŸÕõaäeiïoöuüÿ] { KH } [AÄEIÏOÖUÜŸÕõaäeiïoöuüÿ] > HH;
-[AÄEIÏOÖUÜŸÕõaäeiïoöuüÿ] { Kh } [^[:L:][:M:]] > Hh;
-[AÄEIÏOÖUÜŸÕõaäeiïoöuüÿ] { Kh } [AÄEIÏOÖUÜŸÕõaäeiïoöuüÿ] > Hh;
-[AÄEIÏOÖUÜŸÕõaäeiïoöuüÿ] { kh } [^[:L:][:M:]] > hh;
-[AÄEIÏOÖUÜŸÕõaäeiïoöuüÿ] { kh } [AÄEIÏOÖUÜŸÕõaäeiïoöuüÿ] > hh;
-KH > H;
-Kh > H;
-kh > h;
+[AÄEIÏOÖUÜŸÕaäeiïoöuüÿõ] { KH } [^[:L:][:M:]] > HH;
+[AÄEIÏOÖUÜŸÕaäeiïoöuüÿõ] { KH } [AÄEIÏOÖUÜŸÕaäeiïoöuüÿõ] > HH;
+[AÄEIÏOÖUÜŸÕaäeiïoöuüÿõ] { Kh } [^[:L:][:M:]] > Hh;
+[AÄEIÏOÖUÜŸÕaäeiïoöuüÿõ] { Kh } [AÄEIÏOÖUÜŸÕaäeiïoöuüÿõ] > Hh;
+[AÄEIÏOÖUÜŸÕaäeiïoöuüÿõ] { kH } [^[:L:][:M:]] > hH;
+[AÄEIÏOÖUÜŸÕaäeiïoöuüÿõ] { kH } [AÄEIÏOÖUÜŸÕaäeiïoöuüÿõ] > hH;
+[AÄEIÏOÖUÜŸÕaäeiïoöuüÿõ] { kh } [^[:L:][:M:]] > hh;
+[AÄEIÏOÖUÜŸÕaäeiïoöuüÿõ] { kh } [AÄEIÏOÖUÜŸÕaäeiïoöuüÿõ] > hh;
+K [hH] > H;
+k [hH] > h;
 
 ::Null;
 
@@ -29,10 +29,10 @@ kh > h;
 \\' } [^[:L:][:M:]] > ;
 · > ;
 
-[AÄEIÏOÖUÜŸÕõaäeiïoöuüÿ] { X } [^[:L:][:M:]] > HH;
-[AÄEIÏOÖUÜŸÕõaäeiïoöuüÿ] { X } [AÄEIÏOÖUÜŸÕõaäeiïoöuüÿ] > HH;
-[AÄEIÏOÖUÜŸÕõaäeiïoöuüÿ] { x } [^[:L:][:M:]] > hh;
-[AÄEIÏOÖUÜŸÕõaäeiïoöuüÿ] { x } [AÄEIÏOÖUÜŸÕõaäeiïoöuüÿ] > hh;
+[AÄEIÏOÖUÜŸÕaäeiïoöuüÿõ] { X } [^[:L:][:M:]] > HH;
+[AÄEIÏOÖUÜŸÕaäeiïoöuüÿõ] { X } [AÄEIÏOÖUÜŸÕaäeiïoöuüÿõ] > HH;
+[AÄEIÏOÖUÜŸÕaäeiïoöuüÿõ] { x } [^[:L:][:M:]] > hh;
+[AÄEIÏOÖUÜŸÕaäeiïoöuüÿõ] { x } [AÄEIÏOÖUÜŸÕaäeiïoöuüÿõ] > hh;
 X > H;
 x > h;
 

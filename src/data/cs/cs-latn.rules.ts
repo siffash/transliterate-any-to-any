@@ -1,9 +1,10 @@
 export const csLatnRules = `
 ::NFC;
 
+[:Lu:] { X > KS;
+X } [:Lu:] > KS;
+X > Ks;
 x > ks;
-X } [:Ll:] > Ks;
-X > KS;
 
 qu } [aeiouáéěíóúůyýAEIOUÁÉĚÍÓÚŮYÝ] > kv;
 qU } [aeiouáéěíóúůyýAEIOUÁÉĚÍÓÚŮYÝ] > kV;
@@ -16,66 +17,72 @@ Q > K;
 w > v;
 W > V;
 
-ch > x;
-Ch > X;
-cH > X;
-CH > X;
+C [hH] > X;
+c [hH] > x;
 
+[PTKFSŠCČXŤ] { Ř > RŠ;
+[ptkfsšcčxťPTKFSŠCČXŤ] { Ř } [:Lu:] > RŠ;
+[ptkfsšcčxťPTKFSŠCČXŤ] { Ř > Rš;
 [ptkfsšcčxťPTKFSŠCČXŤ] { ř > rš;
-[ptkfsšcčxťPTKFSŠCČXŤ] { Ř } [:Ll:] > Rš;
-[ptkfsšcčxťPTKFSŠCČXŤ] { Ř > RŠ;
 
-ř } [ptkfsšcčxťPTKFSŠCČXŤ] > rš;
-Ř } [ptkfsšcčxť] > Rš;
 Ř } [PTKFSŠCČXŤ] > RŠ;
+Ř } [ptkfsšcčxť] > Rš;
+ř } [ptkfsšcčxťPTKFSŠCČXŤ] > rš;
 
-ř } [^[:L:][:M:]] > rš;
 [:Lu:] { Ř } [^[:L:][:M:]] > RŠ;
 Ř } [^[:L:][:M:]] > Rš;
+ř } [^[:L:][:M:]] > rš;
 
+[:Lu:] { Ř > RŽ;
+Ř } [:Lu:] > RŽ;
+Ř > Rž;
 ř > rž;
-Ř } [:Ll:] > Rž;
-Ř > RŽ;
 
+[:Lu:] { C > TS;
+C } [:Lu:] > TS;
+C > Ts;
 c > ts;
-C } [:Ll:] > Ts;
-C > TS;
 
 dě > đe;
 Dě > Đe;
+dĚ > đE;
 DĚ > ĐE;
 
 ně > ńe;
 Ně > Ńe;
+nĚ > ńE;
 NĚ > ŃE;
 
 mě > mńe;
 Mě > Mńe;
+mĚ > mńE;
 MĚ > MŃE;
 
 bě > bye;
 Bě > Bye;
+bĚ > byE;
 BĚ > BYE;
 
 pě > pye;
 Pě > Pye;
+pĚ > pyE;
 PĚ > PYE;
 
 vě > vye;
 Vě > Vye;
+vĚ > vyE;
 VĚ > VYE;
 
 fě > fye;
 Fě > Fye;
+fĚ > fyE;
 FĚ > FYE;
 
-d } [ií] > đ;
-D } [ií] > Đ;
-D } [IÍ] > Đ;
+d } [iíIÍ] > đ;
+D } [iíIÍ] > Đ;
 
-n } [ií] > ń;
-N } [ií] > Ń;
-N } [IÍ] > Ń;
+n } [iíIÍ] > ń;
+N } [iíIÍ] > Ń;
 
 ď > đ;
 Ď > Đ;

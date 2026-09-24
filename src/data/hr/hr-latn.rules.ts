@@ -6,18 +6,14 @@ j } [aeiouAEIOU] > y;
 
 ::Null;
 
-LJ > Ľ;
-Lj > Ľ;
-lJ > Ľ;
-lj > ľ;
+L [jJ] > Ľ;
+l [jJ] > ľ;
 
-NJ > Ń;
-Nj > Ń;
-nJ > Ń;
-nj > ń;
+N [jJ] > Ń;
+n [jJ] > ń;
 
+[:Lu:] { C > TS;
 C } [:Lu:] > TS;
-[:Lu:] { C } [^[:L:][:M:]] > TS;
 C > Ts;
 c > ts;
 

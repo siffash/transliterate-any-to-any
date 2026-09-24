@@ -2,36 +2,33 @@ export const sqLatnRules = `
 ::NFC;
 
 XH > DŽ;
+xH > dŽ;
 Xh > Dž;
 xh > dž;
 
-SH > Š;
-Sh > Š;
-sh > š;
+S [hH] > Š;
+s [hH] > š;
 
-ZH > Ž;
-Zh > Ž;
-zh > ž;
+Z [hH] > Ž;
+z [hH] > ž;
 
-GJ > Đ;
-Gj > Đ;
-gj > đ;
+G [jJ] > Đ;
+g [jJ] > đ;
 
-NJ > Ń;
-Nj > Ń;
-nj > ń;
+N [jJ] > Ń;
+n [jJ] > ń;
 
 [lL] { [lL] > ;
 [rR] { [rR] > ;
 
-C } [:Ll:] > Ts;
-[^[:L:][:M:]] { C } [^[:L:][:M:]] > Ts;
-C > TS;
+[:Lu:] { C > TS;
+C } [:Lu:] > TS;
+C > Ts;
 c > ts;
 
-X } [:Ll:] > Dz;
-[^[:L:][:M:]] { X } [^[:L:][:M:]] > Dz;
-X > DZ;
+[:Lu:] { X > DZ;
+X } [:Lu:] > DZ;
+X > Dz;
 x > dz;
 
 Ç > Č;

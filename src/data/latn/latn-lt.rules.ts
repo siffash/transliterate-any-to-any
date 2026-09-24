@@ -1,20 +1,14 @@
 export const latnLtRules = `
 ::Null;
 
-TS > C;
-Ts > C;
-tS > c;
-ts > c;
+T [sS] > C;
+t [sS] > c;
 
-TH > T;
-Th > T;
-tH > t;
-th > t;
+T [hH] > T;
+t [hH] > t;
 
-GH > G;
-Gh > G;
-gH > g;
-gh > g;
+G [hH] > G;
+g [hH] > g;
 
 KH > CH;
 Kh > Ch;
@@ -82,16 +76,17 @@ y > j;
 
 Ľ } [eEęĘėĖiIįĮyY] > L;
 ľ } [eEęĘėĖiIįĮyY] > l;
-Ń } [eEęĘėĖiIįĮyY] > N;
-ń } [eEęĘėĖiIįĮyY] > n;
 
 Ľ } [AĄOUŲŪ] > LI;
 ľ } [AĄOUŲŪ] > lI;
-Ń } [AĄOUŲŪ] > NI;
-ń } [AĄOUŲŪ] > nI;
-
 Ľ } [aąouųū] > Li;
 ľ } [aąouųū] > li;
+
+Ń } [eEęĘėĖiIįĮyY] > N;
+ń } [eEęĘėĖiIįĮyY] > n;
+
+Ń } [AĄOUŲŪ] > NI;
+ń } [AĄOUŲŪ] > nI;
 Ń } [aąouųū] > Ni;
 ń } [aąouųū] > ni;
 

@@ -3,15 +3,15 @@ export const lbLatnRules = `
 
 DSCH > DŽ;
 Dsch > Dž;
-dsch > dž;
+d [sS] [cC] [hH] > dž;
 
 TSCH > Č;
 Tsch > Č;
-tsch > č;
+t [sS] [cC] [hH] > č;
 
 SCH > Š;
 Sch > Š;
-sch > š;
+s [cC] [hH] > š;
 
 [:Lu:] { X > KS;
 X } [:Lu:] > KS;
@@ -19,34 +19,32 @@ X > Ks;
 x > ks;
 
 [AOUaou] { CH > KH;
+[AOUaou] { cH > kH;
 [AOUaou] { Ch > Kh;
 [AOUaou] { ch > kh;
 
-CH > X;
-Ch > X;
-ch > x;
+C [hH] > X;
+c [hH] > x;
 
-CK > K;
-Ck > K;
-ck > k;
+C [kK] > K;
+c [kK] > k;
 
-PH > F;
-Ph > F;
-ph > f;
+P [hH] > F;
+p [hH] > f;
 
-TH > T;
-Th > T;
-th > t;
+T [hH] > T;
+t [hH] > t;
 
 DJ > DŽ;
+dJ > dŽ;
 Dj > Dž;
 dj > dž;
 
-QUE } [^[:L:][:M:]] > K;
-Que } [^[:L:][:M:]] > K;
-que } [^[:L:][:M:]] > k;
+Q [uU] [eE] } [^[:L:][:M:]] > K;
+q [uU] [eE] } [^[:L:][:M:]] > k;
 
 QU > KV;
+qU > kV;
 Qu > Kv;
 qu > kv;
 
@@ -54,10 +52,12 @@ Q > K;
 q > k;
 
 [^[:L:][:M:]] { ST > ŠT;
+[^[:L:][:M:]] { sT > šT;
 [^[:L:][:M:]] { St > Št;
 [^[:L:][:M:]] { st > št;
 
 [^[:L:][:M:]] { SP > ŠP;
+[^[:L:][:M:]] { sP > šP;
 [^[:L:][:M:]] { Sp > Šp;
 [^[:L:][:M:]] { sp > šp;
 
@@ -70,6 +70,7 @@ C > K;
 c > k;
 
 TZ > TS;
+tZ > tS;
 Tz > Ts;
 tz > ts;
 
@@ -85,6 +86,7 @@ w > v;
 ç > s;
 
 [ÄEÉ] I > IJ;
+[äeé] I > iJ;
 [ÄEÉ] i > Ij;
 [äeé] i > ij;
 
@@ -111,7 +113,5 @@ j > y;
 
 ::Null;
 
-KK > K;
-Kk > K;
-kk > k;
+[kK] { [kK] > ;
 `;

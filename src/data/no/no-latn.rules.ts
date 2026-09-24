@@ -3,66 +3,53 @@ export const noLatnRules = `
 
 [ÉÈÊ] > E;
 [éèê] > e;
+
 [ÓÒÔ] > O;
 [óòô] > o;
+
 [ÀÂ] > A;
 [àâ] > a;
 
 ::Null;
 
-SCH > Š;
-Sch > Š;
-sch > š;
+S [Cc] [Hh] > Š;
+s [Cc] [Hh] > š;
 
-SKJ > Š;
-Skj > Š;
-skj > š;
+S [Kk] [Jj] > Š;
+s [Kk] [Jj] > š;
 
-TSJ > Č;
-Tsj > Č;
-tsJ > Č;
-tsj > č;
+T [Ss] [Jj] > Č;
+t [Ss] [Jj] > č;
 
-SJ > Š;
-Sj > Š;
-sJ > Š;
-sj > š;
+S [Jj] > Š;
+s [Jj] > š;
 
-[KT] J > Ć;
-[KT] j > Ć;
-[kt] j > ć;
+[KT] [Jj] > Ć;
+[kt] [Jj] > ć;
 
-[GHL] J > J;
-[GHL] j > J;
-[ghl] J > J;
-[ghl] j > j;
+[GHL] [Jj] > J;
+[ghl] [Jj] > j;
 
-HV > V;
-Hv > V;
-hv > v;
+H [Vv] > V;
+h [Vv] > v;
 
-SK } [IYiy] > Š;
-Sk } [IYiy] > Š;
-sk } [IYiy] > š;
-SK } EI > Š;
-Sk } Ei > Š;
-Sk } ei > Š;
-sk } ei > š;
-SK } ØY > Š;
-Sk } Øy > Š;
-Sk } øy > Š;
-sk } øy > š;
+S [Kk] } [IYiy] > Š;
+s [Kk] } [IYiy] > š;
+
+S [Kk] } [Ee] [Ii] > Š;
+s [Kk] } [Ee] [Ii] > š;
+
+S [Kk] } [Øø] [Yy] > Š;
+s [Kk] } [Øø] [Yy] > š;
 
 G } [IYiy] > J;
 g } [IYiy] > j;
-G } EI > J;
-G } Ei > J;
-G } ei > J;
-g } ei > j;
-G } ØY > J;
-G } Øy > J;
-G } øy > J;
-g } øy > j;
+
+G } [Ee] [Ii] > J;
+g } [Ee] [Ii] > j;
+
+G } [Øø] [Yy] > J;
+g } [Øø] [Yy] > j;
 
 C } [EIYÆØÄÖÜeiyæøäöü] > S;
 c } [EIYÆØÄÖÜeiyæøäöü] > s;
@@ -72,10 +59,12 @@ c > k;
 ::Null;
 
 AU > ÄU;
+aU > äU;
 Au > Äu;
 au > äu;
 
 EI > IJ;
+eI > iJ;
 Ei > Ij;
 ei > ij;
 

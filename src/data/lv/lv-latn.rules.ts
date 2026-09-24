@@ -19,8 +19,8 @@ Ch > X;
 cH > x;
 ch > x;
 
+[:Lu:] { C > TS;
 C } [:Lu:] > TS;
-C } [^[:L:][:M:]] > TS;
 C > Ts;
 c > ts;
 

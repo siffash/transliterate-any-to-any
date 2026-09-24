@@ -2,33 +2,36 @@ export const latnSvRules = `
 ::Null;
 
 DŽ > DJ;
+dŽ > dJ;
 Dž > Dj;
 dž > dj;
 
-TH > T;
-Th > T;
-th > t;
+T [hH] > T;
+t [hH] > t;
 
-GH > G;
-Gh > G;
-gh > g;
+G [hH] > G;
+g [hH] > g;
 
 KH > CH;
+kH > cH;
 Kh > Ch;
 kh > ch;
 
 IJ > EJ;
+iJ > eJ;
 Ij > Ej;
 ij > ej;
 
 ::Null;
 
-[ČĆ] } [:Ll:] > Tj;
-[ČĆ] > TJ;
+[:Lu:] { [ČĆ] > TJ;
+[ČĆ] } [:Lu:] > TJ;
+[ČĆ] > Tj;
 [čć] > tj;
 
-Đ } [:Ll:] > Dj;
-Đ > DJ;
+[:Lu:] { Đ > DJ;
+Đ } [:Lu:] > DJ;
+Đ > Dj;
 đ > dj;
 
 Ľ } [^[:L:][:M:]] > L;
@@ -49,12 +52,14 @@ ij > ej;
 Ń > Nj;
 ń > nj;
 
-Š } [:Ll:] > Sj;
-Š > SJ;
+[:Lu:] { Š > SJ;
+Š } [:Lu:] > SJ;
+Š > Sj;
 š > sj;
 
-Ž } [:Ll:] > Zj;
-Ž > ZJ;
+[:Lu:] { Ž > ZJ;
+Ž } [:Lu:] > ZJ;
+Ž > Zj;
 ž > zj;
 
 X > H;

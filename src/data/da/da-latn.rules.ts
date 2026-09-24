@@ -1,10 +1,8 @@
 export const daLatnRules = `
 ::NFC;
 
-AA > O;
-Aa > O;
-aA > o;
-aa > o;
+A [aA] > O;
+a [aA] > o;
 
 Å > O;
 å > o;
@@ -40,9 +38,8 @@ SCH > Š;
 Sch > Š;
 sch > š;
 
-SJ > Š;
-Sj > Š;
-sj > š;
+S [jJ] > Š;
+s [jJ] > š;
 
 [Mm] i { ch } [aA] > k;
 [Mm] i { Ch } [aA] > K;
@@ -52,31 +49,28 @@ MI { CH } A > K;
 [Jj] oa { Ch } i > K;
 JOA { CH } I > K;
 
-CH > Š;
-Ch > Š;
-ch > š;
+C [hH] > Š;
+c [hH] > š;
 
-CK > K;
-Ck > K;
-ck > k;
+C [kK] > K;
+c [kK] > k;
 
 C } [EIYÆØÄÖÜeiyæøäöü] > S;
 c } [EIYÆØÄÖÜeiyæøäöü] > s;
 C > K;
 c > k;
 
-PH > F;
-Ph > F;
-ph > f;
+P [hH] > F;
+p [hH] > f;
 
-TH > T;
-Th > T;
-th > t;
+T [hH] > T;
+t [hH] > t;
 
 J > Y;
 j > y;
 
-X } [:Ll:] > Ks;
-X > KS;
+[:Lu:] { X > KS;
+X } [:Lu:] > KS;
+X > Ks;
 x > ks;
 `;

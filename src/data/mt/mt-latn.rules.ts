@@ -14,17 +14,14 @@ export const mtLatnRules = `
 
 ::Null;
 
-IE > I;
-Ie > I;
-ie > i;
+I [eE] > I;
+i [eE] > i;
 
-TH > T;
-Th > T;
-th > t;
+T [hH] > T;
+t [hH] > t;
 
-PH > F;
-Ph > F;
-ph > f;
+P [hH] > F;
+p [hH] > f;
 
 QU } [aeiouAEIOU] > KW;
 Qu } [aeiouAEIOU] > Kw;
@@ -32,7 +29,7 @@ qU } [aeiouAEIOU] > kW;
 qu } [aeiouAEIOU] > kw;
 
 G [Ħħ] } [^[:L:][:M:]] > H;
-għ } [^[:L:][:M:]] > h;
+g [Ħħ] } [^[:L:][:M:]] > h;
 
 G [Ħħ] ([:L:]) >| &Any-Upper($1);
 [Gg] [Ħħ] > ;
@@ -41,17 +38,17 @@ G [Ħħ] ([:L:]) >| &Any-Upper($1);
 ħ > h;
 
 H ([:L:]) >| &Any-Upper($1);
-H } [:L:] > ;
-h } [:L:] > ;
+[Hh] } [:L:] > ;
 
-CH > K;
-Ch > K;
-ch > k;
+C [hH] > K;
+c [hH] > k;
 
+[:Lu:] { Ġ > DŽ;
 Ġ } [:Lu:] > DŽ;
 Ġ > Dž;
 ġ > dž;
 
+[:Lu:] { Z > TS;
 Z } [:Lu:] > TS;
 Z > Ts;
 z > ts;

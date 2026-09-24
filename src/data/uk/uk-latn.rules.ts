@@ -4,6 +4,7 @@ export const ukLatnRules = `
 ['’‘\`´ʼ] > \\';
 
 ЕЙ > IJ;
+еЙ > iJ;
 Ей > Ij;
 ей > ij;
 
@@ -12,33 +13,35 @@ export const ukLatnRules = `
 Н } [ЬЮЯЄьюяє] > Ń;
 н } [ЬЮЯЄьюяє] > ń;
 
-ьо > ö;
-ЬО > Ö;
-[ьЬ] [оО] > ö;
+ь [оО] > ö;
+Ь [оО] > Ö;
 
-[AEIOUÏaeiouï] { Є } [:Lu:] > YE;
 [^[:L:][:M:]] { Є } [:Lu:] > YE;
-[AEIOUÏ] { Є > YE;
-[AEIOUÏaeiouï] { Є > Ye;
 [^[:L:][:M:]] { Є > Ye;
-[AEIOUÏaeiouï] { є > ye;
 [^[:L:][:M:]] { є > ye;
 
-[AEIOUÏaeiouï] { Ю } [:Lu:] > YU;
+[AEIOUÏaeiouï] { Є } [:Lu:] > YE;
+[AEIOUÏ] { Є > YE;
+[AEIOUÏaeiouï] { Є > Ye;
+[AEIOUÏaeiouï] { є > ye;
+
 [^[:L:][:M:]] { Ю } [:Lu:] > YU;
-[AEIOUÏ] { Ю > YU;
-[AEIOUÏaeiouï] { Ю > Yu;
 [^[:L:][:M:]] { Ю > Yu;
-[AEIOUÏaeiouï] { ю > yu;
 [^[:L:][:M:]] { ю > yu;
 
-[AEIOUÏaeiouï] { Я } [:Lu:] > YA;
+[AEIOUÏaeiouï] { Ю } [:Lu:] > YU;
+[AEIOUÏ] { Ю > YU;
+[AEIOUÏaeiouï] { Ю > Yu;
+[AEIOUÏaeiouï] { ю > yu;
+
 [^[:L:][:M:]] { Я } [:Lu:] > YA;
+[^[:L:][:M:]] { Я > Ya;
+[^[:L:][:M:]] { я > ya;
+
+[AEIOUÏaeiouï] { Я } [:Lu:] > YA;
 [AEIOUÏ] { Я > YA;
 [AEIOUÏaeiouï] { Я > Ya;
-[^[:L:][:M:]] { Я > Ya;
 [AEIOUÏaeiouï] { я > ya;
-[^[:L:][:M:]] { я > ya;
 
 Ї } [:Lu:] > YI;
 [:Lu:] { Ї > YI;
@@ -71,31 +74,80 @@ export const ukLatnRules = `
 Ц > Ts;
 ц > ts;
 
-А > A; а > a;
-Б > B; б > b;
-В > V; в > v;
-Г > H; г > h;
-Ґ > G; ґ > g;
-Д > D; д > d;
-Е > E; е > e;
-Ж > Ž; ж > ž;
-З > Z; з > z;
-И > Ï; и > ï;
-І > I; і > i;
-К > K; к > k;
-Л > L; л > l;
-М > M; м > m;
-Н > N; н > n;
-О > O; о > o;
-П > P; п > p;
-Р > R; р > r;
-С > S; с > s;
-Т > T; т > t;
-У > U; у > u;
-Ф > F; ф > f;
-Х > X; х > x;
-Ч > Č; ч > č;
-Ш > Š; ш > š;
+А > A;
+а > a;
 
-Ь > ; ь > ;
+Б > B;
+б > b;
+
+В > V;
+в > v;
+
+Г > H;
+г > h;
+
+Ґ > G;
+ґ > g;
+
+Д > D;
+д > d;
+
+Е > E;
+е > e;
+
+Ж > Ž;
+ж > ž;
+
+З > Z;
+з > z;
+
+И > Ï;
+и > ï;
+
+І > I;
+і > i;
+
+К > K;
+к > k;
+
+Л > L;
+л > l;
+
+М > M;
+м > m;
+
+Н > N;
+н > n;
+
+О > O;
+о > o;
+
+П > P;
+п > p;
+
+Р > R;
+р > r;
+
+С > S;
+с > s;
+
+Т > T;
+т > t;
+
+У > U;
+у > u;
+
+Ф > F;
+ф > f;
+
+Х > X;
+х > x;
+
+Ч > Č;
+ч > č;
+
+Ш > Š;
+ш > š;
+
+[Ьь] > ;
 `;

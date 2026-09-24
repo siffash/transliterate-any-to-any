@@ -2,24 +2,21 @@ export const latnLvRules = `
 ::Null;
 
 IJ > EI;
+iJ > eI;
 Ij > Ei;
 ij > ei;
 
-TS > C;
-Ts > C;
-ts > c;
+T [sS] > C;
+t [sS] > c;
 
-TH > T;
-Th > T;
-th > t;
+T [hH] > T;
+t [hH] > t;
 
-GH > G;
-Gh > G;
-gh > g;
+G [hH] > G;
+g [hH] > g;
 
-KH > H;
-Kh > H;
-kh > h;
+K [hH] > H;
+k [hH] > h;
 
 ::Null;
 

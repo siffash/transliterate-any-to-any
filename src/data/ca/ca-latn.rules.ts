@@ -1,65 +1,57 @@
 export const caLatnRules = `
 ::NFC;
 
-ll > ľ;
-Ll > Ľ;
-LL > Ľ;
+l [lL] > ľ;
+L [lL] > Ľ;
 
-l·l > ll;
-L·l > Ll;
-L·L > LL;
+[lL] { · } [lL] > ;
 
 h > ;
 H ([:L:]) >| &Any-Upper($1);
 H > ;
 
-[aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] { ig } [^[:L:][:M:]] > č;
-[aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] { Ig } [^[:L:][:M:]] > Č;
-[aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] { IG } [^[:L:][:M:]] > Č;
+[aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] { i [gG] } [^[:L:][:M:]] > č;
+[aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] { I [gG] } [^[:L:][:M:]] > Č;
 
-i { g } [^[:L:][:M:]] > č;
-I { g } [^[:L:][:M:]] > Č;
-I { G } [^[:L:][:M:]] > Č;
+[iI] { g } [^[:L:][:M:]] > č;
+[iI] { G } [^[:L:][:M:]] > Č;
 
-[aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] { ix > š;
-[aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] { Ix > Š;
-[aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] { IX > Š;
+[aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] { i [xX] > š;
+[aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] { I [xX] > Š;
 
-tx > č;
-Tx > Č;
-TX > Č;
+t [xX] > č;
+T [xX] > Č;
 
 tz > dz;
 Tz > Dz;
+tZ > dZ;
 TZ > DZ;
 
-ny > ń;
-Ny > Ń;
-NY > Ń;
+n [yY] > ń;
+N [yY] > Ń;
 
 tg } [eiéèíEIÉÈÍïÏ] > dž;
 Tg } [eiéèíEIÉÈÍïÏ] > Dž;
+tG } [eiéèíEIÉÈÍïÏ] > dŽ;
 TG } [eiéèíEIÉÈÍïÏ] > DŽ;
 
 tj > dž;
 Tj > Dž;
+tJ > dŽ;
 TJ > DŽ;
 
-qu } [eiéèíEIÉÈÍïÏ] > k;
-Qu } [eiéèíEIÉÈÍïÏ] > K;
-QU } [eiéèíEIÉÈÍïÏ] > K;
+q [uU] } [eiéèíEIÉÈÍïÏ] > k;
+Q [uU] } [eiéèíEIÉÈÍïÏ] > K;
 
-gu } [eiéèíEIÉÈÍïÏ] > g;
-Gu } [eiéèíEIÉÈÍïÏ] > G;
-GU } [eiéèíEIÉÈÍïÏ] > G;
+g [uU] } [eiéèíEIÉÈÍïÏ] > g;
+G [uU] } [eiéèíEIÉÈÍïÏ] > G;
 
-ss > s;
-Ss > S;
-SS > S;
+s [sS] > s;
+S [sS] > S;
 
-[aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] { x } [aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] > ks;
 [AEIOUÀÈÉÍÒÓÚÏÜ] { X } [AEIOUÀÈÉÍÒÓÚÏÜ] > KS;
 [aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] { X } [aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] > Ks;
+[aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] { x } [aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] > ks;
 
 x > š;
 X > Š;
@@ -72,21 +64,25 @@ G } [eiéèíEIÉÈÍïÏ] > Ž;
 
 j > ž;
 J > Ž;
+
 ç > s;
 Ç > S;
-c > k;
-C > K;
-q > k;
-Q > K;
+
+[cq] > k;
+[CQ] > K;
 
 [àá] > a;
 [ÀÁ] > A;
+
 [èé] > e;
 [ÈÉ] > E;
+
 [íï] > i;
 [ÍÏ] > I;
+
 [òó] > o;
 [ÒÓ] > O;
+
 [úü] > u;
 [ÚÜ] > U;
 `;

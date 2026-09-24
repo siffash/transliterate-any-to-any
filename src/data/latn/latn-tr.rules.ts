@@ -1,24 +1,20 @@
 export const latnTrRules = `
 ::Null;
 
-DŽ > C;
-Dž > C;
-dž > c;
+D [žŽ] > C;
+d [žŽ] > c;
 
-TH > T;
-Th > T;
-th > t;
+T [hH] > T;
+t [hH] > t;
 
-GH > Ğ;
-Gh > Ğ;
-gh > ğ;
+G [hH] > Ğ;
+g [hH] > ğ;
 
-KH > H;
-Kh > H;
-kh > h;
+K [hH] > H;
+k [hH] > h;
 
-IJ } [:Ll:] > Ey;
 IJ > EY;
+iJ > eY;
 Ij > Ey;
 ij > ey;
 

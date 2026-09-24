@@ -1,10 +1,8 @@
 export const latnSrRules = `
 ::Null;
 
-TH > T;
-Th > T;
-tH > t;
-th > t;
+T [hH] > T;
+t [hH] > t;
 
 NGH > NGH;
 NGh > NGh;
@@ -15,20 +13,14 @@ nGh > nGh;
 ngH > ngH;
 ngh > ngh;
 
-GH > G;
-Gh > G;
-gH > g;
-gh > g;
+G [hH] > G;
+g [hH] > g;
 
-KH > H;
-Kh > H;
-kH > h;
-kh > h;
+K [hH] > H;
+k [hH] > h;
 
-TS > C;
-Ts > C;
-tS > c;
-ts > c;
+T [sS] > C;
+t [sS] > c;
 
 IJ > EJ;
 Ij > Ej;

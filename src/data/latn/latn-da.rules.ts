@@ -3,23 +3,24 @@ export const latnDaRules = `
 
 DŽ > DJ;
 Dž > Dj;
+dŽ > dJ;
 dž > dj;
 
 DZ > DS;
 Dz > Ds;
+dZ > dS;
 dz > ds;
 
 IJ > EJ;
 Ij > Ej;
+iJ > eJ;
 ij > ej;
 
-TH > T;
-Th > T;
-th > t;
+T [hH] > T;
+t [hH] > t;
 
-GH > G;
-Gh > G;
-gh > g;
+G [hH] > G;
+g [hH] > g;
 
 ::Null;
 
@@ -27,45 +28,47 @@ gh > g;
 \\' } [^[:L:][:M:]] > ;
 · > ;
 
-[ĆČ] } [:Ll:] > Tj;
-[ĆČ] } [^[:L:][:M:]] > Tj;
-[ĆČ] > TJ;
+[:Lu:] { [ĆČ] > TJ;
+[ĆČ] } [:Lu:] > TJ;
+[ĆČ] > Tj;
 [ćč] > tj;
 
-Đ } [:Ll:] > Dj;
-Đ } [^[:L:][:M:]] > Dj;
-Đ > DJ;
+[:Lu:] { Đ > DJ;
+Đ } [:Lu:] > DJ;
+Đ > Dj;
 đ > dj;
 
 Ľ } [^[:L:][:M:]] > L;
 ľ } [^[:L:][:M:]] > l;
 Ľ } [Jj] > L;
 ľ } [Jj] > l;
-Ľ } [:Ll:] > Lj;
-Ľ > LJ;
+[:Lu:] { Ľ > LJ;
+Ľ } [:Lu:] > LJ;
+Ľ > Lj;
 ľ > lj;
 
 Ń } [^[:L:][:M:]] > N;
 ń } [^[:L:][:M:]] > n;
 Ń } [Jj] > N;
 ń } [Jj] > n;
-Ń } [:Ll:] > Nj;
-Ń > NJ;
+[:Lu:] { Ń > NJ;
+Ń } [:Lu:] > NJ;
+Ń > Nj;
 ń > nj;
 
-Š } [:Ll:] > Sj;
-Š } [^[:L:][:M:]] > Sj;
-Š > SJ;
+[:Lu:] { Š > SJ;
+Š } [:Lu:] > SJ;
+Š > Sj;
 š > sj;
 
-Ž } [:Ll:] > Zj;
-Ž } [^[:L:][:M:]] > Zj;
-Ž > ZJ;
+[:Lu:] { Ž > ZJ;
+Ž } [:Lu:] > ZJ;
+Ž > Zj;
 ž > zj;
 
-X } [:Ll:] > Kh;
-X } [^[:L:][:M:]] > Kh;
-X > KH;
+[:Lu:] { X > KH;
+X } [:Lu:] > KH;
+X > Kh;
 x > kh;
 
 Q > K;

@@ -1,65 +1,64 @@
 export const kkEnRules = `
 ::NFC;
 
-[AÄEIÏOÖUÜaäeiïoöuü] { Е } [:Ll:] > Ye;
-[AÄEIÏOÖUÜaäeiïoöuü] { Е > YE;
+[AÄEIÏOÖUÜ] { Е > YE;
+[AÄEIÏOÖUÜaäeiïoöuü] { Е > Ye;
 [AÄEIÏOÖUÜaäeiïoöuü] { е > ye;
 
-[ЪЬ] Е } [^[:L:][:M:]] > Ye;
-[ЪЬ] Е } [:Ll:] > Ye;
 [ЪЬ] Е > YE;
 [ЪЬ] е > Ye;
+[ъь] Е > yE;
 [ъь] е > ye;
 
 [ЪЬъь] > ;
 
-Ё } [:Lu:] > YO;
 [:Lu:] { Ё > YO;
+Ё } [:Lu:] > YO;
 Ё > Yo;
 ё > yo;
 
-Ю } [:Lu:] > YU;
 [:Lu:] { Ю > YU;
+Ю } [:Lu:] > YU;
 Ю > Yu;
 ю > yu;
 
-Я } [:Lu:] > YA;
 [:Lu:] { Я > YA;
+Я } [:Lu:] > YA;
 Я > Ya;
 я > ya;
 
-Ғ } [:Lu:] > GH;
 [:Lu:] { Ғ > GH;
+Ғ } [:Lu:] > GH;
 Ғ > Gh;
 ғ > gh;
 
-Х } [:Lu:] > KH;
 [:Lu:] { Х > KH;
+Х } [:Lu:] > KH;
 Х > Kh;
 х > kh;
 
-Ж } [:Lu:] > ZH;
 [:Lu:] { Ж > ZH;
+Ж } [:Lu:] > ZH;
 Ж > Zh;
 ж > zh;
 
-Ц } [:Lu:] > TS;
 [:Lu:] { Ц > TS;
+Ц } [:Lu:] > TS;
 Ц > Ts;
 ц > ts;
 
-Ч } [:Lu:] > CH;
 [:Lu:] { Ч > CH;
+Ч } [:Lu:] > CH;
 Ч > Ch;
 ч > ch;
 
-Ш } [:Lu:] > SH;
 [:Lu:] { Ш > SH;
+Ш } [:Lu:] > SH;
 Ш > Sh;
 ш > sh;
 
-Щ } [:Lu:] > SHCH;
 [:Lu:] { Щ > SHCH;
+Щ } [:Lu:] > SHCH;
 Щ > Shch;
 щ > shch;
 

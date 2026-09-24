@@ -1,5 +1,3 @@
-// Hunterian transliteration system
-
 export const hiEnRules = `
 ::NFD;
 

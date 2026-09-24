@@ -6,31 +6,26 @@ export const latnViRules = `
 
 ::Null;
 
-DŽ } [Ii] > G;
-Dž } [Ii] > G;
-dž } [Ii] > g;
+D [Žž] } [Ii] > G;
+d [Žž] } [Ii] > g;
 
-DŽ } [:Lu:] > GI;
-DŽ > Gi;
+DŽ > GI;
+dŽ > gI;
 Dž > Gi;
 dž > gi;
 
-DZ } [:Lu:] > D;
-DZ > D;
-Dz > D;
-dz > d;
+D [Zz] > D;
+d [Zz] > d;
 
-TS } [:Lu:] > X;
-TS > X;
-Ts > X;
-ts > x;
+T [Ss] > X;
+t [Ss] > x;
 
-IJ } [:Lu:] > AY;
-IJ > Ay;
+IJ > AY;
+iJ > aY;
 Ij > Ay;
 ij > ay;
 
-NG } [eäiy] > Ngh;
+NG } [eäiy] > NGh;
 NG } [EÄIY] > NGH;
 Ng } [EeÄäIiYy] > Ngh;
 ng } [EeÄäIiYy] > ngh;
@@ -39,17 +34,16 @@ GH } [EeÄäIiYy] > GH;
 Gh } [EeÄäIiYy] > Gh;
 gH } [EeÄäIiYy] > gH;
 gh } [EeÄäIiYy] > gh;
-GH > G;
-Gh > G;
-gH > g;
-gh > g;
+G [Hh] > G;
+g [Hh] > g;
 
-G } [eäiy] > Gh;
 G } [EÄIY] > GH;
-g } [EeÄäIiYy] > gh;
+G } [eäiy] > Gh;
+g } [EÄIY] > gH;
+g } [eäiy] > gh;
 
-KH } [:Lu:] > KH;
-KH > Kh;
+KH > KH;
+kH > kH;
 Kh > Kh;
 kh > kh;
 
@@ -71,6 +65,7 @@ k } [EeÄäIiYy] > k;
 K > C;
 k > c;
 
+[:Lu:] { [ČĆ] > CH;
 [ČĆ] } [:Lu:] > CH;
 [ČĆ] > Ch;
 [čć] > ch;
@@ -90,14 +85,17 @@ k > c;
 Ž } [Ii] > G;
 ž } [Ii] > g;
 
+[:Lu:] { Ž > GI;
 Ž } [:Lu:] > GI;
 Ž > Gi;
 ž > gi;
 
+[:Lu:] { Š > S;
 Š } [:Lu:] > S;
 Š > S;
 š > s;
 
+[:Lu:] { Đ > D;
 Đ } [:Lu:] > D;
 Đ > D;
 đ > d;
@@ -105,14 +103,17 @@ k > c;
 D > Đ;
 d > đ;
 
+[:Lu:] { F > PH;
 F } [:Lu:] > PH;
 F > Ph;
 f > ph;
 
+[:Lu:] { X > KH;
 X } [:Lu:] > KH;
 X > Kh;
 x > kh;
 
+[:Lu:] { [ÜŸ] > UY;
 [ÜŸ] } [:Lu:] > UY;
 [ÜŸ] > Uy;
 [üÿ] > uy;
@@ -124,6 +125,7 @@ y } [^[:L:][:M:]] > i;
 Y } [BbĆćČčDdĐđFfGgHhKkLlĽľMmNnŃńPpQqRrSsŠšTtVvWwXxZzŽž] > I;
 y } [BbĆćČčDdĐđFfGgHhKkLlĽľMmNnŃńPpQqRrSsŠšTtVvWwXxZzŽž] > i;
 
+[:Lu:] { Y > GI;
 Y } [:Lu:] > GI;
 Y > Gi;
 y > gi;

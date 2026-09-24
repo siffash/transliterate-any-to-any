@@ -1,5 +1,3 @@
-// ELOT 743, 2nd ed.
-
 export const elEnRules = `
 ::NFD;
 
@@ -109,8 +107,8 @@ export const elEnRules = `
 υί > yí;
 υι > yi;
 
-ΓΚ } [:Ll:] > Gk;
 ΓΚ > GK;
+γΚ > gK;
 Γκ > Gk;
 γκ > gk;
 
@@ -121,41 +119,44 @@ export const elEnRules = `
 μπ } [^[:L:][:M:]] > b;
 [^[:L:][:M:]] { μπ > b;
 
-ΜΠ } [:Ll:] > Mp;
 ΜΠ > MP;
+μΠ > mP;
 Μπ > Mp;
 μπ > mp;
 
-ΝΤ } [:Ll:] > Nt;
 ΝΤ > NT;
+νΤ > nT;
 Ντ > Nt;
 ντ > nt;
 
-ΓΓ } [:Ll:] > Ng;
 ΓΓ > NG;
+γΓ > nG;
 Γγ > Ng;
 γγ > ng;
 
-ΓΞ } [:Ll:] > Nx;
 ΓΞ > NX;
+γΞ > nX;
 Γξ > Nx;
 γξ > nx;
 
-ΓΧ } [:Ll:] > Nch;
 ΓΧ > NCH;
+γΧ > nCH;
 Γχ > Nch;
 γχ > nch;
 
-Θ } [:Ll:] > Th;
-Θ > TH;
+[:Lu:] { Θ > TH;
+Θ } [:Lu:] > TH;
+Θ > Th;
 θ > th;
 
-Χ } [:Ll:] > Ch;
-Χ > CH;
+[:Lu:] { Χ > CH;
+Χ } [:Lu:] > CH;
+Χ > Ch;
 χ > ch;
 
-Ψ } [:Ll:] > Ps;
-Ψ > PS;
+[:Lu:] { Ψ > PS;
+Ψ } [:Lu:] > PS;
+Ψ > Ps;
 ψ > ps;
 
 Α > A;

@@ -2,45 +2,47 @@ export const latnFiRules = `
 ::Null;
 
 IJ > EI;
+iJ > eI;
 Ij > Ei;
 ij > ei;
 
-TH > T;
-Th > T;
-th > t;
+T [hH] > T;
+t [hH] > t;
 
-GH > G;
-Gh > G;
-gh > g;
+G [hH] > G;
+g [hH] > g;
 
-KH > H;
-Kh > H;
-kh > h;
+K [hH] > H;
+k [hH] > h;
 
 ::Null;
 
-[ČĆ] } [:Ll:] > Tš;
-[ČĆ] > TŠ;
+[:Lu:] { [ČĆ] > TŠ;
+[ČĆ] } [:Lu:] > TŠ;
+[ČĆ] > Tš;
 [čć] > tš;
 
-Đ } [:Ll:] > Dž;
-Đ > DŽ;
+[:Lu:] { Đ > DŽ;
+Đ } [:Lu:] > DŽ;
+Đ > Dž;
 đ > dž;
 
 Ń } [^[:L:][:M:]] > N;
 ń } [^[:L:][:M:]] > n;
 Ń } [Jj] > N;
 ń } [Jj] > n;
-Ń } [:Ll:] > Nj;
-Ń > NJ;
+[:Lu:] { Ń > NJ;
+Ń } [:Lu:] > NJ;
+Ń > Nj;
 ń > nj;
 
 Ľ } [^[:L:][:M:]] > L;
 ľ } [^[:L:][:M:]] > l;
 Ľ } [Jj] > L;
 ľ } [Jj] > l;
-Ľ } [:Ll:] > Lj;
-Ľ > LJ;
+[:Lu:] { Ľ > LJ;
+Ľ } [:Lu:] > LJ;
+Ľ > Lj;
 ľ > lj;
 
 X > H;

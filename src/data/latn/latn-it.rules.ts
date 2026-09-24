@@ -1,95 +1,96 @@
 export const latnItRules = `
 ::Null;
 
-DŽ } [EIÏY] > G;
-DŽ } [eiïy] > G;
-DŽ } [:Lu:] > GI;
-DŽ > Gi;
-Dž } [EIÏY] > G;
-Dž } [eiïy] > G;
-Dž } [:Lu:] > Gi;
+D [žŽ] } [EIÏYeiïy] > G;
+d [žŽ] } [EIÏYeiïy] > g;
+
+DŽ > GI;
+dŽ > gI;
 Dž > Gi;
-dž } [EIÏYeiïy] > g;
 dž > gi;
 
-TS > Z;
-Ts > Z;
-ts > z;
+T [sS] > Z;
+t [sS] > z;
 
-DZ > Z;
-Dz > Z;
-dz > z;
+D [zZ] > Z;
+d [zZ] > z;
 
-TH > T;
-Th > T;
-th > t;
+T [hH] > T;
+t [hH] > t;
 
-KH } [EIÏY] > CH;
-KH } [eiïy] > CH;
-KH } [:Lu:] > C;
-KH > C;
-Kh } [EIÏY] > Ch;
-Kh } [eiïy] > Ch;
-Kh } [:Lu:] > C;
-Kh > C;
+KH } [EIÏYeiïy] > CH;
+kH } [EIÏYeiïy] > cH;
+Kh } [EIÏYeiïy] > Ch;
 kh } [EIÏYeiïy] > ch;
-kh > c;
 
-GH } [EIÏY] > GH;
-GH } [eiïy] > Gh;
-GH } [:Lu:] > G;
-GH > G;
-Gh } [EIÏY] > Gh;
-Gh } [eiïy] > Gh;
-Gh } [:Lu:] > G;
-Gh > G;
+K [hH] > C;
+k [hH] > c;
+
+GH } [EIÏYeiïy] > GH;
+gH } [EIÏYeiïy] > gH;
+Gh } [EIÏYeiïy] > Gh;
 gh } [EIÏYeiïy] > gh;
-gh > g;
+
+G [hH] > G;
+g [hH] > g;
 
 IJ > EI;
+iJ > eI;
 Ij > Ei;
 ij > ei;
 
 ::Null;
 
-Đ } [EIÏY] > G;
-Đ } [eiïy] > G;
+Đ } [EIÏYeiïy] > G;
+đ } [EIÏYeiïy] > g;
+
+[:Lu:] { Đ > GI;
 Đ } [:Lu:] > GI;
 Đ > Gi;
-đ } [EIÏYeiïy] > g;
 đ > gi;
 
-[ČĆ] } [EIÏY] > C;
-[ČĆ] } [eiïy] > C;
+[ČĆ] } [EIÏYeiïy] > C;
+[čć] } [EIÏYeiïy] > c;
+
+[:Lu:] { [ČĆ] > CI;
 [ČĆ] } [:Lu:] > CI;
 [ČĆ] > Ci;
-[čć] } [EIÏYeiïy] > c;
 [čć] > ci;
 
 Š } [EIÏY] > SC;
 Š } [eiïy] > Sc;
+š } [EIÏY] > sC;
+š } [eiïy] > sc;
+
+[:Lu:] { Š > SCI;
 Š } [:Lu:] > SCI;
 Š > Sci;
-š } [EIÏYeiïy] > sc;
 š > sci;
 
 Ľ } [IÏY] > GL;
 Ľ } [iïy] > Gl;
+ľ } [IÏY] > gL;
+ľ } [iïy] > gl;
+
+[:Lu:] { Ľ > GLI;
 Ľ } [:Lu:] > GLI;
 Ľ > Gli;
-ľ } [IÏYiïy] > gl;
 ľ > gli;
 
 [KQX] } [EIÏY] > CH;
 [KQX] } [eiïy] > Ch;
+[kqx] } [EIÏY] > cH;
+[kqx] } [eiïy] > ch;
+
 [KQX] > C;
-[kqx] } [EIÏYeiïy] > ch;
 [kqx] > c;
 
 G } [EIÏY] > GH;
 G } [eiïy] > Gh;
-g } [EIÏYeiïy] > gh;
+g } [EIÏY] > gH;
+g } [eiïy] > gh;
 
+[:Lu:] { Ń > GN;
 Ń } [:Lu:] > GN;
 Ń > Gn;
 ń > gn;
