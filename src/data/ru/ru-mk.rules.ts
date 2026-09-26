@@ -1,4 +1,6 @@
 export const ruMKRules = `
+::NFC;
+
 [:Lu:] { ЩЁ > ШЧО;
 ЩЁ } [:Lu:] > ШЧО;
 Щ [Ёё] > Шчо;

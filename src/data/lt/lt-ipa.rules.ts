@@ -1,5 +1,6 @@
 export const ltIpaRules = `
 ::Lower;
+::NFC;
 
 iai > ei;
 iau > iau;

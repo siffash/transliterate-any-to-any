@@ -1,5 +1,6 @@
 export const etIpaRules = `
 ::Lower;
+::NFC;
 
 [:L:] { ll } [ij] > lʲː;
 [:L:] { nn } [ij] > nʲː;
@@ -10,11 +11,10 @@ export const etIpaRules = `
 [:L:] { s } [ij] > sʲ;
 [:L:] { t } [ij] > tʲ;
 [:L:] { d } [ij] > tʲ;
-{n} g > ŋ;
-{n} k > ŋ;
-c{h} > tʃ;
-s{h} > ʃ;
-z{h} > ʒ;
+n } [gk] > ŋ;
+ch > tʃ;
+sh > ʃ;
+zh > ʒ;
 šš > ʃː;
 žž > ʒː;
 [aäeiouõöüɑæeiouɤøyː] { p } [aäeiouõöüɑæeiouɤøy] > pː;

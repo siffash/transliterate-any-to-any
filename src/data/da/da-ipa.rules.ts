@@ -1,5 +1,6 @@
 export const daIpaRules = `
 ::Lower;
+::NFC;
 
 aa { r } [^aeiouyæøåː] > ;
 [:L:] [ouå] { g } [^[:L:][:M:]] > w;

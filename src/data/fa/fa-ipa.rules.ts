@@ -1,4 +1,6 @@
 export const faIpaRules = `
+::NFC;
+
 [^[:L:][:M:]] { ا > ʔ;
 ا > ɒ;
 آ > ʔɒ;

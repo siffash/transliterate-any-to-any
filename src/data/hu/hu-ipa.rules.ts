@@ -1,5 +1,6 @@
 export const huIpaRules = `
 ::Lower;
+::NFC;
 
 szombathely > sombɒthɛj;
 

@@ -1,4 +1,6 @@
 export const bgMkRules = `
+::NFC;
+
 Д [жЖ] > Џ;
 д [жЖ] > џ;
 

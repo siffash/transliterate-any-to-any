@@ -1,4 +1,6 @@
 export const zhBgRules = `
+::NFC;
+
 [āáǎàɑɐæ] > a;
 [ēéěèê] > e;
 [īíǐì] > i;

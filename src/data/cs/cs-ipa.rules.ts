@@ -1,5 +1,6 @@
 export const csIpaRules = `
 ::Lower;
+::NFC;
 
 ch } [bdďgzžh] > ɣ;
 ch > x;

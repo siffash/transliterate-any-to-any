@@ -1,4 +1,6 @@
 export const ukEnRules = `
+::NFC;
+
 ['’‘\`´ʼ] > ;
 
 ЗГ > ZGH;

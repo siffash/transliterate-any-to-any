@@ -1,5 +1,6 @@
 export const caIpaRules = `
 ::Lower;
+::NFC;
 
 ['] > ;
 

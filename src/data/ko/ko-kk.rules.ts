@@ -1,4 +1,6 @@
 export const koKkRules = `
+::NFC;
+
 yae > яй;
 yeo > ё;
 wae > вэ;

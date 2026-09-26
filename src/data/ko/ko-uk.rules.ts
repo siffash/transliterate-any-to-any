@@ -1,4 +1,6 @@
 export const koUkRules = `
+::NFC;
+
 seoul > сеул;
 pyeongyang > пхеньян;
 

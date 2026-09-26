@@ -1,5 +1,6 @@
 export const azIpaRules = `
 ::Lower;
+::NFC;
 
 bb > bː;
 cc > d͡ʒː;

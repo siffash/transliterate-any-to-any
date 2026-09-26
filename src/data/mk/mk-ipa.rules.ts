@@ -1,5 +1,6 @@
 export const mkIpaRules = `
 ::Lower;
+::NFC;
 
 н } [кг] > ŋ;
 л } [еиј] > l;

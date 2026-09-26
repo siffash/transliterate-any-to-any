@@ -1,5 +1,6 @@
 export const frIpaRules = `
 ::Lower;
+::NFC;
 
 femme > fam;
 monsieur > məsjø;

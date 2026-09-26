@@ -1,4 +1,6 @@
 export const zhRuRules = `
+::NFC;
+
 [āáǎàɑɐæ] > a;
 [ēéěèê] > e;
 [īíǐì] > i;

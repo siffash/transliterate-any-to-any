@@ -1,5 +1,6 @@
 export const ukIpaRules = `
 ::Lower;
+::NFC;
 
 дж > d͡ʒ;
 дз > d͡z;

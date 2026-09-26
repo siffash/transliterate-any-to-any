@@ -1,5 +1,6 @@
 export const trIpaRules = `
 ::Lower;
+::NFC;
 
 i̇ > i;
 

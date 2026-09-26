@@ -1,5 +1,6 @@
 export const srIpaRules = `
 ::Lower;
+::NFC;
 
 dž > d͡ʐ;
 lj > ʎ;

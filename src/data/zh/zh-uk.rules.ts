@@ -1,4 +1,6 @@
 export const zhUkRules = `
+::NFC;
+
 [āáǎàɑɐæ] > a;
 [ēéěèê] > e;
 [īíǐì] > i;

@@ -1,5 +1,4 @@
 export const zhEnRules = `
-::Lower;
 ::NFC;
 
 [āáǎà] > a;

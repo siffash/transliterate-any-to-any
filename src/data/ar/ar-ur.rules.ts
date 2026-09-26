@@ -1,4 +1,6 @@
 export const arUrRules = `
+::NFC;
+
 ٠ > ۰;
 ١ > ۱;
 ٢ > ۲;

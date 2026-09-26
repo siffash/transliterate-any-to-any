@@ -1,5 +1,6 @@
 export const bsIpaRules = `
 ::Lower;
+::NFC;
 
 aa > aː;
 ee > iː;

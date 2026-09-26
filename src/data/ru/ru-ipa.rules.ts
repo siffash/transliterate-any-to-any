@@ -1,5 +1,6 @@
 export const ruIpaRules = `
 ::Lower;
+::NFC;
 
 б } [пфктсшхцчщ] > п;
 в } [пфктсшхцчщ] > ф;

@@ -55,6 +55,7 @@ export const jaMkRules = `
 [ョょ] > yo;
 
 ::Null;
+::NFC;
 
 tōkyō > токио;
 kyōto > киото;

@@ -55,6 +55,7 @@ export const jaUkRules = `
 [ョょ] > yo;
 
 ::Null;
+::NFC;
 
 tōkyō > токіо;
 kyōto > кіото;

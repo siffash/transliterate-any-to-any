@@ -1,5 +1,6 @@
 export const esIpaRules = `
 ::Lower;
+::NFC;
 
 m [ée] xic > mexik;
 

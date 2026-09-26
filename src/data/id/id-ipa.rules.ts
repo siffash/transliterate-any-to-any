@@ -1,5 +1,6 @@
 export const idIpaRules = `
 ::Lower;
+::NFC;
 
 ch > tʃ;
 dj > dʒ;

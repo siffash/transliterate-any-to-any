@@ -1,5 +1,6 @@
 export const lbIpaRules = `
 ::Lower;
+::NFC;
 
 éi > eɪ̯;
 ie > iə;

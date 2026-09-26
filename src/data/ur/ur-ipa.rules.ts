@@ -1,4 +1,6 @@
 export const urIpaRules = `
+::NFC;
+
 یٰ > ɑ;
 [^[:L:][:M:]] { او > o;
 [^[:L:][:M:]] { ای > e;

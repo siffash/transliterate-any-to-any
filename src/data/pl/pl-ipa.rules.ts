@@ -1,5 +1,6 @@
 export const plIpaRules = `
 ::Lower;
+::NFC;
 
 ci } [aąeęioóuy] > t͡ɕ;
 dzi } [aąeęioóuy] > d͡ʑ;

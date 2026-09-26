@@ -1,5 +1,6 @@
 export const viIpaRules = `
 ::Lower;
+::NFC;
 
 [àáảãạ] > a;
 [ằắẳẵặ] > ă;

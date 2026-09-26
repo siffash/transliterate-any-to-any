@@ -1,4 +1,6 @@
 export const ruEnRules = `
+::NFC;
+
 [ыи] [йЙ] } [^[:L:][:M:]] > y;
 [ЫИ] [йЙ] } [^[:L:][:M:]] > Y;
 

@@ -1,7 +1,4 @@
 export const jaLatnRules = `
-::Lower;
-::NFC;
-
 ファ > fa;
 ふぁ > fa;
 フィ > fi;
@@ -58,6 +55,7 @@ export const jaLatnRules = `
 [ョょ] > yo;
 
 ::Null;
+::NFC;
 
 [^[:L:][:M:]] { ['’‘\`´ʼ] > ;
 ['’‘\`´ʼ] } [^[:L:][:M:]] > ;

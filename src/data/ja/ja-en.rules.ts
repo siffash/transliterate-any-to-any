@@ -1,7 +1,4 @@
 export const jaEnRules = `
-::Lower;
-::NFC;
-
 ファ > fa;
 ふぁ > fa;
 フィ > fi;
@@ -58,6 +55,7 @@ export const jaEnRules = `
 [ョょ] > yo;
 
 ::Null;
+::NFC;
 
 [^[:L:][:M:]] { ['’‘\`´ʼ] > ;
 ['’‘\`´ʼ] } [^[:L:][:M:]] > ;

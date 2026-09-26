@@ -1,5 +1,6 @@
 export const deIpaRules = `
 ::Lower;
+::NFC;
 
 ch } arlotte > ʃ;
 s } tadt > ʃ;

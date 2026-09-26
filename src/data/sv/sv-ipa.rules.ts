@@ -1,5 +1,6 @@
 export const svIpaRules = `
 ::Lower;
+::NFC;
 
 kristian > krɪɧan;
 tion > ɧuːn;

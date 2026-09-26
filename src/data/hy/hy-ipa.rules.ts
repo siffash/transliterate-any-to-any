@@ -1,5 +1,6 @@
 export const hyIpaRules = `
 ::Lower;
+::NFC;
 
 [^[:L:][:M:]] { ով } [^[:L:][:M:]] > ov;
 [^[:L:][:M:]] { ովքեր } [^[:L:][:M:]] > ovkʰɛɾ;

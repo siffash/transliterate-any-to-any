@@ -1,4 +1,6 @@
 export const ukMkRules = `
+::NFC;
+
 Київ > Киев;
 КИЇВ > КИЕВ;
 Львів > Лавов;

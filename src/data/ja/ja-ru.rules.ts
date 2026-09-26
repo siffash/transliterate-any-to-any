@@ -55,6 +55,7 @@ export const jaRuRules = `
 [ョょ] > yo;
 
 ::Null;
+::NFC;
 
 tōkyō > токио;
 kyōto > киото;

@@ -1,5 +1,6 @@
 export const noIpaRules = `
 ::Lower;
+::NFC;
 
 ige } [^[:L:][:M:]] > iə;
 ig } [^[:L:][:M:]] > i;

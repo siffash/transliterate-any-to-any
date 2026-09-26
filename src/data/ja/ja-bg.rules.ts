@@ -55,6 +55,7 @@ export const jaBgRules = `
 [ョょ] > yo;
 
 ::Null;
+::NFC;
 
 tōkyō > токио;
 kyōto > киото;

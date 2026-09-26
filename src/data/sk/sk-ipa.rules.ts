@@ -1,5 +1,6 @@
 export const skIpaRules = `
 ::Lower;
+::NFC;
 
 t } islav > t;
 t } er > t;

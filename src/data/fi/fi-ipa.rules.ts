@@ -1,5 +1,6 @@
 export const fiIpaRules = `
 ::Lower;
+::NFC;
 
 sch > ʃ;
 ch > ʃ;

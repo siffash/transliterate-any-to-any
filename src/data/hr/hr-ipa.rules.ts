@@ -1,5 +1,6 @@
 export const hrIpaRules = `
 ::Lower;
+::NFC;
 
 ts > t͡s;
 dž > d͡ʒ;

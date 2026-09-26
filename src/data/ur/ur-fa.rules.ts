@@ -1,4 +1,6 @@
 export const urFaRules = `
+::NFC;
+
 ٠ > ۰;
 ١ > ۱;
 ٢ > ۲;

@@ -1,5 +1,5 @@
 export const hiIpaRules = `
-::Lower;
+::NFC;
 
 \u200C > ;
 \u200D > ;

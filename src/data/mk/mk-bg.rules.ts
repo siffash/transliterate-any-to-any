@@ -1,4 +1,6 @@
 export const mkBgRules = `
+::NFC;
+
 Ј [Аа] > Я;
 ј [Аа] > я;
 

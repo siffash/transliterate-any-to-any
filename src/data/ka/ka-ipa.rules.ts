@@ -1,5 +1,6 @@
 export const kaIpaRules = `
 ::Lower;
+::NFD;
 
 ა > a;
 ბ > b;

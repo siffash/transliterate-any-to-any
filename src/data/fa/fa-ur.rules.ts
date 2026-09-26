@@ -1,4 +1,6 @@
 export const faUrRules = `
+::NFC;
+
 ك > ک;
 ي > ی;
 هٔ > ۂ;

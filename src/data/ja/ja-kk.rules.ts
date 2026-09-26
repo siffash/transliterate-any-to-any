@@ -55,6 +55,7 @@ export const jaKkRules = `
 [ョょ] > yo;
 
 ::Null;
+::NFC;
 
 [ɑɐæāâ] > a;
 [īî] > i;

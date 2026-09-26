@@ -1,5 +1,6 @@
 export const sqIpaRules = `
 ::Lower;
+::NFC;
 
 ngj > ɲɟ;
 ng > ŋɡ;

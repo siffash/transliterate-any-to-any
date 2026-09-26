@@ -1,4 +1,6 @@
 export const mkEnRules = `
+::NFC;
+
 Ѓ } [:Lu:] > GJ;
 [:Lu:] { Ѓ > GJ;
 Ѓ > Gj;

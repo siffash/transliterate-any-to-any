@@ -1,4 +1,6 @@
 export const faArRules = `
+::NFC;
+
 َ { ی > ى;
 [پڀ] > ب;
 [چڇڿ] > ج;

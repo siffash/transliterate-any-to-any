@@ -1,5 +1,6 @@
 export const msIpaRules = `
 ::Lower;
+::NFC;
 
 sy > ʃ;
 ny > ɲ;

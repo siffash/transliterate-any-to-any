@@ -1,5 +1,6 @@
 export const ptIpaRules = `
 ::Lower;
+::NFC;
 
 ch > ʃ;
 lh > ʎ;

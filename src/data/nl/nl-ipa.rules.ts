@@ -1,20 +1,21 @@
 export const nlIpaRules = `
 ::Lower;
+::NFC;
 
 ['’‘\`´ʼ] s [-] > s;
 
 ::Null;
 
-{lijken} [^[:L:][:M:]] > ləkən;
-{lijks} [^[:L:][:M:]] > ləks;
-{lijke} [^[:L:][:M:]] > ləkə;
-{lijk} [^[:L:][:M:]] > lək;
-{ische} [^[:L:][:M:]] > ɪsə;
-{isch} [^[:L:][:M:]] > ɪs;
-{ige} [^[:L:][:M:]] > əɣə;
-{ig} [^[:L:][:M:]] > əx;
-{ties} [^[:L:][:M:]] > tsis;
-{tie} [^[:L:][:M:]] > tsi;
+lijken } [^[:L:][:M:]] > ləkən;
+lijks } [^[:L:][:M:]] > ləks;
+lijke } [^[:L:][:M:]] > ləkə;
+lijk } [^[:L:][:M:]] > lək;
+ische } [^[:L:][:M:]] > ɪsə;
+isch } [^[:L:][:M:]] > ɪs;
+ige } [^[:L:][:M:]] > əɣə;
+ig } [^[:L:][:M:]] > əx;
+ties } [^[:L:][:M:]] > tsis;
+tie } [^[:L:][:M:]] > tsi;
 
 eeuw > eːu;
 ieuw > iu;
@@ -22,7 +23,7 @@ aai > aːi;
 ooi > oːi;
 oei > ui;
 
-{sch} [^[:L:][:M:]] > s;
+sch } [^[:L:][:M:]] > s;
 sch > sx;
 ch > x;
 ng > ŋ;
@@ -54,13 +55,13 @@ ai > ɑi;
 oi > ɔi;
 uw > yʋ;
 
-{c}[eiy] > s;
-{c} > k;
+c } [eiy] > s;
+c > k;
 
-{a} [bcdfghjklmnpqrstvwxz] [aeiouy] > aː;
-{e} [bcdfghjklmnpqrstvwxz] [aeiouy] > eː;
-{o} [bcdfghjklmnpqrstvwxz] [aeiouy] > oː;
-{u} [bcdfghjklmnpqrstvwxz] [aeiouy] > yː;
+a } [bcdfghjklmnpqrstvwxz] [aeiouy] > aː;
+e } [bcdfghjklmnpqrstvwxz] [aeiouy] > eː;
+o } [bcdfghjklmnpqrstvwxz] [aeiouy] > oː;
+u } [bcdfghjklmnpqrstvwxz] [aeiouy] > yː;
 
 bb > b;
 dd > d;
@@ -78,23 +79,23 @@ vv > v;
 ww > ʋ;
 zz > z;
 
-{en} [^[:L:][:M:]] > ən;
-{e} [^[:L:][:M:]] > ə;
+en } [^[:L:][:M:]] > ən;
+e } [^[:L:][:M:]] > ə;
 
-{b} [c f h k p s t] > p;
-{d} [c f h k p s t] > t;
-{v} [st] > f;
-{z} [st] > s;
-{g} [st] > x;
+b } [c f h k p s t] > p;
+d } [c f h k p s t] > t;
+v } [st] > f;
+z } [st] > s;
+g } [st] > x;
 
-{a} [^[:L:][:M:]] > aː;
-{o} [^[:L:][:M:]] > oː;
-{u} [^[:L:][:M:]] > yː;
-{b} [^[:L:][:M:]] > p;
-{d} [^[:L:][:M:]] > t;
-{v} [^[:L:][:M:]] > f;
-{z} [^[:L:][:M:]] > s;
-{g} [^[:L:][:M:]] > x;
+a } [^[:L:][:M:]] > aː;
+o } [^[:L:][:M:]] > oː;
+u } [^[:L:][:M:]] > yː;
+b } [^[:L:][:M:]] > p;
+d } [^[:L:][:M:]] > t;
+v } [^[:L:][:M:]] > f;
+z } [^[:L:][:M:]] > s;
+g } [^[:L:][:M:]] > x;
 
 b > b;
 d > d;

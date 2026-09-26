@@ -1,4 +1,6 @@
 export const bgRuRules = `
+::NFC;
+
 [^[:L:][:M:]] { е > э;
 [^[:L:][:M:]] { Е > Э;
 

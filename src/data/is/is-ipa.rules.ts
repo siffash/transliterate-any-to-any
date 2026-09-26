@@ -1,5 +1,6 @@
 export const isIpaRules = `
 ::Lower;
+::NFC;
 
 á { nn > tn;
 é { nn > tn;

@@ -1,5 +1,6 @@
 export const mtIpaRules = `
 ::Lower;
+::NFC;
 
 għi > ɐɪ̯;
 għaj > ɐːɪ̯;
