@@ -47,5 +47,5 @@ export const wordSplitter = async (
     parts.push(input.slice(cursor));
   }
 
-  return parts.join("");
+  return parts.join("").replace(/ {2,}/g, " ");
 };

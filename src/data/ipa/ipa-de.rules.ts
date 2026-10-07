@@ -58,9 +58,9 @@ q } [^[:L:][:M:]] > k;
 
 ::Null;
 
-w { w > ;
-y { y > ;
-j { j > ;
-dsch { dsch > ;
-tsch { tsch > ;
+w { w+ > ;
+y { y+ > ;
+j { j+ > ;
+dsch { (dsch)+ > ;
+tsch { (tsch)+ > ;
 `;

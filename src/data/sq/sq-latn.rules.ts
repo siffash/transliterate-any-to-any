@@ -18,8 +18,8 @@ g [jJ] > đ;
 N [jJ] > Ń;
 n [jJ] > ń;
 
-[lL] { [lL] > ;
-[rR] { [rR] > ;
+[lL] { [lL]+ > ;
+[rR] { [rR]+ > ;
 
 [:Lu:] { C > TS;
 C } [:Lu:] > TS;

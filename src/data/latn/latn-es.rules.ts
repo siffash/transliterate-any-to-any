@@ -96,23 +96,23 @@ g } [ei] > gu;
 
 ::Null;
 
-[bB] { [bB] > ;
-[cC] { [cC] } [^eéiíEÉIÍ] > ;
-[dD] { [dD] > ;
-[fF] { [fF] > ;
-[gG] { [gG] > ;
-[hH] { [hH] > ;
-[jJ] { [jJ] > ;
-[kK] { [kK] > ;
-[mM] { [mM] > ;
-[pP] { [pP] > ;
-[qQ] { [qQ] > ;
-[sS] { [sS] > ;
-[tT] { [tT] > ;
-[vV] { [vV] > ;
-[wW] { [wW] > ;
-[xX] { [xX] > ;
-[zZ] { [zZ] > ;
+[bB] { [bB]+ > ;
+[cC] { [cC]+ } [^eéiíEÉIÍ] > ;
+[dD] { [dD]+ > ;
+[fF] { [fF]+ > ;
+[gG] { [gG]+ > ;
+[hH] { [hH]+ > ;
+[jJ] { [jJ]+ > ;
+[kK] { [kK]+ > ;
+[mM] { [mM]+ > ;
+[pP] { [pP]+ > ;
+[qQ] { [qQ]+ > ;
+[sS] { [sS]+ > ;
+[tT] { [tT]+ > ;
+[vV] { [vV]+ > ;
+[wW] { [wW]+ > ;
+[xX] { [xX]+ > ;
+[zZ] { [zZ]+ > ;
 
 ::Null;
 

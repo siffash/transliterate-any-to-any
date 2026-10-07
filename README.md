@@ -2,7 +2,7 @@
 
 # transliterate-any-to-any
 
-A TypeScript library for [orthographic transcription](https://en.wikipedia.org/wiki/Orthographic_transcription) between [50 languages](#supported-languages)
+A TypeScript library for [orthographic transcription](https://en.wikipedia.org/wiki/Orthographic_transcription) between [51 languages](#supported-languages)
 
 ###### 🚀 [Playground](https://transliterate-any-to-any.js.org) · 📦 [npm package](https://www.npmjs.com/package/transliterate-any-to-any) · 📖 [Read the article](https://realpandablog.wordpress.com/2026/09/03/transliterate-any-to-any/)
 
@@ -114,6 +114,7 @@ if (!validateLanguageByScript("en", "ლევან")) {
 | Chinese       | zh                                                        | Hani (Hanzi+Kanji+Hanja)                                    | China, Taiwan, Singapore                                              |
 | Japanese      | ja                                                        | Jpan (Hira+Kana+Han)                                        | Japan                                                                 |
 | Korean        | ko                                                        | Kore (Hangul)                                               | South Korea, North Korea                                              |
+| Thai          | th                                                        | Thai                                                        | Thailand, Cambodia, Myanmar                                           |
 | Hindi         | hi                                                        | Deva                                                        | India                                                                 |
 | Bengali       | bn                                                        | Beng                                                        | Bangladesh, India                                                     |
 | Urdu          | ur                                                        | Arab                                                        | Pakistan, India                                                       |
@@ -169,6 +170,7 @@ if (!validateLanguageByScript("en", "ლევან")) {
 - [kuroshiro](https://github.com/hexenq/kuroshiro), [kuroshiro-analyzer-kuromoji](https://github.com/hexenq/kuroshiro-analyzer-kuromoji), [kuromoji](https://github.com/takuyaa/kuromoji.js) - for handling Japanese Hiragana & Katakana (patched for browser compatibility)
 - [aromanize](https://github.com/fujaru/aromanize-js) - for handling Korean Hangul (patched for browser compatibility)
 - [hangul-js](https://github.com/e-/Hangul.js) - for handling Korean Hangul
+- [thai-romanization](https://github.com/Pcampus-Studio/Pcampus-thai-romanization) - for handling Thai
 - [hanviet-pinyin-words](https://github.com/ph0ngp/hanviet-pinyin-words) - for handling Vietnamese
 - [phonemize](https://github.com/hans00/phonemize) - for converting some languages to IPA
 - [icu-transliterator](https://github.com/longnow/node-icu-transliterator) - for verifying the JS implementation of [ICU](https://icu.unicode.org/)'s [RuleBasedTransliterator (RBT)](https://unicode-org.github.io/icu/userguide/transforms/)

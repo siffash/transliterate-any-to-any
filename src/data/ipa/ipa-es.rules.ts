@@ -55,23 +55,23 @@ j > y;
 
 ::Null;
 
-b { b > ;
-c { c } [^eéií] > ;
-d { d > ;
-f { f > ;
-g { g > ;
-h { h > ;
-j { j > ;
-k { k > ;
-m { m > ;
-p { p > ;
-q { q > ;
-s { s > ;
-t { t > ;
-v { v > ;
-w { w > ;
-x { x > ;
-z { z > ;
+b { b+ > ;
+c { c+ } [^eéií] > ;
+d { d+ > ;
+f { f+ > ;
+g { g+ > ;
+h { h+ > ;
+j { j+ > ;
+k { k+ > ;
+m { m+ > ;
+p { p+ > ;
+q { q+ > ;
+s { s+ > ;
+t { t+ > ;
+v { v+ > ;
+w { w+ > ;
+x { x+ > ;
+z { z+ > ;
 
 ::Null;
 

@@ -39,20 +39,20 @@ export const ipaLbRules = `
 
 ::Null;
 
-i { i > ;
-u { u > ;
-ä { ä > ;
-ë { ë > ;
-é { é > ;
+i { i+ > ;
+u { u+ > ;
+ä { ä+ > ;
+ë { ë+ > ;
+é { é+ > ;
 
-u { o > e;
-k } k > c;
-z } z > t;
-s { z > s;
-ß > ss;
-ch { ch > ;
-sch { sch > ;
-ng { ng > ;
+u { o+ > e;
+k+ } k > c;
+z+ } z > t;
+s { z+ > s;
+ß+ > ss;
+ch { (ch)+ > ;
+sch { (sch)+ > ;
+ng { (ng)+ > ;
 
 [^[:L:][:M:]] { sch } [pt] > s;
 `;

@@ -129,9 +129,9 @@ Q } [^[:L:][:M:]] > K;
 
 ::Null;
 
-[Ww] { [Ww] > ;
-[Yy] { [Yy] > ;
-[Jj] { [Jj] > ;
-[Dd] [Ss] [Cc] [Hh] { [Dd] [Ss] [Cc] [Hh] > ;
-[Tt] [Ss] [Cc] [Hh] { [Tt] [Ss] [Cc] [Hh] > ;
+[Ww] { [Ww]+ > ;
+[Yy] { [Yy]+ > ;
+[Jj] { [Jj]+ > ;
+[Dd] [Ss] [Cc] [Hh] { ([Dd] [Ss] [Cc] [Hh])+ > ;
+[Tt] [Ss] [Cc] [Hh] { ([Tt] [Ss] [Cc] [Hh])+ > ;
 `;

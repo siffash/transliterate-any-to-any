@@ -111,14 +111,14 @@ z > s;
 
 ::Null;
 
-k { k > ;
-t { t > ;
-l { l > ;
-n { n > ;
-m { m > ;
-p { p > ;
-s { s > ;
-f { f > ;
+k { k+ > ;
+t { t+ > ;
+l { l+ > ;
+n { n+ > ;
+m { m+ > ;
+p { p+ > ;
+s { s+ > ;
+f { f+ > ;
 
 [^[:L:][:M:]] { p > pʰ;
 p } [aeiouyæøåːlrj] > pʰ;

@@ -1,7 +1,7 @@
 {
   "name": "transliterate-any-to-any",
   "version": "1.0.7",
-  "description": "A JS/TS Node.js & cross-browser library for bidirectional transliterations between 50 most popular languages (2450 combinations)",
+  "description": "A JS/TS Node.js & cross-browser library for bidirectional transliterations between 51 most popular languages (2550 combinations)",
   "keywords": [
     "transliteration",
     "transliterate",
@@ -79,6 +79,7 @@
     ]
   },
   "dependencies": {
+    "@pcampus/thai-romanization": "^1.0.0",
     "aromanize": "^0.1.5",
     "browser-or-node": "^3.0.0",
     "fflate": "^0.8.3",

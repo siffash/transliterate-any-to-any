@@ -1,14 +1,5 @@
 import { createTheme, responsiveFontSizes, type Theme } from "@mui/material/styles";
 
-// Design tokens.
-//
-// Grounded in the subject rather than a generic "modern SaaS" palette: deep
-// ink for the page, and a muted antique gold for emphasis — the color
-// manuscript traditions across many of these 50 scripts have long used for
-// rubrication and phonetic annotation (red/gold ink marking the parts of a
-// text that carry pronunciation). Teal is the second accent, evoking
-// oxidised copper type. Light mode is a cool neutral, not a warm cream, so
-// it doesn't default into the same look from the other side.
 const tokens = {
   gold: "#D9AE4F",
   goldDark: "#C39A3E",
@@ -84,9 +75,5 @@ export function getTheme(mode: "light" | "dark"): Theme {
   return responsiveFontSizes(theme);
 }
 
-// The textareas themselves render live text in whichever of the 50 scripts
-// is selected (Arabic, Devanagari, Han, Hangul, …). A display webfont only
-// covers Latin, so multilingual content gets a plain system-font stack with
-// broad, OS-native script coverage instead of the branded UI fonts above.
 export const multilingualTextStack =
   'ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif';

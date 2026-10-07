@@ -4,8 +4,9 @@ export const koEn = async (text: Text) => {
   const Aromanize = (await import("aromanize")).default;
   const { RBT } = await import("helpers/rbt");
   const { wordSplitter } = await import("helpers/wordSplitter");
+  const { koEnRules } = await import("data/ko/ko-en.rules");
 
-  const transliterator = RBT.fromRules("::Title;");
+  const transliterator = RBT.fromRules(koEnRules);
 
   const convert = async (text: string) => {
     const romanized = await wordSplitter(text, "ko", text => Aromanize.romanize(text));

@@ -106,15 +106,14 @@ export const bgEnRules = `
 
 ::Null;
 
-[wW] { [wW] > ;
-[yY] { [yY] > ;
-[hH] { [hH] > ;
-[iI] { [iIyY] } [^[:L:][:M:]] > ;
-[yY] { [iIyY] } [^[:L:][:M:]] > ;
-[^[:L:][:M:]] { [cC] } [kK] > ;
+[wW] { [wW]+ > ;
+[yY] { [yY]+ > ;
+[hH] { [hH]+ > ;
+[iIyY] { [iIyY]+ } [^[:L:][:M:]] > ;
+[^[:L:][:M:]] { [cC]+ } [kK] > ;
 
 ::Null;
 
-[kK] { [kK] } [hH] > ;
-[gG] { [gG] } [hH] > ;
+[kK] { [kK]+ } [hH] > ;
+[gG] { [gG]+ } [hH] > ;
 `;

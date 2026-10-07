@@ -116,9 +116,16 @@ export const bnEnRules = `
 
 ::Null;
 
-w { w > ;
-y { y > ;
-[^[:L:][:M:]] { c } k > ;
+w { w+ > ;
+y { y+ > ;
+h { h+ > ;
+[iy] { [iy]+ } [^[:L:][:M:]] > ;
+[^[:L:][:M:]] { c+ } k > ;
+
+::Null;
+
+k { k+ } h > ;
+g { g+ } h > ;
 
 ::Title;
 `;

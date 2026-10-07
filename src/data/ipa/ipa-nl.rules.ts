@@ -58,21 +58,21 @@ y } [aâæăɐɑʌeêęẽɘəɛɜiĩɨɪoôõɒɔɤơuũưɯʉʊyʏøœɵ] > j;
 
 ::Null;
 
-a { a } [^[:L:][:M:]] > ;
-o { o } [^[:L:][:M:]] > ;
-u { u } [^[:L:][:M:]] > ;
+a { a+ } [^[:L:][:M:]] > ;
+o { o+ } [^[:L:][:M:]] > ;
+u { u+ } [^[:L:][:M:]] > ;
 
-ch { ch > ;
-sj { sj > ;
-zj { zj > ;
-ng { ng > ;
+ch { (ch)+ > ;
+sj { (sj)+ > ;
+zj { (zj)+ > ;
+ng { (ng)+ > ;
 
-tsj { tsj > ;
-dzj { dzj > ;
+tsj { (tsj)+ > ;
+dzj { (dzj)+ > ;
 
-aa { a > ;
-ee { e > ;
-ii { i > ;
-oo { o > ;
-uu { u > ;
+aa { a+ > ;
+ee { e+ > ;
+ii { i+ > ;
+oo { o+ > ;
+uu { u+ > ;
 `;
