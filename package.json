@@ -86,11 +86,11 @@
     "hangul-js": "^0.2.6",
     "hanviet-pinyin-words": "^2.1.7",
     "intl-segmenter": "^1.0.0",
-    "kuroshiro": "^1.2.0",
+    "kuroshiro": "^1.2.1",
     "kuroshiro-analyzer-kuromoji": "^1.1.0",
-    "opencc-js": "^1.4.0",
+    "opencc-js": "^1.4.2",
     "phonemize": "^2.0.1",
-    "pinyin-pro": "^3.28.1"
+    "pinyin-pro": "^3.29.4"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.6",
