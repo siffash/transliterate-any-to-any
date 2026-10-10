@@ -17,6 +17,7 @@ export const jaRo = async (text: Text) => {
         isNode || isDeno || isBun ? undefined : "https://cdn.jsdelivr.net/npm/kuromoji@0.1.2/dict/",
     }),
   );
+
   const transliterator = RBT.fromRules(jaLatnRules + latnRoRules);
 
   const convert = async (text: string) => {

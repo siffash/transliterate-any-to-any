@@ -2,7 +2,7 @@
 
 # transliterate-any-to-any
 
-A TypeScript library for [orthographic transcription](https://en.wikipedia.org/wiki/Orthographic_transcription) between [51 languages](#supported-languages)
+A TypeScript library for [orthographic transcription](https://en.wikipedia.org/wiki/Orthographic_transcription) between [52 languages](#supported-languages)
 
 ###### 🚀 [Playground](https://transliterate-any-to-any.js.org) · 📦 [npm package](https://www.npmjs.com/package/transliterate-any-to-any) · 📖 [Read the article](https://realpandablog.wordpress.com/2026/09/03/transliterate-any-to-any/)
 
@@ -125,10 +125,11 @@ if (!validateLanguageByScript("en", "ლევან")) {
 | Armenian      | hy                                                        | Armn                                                        | Armenia, Russia, Georgia, France                                      |
 | Greek         | el                                                        | Grek                                                        | Greece, Cyprus                                                        |
 | Russian       | ru                                                        | Cyrl                                                        | Russia, Belarus, Kazakhstan, Kyrgyzstan, Ukraine                      |
-| Kazakh        | kk                                                        | Cyrl                                                        | Kazakhstan (European part), Russia                                    |
 | Ukrainian     | uk                                                        | Cyrl                                                        | Ukraine                                                               |
 | Bulgarian     | bg                                                        | Cyrl                                                        | Bulgaria                                                              |
 | Macedonian    | mk                                                        | Cyrl                                                        | North Macedonia                                                       |
+| Kazakh        | kk                                                        | Cyrl                                                        | Kazakhstan, Russia                                                    |
+| Tajik         | tg                                                        | Cyrl                                                        | Tajikistan, Uzbekistan                                                |
 | Azerbaijani   | az                                                        | Latn                                                        | Azerbaijan, Russia, Georgia                                           |
 | Bosnian       | bs                                                        | Latn                                                        | Bosnia and Herzegovina                                                |
 | Catalan       | ca                                                        | Latn                                                        | Spain (Catalonia, Valencia, Balearic Islands), Andorra                |

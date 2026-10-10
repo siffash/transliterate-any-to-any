@@ -9,8 +9,8 @@ export const koKk = async (text: Text) => {
   const transliterator = RBT.fromRules(koKkRules);
 
   const convert = async (text: string) => {
-    const split = await wordSplitter(text, "ko", text => Aromanize.romanize(text));
-    return transliterator.transliterate(split);
+    const romanized = await wordSplitter(text, "ko", text => Aromanize.romanize(text));
+    return transliterator.transliterate(romanized);
   };
 
   if (typeof text === "string") {
