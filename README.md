@@ -87,20 +87,20 @@ if (languages[languageFrom]?.script !== languages[languageTo]?.script) {
 }
 ```
 
-## ✅ Validate Language By Script
+## ✅ Validate Language
 
-By default, the library validates the source text against the source language by checking the language's script:
+By default, the library validates the source text against the source language. This is done by checking if the source text contains only the letters/characters from the language's alphabet/script:
 
 ```typescript
 await transliterate("ლევან", { from: "en", to: "zh" }); // -> throws an error
 ```
 
-If you need to do it yourself, you can use `validateLanguageByScript` function:
+If you need to do it yourself, you can use the function `validateLanguage`:
 
 ```typescript
-import { validateLanguageByScript, languages } from "transliterate-any-to-any";
+import { validateLanguage, languages } from "transliterate-any-to-any";
 
-if (!validateLanguageByScript("en", "ლევან")) {
+if (!validateLanguage("en", "ლევან")) {
   throw new Error(`The text does not match ${languages["en"].name}.`);
 }
 ```

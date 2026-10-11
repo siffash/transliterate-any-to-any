@@ -1,6 +1,13 @@
 export const mkLatnRules = `
 ::NFC;
 
+Ѝ > И;
+ѝ > и;
+Ѐ > Е;
+ѐ > е;
+
+::Null;
+
 Ѕ } [:Lu:] > DZ;
 [:Lu:] { Ѕ > DZ;
 Ѕ > Dz;

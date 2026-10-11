@@ -1,6 +1,11 @@
 export const mkBgRules = `
 ::NFC;
 
+Ѐ > Е;
+ѐ > е;
+
+::Null;
+
 Ј [Аа] > Я;
 ј [Аа] > я;
 

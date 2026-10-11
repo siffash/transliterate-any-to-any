@@ -1,6 +1,6 @@
 import { languages, supportedLanguages } from "helpers/constants";
 import { Options, Text } from "types";
-import { validateLanguageByScript } from "helpers/validateLanguageByScript";
+import { validateLanguage } from "helpers/validateLanguage";
 
 export const transliterate = async <T extends Text>(text: T, { from, to }: Options): Promise<T> => {
   if (Array.isArray(text) ? text.length === 0 : !text) {
@@ -23,7 +23,7 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
       `Source and target languages ("from" and "to") are the same: ${languages[from].name}.`,
     );
   }
-  if (!validateLanguageByScript(from, text)) {
+  if (!validateLanguage(from, text)) {
     throw new Error(`Source text does not match ${languages[from].name}.`);
   }
 

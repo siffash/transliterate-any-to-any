@@ -81,7 +81,7 @@ export const TransliteratorCard = () => {
     stop: stopListening,
   } = useSpeechRecognition();
 
-  const fromLocale = useMemo(() => languages[langFrom]?.speechLocale ?? "en-US", [langFrom]);
+  const fromLocale = useMemo(() => languages[langFrom]?.locale ?? "en-US", [langFrom]);
 
   // Debounced transliteration: fires MAX_CHARS/DEBOUNCE_MS after the last keystroke or language change,
   // and ignores a response that arrives after a newer request has already been fired

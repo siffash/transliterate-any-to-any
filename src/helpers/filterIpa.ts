@@ -1,5 +1,5 @@
 import { Language } from "types";
-import { languages, scripts } from "helpers/constants";
+import { languages } from "helpers/constants";
 
 const allowedIpaChars = new Set(
   "abcdefghijklmnopqrstuvwxyzâæçêðôõøăčďęħĩŋœťũžơưɐɑɒɓɔɕɖɗɘəɚɛɜɝɟɡɢɣɤɰɥɦɧɨɪɫɭɯɱɲɳɵɹɽɾʀʁʂʃʈʉʊʋʌʎʏʐʑʒʔʕʝʰʱʲʷʼˈ'’ˌ̧̇ːˠˤ˥˧˩̝̟̥̩̪̯͈̃̊̚͡βθχẽɸ",
@@ -15,7 +15,7 @@ export const filterIpa = (
     return ipa;
   }
 
-  const { regex } = scripts[languages[language].script];
+  const { regex } = languages[language];
   const originalChars = new Set(original.replace(new RegExp(`[${regex}]+`, "gu"), ""));
   const additionalChars = new Set(additional);
 

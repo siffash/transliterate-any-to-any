@@ -1,6 +1,13 @@
 export const mkEnRules = `
 ::NFC;
 
+Ѝ > И;
+ѝ > и;
+Ѐ > Е;
+ѐ > е;
+
+::Null;
+
 Ѓ } [:Lu:] > GJ;
 [:Lu:] { Ѓ > GJ;
 Ѓ > Gj;

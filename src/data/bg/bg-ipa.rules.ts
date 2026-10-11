@@ -47,7 +47,7 @@ export const bgIpaRules = `
 е > ɛ;
 ж > ʒ;
 з > z;
-и > i;
+[иѝ] > i;
 й > j;
 к > k;
 л > ɫ;

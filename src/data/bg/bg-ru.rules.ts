@@ -1,6 +1,11 @@
 export const bgRuRules = `
 ::NFC;
 
+Ѝ > И;
+ѝ > и;
+
+::Null;
+
 [^[:L:][:M:]] { е > э;
 [^[:L:][:M:]] { Е > Э;
 

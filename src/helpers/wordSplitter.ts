@@ -1,6 +1,6 @@
 import { Segmenter } from "intl-segmenter";
 import { Language } from "types";
-import { languages, scripts } from "helpers/constants";
+import { languages } from "helpers/constants";
 
 export const wordSplitter = async (
   input: string,
@@ -8,8 +8,8 @@ export const wordSplitter = async (
   fn?: (word: string) => string | Promise<string>,
   skipSegmenter?: boolean,
 ): Promise<string> => {
-  const { script } = languages[language];
-  const re = new RegExp(`[${scripts[script].regex}\\p{L}]+`, "gu");
+  const { regex } = languages[language];
+  const re = new RegExp(`[${regex}\\p{L}]+`, "gu");
   const segmenter = new Segmenter(language, { granularity: "word" });
   const parts: string[] = [];
   let cursor = 0;
