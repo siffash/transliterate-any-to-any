@@ -5,22 +5,14 @@ export const ipaHuRules = `
 
 ::Null;
 
-tʃ ː > ccs;
-dʒ ː > ddzs;
+[tʈ] [ʃʂɕ] ː > ccs;
+[dɖ] [ʒʑʐ] ː > ddzs;
 ts ː > cc;
 dz ː > ddz;
-tɕ ː > ccs;
-dʑ ː > ddzs;
-ʈʂ ː > ccs;
-ɖʐ ː > ddzs;
 
-tʃ > cs;
-dʒ > dzs;
+[tʈ] [ʃʂɕ] > cs;
+[dɖ] [ʒʑʐ] > dzs;
 ts > c;
-tɕ > cs;
-dʑ > dzs;
-ʈʂ > cs;
-ɖʐ > dzs;
 
 p ː > pp;
 [bɓ] ː > bb;
@@ -47,14 +39,16 @@ z ː > zz;
 č ː > ccs;
 
 ɓ > b;
-[cť] > ty;
+ʈ > t;
 [ɖɗð] > d;
 q > k;
 [ɡɢɣɰ] > g;
+[cť] > ty;
 [ɟď] > gy;
 ɱ > m;
 [ɳŋ] > n;
 ɲ > ny;
+ɸ > f;
 [wβʋ] > v;
 [sθ] > sz;
 [ʃɕʂɧ] > s;
@@ -65,7 +59,6 @@ q > k;
 ʎ > ly;
 [ɹɽɾʀʁ] > r;
 č > cs;
-ɸ > f;
 
 [aɑɒɐʌăâæ] ː > á;
 [ɚɝ] ː > ér;
