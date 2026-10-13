@@ -27,6 +27,8 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
     throw new Error(`Source text does not match ${languages[from].name}.`);
   }
 
+  text = (Array.isArray(text) ? text.map(s => s.normalize("NFC")) : text.normalize("NFC")) as T;
+
   try {
     switch (from) {
       case "zh":
