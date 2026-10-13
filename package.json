@@ -1,6 +1,6 @@
 {
   "name": "transliterate-any-to-any",
-  "version": "1.3.1",
+  "version": "1.4.0",
   "description": "A JS/TS Node.js & cross-browser library for bidirectional transliterations between 52 most popular languages (2652 combinations)",
   "keywords": [
     "transliteration",
