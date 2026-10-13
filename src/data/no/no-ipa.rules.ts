@@ -2,6 +2,12 @@ export const noIpaRules = `
 ::Lower;
 ::NFC;
 
+[éèê] > e;
+[óòô] > o;
+[àâ] > a;
+
+::Null;
+
 ige } [^[:L:][:M:]] > iə;
 ig } [^[:L:][:M:]] > i;
 et } [^[:L:][:M:]] > ɛ;

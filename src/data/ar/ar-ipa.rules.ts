@@ -129,5 +129,14 @@ aʔa > aː;
 [btθdðrzsʃʕɣfqklmnhħʒ] { j } [^[:L:][:M:]] > ijj;
 [btθdðrzsʃʕɣfqklmnhħʒ]ˤ { j } [^[:L:][:M:]] > ijj;
 
+أَ > ʔa;
+أُ > ʔu;
+أْ > ʔ;
+أ > ʔ;
+إِ > ʔi;
+إ > ʔ;
+
+::Null;
+
 [:Arabic:] > ;
 `;

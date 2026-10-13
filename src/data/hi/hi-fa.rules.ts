@@ -88,6 +88,7 @@ export const hiFaRules = `
 य > ی;
 र > ر;
 ल > ل;
+ळ > ل;
 व > و;
 श > ش;
 ष > ش;

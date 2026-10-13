@@ -2,6 +2,14 @@ export const mtIpaRules = `
 ::Lower;
 ::NFC;
 
+[àáâ] > a;
+[èéê] > e;
+[ìíî] > i;
+[òóô] > o;
+[ùúû] > u;
+
+::Null;
+
 għi > ɐɪ̯;
 għaj > ɐːɪ̯;
 għej > ɛɪ̯;
@@ -98,7 +106,7 @@ i > ɪ;
 o > ɔ;
 u > ʊ;
 
-c } [e i y ɛ ɪ] > s;
+c } [eiyɛɪ] > s;
 c > k;
 y > ɪ;
 ċ > t͡ʃ;

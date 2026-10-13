@@ -54,6 +54,8 @@ export const hiLatnRules = `
 य > ya;
 र > ra;
 ल > la;
+ळ > la;
+ऌ > li;
 व > va;
 श > ša;
 ष > ša;

@@ -6,6 +6,9 @@ export const bnLatnRules = `
 [ইঈ] > i;
 [উঊ] > u;
 ঋ > ri;
+ৠ > ri;
+ৡ > li;
+ঌ > li;
 এ > e;
 ঐ > oi;
 ও > o;

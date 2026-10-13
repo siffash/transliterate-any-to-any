@@ -9,6 +9,9 @@ export const bnIpaRules = `
 উ > u;
 ঊ > u;
 ঋ > ri;
+ৠ > ri;
+ৡ > li;
+ঌ > li;
 এ > e;
 ঐ > oi;
 ও > o;
@@ -57,7 +60,7 @@ export const bnIpaRules = `
 ং > ŋ;
 ঃ > h;
 ঁ > ̃;
-় >;
+় > ;
 া > \\_a;
 ি > \\_i;
 ী > \\_i;
@@ -68,6 +71,7 @@ export const bnIpaRules = `
 ৈ > \\_oi;
 ো > \\_o;
 ৌ > \\_ou;
+ঽ > \\';
 
 ::Null;
 

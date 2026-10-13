@@ -10,7 +10,7 @@ export const thMk = async (text: Text) => {
   const transliterator = RBT.fromRules(thLatnRules + latnMkRules + "::Title;");
 
   const convert = async (text: string) => {
-    const romanized = await wordSplitter(text, "th", text => romanize(text));
+    const romanized = await wordSplitter(text.replaceAll("ฦ", "ลึ"), "th", text => romanize(text));
     return transliterator.transliterate(romanized);
   };
 

@@ -52,6 +52,8 @@ export const hiEnRules = `
 य > ya;
 र > ra;
 ल > la;
+ळ > la;
+ऌ > li;
 व > va;
 श > sha;
 ष > sha;

@@ -76,7 +76,8 @@ y } [bcdfghjklmnpqrstvwxzʈɖɳɭʂɧɕŋ] [^[:L:][:M:]] > ʏ;
 a } [^[:L:][:M:]] > a;
 
 a > ɑː;
-e > eː;
+à > a;
+[eé] > eː;
 i > iː;
 o > uː;
 u > ʉː;

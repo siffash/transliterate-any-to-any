@@ -10847,7 +10847,7 @@ export const transliterate = async <T extends Text>(text: T, { from, to }: Optio
         break;
     }
   } catch (e: unknown) {
-    throw new Error(typeof e === "string" ? e : JSON.stringify(e), { cause: e });
+    throw new Error(e instanceof Error ? e.message : String(e), { cause: e });
   }
 
   throw new Error(`Transliteration failed: the language pair is not supported: ${from} -> ${to}`);

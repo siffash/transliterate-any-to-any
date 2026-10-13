@@ -1,6 +1,13 @@
 export const svLatnRules = `
 ::NFC;
 
+À > A;
+à > a;
+É > E;
+é > e;
+
+::Null;
+
 [Nn] { G > G;
 [Nn] { g > g;
 

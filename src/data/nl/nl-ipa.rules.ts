@@ -82,8 +82,8 @@ zz > z;
 en } [^[:L:][:M:]] > ən;
 e } [^[:L:][:M:]] > ə;
 
-b } [c f h k p s t] > p;
-d } [c f h k p s t] > t;
+b } [cfhkpst] > p;
+d } [cfhkpst] > t;
 v } [st] > f;
 z } [st] > s;
 g } [st] > x;
@@ -118,9 +118,12 @@ x > ks;
 z > z;
 
 a > ɑ;
-e > ɛ;
+[áä] > a;
+[eëé] > ɛ;
 i > ɪ;
-o > ɔ;
+[oö] > ɔ;
+ó > o;
 u > ʏ;
-y > i;
+[úü] > y;
+[yíï] > i;
 `;

@@ -82,6 +82,9 @@ export const bnEnRules = `
 উ > u;
 ঊ > u;
 ঋ > ri;
+ৠ > ri;
+ৡ > li;
+ঌ > li;
 এ > e;
 ঐ > ai;
 ও > o;
@@ -101,6 +104,7 @@ export const bnEnRules = `
 ঁ > n;
 ৎ > t;
 ্ > \\*;
+ঽ > \\';
 
 ::Null;
 
