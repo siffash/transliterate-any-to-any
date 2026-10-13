@@ -1,12 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 
-const ANCHOR = 'var path = require("path");';
-const MARKER = "function joinDicPath(";
-const NEEDLE = "path.join(dic_path,";
-const REPLACEMENT = "joinDicPath(dic_path,";
-
-const HELPER = `
+const PATH_HELPER = `
 function joinDicPath(dic_path, filename) {
     if (new RegExp("^https?://", "i").test(dic_path)) {
         return dic_path.replace(new RegExp("/+$"), "") + "/" + filename.replace(new RegExp("^/+"), "");
@@ -14,6 +9,50 @@ function joinDicPath(dic_path, filename) {
     return path.join(dic_path, filename);
 }
 `;
+
+const READ_HELPER = `
+function readFileLazy(file, callback) {
+    var spec = "node:fs";
+    import(/* @vite-ignore */ spec).then(
+        function (m) { (m.default || m).readFile(file, callback); },
+        callback
+    );
+}
+`;
+
+const PATCHES = {
+  "DictionaryLoader.js": {
+    anchor: 'var path = require("path");',
+    marker: "function joinDicPath(",
+    needle: "path.join(dic_path,",
+    replacement: "joinDicPath(dic_path,",
+    helper: PATH_HELPER,
+  },
+  "NodeDictionaryLoader.js": {
+    anchor: 'var fs = require("fs");',
+    marker: "function readFileLazy(",
+    needle: "fs.readFile(",
+    replacement: "readFileLazy(",
+    helper: READ_HELPER,
+  },
+  "BrowserDictionaryLoader.js": {
+    anchor: 'var zlib = require("zlibjs/bin/gunzip.min.js");',
+    marker: "function readFileLazy(",
+    needle: "BrowserDictionaryLoader.prototype.loadArrayBuffer = function (url, callback) {",
+    replacement: `BrowserDictionaryLoader.prototype.loadArrayBuffer = function (url, callback) {
+    if (typeof XMLHttpRequest === "undefined") {
+        return readFileLazy(url, function (err, buf) {
+            if (err) return callback(err, null);
+            try {
+                callback(null, new zlib.Zlib.Gunzip(new Uint8Array(buf)).decompress().buffer);
+            } catch (e) {
+                callback(e, null);
+            }
+        });
+    }`,
+    helper: READ_HELPER,
+  },
+};
 
 function findDictionaryLoaders(nodeModulesDir, found, depth) {
   if (depth > 8 || !fs.existsSync(nodeModulesDir)) return;
@@ -42,8 +81,10 @@ function findDictionaryLoaders(nodeModulesDir, found, depth) {
     }
 
     if (entry.name === "kuromoji") {
-      const target = path.join(entryPath, "src", "loader", "DictionaryLoader.js");
-      if (fs.existsSync(target)) found.push(target);
+      for (const name of Object.keys(PATCHES)) {
+        const target = path.join(entryPath, "src", "loader", name);
+        if (fs.existsSync(target)) found.push(target);
+      }
     }
 
     const nested = path.join(entryPath, "node_modules");
@@ -54,21 +95,22 @@ function findDictionaryLoaders(nodeModulesDir, found, depth) {
 }
 
 function patch(filePath) {
+  const { anchor, marker, needle, replacement, helper } = PATCHES[path.basename(filePath)];
   const original = fs.readFileSync(filePath, "utf8");
 
-  if (original.includes(MARKER)) {
+  if (original.includes(marker)) {
     console.log("✅ Patched kuromoji:", filePath);
     return "already-patched";
   }
 
-  if (!original.includes(ANCHOR) || !original.includes(NEEDLE)) {
+  if (!original.includes(anchor) || !original.includes(needle)) {
     console.error("❌ Not patched kuromoji:", filePath);
     console.error(`Could not find expected code in ${filePath}.`);
     return "no-match";
   }
 
-  const withCallsFixed = original.replaceAll(NEEDLE, REPLACEMENT);
-  const patched = withCallsFixed.replace(ANCHOR, ANCHOR + "\n" + HELPER);
+  const withCallsFixed = original.replaceAll(needle, replacement);
+  const patched = withCallsFixed.replace(anchor, anchor + "\n" + helper);
 
   fs.writeFileSync(filePath, patched, "utf8");
   console.log("✅ Patched kuromoji:", filePath);
@@ -81,9 +123,8 @@ function main() {
   findDictionaryLoaders(nodeModulesDir, found, 0);
 
   if (found.length === 0) {
-    console.error("❌ Not patched kuromoji: /node_modules/kuromoji/src/loader/DictionaryLoader.js");
     console.error(
-      "No kuromoji/src/loader/DictionaryLoader.js found under node_modules. Is kuromoji installed?",
+      "❌ Not patched kuromoji: no loader files found under node_modules. Is kuromoji installed?",
     );
     process.exit(1);
   }
