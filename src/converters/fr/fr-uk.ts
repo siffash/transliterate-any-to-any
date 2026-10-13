@@ -10,9 +10,9 @@ export const frUk = async (text: Text) => {
 
   if (typeof text === "string") {
     const ipa = await frIpa<string>(text);
-    return copyCase(text, transliterator.transliterate(ipa));
+    return copyCase(text, transliterator.transliterate(ipa), "uk");
   } else {
     const ipaArray = await frIpa<string[]>(text);
-    return ipaArray.map((ipa, i) => copyCase(text[i], transliterator.transliterate(ipa)));
+    return ipaArray.map((ipa, i) => copyCase(text[i], transliterator.transliterate(ipa), "uk"));
   }
 };
