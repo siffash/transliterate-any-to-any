@@ -1,21 +1,13 @@
 import { Text } from "types";
 
 export const jaEn = async (text: Text) => {
-  const { resolveCjsDefault } = await import("helpers/resolveCjsDefault");
-  const Kuroshiro = resolveCjsDefault(await import("kuroshiro"));
-  const KuromojiAnalyzer = resolveCjsDefault(await import("kuroshiro-analyzer-kuromoji"));
-  const { isNode, isDeno, isBun } = await import("browser-or-node");
   const { RBT } = await import("helpers/rbt");
   const { jaEnRules } = await import("data/ja/ja-en.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
+  const { getKuroshiro } = await import("helpers/getKuroshiro");
 
-  const kuroshiro = new Kuroshiro();
-  await kuroshiro.init(
-    new KuromojiAnalyzer({
-      dictPath:
-        isNode || isDeno || isBun ? undefined : "https://cdn.jsdelivr.net/npm/kuromoji@0.1.2/dict/",
-    }),
-  );
+  const kuroshiro = await getKuroshiro();
+
   const transliterator = RBT.fromRules(jaEnRules);
 
   const convert = async (text: string) => {

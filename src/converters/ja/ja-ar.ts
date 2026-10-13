@@ -1,10 +1,6 @@
 import { Text } from "types";
 
 export const jaAr = async (text: Text) => {
-  const { resolveCjsDefault } = await import("helpers/resolveCjsDefault");
-  const Kuroshiro = resolveCjsDefault(await import("kuroshiro"));
-  const KuromojiAnalyzer = resolveCjsDefault(await import("kuroshiro-analyzer-kuromoji"));
-  const { isNode, isDeno, isBun } = await import("browser-or-node");
   const { getPhonemizeAll } = await import("helpers/getPhonemize");
   const { toIPA } = await getPhonemizeAll();
   const { filterIpa } = await import("helpers/filterIpa");
@@ -12,14 +8,10 @@ export const jaAr = async (text: Text) => {
   const { jaIpaRules } = await import("data/ja/ja-ipa.rules");
   const { ipaArRules } = await import("data/ipa/ipa-ar.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
+  const { getKuroshiro } = await import("helpers/getKuroshiro");
 
-  const kuroshiro = new Kuroshiro();
-  await kuroshiro.init(
-    new KuromojiAnalyzer({
-      dictPath:
-        isNode || isDeno || isBun ? undefined : "https://cdn.jsdelivr.net/npm/kuromoji@0.1.2/dict/",
-    }),
-  );
+  const kuroshiro = await getKuroshiro();
+
   const transliterator = RBT.fromRules(jaIpaRules + ipaArRules);
   const exceptions = jaIpaRules.replace(/( ?> ?[^;]+;)|\[|]|\n/g, "");
 
