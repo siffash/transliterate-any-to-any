@@ -2,21 +2,25 @@ export const bgLatnRules = `
 ::NFC;
 
 [:Lu:] { Ц > TS;
+Ц } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > TS;
 Ц } [:Lu:] > TS;
 Ц > Ts;
 ц > ts;
 
 [:Lu:] { Щ > ŠT;
+Щ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > ŠT;
 Щ } [:Lu:] > ŠT;
 Щ > Št;
 щ > št;
 
 [:Lu:] { Ю > YU;
+Ю } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > YU;
 Ю } [:Lu:] > YU;
 Ю > Yu;
 ю > yu;
 
 [:Lu:] { Я > YA;
+Я } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > YA;
 Я } [:Lu:] > YA;
 Я > Ya;
 я > ya;

@@ -32,6 +32,7 @@ z } [iI] > ž;
 Z } [iI] > Ž;
 
 [:Lu:] { C > TS;
+C } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > TS;
 C } [:Lu:] > TS;
 C > Ts;
 c > ts;
@@ -41,11 +42,13 @@ c > ts;
 [pbmwvPBMWV] { I } [eE] > Y;
 
 [:Lu:] { Ą > ON;
+Ą } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > ON;
 Ą } [:Lu:] > ON;
 Ą > On;
 ą > on;
 
 [:Lu:] { Ę > EN;
+Ę } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > EN;
 Ę } [:Lu:] > EN;
 Ę > En;
 ę > en;

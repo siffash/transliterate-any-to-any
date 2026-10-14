@@ -1,10 +1,10 @@
 import { Text } from "types";
-import { copyCase } from "helpers/copyCase";
 
 export const enIs = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { enIpa } = await import("converters/en/en-ipa");
   const { ipaIsRules } = await import("data/ipa/ipa-is.rules");
+  const { copyCase } = await import("helpers/copyCase");
 
   const transliterator = RBT.fromRules(ipaIsRules);
 

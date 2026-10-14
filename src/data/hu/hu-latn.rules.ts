@@ -68,12 +68,14 @@ cZ > tS;
 Cz > Ts;
 cz > ts;
 
+C } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > TS;
 C } [:Lu:] > TS;
 [:Lu:] { C > TS;
 C > Ts;
 c > ts;
 
 [:Lu:] { X > KS;
+X } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > KS;
 X } [:Lu:] > KS;
 X > Ks;
 x > ks;

@@ -13,6 +13,7 @@ N [jJ] > Ń;
 n [jJ] > ń;
 
 [:Lu:] { C > TS;
+C } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > TS;
 C } [:Lu:] > TS;
 C > Ts;
 c > ts;

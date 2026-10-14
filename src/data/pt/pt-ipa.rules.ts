@@ -132,8 +132,6 @@ u > u;
 l } [bcdfgjklmnpqrstvwxyzçɲʎʃʒʁɾ] > ɫ;
 l } [^[:L:][:M:]] > ɫ;
 
-[sz] } [^[:L:][:M:]] [aáàãâeéêiíîoóõôuúɐ̃ẽĩõũɐɛɨɔjwˈ] > z;
-[sz] } [^[:L:][:M:]] [bdgvmnɲlɫʎʁɾʒzj] > ʒ;
 [sz] } [bdgvmnɲlɫʎʁɾʒzj] > ʒ;
 [sz] } [^[:L:][:M:]] > ʃ;
 [sz] } [ptkfsʃcqçx] > ʃ;

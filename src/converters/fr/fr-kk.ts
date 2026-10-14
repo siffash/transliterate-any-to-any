@@ -1,10 +1,10 @@
 import { Text } from "types";
-import { copyCase } from "helpers/copyCase";
 
 export const frKk = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { frIpa } = await import("converters/fr/fr-ipa");
   const { ipaKkRules } = await import("data/ipa/ipa-kk.rules");
+  const { copyCase } = await import("helpers/copyCase");
 
   const transliterator = RBT.fromRules(ipaKkRules);
 

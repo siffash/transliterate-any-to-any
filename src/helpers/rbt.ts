@@ -77,6 +77,8 @@ const POSIX_CLASSES: Readonly<Record<string, PosixClassSpec>> = {
   "^M": { test: makeCharTest("\\P{M}"), matchesStartOfString: true, matchesEndOfString: true },
   Mn: { test: makeCharTest("\\p{Mn}"), matchesStartOfString: false, matchesEndOfString: false },
   "^Mn": { test: makeCharTest("\\P{Mn}"), matchesStartOfString: true, matchesEndOfString: true },
+  P: { test: makeCharTest("\\p{P}"), matchesStartOfString: false, matchesEndOfString: false },
+  "^P": { test: makeCharTest("\\P{P}"), matchesStartOfString: true, matchesEndOfString: true },
   Lu: { test: makeCharTest("\\p{Lu}"), matchesStartOfString: false, matchesEndOfString: false },
   "^Lu": { test: makeCharTest("\\P{Lu}"), matchesStartOfString: true, matchesEndOfString: true },
   Ll: { test: makeCharTest("\\p{Ll}"), matchesStartOfString: false, matchesEndOfString: false },
@@ -886,7 +888,7 @@ class Parser {
     const spec = POSIX_CLASSES[key];
     if (spec === undefined) {
       this.fail(
-        `unknown POSIX class token '[:${key}:]' - supported tokens are [:L:], [:^L:], [:Lu:], [:^Lu:], [:Ll:], [:^Ll:], [:M:], [:^M:], [:Mn:], [:^Mn:]`,
+        `unknown POSIX class token '[:${key}:]' - supported tokens are [:L:], [:^L:], [:Lu:], [:^Lu:], [:Ll:], [:^Ll:], [:M:], [:^M:], [:Mn:], [:^Mn:], [:P:], [:^P:]`,
       );
     }
 

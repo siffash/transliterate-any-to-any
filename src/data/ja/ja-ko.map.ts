@@ -176,6 +176,7 @@ export const jaKoMap: Record<string, string> = {
   ユ: "ㅇㅠ",
   よ: "ㅇㅛ",
   ヨ: "ㅇㅛ",
+  予: "ㅇㅛ",
   ら: "ㄹㅏ",
   ラ: "ㄹㅏ",
   り: "ㄹㅣ",

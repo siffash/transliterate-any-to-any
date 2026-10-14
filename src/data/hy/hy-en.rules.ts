@@ -18,36 +18,43 @@ export const hyEnRules = `
 ::Null;
 
 [:Lu:] { Ժ > ZH;
+Ժ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > ZH;
 Ժ } [:Lu:] > ZH;
 Ժ > Zh;
 ժ > zh;
 
 [:Lu:] { Խ > KH;
+Խ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > KH;
 Խ } [:Lu:] > KH;
 Խ > Kh;
 խ > kh;
 
 [:Lu:] { Ծ > TS;
+Ծ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > TS;
 Ծ } [:Lu:] > TS;
 Ծ > Ts;
 ծ > ts;
 
 [:Lu:] { Ձ > DZ;
+Ձ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > DZ;
 Ձ } [:Lu:] > DZ;
 Ձ > Dz;
 ձ > dz;
 
 [:Lu:] { Ղ > GH;
+Ղ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > GH;
 Ղ } [:Lu:] > GH;
 Ղ > Gh;
 ղ > gh;
 
 [:Lu:] { Ճ > CH;
+Ճ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > CH;
 Ճ } [:Lu:] > CH;
 Ճ > Ch;
 ճ > ch;
 
 [:Lu:] { Շ > SH;
+Շ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > SH;
 Շ } [:Lu:] > SH;
 Շ > Sh;
 շ > sh;

@@ -8,6 +8,7 @@ L [jJ] > Ľ;
 l [jJ] > ľ;
 
 [:Lu:] { C > TS;
+C } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > TS;
 C } [:Lu:] > TS;
 C > Ts;
 c > ts;

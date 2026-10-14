@@ -23,6 +23,7 @@ ij > ej;
 ::Null;
 
 [:Lu:] { X > CH;
+X } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > CH;
 X } [:Lu:] > CH;
 X > Ch;
 x > ch;

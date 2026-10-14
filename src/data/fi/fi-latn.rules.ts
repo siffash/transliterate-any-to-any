@@ -18,11 +18,13 @@ c } [EIYÄÖeiyäö] > s;
 C > K;
 c > k;
 
+X } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > KS;
 X } [:Lu:] > KS;
 [:Lu:] { X > KS;
 X > Ks;
 x > ks;
 
+Z } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > TS;
 Z } [:Lu:] > TS;
 [:Lu:] { Z > TS;
 Z > Ts;

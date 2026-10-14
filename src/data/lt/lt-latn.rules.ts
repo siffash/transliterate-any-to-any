@@ -6,6 +6,7 @@ export const ltLatnRules = `
 [^[:L:][:M:]] { i } [ėeęouųūaąĖEĘOUŲŪAĄ] > y;
 [^[:L:][:M:]] { I } [ėeęouųūaąĖEĘOUŲŪAĄ] > Y;
 
+X } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > KS;
 X } [:Lu:] > KS;
 [:Lu:] { X > KS;
 X > Ks;
@@ -23,6 +24,7 @@ c [hH] > x;
 D [zZ] } [EĘĖIĮYeęėiįy] > Đ;
 d [zZ] } [EĘĖIĮYeęėiįy] > đ;
 
+C } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > TS;
 C } [:Lu:] > TS;
 [:Lu:] { C > TS;
 C > Ts;

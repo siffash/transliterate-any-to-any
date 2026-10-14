@@ -70,6 +70,7 @@ J > Y;
 j > y;
 
 [:Lu:] { X > KS;
+X } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > KS;
 X } [:Lu:] > KS;
 X > Ks;
 x > ks;

@@ -2,9 +2,14 @@ import { languages, supportedLanguages } from "helpers/constants";
 import { Options, Text } from "types";
 import { validateLanguage } from "helpers/validateLanguage";
 
-export const transliterate = async <T extends Text>(text: T, { from, to }: Options): Promise<T> => {
-  if (Array.isArray(text) ? text.length === 0 : !text) {
+export const transliterate = async <T extends Text>(text: T, options: Options): Promise<T> => {
+  const { from, to } = options || {};
+
+  if (Array.isArray(text) ? text.length === 0 || text.some(s => !s) : !text) {
     throw new Error("Source text is empty.");
+  }
+  if (Array.isArray(text) ? text.some(s => typeof s !== "string") : typeof text !== "string") {
+    throw new Error("Source text must be a string or an array of strings.");
   }
   if (!from) {
     throw new Error('Source language ("from") is not specified.');

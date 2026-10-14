@@ -97,6 +97,7 @@ C > K;
 c > k;
 
 [:Lu:] { X > KS;
+X } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > KS;
 X } [:Lu:] > KS;
 X > Ks;
 x > ks;
@@ -110,6 +111,7 @@ x > ks;
 [^[:L:][:M:]] { G > Gh;
 [^[:L:][:M:]] { g } [:Lu:] > gH;
 [^[:L:][:M:]] { g > gh;
+[^n] { G > GH;
 [^Nn] { G } [:Lu:] > GH;
 [^Nn] { G > Gh;
 [^Nn] { g } [:Lu:] > gH;

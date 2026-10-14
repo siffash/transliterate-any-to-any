@@ -22,6 +22,7 @@ kh > ch;
 
 ::Null;
 
+X } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > CH;
 X } [:Lu:] > CH;
 [:Lu:] { X > CH;
 X > Ch;

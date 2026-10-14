@@ -37,4 +37,5 @@ export const ZH_VI_MAP: Record<string, string> = {
   动: "động",
   彝: "di",
   只: "chích",
+  着: "trước",
 };

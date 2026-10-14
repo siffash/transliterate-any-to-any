@@ -43,6 +43,7 @@ export const ukLatnRules = `
 [AEIOUÏaeiouï] { Я > Ya;
 [AEIOUÏaeiouï] { я > ya;
 
+Ї } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > YI;
 Ї } [:Lu:] > YI;
 [:Lu:] { Ї > YI;
 Ї > Yi;
@@ -54,21 +55,25 @@ export const ukLatnRules = `
 Є > E;
 є > e;
 
+Ю } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > YU;
 Ю } [:Lu:] > YU;
 [:Lu:] { Ю > YU;
 Ю > Yu;
 ю > yu;
 
+Я } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > YA;
 Я } [:Lu:] > YA;
 [:Lu:] { Я > YA;
 Я > Ya;
 я > ya;
 
+Щ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > ŠČ;
 Щ } [:Lu:] > ŠČ;
 [:Lu:] { Щ > ŠČ;
 Щ > Šč;
 щ > šč;
 
+Ц } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > TS;
 Ц } [:Lu:] > TS;
 [:Lu:] { Ц > TS;
 Ц > Ts;

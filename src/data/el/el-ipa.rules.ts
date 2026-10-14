@@ -69,7 +69,6 @@ export const elIpaRules = `
 ττ > t;
 
 σ } [βγδζλμνρbdgɟʝŋmnlɾvðɣz] > z;
-ς } [^[:L:][:M:]] [βγδζλμνρbdgɟʝŋmnlɾvðɣz] > z;
 σ > s;
 ς > s;
 

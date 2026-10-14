@@ -7,36 +7,43 @@ export const bgEnRules = `
 иЯ } [^[:L:][:M:]] > iA;
 
 [:Lu:] { Ж > ZH;
+Ж } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > ZH;
 Ж } [:Lu:] > ZH;
 Ж > Zh;
 ж > zh;
 
 [:Lu:] { Ц > TS;
+Ц } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > TS;
 Ц } [:Lu:] > TS;
 Ц > Ts;
 ц > ts;
 
 [:Lu:] { Ч > CH;
+Ч } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > CH;
 Ч } [:Lu:] > CH;
 Ч > Ch;
 ч > ch;
 
 [:Lu:] { Ш > SH;
+Ш } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > SH;
 Ш } [:Lu:] > SH;
 Ш > Sh;
 ш > sh;
 
 [:Lu:] { Щ > SHT;
+Щ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > SHT;
 Щ } [:Lu:] > SHT;
 Щ > Sht;
 щ > sht;
 
 [:Lu:] { Ю > YU;
+Ю } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > YU;
 Ю } [:Lu:] > YU;
 Ю > Yu;
 ю > yu;
 
 [:Lu:] { Я > YA;
+Я } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > YA;
 Я } [:Lu:] > YA;
 Я > Ya;
 я > ya;

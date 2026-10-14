@@ -119,6 +119,7 @@ export const elLatnRules = `
 β > v;
 
 [:Lu:] { Γ > GH;
+Γ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > GH;
 Γ } [:Lu:] > GH;
 Γ > Gh;
 γ > gh;
@@ -133,6 +134,7 @@ export const elLatnRules = `
 ζ > z;
 
 [:Lu:] { Θ > TH;
+Θ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > TH;
 Θ } [:Lu:] > TH;
 Θ > Th;
 θ > th;
@@ -153,6 +155,7 @@ export const elLatnRules = `
 ν > n;
 
 [:Lu:] { Ξ > KS;
+Ξ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > KS;
 Ξ } [:Lu:] > KS;
 Ξ > Ks;
 ξ > ks;
@@ -179,6 +182,7 @@ export const elLatnRules = `
 χ > x;
 
 [:Lu:] { Ψ > PS;
+Ψ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > PS;
 Ψ } [:Lu:] > PS;
 Ψ > Ps;
 ψ > ps;

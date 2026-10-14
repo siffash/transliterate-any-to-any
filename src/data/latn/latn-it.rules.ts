@@ -45,6 +45,7 @@ ij > ei;
 đ } [EIÏYeiïy] > g;
 
 [:Lu:] { Đ > GI;
+Đ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > GI;
 Đ } [:Lu:] > GI;
 Đ > Gi;
 đ > gi;
@@ -63,6 +64,7 @@ ij > ei;
 š } [eiïy] > sc;
 
 [:Lu:] { Š > SCI;
+Š } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > SCI;
 Š } [:Lu:] > SCI;
 Š > Sci;
 š > sci;
@@ -73,6 +75,7 @@ ij > ei;
 ľ } [iïy] > gl;
 
 [:Lu:] { Ľ > GLI;
+Ľ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > GLI;
 Ľ } [:Lu:] > GLI;
 Ľ > Gli;
 ľ > gli;
@@ -91,6 +94,7 @@ g } [EIÏY] > gH;
 g } [eiïy] > gh;
 
 [:Lu:] { Ń > GN;
+Ń } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > GN;
 Ń } [:Lu:] > GN;
 Ń > Gn;
 ń > gn;

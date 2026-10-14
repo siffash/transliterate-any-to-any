@@ -14,6 +14,7 @@ Sch > Š;
 s [cC] [hH] > š;
 
 [:Lu:] { X > KS;
+X } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > KS;
 X } [:Lu:] > KS;
 X > Ks;
 x > ks;
@@ -75,6 +76,7 @@ Tz > Ts;
 tz > ts;
 
 [:Lu:] { Z > TS;
+Z } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > TS;
 Z } [:Lu:] > TS;
 Z > Ts;
 z > ts;

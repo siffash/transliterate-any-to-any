@@ -13,6 +13,7 @@ export const ukEnRules = `
 [^[:L:][:M:]] { є > ye;
 
 [:Lu:] { Є > IE;
+Є } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > IE;
 Є } [:Lu:] > IE;
 Є > Ie;
 є > ie;
@@ -22,6 +23,7 @@ export const ukEnRules = `
 [^[:L:][:M:]] { ю > yu;
 
 [:Lu:] { Ю > IU;
+Ю } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > IU;
 Ю } [:Lu:] > IU;
 Ю > Iu;
 ю > iu;
@@ -31,6 +33,7 @@ export const ukEnRules = `
 [^[:L:][:M:]] { я > ya;
 
 [:Lu:] { Я > IA;
+Я } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > IA;
 Я } [:Lu:] > IA;
 Я > Ia;
 я > ia;
@@ -40,6 +43,7 @@ export const ukEnRules = `
 [^[:L:][:M:]] { ї > yi;
 
 [:Lu:] { Ї > I;
+Ї } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > I;
 Ї } [:Lu:] > I;
 Ї > I;
 ї > i;
@@ -49,36 +53,43 @@ export const ukEnRules = `
 [^[:L:][:M:]] { й > y;
 
 [:Lu:] { Й > I;
+Й } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > I;
 Й } [:Lu:] > I;
 Й > I;
 й > i;
 
 [:Lu:] { Щ > SHCH;
+Щ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > SHCH;
 Щ } [:Lu:] > SHCH;
 Щ > Shch;
 щ > shch;
 
 [:Lu:] { Ж > ZH;
+Ж } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > ZH;
 Ж } [:Lu:] > ZH;
 Ж > Zh;
 ж > zh;
 
 [:Lu:] { Х > KH;
+Х } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > KH;
 Х } [:Lu:] > KH;
 Х > Kh;
 х > kh;
 
 [:Lu:] { Ц > TS;
+Ц } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > TS;
 Ц } [:Lu:] > TS;
 Ц > Ts;
 ц > ts;
 
 [:Lu:] { Ч > CH;
+Ч } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > CH;
 Ч } [:Lu:] > CH;
 Ч > Ch;
 ч > ch;
 
 [:Lu:] { Ш > SH;
+Ш } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > SH;
 Ш } [:Lu:] > SH;
 Ш > Sh;
 ш > sh;

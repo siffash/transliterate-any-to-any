@@ -18,31 +18,37 @@ export const hyLatnRules = `
 ::Null;
 
 [:Lu:] { Ծ > TS;
+Ծ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > TS;
 Ծ } [:Lu:] > TS;
 Ծ > Ts;
 ծ > ts;
 
 [:Lu:] { Ձ > DZ;
+Ձ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > DZ;
 Ձ } [:Lu:] > DZ;
 Ձ > Dz;
 ձ > dz;
 
 [:Lu:] { Ղ > GH;
+Ղ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > GH;
 Ղ } [:Lu:] > GH;
 Ղ > Gh;
 ղ > gh;
 
 [:Lu:] { Ց > TS;
+Ց } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > TS;
 Ց } [:Lu:] > TS;
 Ց > Ts;
 ց > ts;
 
 [:Lu:] { Ջ > DŽ;
+Ջ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > DŽ;
 Ջ } [:Lu:] > DŽ;
 Ջ > Dž;
 ջ > dž;
 
 [:Lu:] { Թ > TH;
+Թ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > TH;
 Թ } [:Lu:] > TH;
 Թ > Th;
 թ > th;

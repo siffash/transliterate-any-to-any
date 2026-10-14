@@ -45,11 +45,13 @@ export const ruEnRules = `
 Е > E;
 е > e;
 
+Ё } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > YO;
 Ё } [:Lu:] > YO;
 [:Lu:] { Ё > YO;
 Ё > Yo;
 ё > yo;
 
+Ж } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > ZH;
 Ж } [:Lu:] > ZH;
 [:Lu:] { Ж > ZH;
 Ж > Zh;
@@ -97,26 +99,31 @@ export const ruEnRules = `
 Ф > F;
 ф > f;
 
+Х } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > KH;
 Х } [:Lu:] > KH;
 [:Lu:] { Х > KH;
 Х > Kh;
 х > kh;
 
+Ц } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > TS;
 Ц } [:Lu:] > TS;
 [:Lu:] { Ц > TS;
 Ц > Ts;
 ц > ts;
 
+Ч } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > CH;
 Ч } [:Lu:] > CH;
 [:Lu:] { Ч > CH;
 Ч > Ch;
 ч > ch;
 
+Ш } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > SH;
 Ш } [:Lu:] > SH;
 [:Lu:] { Ш > SH;
 Ш > Sh;
 ш > sh;
 
+Щ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > SHCH;
 Щ } [:Lu:] > SHCH;
 [:Lu:] { Щ > SHCH;
 Щ > Shch;
@@ -128,11 +135,13 @@ export const ruEnRules = `
 Э > E;
 э > e;
 
+Ю } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > YU;
 Ю } [:Lu:] > YU;
 [:Lu:] { Ю > YU;
 Ю > Yu;
 ю > yu;
 
+Я } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > YA;
 Я } [:Lu:] > YA;
 [:Lu:] { Я > YA;
 Я > Ya;

@@ -145,16 +145,19 @@ export const elEnRules = `
 γχ > nch;
 
 [:Lu:] { Θ > TH;
+Θ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > TH;
 Θ } [:Lu:] > TH;
 Θ > Th;
 θ > th;
 
 [:Lu:] { Χ > CH;
+Χ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > CH;
 Χ } [:Lu:] > CH;
 Χ > Ch;
 χ > ch;
 
 [:Lu:] { Ψ > PS;
+Ψ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > PS;
 Ψ } [:Lu:] > PS;
 Ψ > Ps;
 ψ > ps;

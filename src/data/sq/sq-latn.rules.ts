@@ -22,11 +22,13 @@ n [jJ] > ń;
 [rR] { [rR]+ > ;
 
 [:Lu:] { C > TS;
+C } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > TS;
 C } [:Lu:] > TS;
 C > Ts;
 c > ts;
 
 [:Lu:] { X > DZ;
+X } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > DZ;
 X } [:Lu:] > DZ;
 X > Dz;
 x > dz;

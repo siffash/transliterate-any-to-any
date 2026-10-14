@@ -9,6 +9,7 @@ export const bgKkRules = `
 ::Null;
 
 [:Lu:] { Щ > ШТ;
+Щ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > ШТ;
 Щ } [:Lu:] > ШТ;
 Щ > Шт;
 щ > шт;

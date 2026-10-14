@@ -10,6 +10,7 @@ export const trLatnRules = `
 Û > U;
 û > u;
 
+C } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > DŽ;
 C } [:Lu:] > DŽ;
 [:Lu:] { C > DŽ;
 C > Dž;
@@ -21,6 +22,7 @@ c > dž;
 [eiöüEIÖÜ] { Ğ > Y;
 [eiöüEIÖÜ] { ğ > y;
 
+Ğ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > GH;
 Ğ } [:Lu:] > GH;
 [:Lu:] { Ğ > GH;
 Ğ > Gh;

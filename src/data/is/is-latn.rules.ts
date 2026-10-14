@@ -2,6 +2,7 @@ export const isLatnRules = `
 ::NFC;
 
 [:Lu:] { X > KS;
+X } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > KS;
 X } [:Lu:] > KS;
 X > Ks;
 x > ks;
@@ -29,11 +30,13 @@ e [IY] > iJ;
 E [IY] > IJ;
 
 [:Lu:] { Á > AU;
+Á } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > AU;
 Á } [:Lu:] > AU;
 Á > Au;
 á > au;
 
 [:Lu:] { É > YE;
+É } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > YE;
 É } [:Lu:] > YE;
 É > Ye;
 é > ye;
@@ -42,6 +45,7 @@ E [IY] > IJ;
 Í > I;
 
 [:Lu:] { Ó > OU;
+Ó } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > OU;
 Ó } [:Lu:] > OU;
 Ó > Ou;
 ó > ou;
@@ -53,6 +57,7 @@ E [IY] > IJ;
 Ý > I;
 
 [:Lu:] { Æ > AI;
+Æ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > AI;
 Æ } [:Lu:] > AI;
 Æ > Ai;
 æ > ai;
@@ -61,6 +66,7 @@ y > i;
 Y > I;
 
 [:Lu:] { Þ > TH;
+Þ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > TH;
 Þ } [:Lu:] > TH;
 Þ > Th;
 þ > th;

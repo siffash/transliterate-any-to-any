@@ -2,6 +2,7 @@ export const csLatnRules = `
 ::NFC;
 
 [:Lu:] { X > KS;
+X } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > KS;
 X } [:Lu:] > KS;
 X > Ks;
 x > ks;
@@ -34,11 +35,13 @@ c [hH] > x;
 ř } [^[:L:][:M:]] > rš;
 
 [:Lu:] { Ř > RŽ;
+Ř } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > RŽ;
 Ř } [:Lu:] > RŽ;
 Ř > Rž;
 ř > rž;
 
 [:Lu:] { C > TS;
+C } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > TS;
 C } [:Lu:] > TS;
 C > Ts;
 c > ts;

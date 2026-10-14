@@ -78,11 +78,13 @@ c > k;
 C > K;
 
 [:Lu:] { X > KS;
+X } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > KS;
 X } [:Lu:] > KS;
 X > Ks;
 x > ks;
 
 [:Lu:] { Z > TS;
+Z } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > TS;
 Z } [:Lu:] > TS;
 Z > Ts;
 z > ts;

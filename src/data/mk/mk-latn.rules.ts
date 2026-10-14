@@ -8,16 +8,19 @@ export const mkLatnRules = `
 
 ::Null;
 
+Ѕ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > DZ;
 Ѕ } [:Lu:] > DZ;
 [:Lu:] { Ѕ > DZ;
 Ѕ > Dz;
 ѕ > dz;
 
+Ц } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > TS;
 Ц } [:Lu:] > TS;
 [:Lu:] { Ц > TS;
 Ц > Ts;
 ц > ts;
 
+Џ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > DŽ;
 Џ } [:Lu:] > DŽ;
 [:Lu:] { Џ > DŽ;
 Џ > Dž;

@@ -39,6 +39,7 @@ X } [oO] [cC] [hH] [iI] [mM] [iI] [lL] [cC] [oO] > S;
 [^[:L:][:M:]] { X > S;
 
 [:Lu:] { X > KS;
+X } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > KS;
 X } [:Lu:] > KS;
 X > Ks;
 x > ks;
