@@ -14,7 +14,7 @@ A TypeScript library for [orthographic transcription](https://en.wikipedia.org/w
 
 - Geographical names, toponyms (e.g. names of cities, neighborhoods, streets, villages, rivers, mountains, etc.)
 - People names, anthroponyms (e.g. first / middle / last names, nicknames, pseudonyms, names of pets, etc.)
-- Business names, ergonyms (e.g. names of companies, organizations, institutions, brand names, trademarks, etc.)
+- Business names, ergonyms (e.g. names of companies, organizations, institutions, brands, trademarks, etc.)
 
 ### Features:
 
