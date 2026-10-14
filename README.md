@@ -12,9 +12,9 @@ A TypeScript library for [orthographic transcription](https://en.wikipedia.org/w
 
 ### Most suitable for proper nouns:
 
-- Place names, toponyms (e.g. names of cities, neighborhoods, towns, villages, streets, rivers, mountains, etc.).
-- Personal names, anthroponyms (e.g. first names, middle names, last names, nicknames, names of pets, etc.).
-- Business names (e.g. company or organization names, brand names, trademarks, etc.).
+- Geographical names, toponyms (e.g. names of cities, neighborhoods, streets, villages, rivers, mountains, etc.)
+- People names, anthroponyms (e.g. first / middle / last names, nicknames, pseudonyms, names of pets, etc.)
+- Business names, ergonyms (e.g. names of companies, organizations, institutions, brand names, trademarks, etc.)
 
 ### Features:
 
