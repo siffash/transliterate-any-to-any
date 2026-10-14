@@ -39,6 +39,7 @@ ij > ei;
 [aäeiïoöuüÿAÄEIÏOÖUÜŸ] { s } [aäeiïoöuüÿAÄEIÏOÖUÜŸ] > ss;
 
 [:Lu:] { [ČĆ] > TSCH;
+[ČĆ] } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > TSCH;
 [ČĆ] } [:Lu:] > TSCH;
 [ČĆ] > Tsch;
 [čć] > tsch;

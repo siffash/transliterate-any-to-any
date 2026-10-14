@@ -19,6 +19,7 @@ ij > ei;
 š > ch;
 
 [:Lu:] { [ČĆ] > TCH;
+[ČĆ] } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > TCH;
 [ČĆ] } [:Lu:] > TCH;
 [ČĆ] > Tch;
 [čć] > tch;
@@ -29,10 +30,15 @@ ij > ei;
 Đ > Dj;
 đ > dj;
 
-Ľ } [^[:L:][:M:]] > ILLE;
+[^[:L:][:M:]] { Ľ } [^[:L:][:M:]] > L;
+[^[:L:][:M:]] { ľ } [^[:L:][:M:]] > l;
+[:Lu:] { Ľ } [^[:L:][:M:]] > ILLE;
+Ľ } [^[:L:][:M:]] > Ille;
 ľ } [^[:L:][:M:]] > ille;
+
 Ľ } [IÏiï] > L;
 ľ } [IÏiï] > l;
+
 [:Lu:] { Ľ > LI;
 Ľ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > LI;
 Ľ } [:Lu:] > LI;
@@ -54,10 +60,13 @@ x > kh;
 Ž > J;
 ž > j;
 
+[AEIOUYÄÏÖÜŸ] { S } [AEIOUYÄÏÖÜŸaeiouyäïöüÿ] > SS;
 [AEIOUYÄÏÖÜŸaeiouyäïöüÿ] { S } [AEIOUYÄÏÖÜŸ] > SS;
-[AEIOUYÄÏÖÜŸaeiouyäïöüÿ] { S } [aeiouyäïöüÿ] > Ss;
+[AEIOUYÄÏÖÜŸaeiouyäïöüÿ] { S } [AEIOUYÄÏÖÜŸaeiouyäïöüÿ] > Ss;
 [AEIOUYÄÏÖÜŸaeiouyäïöüÿ] { s } [AEIOUYÄÏÖÜŸaeiouyäïöüÿ] > ss;
 
+[^[:L:][:M:]] { S } [^[:L:][:M:]] > S;
+[^[:L:][:M:]] { s } [^[:L:][:M:]] > s;
 [:Lu:] { S } [^[:L:][:M:]] > SSE;
 S } [^[:L:][:M:]] > Sse;
 s } [^[:L:][:M:]] > sse;
