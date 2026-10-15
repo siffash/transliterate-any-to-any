@@ -20,7 +20,8 @@ A TypeScript library for [orthographic transcription](https://en.wikipedia.org/w
 
 - Supports any language pair from the [supported languages list](#supported-languages). This includes converting between languages of same script (see [Maltese to Latvian example](#examples)).
 - Based on rules & dictionaries, no machine learning overhead.
-- Dynamically imports only the libraries/mappings/rules needed for the given language pair.
+- Always produces the same output for the given input. The results are consistent, no risk of AI hallucinations.
+- Dynamically imports only the libraries/mappings/rules/dictionaries needed for the given language pair.
 - Supports batching - you can pass an array of strings.
 - Works in browser - but it's recommended to be used in a Web Worker (see the [demo implementation](https://github.com/siffash/transliterate-any-to-any/tree/main/demo)).
 
