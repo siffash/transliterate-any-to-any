@@ -135,4 +135,6 @@ export const hyLatnRules = `
 ֆ > f;
 
 ::NFC;
+
+[:Armenian:] > ;
 `;

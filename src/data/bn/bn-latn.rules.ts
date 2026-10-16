@@ -78,5 +78,9 @@ export const bnLatnRules = `
 · } [^[:L:][:M:]] > ;
 · > a;
 
+::Null;
+
+[:Bengali:] > ;
+
 ::Title;
 `;

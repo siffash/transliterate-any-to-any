@@ -67,4 +67,8 @@ export const kkIpaRules = `
 ч > tʃ;
 ш > ʃ;
 щ > ʃː;
+
+::Null;
+
+[:Cyrillic:] > ;
 `;

@@ -38,8 +38,8 @@ export default defineConfig({
         overrideManifestIcons: true,
       },
       manifest: {
-        name: "transliterate-any-to-any",
-        short_name: "transliterate-any-to-any",
+        name: "Transliterate between 52 languages",
+        short_name: "Transliterate",
         description:
           "Playground for transliterate-any-to-any — JS library for transliterations between 52 languages",
         theme_color: "#121017",

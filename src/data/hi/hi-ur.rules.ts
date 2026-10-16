@@ -214,6 +214,12 @@ export const hiUrRules = `
 
 ::Null;
 
+[:Devanagari:] > ;
+
+
+
+::Null;
+
 ے } [:L:] > ی;
 ں } [:L:] > ن;
 [^[:L:][:M:]] { ھ > ہ;

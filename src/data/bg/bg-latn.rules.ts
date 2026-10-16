@@ -96,4 +96,8 @@ export const bgLatnRules = `
 
 Ш > Š;
 ш > š;
+
+::Null;
+
+[:Cyrillic:] > ;
 `;

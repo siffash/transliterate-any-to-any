@@ -73,4 +73,8 @@ export const jaIpaRules = `
 劾 > ɡai;
 匿 > tokɯ;
 受 > dʑɯ;
+
+::Null;
+
+[[:Hiragana:][:Katakana:][:Han:]] > ;
 `;

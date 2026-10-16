@@ -12,6 +12,10 @@ export const zhLatnRules = `
 ８ > 8;
 ９ > 9;
 
+[:Han:] > ;
+
+::Null;
+
 [āáǎà] > a;
 [ēéěèêếềễệ] > e;
 [īíǐì] > i;

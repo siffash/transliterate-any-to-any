@@ -63,4 +63,8 @@ export const hyIpaRules = `
 ք > kʰ;
 օ > ɔ;
 ֆ > f;
+
+::Null;
+
+[:Armenian:] > ;
 `;

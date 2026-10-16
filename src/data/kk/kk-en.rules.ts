@@ -140,6 +140,12 @@ export const kkEnRules = `
 
 ::Null;
 
+[:Cyrillic:] > ;
+
+
+
+::Null;
+
 [wW] { [wW]+ > ;
 [yY] { [yY]+ > ;
 [hH] { [hH]+ > ;

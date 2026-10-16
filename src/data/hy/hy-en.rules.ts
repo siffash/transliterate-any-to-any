@@ -145,6 +145,11 @@ export const hyEnRules = `
 ֆ > f;
 
 ::NFC;
+
+[:Armenian:] > ;
+
+
+
 ::Null;
 
 [wW] { [wW]+ > ;

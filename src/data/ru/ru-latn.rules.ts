@@ -148,4 +148,8 @@ export const ruLatnRules = `
 
 [Ъъ] > \\';
 [Ьь] > ;
+
+::Null;
+
+[:Cyrillic:] > ;
 `;

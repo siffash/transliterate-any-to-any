@@ -23,6 +23,8 @@ export const faUrRules = `
 
 [اآو] { ی } ی > ئ;
 
+
+
 ::Null;
 
 ے } [:L:] > ی;

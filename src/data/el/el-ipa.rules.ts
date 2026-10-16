@@ -112,7 +112,6 @@ export const elIpaRules = `
 
 ::Null;
 
-
 niˈ } [aɛɔu] > ˈɲ;
 liˈ } [aɛɔu] > ˈʎ;
 ʝiˈ } [aɛɔu] > ˈʝ;

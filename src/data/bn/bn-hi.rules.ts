@@ -86,6 +86,8 @@ export const bnHiRules = `
 ৢ > ॢ;
 ৣ > ॣ;
 
+
+
 ::Null;
 
 ् } [^[:L:][:M:]] > ;

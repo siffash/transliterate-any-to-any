@@ -161,6 +161,12 @@ export const ukEnRules = `
 
 ::Null;
 
+[:Cyrillic:] > ;
+
+
+
+::Null;
+
 [wW] { [wW]+ > ;
 [yY] { [yY]+ > ;
 [hH] { [hH]+ > ;

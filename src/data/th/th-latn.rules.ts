@@ -1,12 +1,6 @@
 export const thLatnRules = `
 ::NFC;
 
-ae > ä;
-oe > ö;
-ue > ï;
-ch > ć;
-\\- > ·;
-
 ๐ > 0;
 ๑ > 1;
 ๒ > 2;
@@ -17,6 +11,16 @@ ch > ć;
 ๗ > 7;
 ๘ > 8;
 ๙ > 9;
+
+[:Thai:] > ;
+
+::Null;
+
+ae > ä;
+oe > ö;
+ue > ï;
+ch > ć;
+\\- > ·;
 
 ::Title;
 `;

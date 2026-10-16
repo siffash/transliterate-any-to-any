@@ -73,4 +73,8 @@ export const mkIpaRules = `
 џ > d͡ʒ;
 ш > ʃ;
 \\' > ə;
+
+::Null;
+
+[:Cyrillic:] > ;
 `;

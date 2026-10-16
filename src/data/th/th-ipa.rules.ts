@@ -206,4 +206,8 @@ export const thIpaRules = `
 [้๊] > ˥;
 ๋ > ˩˥;
 [็ํฺ] > ;
+
+::Null;
+
+[:Thai:] > ;
 `;

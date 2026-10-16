@@ -113,6 +113,12 @@ export const hiArRules = `
 
 ::Null;
 
+[:Devanagari:] > ;
+
+
+
+::Null;
+
 اا > آ;
 أا > آ;
 إا > آ;

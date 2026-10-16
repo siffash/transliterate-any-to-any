@@ -50,4 +50,8 @@ export const kaIpaRules = `
 ჽ > æ;
 ჾ > ˠ;
 ჿ > ʷ;
+
+::Null;
+
+[:Georgian:] > ;
 `;

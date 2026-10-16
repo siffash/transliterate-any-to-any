@@ -103,4 +103,8 @@ export const bnIpaRules = `
 ::Null;
 
 ɔ } ([kɡŋ{tʃ}{dʒ}ʈɖɽtdnpbmjrlʃh] [ʰʱ̪]*)+ [iu] > o;
+
+::Null;
+
+[:Bengali:] > ;
 `;

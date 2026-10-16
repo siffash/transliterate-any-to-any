@@ -137,4 +137,8 @@ export const kkLatnRules = `
 
 Ы > Ï;
 ы > ï;
+
+::Null;
+
+[:Cyrillic:] > ;
 `;

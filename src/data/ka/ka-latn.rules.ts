@@ -50,5 +50,8 @@ export const kaLatnRules = `
 ჸ > \\';
 
 ::NFC;
+
+[:Georgian:] > ;
+
 ::Title;
 `;

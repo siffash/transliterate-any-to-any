@@ -196,4 +196,8 @@ export const hiIpaRules = `
 
 j̃ > jə̃;
 ʋ̃ > ʋə̃;
+
+::Null;
+
+[:Devanagari:] > ;
 `;

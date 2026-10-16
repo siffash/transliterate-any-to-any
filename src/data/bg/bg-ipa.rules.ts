@@ -64,4 +64,8 @@ export const bgIpaRules = `
 ш > ʃ;
 ъ > ɤ;
 ь > ʲ;
+
+::Null;
+
+[:Cyrillic:] > ;
 `;

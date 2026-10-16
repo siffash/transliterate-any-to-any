@@ -211,6 +211,11 @@ export const elEnRules = `
 ́ > ;
 
 ::NFC;
+
+[:Greek:] > ;
+
+
+
 ::Null;
 
 [wW] { [wW]+ > ;

@@ -86,6 +86,10 @@ export const jaLatnRules = `
 受 > ju;
 
 ::Null;
+
+[[:Hiragana:][:Katakana:][:Han:]] > ;
+
+::Null;
 ::NFC;
 
 [^[:L:][:M:]] { ['’‘\`´ʼ] > ;

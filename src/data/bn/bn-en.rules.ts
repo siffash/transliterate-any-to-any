@@ -129,6 +129,10 @@ export const bnEnRules = `
 
 \\* > ;
 
+[:Bengali:] > ;
+
+
+
 ::Null;
 
 w { w+ > ;

@@ -86,6 +86,10 @@ export const jaEnRules = `
 受 > ju;
 
 ::Null;
+
+[[:Hiragana:][:Katakana:][:Han:]] > ;
+
+::Null;
 ::NFC;
 
 [^[:L:][:M:]] { ['’‘\`´ʼ] > ;
@@ -98,6 +102,8 @@ export const jaEnRules = `
 [ōô] > o;
 
 ･ > ' ';
+
+
 
 ::Null;
 

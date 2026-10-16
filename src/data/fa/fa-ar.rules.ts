@@ -25,6 +25,8 @@ export const faArRules = `
 ۸ > ٨;
 ۹ > ٩;
 
+
+
 ::Null;
 
 اا > آ;

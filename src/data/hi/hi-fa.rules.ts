@@ -124,4 +124,8 @@ export const hiFaRules = `
 ९ > ۹;
 । > \\.;
 ॥ > \\.;
+
+::Null;
+
+[:Devanagari:] > ;
 `;

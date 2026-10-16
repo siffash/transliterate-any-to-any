@@ -42,6 +42,8 @@ export const urArRules = `
 ۸ > ٨;
 ۹ > ٩;
 
+
+
 ::Null;
 
 اا > آ;

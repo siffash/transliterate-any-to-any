@@ -12,6 +12,10 @@ export const zhBgRules = `
 ８ > 8;
 ９ > 9;
 
+[:Han:] > ;
+
+::Null;
+
 [āáǎàɑɐæ] > a;
 [ēéěèê] > e;
 [īíǐì] > i;

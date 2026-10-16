@@ -105,5 +105,8 @@ a् > ;
 ः > h;
 
 ::NFC;
+
+[:Devanagari:] > ;
+
 ::Title;
 `;

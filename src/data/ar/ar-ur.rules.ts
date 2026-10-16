@@ -24,6 +24,8 @@ export const arUrRules = `
 ه > ہ;
 ٱ > ا;
 
+
+
 ::Null;
 
 ے } [:L:] > ی;

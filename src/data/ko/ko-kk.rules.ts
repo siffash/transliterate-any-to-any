@@ -12,6 +12,10 @@ export const koKkRules = `
 ８ > 8;
 ９ > 9;
 
+[:Hangul:] > ;
+
+::Null;
+
 yae > яй;
 yeo > ё;
 wae > вэ;

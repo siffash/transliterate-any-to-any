@@ -134,4 +134,8 @@ export const tgLatnRules = `
 ы > ï;
 
 [ЪЬъь] > \\';
+
+::Null;
+
+[:Cyrillic:] > ;
 `;

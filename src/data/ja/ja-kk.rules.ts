@@ -86,6 +86,10 @@ export const jaKkRules = `
 受 > ju;
 
 ::Null;
+
+[[:Hiragana:][:Katakana:][:Han:]] > ;
+
+::Null;
 ::NFC;
 
 [ɑɐæāâ] > a;

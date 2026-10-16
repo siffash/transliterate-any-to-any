@@ -149,6 +149,12 @@ export const ruEnRules = `
 
 ::Null;
 
+[:Cyrillic:] > ;
+
+
+
+::Null;
+
 [wW] { [wW]+ > ;
 [yY] { [yY]+ > ;
 [hH] { [hH]+ > ;

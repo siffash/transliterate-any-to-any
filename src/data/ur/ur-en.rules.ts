@@ -177,6 +177,12 @@ export const urEnRules = `
 
 ::Null;
 
+[:Arabic:] > ;
+
+
+
+::Null;
+
 w { w+ > ;
 y { y+ > ;
 h { h+ > ;

@@ -86,6 +86,10 @@ export const jaBgRules = `
 受 > ju;
 
 ::Null;
+
+[[:Hiragana:][:Katakana:][:Han:]] > ;
+
+::Null;
 ::NFC;
 
 tōkyō > токио;

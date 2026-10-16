@@ -106,6 +106,12 @@ export const bnUrRules = `
 
 ::Null;
 
+[:Bengali:] > ;
+
+
+
+::Null;
+
 ے } [:L:] > ی;
 ں } [:L:] > ن;
 [^[:L:][:M:]] { ھ > ہ;

@@ -12,6 +12,12 @@ export const koEnRules = `
 ８ > 8;
 ９ > 9;
 
+[:Hangul:] > ;
+
+
+
+::Null;
+
 w { w+ > ;
 y { y+ > ;
 h { h+ > ;

@@ -112,6 +112,11 @@ export const kaEnRules = `
 ჰ > h;
 
 ::NFC;
+
+[:Georgian:] > ;
+
+
+
 ::Null;
 
 w { w+ > ;

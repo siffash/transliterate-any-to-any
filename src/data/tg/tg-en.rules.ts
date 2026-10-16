@@ -141,6 +141,10 @@ export const tgEnRules = `
 
 [ЪЬъь] > \\';
 
+::Null;
+
+[:Cyrillic:] > ;
+
 
 
 ::Null;

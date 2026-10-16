@@ -190,4 +190,6 @@ export const elLatnRules = `
 ̈ > ;
 
 ::NFC;
+
+[:Greek:] > ;
 `;

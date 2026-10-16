@@ -82,4 +82,8 @@ export const ruIpaRules = `
 ш > ʂ;
 ы > ɨ;
 э > ɛ;
+
+::Null;
+
+[:Cyrillic:] > ;
 `;

@@ -13,6 +13,10 @@ export const koLatnRules = `
 ８ > 8;
 ９ > 9;
 
+[:Hangul:] > ;
+
+::Null;
+
 [^[:L:][:M:]] { ng > ;
 
 wae > wä;

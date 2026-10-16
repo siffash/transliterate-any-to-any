@@ -155,6 +155,12 @@ ey { a } r > a;
 
 ::Null;
 
+[:Devanagari:] > ;
+
+
+
+::Null;
+
 w { w+ > ;
 y { y+ > ;
 h { h+ > ;

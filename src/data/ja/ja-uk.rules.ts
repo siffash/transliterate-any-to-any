@@ -86,6 +86,10 @@ export const jaUkRules = `
 受 > ju;
 
 ::Null;
+
+[[:Hiragana:][:Katakana:][:Han:]] > ;
+
+::Null;
 ::NFC;
 
 tōkyō > токіо;

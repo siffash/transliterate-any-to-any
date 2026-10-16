@@ -48,4 +48,8 @@ export const tgIpaRules = `
 ь > ʲ;
 ю > ju;
 я > ja;
+
+::Null;
+
+[:Cyrillic:] > ;
 `;

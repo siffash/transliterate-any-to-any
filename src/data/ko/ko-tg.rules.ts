@@ -12,6 +12,10 @@ export const koTgRules = `
 ８ > 8;
 ９ > 9;
 
+[:Hangul:] > ;
+
+::Null;
+
 seoul > сеул;
 pyeongyang > пхенян;
 

@@ -97,4 +97,8 @@ export const bnFaRules = `
 ৯ > ۹;
 । > \\.;
 ॥ > \\.;
+
+::Null;
+
+[:Bengali:] > ;
 `;

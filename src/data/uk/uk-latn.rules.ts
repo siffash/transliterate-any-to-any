@@ -155,4 +155,8 @@ export const ukLatnRules = `
 ш > š;
 
 [Ьь] > ;
+
+::Null;
+
+[:Cyrillic:] > ;
 `;

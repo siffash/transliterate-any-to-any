@@ -109,4 +109,8 @@ export const mkLatnRules = `
 
 Ш > Š;
 ш > š;
+
+::Null;
+
+[:Cyrillic:] > ;
 `;
