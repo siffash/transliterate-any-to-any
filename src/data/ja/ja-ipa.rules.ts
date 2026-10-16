@@ -76,5 +76,5 @@ export const jaIpaRules = `
 
 ::Null;
 
-[[:Hiragana:][:Katakana:][:Han:]] > ;
+[[:Hiragana:][:Katakana:][:Han:]ー] > ;
 `;

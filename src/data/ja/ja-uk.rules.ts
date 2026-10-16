@@ -87,7 +87,7 @@ export const jaUkRules = `
 
 ::Null;
 
-[[:Hiragana:][:Katakana:][:Han:]] > ;
+[[:Hiragana:][:Katakana:][:Han:]ー] > ;
 
 ::Null;
 ::NFC;

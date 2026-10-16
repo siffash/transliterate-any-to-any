@@ -87,7 +87,7 @@ export const jaTgRules = `
 
 ::Null;
 
-[[:Hiragana:][:Katakana:][:Han:]] > ;
+[[:Hiragana:][:Katakana:][:Han:]ー] > ;
 
 ::Null;
 ::NFC;

@@ -87,7 +87,7 @@ export const jaRuRules = `
 
 ::Null;
 
-[[:Hiragana:][:Katakana:][:Han:]] > ;
+[[:Hiragana:][:Katakana:][:Han:]ー] > ;
 
 ::Null;
 ::NFC;
