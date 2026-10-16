@@ -2,6 +2,7 @@ import { Text } from "types";
 
 export const jaKo = async (text: Text) => {
   const { default: Hangul } = await import("hangul-js");
+  const { normalizeJa } = await import("helpers/normalizeJa");
   const { jaKoMap } = await import("data/ja/ja-ko.map");
   const { wordSplitter } = await import("helpers/wordSplitter");
 
@@ -14,7 +15,7 @@ export const jaKo = async (text: Text) => {
   const convert = async (text: string) => {
     // Get the Japanese phonetic reading (Mandatory for Korean)
     const hiragana = await wordSplitter(
-      text,
+      normalizeJa(text),
       "ja",
       async text => await kuroshiro.convert(text, { to: "hiragana" }),
       true,

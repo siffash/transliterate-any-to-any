@@ -108,6 +108,12 @@ export const bnUrRules = `
 
 [:Bengali:] > ;
 
+::Null;
+
+\\? > ؟;
+';' > ؛;
+',' } [^0-9٠-٩۰-۹] > ،;
+
 
 
 ::Null;

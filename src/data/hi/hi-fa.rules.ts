@@ -1,6 +1,11 @@
 export const hiFaRules = `
 ::NFC;
 
+॰ > \\.;
+ॲ > ऍ;
+
+::Null;
+
 [^[:L:][:M:]] { अ > ا;
 [^[:L:][:M:]] { आ > آ;
 [^[:L:][:M:]] { इ > اِ;
@@ -128,4 +133,10 @@ export const hiFaRules = `
 ::Null;
 
 [:Devanagari:] > ;
+
+::Null;
+
+\\? > ؟;
+';' > ؛;
+',' } [^0-9٠-٩۰-۹] > ،;
 `;

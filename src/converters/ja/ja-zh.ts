@@ -2,6 +2,7 @@ import { Text } from "types";
 
 export const jaZh = async (text: Text) => {
   const OpenCC = await import("opencc-js");
+  const { normalizeJa } = await import("helpers/normalizeJa");
   const { jaZhMap } = await import("data/ja/ja-zh.map");
 
   const sortedKeys = Object.keys(jaZhMap).sort((a, b) => b.length - a.length);
@@ -11,7 +12,7 @@ export const jaZh = async (text: Text) => {
   const jp2s = OpenCC.Converter({ from: "jp", to: "cn" });
 
   const convert = (text: string) => {
-    const simplified = jp2s(text);
+    const simplified = jp2s(normalizeJa(text));
     // Transliterate remaining Kana
     return simplified.replace(pattern, match => jaZhMap[match]);
   };

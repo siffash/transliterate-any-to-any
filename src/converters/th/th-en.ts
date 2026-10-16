@@ -4,12 +4,13 @@ export const thEn = async (text: Text) => {
   const { romanize } = await import("@pcampus/thai-romanization");
   const { RBT } = await import("helpers/rbt");
   const { wordSplitter } = await import("helpers/wordSplitter");
+  const { normalizeTh } = await import("helpers/normalizeTh");
   const { thEnRules } = await import("data/th/th-en.rules");
 
   const transliterator = RBT.fromRules(thEnRules);
 
   const convert = async (text: string) => {
-    const romanized = await wordSplitter(text.replaceAll("ฦ", "ลึ"), "th", text =>
+    const romanized = await wordSplitter(normalizeTh(text), "th", text =>
       text.replace(/[^๐-๙]+/g, part => romanize(part)),
     );
     return transliterator.transliterate(romanized);

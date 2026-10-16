@@ -15,7 +15,7 @@ export const ipaJaRules = `
 
 ::Null;
 
-[͈̚ˈˌˑ'’ʰʱʷˠˤʼ͜͡\\.\u0300-\u036F\u02E0-\u02E9\uA71B-\uA71F] > ;
+[͈̚ˈˌˑ'’ʰʱʷˠˤʼ͜͡\u0300-\u036F\u02E0-\u02E9\uA71B-\uA71F] > ;
 
 ::Null;
 

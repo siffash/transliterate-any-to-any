@@ -6,11 +6,12 @@ export const thCs = async (text: Text) => {
   const { thLatnRules } = await import("data/th/th-latn.rules");
   const { latnCsRules } = await import("data/latn/latn-cs.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
+  const { normalizeTh } = await import("helpers/normalizeTh");
 
   const transliterator = RBT.fromRules(thLatnRules + latnCsRules + "::Title;");
 
   const convert = async (text: string) => {
-    const romanized = await wordSplitter(text.replaceAll("ฦ", "ลึ"), "th", text =>
+    const romanized = await wordSplitter(normalizeTh(text), "th", text =>
       text.replace(/[^๐-๙]+/g, part => romanize(part)),
     );
     return transliterator.transliterate(romanized);

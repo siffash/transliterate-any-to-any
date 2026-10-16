@@ -17,8 +17,14 @@ type Syllable = HangulSyllable | NonHangulSyllable;
 
 export const koJa = async (text: Text) => {
   const { BATCHIMS, INITIALS, KANA_ROWS, VOWEL_TO_IDX, VOWELS } = await import("data/ko/ko-ja.map");
+  const { RBT } = await import("helpers/rbt");
+  const { normalizeKo } = await import("helpers/normalizeKo");
+  const { ipaJaRules } = await import("data/ipa/ipa-ja.rules");
 
-  const convert = (text: string) => {
+  // Converts standalone letters (ㅋㅋㅋ, ㅠㅠ), spelled in IPA; compiled only when the text has any
+  let letters: ReturnType<typeof RBT.fromRules> | undefined;
+
+  const convertSyllables = (text: string) => {
     const syllables: Syllable[] = [];
 
     for (let i = 0; i < text.length; i++) {
@@ -120,9 +126,14 @@ export const koJa = async (text: Text) => {
     return result;
   };
 
+  const convert = (text: string) =>
+    normalizeKo(text, convertSyllables, "ipa", text =>
+      (letters ??= RBT.fromRules(ipaJaRules)).transliterate(text),
+    );
+
   if (typeof text === "string") {
-    return convert(text);
+    return await convert(text);
   } else {
-    return text.map(convert);
+    return Promise.all(text.map(convert));
   }
 };

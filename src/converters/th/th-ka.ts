@@ -5,11 +5,12 @@ export const thKa = async (text: Text) => {
   const { thIpaRules } = await import("data/th/th-ipa.rules");
   const { ipaKaRules } = await import("data/ipa/ipa-ka.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
+  const { normalizeTh } = await import("helpers/normalizeTh");
 
   const transliterator = RBT.fromRules(thIpaRules + ipaKaRules);
 
   const convert = async (text: string) => {
-    return wordSplitter(text, "th", text => transliterator.transliterate(text));
+    return wordSplitter(normalizeTh(text), "th", text => transliterator.transliterate(text));
   };
 
   if (typeof text === "string") {

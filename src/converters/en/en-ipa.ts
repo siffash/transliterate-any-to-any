@@ -5,12 +5,12 @@ export const enIpa = async <T = Text>(text: Text): Promise<T> => {
   const { toIPA } = await getPhonemize();
   const { filterIpa } = await import("helpers/filterIpa");
   const { wordSplitter } = await import("helpers/wordSplitter");
-  const { normalizerEnIpa } = await import("helpers/normalizerEnIpa");
+  const { normalizeEnIpa } = await import("helpers/normalizeEnIpa");
 
   const convert = async (text: string) =>
     await wordSplitter(text, "en", (word: string) => {
       const ipa = filterIpa(toIPA(word), word, "en");
-      return normalizerEnIpa(word, ipa);
+      return normalizeEnIpa(word, ipa);
     });
 
   if (typeof text === "string") {

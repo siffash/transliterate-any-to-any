@@ -2,7 +2,6 @@ export const ipaHiRules = `
 ::Null;
 
 ['’ˈˌ] > ;
-\\. > ;
 ˥ > ;
 ˦ > ;
 ˧ > ;

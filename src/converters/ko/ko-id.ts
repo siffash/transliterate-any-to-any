@@ -6,11 +6,14 @@ export const koId = async (text: Text) => {
   const { koLatnRules } = await import("data/ko/ko-latn.rules");
   const { latnIdRules } = await import("data/latn/latn-id.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
+  const { normalizeKo } = await import("helpers/normalizeKo");
 
   const transliterator = RBT.fromRules(koLatnRules + latnIdRules);
 
   const convert = async (text: string) => {
-    const romanized = await wordSplitter(text, "ko", text => Aromanize.romanize(text));
+    const romanized = await wordSplitter(text, "ko", text =>
+      normalizeKo(text, text => Aromanize.romanize(text), "latn"),
+    );
     return transliterator.transliterate(romanized);
   };
 

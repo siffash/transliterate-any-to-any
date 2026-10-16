@@ -1,6 +1,11 @@
 export const hiIpaRules = `
 ::NFC;
 
+[।॥॰] > \\.;
+ॲ > ऍ;
+
+::Null;
+
 \u200C > ;
 \u200D > ;
 

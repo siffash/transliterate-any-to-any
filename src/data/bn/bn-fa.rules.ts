@@ -80,7 +80,6 @@ export const bnFaRules = `
 ্ > ْ;
 ং > نگ;
 ঃ > ه;
-ঁ } [^[:L:][:M:]] > ں;
 ঁ > ن;
 ঽ > \\';
 ় > ;
@@ -101,4 +100,10 @@ export const bnFaRules = `
 ::Null;
 
 [:Bengali:] > ;
+
+::Null;
+
+\\? > ؟;
+';' > ؛;
+',' } [^0-9٠-٩۰-۹] > ،;
 `;

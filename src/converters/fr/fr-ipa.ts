@@ -6,7 +6,7 @@ export const frIpa = async <T = Text>(text: Text): Promise<T> => {
   const { frIpaRules } = await import("data/fr/fr-ipa.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
   const { filterIpa } = await import("helpers/filterIpa");
-  const { normalizerFrIpa } = await import("helpers/normalizerFrIpa");
+  const { normalizeFrIpa } = await import("helpers/normalizeFrIpa");
 
   const transliterator = RBT.fromRules(frIpaRules);
 
@@ -17,7 +17,7 @@ export const frIpa = async <T = Text>(text: Text): Promise<T> => {
       (word: string) => {
         word = word.toLocaleLowerCase("fr");
         const ipa = filterIpa(frIpaMap[word], word, "fr") || transliterator.transliterate(word);
-        return normalizerFrIpa(word, ipa);
+        return normalizeFrIpa(word, ipa);
       },
       true,
     );

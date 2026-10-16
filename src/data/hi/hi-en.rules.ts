@@ -1,6 +1,11 @@
 export const hiEnRules = `
 ::NFD;
 
+[।॥॰] > \\.;
+ॲ > ऍ;
+
+::Null;
+
 [‌‍] > ;
 
 अ > a;

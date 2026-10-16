@@ -1,6 +1,10 @@
 export const bnLatnRules = `
 ::NFC;
 
+[।॥] > \\.;
+
+::Null;
+
 ওয় > w·;
 [অআ] > a;
 [ইঈ] > i;

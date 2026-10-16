@@ -1,6 +1,6 @@
 import { restoreLettersInIpa } from "helpers/restoreLettersInIpa";
 
-export const normalizerEnIpa = (originalWord: string, ipaWord: string): string => {
+export const normalizeEnIpa = (originalWord: string, ipaWord: string): string => {
   return restoreLettersInIpa(originalWord, ipaWord, [
     // Restore all double letters
     { ipaCharToBeReplaced: "ɑ", lettersToRestore: { aa: "aː" } },

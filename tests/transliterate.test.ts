@@ -90,7 +90,7 @@ describe("transliteration of texts in all supported languages", () => {
 
         // Check if the output is the same if we pass each word separately in an array
         const exampleArray = example.split(", ");
-        const transliteratedArray = transliterated.split(", ");
+        const transliteratedArray = transliterated.split(/[,،] /);
         const transliteratedArrayResult = await transliterate(exampleArray, { from, to });
         expect(transliteratedArrayResult).toEqual(transliteratedArray);
 

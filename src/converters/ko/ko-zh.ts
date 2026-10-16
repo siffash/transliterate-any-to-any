@@ -3,8 +3,14 @@ import { Text } from "types";
 export const koZh = async (text: Text) => {
   const { B_MAP, BATCHIMS, DIRECT_MAP, INITIALS, IV_MAP, VOWELS } =
     await import("data/ko/ko-zh.map");
+  const { RBT } = await import("helpers/rbt");
+  const { normalizeKo } = await import("helpers/normalizeKo");
+  const { ipaZhRules } = await import("data/ipa/ipa-zh.rules");
 
-  const convert = (text: string) => {
+  // Converts standalone letters (ㅋㅋㅋ, ㅠㅠ), spelled in IPA; compiled only when the text has any
+  let letters: ReturnType<typeof RBT.fromRules> | undefined;
+
+  const convertSyllables = (text: string) => {
     let result = "";
 
     for (let i = 0; i < text.length; i++) {
@@ -41,9 +47,14 @@ export const koZh = async (text: Text) => {
     return result;
   };
 
+  const convert = (text: string) =>
+    normalizeKo(text, convertSyllables, "ipa", text =>
+      (letters ??= RBT.fromRules(ipaZhRules)).transliterate(text),
+    );
+
   if (typeof text === "string") {
-    return convert(text);
+    return await convert(text);
   } else {
-    return text.map(convert);
+    return Promise.all(text.map(convert));
   }
 };

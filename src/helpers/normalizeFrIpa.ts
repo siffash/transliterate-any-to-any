@@ -1,6 +1,6 @@
 import { restoreLettersInIpa } from "helpers/restoreLettersInIpa";
 
-export const normalizerFrIpa = (originalWord: string, ipaWord: string): string => {
+export const normalizeFrIpa = (originalWord: string, ipaWord: string): string => {
   return restoreLettersInIpa(originalWord, ipaWord, [
     // Restore "g" in "bourg"
     { ipaCharToBeReplaced: ["buʁɡ", "buʁg", "buʁɠ", "buʁɢ"], lettersToRestore: { bourg: "buʁɡ" } },

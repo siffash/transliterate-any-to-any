@@ -1,6 +1,11 @@
 export const hiLatnRules = `
 ::NFD;
 
+[।॥॰] > \\.;
+ॲ > ऍ;
+
+::Null;
+
 [‌‍] > ;
 
 अ > a;

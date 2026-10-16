@@ -2,6 +2,7 @@ import { Text } from "types";
 
 export const jaSq = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
+  const { normalizeJa } = await import("helpers/normalizeJa");
   const { jaLatnRules } = await import("data/ja/ja-latn.rules");
   const { latnSqRules } = await import("data/latn/latn-sq.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
@@ -13,7 +14,7 @@ export const jaSq = async (text: Text) => {
 
   const convert = async (text: string) => {
     const romanized = await wordSplitter(
-      text,
+      normalizeJa(text),
       "ja",
       async text => await kuroshiro.convert(text, { to: "romaji" }),
     );

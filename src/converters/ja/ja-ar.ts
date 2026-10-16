@@ -2,6 +2,7 @@ import { Text } from "types";
 
 export const jaAr = async (text: Text) => {
   const { getPhonemizeAll } = await import("helpers/getPhonemize");
+  const { normalizeJa } = await import("helpers/normalizeJa");
   const { toIPA } = await getPhonemizeAll();
   const { filterIpa } = await import("helpers/filterIpa");
   const { RBT } = await import("helpers/rbt");
@@ -16,7 +17,7 @@ export const jaAr = async (text: Text) => {
   const exceptions = jaIpaRules.replace(/( ?> ?[^;]+;)|\[|]|\n/g, "");
 
   const convert = async (text: string) => {
-    const ipa = await wordSplitter(text, "ja", async text => {
+    const ipa = await wordSplitter(normalizeJa(text), "ja", async text => {
       const hiragana = await kuroshiro.convert(text, { to: "hiragana" });
       return filterIpa(toIPA(hiragana), hiragana, "ja", exceptions);
     });

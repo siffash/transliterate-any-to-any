@@ -1,6 +1,10 @@
 export const bnIpaRules = `
 ::NFC;
 
+[।॥] > \\.;
+
+::Null;
+
 অ্যা > æ;
 অ > ɔ;
 আ > a;
