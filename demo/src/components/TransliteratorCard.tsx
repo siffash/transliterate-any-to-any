@@ -481,7 +481,10 @@ export const TransliteratorCard = ({ suppressErrors = false }: { suppressErrors?
               </Alert>
             }
             anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-            sx={{ "& .MuiSnackbarContent-root, & .MuiSnackbarContent-message": { padding: 0 } }}
+            sx={{
+              "& .MuiSnackbarContent-root": { padding: 0 },
+              "& .MuiSnackbarContent-message": { padding: 0, flexGrow: 1 },
+            }}
           />
         )}
       </CardContent>
