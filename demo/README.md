@@ -5,11 +5,13 @@ A live demo of the `transliterate-any-to-any` library, built with Vite + React +
 ## Run locally
 
 ```bash
+# in the root directory, install & build the library
 npm i
 npm run build
+# then install & run the demo
 cd demo
 npm i
-npm run dev
+npm run dev # or npm run build && npm run preview
 ```
 
 ## How it's wired to the library

@@ -20,6 +20,7 @@ module.exports = [
       globals: {
         ...globals.browser,
         ...globals.node,
+        __KUROMOJI_DICT_URL__: "readonly",
       },
     },
     rules: {

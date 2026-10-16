@@ -9,8 +9,11 @@ export const zhVi = async (text: Text) => {
   const converter = OpenCC.Converter({ from: "cn", to: "t" });
 
   const convert = (text: string) => {
-    // 1. Normalize input to Traditional Chinese for accurate dictionary lookups
-    const traditionalText = converter(text);
+    // 1. Normalize input to Traditional Chinese for accurate dictionary lookups,
+    // and full-width digits to ASCII ones
+    const traditionalText = converter(text).replace(/[０-９]/g, digit =>
+      String(digit.charCodeAt(0) - 0xff10),
+    );
 
     // 2. Regex to extract continuous blocks of Chinese characters
     const chineseRegex = /[\u4e00-\u9fa5]+/g;

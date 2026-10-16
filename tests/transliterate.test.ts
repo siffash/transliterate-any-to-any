@@ -60,7 +60,7 @@ const examples: Record<Language, string> = {
   vi: "Hà Nội, Thành phố Hồ Chí Minh, Hải Phòng, Đà Nẵng, Cần Thơ, Biên Hòa, Vũng Tàu, Nha Trang, Buôn Ma Thuột, Quy Nhơn, Huế, Long Xuyên, Phan Thiết, Rạch Giá, Thủ Dầu Một, Nam Định, Bạc Liêu, Cà Mau, Ninh Bình, Thái Nguyên, Nguyễn Phan Anh Thư, Trần Minh Hoàng Nam, Lê Thị Kim Ngân, Phạm Hồng Quang Dũng, Võ Văn Đức Trọng, Đặng Thùy Minh Châu, Bùi Hữu Phước Lộc, Ngô Mỹ Ngọc Huyền, Đỗ Tuấn Khải Hoàn, Hoàng Bảo Khánh An, Phan Thanh Trường Giang, Vũ Diệu Linh Chi, Cao Xuân Nhật Minh, Mai Thu Phương Thảo, Trịnh Quốc Bảo Lâm, Lý Thụy Vân Anh, Đinh Gia Thế Vinh, Đoàn Thục Thùy Dương, Lâm Vĩnh Tiến Đạt, Quách Kiến Tường Vy, Tập đoàn Công nghiệp Viễn thông Quân đội, Tổng công ty Hàng không Việt Nam, Ngân hàng Thương mại Cổ phần Ngoại thương, Công ty Sữa Việt Nam, Tập đoàn Xăng dầu Việt Nam, Tổng công ty Bưu điện Việt Nam, Công ty Cổ phần Thế giới Di động, Tập đoàn Hòa Phát, Công ty Cổ phần, Ngân hàng Nông nghiệp và Phát triển Nông thôn, Tập đoàn Dầu khí Quốc gia, Tổng công ty Đường sắt Việt Nam, Công ty Cổ phần Vinamilk, Tập đoàn Masan, Công ty Cổ phần, Tổng công ty Thăm dò Khai thác Dầu khí, Ngân hàng Công thương Việt Nam, Công ty Cổ phần Bánh kẹo Kinh Đô, Tổng công ty Bảo hiểm Bảo Việt, Công ty Cổ phần Đầu tư Thế giới Di động",
 };
 
-describe("transliterate", () => {
+describe("transliteration of texts in all supported languages", () => {
   for (const from of supportedLanguages) {
     for (const to of supportedLanguages.filter(l => l !== from)) {
       it(`from ${languages[from].name} to ${languages[to].name}`, async () => {
@@ -104,4 +104,62 @@ describe("transliterate", () => {
       });
     }
   }
+
+  describe("punctuation that belongs to the source script", () => {
+    it.each([
+      ["東京に行きます。", "ja", "en", "Tokyo Ni Iki Masu."],
+      ["はい、そうです。", "ja", "ru", "Хай, Со Дэсу."],
+      ["「東京」へ", "ja", "en", '"Tokyo" E'],
+      ["你好，世界。", "zh", "en", "Nihao，Shijie."],
+      ["مرحبا، كيف حالك؟", "ar", "en", "Mrhbia, Kayfa Halika?"],
+      ["سلام، دنیا۔", "ur", "en", "Slam, Duniya."],
+      ["سلام، دنیا؟", "fa", "en", "Salom, Donyo?"],
+      ["سلام؛ دنیا", "fa", "ru", "Селам; Донья"],
+    ] as const)("%s (%s → %s) keeps its punctuation", async (text, from, to, expected) => {
+      const transliterated = await transliterate(text, { from, to });
+      expect(transliterated).toBe(expected);
+      expect(validateLanguage(to, transliterated)).toBe(true);
+    });
+  });
+
+  describe("native and full-width digits", () => {
+    it.each([
+      ["سلام ۱۴۰۲", "fa", "en", "Salom 1402"],
+      ["سلام ۱۴۰۲", "fa", "ar", "سلام ١٤٠٢"],
+      ["سلام ۱۴۰۲", "fa", "ur", "سلام ۱۴۰۲"],
+      ["مرحبا ١٢٣", "ar", "ru", "Мрхбия 123"],
+      ["سلام ۱۲۳", "ur", "en", "Slam 123"],
+      ["नमस्ते १२३", "hi", "bn", "নমস্তে ১২৩"],
+      ["নমস্কার ১২৩", "bn", "en", "Namaskar 123"],
+      ["สวัสดี ๑๒๓", "th", "en", "Sawatdi 123"],
+      ["สวัสดี๑๒๓", "th", "ru", "Саватди123"],
+      ["สวัสดี ๑๒๓", "th", "ja", "スワトディー 123"],
+      ["নমস্কার ১২৩", "bn", "el", "Ναμασκαρ 123"],
+      ["नमस्ते १२३", "hi", "ru", "Неместе 123"],
+      ["مرحبا ١٢٣", "ar", "hi", "म्र्ह्बिअ 123"],
+      ["東京１２３", "ja", "en", "Tokyo123"],
+      ["東京 １２３", "ja", "ru", "Токио 123"],
+      ["東京 １２３", "ja", "ar", "توكيو 123"],
+      ["東京 １２３", "ja", "ko", "토우쿄우 123"],
+      ["東京 １２３", "ja", "zh", "东京 １２３"],
+      ["东京 １２３", "zh", "en", "Dongjing 123"],
+      ["东京 １２３", "zh", "ko", "디징 123"],
+      ["东京 １２３", "zh", "vi", "Đông Kinh 123"],
+      ["东京 １２３", "zh", "ja", "東京 １２３"],
+      ["서울 １２３", "ko", "en", "Seoul 123"],
+      ["서울 １２３", "ko", "hi", "सउल 123"],
+      ["Hello 123", "en", "ar", "هاللو 123"],
+    ] as const)("%s (%s → %s) keeps its digits", async (text, from, to, expected) => {
+      const transliterated = await transliterate(text, { from, to });
+      expect(transliterated).toBe(expected);
+      expect(validateLanguage(to, transliterated)).toBe(true);
+    });
+
+    it("converts digits in every string of an array", async () => {
+      expect(await transliterate(["سلام ۱", "دنیا ۲"], { from: "fa", to: "en" })).toEqual([
+        "Salom 1",
+        "Donyo 2",
+      ]);
+    });
+  });
 });

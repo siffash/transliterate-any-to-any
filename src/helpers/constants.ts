@@ -53,7 +53,7 @@ export const languages: Record<
     script: "Arab",
     locale: "fa-IR",
     regex:
-      "\u0621-\u0628\u062A-\u063A\u0641\u0642\u0644-\u0648\u064B-\u0655\u0670\u067E\u0686\u0698\u06A9\u06AF\u06C0\u06CC\u200C\\p{M}\\p{Cf}",
+      "\u0621-\u0628\u062A-\u063A\u0641\u0642\u0644-\u0648\u064B-\u0655\u0670\u067E\u0686\u0698\u06A9\u06AF\u06C0\u06CC\u06F0-\u06F9\u060C\u061B\u061F\u200C\\p{M}\\p{Cf}",
   },
   ar: {
     name: "Arabic",

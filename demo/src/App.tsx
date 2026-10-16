@@ -19,6 +19,7 @@ import Inventory2Icon from "@mui/icons-material/Inventory2";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import { getTheme } from "./theme";
 import { TransliteratorCard } from "./components/TransliteratorCard";
+import { UpdatePrompt } from "./components/UpdatePrompt";
 import { LINKS, LOCAL_STORAGE_KEYS, SCATTER } from "./constants";
 
 function getInitialMode(): "light" | "dark" {
@@ -30,6 +31,7 @@ function getInitialMode(): "light" | "dark" {
 
 export default function App() {
   const [mode, setMode] = useState<"light" | "dark">(getInitialMode);
+  const [pwaSnackbarVisible, setPwaSnackbarVisible] = useState(false);
   const theme = useMemo(() => getTheme(mode), [mode]);
 
   useEffect(() => {
@@ -177,7 +179,7 @@ export default function App() {
             </Stack>
           </Stack>
 
-          <TransliteratorCard />
+          <TransliteratorCard suppressErrors={pwaSnackbarVisible} />
         </Container>
 
         <Box component="footer" sx={{ mt: "auto", py: 3, textAlign: "center" }}>
@@ -204,6 +206,7 @@ export default function App() {
           </Typography>
         </Box>
       </Box>
+      <UpdatePrompt onVisibleChange={setPwaSnackbarVisible} />
     </ThemeProvider>
   );
 }

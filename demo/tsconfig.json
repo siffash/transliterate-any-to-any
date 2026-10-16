@@ -15,7 +15,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "types": ["node", "dom-speech-recognition"],
+    "types": ["node", "dom-speech-recognition", "vite-plugin-pwa/react"],
     "baseUrl": "."
   },
   "include": ["src", "vite.config.ts"]

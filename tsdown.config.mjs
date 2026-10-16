@@ -1,5 +1,6 @@
 import { defineConfig } from "tsdown";
 import nodePolyfills from "@rolldown/plugin-node-polyfills";
+import { getKuromojiDictUrl } from "./src/helpers/getKuromojiDictUrl.mts";
 
 export default defineConfig({
   entry: ["src/index.ts"],
@@ -10,6 +11,9 @@ export default defineConfig({
   shims: true,
   clean: true,
   minify: true,
+  define: {
+    __KUROMOJI_DICT_URL__: JSON.stringify(getKuromojiDictUrl()),
+  },
   deps: {
     alwaysBundle: [
       "aromanize",

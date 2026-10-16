@@ -9,10 +9,7 @@ export const getKuroshiro = () => {
     const kuroshiro = new Kuroshiro();
     await kuroshiro.init(
       new KuromojiAnalyzer({
-        dictPath:
-          isNode || isDeno || isBun
-            ? undefined
-            : "https://cdn.jsdelivr.net/npm/kuromoji@0.1.2/dict/",
+        dictPath: isNode || isDeno || isBun ? undefined : __KUROMOJI_DICT_URL__,
       }),
     );
     return kuroshiro;

@@ -6,6 +6,7 @@ import {
   CardContent,
   CircularProgress,
   IconButton,
+  Snackbar,
   Stack,
   TextField,
   Tooltip,
@@ -19,12 +20,19 @@ import MicOffIcon from "@mui/icons-material/MicOff";
 import SwapHorizIcon from "@mui/icons-material/SwapHoriz";
 import { Language, languages } from "transliterate-any-to-any";
 import { multilingualTextStack } from "../theme";
-import { useTransliterateWorker } from "../hooks/useTransliterateWorker";
+import { isLoadError, useTransliterateWorker } from "../hooks/useTransliterateWorker";
 import { useSpeechRecognition } from "../hooks/useSpeechRecognition";
 import { useQueryParams } from "../hooks/useQueryParams.ts";
 import { DEBOUNCE_MS, DEFAULT_LANGS, LOCAL_STORAGE_KEYS, MAX_CHARS } from "../constants";
 import { LanguageSelect } from "./LanguageSelect";
 import { CodeBadge } from "./CodeBadge";
+
+function getErrorMessage(err: Error): string {
+  if (!navigator.onLine && isLoadError(err.message)) {
+    return "This language pair isn't available offline yet. To make it available offline, use it once while online.";
+  }
+  return err.message || "Transliteration failed.";
+}
 
 function getInitialLangFrom(): Language {
   // try to get from URL
@@ -52,7 +60,7 @@ function getInitialLangTo(): Language {
   return DEFAULT_LANGS.langTo;
 }
 
-export const TransliteratorCard = () => {
+export const TransliteratorCard = ({ suppressErrors = false }: { suppressErrors?: boolean }) => {
   const [langFrom, setLangFrom] = useState<Language>(getInitialLangFrom);
   const [langTo, setLangTo] = useState<Language>(getInitialLangTo);
   const [sourceText, setSourceText] = useState("");
@@ -61,12 +69,14 @@ export const TransliteratorCard = () => {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
   const [swapRotation, setSwapRotation] = useState(0);
+  const [retryKey, setRetryKey] = useState(0);
 
   const { run } = useTransliterateWorker();
   const sourceTextInputRef = useRef<HTMLInputElement>(null);
   const requestIdRef = useRef(0);
   const baseTextRef = useRef("");
   const dontPushToHistory = useRef(false);
+  const loadFailedRef = useRef(false);
 
   const {
     params: { paramFrom, paramTo, paramText },
@@ -117,13 +127,15 @@ export const TransliteratorCard = () => {
       run(sourceText, langFrom, langTo)
         .then(result => {
           if (thisId === requestIdRef.current) {
+            loadFailedRef.current = false;
             setTargetText(result);
             setErrorMsg(null);
           }
         })
         .catch((err: Error) => {
           if (thisId === requestIdRef.current) {
-            setErrorMsg(err.message || "Transliteration failed.");
+            loadFailedRef.current = isLoadError(err.message);
+            setErrorMsg(getErrorMessage(err));
           }
         })
         .finally(() => {
@@ -134,7 +146,19 @@ export const TransliteratorCard = () => {
     }, DEBOUNCE_MS);
 
     return () => clearTimeout(timer);
-  }, [sourceText, langFrom, langTo, run]);
+  }, [sourceText, langFrom, langTo, run, retryKey]);
+
+  // A language pair that failed to load (e.g. offline) is loaded again as soon
+  // as the connection is back, without waiting for the next keystroke
+  useEffect(() => {
+    const onOnline = () => {
+      if (!loadFailedRef.current) return;
+      dontPushToHistory.current = true;
+      setRetryKey(key => key + 1);
+    };
+    window.addEventListener("online", onOnline);
+    return () => window.removeEventListener("online", onOnline);
+  }, []);
 
   useEffect(() => {
     window.localStorage.setItem(LOCAL_STORAGE_KEYS.langFrom, langFrom);
@@ -193,6 +217,12 @@ export const TransliteratorCard = () => {
     }
   }, [errorMsg]);
 
+  useEffect(() => {
+    if (suppressErrors && errorMsg) {
+      setErrorMsg(null);
+    }
+  }, [suppressErrors, errorMsg]);
+
   const handleSourceChange = (value: string) => {
     setSourceText(value.slice(0, MAX_CHARS));
     setErrorMsg(null);
@@ -202,7 +232,7 @@ export const TransliteratorCard = () => {
     setSwapRotation(r => r + 180);
     setLangFrom(langTo);
     setLangTo(langFrom);
-    setSourceText(targetText);
+    if (targetText) setSourceText(targetText);
   };
 
   const handleClear = () => {
@@ -442,10 +472,17 @@ export const TransliteratorCard = () => {
           </Box>
         </Stack>
 
-        {errorMsg && (
-          <Alert severity="error" sx={{ mt: 2 }} onClose={() => setErrorMsg(null)}>
-            {errorMsg}
-          </Alert>
+        {!!errorMsg && (
+          <Snackbar
+            open
+            message={
+              <Alert severity="error" onClose={() => setErrorMsg(null)}>
+                {errorMsg}
+              </Alert>
+            }
+            anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+            sx={{ "& .MuiSnackbarContent-root, & .MuiSnackbarContent-message": { padding: 0 } }}
+          />
         )}
       </CardContent>
     </Card>
