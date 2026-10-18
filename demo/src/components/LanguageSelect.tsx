@@ -1,4 +1,4 @@
-import { Autocomplete, FormControl, TextField } from "@mui/material";
+import { Autocomplete, FormControl, TextField, type SxProps, type Theme } from "@mui/material";
 import { Language, languages } from "transliterate-any-to-any";
 
 export const LanguageSelect = ({
@@ -6,14 +6,18 @@ export const LanguageSelect = ({
   label,
   value,
   onChange,
+  blurOnSelect,
+  sx,
 }: {
   id: string;
   label: string;
   value: string;
   onChange: (code: Language) => void;
+  blurOnSelect?: boolean | "touch" | "mouse";
+  sx?: SxProps<Theme>;
 }) => {
   return (
-    <FormControl size="small" sx={{ minWidth: 180 }}>
+    <FormControl size="small" sx={[{ minWidth: 180 }, ...(Array.isArray(sx) ? sx : [sx])]}>
       <Autocomplete
         id={id}
         options={(Object.keys(languages) as Language[]).sort((a, b) =>
@@ -37,6 +41,7 @@ export const LanguageSelect = ({
         }}
         renderInput={params => <TextField {...params} label={label} size="small" />}
         disableClearable
+        blurOnSelect={blurOnSelect}
         sx={{
           bgcolor: "background.paper",
         }}

@@ -107,6 +107,15 @@ export default defineConfig({
     },
     tsconfigPaths: true,
   },
+  // The mobile app isn't part of the PWA
+  optimizeDeps: {
+    entries: ["index.html"],
+  },
+  server: {
+    watch: {
+      ignored: ["**/android/**", "**/ios/**", "**/dist-mobile/**"],
+    },
+  },
   worker: {
     format: "es",
     plugins: () => [pack.workerPlugin()],

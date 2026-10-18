@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import {
   Box,
   Chip,
@@ -20,23 +20,13 @@ import LightModeIcon from "@mui/icons-material/LightMode";
 import { getTheme } from "./theme";
 import { TransliteratorCard } from "./components/TransliteratorCard";
 import { UpdatePrompt } from "./components/UpdatePrompt";
-import { LINKS, LOCAL_STORAGE_KEYS, SCATTER } from "./constants";
-
-function getInitialMode(): "light" | "dark" {
-  if (typeof window === "undefined") return "light";
-  const stored = window.localStorage.getItem(LOCAL_STORAGE_KEYS.colorMode);
-  if (stored === "light" || stored === "dark") return stored;
-  return window.matchMedia?.("(prefers-color-scheme: light)").matches ? "light" : "dark";
-}
+import { useColorMode } from "./hooks/useColorMode";
+import { LINKS, SCATTER } from "./constants";
 
 export default function App() {
-  const [mode, setMode] = useState<"light" | "dark">(getInitialMode);
+  const { mode, toggleMode } = useColorMode();
   const [pwaSnackbarVisible, setPwaSnackbarVisible] = useState(false);
   const theme = useMemo(() => getTheme(mode), [mode]);
-
-  useEffect(() => {
-    window.localStorage.setItem(LOCAL_STORAGE_KEYS.colorMode, mode);
-  }, [mode]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -52,7 +42,7 @@ export default function App() {
         <Container component="main" maxWidth="md" sx={{ py: { xs: 6, sm: 10 } }}>
           <Tooltip title={mode === "dark" ? "Switch to light mode" : "Switch to dark mode"}>
             <IconButton
-              onClick={() => setMode(m => (m === "dark" ? "light" : "dark"))}
+              onClick={toggleMode}
               sx={{ position: "absolute", top: 0, right: 0, zIndex: 1, m: 2 }}
               aria-label="Toggle color mode"
             >

@@ -36,7 +36,8 @@ export function getTheme(mode: "light" | "dark"): Theme {
     typography: {
       fontFamily: '"IBM Plex Sans", system-ui, sans-serif',
       h1: {
-        fontFamily: '"Bricolage Grotesque", "IBM Plex Sans", system-ui, sans-serif',
+        fontFamily:
+          '"Bricolage Grotesque", "Bricolage Grotesque Variable", "IBM Plex Sans", system-ui, sans-serif',
         fontWeight: 700,
         letterSpacing: "-0.01em",
       },

@@ -26,10 +26,15 @@ export function getKuromojiDictUrl(): string {
   return `https://cdn.jsdelivr.net/npm/kuromoji@${findKuromoji().version}/dict/`;
 }
 
+// The directory of the dictionary, which the demo's mobile app bundles
+export function getKuromojiDictDir(): string {
+  return path.join(findKuromoji().dir, "dict");
+}
+
 // The dictionary files, which the demo precaches for offline use
 export function getKuromojiDictFiles(): string[] {
   return fs
-    .readdirSync(path.join(findKuromoji().dir, "dict"))
+    .readdirSync(getKuromojiDictDir())
     .filter(file => file.endsWith(".dat.gz"))
     .sort();
 }
