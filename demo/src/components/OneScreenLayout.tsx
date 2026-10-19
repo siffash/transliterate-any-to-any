@@ -64,6 +64,7 @@ export function OneScreenLayout({
   const viewport = useVisualViewport();
   const keyboard = keyboardOpen ?? viewport.keyboardOpen;
   const [resultShown, setResultShown] = useState(false);
+  const footerShown = !keyboard && !resultShown;
   // The header and the footer slide away (at once if motion is reduced)
   const timeout = useMediaQuery("(prefers-reduced-motion: reduce)") ? 0 : undefined;
 
@@ -108,6 +109,14 @@ export function OneScreenLayout({
             mx: "auto",
             // For the error snackbar (see OneScreenTransliterator)
             position: "relative",
+            // Without the header or the footer, the content keeps a margin from
+            // the screen edges, growing as they slide away
+            pt: resultShown ? 1 : 0,
+            pb: footerShown ? 0 : 1,
+            transition: theme =>
+              theme.transitions.create(["padding-top", "padding-bottom"], {
+                duration: timeout ?? theme.transitions.duration.standard,
+              }),
           }}
         >
           <Collapse in={!resultShown} timeout={timeout} sx={{ flexShrink: 0 }}>
@@ -143,7 +152,7 @@ export function OneScreenLayout({
           </ResultShownContext.Provider>
 
           {/* Hidden while typing or showing a result, to leave the space to the text */}
-          <Collapse in={!keyboard && !resultShown} timeout={timeout} sx={{ flexShrink: 0 }}>
+          <Collapse in={footerShown} timeout={timeout} sx={{ flexShrink: 0 }}>
             <Box component="footer" sx={{ display: "flex", px: 1, pb: 0.5 }}>
               {links.map(({ label, href, icon }) => (
                 <Button
