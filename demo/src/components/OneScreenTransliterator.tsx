@@ -21,7 +21,6 @@ import { useTransliterator } from "../hooks/useTransliterator";
 import type { SpeechInput } from "../hooks/useSpeechRecognition";
 import { MAX_CHARS } from "../constants";
 import { LanguageSelect } from "./LanguageSelect";
-import { CodeBadge } from "./CodeBadge";
 import { useReportResultShown } from "./OneScreenLayout";
 
 const panelSx = {
@@ -39,7 +38,7 @@ const panelSx = {
 // The text area fills its panel and scrolls inside it
 const textAreaSx = {
   px: 2,
-  pt: 1,
+  pt: 2,
   flex: 1,
   minHeight: 0,
   "& .MuiInputBase-root": {
@@ -55,7 +54,14 @@ const textAreaSx = {
   },
 };
 
-const spinnerSx = { position: "absolute", top: 14, right: 16 } as const;
+const SPINNER_SIZE = 32;
+const spinnerSx = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  mt: `${-SPINNER_SIZE / 2}px`,
+  ml: `${-SPINNER_SIZE / 2}px`,
+} as const;
 
 /**
  * The transliterator card laid out like the Google Translate app, for
@@ -97,14 +103,14 @@ export const OneScreenTransliterator = ({
     handleToLang,
   } = useTransliterator({ speech, copyText, syncUrl, suppressErrors });
 
-  // The target panel appears with the first transliteration, and stays while
-  // the next one loads (e.g. after a language change), so that the layout
-  // doesn't jump; it goes away with the source text or on an error
+  // The target panel appears as soon as a transliteration starts loading, and
+  // stays while the next one loads (e.g. after a language change), so that the
+  // layout doesn't jump; it goes away with the source text or on an error
   const [showTarget, setShowTarget] = useState(false);
   useEffect(() => {
-    if (targetText) setShowTarget(true);
+    if (loading || targetText) setShowTarget(true);
     else if (!sourceText.trim() || errorMsg) setShowTarget(false);
-  }, [targetText, sourceText, errorMsg]);
+  }, [loading, targetText, sourceText, errorMsg]);
 
   const reportResultShown = useReportResultShown();
   useEffect(() => reportResultShown(showTarget), [showTarget, reportResultShown]);
@@ -159,9 +165,6 @@ export const OneScreenTransliterator = ({
       >
         {/* Source panel */}
         <Box sx={panelSx}>
-          <Box sx={{ px: 2, pt: 1.5 }}>
-            <CodeBadge code={langFrom} />
-          </Box>
           <TextField
             multiline
             placeholder="Type, paste, or dictate text to transliterate"
@@ -175,7 +178,6 @@ export const OneScreenTransliterator = ({
             sx={textAreaSx}
             inputRef={sourceTextInputRef}
           />
-          {loading && !showTarget && <CircularProgress size={18} sx={spinnerSx} />}
           <Stack
             component="div"
             direction="row"
@@ -223,21 +225,21 @@ export const OneScreenTransliterator = ({
         {/* Target panel */}
         {showTarget && (
           <Box sx={panelSx}>
-            <Box sx={{ px: 2, pt: 1.5 }}>
-              <CodeBadge code={langTo} />
-            </Box>
             <TextField
               multiline
-              placeholder="Transliteration appears here"
+              placeholder={loading ? "" : "Transliteration appears here"}
               value={targetText}
               variant="standard"
               slotProps={{
                 input: { readOnly: true, disableUnderline: true },
-                htmlInput: { "aria-label": "Transliterated text" },
+                htmlInput: { "aria-label": "Transliterated text", "aria-busy": loading },
               }}
-              sx={textAreaSx}
+              // The previous result stays, dimmed, while the next one loads
+              sx={[textAreaSx, { opacity: loading ? 0.4 : 1, transition: "opacity 0.2s" }]}
             />
-            {loading && <CircularProgress size={18} sx={spinnerSx} />}
+            {loading && (
+              <CircularProgress size={SPINNER_SIZE} sx={spinnerSx} aria-label="Transliterating" />
+            )}
             <Stack
               component="div"
               direction="row"
