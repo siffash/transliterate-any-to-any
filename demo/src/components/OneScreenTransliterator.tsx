@@ -16,13 +16,12 @@ import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import MicIcon from "@mui/icons-material/Mic";
 import MicOffIcon from "@mui/icons-material/MicOff";
 import SwapHorizIcon from "@mui/icons-material/SwapHoriz";
-import { multilingualTextStack } from "../src/theme";
-import { useTransliterator } from "../src/hooks/useTransliterator";
-import { MAX_CHARS } from "../src/constants";
-import { LanguageSelect } from "../src/components/LanguageSelect";
-import { CodeBadge } from "../src/components/CodeBadge";
-import { useNativeSpeechRecognition } from "./hooks/useNativeSpeechRecognition";
-import { copyText } from "./native";
+import { multilingualTextStack } from "../theme";
+import { useTransliterator } from "../hooks/useTransliterator";
+import type { SpeechInput } from "../hooks/useSpeechRecognition";
+import { MAX_CHARS } from "../constants";
+import { LanguageSelect } from "./LanguageSelect";
+import { CodeBadge } from "./CodeBadge";
 
 const panelSx = {
   flex: 1,
@@ -58,12 +57,22 @@ const textAreaSx = {
 const spinnerSx = { position: "absolute", top: 14, right: 16 } as const;
 
 /**
- * The PWA's transliterator card laid out like the Google Translate app: the
- * source panel takes all the space until there is a transliteration, and then
- * shares it equally with the target panel.
+ * The transliterator card laid out like the Google Translate app, for
+ * OneScreenLayout: the source panel takes all the space until there is a
+ * transliteration, and then shares it equally with the target panel. The
+ * options are useTransliterator's.
  */
-export const MobileTransliterator = () => {
-  const speech = useNativeSpeechRecognition();
+export const OneScreenTransliterator = ({
+  speech,
+  copyText,
+  syncUrl,
+  suppressErrors,
+}: {
+  speech: SpeechInput;
+  copyText: (text: string) => Promise<void>;
+  syncUrl: boolean;
+  suppressErrors?: boolean;
+}) => {
   const {
     langFrom,
     langTo,
@@ -85,7 +94,7 @@ export const MobileTransliterator = () => {
     handleMicToggle,
     handleFromLang,
     handleToLang,
-  } = useTransliterator({ speech, copyText, syncUrl: false });
+  } = useTransliterator({ speech, copyText, syncUrl, suppressErrors });
 
   // The target panel appears with the first transliteration, and stays while
   // the next one loads (e.g. after a language change), so that the layout
@@ -249,8 +258,8 @@ export const MobileTransliterator = () => {
           </Box>
         )}
 
-        {/* At the bottom of the app's column (see MobileApp) rather than of the
-            screen, over the footer, so that it stays above the keyboard too */}
+        {/* At the bottom of the layout's column (see OneScreenLayout) rather than
+            of the screen, over the footer, so that it stays above the keyboard too */}
         {!!errorMsg && (
           <Snackbar
             open

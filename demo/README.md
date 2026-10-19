@@ -22,7 +22,7 @@ npm run dev # or npm run build && npm run preview
 
 ## Mobile app (Android & iOS)
 
-The demo also ships as a native app built with [Capacitor](https://capacitorjs.com): the same React + MUI code runs in the system WebView, laid out for phones like the Google Translate app (`mobile/`). It shares the transliterator's logic with the PWA through `src/hooks/useTransliterator.ts`, and uses native plugins for voice input, the clipboard, links and the status bar.
+The demo also ships as a native app built with [Capacitor](https://capacitorjs.com): the same React + MUI code runs in the system WebView (`mobile/`), with native plugins for voice input, the clipboard, links and the status bar. It's laid out for phones like the Google Translate app, on one screen (`src/components/OneScreenLayout.tsx`, `OneScreenTransliterator.tsx`), which the PWA also uses on phones, tablets and windows narrower than 1024px. Both share the transliterator's logic through `src/hooks/useTransliterator.ts`.
 
 The app works offline right after install. Unlike the PWA, which downloads the library's chunks and the kuromoji dictionary as needed, the app contains all of them: `vite.mobile.config.ts` builds it into `dist-mobile/`, with the fonts bundled and kuromoji pointed at the app's own copy of the dictionary instead of jsDelivr.
 
