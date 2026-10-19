@@ -9,8 +9,6 @@ import type { ColorMode } from "../src/hooks/useColorMode";
 
 const isNative = Capacitor.isNativePlatform();
 
-export const isIos = Capacitor.getPlatform() === "ios";
-
 export const copyText = (text: string) => Clipboard.write({ string: text });
 
 // In an in-app browser tab (SFSafariViewController / Custom Tabs)

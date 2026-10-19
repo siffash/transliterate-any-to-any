@@ -1,16 +1,22 @@
 import { useEffect, useMemo } from "react";
 import { CssBaseline, ThemeProvider } from "@mui/material";
+import PrivacyTipIcon from "@mui/icons-material/PrivacyTip";
 import { getTheme } from "../src/theme";
 import { useColorMode } from "../src/hooks/useColorMode";
 import { LINKS } from "../src/constants";
-import { FOOTER_LINKS, OneScreenLayout } from "../src/components/OneScreenLayout";
+import { FOOTER_LINKS, OneScreenLayout, type FooterLink } from "../src/components/OneScreenLayout";
 import { OneScreenTransliterator } from "../src/components/OneScreenTransliterator";
 import { useKeyboardVisible } from "./hooks/useKeyboardVisible";
 import { useNativeSpeechRecognition } from "./hooks/useNativeSpeechRecognition";
-import { copyText, hideSplashScreen, isIos, openExternal, setSystemBarsStyle } from "./native";
+import { copyText, hideSplashScreen, openExternal, setSystemBarsStyle } from "./native";
 
-// Apple rejects apps that link to paying the developer outside the App Store
-const links = isIos ? FOOTER_LINKS.filter(link => link.href !== LINKS.support) : FOOTER_LINKS;
+const PRIVACY_LINK: FooterLink = {
+  label: "Privacy",
+  href: LINKS.privacy,
+  icon: <PrivacyTipIcon />,
+};
+
+const links = [...FOOTER_LINKS.filter(link => link.href !== LINKS.support), PRIVACY_LINK];
 
 const openLink = (href: string) => {
   openExternal(href).catch(() => {});

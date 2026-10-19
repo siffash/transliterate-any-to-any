@@ -5,6 +5,7 @@ export const LINKS = {
   package: "https://www.npmjs.com/package/transliterate-any-to-any",
   article: "https://realpandablog.wordpress.com/2026/09/03/transliterate-any-to-any/",
   support: "https://github.com/sponsors/siffash",
+  privacy: "https://transliterate-any-to-any.js.org/privacy.html",
 };
 
 export const DEFAULT_LANGS: { langFrom: Language; langTo: Language } = {

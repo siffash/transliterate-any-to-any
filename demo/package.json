@@ -11,6 +11,7 @@
     "build:mobile": "tsc --noEmit && vite build --config vite.mobile.config.ts && cap sync",
     "android": "cap run android",
     "ios": "cap run ios",
+    "bundle:android": "npm run build:mobile && cd android && ./gradlew bundleRelease",
     "icons:mobile": "node mobile/resources/render.mjs && capacitor-assets generate --ios --android --assetPath mobile/resources --iconBackgroundColor \"#D9AE4F\" --iconBackgroundColorDark \"#D9AE4F\" --splashBackgroundColor \"#FFFFFF\" --splashBackgroundColorDark \"#1A1822\""
   },
   "dependencies": {
