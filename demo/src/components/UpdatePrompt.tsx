@@ -1,9 +1,46 @@
 import { useEffect, useRef, useState } from "react";
 import { Box, Button, Snackbar } from "@mui/material";
 import { useRegisterSW } from "virtual:pwa-register/react";
-import { useOfflinePack } from "../hooks/useOfflinePack";
+import { type OfflinePackProgress, useOfflinePack } from "../hooks/useOfflinePack";
 
 const UPDATE_CHECK_INTERVAL_MS = 60 * 60 * 1000;
+const NOTICE_DURATION_MS = 4000;
+
+// Rounded, so 59.6s reads "1 min" rather than "60s"
+const formatDelay = (ms: number) =>
+  ms < 59_500 ? `${Math.round(ms / 1000)}s` : `${Math.round(ms / 60_000)} min`;
+
+// What the offline download has come to, after a pass
+const offlinePackNotice = (progress: OfflinePackProgress) => {
+  switch (progress.status) {
+    case "offline":
+      return "Offline download paused — waiting for connection";
+    case "waiting":
+      return `Couldn't download some files, retrying in ${formatDelay(progress.retryInMs)}`;
+    case "finished":
+      return progress.failed > 0 ? "Some languages may not work offline" : "Ready to work offline";
+    default:
+      return null;
+  }
+};
+
+// Tells notices apart, even with the same text: each one comes with its own
+// progress object
+const noticeIds = new WeakMap<OfflinePackProgress, number>();
+let lastNoticeId = 0;
+const noticeId = (progress: OfflinePackProgress) => {
+  let id = noticeIds.get(progress);
+  if (id === undefined) noticeIds.set(progress, (id = ++lastNoticeId));
+  return id;
+};
+
+interface Message {
+  // A message with the same id is updated in place, e.g. the download's percentage
+  id: string;
+  text: string;
+  // The progress a notice is about; notices hide by themselves
+  notice?: OfflinePackProgress;
+}
 
 export const UpdatePrompt = ({
   onVisibleChange,
@@ -35,15 +72,42 @@ export const UpdatePrompt = ({
   });
 
   const offlinePack = useOfflinePack();
-  const [offlineReadyClosed, setOfflineReadyClosed] = useState(false);
-  const downloading = offlinePack !== null && offlinePack.done < offlinePack.total;
-  const downloadPercent = offlinePack
-    ? Math.floor((offlinePack.done / offlinePack.total) * 100)
-    : 0;
-  const offlineReady =
-    offlinePack !== null && !downloading && offlinePack.failed === 0 && !offlineReadyClosed;
+  // Each notice is shown once, for the progress it's about
+  const [closedNotice, setClosedNotice] = useState<OfflinePackProgress | null>(null);
+  const notice = offlinePack && offlinePackNotice(offlinePack);
 
-  const visible = needRefresh || downloading || offlineReady;
+  // What should be on screen, by priority
+  let desired: Message | null = null;
+  if (needRefresh) {
+    desired = { id: "update", text: "New version available" };
+  } else if (offlinePack?.status === "downloading") {
+    const percent = Math.floor((offlinePack.done / offlinePack.total) * 100);
+    desired = { id: "progress", text: `Downloading for offline use... ${percent}%` };
+  } else if (offlinePack && notice && closedNotice !== offlinePack) {
+    desired = { id: `notice-${noticeId(offlinePack)}`, text: notice, notice: offlinePack };
+  }
+
+  // One snackbar at a time: a different message waits for the current one to
+  // close and finish its exit transition, and then the latest one is shown
+  const [shown, setShown] = useState<Message | null>(null);
+  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    if (shown === null) {
+      if (desired) {
+        setShown(desired);
+        setOpen(true);
+      }
+    } else if (shown.id === desired?.id) {
+      if (shown.text !== desired.text) setShown(desired);
+      // Back before its exit transition ended
+      setOpen(true);
+    } else {
+      setOpen(false);
+    }
+  }, [shown, desired?.id, desired?.text]);
+
+  // Until the exit transition ends
+  const visible = shown !== null;
   useEffect(() => {
     onVisibleChange?.(visible);
   }, [visible, onVisibleChange]);
@@ -93,12 +157,19 @@ export const UpdatePrompt = ({
   };
 
   return (
-    <>
-      <Snackbar
-        open={needRefresh}
-        message="New version available"
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-        action={
+    <Snackbar
+      // A new message gets its own auto-hide timer
+      key={shown?.id}
+      open={open}
+      message={shown?.text}
+      autoHideDuration={shown?.notice ? NOTICE_DURATION_MS : null}
+      onClose={() => {
+        if (open && shown?.notice) setClosedNotice(shown.notice);
+      }}
+      slotProps={{ transition: { onExited: () => setShown(null) } }}
+      anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      action={
+        shown?.id === "update" && (
           <Box
             sx={{
               display: "flex",
@@ -116,20 +187,8 @@ export const UpdatePrompt = ({
               Reload
             </Button>
           </Box>
-        }
-      />
-      <Snackbar
-        open={downloading && !needRefresh}
-        message={`Downloading for offline use... ${downloadPercent}%`}
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-      />
-      <Snackbar
-        open={offlineReady && !needRefresh}
-        message="Ready to work offline"
-        autoHideDuration={4000}
-        onClose={() => setOfflineReadyClosed(true)}
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-      />
-    </>
+        )
+      }
+    />
   );
 };
