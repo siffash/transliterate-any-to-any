@@ -3,7 +3,7 @@ import { getJieba, type Jieba } from "helpers/getJieba";
 // Transliterated names stay whole (阿里巴巴, 麦当劳)
 const FOREIGN_NAME_TAG = "nrt";
 const NAME_TAG = "nr";
-// The most common surnames (in simplified Chinese, see segmentChinese)
+// The most common surnames (in simplified Chinese, see loadChineseSegmenter)
 const SURNAMES = new Set(
   "王李张刘陈杨黄赵吴周徐孙马朱胡郭何高林罗郑梁谢宋唐许韩冯邓曹彭曾肖田董袁潘于蒋蔡余杜叶程苏魏吕丁任沈姚卢姜崔钟谭陆汪范金石廖贾夏韦付方白邹孟熊秦邱江尹薛闫段雷侯龙史陶黎贺顾毛郝龚邵万钱严覃武戴莫孔向汤",
 );
@@ -69,9 +69,15 @@ const splitWord = (jieba: Jieba, { word, tag }: { word: string; tag: string }) =
  * jieba's dictionary and pinyin-pro's readings are in simplified Chinese, so
  * traditional text is split by its simplified form (OpenCC converts it
  * character for character), and its words are given in that form.
+ *
+ * Rejects if jieba or OpenCC can't be loaded.
  */
-export const segmentChinese = async (text: string) => {
+export const loadChineseSegmenter = async () => {
   const [jieba, toSimplified] = await Promise.all([getJieba(), getToSimplified()]);
+  return (text: string) => segmentChinese(jieba, toSimplified, text);
+};
+
+const segmentChinese = (jieba: Jieba, toSimplified: (text: string) => string, text: string) => {
   const original = [...text];
   const simplified = toSimplified(text);
   const source = [...simplified].length === original.length ? simplified : text;

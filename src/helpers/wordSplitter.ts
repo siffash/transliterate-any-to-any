@@ -35,16 +35,57 @@ const PUNCTUATION: Record<string, [replacement: string, kind: Kind]> = {
 
 type Segment = { segment: string; isWordLike?: boolean };
 
-// Chinese and Japanese words come from the dictionaries the library ships,
-// because Intl.Segmenter splits them according to the engine's ICU data,
-// which on Android lacks the CJ dictionary (see segmentChinese, segmentJapanese)
-const getWordSegmenter = async (
-  language: Language,
-): Promise<(text: string) => Promise<Segment[]> | Segment[]> => {
-  if (language === "zh") return (await import("helpers/segmentChinese")).segmentChinese;
-  if (language === "ja") return (await import("helpers/segmentJapanese")).segmentJapanese;
+type WordSegmenter = (text: string) => Promise<Segment[]> | Segment[];
+
+const getIntlSegmenter = (language: Language): WordSegmenter => {
   const segmenter = new Segmenter(language, { granularity: "word" });
   return text => Array.from(segmenter.segment(text));
+};
+
+let warnedChineseFallback = false;
+
+// jieba is WebAssembly, which some environments don't run or load (no
+// WebAssembly, a CSP without 'wasm-unsafe-eval', a bundler that doesn't emit
+// its .wasm, offline in a browser): Chinese then falls back to Intl.Segmenter,
+// whose words are worse but still words. The next call tries jieba again,
+// unless there's no WebAssembly at all.
+const getChineseSegmenter = async (): Promise<WordSegmenter> => {
+  const fallback = getIntlSegmenter("zh");
+  const warn = (e: unknown) => {
+    if (warnedChineseFallback) return;
+    warnedChineseFallback = true;
+    console.warn(
+      "transliterate-any-to-any: Chinese word segmentation (jieba-wasm) failed, so Intl.Segmenter splits Chinese into words instead",
+      e,
+    );
+  };
+  if (typeof WebAssembly === "undefined") {
+    warn(new Error("WebAssembly is not available"));
+    return fallback;
+  }
+  try {
+    const segment = await (await import("helpers/segmentChinese")).loadChineseSegmenter();
+    return text => {
+      try {
+        return segment(text);
+      } catch (e) {
+        warn(e);
+        return fallback(text);
+      }
+    };
+  } catch (e) {
+    warn(e);
+    return fallback;
+  }
+};
+
+// Chinese and Japanese words come from the dictionaries the library ships,
+// because Intl.Segmenter splits them according to the engine's ICU data,
+// which on Android lacks the CJ dictionary (see loadChineseSegmenter, segmentJapanese)
+const getWordSegmenter = async (language: Language): Promise<WordSegmenter> => {
+  if (language === "zh") return getChineseSegmenter();
+  if (language === "ja") return (await import("helpers/segmentJapanese")).segmentJapanese;
+  return getIntlSegmenter(language);
 };
 
 // Whether a space goes between the previous token and the next one, e.g.

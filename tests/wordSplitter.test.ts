@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi, afterEach } from "vitest";
 import { wordSplitter } from "../src/helpers/wordSplitter";
 
 describe("wordSplitter", () => {
@@ -131,6 +131,65 @@ describe("wordSplitter", () => {
       const calls: string[] = [];
       expect(await wordSplitter("123 456", "en", word => (calls.push(word), word))).toBe("123 456");
       expect(calls).toEqual([]);
+    });
+  });
+
+  // Where jieba-wasm can't run (no WebAssembly, a strict CSP, its .wasm not
+  // emitted by the bundler), Chinese is still split by Intl.Segmenter
+  describe("Chinese without jieba", () => {
+    afterEach(() => {
+      vi.doUnmock("../src/helpers/getJieba");
+      vi.resetModules();
+      vi.restoreAllMocks();
+      vi.unstubAllGlobals();
+    });
+
+    const importWithJieba = async (getJieba: () => Promise<unknown>) => {
+      vi.resetModules();
+      vi.doMock("../src/helpers/getJieba", () => ({ getJieba }));
+      return (await import("../src/helpers/wordSplitter")).wordSplitter;
+    };
+
+    // Words as the engine's ICU data splits them, whatever its version
+    const intlWords = (text: string) =>
+      Array.from(new Intl.Segmenter("zh", { granularity: "word" }).segment(text))
+        .filter(({ isWordLike }) => isWordLike)
+        .map(({ segment }) => `[${segment}]`)
+        .join(" ");
+
+    const TEXT = "我们一起去银行";
+
+    it("falls back to Intl.Segmenter when jieba fails to load, warning once", async () => {
+      const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+      const getJieba = vi.fn(() => Promise.reject(new Error("CompileError: blocked by CSP")));
+      const split = await importWithJieba(getJieba);
+      expect(await split(TEXT, "zh", word => `[${word}]`)).toBe(intlWords(TEXT));
+      expect(await split(TEXT, "zh", word => `[${word}]`)).toBe(intlWords(TEXT));
+      // Tried again on the next call, but warned only once
+      expect(getJieba).toHaveBeenCalledTimes(2);
+      expect(warn).toHaveBeenCalledOnce();
+    });
+
+    it("falls back to Intl.Segmenter when jieba fails while splitting", async () => {
+      const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+      const split = await importWithJieba(async () => ({
+        tag: () => {
+          throw new Error("RuntimeError: unreachable");
+        },
+      }));
+      expect(await split(TEXT, "zh", word => `[${word}]`)).toBe(intlWords(TEXT));
+      expect(warn).toHaveBeenCalledOnce();
+    });
+
+    it("doesn't try jieba without WebAssembly", async () => {
+      const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+      vi.stubGlobal("WebAssembly", undefined);
+      const getJieba = vi.fn();
+      const split = await importWithJieba(getJieba);
+      expect(await split(TEXT, "zh", word => `[${word}]`)).toBe(intlWords(TEXT));
+      expect(await split(TEXT, "zh", word => `[${word}]`)).toBe(intlWords(TEXT));
+      expect(getJieba).not.toHaveBeenCalled();
+      expect(warn).toHaveBeenCalledOnce();
     });
   });
 });
