@@ -1,4 +1,4 @@
-import { defineConfig } from "vite";
+import { defineConfig, searchForWorkspaceRoot } from "vite";
 import react from "@vitejs/plugin-react";
 import { VitePWA } from "vite-plugin-pwa";
 import { minimal2023Preset } from "@vite-pwa/assets-generator/config";
@@ -112,6 +112,13 @@ export default defineConfig({
     entries: ["index.html"],
   },
   server: {
+    fs: {
+      // jieba's .wasm, which the library (../dist) loads from the repo's node_modules
+      allow: [
+        searchForWorkspaceRoot(__dirname),
+        path.resolve(__dirname, "../node_modules/jieba-wasm"),
+      ],
+    },
     watch: {
       ignored: ["**/android/**", "**/ios/**", "**/dist-mobile/**"],
     },

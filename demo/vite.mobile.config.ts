@@ -1,4 +1,4 @@
-import { defineConfig, type Plugin } from "vite";
+import { defineConfig, searchForWorkspaceRoot, type Plugin } from "vite";
 import react from "@vitejs/plugin-react";
 import fs from "node:fs";
 import path from "node:path";
@@ -93,6 +93,15 @@ export default defineConfig({
   },
   optimizeDeps: {
     entries: ["index.html"],
+  },
+  server: {
+    fs: {
+      // jieba's .wasm, which the library (../dist) loads from the repo's node_modules
+      allow: [
+        searchForWorkspaceRoot(__dirname),
+        path.resolve(__dirname, "../node_modules/jieba-wasm"),
+      ],
+    },
   },
   worker: {
     format: "es",

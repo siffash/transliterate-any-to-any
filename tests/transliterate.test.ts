@@ -107,7 +107,7 @@ describe("transliteration of texts in all supported languages", () => {
 
   describe("punctuation that belongs to the source script", () => {
     it.each([
-      ["東京に行きます。", "ja", "en", "Tokyo Ni Iki Masu."],
+      ["東京に行きます。", "ja", "en", "Tokyo Ni Ikimasu."],
       ["はい、そうです。", "ja", "ru", "Хай, Со Дэсу."],
       ["「東京」へ", "ja", "en", '"Tokyo" E'],
       ["你好，世界。", "zh", "en", "Nihao，Shijie."],
@@ -161,5 +161,63 @@ describe("transliteration of texts in all supported languages", () => {
         "Donyo 2",
       ]);
     });
+  });
+
+  describe("Chinese and Japanese words", () => {
+    const cases = [
+      ["大きい都市", "ja", "en", "Oki Toshi"],
+      ["私は昨日新しい本を買いました", "ja", "en", "Watashi Wa Kino Atarashi Hon O Kaimashita"],
+      ["コンピューターを使って仕事をします", "ja", "en", "Konpyuta O Tsukatte Shigoto O Shimasu"],
+      ["東京に行きたかったです", "ja", "en", "Tokyo Ni Ikitakatta Desu"],
+      ["読んでいる本", "ja", "ru", "Ёндэ Иру Хон"],
+      ["我们一起去银行", "zh", "en", "Women Yiqi Qu Yinhang"],
+      ["北京是中国的首都", "zh", "en", "Beijing Shi Zhongguo De Shoudu"],
+      ["中华人民共和国", "zh", "en", "Zhonghua Renmin Gongheguo"],
+      ["我在清华大学读书", "zh", "ru", "Во Цзай Цинхуа Дасюэ Душу"],
+      ["阿里巴巴集团", "zh", "en", "Alibaba Jituan"],
+      ["今天天气很好", "zh", "en", "Jintian Tianqi Hen Hao"],
+      ["中国移动通信集团", "zh", "en", "Zhongguo Yidong Tongxin Jituan"],
+      ["张伟杰, 欧阳修, 周嘉怡", "zh", "en", "Zhang Weijie, Ouyang Xiu, Zhou Jiayi"],
+      ["礼仪, 一", "zh", "en", "Liyi, Yi"],
+      [
+        "我喜歡學習中文, 臺灣大學, 銀行",
+        "zh",
+        "en",
+        "Wo Xihuan Xuexi Zhongwen, Taiwan Daxue, Yinhang",
+      ],
+      ["三菱商事株式会社", "ja", "en", "Mitsubishi Shoji Kabushikigaisha"],
+      ["瀬戸内海, 鹿児島湾", "ja", "en", "Setonaikai, Kagoshima Wan"],
+    ] as const;
+
+    it.each(cases)("%s (%s → %s)", async (text, from, to, expected) => {
+      expect(await transliterate(text, { from, to })).toBe(expected);
+    });
+
+    // Intl.Segmenter splits them by the engine's ICU data, so the words come
+    // from the library's own dictionaries instead
+    it.each(cases)(
+      "%s (%s → %s) without a CJ dictionary in ICU",
+      async (text, from, to, expected) => {
+        const descriptor = Object.getOwnPropertyDescriptor(Intl, "Segmenter")!;
+        // Like Android's Chrome and WebView: one segment per character
+        class CharSegmenter extends Intl.Segmenter {
+          // @ts-expect-error -- a plain array of segments is enough here
+          segment(input: string) {
+            return [...input].map((segment, index) => ({
+              segment,
+              index,
+              input,
+              isWordLike: /\p{L}/u.test(segment),
+            }));
+          }
+        }
+        Object.defineProperty(Intl, "Segmenter", { ...descriptor, value: CharSegmenter });
+        try {
+          expect(await transliterate(text, { from, to })).toBe(expected);
+        } finally {
+          Object.defineProperty(Intl, "Segmenter", descriptor);
+        }
+      },
+    );
   });
 });

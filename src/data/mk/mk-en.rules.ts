@@ -118,7 +118,7 @@ export const mkEnRules = `
 [wW] { [wW]+ > ;
 [yY] { [yY]+ > ;
 [hH] { [hH]+ > ;
-[iIyY] { [iIyY]+ } [^[:L:][:M:]] > ;
+[iI] { [iI]+ } [^[:L:][:M:]] > ;
 [^[:L:][:M:]] { [cC]+ } [kK] > ;
 
 ::Null;

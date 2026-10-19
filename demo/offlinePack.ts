@@ -65,7 +65,7 @@ export function offlinePack({ extraUrls }: { extraUrls: string[] }) {
       // The app's own lazy chunks (e.g. workbox-window) are needed on startup
       collectShell(bundle, { dynamic: true });
       for (const fileName of Object.keys(bundle)) {
-        if (/\.(js|css)$/.test(fileName) && !shell.has(fileName)) pack.add(fileName);
+        if (/\.(js|css|wasm)$/.test(fileName) && !shell.has(fileName)) pack.add(fileName);
       }
       this.emitFile({
         type: "asset",

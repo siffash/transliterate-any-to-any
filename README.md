@@ -168,6 +168,7 @@ if (!validateLanguage("en", "ლევან")) {
 ## 📦 Third-Party Libraries Used
 
 - [pinyin-pro](https://github.com/zh-lx/pinyin-pro) - for handling Chinese Pinyin
+- [jieba-wasm](https://github.com/fengkx/jieba-wasm) - for handling Chinese word segmentation
 - [opencc-js](https://github.com/nk2028/opencc-js) - for handling Traditional & Simplified Chinese & Japanese Kanji (Shinjitai)
 - [kuroshiro](https://github.com/hexenq/kuroshiro), [kuroshiro-analyzer-kuromoji](https://github.com/hexenq/kuroshiro-analyzer-kuromoji), [kuromoji](https://github.com/takuyaa/kuromoji.js) - for handling Japanese Hiragana & Katakana (patched for browser compatibility)
 - [aromanize](https://github.com/fujaru/aromanize-js) - for handling Korean Hangul (patched for browser compatibility)

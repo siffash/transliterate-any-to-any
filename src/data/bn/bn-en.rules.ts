@@ -142,7 +142,7 @@ export const bnEnRules = `
 w { w+ > ;
 y { y+ > ;
 h { h+ > ;
-[iy] { [iy]+ } [^[:L:][:M:]] > ;
+i { i+ } [^[:L:][:M:]] > ;
 [^[:L:][:M:]] { c+ } k > ;
 
 ::Null;

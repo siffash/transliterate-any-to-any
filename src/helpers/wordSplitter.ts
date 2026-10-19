@@ -33,6 +33,20 @@ const PUNCTUATION: Record<string, [replacement: string, kind: Kind]> = {
   "​": ["", "separator"],
 };
 
+type Segment = { segment: string; isWordLike?: boolean };
+
+// Chinese and Japanese words come from the dictionaries the library ships,
+// because Intl.Segmenter splits them according to the engine's ICU data,
+// which on Android lacks the CJ dictionary (see segmentChinese, segmentJapanese)
+const getWordSegmenter = async (
+  language: Language,
+): Promise<(text: string) => Promise<Segment[]> | Segment[]> => {
+  if (language === "zh") return (await import("helpers/segmentChinese")).segmentChinese;
+  if (language === "ja") return (await import("helpers/segmentJapanese")).segmentJapanese;
+  const segmenter = new Segmenter(language, { granularity: "word" });
+  return text => Array.from(segmenter.segment(text));
+};
+
 // Whether a space goes between the previous token and the next one, e.g.
 // `word word`, `word, word`, `word "word"`, but `"word"` and `word.`
 const needsSpace = (prev: Kind | undefined, next: Kind) =>
@@ -47,7 +61,7 @@ export const wordSplitter = async (
 ): Promise<string> => {
   const { regex } = languages[language];
   const re = new RegExp(`[${regex}\\p{L}]+`, "gu");
-  const segmenter = new Segmenter(language, { granularity: "word" });
+  const segment = skipSegmenter ? undefined : await getWordSegmenter(language);
   const parts: string[] = [];
   let cursor = 0;
   let m: RegExpExecArray | null;
@@ -57,9 +71,7 @@ export const wordSplitter = async (
       parts.push(input.slice(cursor, m.index));
     }
 
-    const segments = skipSegmenter
-      ? [{ segment: m[0], isWordLike: true }]
-      : Array.from(segmenter.segment(m[0]));
+    const segments = segment ? await segment(m[0]) : [{ segment: m[0], isWordLike: true }];
 
     let prev: Kind | undefined;
     const push = async (kind: Kind, text: string) => {

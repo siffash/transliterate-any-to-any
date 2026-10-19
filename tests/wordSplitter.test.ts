@@ -36,7 +36,7 @@ describe("wordSplitter", () => {
     // Unicode assigns these marks to the Han/kana or Arabic scripts, so they
     // match the language's letters; they become script-neutral punctuation.
     it("converts Japanese sentence punctuation and spaces it like Latin text", async () => {
-      expect(await wordSplitter("東京に行きます。", "ja")).toBe("東京 に 行き ます.");
+      expect(await wordSplitter("東京に行きます。", "ja")).toBe("東京 に 行きます.");
       expect(await wordSplitter("はい、そうです。", "ja")).toBe("はい, そう です.");
     });
 
@@ -89,7 +89,7 @@ describe("wordSplitter", () => {
 
     it("applies fn to each segmented word", async () => {
       expect(await wordSplitter("東京に行きます", "ja", word => `[${word}]`)).toBe(
-        "[東京] [に] [行き] [ます]",
+        "[東京] [に] [行きます]",
       );
     });
 
@@ -102,16 +102,14 @@ describe("wordSplitter", () => {
         events.push(`end ${word}`);
         return `[${word}]`;
       });
-      expect(result).toBe("[東京] [に] [行き] [ます]");
+      expect(result).toBe("[東京] [に] [行きます]");
       expect(events).toEqual([
         "start 東京",
         "end 東京",
         "start に",
         "end に",
-        "start 行き",
-        "end 行き",
-        "start ます",
-        "end ます",
+        "start 行きます",
+        "end 行きます",
       ]);
     });
   });

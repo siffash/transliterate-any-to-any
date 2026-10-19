@@ -179,6 +179,8 @@ export const urEnRules = `
 
 [:Arabic:] > ;
 
+[iy] { [iy]+ } [^[:L:][:M:]] > ;
+
 
 
 ::Null;
@@ -186,7 +188,7 @@ export const urEnRules = `
 w { w+ > ;
 y { y+ > ;
 h { h+ > ;
-[iy] { [iy]+ } [^[:L:][:M:]] > ;
+i { i+ } [^[:L:][:M:]] > ;
 [^[:L:][:M:]] { c+ } k > ;
 
 ::Null;
