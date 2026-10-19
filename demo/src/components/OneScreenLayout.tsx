@@ -1,5 +1,14 @@
-import type { ReactNode } from "react";
-import { Box, Button, GlobalStyles, IconButton, Tooltip, Typography } from "@mui/material";
+import { createContext, useContext, useState, type ReactNode } from "react";
+import {
+  Box,
+  Button,
+  Collapse,
+  GlobalStyles,
+  IconButton,
+  Tooltip,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import GitHubIcon from "@mui/icons-material/GitHub";
@@ -23,11 +32,17 @@ export const FOOTER_LINKS: FooterLink[] = [
 // draws the page under them with viewport-fit=cover in its index.html)
 const safeArea = (side: "top" | "right" | "bottom" | "left") => `env(safe-area-inset-${side}, 0px)`;
 
+const ResultShownContext = createContext<(shown: boolean) => void>(() => {});
+
+// For the transliterator to tell the layout whether its result panel is shown
+export const useReportResultShown = () => useContext(ResultShownContext);
+
 /**
  * The phone layout of the app and of the web demo on small screens, like the
  * Google Translate app: the title and the light/dark toggle, the transliterator
  * (children) taking the rest of the screen, and links at the bottom. Nothing
- * scrolls but the text areas, and the layout shrinks above the keyboard.
+ * scrolls but the text areas, and the layout shrinks above the keyboard. While
+ * there's a result, the title and the links make way for the text.
  */
 export function OneScreenLayout({
   mode,
@@ -48,6 +63,9 @@ export function OneScreenLayout({
 }) {
   const viewport = useVisualViewport();
   const keyboard = keyboardOpen ?? viewport.keyboardOpen;
+  const [resultShown, setResultShown] = useState(false);
+  // The header and the footer slide away (at once if motion is reduced)
+  const timeout = useMediaQuery("(prefers-reduced-motion: reduce)") ? 0 : undefined;
 
   return (
     <>
@@ -92,36 +110,40 @@ export function OneScreenLayout({
             position: "relative",
           }}
         >
-          <Box
-            component="header"
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              gap: 1,
-              pl: 2,
-              pr: 1,
-              py: 1,
-            }}
-          >
-            <Typography
-              variant="h1"
-              noWrap
-              sx={{ fontSize: { xs: "clamp(1.1rem, 5.6vw, 1.5rem)", sm: "1.75rem" } }}
+          <Collapse in={!resultShown} timeout={timeout} sx={{ flexShrink: 0 }}>
+            <Box
+              component="header"
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                gap: 1,
+                pl: 2,
+                pr: 1,
+                py: 1,
+              }}
             >
-              transliterate-any-to-any
-            </Typography>
-            <Tooltip title={mode === "dark" ? "Switch to light mode" : "Switch to dark mode"}>
-              <IconButton onClick={onToggleMode} aria-label="Toggle color mode">
-                {mode === "dark" ? <LightModeIcon /> : <DarkModeIcon />}
-              </IconButton>
-            </Tooltip>
-          </Box>
+              <Typography
+                variant="h1"
+                noWrap
+                sx={{ fontSize: { xs: "clamp(1.1rem, 5.6vw, 1.5rem)", sm: "1.75rem" } }}
+              >
+                transliterate-any-to-any
+              </Typography>
+              <Tooltip title={mode === "dark" ? "Switch to light mode" : "Switch to dark mode"}>
+                <IconButton onClick={onToggleMode} aria-label="Toggle color mode">
+                  {mode === "dark" ? <LightModeIcon /> : <DarkModeIcon />}
+                </IconButton>
+              </Tooltip>
+            </Box>
+          </Collapse>
 
-          {children}
+          <ResultShownContext.Provider value={setResultShown}>
+            {children}
+          </ResultShownContext.Provider>
 
-          {/* Hidden while typing, to leave the space to the text */}
-          {!keyboard && (
+          {/* Hidden while typing or showing a result, to leave the space to the text */}
+          <Collapse in={!keyboard && !resultShown} timeout={timeout} sx={{ flexShrink: 0 }}>
             <Box component="footer" sx={{ display: "flex", px: 1, pb: 0.5 }}>
               {links.map(({ label, href, icon }) => (
                 <Button
@@ -156,7 +178,7 @@ export function OneScreenLayout({
                 </Button>
               ))}
             </Box>
-          )}
+          </Collapse>
         </Box>
       </Box>
     </>

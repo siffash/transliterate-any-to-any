@@ -22,6 +22,7 @@ import type { SpeechInput } from "../hooks/useSpeechRecognition";
 import { MAX_CHARS } from "../constants";
 import { LanguageSelect } from "./LanguageSelect";
 import { CodeBadge } from "./CodeBadge";
+import { useReportResultShown } from "./OneScreenLayout";
 
 const panelSx = {
   flex: 1,
@@ -104,6 +105,9 @@ export const OneScreenTransliterator = ({
     if (targetText) setShowTarget(true);
     else if (!sourceText.trim() || errorMsg) setShowTarget(false);
   }, [targetText, sourceText, errorMsg]);
+
+  const reportResultShown = useReportResultShown();
+  useEffect(() => reportResultShown(showTarget), [showTarget, reportResultShown]);
 
   return (
     <>
