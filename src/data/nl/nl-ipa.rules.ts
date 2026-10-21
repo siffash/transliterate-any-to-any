@@ -30,7 +30,7 @@ ng > ŋ;
 nk > ŋk;
 nj > ɲ;
 sj > ʃ;
-tj > c;
+tj > t͡ɕ;
 qu > kʋ;
 ph > f;
 th > t;

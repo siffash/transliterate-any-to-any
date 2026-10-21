@@ -7,6 +7,12 @@ s [yhjYHJ] > š;
 N [yjYJ] > Ń;
 n [yjYJ] > ń;
 
+[:Lu:] { X > KS;
+X } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > KS;
+X } [:Lu:] > KS;
+X > Ks;
+x > ks;
+
 K [hH] > X;
 k [hH] > x;
 

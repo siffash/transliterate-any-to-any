@@ -24,6 +24,8 @@ c [hH] > x;
 D [zZ] } [EĘĖIĮYeęėiįy] > Đ;
 d [zZ] } [EĘĖIĮYeęėiįy] > đ;
 
+[:L:] { C } SS > K;
+[:L:] { c } ss > k;
 C } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > TS;
 C } [:Lu:] > TS;
 [:Lu:] { C > TS;

@@ -70,7 +70,7 @@ s } [bdgjlmnrvwz{dʒ}ɲʎ] > z;
 qu } [aàeèéiìíoòóuùúɛɔ] > kw;
 gu } [aàeèéiìíoòóuùúɛɔ] > gw;
 
-i } [aàeèéiìíoòóuùúɛɔ] > j;
+[^[:L:][:M:]] { i } [aàeèéiìíoòóuùúɛɔ] > j;
 u } [aàeèéiìíoòóuùúɛɔ] > w;
 
 \\' > ;

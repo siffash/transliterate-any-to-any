@@ -12,6 +12,12 @@ export const noLatnRules = `
 
 ::Null;
 
+[:Lu:] { X > KS;
+X } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > KS;
+X } [:Lu:] > KS;
+X > Ks;
+x > ks;
+
 S [Cc] [Hh] > Š;
 s [Cc] [Hh] > š;
 

@@ -102,6 +102,7 @@ ch > x;
 dz > d͡z;
 dž > d͡ʒ;
 cc > kt͡s;
+[:L:] { css > ks;
 cs > t͡s;
 c > t͡s;
 č > t͡ʃ;

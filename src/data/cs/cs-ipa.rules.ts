@@ -2,15 +2,14 @@ export const csIpaRules = `
 ::Lower;
 ::NFC;
 
-ch } [bdďgzžh] > ɣ;
 ch > x;
 
 ou > oʊ̯;
 au > aʊ̯;
 eu > ɛʊ̯;
 
-dě > ɟɛ;
-tě > cɛ;
+dě > d͡ʑɛ;
+tě > t͡ɕɛ;
 ně > ɲɛ;
 mě > mɲɛ;
 bě > bjɛ;
@@ -18,8 +17,8 @@ pě > pjɛ;
 vě > vjɛ;
 fě > fjɛ;
 
-d } [ií] > ɟ;
-t } [ií] > c;
+d } [ií] > d͡ʑ;
+t } [ií] > t͡ɕ;
 n } [ií] > ɲ;
 
 dž > d͡ʒ;
@@ -32,7 +31,7 @@ dz > d͡z;
 
 b } [^[:L:][:M:]] > p;
 d } [^[:L:][:M:]] > t;
-ď } [^[:L:][:M:]] > c;
+ď } [^[:L:][:M:]] > t͡ɕ;
 g } [^[:L:][:M:]] > k;
 z } [^[:L:][:M:]] > s;
 ž } [^[:L:][:M:]] > ʃ;
@@ -42,7 +41,7 @@ v } [^[:L:][:M:]] > f;
 
 b } [ptťksšfcčx] > p;
 d } [ptťksšfcčx] > t;
-ď } [ptťksšfcčx] > c;
+ď } [ptťksšfcčx] > t͡ɕ;
 g } [ptťksšfcčx] > k;
 z } [ptťksšfcčx] > s;
 ž } [ptťksšfcčx] > ʃ;
@@ -51,24 +50,14 @@ v } [ptťksšfcčx] > f;
 ř } [ptťksšfcčx] > r̝̊;
 [ptťksšfcčx] { ř > r̝̊;
 
-p } [bdďgzžɦh] > b;
-t } [bdďgzžɦh] > d;
-ť } [bdďgzžɦh] > ď;
-k } [bdďgzžɦh] > g;
-s } [bdďgzžɦh] > z;
-š } [bdďgzžɦh] > ž;
-f } [bdďgzžɦh] > ɦ;
-x } [bdďgzžɦh] > ɦ;
-c } [bdďgzžɦh] > d͡z;
-č } [bdďgzžɦh] > d͡ʒ;
-
 a > a;
 á > aː;
 b > b;
+[:L:] { css > ks;
 c > t͡s;
 č > t͡ʃ;
 d > d;
-ď > ɟ;
+ď > d͡ʑ;
 e > ɛ;
 é > ɛː;
 ě > jɛ;
@@ -97,7 +86,7 @@ r > r;
 s > s;
 š > ʃ;
 t > t;
-ť > c;
+ť > t͡ɕ;
 u > u;
 ú > uː;
 ů > uː;

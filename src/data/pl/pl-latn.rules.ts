@@ -1,11 +1,22 @@
 export const plLatnRules = `
 ::NFC;
 
+[^[:L:][:M:]] { c [hH] } [oO] [pP] [iI] [nN] [^[:L:][:M:]] > š;
+[^[:L:][:M:]] { C [hH] } [oO] [pP] [iI] [nN] [^[:L:][:M:]] > Š;
+[^[:L:][:M:]] [šŠ] [oO] [pP] { i } [nN] [^[:L:][:M:]] > e;
+[^[:L:][:M:]] [šŠ] [oO] [pP] { I } [nN] [^[:L:][:M:]] > E;
+
 d [źŹ] > đ;
 D [źŹ] > Đ;
 
 d [zZ] } [iI] > đ;
 D [zZ] } [iI] > Đ;
+
+[:Lu:] { X > KS;
+X } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > KS;
+X } [:Lu:] > KS;
+X > Ks;
+x > ks;
 
 c [hH] > x;
 C [hH] > X;
@@ -31,6 +42,8 @@ S } [iI] > Š;
 z } [iI] > ž;
 Z } [iI] > Ž;
 
+[:L:] { C } SS > K;
+[:L:] { c } ss > k;
 [:Lu:] { C > TS;
 C } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > TS;
 C } [:Lu:] > TS;

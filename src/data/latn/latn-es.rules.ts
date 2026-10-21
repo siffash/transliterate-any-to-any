@@ -70,6 +70,8 @@ ij > ei;
 Ž > Zh;
 ž > zh;
 
+K } [sS][sS] > K;
+k } [sS][sS] > k;
 K [sS] > X;
 k [sS] > x;
 

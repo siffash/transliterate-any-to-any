@@ -49,29 +49,13 @@ x } [^[:L:][:M:]] > ʃ;
 [aàeèéiíïoòóuúü] { x } [aàeèéiíïoòóuúü] > ks;
 x > ʃ;
 
-b } [ptkfsʃ{t͡ʃ}] > p;
-d } [ptkfsʃ{t͡ʃ}] > t;
-g } [ptkfsʃ{t͡ʃ}] > k;
 v } [ptkfsʃ{t͡ʃ}] > f;
 z } [ptkfsʃ{t͡ʃ}] > s;
 ʒ } [ptkfsʃ{t͡ʃ}] > ʃ;
-d͡ʒ } [ptkfsʃ{t͡ʃ}] > t͡ʃ;
 
-p } [bdgvzʒ{d͡ʒ}] > b;
-t } [bdgvzʒ{d͡ʒ}] > d;
-k } [bdgvzʒ{d͡ʒ}] > g;
-f } [bdgvzʒ{d͡ʒ}] > v;
-s } [bdgvzʒ{d͡ʒ}] > z;
-ʃ } [bdgvzʒ{d͡ʒ}] > ʒ;
-t͡ʃ } [bdgvzʒ{d͡ʒ}] > d͡ʒ;
-
-b } [^[:L:][:M:]] > p;
-d } [^[:L:][:M:]] > t;
-g } [^[:L:][:M:]] > k;
 v } [^[:L:][:M:]] > f;
 z } [^[:L:][:M:]] > s;
 ʒ } [^[:L:][:M:]] > ʃ;
-d͡ʒ } [^[:L:][:M:]] > t͡ʃ;
 
 v > b;
 l > ɫ;

@@ -34,6 +34,8 @@ dJ > dŽ;
 Dj > Dž;
 dj > dž;
 
+[^[:L:][:M:]] { C [hH] } [rR] > K;
+[^[:L:][:M:]] { c [hH] } [rR] > k;
 C [hH] > X;
 c [hH] > x;
 

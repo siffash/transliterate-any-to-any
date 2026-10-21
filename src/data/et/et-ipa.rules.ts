@@ -90,6 +90,7 @@ k > k;
 b > p;
 d > t;
 g > k;
+[:L:] { css > ks;
 c > ts;
 f > f;
 h > h;

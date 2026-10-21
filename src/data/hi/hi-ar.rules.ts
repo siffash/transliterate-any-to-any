@@ -142,4 +142,5 @@ export const hiArRules = `
 
 ة } [:L:] > ت;
 ى } [:L:] > ي;
+ي ي { ي+ > ;
 `;

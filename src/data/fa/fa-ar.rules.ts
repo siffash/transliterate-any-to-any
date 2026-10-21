@@ -43,4 +43,5 @@ export const faArRules = `
 
 ة } [:L:] > ت;
 ى } [:L:] > ي;
+ي ي { ي+ > ;
 `;

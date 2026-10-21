@@ -25,6 +25,8 @@ X } [:Lu:] > KS;
 X > Ks;
 x > ks;
 
+[:L:] { C } SS > K;
+[:L:] { c } ss > k;
 [:Lu:] { C > TS;
 C } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > TS;
 C } [:Lu:] > TS;

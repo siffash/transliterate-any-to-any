@@ -14,11 +14,19 @@ export const lvLatnRules = `
 
 ::Null;
 
+[:Lu:] { X > KS;
+X } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > KS;
+X } [:Lu:] > KS;
+X > Ks;
+x > ks;
+
 CH > X;
 Ch > X;
 cH > x;
 ch > x;
 
+[:L:] { C } SS > K;
+[:L:] { c } ss > k;
 [:Lu:] { C > TS;
 C } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > TS;
 C } [:Lu:] > TS;

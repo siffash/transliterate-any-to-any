@@ -101,9 +101,12 @@ export const bnFaRules = `
 
 [:Bengali:] > ;
 
+
+
 ::Null;
 
 \\? > ؟;
 ';' > ؛;
 ',' } [^0-9٠-٩۰-۹] > ،;
+ی ی { ی+ > ;
 `;

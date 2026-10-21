@@ -61,4 +61,5 @@ export const urArRules = `
 
 ة } [:L:] > ت;
 ى } [:L:] > ي;
+ي ي { ي+ > ;
 `;

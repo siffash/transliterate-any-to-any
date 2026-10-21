@@ -38,7 +38,6 @@ z > θ;
 [lns] { r > r;
 r > ɾ;
 
-s } [bβdðɡɣmnɲŋlʎrɾʝz] > z;
 s > s;
 x } [aáeéiíoóuúü] > ks;
 x } [^[:L:][:M:]] > ks;
@@ -50,7 +49,7 @@ y } [aáeéiíoóuúü] > ʝ;
 [aáeéoó] { y > i̯;
 y > i;
 
-i } [aáeéiíoóuúü] > j;
+[^[:L:][:M:]] { i } [aáeéiíoóuúü] > j;
 u } [aáeéiíoó] > w;
 [aáeéoó] { i > i̯;
 [aáeéoó] { u > u̯;

@@ -137,8 +137,9 @@ aʔa > aː;
 [^[:L:][:M:]] { wal } θ > waθ;
 [^[:L:][:M:]] { wal } ð > wað;
 
-[btθdðrzsʃʕɣfqklmnhħʒ] { j } [^[:L:][:M:]] > ijj;
-[btθdðrzsʃʕɣfqklmnhħʒ]ˤ { j } [^[:L:][:M:]] > ijj;
+[btθdðrzsʃʕɣfqklmnhħʒ] { j } [^[:L:][:M:]] > iː;
+[btθdðrzsʃʕɣfqklmnhħʒ]ˤ { j } [^[:L:][:M:]] > iː;
+ijj } [^[:L:][:M:]] > iː;
 
 أَ > ʔa;
 أُ > ʔu;

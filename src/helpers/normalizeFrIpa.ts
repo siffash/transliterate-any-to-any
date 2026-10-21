@@ -11,8 +11,9 @@ export const normalizeFrIpa = (originalWord: string, ipaWord: string): string =>
     { ipaCharToBeReplaced: "w", lettersToRestore: { u: "u", oi: "u" } },
     // Restore "o"
     { ipaCharToBeReplaced: "w", lettersToRestore: { o: "o" } },
-    // Restore "ɛ"
-    { ipaCharToBeReplaced: "ø", lettersToRestore: { eu: "ɛ" } },
+    // Restore "e"
+    { ipaCharToBeReplaced: "ø", lettersToRestore: { eu: "e" } },
+    { ipaCharToBeReplaced: "ə", lettersToRestore: { e: "e" } },
     // Restore "ɛl"
     { ipaCharToBeReplaced: "ɛj", lettersToRestore: { eil: "ɛl", eille: "ɛl" } },
     // Restore "il"

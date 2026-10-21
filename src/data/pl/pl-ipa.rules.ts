@@ -2,6 +2,8 @@ export const plIpaRules = `
 ::Lower;
 ::NFC;
 
+[^[:L:][:M:]] { chopin } [^[:L:][:M:]] > ʃopɛn;
+
 ci } [aąeęioóuy] > t͡ɕ;
 dzi } [aąeęioóuy] > d͡ʑ;
 si } [aąeęioóuy] > ɕ;
@@ -61,18 +63,6 @@ w } [ptkcfsśćx] > f;
 w } [^[:L:][:M:]] > f;
 w > v;
 
-cz } [bdgzźż] > d͡ʐ;
-sz } [bdgzźż] > ʐ;
-ch } [bdgzźż] > ɣ;
-p } [bdgzźż] > b;
-t } [bdgzźż] > d;
-k } [bdgzźż] > g;
-c } [bdgźż] > d͡z;
-ć } [bdgzźż] > d͡ʑ;
-s } [bdgźż] > z;
-ś } [bdgzźż] > ʑ;
-f } [bdgzźż] > v;
-x } [bdgzźż] > ɣ;
 dz } [ptkcfsśćx] > t͡s;
 dź } [ptkcfsśćx] > t͡ɕ;
 dż } [ptkcfsśćx] > t͡ʂ;
@@ -106,6 +96,7 @@ z } [^[:L:][:M:]] > s;
 
 a > a;
 b > b;
+[:L:] { css > ks;
 c > t͡s;
 ć > t͡ɕ;
 d > d;
@@ -122,7 +113,7 @@ m > m;
 n } [kg] > ŋ;
 n > n;
 ń > ɲ;
-o > ɔ;
+o > o;
 ó > u;
 p > p;
 r > r;

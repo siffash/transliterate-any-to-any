@@ -15,10 +15,10 @@ n } [bp] > m;
 [^[:L:][:M:]] { r } [^aeioujy] > r̩;
 [^aeioujy] { r } [^[:L:][:M:]] > r̩;
 [^[:L:][:M:]] { r } [^[:L:][:M:]] > r̩;
-v } [ptksšcčćfh] > f;
 
 a > a;
 b > b;
+[:L:] { css > ks;
 c > t͡s;
 ć > t͡ɕ;
 č > t͡ʃ;

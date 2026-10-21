@@ -134,9 +134,12 @@ export const hiFaRules = `
 
 [:Devanagari:] > ;
 
+
+
 ::Null;
 
 \\? > ؟;
 ';' > ؛;
 ',' } [^0-9٠-٩۰-۹] > ،;
+ی ی { ی+ > ;
 `;

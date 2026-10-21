@@ -26,6 +26,10 @@ X } [:Lu:] > KS;
 X > Ks;
 x > ks;
 
+[^[:L:][:M:]] { C [hH] } [rR] > K;
+[^[:L:][:M:]] { c [hH] } [rR] > k;
+C [hH] } [sS] [^tT] > K;
+c [hH] } [sS] [^tT] > k;
 C [hH] > X;
 c [hH] > x;
 

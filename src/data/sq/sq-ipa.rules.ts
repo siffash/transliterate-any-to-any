@@ -2,13 +2,13 @@ export const sqIpaRules = `
 ::Lower;
 ::NFC;
 
-ngj > ɲɟ;
+ngj > ɲd͡ʑ;
 ng > ŋɡ;
 nk > ŋk;
-nq > ɲc;
+nq > ɲt͡ɕ;
 
 dh > ð;
-gj > ɟ;
+gj > d͡ʑ;
 ll > ɫ;
 nj > ɲ;
 rr > r;
@@ -17,13 +17,14 @@ th > θ;
 xh > d͡ʒ;
 zh > ʒ;
 
+[:L:] { css > ks;
 c > t͡s;
 ç > t͡ʃ;
 e > ɛ;
 ë > ə;
 g > ɡ;
-o > ɔ;
-q > c;
+o > o;
+q > t͡ɕ;
 r > ɾ;
 x > d͡z;
 `;

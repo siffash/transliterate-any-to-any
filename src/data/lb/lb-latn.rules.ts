@@ -19,6 +19,11 @@ X } [:Lu:] > KS;
 X > Ks;
 x > ks;
 
+[^[:L:][:M:]] { C [hH] } [rRlL] > K;
+[^[:L:][:M:]] { c [hH] } [rRlL] > k;
+[^[:L:][:M:]] { C [hH] } [AÄEËÉÈÊIÏOÖUÜYaäeëéèêiïoöuüy] > Š;
+[^[:L:][:M:]] { c [hH] } [AÄEËÉÈÊIÏOÖUÜYaäeëéèêiïoöuüy] > š;
+
 [AOUaou] { CH > KH;
 [AOUaou] { cH > kH;
 [AOUaou] { Ch > Kh;
@@ -61,6 +66,9 @@ q > k;
 [^[:L:][:M:]] { sP > šP;
 [^[:L:][:M:]] { Sp > Šp;
 [^[:L:][:M:]] { sp > šp;
+
+[AÄEÉÈÊËIÏOÖUÜYaäeéèêëiïoöuüy] { s } [AÄEÉÈÊËIÏOÖUÜYaäeéèêëiïoöuüy] > z;
+[AÄEÉÈÊËIÏOÖUÜYaäeéèêëiïoöuüy] { S } [AÄEÉÈÊËIÏOÖUÜYaäeéèêëiïoöuüy] > Z;
 
 [:Lu:] { C } [eéèêëiïyäöüEÉÈÊËIÏYÄÖÜ] > TS;
 C } [EÉÈÊËIÏYÄÖÜ] > TS;

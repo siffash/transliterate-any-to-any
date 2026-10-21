@@ -2,34 +2,33 @@ export const huIpaRules = `
 ::Lower;
 ::NFC;
 
-szombathely > sombɒthɛj;
+szombathely > sombɑthɛj;
 
 ddzs > d͡ʒː;
 ccs > t͡ʃː;
 ddz > d͡zː;
-ggy > ɟː;
+ggy > d͡ʑː;
+ngy > nd͡ʑ;
 lly > jː;
 nny > ɲː;
 ssz > sː;
-tty > cː;
+tty > t͡ɕː;
 zzs > ʒː;
 
 sch > ʃ;
 
 cs > t͡ʃ;
 dz > d͡z;
-pgy > bɟ;
-gyk > ck;
-gy > ɟ;
+gy > d͡ʑ;
 ly > j;
 ny > ɲ;
 sz > s;
-ty > c;
+ty > t͡ɕ;
 zs > ʒ;
 
-dj > ɟː;
+dj > d͡ʑː;
 nj > ɲː;
-tj > cː;
+tj > t͡ɕː;
 lj > jː;
 
 ch > x;
@@ -60,7 +59,7 @@ xx > ksː;
 yy > jː;
 zz > zː;
 
-a > ɒ;
+a > ɑ;
 á > aː;
 e > ɛ;
 é > eː;
@@ -101,7 +100,5 @@ x > ks;
 
 y } [^aáeéiíoóöőuúüű] > i;
 y > j;
-zp > sp;
-zt > st;
 z > z;
 `;

@@ -14,7 +14,7 @@ export const tgIpaRules = `
 б > b;
 в > v;
 г > ɡ;
-ғ > ʁ;
+ғ > ɣ;
 д > d;
 [еэ] > e;
 ё > jɔ;

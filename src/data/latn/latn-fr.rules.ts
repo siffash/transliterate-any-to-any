@@ -67,6 +67,14 @@ x > kh;
 
 [^[:L:][:M:]] { S } [^[:L:][:M:]] > S;
 [^[:L:][:M:]] { s } [^[:L:][:M:]] > s;
+[sS] { S } [^[:L:][:M:]] > SE;
+[sS] { s } [^[:L:][:M:]] > se;
+[aeoAEO] { K [sS] } [^[:L:][:M:]] > X;
+[aeoAEO] { k [sS] } [^[:L:][:M:]] > x;
+[^aeiouAEIOU] [iI] { K [sS] } [^[:L:][:M:]] > X;
+[^aeiouAEIOU] [iI] { k [sS] } [^[:L:][:M:]] > x;
+[BCDFGHJKLMNPQRTVWXZbcdfghjklmnpqrtvwxz] { S } [^[:L:][:M:]] > S;
+[BCDFGHJKLMNPQRTVWXZbcdfghjklmnpqrtvwxz] { s } [^[:L:][:M:]] > s;
 [:Lu:] { S } [^[:L:][:M:]] > SSE;
 S } [^[:L:][:M:]] > Sse;
 s } [^[:L:][:M:]] > sse;

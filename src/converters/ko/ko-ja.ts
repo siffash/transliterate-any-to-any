@@ -97,7 +97,7 @@ export const koJa = async (text: Text) => {
       const shouldVoice =
         !isStartOfWord &&
         isSoftPrev &&
-        ["ㄱ", "ㄷ", "ㅂ", "ㅈ"].includes(normInit) &&
+        ["ㄱ", "ㄷ", "ㅂ", "ㅈ"].includes(s.initial) &&
         !s.isAspirated;
       const rowKey = shouldVoice ? `v_${normInit}` : normInit;
 
@@ -108,7 +108,7 @@ export const koJa = async (text: Text) => {
         const yMod = s.vowel === "ㅑ" ? "ャ" : s.vowel === "ㅠ" ? "ュ" : "ョ";
         kana = ["ㅅ", "ㅈ"].includes(normInit)
           ? KANA_ROWS[rowKey][0].replace("ャ", "") + yMod
-          : KANA_ROWS[rowKey][1] + yMod;
+          : KANA_ROWS[rowKey][normInit === "ㄷ" ? 3 : 1] + yMod;
       }
 
       result += kana;

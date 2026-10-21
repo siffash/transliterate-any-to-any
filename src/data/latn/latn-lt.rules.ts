@@ -20,6 +20,11 @@ Ij > Ei;
 iJ > eI;
 ij > ei;
 
+[aeouäöüëïyAEOUÄÖÜËÏYjJđĐćĆśŚźŹ] [iI] { a } [^[:L:][:M:]] > a;
+[aeouäöüëïyAEOUÄÖÜËÏYjJđĐćĆśŚźŹ] [iI] { A } [^[:L:][:M:]] > A;
+[:L:] [iI] { a } [^[:L:][:M:]] > ja;
+[:L:] [iI] { A } [^[:L:][:M:]] > JA;
+
 ::Null;
 
 [^[:L:][:M:]] { Ö } [:Lu:] > JO;

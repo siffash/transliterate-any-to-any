@@ -7,6 +7,8 @@ export const skLatnRules = `
 c [hH] > x;
 C [hH] > X;
 
+[:L:] { C } SS > K;
+[:L:] { c } ss > k;
 [:Lu:] { C > TS;
 C } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > TS;
 C } [:Lu:] > TS;

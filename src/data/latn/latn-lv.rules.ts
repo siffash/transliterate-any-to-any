@@ -18,6 +18,11 @@ g [hH] > g;
 K [hH] > H;
 k [hH] > h;
 
+[aeouäöüëïyAEOUÄÖÜËÏYjJđĐćĆśŚźŹ] [iI] { a } [^[:L:][:M:]] > a;
+[aeouäöüëïyAEOUÄÖÜËÏYjJđĐćĆśŚźŹ] [iI] { A } [^[:L:][:M:]] > A;
+[:L:] [iI] { a } [^[:L:][:M:]] > ja;
+[:L:] [iI] { A } [^[:L:][:M:]] > JA;
+
 ::Null;
 
 [:Lu:] { Đ > DŽ;

@@ -103,12 +103,13 @@ p { n > n̥;
 t { n > n̥;
 k { n > n̥;
 
-l { [ptkc] > l̥;
-r { [ptkc] > r̥;
-m { [ptkc] > m̥;
-n { [ptkc] > n̥;
-ŋ { [ptkc] > ŋ̊;
+l } [ptkc] > l̥;
+r } [ptkc] > r̥;
+m } [ptkc] > m̥;
+n } [pt] > n̥;
 
+ng } t > ŋ̊;
+ng } [dls] > ŋ;
 ng } [eéiíyýæ{ei}{ey}] > ŋc;
 ng > ŋk;
 nk } [eéiíyýæ{ei}{ey}] > ŋ̊c;
