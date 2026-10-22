@@ -4,8 +4,6 @@ import { validateLanguage } from "helpers/validateLanguage";
 
 type Converter = (text: Text) => Promise<Text>;
 
-// One small loader per pair: a single async function with an await per pair (5,000+ resume
-// points) made V8's Maglev compiler abort on arm64 ("Check failed: is_int26(x)")
 const converters: Partial<Record<`${Language}${Language}`, () => Promise<Converter>>> = {
   zhja: () => import("converters/zh/zh-ja").then(m => m.zhJa),
   zhko: () => import("converters/zh/zh-ko").then(m => m.zhKo),
@@ -2665,43 +2663,51 @@ export const transliterate = async <T extends Text>(text: T, options: Options): 
   const { from, to } = options || {};
 
   if (Array.isArray(text) ? text.length === 0 || text.some(s => !s) : !text) {
-    throw new Error("Source text is empty.");
+    throw new Error("transliterate-any-to-any ❌ Source text is empty.");
   }
   if (Array.isArray(text) ? text.some(s => typeof s !== "string") : typeof text !== "string") {
-    throw new Error("Source text must be a string or an array of strings.");
+    throw new Error(
+      "transliterate-any-to-any ❌ Source text must be a string or an array of strings.",
+    );
   }
   if (!from) {
-    throw new Error('Source language ("from") is not specified.');
+    throw new Error('transliterate-any-to-any ❌ Source language ("from") is not specified.');
   }
   if (!to) {
-    throw new Error('Target language ("to") is not specified.');
+    throw new Error('transliterate-any-to-any ❌ Target language ("to") is not specified.');
   }
   if (!supportedLanguages.includes(from)) {
-    throw new Error(`Unsupported source language ("from"): ${from}.`);
+    throw new Error(`transliterate-any-to-any ❌ Unsupported source language ("from"): ${from}.`);
   }
   if (!supportedLanguages.includes(to)) {
-    throw new Error(`Unsupported target language ("to"): ${to}.`);
+    throw new Error(`transliterate-any-to-any ❌ Unsupported target language ("to"): ${to}.`);
   }
   if (from === to) {
     throw new Error(
-      `Source and target languages ("from" and "to") are the same: ${languages[from].name}.`,
+      `transliterate-any-to-any ❌ Source ("from") and target ("to") languages are the same: ${languages[from].name}.`,
     );
   }
   if (!validateLanguage(from, text)) {
-    throw new Error(`Source text does not match ${languages[from].name}.`);
+    throw new Error(
+      `transliterate-any-to-any ❌ Source text does not match ${languages[from].name}.`,
+    );
   }
 
   text = (Array.isArray(text) ? text.map(s => s.normalize("NFC")) : text.normalize("NFC")) as T;
 
   const load = converters[`${from}${to}`];
   if (!load) {
-    throw new Error(`Transliteration failed: the language pair is not supported: ${from} -> ${to}`);
+    throw new Error(
+      `transliterate-any-to-any ❌ The language pair is not supported: ${from} -> ${to}`,
+    );
   }
 
   try {
     const convert = await load();
     return (await convert(text)) as T;
   } catch (e: unknown) {
-    throw new Error(e instanceof Error ? e.message : String(e), { cause: e });
+    throw new Error(`transliterate-any-to-any ❌ ${e instanceof Error ? e.message : String(e)}`, {
+      cause: e,
+    });
   }
 };
