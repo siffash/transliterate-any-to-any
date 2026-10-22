@@ -13,6 +13,19 @@ export const getPhonemize = async (): Promise<typeof import("phonemize")> => {
   }
 };
 
+export const getPhonemizeEnG2P = async (): Promise<typeof import("phonemize/en-g2p")> => {
+  if (isNode || isDeno || isBun) {
+    const { createRequire } = await import(
+      /* @vite-ignore */ /* webpackIgnore: true */ "node:module"
+    );
+    const require = createRequire(import.meta.url);
+    const pkg = "phonemize/en-g2p";
+    return require(pkg);
+  } else {
+    return await import("phonemize/en-g2p");
+  }
+};
+
 export const getPhonemizeAll = async (): Promise<typeof import("phonemize/all")> => {
   if (isNode || isDeno || isBun) {
     const { createRequire } = await import(

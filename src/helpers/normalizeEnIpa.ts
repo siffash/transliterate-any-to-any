@@ -56,6 +56,11 @@ export const normalizeEnIpa = (originalWord: string, ipaWord: string): string =>
     // Restore "i"
     { ipaCharToBeReplaced: ["o", "ə"], lettersToRestore: { i: "i" } },
     // Restore "ja"
+    { ipaCharToBeReplaced: "dʒə", lettersToRestore: { ja: "dʒa" } },
+    { ipaCharToBeReplaced: "jə", lettersToRestore: { ja: "ja" } },
+    { ipaCharToBeReplaced: "dʒ", lettersToRestore: { ja: "dʒ" } },
+    { ipaCharToBeReplaced: "ʒ", lettersToRestore: { ja: "ʒ" } },
+    { ipaCharToBeReplaced: "j", lettersToRestore: { ja: "j" } },
     { ipaCharToBeReplaced: "ə", lettersToRestore: { ja: "ja" } },
     // Restore "s"
     { ipaCharToBeReplaced: "z", lettersToRestore: { s: "s" } },

@@ -8,12 +8,14 @@ export const urEn = async <T = Text>(text: Text): Promise<T> => {
   const { wordSplitter } = await import("helpers/wordSplitter");
   const { filterIpa } = await import("helpers/filterIpa");
 
-  const transliteratorIpa = RBT.fromRules(ipaEnRules + "[iy] { [iy]+ } [^[:L:][:M:]] > ; ::Title;");
+  const transliteratorIpa = RBT.fromRules(ipaEnRules + "::Title;");
   const transliteratorEn = RBT.fromRules(urEnRules);
 
   const convert = async (text: string) =>
     await wordSplitter(text, "ur", (word: string) => {
-      const ipa = filterIpa(urIpaMap[word], word, "ur");
+      const ipa = filterIpa(urIpaMap[word], word, "ur")
+        ?.replaceAll("ə\u0303", "ɐ\u0303")
+        .replaceAll("ə", "a");
       if (ipa) {
         return transliteratorIpa.transliterate(ipa);
       } else {

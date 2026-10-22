@@ -18,10 +18,27 @@ export const jaKo = async (text: Text) => {
       normalizeJa(text),
       "ja",
       async text => await kuroshiro.convert(text, { to: "hiragana" }),
-      true,
     );
     // Map Hiragana to Korean Jamo (Individual pieces)
-    const jamo = hiragana.replace(jaKoPattern, match => jaKoMap[match]);
+    // Korean leaves long vowels unwritten (東京 → 도쿄, 大阪 → 오사카)
+    const short = hiragana
+      .replace(
+        /([おこごそぞとどのほぼぽもよろをょオコゴソゾトドノホボポモヨロヲョ])[うおウオ](?![ぁぃぅぇぉあいうえおァィゥェォアイウエオ])/g,
+        "$1",
+      )
+      .replace(
+        /([うくぐすずつづぬふぶぷむゆるゅウクグスズツヅヌフブプムユルュ])[うウ](?![ぁぃぅぇぉあいうえおァィゥェォアイウエオ])/g,
+        "$1",
+      );
+    let jamo = short.replace(jaKoPattern, match => jaKoMap[match]);
+    // Word-initial k/t/ch are written plain (加藤 → 가토), and ㅈ/ㅊ take no y-vowel (じゅ → 주)
+    jamo = jamo
+      .replace(/(^|[^ㄱ-ㅣ])ㅋ/g, "$1ㄱ")
+      .replace(/(^|[^ㄱ-ㅣ])ㅌ/g, "$1ㄷ")
+      .replace(/(^|[^ㄱ-ㅣ])ㅊ/g, "$1ㅈ")
+      .replace(/([ㅈㅊ])ㅑ/g, "$1ㅏ")
+      .replace(/([ㅈㅊ])ㅠ/g, "$1ㅜ")
+      .replace(/([ㅈㅊ])ㅛ/g, "$1ㅗ");
     // Assemble Jamo into proper Hangul blocks
     return Hangul.assemble(jamo.split(""));
   };

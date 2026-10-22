@@ -9,6 +9,9 @@ export const viZh = async (text: Text) => {
   const transliteratorToIpa = RBT.fromRules(viIpaRules);
   const transliteratorToZh = RBT.fromRules(ipaZhRules);
 
+  const lookup = (dictionary: Record<string, string>, key: string) =>
+    Object.prototype.hasOwnProperty.call(dictionary, key) ? dictionary[key] : undefined;
+
   const convert = async (text: string) => {
     // 1. Tokenize: Split into words (letters + diacritics) and non-words (spaces/punctuation)
     // The 'u' flag is critical for \p{L} (Letters) and \p{M} (Marks/Diacritics) to support Vietnamese
@@ -54,9 +57,11 @@ export const viZh = async (text: Text) => {
         if (candidateWords.length === windowSize) {
           const lookupKey = candidateWords.join(" ");
 
-          if (compoundDictionary[lookupKey]) {
+          const compound = lookup(compoundDictionary, lookupKey);
+
+          if (compound) {
             // Match found in the compound dictionary!
-            result += compoundDictionary[lookupKey];
+            result += compound;
             i += tokensConsumed; // Skip past all consumed tokens (including inner spaces)
             matchFound = true;
             break;
@@ -68,14 +73,16 @@ export const viZh = async (text: Text) => {
       if (!matchFound) {
         const singleWord = token.toLowerCase();
         const normalizedWord = singleWord.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        const exact = lookup(singleDictionary, singleWord);
+        const toneless = lookup(singleDictionary, normalizedWord);
 
         // Priority 1: Exact Sino-Vietnamese match (preserves tonal meaning)
-        if (singleDictionary[singleWord] && singleDictionary[singleWord] !== "_") {
-          result += singleDictionary[singleWord];
+        if (exact && exact !== "_") {
+          result += exact;
         }
         // Priority 2: Tone-stripped fallback match
-        else if (singleDictionary[normalizedWord] && singleDictionary[normalizedWord] !== "_") {
-          result += singleDictionary[normalizedWord];
+        else if (toneless && toneless !== "_") {
+          result += toneless;
         }
         // Priority 3: IPA Fallback via ICU Rules
         else {

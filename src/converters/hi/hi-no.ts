@@ -2,10 +2,14 @@ import { Text } from "types";
 
 export const hiNo = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
-  const { hiLatnRules } = await import("data/hi/hi-latn.rules");
+  const { hiIpaRules } = await import("data/hi/hi-ipa.rules");
+  const { hiIpaHRules } = await import("data/hi/hi-ipa_h.rules");
+  const { ipaLatnRules } = await import("data/ipa/ipa-latn.rules");
   const { latnNoRules } = await import("data/latn/latn-no.rules");
 
-  const transliterator = RBT.fromRules(hiLatnRules + latnNoRules);
+  const transliterator = RBT.fromRules(
+    hiIpaRules + hiIpaHRules + ipaLatnRules + "::Title;" + latnNoRules,
+  );
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);

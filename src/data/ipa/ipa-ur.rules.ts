@@ -1,6 +1,8 @@
 export const ipaUrRules = `
 ::Null;
 
+[^[:L:][:M:]] { [ʔʼ] > ;
+
 ẽ > e ̃;
 ĩ > i ̃;
 õ > o ̃;

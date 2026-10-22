@@ -131,4 +131,9 @@ H > ;
 [cCgG] { [iI] } [eEèéÈÉiIìíÌÍyYïÏ] > ;
 [gG] [nN] { [iI] } [aAàáÀÁeEèéÈÉiIìíÌÍoOòóÒÓuUùúÙÚyYïÏÿŸäÄöÖüÜ] > ;
 [gG] [lL] { [iI] } [iIìíÌÍyYïÏ] > ;
+
+::Null;
+
+[iI] [iI] { [iI]+ > ;
+[uU] [uU] { [uU]+ > ;
 `;

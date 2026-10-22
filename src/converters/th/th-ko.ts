@@ -2,15 +2,16 @@ import { Text } from "types";
 
 export const thKo = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
-  const { thIpaRules } = await import("data/th/th-ipa.rules");
+  const { thIpa } = await import("converters/th/th-ipa");
   const { ipaKoRules } = await import("data/ipa/ipa-ko.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
   const { normalizeTh } = await import("helpers/normalizeTh");
 
-  const transliterator = RBT.fromRules(thIpaRules + ipaKoRules);
+  const toIpa = await thIpa();
+  const transliterator = RBT.fromRules(ipaKoRules);
 
   const convert = async (text: string) => {
-    return wordSplitter(normalizeTh(text), "th", text => transliterator.transliterate(text));
+    return wordSplitter(normalizeTh(text), "th", text => transliterator.transliterate(toIpa(text)));
   };
 
   if (typeof text === "string") {

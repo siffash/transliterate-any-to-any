@@ -136,4 +136,9 @@ S [sS] } [^[:L:][:M:]] > S;
 [bBcCdDfFgGhHjJkKlLmMnNpPqQrRtTvVwWxXzZ] { S [sS] > S;
 s [sS] } [bBcCdDfFgGhHjJkKlLmMnNpPqQrRtTvVwWxXzZ] > s;
 S [sS] } [bBcCdDfFgGhHjJkKlLmMnNpPqQrRtTvVwWxXzZ] > S;
+
+::Null;
+
+[iI] [iI] { [iI]+ > ;
+[uU] [uU] { [uU]+ > ;
 `;

@@ -1,6 +1,2665 @@
 import { languages, supportedLanguages } from "helpers/constants";
-import { Options, Text } from "types";
+import { Language, Options, Text } from "types";
 import { validateLanguage } from "helpers/validateLanguage";
+
+type Converter = (text: Text) => Promise<Text>;
+
+// One small loader per pair: a single async function with an await per pair (5,000+ resume
+// points) made V8's Maglev compiler abort on arm64 ("Check failed: is_int26(x)")
+const converters: Partial<Record<`${Language}${Language}`, () => Promise<Converter>>> = {
+  zhja: () => import("converters/zh/zh-ja").then(m => m.zhJa),
+  zhko: () => import("converters/zh/zh-ko").then(m => m.zhKo),
+  zhth: () => import("converters/zh/zh-th").then(m => m.zhTh),
+  zhhi: () => import("converters/zh/zh-hi").then(m => m.zhHi),
+  zhbn: () => import("converters/zh/zh-bn").then(m => m.zhBn),
+  zhur: () => import("converters/zh/zh-ur").then(m => m.zhUr),
+  zhfa: () => import("converters/zh/zh-fa").then(m => m.zhFa),
+  zhar: () => import("converters/zh/zh-ar").then(m => m.zhAr),
+  zhhe: () => import("converters/zh/zh-he").then(m => m.zhHe),
+  zhka: () => import("converters/zh/zh-ka").then(m => m.zhKa),
+  zhhy: () => import("converters/zh/zh-hy").then(m => m.zhHy),
+  zhel: () => import("converters/zh/zh-el").then(m => m.zhEl),
+  zhru: () => import("converters/zh/zh-ru").then(m => m.zhRu),
+  zhuk: () => import("converters/zh/zh-uk").then(m => m.zhUk),
+  zhbg: () => import("converters/zh/zh-bg").then(m => m.zhBg),
+  zhmk: () => import("converters/zh/zh-mk").then(m => m.zhMk),
+  zhkk: () => import("converters/zh/zh-kk").then(m => m.zhKk),
+  zhtg: () => import("converters/zh/zh-tg").then(m => m.zhTg),
+  zhaz: () => import("converters/zh/zh-az").then(m => m.zhAz),
+  zhbs: () => import("converters/zh/zh-bs").then(m => m.zhBs),
+  zhca: () => import("converters/zh/zh-ca").then(m => m.zhCa),
+  zhcs: () => import("converters/zh/zh-cs").then(m => m.zhCs),
+  zhda: () => import("converters/zh/zh-da").then(m => m.zhDa),
+  zhde: () => import("converters/zh/zh-de").then(m => m.zhDe),
+  zhen: () => import("converters/zh/zh-en").then(m => m.zhEn),
+  zhes: () => import("converters/zh/zh-es").then(m => m.zhEs),
+  zhet: () => import("converters/zh/zh-et").then(m => m.zhEt),
+  zhfi: () => import("converters/zh/zh-fi").then(m => m.zhFi),
+  zhfr: () => import("converters/zh/zh-fr").then(m => m.zhFr),
+  zhhr: () => import("converters/zh/zh-hr").then(m => m.zhHr),
+  zhhu: () => import("converters/zh/zh-hu").then(m => m.zhHu),
+  zhid: () => import("converters/zh/zh-id").then(m => m.zhId),
+  zhis: () => import("converters/zh/zh-is").then(m => m.zhIs),
+  zhit: () => import("converters/zh/zh-it").then(m => m.zhIt),
+  zhlb: () => import("converters/zh/zh-lb").then(m => m.zhLb),
+  zhlt: () => import("converters/zh/zh-lt").then(m => m.zhLt),
+  zhlv: () => import("converters/zh/zh-lv").then(m => m.zhLv),
+  zhms: () => import("converters/zh/zh-ms").then(m => m.zhMs),
+  zhmt: () => import("converters/zh/zh-mt").then(m => m.zhMt),
+  zhnl: () => import("converters/zh/zh-nl").then(m => m.zhNl),
+  zhno: () => import("converters/zh/zh-no").then(m => m.zhNo),
+  zhpl: () => import("converters/zh/zh-pl").then(m => m.zhPl),
+  zhpt: () => import("converters/zh/zh-pt").then(m => m.zhPt),
+  zhro: () => import("converters/zh/zh-ro").then(m => m.zhRo),
+  zhsk: () => import("converters/zh/zh-sk").then(m => m.zhSk),
+  zhsl: () => import("converters/zh/zh-sl").then(m => m.zhSl),
+  zhsq: () => import("converters/zh/zh-sq").then(m => m.zhSq),
+  zhsr: () => import("converters/zh/zh-sr").then(m => m.zhSr),
+  zhsv: () => import("converters/zh/zh-sv").then(m => m.zhSv),
+  zhtr: () => import("converters/zh/zh-tr").then(m => m.zhTr),
+  zhvi: () => import("converters/zh/zh-vi").then(m => m.zhVi),
+  jazh: () => import("converters/ja/ja-zh").then(m => m.jaZh),
+  jako: () => import("converters/ja/ja-ko").then(m => m.jaKo),
+  jath: () => import("converters/ja/ja-th").then(m => m.jaTh),
+  jahi: () => import("converters/ja/ja-hi").then(m => m.jaHi),
+  jabn: () => import("converters/ja/ja-bn").then(m => m.jaBn),
+  jaur: () => import("converters/ja/ja-ur").then(m => m.jaUr),
+  jafa: () => import("converters/ja/ja-fa").then(m => m.jaFa),
+  jaar: () => import("converters/ja/ja-ar").then(m => m.jaAr),
+  jahe: () => import("converters/ja/ja-he").then(m => m.jaHe),
+  jaka: () => import("converters/ja/ja-ka").then(m => m.jaKa),
+  jahy: () => import("converters/ja/ja-hy").then(m => m.jaHy),
+  jael: () => import("converters/ja/ja-el").then(m => m.jaEl),
+  jaru: () => import("converters/ja/ja-ru").then(m => m.jaRu),
+  jauk: () => import("converters/ja/ja-uk").then(m => m.jaUk),
+  jabg: () => import("converters/ja/ja-bg").then(m => m.jaBg),
+  jamk: () => import("converters/ja/ja-mk").then(m => m.jaMk),
+  jakk: () => import("converters/ja/ja-kk").then(m => m.jaKk),
+  jatg: () => import("converters/ja/ja-tg").then(m => m.jaTg),
+  jaaz: () => import("converters/ja/ja-az").then(m => m.jaAz),
+  jabs: () => import("converters/ja/ja-bs").then(m => m.jaBs),
+  jaca: () => import("converters/ja/ja-ca").then(m => m.jaCa),
+  jacs: () => import("converters/ja/ja-cs").then(m => m.jaCs),
+  jada: () => import("converters/ja/ja-da").then(m => m.jaDa),
+  jade: () => import("converters/ja/ja-de").then(m => m.jaDe),
+  jaen: () => import("converters/ja/ja-en").then(m => m.jaEn),
+  jaes: () => import("converters/ja/ja-es").then(m => m.jaEs),
+  jaet: () => import("converters/ja/ja-et").then(m => m.jaEt),
+  jafi: () => import("converters/ja/ja-fi").then(m => m.jaFi),
+  jafr: () => import("converters/ja/ja-fr").then(m => m.jaFr),
+  jahr: () => import("converters/ja/ja-hr").then(m => m.jaHr),
+  jahu: () => import("converters/ja/ja-hu").then(m => m.jaHu),
+  jaid: () => import("converters/ja/ja-id").then(m => m.jaId),
+  jais: () => import("converters/ja/ja-is").then(m => m.jaIs),
+  jait: () => import("converters/ja/ja-it").then(m => m.jaIt),
+  jalb: () => import("converters/ja/ja-lb").then(m => m.jaLb),
+  jalt: () => import("converters/ja/ja-lt").then(m => m.jaLt),
+  jalv: () => import("converters/ja/ja-lv").then(m => m.jaLv),
+  jams: () => import("converters/ja/ja-ms").then(m => m.jaMs),
+  jamt: () => import("converters/ja/ja-mt").then(m => m.jaMt),
+  janl: () => import("converters/ja/ja-nl").then(m => m.jaNl),
+  jano: () => import("converters/ja/ja-no").then(m => m.jaNo),
+  japl: () => import("converters/ja/ja-pl").then(m => m.jaPl),
+  japt: () => import("converters/ja/ja-pt").then(m => m.jaPt),
+  jaro: () => import("converters/ja/ja-ro").then(m => m.jaRo),
+  jask: () => import("converters/ja/ja-sk").then(m => m.jaSk),
+  jasl: () => import("converters/ja/ja-sl").then(m => m.jaSl),
+  jasq: () => import("converters/ja/ja-sq").then(m => m.jaSq),
+  jasr: () => import("converters/ja/ja-sr").then(m => m.jaSr),
+  jasv: () => import("converters/ja/ja-sv").then(m => m.jaSv),
+  jatr: () => import("converters/ja/ja-tr").then(m => m.jaTr),
+  javi: () => import("converters/ja/ja-vi").then(m => m.jaVi),
+  kozh: () => import("converters/ko/ko-zh").then(m => m.koZh),
+  koja: () => import("converters/ko/ko-ja").then(m => m.koJa),
+  koth: () => import("converters/ko/ko-th").then(m => m.koTh),
+  kohi: () => import("converters/ko/ko-hi").then(m => m.koHi),
+  kobn: () => import("converters/ko/ko-bn").then(m => m.koBn),
+  kour: () => import("converters/ko/ko-ur").then(m => m.koUr),
+  kofa: () => import("converters/ko/ko-fa").then(m => m.koFa),
+  koar: () => import("converters/ko/ko-ar").then(m => m.koAr),
+  kohe: () => import("converters/ko/ko-he").then(m => m.koHe),
+  koka: () => import("converters/ko/ko-ka").then(m => m.koKa),
+  kohy: () => import("converters/ko/ko-hy").then(m => m.koHy),
+  koel: () => import("converters/ko/ko-el").then(m => m.koEl),
+  koru: () => import("converters/ko/ko-ru").then(m => m.koRu),
+  kouk: () => import("converters/ko/ko-uk").then(m => m.koUk),
+  kobg: () => import("converters/ko/ko-bg").then(m => m.koBg),
+  komk: () => import("converters/ko/ko-mk").then(m => m.koMk),
+  kokk: () => import("converters/ko/ko-kk").then(m => m.koKk),
+  kotg: () => import("converters/ko/ko-tg").then(m => m.koTg),
+  koaz: () => import("converters/ko/ko-az").then(m => m.koAz),
+  kobs: () => import("converters/ko/ko-bs").then(m => m.koBs),
+  koca: () => import("converters/ko/ko-ca").then(m => m.koCa),
+  kocs: () => import("converters/ko/ko-cs").then(m => m.koCs),
+  koda: () => import("converters/ko/ko-da").then(m => m.koDa),
+  kode: () => import("converters/ko/ko-de").then(m => m.koDe),
+  koen: () => import("converters/ko/ko-en").then(m => m.koEn),
+  koes: () => import("converters/ko/ko-es").then(m => m.koEs),
+  koet: () => import("converters/ko/ko-et").then(m => m.koEt),
+  kofi: () => import("converters/ko/ko-fi").then(m => m.koFi),
+  kofr: () => import("converters/ko/ko-fr").then(m => m.koFr),
+  kohr: () => import("converters/ko/ko-hr").then(m => m.koHr),
+  kohu: () => import("converters/ko/ko-hu").then(m => m.koHu),
+  koid: () => import("converters/ko/ko-id").then(m => m.koId),
+  kois: () => import("converters/ko/ko-is").then(m => m.koIs),
+  koit: () => import("converters/ko/ko-it").then(m => m.koIt),
+  kolb: () => import("converters/ko/ko-lb").then(m => m.koLb),
+  kolt: () => import("converters/ko/ko-lt").then(m => m.koLt),
+  kolv: () => import("converters/ko/ko-lv").then(m => m.koLv),
+  koms: () => import("converters/ko/ko-ms").then(m => m.koMs),
+  komt: () => import("converters/ko/ko-mt").then(m => m.koMt),
+  konl: () => import("converters/ko/ko-nl").then(m => m.koNl),
+  kono: () => import("converters/ko/ko-no").then(m => m.koNo),
+  kopl: () => import("converters/ko/ko-pl").then(m => m.koPl),
+  kopt: () => import("converters/ko/ko-pt").then(m => m.koPt),
+  koro: () => import("converters/ko/ko-ro").then(m => m.koRo),
+  kosk: () => import("converters/ko/ko-sk").then(m => m.koSk),
+  kosl: () => import("converters/ko/ko-sl").then(m => m.koSl),
+  kosq: () => import("converters/ko/ko-sq").then(m => m.koSq),
+  kosr: () => import("converters/ko/ko-sr").then(m => m.koSr),
+  kosv: () => import("converters/ko/ko-sv").then(m => m.koSv),
+  kotr: () => import("converters/ko/ko-tr").then(m => m.koTr),
+  kovi: () => import("converters/ko/ko-vi").then(m => m.koVi),
+  thzh: () => import("converters/th/th-zh").then(m => m.thZh),
+  thja: () => import("converters/th/th-ja").then(m => m.thJa),
+  thko: () => import("converters/th/th-ko").then(m => m.thKo),
+  thhi: () => import("converters/th/th-hi").then(m => m.thHi),
+  thbn: () => import("converters/th/th-bn").then(m => m.thBn),
+  thur: () => import("converters/th/th-ur").then(m => m.thUr),
+  thfa: () => import("converters/th/th-fa").then(m => m.thFa),
+  thar: () => import("converters/th/th-ar").then(m => m.thAr),
+  thhe: () => import("converters/th/th-he").then(m => m.thHe),
+  thka: () => import("converters/th/th-ka").then(m => m.thKa),
+  thhy: () => import("converters/th/th-hy").then(m => m.thHy),
+  thel: () => import("converters/th/th-el").then(m => m.thEl),
+  thru: () => import("converters/th/th-ru").then(m => m.thRu),
+  thuk: () => import("converters/th/th-uk").then(m => m.thUk),
+  thbg: () => import("converters/th/th-bg").then(m => m.thBg),
+  thmk: () => import("converters/th/th-mk").then(m => m.thMk),
+  thkk: () => import("converters/th/th-kk").then(m => m.thKk),
+  thtg: () => import("converters/th/th-tg").then(m => m.thTg),
+  thaz: () => import("converters/th/th-az").then(m => m.thAz),
+  thbs: () => import("converters/th/th-bs").then(m => m.thBs),
+  thca: () => import("converters/th/th-ca").then(m => m.thCa),
+  thcs: () => import("converters/th/th-cs").then(m => m.thCs),
+  thda: () => import("converters/th/th-da").then(m => m.thDa),
+  thde: () => import("converters/th/th-de").then(m => m.thDe),
+  then: () => import("converters/th/th-en").then(m => m.thEn),
+  thes: () => import("converters/th/th-es").then(m => m.thEs),
+  thet: () => import("converters/th/th-et").then(m => m.thEt),
+  thfi: () => import("converters/th/th-fi").then(m => m.thFi),
+  thfr: () => import("converters/th/th-fr").then(m => m.thFr),
+  thhr: () => import("converters/th/th-hr").then(m => m.thHr),
+  thhu: () => import("converters/th/th-hu").then(m => m.thHu),
+  thid: () => import("converters/th/th-id").then(m => m.thId),
+  this: () => import("converters/th/th-is").then(m => m.thIs),
+  thit: () => import("converters/th/th-it").then(m => m.thIt),
+  thlb: () => import("converters/th/th-lb").then(m => m.thLb),
+  thlt: () => import("converters/th/th-lt").then(m => m.thLt),
+  thlv: () => import("converters/th/th-lv").then(m => m.thLv),
+  thms: () => import("converters/th/th-ms").then(m => m.thMs),
+  thmt: () => import("converters/th/th-mt").then(m => m.thMt),
+  thnl: () => import("converters/th/th-nl").then(m => m.thNl),
+  thno: () => import("converters/th/th-no").then(m => m.thNo),
+  thpl: () => import("converters/th/th-pl").then(m => m.thPl),
+  thpt: () => import("converters/th/th-pt").then(m => m.thPt),
+  thro: () => import("converters/th/th-ro").then(m => m.thRo),
+  thsk: () => import("converters/th/th-sk").then(m => m.thSk),
+  thsl: () => import("converters/th/th-sl").then(m => m.thSl),
+  thsq: () => import("converters/th/th-sq").then(m => m.thSq),
+  thsr: () => import("converters/th/th-sr").then(m => m.thSr),
+  thsv: () => import("converters/th/th-sv").then(m => m.thSv),
+  thtr: () => import("converters/th/th-tr").then(m => m.thTr),
+  thvi: () => import("converters/th/th-vi").then(m => m.thVi),
+  hizh: () => import("converters/hi/hi-zh").then(m => m.hiZh),
+  hija: () => import("converters/hi/hi-ja").then(m => m.hiJa),
+  hiko: () => import("converters/hi/hi-ko").then(m => m.hiKo),
+  hith: () => import("converters/hi/hi-th").then(m => m.hiTh),
+  hibn: () => import("converters/hi/hi-bn").then(m => m.hiBn),
+  hiur: () => import("converters/hi/hi-ur").then(m => m.hiUr),
+  hifa: () => import("converters/hi/hi-fa").then(m => m.hiFa),
+  hiar: () => import("converters/hi/hi-ar").then(m => m.hiAr),
+  hihe: () => import("converters/hi/hi-he").then(m => m.hiHe),
+  hika: () => import("converters/hi/hi-ka").then(m => m.hiKa),
+  hihy: () => import("converters/hi/hi-hy").then(m => m.hiHy),
+  hiel: () => import("converters/hi/hi-el").then(m => m.hiEl),
+  hiru: () => import("converters/hi/hi-ru").then(m => m.hiRu),
+  hiuk: () => import("converters/hi/hi-uk").then(m => m.hiUk),
+  hibg: () => import("converters/hi/hi-bg").then(m => m.hiBg),
+  himk: () => import("converters/hi/hi-mk").then(m => m.hiMk),
+  hikk: () => import("converters/hi/hi-kk").then(m => m.hiKk),
+  hitg: () => import("converters/hi/hi-tg").then(m => m.hiTg),
+  hiaz: () => import("converters/hi/hi-az").then(m => m.hiAz),
+  hibs: () => import("converters/hi/hi-bs").then(m => m.hiBs),
+  hica: () => import("converters/hi/hi-ca").then(m => m.hiCa),
+  hics: () => import("converters/hi/hi-cs").then(m => m.hiCs),
+  hida: () => import("converters/hi/hi-da").then(m => m.hiDa),
+  hide: () => import("converters/hi/hi-de").then(m => m.hiDe),
+  hien: () => import("converters/hi/hi-en").then(m => m.hiEn),
+  hies: () => import("converters/hi/hi-es").then(m => m.hiEs),
+  hiet: () => import("converters/hi/hi-et").then(m => m.hiEt),
+  hifi: () => import("converters/hi/hi-fi").then(m => m.hiFi),
+  hifr: () => import("converters/hi/hi-fr").then(m => m.hiFr),
+  hihr: () => import("converters/hi/hi-hr").then(m => m.hiHr),
+  hihu: () => import("converters/hi/hi-hu").then(m => m.hiHu),
+  hiid: () => import("converters/hi/hi-id").then(m => m.hiId),
+  hiis: () => import("converters/hi/hi-is").then(m => m.hiIs),
+  hiit: () => import("converters/hi/hi-it").then(m => m.hiIt),
+  hilb: () => import("converters/hi/hi-lb").then(m => m.hiLb),
+  hilt: () => import("converters/hi/hi-lt").then(m => m.hiLt),
+  hilv: () => import("converters/hi/hi-lv").then(m => m.hiLv),
+  hims: () => import("converters/hi/hi-ms").then(m => m.hiMs),
+  himt: () => import("converters/hi/hi-mt").then(m => m.hiMt),
+  hinl: () => import("converters/hi/hi-nl").then(m => m.hiNl),
+  hino: () => import("converters/hi/hi-no").then(m => m.hiNo),
+  hipl: () => import("converters/hi/hi-pl").then(m => m.hiPl),
+  hipt: () => import("converters/hi/hi-pt").then(m => m.hiPt),
+  hiro: () => import("converters/hi/hi-ro").then(m => m.hiRo),
+  hisk: () => import("converters/hi/hi-sk").then(m => m.hiSk),
+  hisl: () => import("converters/hi/hi-sl").then(m => m.hiSl),
+  hisq: () => import("converters/hi/hi-sq").then(m => m.hiSq),
+  hisr: () => import("converters/hi/hi-sr").then(m => m.hiSr),
+  hisv: () => import("converters/hi/hi-sv").then(m => m.hiSv),
+  hitr: () => import("converters/hi/hi-tr").then(m => m.hiTr),
+  hivi: () => import("converters/hi/hi-vi").then(m => m.hiVi),
+  bnzh: () => import("converters/bn/bn-zh").then(m => m.bnZh),
+  bnja: () => import("converters/bn/bn-ja").then(m => m.bnJa),
+  bnko: () => import("converters/bn/bn-ko").then(m => m.bnKo),
+  bnth: () => import("converters/bn/bn-th").then(m => m.bnTh),
+  bnhi: () => import("converters/bn/bn-hi").then(m => m.bnHi),
+  bnur: () => import("converters/bn/bn-ur").then(m => m.bnUr),
+  bnfa: () => import("converters/bn/bn-fa").then(m => m.bnFa),
+  bnar: () => import("converters/bn/bn-ar").then(m => m.bnAr),
+  bnhe: () => import("converters/bn/bn-he").then(m => m.bnHe),
+  bnka: () => import("converters/bn/bn-ka").then(m => m.bnKa),
+  bnhy: () => import("converters/bn/bn-hy").then(m => m.bnHy),
+  bnel: () => import("converters/bn/bn-el").then(m => m.bnEl),
+  bnru: () => import("converters/bn/bn-ru").then(m => m.bnRu),
+  bnuk: () => import("converters/bn/bn-uk").then(m => m.bnUk),
+  bnbg: () => import("converters/bn/bn-bg").then(m => m.bnBg),
+  bnmk: () => import("converters/bn/bn-mk").then(m => m.bnMk),
+  bnkk: () => import("converters/bn/bn-kk").then(m => m.bnKk),
+  bntg: () => import("converters/bn/bn-tg").then(m => m.bnTg),
+  bnaz: () => import("converters/bn/bn-az").then(m => m.bnAz),
+  bnbs: () => import("converters/bn/bn-bs").then(m => m.bnBs),
+  bnca: () => import("converters/bn/bn-ca").then(m => m.bnCa),
+  bncs: () => import("converters/bn/bn-cs").then(m => m.bnCs),
+  bnda: () => import("converters/bn/bn-da").then(m => m.bnDa),
+  bnde: () => import("converters/bn/bn-de").then(m => m.bnDe),
+  bnen: () => import("converters/bn/bn-en").then(m => m.bnEn),
+  bnes: () => import("converters/bn/bn-es").then(m => m.bnEs),
+  bnet: () => import("converters/bn/bn-et").then(m => m.bnEt),
+  bnfi: () => import("converters/bn/bn-fi").then(m => m.bnFi),
+  bnfr: () => import("converters/bn/bn-fr").then(m => m.bnFr),
+  bnhr: () => import("converters/bn/bn-hr").then(m => m.bnHr),
+  bnhu: () => import("converters/bn/bn-hu").then(m => m.bnHu),
+  bnid: () => import("converters/bn/bn-id").then(m => m.bnId),
+  bnis: () => import("converters/bn/bn-is").then(m => m.bnIs),
+  bnit: () => import("converters/bn/bn-it").then(m => m.bnIt),
+  bnlb: () => import("converters/bn/bn-lb").then(m => m.bnLb),
+  bnlt: () => import("converters/bn/bn-lt").then(m => m.bnLt),
+  bnlv: () => import("converters/bn/bn-lv").then(m => m.bnLv),
+  bnms: () => import("converters/bn/bn-ms").then(m => m.bnMs),
+  bnmt: () => import("converters/bn/bn-mt").then(m => m.bnMt),
+  bnnl: () => import("converters/bn/bn-nl").then(m => m.bnNl),
+  bnno: () => import("converters/bn/bn-no").then(m => m.bnNo),
+  bnpl: () => import("converters/bn/bn-pl").then(m => m.bnPl),
+  bnpt: () => import("converters/bn/bn-pt").then(m => m.bnPt),
+  bnro: () => import("converters/bn/bn-ro").then(m => m.bnRo),
+  bnsk: () => import("converters/bn/bn-sk").then(m => m.bnSk),
+  bnsl: () => import("converters/bn/bn-sl").then(m => m.bnSl),
+  bnsq: () => import("converters/bn/bn-sq").then(m => m.bnSq),
+  bnsr: () => import("converters/bn/bn-sr").then(m => m.bnSr),
+  bnsv: () => import("converters/bn/bn-sv").then(m => m.bnSv),
+  bntr: () => import("converters/bn/bn-tr").then(m => m.bnTr),
+  bnvi: () => import("converters/bn/bn-vi").then(m => m.bnVi),
+  urzh: () => import("converters/ur/ur-zh").then(m => m.urZh),
+  urja: () => import("converters/ur/ur-ja").then(m => m.urJa),
+  urko: () => import("converters/ur/ur-ko").then(m => m.urKo),
+  urth: () => import("converters/ur/ur-th").then(m => m.urTh),
+  urhi: () => import("converters/ur/ur-hi").then(m => m.urHi),
+  urbn: () => import("converters/ur/ur-bn").then(m => m.urBn),
+  urfa: () => import("converters/ur/ur-fa").then(m => m.urFa),
+  urar: () => import("converters/ur/ur-ar").then(m => m.urAr),
+  urhe: () => import("converters/ur/ur-he").then(m => m.urHe),
+  urka: () => import("converters/ur/ur-ka").then(m => m.urKa),
+  urhy: () => import("converters/ur/ur-hy").then(m => m.urHy),
+  urel: () => import("converters/ur/ur-el").then(m => m.urEl),
+  urru: () => import("converters/ur/ur-ru").then(m => m.urRu),
+  uruk: () => import("converters/ur/ur-uk").then(m => m.urUk),
+  urbg: () => import("converters/ur/ur-bg").then(m => m.urBg),
+  urmk: () => import("converters/ur/ur-mk").then(m => m.urMk),
+  urkk: () => import("converters/ur/ur-kk").then(m => m.urKk),
+  urtg: () => import("converters/ur/ur-tg").then(m => m.urTg),
+  uraz: () => import("converters/ur/ur-az").then(m => m.urAz),
+  urbs: () => import("converters/ur/ur-bs").then(m => m.urBs),
+  urca: () => import("converters/ur/ur-ca").then(m => m.urCa),
+  urcs: () => import("converters/ur/ur-cs").then(m => m.urCs),
+  urda: () => import("converters/ur/ur-da").then(m => m.urDa),
+  urde: () => import("converters/ur/ur-de").then(m => m.urDe),
+  uren: () => import("converters/ur/ur-en").then(m => m.urEn),
+  ures: () => import("converters/ur/ur-es").then(m => m.urEs),
+  uret: () => import("converters/ur/ur-et").then(m => m.urEt),
+  urfi: () => import("converters/ur/ur-fi").then(m => m.urFi),
+  urfr: () => import("converters/ur/ur-fr").then(m => m.urFr),
+  urhr: () => import("converters/ur/ur-hr").then(m => m.urHr),
+  urhu: () => import("converters/ur/ur-hu").then(m => m.urHu),
+  urid: () => import("converters/ur/ur-id").then(m => m.urId),
+  uris: () => import("converters/ur/ur-is").then(m => m.urIs),
+  urit: () => import("converters/ur/ur-it").then(m => m.urIt),
+  urlb: () => import("converters/ur/ur-lb").then(m => m.urLb),
+  urlt: () => import("converters/ur/ur-lt").then(m => m.urLt),
+  urlv: () => import("converters/ur/ur-lv").then(m => m.urLv),
+  urms: () => import("converters/ur/ur-ms").then(m => m.urMs),
+  urmt: () => import("converters/ur/ur-mt").then(m => m.urMt),
+  urnl: () => import("converters/ur/ur-nl").then(m => m.urNl),
+  urno: () => import("converters/ur/ur-no").then(m => m.urNo),
+  urpl: () => import("converters/ur/ur-pl").then(m => m.urPl),
+  urpt: () => import("converters/ur/ur-pt").then(m => m.urPt),
+  urro: () => import("converters/ur/ur-ro").then(m => m.urRo),
+  ursk: () => import("converters/ur/ur-sk").then(m => m.urSk),
+  ursl: () => import("converters/ur/ur-sl").then(m => m.urSl),
+  ursq: () => import("converters/ur/ur-sq").then(m => m.urSq),
+  ursr: () => import("converters/ur/ur-sr").then(m => m.urSr),
+  ursv: () => import("converters/ur/ur-sv").then(m => m.urSv),
+  urtr: () => import("converters/ur/ur-tr").then(m => m.urTr),
+  urvi: () => import("converters/ur/ur-vi").then(m => m.urVi),
+  fazh: () => import("converters/fa/fa-zh").then(m => m.faZh),
+  faja: () => import("converters/fa/fa-ja").then(m => m.faJa),
+  fako: () => import("converters/fa/fa-ko").then(m => m.faKo),
+  fath: () => import("converters/fa/fa-th").then(m => m.faTh),
+  fahi: () => import("converters/fa/fa-hi").then(m => m.faHi),
+  fabn: () => import("converters/fa/fa-bn").then(m => m.faBn),
+  faur: () => import("converters/fa/fa-ur").then(m => m.faUr),
+  faar: () => import("converters/fa/fa-ar").then(m => m.faAr),
+  fahe: () => import("converters/fa/fa-he").then(m => m.faHe),
+  faka: () => import("converters/fa/fa-ka").then(m => m.faKa),
+  fahy: () => import("converters/fa/fa-hy").then(m => m.faHy),
+  fael: () => import("converters/fa/fa-el").then(m => m.faEl),
+  faru: () => import("converters/fa/fa-ru").then(m => m.faRu),
+  fauk: () => import("converters/fa/fa-uk").then(m => m.faUk),
+  fabg: () => import("converters/fa/fa-bg").then(m => m.faBg),
+  famk: () => import("converters/fa/fa-mk").then(m => m.faMk),
+  fakk: () => import("converters/fa/fa-kk").then(m => m.faKk),
+  fatg: () => import("converters/fa/fa-tg").then(m => m.faTg),
+  faaz: () => import("converters/fa/fa-az").then(m => m.faAz),
+  fabs: () => import("converters/fa/fa-bs").then(m => m.faBs),
+  faca: () => import("converters/fa/fa-ca").then(m => m.faCa),
+  facs: () => import("converters/fa/fa-cs").then(m => m.faCs),
+  fada: () => import("converters/fa/fa-da").then(m => m.faDa),
+  fade: () => import("converters/fa/fa-de").then(m => m.faDe),
+  faen: () => import("converters/fa/fa-en").then(m => m.faEn),
+  faes: () => import("converters/fa/fa-es").then(m => m.faEs),
+  faet: () => import("converters/fa/fa-et").then(m => m.faEt),
+  fafi: () => import("converters/fa/fa-fi").then(m => m.faFi),
+  fafr: () => import("converters/fa/fa-fr").then(m => m.faFr),
+  fahr: () => import("converters/fa/fa-hr").then(m => m.faHr),
+  fahu: () => import("converters/fa/fa-hu").then(m => m.faHu),
+  faid: () => import("converters/fa/fa-id").then(m => m.faId),
+  fais: () => import("converters/fa/fa-is").then(m => m.faIs),
+  fait: () => import("converters/fa/fa-it").then(m => m.faIt),
+  falb: () => import("converters/fa/fa-lb").then(m => m.faLb),
+  falt: () => import("converters/fa/fa-lt").then(m => m.faLt),
+  falv: () => import("converters/fa/fa-lv").then(m => m.faLv),
+  fams: () => import("converters/fa/fa-ms").then(m => m.faMs),
+  famt: () => import("converters/fa/fa-mt").then(m => m.faMt),
+  fanl: () => import("converters/fa/fa-nl").then(m => m.faNl),
+  fano: () => import("converters/fa/fa-no").then(m => m.faNo),
+  fapl: () => import("converters/fa/fa-pl").then(m => m.faPl),
+  fapt: () => import("converters/fa/fa-pt").then(m => m.faPt),
+  faro: () => import("converters/fa/fa-ro").then(m => m.faRo),
+  fask: () => import("converters/fa/fa-sk").then(m => m.faSk),
+  fasl: () => import("converters/fa/fa-sl").then(m => m.faSl),
+  fasq: () => import("converters/fa/fa-sq").then(m => m.faSq),
+  fasr: () => import("converters/fa/fa-sr").then(m => m.faSr),
+  fasv: () => import("converters/fa/fa-sv").then(m => m.faSv),
+  fatr: () => import("converters/fa/fa-tr").then(m => m.faTr),
+  favi: () => import("converters/fa/fa-vi").then(m => m.faVi),
+  arzh: () => import("converters/ar/ar-zh").then(m => m.arZh),
+  arja: () => import("converters/ar/ar-ja").then(m => m.arJa),
+  arko: () => import("converters/ar/ar-ko").then(m => m.arKo),
+  arth: () => import("converters/ar/ar-th").then(m => m.arTh),
+  arhi: () => import("converters/ar/ar-hi").then(m => m.arHi),
+  arbn: () => import("converters/ar/ar-bn").then(m => m.arBn),
+  arur: () => import("converters/ar/ar-ur").then(m => m.arUr),
+  arfa: () => import("converters/ar/ar-fa").then(m => m.arFa),
+  arhe: () => import("converters/ar/ar-he").then(m => m.arHe),
+  arka: () => import("converters/ar/ar-ka").then(m => m.arKa),
+  arhy: () => import("converters/ar/ar-hy").then(m => m.arHy),
+  arel: () => import("converters/ar/ar-el").then(m => m.arEl),
+  arru: () => import("converters/ar/ar-ru").then(m => m.arRu),
+  aruk: () => import("converters/ar/ar-uk").then(m => m.arUk),
+  arbg: () => import("converters/ar/ar-bg").then(m => m.arBg),
+  armk: () => import("converters/ar/ar-mk").then(m => m.arMk),
+  arkk: () => import("converters/ar/ar-kk").then(m => m.arKk),
+  artg: () => import("converters/ar/ar-tg").then(m => m.arTg),
+  araz: () => import("converters/ar/ar-az").then(m => m.arAz),
+  arbs: () => import("converters/ar/ar-bs").then(m => m.arBs),
+  arca: () => import("converters/ar/ar-ca").then(m => m.arCa),
+  arcs: () => import("converters/ar/ar-cs").then(m => m.arCs),
+  arda: () => import("converters/ar/ar-da").then(m => m.arDa),
+  arde: () => import("converters/ar/ar-de").then(m => m.arDe),
+  aren: () => import("converters/ar/ar-en").then(m => m.arEn),
+  ares: () => import("converters/ar/ar-es").then(m => m.arEs),
+  aret: () => import("converters/ar/ar-et").then(m => m.arEt),
+  arfi: () => import("converters/ar/ar-fi").then(m => m.arFi),
+  arfr: () => import("converters/ar/ar-fr").then(m => m.arFr),
+  arhr: () => import("converters/ar/ar-hr").then(m => m.arHr),
+  arhu: () => import("converters/ar/ar-hu").then(m => m.arHu),
+  arid: () => import("converters/ar/ar-id").then(m => m.arId),
+  aris: () => import("converters/ar/ar-is").then(m => m.arIs),
+  arit: () => import("converters/ar/ar-it").then(m => m.arIt),
+  arlb: () => import("converters/ar/ar-lb").then(m => m.arLb),
+  arlt: () => import("converters/ar/ar-lt").then(m => m.arLt),
+  arlv: () => import("converters/ar/ar-lv").then(m => m.arLv),
+  arms: () => import("converters/ar/ar-ms").then(m => m.arMs),
+  armt: () => import("converters/ar/ar-mt").then(m => m.arMt),
+  arnl: () => import("converters/ar/ar-nl").then(m => m.arNl),
+  arno: () => import("converters/ar/ar-no").then(m => m.arNo),
+  arpl: () => import("converters/ar/ar-pl").then(m => m.arPl),
+  arpt: () => import("converters/ar/ar-pt").then(m => m.arPt),
+  arro: () => import("converters/ar/ar-ro").then(m => m.arRo),
+  arsk: () => import("converters/ar/ar-sk").then(m => m.arSk),
+  arsl: () => import("converters/ar/ar-sl").then(m => m.arSl),
+  arsq: () => import("converters/ar/ar-sq").then(m => m.arSq),
+  arsr: () => import("converters/ar/ar-sr").then(m => m.arSr),
+  arsv: () => import("converters/ar/ar-sv").then(m => m.arSv),
+  artr: () => import("converters/ar/ar-tr").then(m => m.arTr),
+  arvi: () => import("converters/ar/ar-vi").then(m => m.arVi),
+  hezh: () => import("converters/he/he-zh").then(m => m.heZh),
+  heja: () => import("converters/he/he-ja").then(m => m.heJa),
+  heko: () => import("converters/he/he-ko").then(m => m.heKo),
+  heth: () => import("converters/he/he-th").then(m => m.heTh),
+  hehi: () => import("converters/he/he-hi").then(m => m.heHi),
+  hebn: () => import("converters/he/he-bn").then(m => m.heBn),
+  heur: () => import("converters/he/he-ur").then(m => m.heUr),
+  hefa: () => import("converters/he/he-fa").then(m => m.heFa),
+  hear: () => import("converters/he/he-ar").then(m => m.heAr),
+  heka: () => import("converters/he/he-ka").then(m => m.heKa),
+  hehy: () => import("converters/he/he-hy").then(m => m.heHy),
+  heel: () => import("converters/he/he-el").then(m => m.heEl),
+  heru: () => import("converters/he/he-ru").then(m => m.heRu),
+  heuk: () => import("converters/he/he-uk").then(m => m.heUk),
+  hebg: () => import("converters/he/he-bg").then(m => m.heBg),
+  hemk: () => import("converters/he/he-mk").then(m => m.heMk),
+  hekk: () => import("converters/he/he-kk").then(m => m.heKk),
+  hetg: () => import("converters/he/he-tg").then(m => m.heTg),
+  heaz: () => import("converters/he/he-az").then(m => m.heAz),
+  hebs: () => import("converters/he/he-bs").then(m => m.heBs),
+  heca: () => import("converters/he/he-ca").then(m => m.heCa),
+  hecs: () => import("converters/he/he-cs").then(m => m.heCs),
+  heda: () => import("converters/he/he-da").then(m => m.heDa),
+  hede: () => import("converters/he/he-de").then(m => m.heDe),
+  heen: () => import("converters/he/he-en").then(m => m.heEn),
+  hees: () => import("converters/he/he-es").then(m => m.heEs),
+  heet: () => import("converters/he/he-et").then(m => m.heEt),
+  hefi: () => import("converters/he/he-fi").then(m => m.heFi),
+  hefr: () => import("converters/he/he-fr").then(m => m.heFr),
+  hehr: () => import("converters/he/he-hr").then(m => m.heHr),
+  hehu: () => import("converters/he/he-hu").then(m => m.heHu),
+  heid: () => import("converters/he/he-id").then(m => m.heId),
+  heis: () => import("converters/he/he-is").then(m => m.heIs),
+  heit: () => import("converters/he/he-it").then(m => m.heIt),
+  helb: () => import("converters/he/he-lb").then(m => m.heLb),
+  helt: () => import("converters/he/he-lt").then(m => m.heLt),
+  helv: () => import("converters/he/he-lv").then(m => m.heLv),
+  hems: () => import("converters/he/he-ms").then(m => m.heMs),
+  hemt: () => import("converters/he/he-mt").then(m => m.heMt),
+  henl: () => import("converters/he/he-nl").then(m => m.heNl),
+  heno: () => import("converters/he/he-no").then(m => m.heNo),
+  hepl: () => import("converters/he/he-pl").then(m => m.hePl),
+  hept: () => import("converters/he/he-pt").then(m => m.hePt),
+  hero: () => import("converters/he/he-ro").then(m => m.heRo),
+  hesk: () => import("converters/he/he-sk").then(m => m.heSk),
+  hesl: () => import("converters/he/he-sl").then(m => m.heSl),
+  hesq: () => import("converters/he/he-sq").then(m => m.heSq),
+  hesr: () => import("converters/he/he-sr").then(m => m.heSr),
+  hesv: () => import("converters/he/he-sv").then(m => m.heSv),
+  hetr: () => import("converters/he/he-tr").then(m => m.heTr),
+  hevi: () => import("converters/he/he-vi").then(m => m.heVi),
+  kazh: () => import("converters/ka/ka-zh").then(m => m.kaZh),
+  kaja: () => import("converters/ka/ka-ja").then(m => m.kaJa),
+  kako: () => import("converters/ka/ka-ko").then(m => m.kaKo),
+  kath: () => import("converters/ka/ka-th").then(m => m.kaTh),
+  kahi: () => import("converters/ka/ka-hi").then(m => m.kaHi),
+  kabn: () => import("converters/ka/ka-bn").then(m => m.kaBn),
+  kaur: () => import("converters/ka/ka-ur").then(m => m.kaUr),
+  kafa: () => import("converters/ka/ka-fa").then(m => m.kaFa),
+  kaar: () => import("converters/ka/ka-ar").then(m => m.kaAr),
+  kahe: () => import("converters/ka/ka-he").then(m => m.kaHe),
+  kahy: () => import("converters/ka/ka-hy").then(m => m.kaHy),
+  kael: () => import("converters/ka/ka-el").then(m => m.kaEl),
+  karu: () => import("converters/ka/ka-ru").then(m => m.kaRu),
+  kauk: () => import("converters/ka/ka-uk").then(m => m.kaUk),
+  kabg: () => import("converters/ka/ka-bg").then(m => m.kaBg),
+  kamk: () => import("converters/ka/ka-mk").then(m => m.kaMk),
+  kakk: () => import("converters/ka/ka-kk").then(m => m.kaKk),
+  katg: () => import("converters/ka/ka-tg").then(m => m.kaTg),
+  kaaz: () => import("converters/ka/ka-az").then(m => m.kaAz),
+  kabs: () => import("converters/ka/ka-bs").then(m => m.kaBs),
+  kaca: () => import("converters/ka/ka-ca").then(m => m.kaCa),
+  kacs: () => import("converters/ka/ka-cs").then(m => m.kaCs),
+  kada: () => import("converters/ka/ka-da").then(m => m.kaDa),
+  kade: () => import("converters/ka/ka-de").then(m => m.kaDe),
+  kaen: () => import("converters/ka/ka-en").then(m => m.kaEn),
+  kaes: () => import("converters/ka/ka-es").then(m => m.kaEs),
+  kaet: () => import("converters/ka/ka-et").then(m => m.kaEt),
+  kafi: () => import("converters/ka/ka-fi").then(m => m.kaFi),
+  kafr: () => import("converters/ka/ka-fr").then(m => m.kaFr),
+  kahr: () => import("converters/ka/ka-hr").then(m => m.kaHr),
+  kahu: () => import("converters/ka/ka-hu").then(m => m.kaHu),
+  kaid: () => import("converters/ka/ka-id").then(m => m.kaId),
+  kais: () => import("converters/ka/ka-is").then(m => m.kaIs),
+  kait: () => import("converters/ka/ka-it").then(m => m.kaIt),
+  kalb: () => import("converters/ka/ka-lb").then(m => m.kaLb),
+  kalt: () => import("converters/ka/ka-lt").then(m => m.kaLt),
+  kalv: () => import("converters/ka/ka-lv").then(m => m.kaLv),
+  kams: () => import("converters/ka/ka-ms").then(m => m.kaMs),
+  kamt: () => import("converters/ka/ka-mt").then(m => m.kaMt),
+  kanl: () => import("converters/ka/ka-nl").then(m => m.kaNl),
+  kano: () => import("converters/ka/ka-no").then(m => m.kaNo),
+  kapl: () => import("converters/ka/ka-pl").then(m => m.kaPl),
+  kapt: () => import("converters/ka/ka-pt").then(m => m.kaPt),
+  karo: () => import("converters/ka/ka-ro").then(m => m.kaRo),
+  kask: () => import("converters/ka/ka-sk").then(m => m.kaSk),
+  kasl: () => import("converters/ka/ka-sl").then(m => m.kaSl),
+  kasq: () => import("converters/ka/ka-sq").then(m => m.kaSq),
+  kasr: () => import("converters/ka/ka-sr").then(m => m.kaSr),
+  kasv: () => import("converters/ka/ka-sv").then(m => m.kaSv),
+  katr: () => import("converters/ka/ka-tr").then(m => m.kaTr),
+  kavi: () => import("converters/ka/ka-vi").then(m => m.kaVi),
+  hyzh: () => import("converters/hy/hy-zh").then(m => m.hyZh),
+  hyja: () => import("converters/hy/hy-ja").then(m => m.hyJa),
+  hyko: () => import("converters/hy/hy-ko").then(m => m.hyKo),
+  hyth: () => import("converters/hy/hy-th").then(m => m.hyTh),
+  hyhi: () => import("converters/hy/hy-hi").then(m => m.hyHi),
+  hybn: () => import("converters/hy/hy-bn").then(m => m.hyBn),
+  hyur: () => import("converters/hy/hy-ur").then(m => m.hyUr),
+  hyfa: () => import("converters/hy/hy-fa").then(m => m.hyFa),
+  hyar: () => import("converters/hy/hy-ar").then(m => m.hyAr),
+  hyhe: () => import("converters/hy/hy-he").then(m => m.hyHe),
+  hyka: () => import("converters/hy/hy-ka").then(m => m.hyKa),
+  hyel: () => import("converters/hy/hy-el").then(m => m.hyEl),
+  hyru: () => import("converters/hy/hy-ru").then(m => m.hyRu),
+  hyuk: () => import("converters/hy/hy-uk").then(m => m.hyUk),
+  hybg: () => import("converters/hy/hy-bg").then(m => m.hyBg),
+  hymk: () => import("converters/hy/hy-mk").then(m => m.hyMk),
+  hykk: () => import("converters/hy/hy-kk").then(m => m.hyKk),
+  hytg: () => import("converters/hy/hy-tg").then(m => m.hyTg),
+  hyaz: () => import("converters/hy/hy-az").then(m => m.hyAz),
+  hybs: () => import("converters/hy/hy-bs").then(m => m.hyBs),
+  hyca: () => import("converters/hy/hy-ca").then(m => m.hyCa),
+  hycs: () => import("converters/hy/hy-cs").then(m => m.hyCs),
+  hyda: () => import("converters/hy/hy-da").then(m => m.hyDa),
+  hyde: () => import("converters/hy/hy-de").then(m => m.hyDe),
+  hyen: () => import("converters/hy/hy-en").then(m => m.hyEn),
+  hyes: () => import("converters/hy/hy-es").then(m => m.hyEs),
+  hyet: () => import("converters/hy/hy-et").then(m => m.hyEt),
+  hyfi: () => import("converters/hy/hy-fi").then(m => m.hyFi),
+  hyfr: () => import("converters/hy/hy-fr").then(m => m.hyFr),
+  hyhr: () => import("converters/hy/hy-hr").then(m => m.hyHr),
+  hyhu: () => import("converters/hy/hy-hu").then(m => m.hyHu),
+  hyid: () => import("converters/hy/hy-id").then(m => m.hyId),
+  hyis: () => import("converters/hy/hy-is").then(m => m.hyIs),
+  hyit: () => import("converters/hy/hy-it").then(m => m.hyIt),
+  hylb: () => import("converters/hy/hy-lb").then(m => m.hyLb),
+  hylt: () => import("converters/hy/hy-lt").then(m => m.hyLt),
+  hylv: () => import("converters/hy/hy-lv").then(m => m.hyLv),
+  hyms: () => import("converters/hy/hy-ms").then(m => m.hyMs),
+  hymt: () => import("converters/hy/hy-mt").then(m => m.hyMt),
+  hynl: () => import("converters/hy/hy-nl").then(m => m.hyNl),
+  hyno: () => import("converters/hy/hy-no").then(m => m.hyNo),
+  hypl: () => import("converters/hy/hy-pl").then(m => m.hyPl),
+  hypt: () => import("converters/hy/hy-pt").then(m => m.hyPt),
+  hyro: () => import("converters/hy/hy-ro").then(m => m.hyRo),
+  hysk: () => import("converters/hy/hy-sk").then(m => m.hySk),
+  hysl: () => import("converters/hy/hy-sl").then(m => m.hySl),
+  hysq: () => import("converters/hy/hy-sq").then(m => m.hySq),
+  hysr: () => import("converters/hy/hy-sr").then(m => m.hySr),
+  hysv: () => import("converters/hy/hy-sv").then(m => m.hySv),
+  hytr: () => import("converters/hy/hy-tr").then(m => m.hyTr),
+  hyvi: () => import("converters/hy/hy-vi").then(m => m.hyVi),
+  elzh: () => import("converters/el/el-zh").then(m => m.elZh),
+  elja: () => import("converters/el/el-ja").then(m => m.elJa),
+  elko: () => import("converters/el/el-ko").then(m => m.elKo),
+  elth: () => import("converters/el/el-th").then(m => m.elTh),
+  elhi: () => import("converters/el/el-hi").then(m => m.elHi),
+  elbn: () => import("converters/el/el-bn").then(m => m.elBn),
+  elur: () => import("converters/el/el-ur").then(m => m.elUr),
+  elfa: () => import("converters/el/el-fa").then(m => m.elFa),
+  elar: () => import("converters/el/el-ar").then(m => m.elAr),
+  elhe: () => import("converters/el/el-he").then(m => m.elHe),
+  elka: () => import("converters/el/el-ka").then(m => m.elKa),
+  elhy: () => import("converters/el/el-hy").then(m => m.elHy),
+  elru: () => import("converters/el/el-ru").then(m => m.elRu),
+  eluk: () => import("converters/el/el-uk").then(m => m.elUk),
+  elbg: () => import("converters/el/el-bg").then(m => m.elBg),
+  elmk: () => import("converters/el/el-mk").then(m => m.elMk),
+  elkk: () => import("converters/el/el-kk").then(m => m.elKk),
+  eltg: () => import("converters/el/el-tg").then(m => m.elTg),
+  elaz: () => import("converters/el/el-az").then(m => m.elAz),
+  elbs: () => import("converters/el/el-bs").then(m => m.elBs),
+  elca: () => import("converters/el/el-ca").then(m => m.elCa),
+  elcs: () => import("converters/el/el-cs").then(m => m.elCs),
+  elda: () => import("converters/el/el-da").then(m => m.elDa),
+  elde: () => import("converters/el/el-de").then(m => m.elDe),
+  elen: () => import("converters/el/el-en").then(m => m.elEn),
+  eles: () => import("converters/el/el-es").then(m => m.elEs),
+  elet: () => import("converters/el/el-et").then(m => m.elEt),
+  elfi: () => import("converters/el/el-fi").then(m => m.elFi),
+  elfr: () => import("converters/el/el-fr").then(m => m.elFr),
+  elhr: () => import("converters/el/el-hr").then(m => m.elHr),
+  elhu: () => import("converters/el/el-hu").then(m => m.elHu),
+  elid: () => import("converters/el/el-id").then(m => m.elId),
+  elis: () => import("converters/el/el-is").then(m => m.elIs),
+  elit: () => import("converters/el/el-it").then(m => m.elIt),
+  ellb: () => import("converters/el/el-lb").then(m => m.elLb),
+  ellt: () => import("converters/el/el-lt").then(m => m.elLt),
+  ellv: () => import("converters/el/el-lv").then(m => m.elLv),
+  elms: () => import("converters/el/el-ms").then(m => m.elMs),
+  elmt: () => import("converters/el/el-mt").then(m => m.elMt),
+  elnl: () => import("converters/el/el-nl").then(m => m.elNl),
+  elno: () => import("converters/el/el-no").then(m => m.elNo),
+  elpl: () => import("converters/el/el-pl").then(m => m.elPl),
+  elpt: () => import("converters/el/el-pt").then(m => m.elPt),
+  elro: () => import("converters/el/el-ro").then(m => m.elRo),
+  elsk: () => import("converters/el/el-sk").then(m => m.elSk),
+  elsl: () => import("converters/el/el-sl").then(m => m.elSl),
+  elsq: () => import("converters/el/el-sq").then(m => m.elSq),
+  elsr: () => import("converters/el/el-sr").then(m => m.elSr),
+  elsv: () => import("converters/el/el-sv").then(m => m.elSv),
+  eltr: () => import("converters/el/el-tr").then(m => m.elTr),
+  elvi: () => import("converters/el/el-vi").then(m => m.elVi),
+  ruzh: () => import("converters/ru/ru-zh").then(m => m.ruZh),
+  ruja: () => import("converters/ru/ru-ja").then(m => m.ruJa),
+  ruko: () => import("converters/ru/ru-ko").then(m => m.ruKo),
+  ruth: () => import("converters/ru/ru-th").then(m => m.ruTh),
+  ruhi: () => import("converters/ru/ru-hi").then(m => m.ruHi),
+  rubn: () => import("converters/ru/ru-bn").then(m => m.ruBn),
+  ruur: () => import("converters/ru/ru-ur").then(m => m.ruUr),
+  rufa: () => import("converters/ru/ru-fa").then(m => m.ruFa),
+  ruar: () => import("converters/ru/ru-ar").then(m => m.ruAr),
+  ruhe: () => import("converters/ru/ru-he").then(m => m.ruHe),
+  ruka: () => import("converters/ru/ru-ka").then(m => m.ruKa),
+  ruhy: () => import("converters/ru/ru-hy").then(m => m.ruHy),
+  ruel: () => import("converters/ru/ru-el").then(m => m.ruEl),
+  ruuk: () => import("converters/ru/ru-uk").then(m => m.ruUk),
+  rubg: () => import("converters/ru/ru-bg").then(m => m.ruBg),
+  rumk: () => import("converters/ru/ru-mk").then(m => m.ruMk),
+  rukk: () => import("converters/ru/ru-kk").then(m => m.ruKk),
+  rutg: () => import("converters/ru/ru-tg").then(m => m.ruTg),
+  ruaz: () => import("converters/ru/ru-az").then(m => m.ruAz),
+  rubs: () => import("converters/ru/ru-bs").then(m => m.ruBs),
+  ruca: () => import("converters/ru/ru-ca").then(m => m.ruCa),
+  rucs: () => import("converters/ru/ru-cs").then(m => m.ruCs),
+  ruda: () => import("converters/ru/ru-da").then(m => m.ruDa),
+  rude: () => import("converters/ru/ru-de").then(m => m.ruDe),
+  ruen: () => import("converters/ru/ru-en").then(m => m.ruEn),
+  rues: () => import("converters/ru/ru-es").then(m => m.ruEs),
+  ruet: () => import("converters/ru/ru-et").then(m => m.ruEt),
+  rufi: () => import("converters/ru/ru-fi").then(m => m.ruFi),
+  rufr: () => import("converters/ru/ru-fr").then(m => m.ruFr),
+  ruhr: () => import("converters/ru/ru-hr").then(m => m.ruHr),
+  ruhu: () => import("converters/ru/ru-hu").then(m => m.ruHu),
+  ruid: () => import("converters/ru/ru-id").then(m => m.ruId),
+  ruis: () => import("converters/ru/ru-is").then(m => m.ruIs),
+  ruit: () => import("converters/ru/ru-it").then(m => m.ruIt),
+  rulb: () => import("converters/ru/ru-lb").then(m => m.ruLb),
+  rult: () => import("converters/ru/ru-lt").then(m => m.ruLt),
+  rulv: () => import("converters/ru/ru-lv").then(m => m.ruLv),
+  rums: () => import("converters/ru/ru-ms").then(m => m.ruMs),
+  rumt: () => import("converters/ru/ru-mt").then(m => m.ruMt),
+  runl: () => import("converters/ru/ru-nl").then(m => m.ruNl),
+  runo: () => import("converters/ru/ru-no").then(m => m.ruNo),
+  rupl: () => import("converters/ru/ru-pl").then(m => m.ruPl),
+  rupt: () => import("converters/ru/ru-pt").then(m => m.ruPt),
+  ruro: () => import("converters/ru/ru-ro").then(m => m.ruRo),
+  rusk: () => import("converters/ru/ru-sk").then(m => m.ruSk),
+  rusl: () => import("converters/ru/ru-sl").then(m => m.ruSl),
+  rusq: () => import("converters/ru/ru-sq").then(m => m.ruSq),
+  rusr: () => import("converters/ru/ru-sr").then(m => m.ruSr),
+  rusv: () => import("converters/ru/ru-sv").then(m => m.ruSv),
+  rutr: () => import("converters/ru/ru-tr").then(m => m.ruTr),
+  ruvi: () => import("converters/ru/ru-vi").then(m => m.ruVi),
+  ukzh: () => import("converters/uk/uk-zh").then(m => m.ukZh),
+  ukja: () => import("converters/uk/uk-ja").then(m => m.ukJa),
+  ukko: () => import("converters/uk/uk-ko").then(m => m.ukKo),
+  ukth: () => import("converters/uk/uk-th").then(m => m.ukTh),
+  ukhi: () => import("converters/uk/uk-hi").then(m => m.ukHi),
+  ukbn: () => import("converters/uk/uk-bn").then(m => m.ukBn),
+  ukur: () => import("converters/uk/uk-ur").then(m => m.ukUr),
+  ukfa: () => import("converters/uk/uk-fa").then(m => m.ukFa),
+  ukar: () => import("converters/uk/uk-ar").then(m => m.ukAr),
+  ukhe: () => import("converters/uk/uk-he").then(m => m.ukHe),
+  ukka: () => import("converters/uk/uk-ka").then(m => m.ukKa),
+  ukhy: () => import("converters/uk/uk-hy").then(m => m.ukHy),
+  ukel: () => import("converters/uk/uk-el").then(m => m.ukEl),
+  ukru: () => import("converters/uk/uk-ru").then(m => m.ukRu),
+  ukbg: () => import("converters/uk/uk-bg").then(m => m.ukBg),
+  ukmk: () => import("converters/uk/uk-mk").then(m => m.ukMk),
+  ukkk: () => import("converters/uk/uk-kk").then(m => m.ukKk),
+  uktg: () => import("converters/uk/uk-tg").then(m => m.ukTg),
+  ukaz: () => import("converters/uk/uk-az").then(m => m.ukAz),
+  ukbs: () => import("converters/uk/uk-bs").then(m => m.ukBs),
+  ukca: () => import("converters/uk/uk-ca").then(m => m.ukCa),
+  ukcs: () => import("converters/uk/uk-cs").then(m => m.ukCs),
+  ukda: () => import("converters/uk/uk-da").then(m => m.ukDa),
+  ukde: () => import("converters/uk/uk-de").then(m => m.ukDe),
+  uken: () => import("converters/uk/uk-en").then(m => m.ukEn),
+  ukes: () => import("converters/uk/uk-es").then(m => m.ukEs),
+  uket: () => import("converters/uk/uk-et").then(m => m.ukEt),
+  ukfi: () => import("converters/uk/uk-fi").then(m => m.ukFi),
+  ukfr: () => import("converters/uk/uk-fr").then(m => m.ukFr),
+  ukhr: () => import("converters/uk/uk-hr").then(m => m.ukHr),
+  ukhu: () => import("converters/uk/uk-hu").then(m => m.ukHu),
+  ukid: () => import("converters/uk/uk-id").then(m => m.ukId),
+  ukis: () => import("converters/uk/uk-is").then(m => m.ukIs),
+  ukit: () => import("converters/uk/uk-it").then(m => m.ukIt),
+  uklb: () => import("converters/uk/uk-lb").then(m => m.ukLb),
+  uklt: () => import("converters/uk/uk-lt").then(m => m.ukLt),
+  uklv: () => import("converters/uk/uk-lv").then(m => m.ukLv),
+  ukms: () => import("converters/uk/uk-ms").then(m => m.ukMs),
+  ukmt: () => import("converters/uk/uk-mt").then(m => m.ukMt),
+  uknl: () => import("converters/uk/uk-nl").then(m => m.ukNl),
+  ukno: () => import("converters/uk/uk-no").then(m => m.ukNo),
+  ukpl: () => import("converters/uk/uk-pl").then(m => m.ukPl),
+  ukpt: () => import("converters/uk/uk-pt").then(m => m.ukPt),
+  ukro: () => import("converters/uk/uk-ro").then(m => m.ukRo),
+  uksk: () => import("converters/uk/uk-sk").then(m => m.ukSk),
+  uksl: () => import("converters/uk/uk-sl").then(m => m.ukSl),
+  uksq: () => import("converters/uk/uk-sq").then(m => m.ukSq),
+  uksr: () => import("converters/uk/uk-sr").then(m => m.ukSr),
+  uksv: () => import("converters/uk/uk-sv").then(m => m.ukSv),
+  uktr: () => import("converters/uk/uk-tr").then(m => m.ukTr),
+  ukvi: () => import("converters/uk/uk-vi").then(m => m.ukVi),
+  bgzh: () => import("converters/bg/bg-zh").then(m => m.bgZh),
+  bgja: () => import("converters/bg/bg-ja").then(m => m.bgJa),
+  bgko: () => import("converters/bg/bg-ko").then(m => m.bgKo),
+  bgth: () => import("converters/bg/bg-th").then(m => m.bgTh),
+  bghi: () => import("converters/bg/bg-hi").then(m => m.bgHi),
+  bgbn: () => import("converters/bg/bg-bn").then(m => m.bgBn),
+  bgur: () => import("converters/bg/bg-ur").then(m => m.bgUr),
+  bgfa: () => import("converters/bg/bg-fa").then(m => m.bgFa),
+  bgar: () => import("converters/bg/bg-ar").then(m => m.bgAr),
+  bghe: () => import("converters/bg/bg-he").then(m => m.bgHe),
+  bgka: () => import("converters/bg/bg-ka").then(m => m.bgKa),
+  bghy: () => import("converters/bg/bg-hy").then(m => m.bgHy),
+  bgel: () => import("converters/bg/bg-el").then(m => m.bgEl),
+  bgru: () => import("converters/bg/bg-ru").then(m => m.bgRu),
+  bguk: () => import("converters/bg/bg-uk").then(m => m.bgUk),
+  bgmk: () => import("converters/bg/bg-mk").then(m => m.bgMk),
+  bgkk: () => import("converters/bg/bg-kk").then(m => m.bgKk),
+  bgtg: () => import("converters/bg/bg-tg").then(m => m.bgTg),
+  bgaz: () => import("converters/bg/bg-az").then(m => m.bgAz),
+  bgbs: () => import("converters/bg/bg-bs").then(m => m.bgBs),
+  bgca: () => import("converters/bg/bg-ca").then(m => m.bgCa),
+  bgcs: () => import("converters/bg/bg-cs").then(m => m.bgCs),
+  bgda: () => import("converters/bg/bg-da").then(m => m.bgDa),
+  bgde: () => import("converters/bg/bg-de").then(m => m.bgDe),
+  bgen: () => import("converters/bg/bg-en").then(m => m.bgEn),
+  bges: () => import("converters/bg/bg-es").then(m => m.bgEs),
+  bget: () => import("converters/bg/bg-et").then(m => m.bgEt),
+  bgfi: () => import("converters/bg/bg-fi").then(m => m.bgFi),
+  bgfr: () => import("converters/bg/bg-fr").then(m => m.bgFr),
+  bghr: () => import("converters/bg/bg-hr").then(m => m.bgHr),
+  bghu: () => import("converters/bg/bg-hu").then(m => m.bgHu),
+  bgid: () => import("converters/bg/bg-id").then(m => m.bgId),
+  bgis: () => import("converters/bg/bg-is").then(m => m.bgIs),
+  bgit: () => import("converters/bg/bg-it").then(m => m.bgIt),
+  bglb: () => import("converters/bg/bg-lb").then(m => m.bgLb),
+  bglt: () => import("converters/bg/bg-lt").then(m => m.bgLt),
+  bglv: () => import("converters/bg/bg-lv").then(m => m.bgLv),
+  bgms: () => import("converters/bg/bg-ms").then(m => m.bgMs),
+  bgmt: () => import("converters/bg/bg-mt").then(m => m.bgMt),
+  bgnl: () => import("converters/bg/bg-nl").then(m => m.bgNl),
+  bgno: () => import("converters/bg/bg-no").then(m => m.bgNo),
+  bgpl: () => import("converters/bg/bg-pl").then(m => m.bgPl),
+  bgpt: () => import("converters/bg/bg-pt").then(m => m.bgPt),
+  bgro: () => import("converters/bg/bg-ro").then(m => m.bgRo),
+  bgsk: () => import("converters/bg/bg-sk").then(m => m.bgSk),
+  bgsl: () => import("converters/bg/bg-sl").then(m => m.bgSl),
+  bgsq: () => import("converters/bg/bg-sq").then(m => m.bgSq),
+  bgsr: () => import("converters/bg/bg-sr").then(m => m.bgSr),
+  bgsv: () => import("converters/bg/bg-sv").then(m => m.bgSv),
+  bgtr: () => import("converters/bg/bg-tr").then(m => m.bgTr),
+  bgvi: () => import("converters/bg/bg-vi").then(m => m.bgVi),
+  mkzh: () => import("converters/mk/mk-zh").then(m => m.mkZh),
+  mkja: () => import("converters/mk/mk-ja").then(m => m.mkJa),
+  mkko: () => import("converters/mk/mk-ko").then(m => m.mkKo),
+  mkth: () => import("converters/mk/mk-th").then(m => m.mkTh),
+  mkhi: () => import("converters/mk/mk-hi").then(m => m.mkHi),
+  mkbn: () => import("converters/mk/mk-bn").then(m => m.mkBn),
+  mkur: () => import("converters/mk/mk-ur").then(m => m.mkUr),
+  mkfa: () => import("converters/mk/mk-fa").then(m => m.mkFa),
+  mkar: () => import("converters/mk/mk-ar").then(m => m.mkAr),
+  mkhe: () => import("converters/mk/mk-he").then(m => m.mkHe),
+  mkka: () => import("converters/mk/mk-ka").then(m => m.mkKa),
+  mkhy: () => import("converters/mk/mk-hy").then(m => m.mkHy),
+  mkel: () => import("converters/mk/mk-el").then(m => m.mkEl),
+  mkru: () => import("converters/mk/mk-ru").then(m => m.mkRu),
+  mkuk: () => import("converters/mk/mk-uk").then(m => m.mkUk),
+  mkbg: () => import("converters/mk/mk-bg").then(m => m.mkBg),
+  mkkk: () => import("converters/mk/mk-kk").then(m => m.mkKk),
+  mktg: () => import("converters/mk/mk-tg").then(m => m.mkTg),
+  mkaz: () => import("converters/mk/mk-az").then(m => m.mkAz),
+  mkbs: () => import("converters/mk/mk-bs").then(m => m.mkBs),
+  mkca: () => import("converters/mk/mk-ca").then(m => m.mkCa),
+  mkcs: () => import("converters/mk/mk-cs").then(m => m.mkCs),
+  mkda: () => import("converters/mk/mk-da").then(m => m.mkDa),
+  mkde: () => import("converters/mk/mk-de").then(m => m.mkDe),
+  mken: () => import("converters/mk/mk-en").then(m => m.mkEn),
+  mkes: () => import("converters/mk/mk-es").then(m => m.mkEs),
+  mket: () => import("converters/mk/mk-et").then(m => m.mkEt),
+  mkfi: () => import("converters/mk/mk-fi").then(m => m.mkFi),
+  mkfr: () => import("converters/mk/mk-fr").then(m => m.mkFr),
+  mkhr: () => import("converters/mk/mk-hr").then(m => m.mkHr),
+  mkhu: () => import("converters/mk/mk-hu").then(m => m.mkHu),
+  mkid: () => import("converters/mk/mk-id").then(m => m.mkId),
+  mkis: () => import("converters/mk/mk-is").then(m => m.mkIs),
+  mkit: () => import("converters/mk/mk-it").then(m => m.mkIt),
+  mklb: () => import("converters/mk/mk-lb").then(m => m.mkLb),
+  mklt: () => import("converters/mk/mk-lt").then(m => m.mkLt),
+  mklv: () => import("converters/mk/mk-lv").then(m => m.mkLv),
+  mkms: () => import("converters/mk/mk-ms").then(m => m.mkMs),
+  mkmt: () => import("converters/mk/mk-mt").then(m => m.mkMt),
+  mknl: () => import("converters/mk/mk-nl").then(m => m.mkNl),
+  mkno: () => import("converters/mk/mk-no").then(m => m.mkNo),
+  mkpl: () => import("converters/mk/mk-pl").then(m => m.mkPl),
+  mkpt: () => import("converters/mk/mk-pt").then(m => m.mkPt),
+  mkro: () => import("converters/mk/mk-ro").then(m => m.mkRo),
+  mksk: () => import("converters/mk/mk-sk").then(m => m.mkSk),
+  mksl: () => import("converters/mk/mk-sl").then(m => m.mkSl),
+  mksq: () => import("converters/mk/mk-sq").then(m => m.mkSq),
+  mksr: () => import("converters/mk/mk-sr").then(m => m.mkSr),
+  mksv: () => import("converters/mk/mk-sv").then(m => m.mkSv),
+  mktr: () => import("converters/mk/mk-tr").then(m => m.mkTr),
+  mkvi: () => import("converters/mk/mk-vi").then(m => m.mkVi),
+  kkzh: () => import("converters/kk/kk-zh").then(m => m.kkZh),
+  kkja: () => import("converters/kk/kk-ja").then(m => m.kkJa),
+  kkko: () => import("converters/kk/kk-ko").then(m => m.kkKo),
+  kkth: () => import("converters/kk/kk-th").then(m => m.kkTh),
+  kkhi: () => import("converters/kk/kk-hi").then(m => m.kkHi),
+  kkbn: () => import("converters/kk/kk-bn").then(m => m.kkBn),
+  kkur: () => import("converters/kk/kk-ur").then(m => m.kkUr),
+  kkfa: () => import("converters/kk/kk-fa").then(m => m.kkFa),
+  kkar: () => import("converters/kk/kk-ar").then(m => m.kkAr),
+  kkhe: () => import("converters/kk/kk-he").then(m => m.kkHe),
+  kkka: () => import("converters/kk/kk-ka").then(m => m.kkKa),
+  kkhy: () => import("converters/kk/kk-hy").then(m => m.kkHy),
+  kkel: () => import("converters/kk/kk-el").then(m => m.kkEl),
+  kkru: () => import("converters/kk/kk-ru").then(m => m.kkRu),
+  kkuk: () => import("converters/kk/kk-uk").then(m => m.kkUk),
+  kkbg: () => import("converters/kk/kk-bg").then(m => m.kkBg),
+  kkmk: () => import("converters/kk/kk-mk").then(m => m.kkMk),
+  kktg: () => import("converters/kk/kk-tg").then(m => m.kkTg),
+  kkaz: () => import("converters/kk/kk-az").then(m => m.kkAz),
+  kkbs: () => import("converters/kk/kk-bs").then(m => m.kkBs),
+  kkca: () => import("converters/kk/kk-ca").then(m => m.kkCa),
+  kkcs: () => import("converters/kk/kk-cs").then(m => m.kkCs),
+  kkda: () => import("converters/kk/kk-da").then(m => m.kkDa),
+  kkde: () => import("converters/kk/kk-de").then(m => m.kkDe),
+  kken: () => import("converters/kk/kk-en").then(m => m.kkEn),
+  kkes: () => import("converters/kk/kk-es").then(m => m.kkEs),
+  kket: () => import("converters/kk/kk-et").then(m => m.kkEt),
+  kkfi: () => import("converters/kk/kk-fi").then(m => m.kkFi),
+  kkfr: () => import("converters/kk/kk-fr").then(m => m.kkFr),
+  kkhr: () => import("converters/kk/kk-hr").then(m => m.kkHr),
+  kkhu: () => import("converters/kk/kk-hu").then(m => m.kkHu),
+  kkid: () => import("converters/kk/kk-id").then(m => m.kkId),
+  kkis: () => import("converters/kk/kk-is").then(m => m.kkIs),
+  kkit: () => import("converters/kk/kk-it").then(m => m.kkIt),
+  kklb: () => import("converters/kk/kk-lb").then(m => m.kkLb),
+  kklt: () => import("converters/kk/kk-lt").then(m => m.kkLt),
+  kklv: () => import("converters/kk/kk-lv").then(m => m.kkLv),
+  kkms: () => import("converters/kk/kk-ms").then(m => m.kkMs),
+  kkmt: () => import("converters/kk/kk-mt").then(m => m.kkMt),
+  kknl: () => import("converters/kk/kk-nl").then(m => m.kkNl),
+  kkno: () => import("converters/kk/kk-no").then(m => m.kkNo),
+  kkpl: () => import("converters/kk/kk-pl").then(m => m.kkPl),
+  kkpt: () => import("converters/kk/kk-pt").then(m => m.kkPt),
+  kkro: () => import("converters/kk/kk-ro").then(m => m.kkRo),
+  kksk: () => import("converters/kk/kk-sk").then(m => m.kkSk),
+  kksl: () => import("converters/kk/kk-sl").then(m => m.kkSl),
+  kksq: () => import("converters/kk/kk-sq").then(m => m.kkSq),
+  kksr: () => import("converters/kk/kk-sr").then(m => m.kkSr),
+  kksv: () => import("converters/kk/kk-sv").then(m => m.kkSv),
+  kktr: () => import("converters/kk/kk-tr").then(m => m.kkTr),
+  kkvi: () => import("converters/kk/kk-vi").then(m => m.kkVi),
+  tgzh: () => import("converters/tg/tg-zh").then(m => m.tgZh),
+  tgja: () => import("converters/tg/tg-ja").then(m => m.tgJa),
+  tgko: () => import("converters/tg/tg-ko").then(m => m.tgKo),
+  tgth: () => import("converters/tg/tg-th").then(m => m.tgTh),
+  tghi: () => import("converters/tg/tg-hi").then(m => m.tgHi),
+  tgbn: () => import("converters/tg/tg-bn").then(m => m.tgBn),
+  tgur: () => import("converters/tg/tg-ur").then(m => m.tgUr),
+  tgfa: () => import("converters/tg/tg-fa").then(m => m.tgFa),
+  tgar: () => import("converters/tg/tg-ar").then(m => m.tgAr),
+  tghe: () => import("converters/tg/tg-he").then(m => m.tgHe),
+  tgka: () => import("converters/tg/tg-ka").then(m => m.tgKa),
+  tghy: () => import("converters/tg/tg-hy").then(m => m.tgHy),
+  tgel: () => import("converters/tg/tg-el").then(m => m.tgEl),
+  tgru: () => import("converters/tg/tg-ru").then(m => m.tgRu),
+  tguk: () => import("converters/tg/tg-uk").then(m => m.tgUk),
+  tgbg: () => import("converters/tg/tg-bg").then(m => m.tgBg),
+  tgmk: () => import("converters/tg/tg-mk").then(m => m.tgMk),
+  tgkk: () => import("converters/tg/tg-kk").then(m => m.tgKk),
+  tgaz: () => import("converters/tg/tg-az").then(m => m.tgAz),
+  tgbs: () => import("converters/tg/tg-bs").then(m => m.tgBs),
+  tgca: () => import("converters/tg/tg-ca").then(m => m.tgCa),
+  tgcs: () => import("converters/tg/tg-cs").then(m => m.tgCs),
+  tgda: () => import("converters/tg/tg-da").then(m => m.tgDa),
+  tgde: () => import("converters/tg/tg-de").then(m => m.tgDe),
+  tgen: () => import("converters/tg/tg-en").then(m => m.tgEn),
+  tges: () => import("converters/tg/tg-es").then(m => m.tgEs),
+  tget: () => import("converters/tg/tg-et").then(m => m.tgEt),
+  tgfi: () => import("converters/tg/tg-fi").then(m => m.tgFi),
+  tgfr: () => import("converters/tg/tg-fr").then(m => m.tgFr),
+  tghr: () => import("converters/tg/tg-hr").then(m => m.tgHr),
+  tghu: () => import("converters/tg/tg-hu").then(m => m.tgHu),
+  tgid: () => import("converters/tg/tg-id").then(m => m.tgId),
+  tgis: () => import("converters/tg/tg-is").then(m => m.tgIs),
+  tgit: () => import("converters/tg/tg-it").then(m => m.tgIt),
+  tglb: () => import("converters/tg/tg-lb").then(m => m.tgLb),
+  tglt: () => import("converters/tg/tg-lt").then(m => m.tgLt),
+  tglv: () => import("converters/tg/tg-lv").then(m => m.tgLv),
+  tgms: () => import("converters/tg/tg-ms").then(m => m.tgMs),
+  tgmt: () => import("converters/tg/tg-mt").then(m => m.tgMt),
+  tgnl: () => import("converters/tg/tg-nl").then(m => m.tgNl),
+  tgno: () => import("converters/tg/tg-no").then(m => m.tgNo),
+  tgpl: () => import("converters/tg/tg-pl").then(m => m.tgPl),
+  tgpt: () => import("converters/tg/tg-pt").then(m => m.tgPt),
+  tgro: () => import("converters/tg/tg-ro").then(m => m.tgRo),
+  tgsk: () => import("converters/tg/tg-sk").then(m => m.tgSk),
+  tgsl: () => import("converters/tg/tg-sl").then(m => m.tgSl),
+  tgsq: () => import("converters/tg/tg-sq").then(m => m.tgSq),
+  tgsr: () => import("converters/tg/tg-sr").then(m => m.tgSr),
+  tgsv: () => import("converters/tg/tg-sv").then(m => m.tgSv),
+  tgtr: () => import("converters/tg/tg-tr").then(m => m.tgTr),
+  tgvi: () => import("converters/tg/tg-vi").then(m => m.tgVi),
+  azzh: () => import("converters/az/az-zh").then(m => m.azZh),
+  azja: () => import("converters/az/az-ja").then(m => m.azJa),
+  azko: () => import("converters/az/az-ko").then(m => m.azKo),
+  azth: () => import("converters/az/az-th").then(m => m.azTh),
+  azhi: () => import("converters/az/az-hi").then(m => m.azHi),
+  azbn: () => import("converters/az/az-bn").then(m => m.azBn),
+  azur: () => import("converters/az/az-ur").then(m => m.azUr),
+  azfa: () => import("converters/az/az-fa").then(m => m.azFa),
+  azar: () => import("converters/az/az-ar").then(m => m.azAr),
+  azhe: () => import("converters/az/az-he").then(m => m.azHe),
+  azka: () => import("converters/az/az-ka").then(m => m.azKa),
+  azhy: () => import("converters/az/az-hy").then(m => m.azHy),
+  azel: () => import("converters/az/az-el").then(m => m.azEl),
+  azru: () => import("converters/az/az-ru").then(m => m.azRu),
+  azuk: () => import("converters/az/az-uk").then(m => m.azUk),
+  azbg: () => import("converters/az/az-bg").then(m => m.azBg),
+  azmk: () => import("converters/az/az-mk").then(m => m.azMk),
+  azkk: () => import("converters/az/az-kk").then(m => m.azKk),
+  aztg: () => import("converters/az/az-tg").then(m => m.azTg),
+  azbs: () => import("converters/az/az-bs").then(m => m.azBs),
+  azca: () => import("converters/az/az-ca").then(m => m.azCa),
+  azcs: () => import("converters/az/az-cs").then(m => m.azCs),
+  azda: () => import("converters/az/az-da").then(m => m.azDa),
+  azde: () => import("converters/az/az-de").then(m => m.azDe),
+  azen: () => import("converters/az/az-en").then(m => m.azEn),
+  azes: () => import("converters/az/az-es").then(m => m.azEs),
+  azet: () => import("converters/az/az-et").then(m => m.azEt),
+  azfi: () => import("converters/az/az-fi").then(m => m.azFi),
+  azfr: () => import("converters/az/az-fr").then(m => m.azFr),
+  azhr: () => import("converters/az/az-hr").then(m => m.azHr),
+  azhu: () => import("converters/az/az-hu").then(m => m.azHu),
+  azid: () => import("converters/az/az-id").then(m => m.azId),
+  azis: () => import("converters/az/az-is").then(m => m.azIs),
+  azit: () => import("converters/az/az-it").then(m => m.azIt),
+  azlb: () => import("converters/az/az-lb").then(m => m.azLb),
+  azlt: () => import("converters/az/az-lt").then(m => m.azLt),
+  azlv: () => import("converters/az/az-lv").then(m => m.azLv),
+  azms: () => import("converters/az/az-ms").then(m => m.azMs),
+  azmt: () => import("converters/az/az-mt").then(m => m.azMt),
+  aznl: () => import("converters/az/az-nl").then(m => m.azNl),
+  azno: () => import("converters/az/az-no").then(m => m.azNo),
+  azpl: () => import("converters/az/az-pl").then(m => m.azPl),
+  azpt: () => import("converters/az/az-pt").then(m => m.azPt),
+  azro: () => import("converters/az/az-ro").then(m => m.azRo),
+  azsk: () => import("converters/az/az-sk").then(m => m.azSk),
+  azsl: () => import("converters/az/az-sl").then(m => m.azSl),
+  azsq: () => import("converters/az/az-sq").then(m => m.azSq),
+  azsr: () => import("converters/az/az-sr").then(m => m.azSr),
+  azsv: () => import("converters/az/az-sv").then(m => m.azSv),
+  aztr: () => import("converters/az/az-tr").then(m => m.azTr),
+  azvi: () => import("converters/az/az-vi").then(m => m.azVi),
+  bszh: () => import("converters/bs/bs-zh").then(m => m.bsZh),
+  bsja: () => import("converters/bs/bs-ja").then(m => m.bsJa),
+  bsko: () => import("converters/bs/bs-ko").then(m => m.bsKo),
+  bsth: () => import("converters/bs/bs-th").then(m => m.bsTh),
+  bshi: () => import("converters/bs/bs-hi").then(m => m.bsHi),
+  bsbn: () => import("converters/bs/bs-bn").then(m => m.bsBn),
+  bsur: () => import("converters/bs/bs-ur").then(m => m.bsUr),
+  bsfa: () => import("converters/bs/bs-fa").then(m => m.bsFa),
+  bsar: () => import("converters/bs/bs-ar").then(m => m.bsAr),
+  bshe: () => import("converters/bs/bs-he").then(m => m.bsHe),
+  bska: () => import("converters/bs/bs-ka").then(m => m.bsKa),
+  bshy: () => import("converters/bs/bs-hy").then(m => m.bsHy),
+  bsel: () => import("converters/bs/bs-el").then(m => m.bsEl),
+  bsru: () => import("converters/bs/bs-ru").then(m => m.bsRu),
+  bsuk: () => import("converters/bs/bs-uk").then(m => m.bsUk),
+  bsbg: () => import("converters/bs/bs-bg").then(m => m.bsBg),
+  bsmk: () => import("converters/bs/bs-mk").then(m => m.bsMk),
+  bskk: () => import("converters/bs/bs-kk").then(m => m.bsKk),
+  bstg: () => import("converters/bs/bs-tg").then(m => m.bsTg),
+  bsaz: () => import("converters/bs/bs-az").then(m => m.bsAz),
+  bsca: () => import("converters/bs/bs-ca").then(m => m.bsCa),
+  bscs: () => import("converters/bs/bs-cs").then(m => m.bsCs),
+  bsda: () => import("converters/bs/bs-da").then(m => m.bsDa),
+  bsde: () => import("converters/bs/bs-de").then(m => m.bsDe),
+  bsen: () => import("converters/bs/bs-en").then(m => m.bsEn),
+  bses: () => import("converters/bs/bs-es").then(m => m.bsEs),
+  bset: () => import("converters/bs/bs-et").then(m => m.bsEt),
+  bsfi: () => import("converters/bs/bs-fi").then(m => m.bsFi),
+  bsfr: () => import("converters/bs/bs-fr").then(m => m.bsFr),
+  bshr: () => import("converters/bs/bs-hr").then(m => m.bsHr),
+  bshu: () => import("converters/bs/bs-hu").then(m => m.bsHu),
+  bsid: () => import("converters/bs/bs-id").then(m => m.bsId),
+  bsis: () => import("converters/bs/bs-is").then(m => m.bsIs),
+  bsit: () => import("converters/bs/bs-it").then(m => m.bsIt),
+  bslb: () => import("converters/bs/bs-lb").then(m => m.bsLb),
+  bslt: () => import("converters/bs/bs-lt").then(m => m.bsLt),
+  bslv: () => import("converters/bs/bs-lv").then(m => m.bsLv),
+  bsms: () => import("converters/bs/bs-ms").then(m => m.bsMs),
+  bsmt: () => import("converters/bs/bs-mt").then(m => m.bsMt),
+  bsnl: () => import("converters/bs/bs-nl").then(m => m.bsNl),
+  bsno: () => import("converters/bs/bs-no").then(m => m.bsNo),
+  bspl: () => import("converters/bs/bs-pl").then(m => m.bsPl),
+  bspt: () => import("converters/bs/bs-pt").then(m => m.bsPt),
+  bsro: () => import("converters/bs/bs-ro").then(m => m.bsRo),
+  bssk: () => import("converters/bs/bs-sk").then(m => m.bsSk),
+  bssl: () => import("converters/bs/bs-sl").then(m => m.bsSl),
+  bssq: () => import("converters/bs/bs-sq").then(m => m.bsSq),
+  bssr: () => import("converters/bs/bs-sr").then(m => m.bsSr),
+  bssv: () => import("converters/bs/bs-sv").then(m => m.bsSv),
+  bstr: () => import("converters/bs/bs-tr").then(m => m.bsTr),
+  bsvi: () => import("converters/bs/bs-vi").then(m => m.bsVi),
+  cazh: () => import("converters/ca/ca-zh").then(m => m.caZh),
+  caja: () => import("converters/ca/ca-ja").then(m => m.caJa),
+  cako: () => import("converters/ca/ca-ko").then(m => m.caKo),
+  cath: () => import("converters/ca/ca-th").then(m => m.caTh),
+  cahi: () => import("converters/ca/ca-hi").then(m => m.caHi),
+  cabn: () => import("converters/ca/ca-bn").then(m => m.caBn),
+  caur: () => import("converters/ca/ca-ur").then(m => m.caUr),
+  cafa: () => import("converters/ca/ca-fa").then(m => m.caFa),
+  caar: () => import("converters/ca/ca-ar").then(m => m.caAr),
+  cahe: () => import("converters/ca/ca-he").then(m => m.caHe),
+  caka: () => import("converters/ca/ca-ka").then(m => m.caKa),
+  cahy: () => import("converters/ca/ca-hy").then(m => m.caHy),
+  cael: () => import("converters/ca/ca-el").then(m => m.caEl),
+  caru: () => import("converters/ca/ca-ru").then(m => m.caRu),
+  cauk: () => import("converters/ca/ca-uk").then(m => m.caUk),
+  cabg: () => import("converters/ca/ca-bg").then(m => m.caBg),
+  camk: () => import("converters/ca/ca-mk").then(m => m.caMk),
+  cakk: () => import("converters/ca/ca-kk").then(m => m.caKk),
+  catg: () => import("converters/ca/ca-tg").then(m => m.caTg),
+  caaz: () => import("converters/ca/ca-az").then(m => m.caAz),
+  cabs: () => import("converters/ca/ca-bs").then(m => m.caBs),
+  cacs: () => import("converters/ca/ca-cs").then(m => m.caCs),
+  cada: () => import("converters/ca/ca-da").then(m => m.caDa),
+  cade: () => import("converters/ca/ca-de").then(m => m.caDe),
+  caen: () => import("converters/ca/ca-en").then(m => m.caEn),
+  caes: () => import("converters/ca/ca-es").then(m => m.caEs),
+  caet: () => import("converters/ca/ca-et").then(m => m.caEt),
+  cafi: () => import("converters/ca/ca-fi").then(m => m.caFi),
+  cafr: () => import("converters/ca/ca-fr").then(m => m.caFr),
+  cahr: () => import("converters/ca/ca-hr").then(m => m.caHr),
+  cahu: () => import("converters/ca/ca-hu").then(m => m.caHu),
+  caid: () => import("converters/ca/ca-id").then(m => m.caId),
+  cais: () => import("converters/ca/ca-is").then(m => m.caIs),
+  cait: () => import("converters/ca/ca-it").then(m => m.caIt),
+  calb: () => import("converters/ca/ca-lb").then(m => m.caLb),
+  calt: () => import("converters/ca/ca-lt").then(m => m.caLt),
+  calv: () => import("converters/ca/ca-lv").then(m => m.caLv),
+  cams: () => import("converters/ca/ca-ms").then(m => m.caMs),
+  camt: () => import("converters/ca/ca-mt").then(m => m.caMt),
+  canl: () => import("converters/ca/ca-nl").then(m => m.caNl),
+  cano: () => import("converters/ca/ca-no").then(m => m.caNo),
+  capl: () => import("converters/ca/ca-pl").then(m => m.caPl),
+  capt: () => import("converters/ca/ca-pt").then(m => m.caPt),
+  caro: () => import("converters/ca/ca-ro").then(m => m.caRo),
+  cask: () => import("converters/ca/ca-sk").then(m => m.caSk),
+  casl: () => import("converters/ca/ca-sl").then(m => m.caSl),
+  casq: () => import("converters/ca/ca-sq").then(m => m.caSq),
+  casr: () => import("converters/ca/ca-sr").then(m => m.caSr),
+  casv: () => import("converters/ca/ca-sv").then(m => m.caSv),
+  catr: () => import("converters/ca/ca-tr").then(m => m.caTr),
+  cavi: () => import("converters/ca/ca-vi").then(m => m.caVi),
+  cszh: () => import("converters/cs/cs-zh").then(m => m.csZh),
+  csja: () => import("converters/cs/cs-ja").then(m => m.csJa),
+  csko: () => import("converters/cs/cs-ko").then(m => m.csKo),
+  csth: () => import("converters/cs/cs-th").then(m => m.csTh),
+  cshi: () => import("converters/cs/cs-hi").then(m => m.csHi),
+  csbn: () => import("converters/cs/cs-bn").then(m => m.csBn),
+  csur: () => import("converters/cs/cs-ur").then(m => m.csUr),
+  csfa: () => import("converters/cs/cs-fa").then(m => m.csFa),
+  csar: () => import("converters/cs/cs-ar").then(m => m.csAr),
+  cshe: () => import("converters/cs/cs-he").then(m => m.csHe),
+  cska: () => import("converters/cs/cs-ka").then(m => m.csKa),
+  cshy: () => import("converters/cs/cs-hy").then(m => m.csHy),
+  csel: () => import("converters/cs/cs-el").then(m => m.csEl),
+  csru: () => import("converters/cs/cs-ru").then(m => m.csRu),
+  csuk: () => import("converters/cs/cs-uk").then(m => m.csUk),
+  csbg: () => import("converters/cs/cs-bg").then(m => m.csBg),
+  csmk: () => import("converters/cs/cs-mk").then(m => m.csMk),
+  cskk: () => import("converters/cs/cs-kk").then(m => m.csKk),
+  cstg: () => import("converters/cs/cs-tg").then(m => m.csTg),
+  csaz: () => import("converters/cs/cs-az").then(m => m.csAz),
+  csbs: () => import("converters/cs/cs-bs").then(m => m.csBs),
+  csca: () => import("converters/cs/cs-ca").then(m => m.csCa),
+  csda: () => import("converters/cs/cs-da").then(m => m.csDa),
+  csde: () => import("converters/cs/cs-de").then(m => m.csDe),
+  csen: () => import("converters/cs/cs-en").then(m => m.csEn),
+  cses: () => import("converters/cs/cs-es").then(m => m.csEs),
+  cset: () => import("converters/cs/cs-et").then(m => m.csEt),
+  csfi: () => import("converters/cs/cs-fi").then(m => m.csFi),
+  csfr: () => import("converters/cs/cs-fr").then(m => m.csFr),
+  cshr: () => import("converters/cs/cs-hr").then(m => m.csHr),
+  cshu: () => import("converters/cs/cs-hu").then(m => m.csHu),
+  csid: () => import("converters/cs/cs-id").then(m => m.csId),
+  csis: () => import("converters/cs/cs-is").then(m => m.csIs),
+  csit: () => import("converters/cs/cs-it").then(m => m.csIt),
+  cslb: () => import("converters/cs/cs-lb").then(m => m.csLb),
+  cslt: () => import("converters/cs/cs-lt").then(m => m.csLt),
+  cslv: () => import("converters/cs/cs-lv").then(m => m.csLv),
+  csms: () => import("converters/cs/cs-ms").then(m => m.csMs),
+  csmt: () => import("converters/cs/cs-mt").then(m => m.csMt),
+  csnl: () => import("converters/cs/cs-nl").then(m => m.csNl),
+  csno: () => import("converters/cs/cs-no").then(m => m.csNo),
+  cspl: () => import("converters/cs/cs-pl").then(m => m.csPl),
+  cspt: () => import("converters/cs/cs-pt").then(m => m.csPt),
+  csro: () => import("converters/cs/cs-ro").then(m => m.csRo),
+  cssk: () => import("converters/cs/cs-sk").then(m => m.csSk),
+  cssl: () => import("converters/cs/cs-sl").then(m => m.csSl),
+  cssq: () => import("converters/cs/cs-sq").then(m => m.csSq),
+  cssr: () => import("converters/cs/cs-sr").then(m => m.csSr),
+  cssv: () => import("converters/cs/cs-sv").then(m => m.csSv),
+  cstr: () => import("converters/cs/cs-tr").then(m => m.csTr),
+  csvi: () => import("converters/cs/cs-vi").then(m => m.csVi),
+  dazh: () => import("converters/da/da-zh").then(m => m.daZh),
+  daja: () => import("converters/da/da-ja").then(m => m.daJa),
+  dako: () => import("converters/da/da-ko").then(m => m.daKo),
+  dath: () => import("converters/da/da-th").then(m => m.daTh),
+  dahi: () => import("converters/da/da-hi").then(m => m.daHi),
+  dabn: () => import("converters/da/da-bn").then(m => m.daBn),
+  daur: () => import("converters/da/da-ur").then(m => m.daUr),
+  dafa: () => import("converters/da/da-fa").then(m => m.daFa),
+  daar: () => import("converters/da/da-ar").then(m => m.daAr),
+  dahe: () => import("converters/da/da-he").then(m => m.daHe),
+  daka: () => import("converters/da/da-ka").then(m => m.daKa),
+  dahy: () => import("converters/da/da-hy").then(m => m.daHy),
+  dael: () => import("converters/da/da-el").then(m => m.daEl),
+  daru: () => import("converters/da/da-ru").then(m => m.daRu),
+  dauk: () => import("converters/da/da-uk").then(m => m.daUk),
+  dabg: () => import("converters/da/da-bg").then(m => m.daBg),
+  damk: () => import("converters/da/da-mk").then(m => m.daMk),
+  dakk: () => import("converters/da/da-kk").then(m => m.daKk),
+  datg: () => import("converters/da/da-tg").then(m => m.daTg),
+  daaz: () => import("converters/da/da-az").then(m => m.daAz),
+  dabs: () => import("converters/da/da-bs").then(m => m.daBs),
+  daca: () => import("converters/da/da-ca").then(m => m.daCa),
+  dacs: () => import("converters/da/da-cs").then(m => m.daCs),
+  dade: () => import("converters/da/da-de").then(m => m.daDe),
+  daen: () => import("converters/da/da-en").then(m => m.daEn),
+  daes: () => import("converters/da/da-es").then(m => m.daEs),
+  daet: () => import("converters/da/da-et").then(m => m.daEt),
+  dafi: () => import("converters/da/da-fi").then(m => m.daFi),
+  dafr: () => import("converters/da/da-fr").then(m => m.daFr),
+  dahr: () => import("converters/da/da-hr").then(m => m.daHr),
+  dahu: () => import("converters/da/da-hu").then(m => m.daHu),
+  daid: () => import("converters/da/da-id").then(m => m.daId),
+  dais: () => import("converters/da/da-is").then(m => m.daIs),
+  dait: () => import("converters/da/da-it").then(m => m.daIt),
+  dalb: () => import("converters/da/da-lb").then(m => m.daLb),
+  dalt: () => import("converters/da/da-lt").then(m => m.daLt),
+  dalv: () => import("converters/da/da-lv").then(m => m.daLv),
+  dams: () => import("converters/da/da-ms").then(m => m.daMs),
+  damt: () => import("converters/da/da-mt").then(m => m.daMt),
+  danl: () => import("converters/da/da-nl").then(m => m.daNl),
+  dano: () => import("converters/da/da-no").then(m => m.daNo),
+  dapl: () => import("converters/da/da-pl").then(m => m.daPl),
+  dapt: () => import("converters/da/da-pt").then(m => m.daPt),
+  daro: () => import("converters/da/da-ro").then(m => m.daRo),
+  dask: () => import("converters/da/da-sk").then(m => m.daSk),
+  dasl: () => import("converters/da/da-sl").then(m => m.daSl),
+  dasq: () => import("converters/da/da-sq").then(m => m.daSq),
+  dasr: () => import("converters/da/da-sr").then(m => m.daSr),
+  dasv: () => import("converters/da/da-sv").then(m => m.daSv),
+  datr: () => import("converters/da/da-tr").then(m => m.daTr),
+  davi: () => import("converters/da/da-vi").then(m => m.daVi),
+  dezh: () => import("converters/de/de-zh").then(m => m.deZh),
+  deja: () => import("converters/de/de-ja").then(m => m.deJa),
+  deko: () => import("converters/de/de-ko").then(m => m.deKo),
+  deth: () => import("converters/de/de-th").then(m => m.deTh),
+  dehi: () => import("converters/de/de-hi").then(m => m.deHi),
+  debn: () => import("converters/de/de-bn").then(m => m.deBn),
+  deur: () => import("converters/de/de-ur").then(m => m.deUr),
+  defa: () => import("converters/de/de-fa").then(m => m.deFa),
+  dear: () => import("converters/de/de-ar").then(m => m.deAr),
+  dehe: () => import("converters/de/de-he").then(m => m.deHe),
+  deka: () => import("converters/de/de-ka").then(m => m.deKa),
+  dehy: () => import("converters/de/de-hy").then(m => m.deHy),
+  deel: () => import("converters/de/de-el").then(m => m.deEl),
+  deru: () => import("converters/de/de-ru").then(m => m.deRu),
+  deuk: () => import("converters/de/de-uk").then(m => m.deUk),
+  debg: () => import("converters/de/de-bg").then(m => m.deBg),
+  demk: () => import("converters/de/de-mk").then(m => m.deMk),
+  dekk: () => import("converters/de/de-kk").then(m => m.deKk),
+  detg: () => import("converters/de/de-tg").then(m => m.deTg),
+  deaz: () => import("converters/de/de-az").then(m => m.deAz),
+  debs: () => import("converters/de/de-bs").then(m => m.deBs),
+  deca: () => import("converters/de/de-ca").then(m => m.deCa),
+  decs: () => import("converters/de/de-cs").then(m => m.deCs),
+  deda: () => import("converters/de/de-da").then(m => m.deDa),
+  deen: () => import("converters/de/de-en").then(m => m.deEn),
+  dees: () => import("converters/de/de-es").then(m => m.deEs),
+  deet: () => import("converters/de/de-et").then(m => m.deEt),
+  defi: () => import("converters/de/de-fi").then(m => m.deFi),
+  defr: () => import("converters/de/de-fr").then(m => m.deFr),
+  dehr: () => import("converters/de/de-hr").then(m => m.deHr),
+  dehu: () => import("converters/de/de-hu").then(m => m.deHu),
+  deid: () => import("converters/de/de-id").then(m => m.deId),
+  deis: () => import("converters/de/de-is").then(m => m.deIs),
+  deit: () => import("converters/de/de-it").then(m => m.deIt),
+  delb: () => import("converters/de/de-lb").then(m => m.deLb),
+  delt: () => import("converters/de/de-lt").then(m => m.deLt),
+  delv: () => import("converters/de/de-lv").then(m => m.deLv),
+  dems: () => import("converters/de/de-ms").then(m => m.deMs),
+  demt: () => import("converters/de/de-mt").then(m => m.deMt),
+  denl: () => import("converters/de/de-nl").then(m => m.deNl),
+  deno: () => import("converters/de/de-no").then(m => m.deNo),
+  depl: () => import("converters/de/de-pl").then(m => m.dePl),
+  dept: () => import("converters/de/de-pt").then(m => m.dePt),
+  dero: () => import("converters/de/de-ro").then(m => m.deRo),
+  desk: () => import("converters/de/de-sk").then(m => m.deSk),
+  desl: () => import("converters/de/de-sl").then(m => m.deSl),
+  desq: () => import("converters/de/de-sq").then(m => m.deSq),
+  desr: () => import("converters/de/de-sr").then(m => m.deSr),
+  desv: () => import("converters/de/de-sv").then(m => m.deSv),
+  detr: () => import("converters/de/de-tr").then(m => m.deTr),
+  devi: () => import("converters/de/de-vi").then(m => m.deVi),
+  enzh: () => import("converters/en/en-zh").then(m => m.enZh),
+  enja: () => import("converters/en/en-ja").then(m => m.enJa),
+  enko: () => import("converters/en/en-ko").then(m => m.enKo),
+  enth: () => import("converters/en/en-th").then(m => m.enTh),
+  enhi: () => import("converters/en/en-hi").then(m => m.enHi),
+  enbn: () => import("converters/en/en-bn").then(m => m.enBn),
+  enur: () => import("converters/en/en-ur").then(m => m.enUr),
+  enfa: () => import("converters/en/en-fa").then(m => m.enFa),
+  enar: () => import("converters/en/en-ar").then(m => m.enAr),
+  enhe: () => import("converters/en/en-he").then(m => m.enHe),
+  enka: () => import("converters/en/en-ka").then(m => m.enKa),
+  enhy: () => import("converters/en/en-hy").then(m => m.enHy),
+  enel: () => import("converters/en/en-el").then(m => m.enEl),
+  enru: () => import("converters/en/en-ru").then(m => m.enRu),
+  enuk: () => import("converters/en/en-uk").then(m => m.enUk),
+  enbg: () => import("converters/en/en-bg").then(m => m.enBg),
+  enmk: () => import("converters/en/en-mk").then(m => m.enMk),
+  enkk: () => import("converters/en/en-kk").then(m => m.enKk),
+  entg: () => import("converters/en/en-tg").then(m => m.enTg),
+  enaz: () => import("converters/en/en-az").then(m => m.enAz),
+  enbs: () => import("converters/en/en-bs").then(m => m.enBs),
+  enca: () => import("converters/en/en-ca").then(m => m.enCa),
+  encs: () => import("converters/en/en-cs").then(m => m.enCs),
+  enda: () => import("converters/en/en-da").then(m => m.enDa),
+  ende: () => import("converters/en/en-de").then(m => m.enDe),
+  enes: () => import("converters/en/en-es").then(m => m.enEs),
+  enet: () => import("converters/en/en-et").then(m => m.enEt),
+  enfi: () => import("converters/en/en-fi").then(m => m.enFi),
+  enfr: () => import("converters/en/en-fr").then(m => m.enFr),
+  enhr: () => import("converters/en/en-hr").then(m => m.enHr),
+  enhu: () => import("converters/en/en-hu").then(m => m.enHu),
+  enid: () => import("converters/en/en-id").then(m => m.enId),
+  enis: () => import("converters/en/en-is").then(m => m.enIs),
+  enit: () => import("converters/en/en-it").then(m => m.enIt),
+  enlb: () => import("converters/en/en-lb").then(m => m.enLb),
+  enlt: () => import("converters/en/en-lt").then(m => m.enLt),
+  enlv: () => import("converters/en/en-lv").then(m => m.enLv),
+  enms: () => import("converters/en/en-ms").then(m => m.enMs),
+  enmt: () => import("converters/en/en-mt").then(m => m.enMt),
+  ennl: () => import("converters/en/en-nl").then(m => m.enNl),
+  enno: () => import("converters/en/en-no").then(m => m.enNo),
+  enpl: () => import("converters/en/en-pl").then(m => m.enPl),
+  enpt: () => import("converters/en/en-pt").then(m => m.enPt),
+  enro: () => import("converters/en/en-ro").then(m => m.enRo),
+  ensk: () => import("converters/en/en-sk").then(m => m.enSk),
+  ensl: () => import("converters/en/en-sl").then(m => m.enSl),
+  ensq: () => import("converters/en/en-sq").then(m => m.enSq),
+  ensr: () => import("converters/en/en-sr").then(m => m.enSr),
+  ensv: () => import("converters/en/en-sv").then(m => m.enSv),
+  entr: () => import("converters/en/en-tr").then(m => m.enTr),
+  envi: () => import("converters/en/en-vi").then(m => m.enVi),
+  eszh: () => import("converters/es/es-zh").then(m => m.esZh),
+  esja: () => import("converters/es/es-ja").then(m => m.esJa),
+  esko: () => import("converters/es/es-ko").then(m => m.esKo),
+  esth: () => import("converters/es/es-th").then(m => m.esTh),
+  eshi: () => import("converters/es/es-hi").then(m => m.esHi),
+  esbn: () => import("converters/es/es-bn").then(m => m.esBn),
+  esur: () => import("converters/es/es-ur").then(m => m.esUr),
+  esfa: () => import("converters/es/es-fa").then(m => m.esFa),
+  esar: () => import("converters/es/es-ar").then(m => m.esAr),
+  eshe: () => import("converters/es/es-he").then(m => m.esHe),
+  eska: () => import("converters/es/es-ka").then(m => m.esKa),
+  eshy: () => import("converters/es/es-hy").then(m => m.esHy),
+  esel: () => import("converters/es/es-el").then(m => m.esEl),
+  esru: () => import("converters/es/es-ru").then(m => m.esRu),
+  esuk: () => import("converters/es/es-uk").then(m => m.esUk),
+  esbg: () => import("converters/es/es-bg").then(m => m.esBg),
+  esmk: () => import("converters/es/es-mk").then(m => m.esMk),
+  eskk: () => import("converters/es/es-kk").then(m => m.esKk),
+  estg: () => import("converters/es/es-tg").then(m => m.esTg),
+  esaz: () => import("converters/es/es-az").then(m => m.esAz),
+  esbs: () => import("converters/es/es-bs").then(m => m.esBs),
+  esca: () => import("converters/es/es-ca").then(m => m.esCa),
+  escs: () => import("converters/es/es-cs").then(m => m.esCs),
+  esda: () => import("converters/es/es-da").then(m => m.esDa),
+  esde: () => import("converters/es/es-de").then(m => m.esDe),
+  esen: () => import("converters/es/es-en").then(m => m.esEn),
+  eset: () => import("converters/es/es-et").then(m => m.esEt),
+  esfi: () => import("converters/es/es-fi").then(m => m.esFi),
+  esfr: () => import("converters/es/es-fr").then(m => m.esFr),
+  eshr: () => import("converters/es/es-hr").then(m => m.esHr),
+  eshu: () => import("converters/es/es-hu").then(m => m.esHu),
+  esid: () => import("converters/es/es-id").then(m => m.esId),
+  esis: () => import("converters/es/es-is").then(m => m.esIs),
+  esit: () => import("converters/es/es-it").then(m => m.esIt),
+  eslb: () => import("converters/es/es-lb").then(m => m.esLb),
+  eslt: () => import("converters/es/es-lt").then(m => m.esLt),
+  eslv: () => import("converters/es/es-lv").then(m => m.esLv),
+  esms: () => import("converters/es/es-ms").then(m => m.esMs),
+  esmt: () => import("converters/es/es-mt").then(m => m.esMt),
+  esnl: () => import("converters/es/es-nl").then(m => m.esNl),
+  esno: () => import("converters/es/es-no").then(m => m.esNo),
+  espl: () => import("converters/es/es-pl").then(m => m.esPl),
+  espt: () => import("converters/es/es-pt").then(m => m.esPt),
+  esro: () => import("converters/es/es-ro").then(m => m.esRo),
+  essk: () => import("converters/es/es-sk").then(m => m.esSk),
+  essl: () => import("converters/es/es-sl").then(m => m.esSl),
+  essq: () => import("converters/es/es-sq").then(m => m.esSq),
+  essr: () => import("converters/es/es-sr").then(m => m.esSr),
+  essv: () => import("converters/es/es-sv").then(m => m.esSv),
+  estr: () => import("converters/es/es-tr").then(m => m.esTr),
+  esvi: () => import("converters/es/es-vi").then(m => m.esVi),
+  etzh: () => import("converters/et/et-zh").then(m => m.etZh),
+  etja: () => import("converters/et/et-ja").then(m => m.etJa),
+  etko: () => import("converters/et/et-ko").then(m => m.etKo),
+  etth: () => import("converters/et/et-th").then(m => m.etTh),
+  ethi: () => import("converters/et/et-hi").then(m => m.etHi),
+  etbn: () => import("converters/et/et-bn").then(m => m.etBn),
+  etur: () => import("converters/et/et-ur").then(m => m.etUr),
+  etfa: () => import("converters/et/et-fa").then(m => m.etFa),
+  etar: () => import("converters/et/et-ar").then(m => m.etAr),
+  ethe: () => import("converters/et/et-he").then(m => m.etHe),
+  etka: () => import("converters/et/et-ka").then(m => m.etKa),
+  ethy: () => import("converters/et/et-hy").then(m => m.etHy),
+  etel: () => import("converters/et/et-el").then(m => m.etEl),
+  etru: () => import("converters/et/et-ru").then(m => m.etRu),
+  etuk: () => import("converters/et/et-uk").then(m => m.etUk),
+  etbg: () => import("converters/et/et-bg").then(m => m.etBg),
+  etmk: () => import("converters/et/et-mk").then(m => m.etMk),
+  etkk: () => import("converters/et/et-kk").then(m => m.etKk),
+  ettg: () => import("converters/et/et-tg").then(m => m.etTg),
+  etaz: () => import("converters/et/et-az").then(m => m.etAz),
+  etbs: () => import("converters/et/et-bs").then(m => m.etBs),
+  etca: () => import("converters/et/et-ca").then(m => m.etCa),
+  etcs: () => import("converters/et/et-cs").then(m => m.etCs),
+  etda: () => import("converters/et/et-da").then(m => m.etDa),
+  etde: () => import("converters/et/et-de").then(m => m.etDe),
+  eten: () => import("converters/et/et-en").then(m => m.etEn),
+  etes: () => import("converters/et/et-es").then(m => m.etEs),
+  etfi: () => import("converters/et/et-fi").then(m => m.etFi),
+  etfr: () => import("converters/et/et-fr").then(m => m.etFr),
+  ethr: () => import("converters/et/et-hr").then(m => m.etHr),
+  ethu: () => import("converters/et/et-hu").then(m => m.etHu),
+  etid: () => import("converters/et/et-id").then(m => m.etId),
+  etis: () => import("converters/et/et-is").then(m => m.etIs),
+  etit: () => import("converters/et/et-it").then(m => m.etIt),
+  etlb: () => import("converters/et/et-lb").then(m => m.etLb),
+  etlt: () => import("converters/et/et-lt").then(m => m.etLt),
+  etlv: () => import("converters/et/et-lv").then(m => m.etLv),
+  etms: () => import("converters/et/et-ms").then(m => m.etMs),
+  etmt: () => import("converters/et/et-mt").then(m => m.etMt),
+  etnl: () => import("converters/et/et-nl").then(m => m.etNl),
+  etno: () => import("converters/et/et-no").then(m => m.etNo),
+  etpl: () => import("converters/et/et-pl").then(m => m.etPl),
+  etpt: () => import("converters/et/et-pt").then(m => m.etPt),
+  etro: () => import("converters/et/et-ro").then(m => m.etRo),
+  etsk: () => import("converters/et/et-sk").then(m => m.etSk),
+  etsl: () => import("converters/et/et-sl").then(m => m.etSl),
+  etsq: () => import("converters/et/et-sq").then(m => m.etSq),
+  etsr: () => import("converters/et/et-sr").then(m => m.etSr),
+  etsv: () => import("converters/et/et-sv").then(m => m.etSv),
+  ettr: () => import("converters/et/et-tr").then(m => m.etTr),
+  etvi: () => import("converters/et/et-vi").then(m => m.etVi),
+  fizh: () => import("converters/fi/fi-zh").then(m => m.fiZh),
+  fija: () => import("converters/fi/fi-ja").then(m => m.fiJa),
+  fiko: () => import("converters/fi/fi-ko").then(m => m.fiKo),
+  fith: () => import("converters/fi/fi-th").then(m => m.fiTh),
+  fihi: () => import("converters/fi/fi-hi").then(m => m.fiHi),
+  fibn: () => import("converters/fi/fi-bn").then(m => m.fiBn),
+  fiur: () => import("converters/fi/fi-ur").then(m => m.fiUr),
+  fifa: () => import("converters/fi/fi-fa").then(m => m.fiFa),
+  fiar: () => import("converters/fi/fi-ar").then(m => m.fiAr),
+  fihe: () => import("converters/fi/fi-he").then(m => m.fiHe),
+  fika: () => import("converters/fi/fi-ka").then(m => m.fiKa),
+  fihy: () => import("converters/fi/fi-hy").then(m => m.fiHy),
+  fiel: () => import("converters/fi/fi-el").then(m => m.fiEl),
+  firu: () => import("converters/fi/fi-ru").then(m => m.fiRu),
+  fiuk: () => import("converters/fi/fi-uk").then(m => m.fiUk),
+  fibg: () => import("converters/fi/fi-bg").then(m => m.fiBg),
+  fimk: () => import("converters/fi/fi-mk").then(m => m.fiMk),
+  fikk: () => import("converters/fi/fi-kk").then(m => m.fiKk),
+  fitg: () => import("converters/fi/fi-tg").then(m => m.fiTg),
+  fiaz: () => import("converters/fi/fi-az").then(m => m.fiAz),
+  fibs: () => import("converters/fi/fi-bs").then(m => m.fiBs),
+  fica: () => import("converters/fi/fi-ca").then(m => m.fiCa),
+  fics: () => import("converters/fi/fi-cs").then(m => m.fiCs),
+  fida: () => import("converters/fi/fi-da").then(m => m.fiDa),
+  fide: () => import("converters/fi/fi-de").then(m => m.fiDe),
+  fien: () => import("converters/fi/fi-en").then(m => m.fiEn),
+  fies: () => import("converters/fi/fi-es").then(m => m.fiEs),
+  fiet: () => import("converters/fi/fi-et").then(m => m.fiEt),
+  fifr: () => import("converters/fi/fi-fr").then(m => m.fiFr),
+  fihr: () => import("converters/fi/fi-hr").then(m => m.fiHr),
+  fihu: () => import("converters/fi/fi-hu").then(m => m.fiHu),
+  fiid: () => import("converters/fi/fi-id").then(m => m.fiId),
+  fiis: () => import("converters/fi/fi-is").then(m => m.fiIs),
+  fiit: () => import("converters/fi/fi-it").then(m => m.fiIt),
+  filb: () => import("converters/fi/fi-lb").then(m => m.fiLb),
+  filt: () => import("converters/fi/fi-lt").then(m => m.fiLt),
+  filv: () => import("converters/fi/fi-lv").then(m => m.fiLv),
+  fims: () => import("converters/fi/fi-ms").then(m => m.fiMs),
+  fimt: () => import("converters/fi/fi-mt").then(m => m.fiMt),
+  finl: () => import("converters/fi/fi-nl").then(m => m.fiNl),
+  fino: () => import("converters/fi/fi-no").then(m => m.fiNo),
+  fipl: () => import("converters/fi/fi-pl").then(m => m.fiPl),
+  fipt: () => import("converters/fi/fi-pt").then(m => m.fiPt),
+  firo: () => import("converters/fi/fi-ro").then(m => m.fiRo),
+  fisk: () => import("converters/fi/fi-sk").then(m => m.fiSk),
+  fisl: () => import("converters/fi/fi-sl").then(m => m.fiSl),
+  fisq: () => import("converters/fi/fi-sq").then(m => m.fiSq),
+  fisr: () => import("converters/fi/fi-sr").then(m => m.fiSr),
+  fisv: () => import("converters/fi/fi-sv").then(m => m.fiSv),
+  fitr: () => import("converters/fi/fi-tr").then(m => m.fiTr),
+  fivi: () => import("converters/fi/fi-vi").then(m => m.fiVi),
+  frzh: () => import("converters/fr/fr-zh").then(m => m.frZh),
+  frja: () => import("converters/fr/fr-ja").then(m => m.frJa),
+  frko: () => import("converters/fr/fr-ko").then(m => m.frKo),
+  frth: () => import("converters/fr/fr-th").then(m => m.frTh),
+  frhi: () => import("converters/fr/fr-hi").then(m => m.frHi),
+  frbn: () => import("converters/fr/fr-bn").then(m => m.frBn),
+  frur: () => import("converters/fr/fr-ur").then(m => m.frUr),
+  frfa: () => import("converters/fr/fr-fa").then(m => m.frFa),
+  frar: () => import("converters/fr/fr-ar").then(m => m.frAr),
+  frhe: () => import("converters/fr/fr-he").then(m => m.frHe),
+  frka: () => import("converters/fr/fr-ka").then(m => m.frKa),
+  frhy: () => import("converters/fr/fr-hy").then(m => m.frHy),
+  frel: () => import("converters/fr/fr-el").then(m => m.frEl),
+  frru: () => import("converters/fr/fr-ru").then(m => m.frRu),
+  fruk: () => import("converters/fr/fr-uk").then(m => m.frUk),
+  frbg: () => import("converters/fr/fr-bg").then(m => m.frBg),
+  frmk: () => import("converters/fr/fr-mk").then(m => m.frMk),
+  frkk: () => import("converters/fr/fr-kk").then(m => m.frKk),
+  frtg: () => import("converters/fr/fr-tg").then(m => m.frTg),
+  fraz: () => import("converters/fr/fr-az").then(m => m.frAz),
+  frbs: () => import("converters/fr/fr-bs").then(m => m.frBs),
+  frca: () => import("converters/fr/fr-ca").then(m => m.frCa),
+  frcs: () => import("converters/fr/fr-cs").then(m => m.frCs),
+  frda: () => import("converters/fr/fr-da").then(m => m.frDa),
+  frde: () => import("converters/fr/fr-de").then(m => m.frDe),
+  fren: () => import("converters/fr/fr-en").then(m => m.frEn),
+  fres: () => import("converters/fr/fr-es").then(m => m.frEs),
+  fret: () => import("converters/fr/fr-et").then(m => m.frEt),
+  frfi: () => import("converters/fr/fr-fi").then(m => m.frFi),
+  frhr: () => import("converters/fr/fr-hr").then(m => m.frHr),
+  frhu: () => import("converters/fr/fr-hu").then(m => m.frHu),
+  frid: () => import("converters/fr/fr-id").then(m => m.frId),
+  fris: () => import("converters/fr/fr-is").then(m => m.frIs),
+  frit: () => import("converters/fr/fr-it").then(m => m.frIt),
+  frlb: () => import("converters/fr/fr-lb").then(m => m.frLb),
+  frlt: () => import("converters/fr/fr-lt").then(m => m.frLt),
+  frlv: () => import("converters/fr/fr-lv").then(m => m.frLv),
+  frms: () => import("converters/fr/fr-ms").then(m => m.frMs),
+  frmt: () => import("converters/fr/fr-mt").then(m => m.frMt),
+  frnl: () => import("converters/fr/fr-nl").then(m => m.frNl),
+  frno: () => import("converters/fr/fr-no").then(m => m.frNo),
+  frpl: () => import("converters/fr/fr-pl").then(m => m.frPl),
+  frpt: () => import("converters/fr/fr-pt").then(m => m.frPt),
+  frro: () => import("converters/fr/fr-ro").then(m => m.frRo),
+  frsk: () => import("converters/fr/fr-sk").then(m => m.frSk),
+  frsl: () => import("converters/fr/fr-sl").then(m => m.frSl),
+  frsq: () => import("converters/fr/fr-sq").then(m => m.frSq),
+  frsr: () => import("converters/fr/fr-sr").then(m => m.frSr),
+  frsv: () => import("converters/fr/fr-sv").then(m => m.frSv),
+  frtr: () => import("converters/fr/fr-tr").then(m => m.frTr),
+  frvi: () => import("converters/fr/fr-vi").then(m => m.frVi),
+  hrzh: () => import("converters/hr/hr-zh").then(m => m.hrZh),
+  hrja: () => import("converters/hr/hr-ja").then(m => m.hrJa),
+  hrko: () => import("converters/hr/hr-ko").then(m => m.hrKo),
+  hrth: () => import("converters/hr/hr-th").then(m => m.hrTh),
+  hrhi: () => import("converters/hr/hr-hi").then(m => m.hrHi),
+  hrbn: () => import("converters/hr/hr-bn").then(m => m.hrBn),
+  hrur: () => import("converters/hr/hr-ur").then(m => m.hrUr),
+  hrfa: () => import("converters/hr/hr-fa").then(m => m.hrFa),
+  hrar: () => import("converters/hr/hr-ar").then(m => m.hrAr),
+  hrhe: () => import("converters/hr/hr-he").then(m => m.hrHe),
+  hrka: () => import("converters/hr/hr-ka").then(m => m.hrKa),
+  hrhy: () => import("converters/hr/hr-hy").then(m => m.hrHy),
+  hrel: () => import("converters/hr/hr-el").then(m => m.hrEl),
+  hrru: () => import("converters/hr/hr-ru").then(m => m.hrRu),
+  hruk: () => import("converters/hr/hr-uk").then(m => m.hrUk),
+  hrbg: () => import("converters/hr/hr-bg").then(m => m.hrBg),
+  hrmk: () => import("converters/hr/hr-mk").then(m => m.hrMk),
+  hrkk: () => import("converters/hr/hr-kk").then(m => m.hrKk),
+  hrtg: () => import("converters/hr/hr-tg").then(m => m.hrTg),
+  hraz: () => import("converters/hr/hr-az").then(m => m.hrAz),
+  hrbs: () => import("converters/hr/hr-bs").then(m => m.hrBs),
+  hrca: () => import("converters/hr/hr-ca").then(m => m.hrCa),
+  hrcs: () => import("converters/hr/hr-cs").then(m => m.hrCs),
+  hrda: () => import("converters/hr/hr-da").then(m => m.hrDa),
+  hrde: () => import("converters/hr/hr-de").then(m => m.hrDe),
+  hren: () => import("converters/hr/hr-en").then(m => m.hrEn),
+  hres: () => import("converters/hr/hr-es").then(m => m.hrEs),
+  hret: () => import("converters/hr/hr-et").then(m => m.hrEt),
+  hrfi: () => import("converters/hr/hr-fi").then(m => m.hrFi),
+  hrfr: () => import("converters/hr/hr-fr").then(m => m.hrFr),
+  hrhu: () => import("converters/hr/hr-hu").then(m => m.hrHu),
+  hrid: () => import("converters/hr/hr-id").then(m => m.hrId),
+  hris: () => import("converters/hr/hr-is").then(m => m.hrIs),
+  hrit: () => import("converters/hr/hr-it").then(m => m.hrIt),
+  hrlb: () => import("converters/hr/hr-lb").then(m => m.hrLb),
+  hrlt: () => import("converters/hr/hr-lt").then(m => m.hrLt),
+  hrlv: () => import("converters/hr/hr-lv").then(m => m.hrLv),
+  hrms: () => import("converters/hr/hr-ms").then(m => m.hrMs),
+  hrmt: () => import("converters/hr/hr-mt").then(m => m.hrMt),
+  hrnl: () => import("converters/hr/hr-nl").then(m => m.hrNl),
+  hrno: () => import("converters/hr/hr-no").then(m => m.hrNo),
+  hrpl: () => import("converters/hr/hr-pl").then(m => m.hrPl),
+  hrpt: () => import("converters/hr/hr-pt").then(m => m.hrPt),
+  hrro: () => import("converters/hr/hr-ro").then(m => m.hrRo),
+  hrsk: () => import("converters/hr/hr-sk").then(m => m.hrSk),
+  hrsl: () => import("converters/hr/hr-sl").then(m => m.hrSl),
+  hrsq: () => import("converters/hr/hr-sq").then(m => m.hrSq),
+  hrsr: () => import("converters/hr/hr-sr").then(m => m.hrSr),
+  hrsv: () => import("converters/hr/hr-sv").then(m => m.hrSv),
+  hrtr: () => import("converters/hr/hr-tr").then(m => m.hrTr),
+  hrvi: () => import("converters/hr/hr-vi").then(m => m.hrVi),
+  huzh: () => import("converters/hu/hu-zh").then(m => m.huZh),
+  huja: () => import("converters/hu/hu-ja").then(m => m.huJa),
+  huko: () => import("converters/hu/hu-ko").then(m => m.huKo),
+  huth: () => import("converters/hu/hu-th").then(m => m.huTh),
+  huhi: () => import("converters/hu/hu-hi").then(m => m.huHi),
+  hubn: () => import("converters/hu/hu-bn").then(m => m.huBn),
+  huur: () => import("converters/hu/hu-ur").then(m => m.huUr),
+  hufa: () => import("converters/hu/hu-fa").then(m => m.huFa),
+  huar: () => import("converters/hu/hu-ar").then(m => m.huAr),
+  huhe: () => import("converters/hu/hu-he").then(m => m.huHe),
+  huka: () => import("converters/hu/hu-ka").then(m => m.huKa),
+  huhy: () => import("converters/hu/hu-hy").then(m => m.huHy),
+  huel: () => import("converters/hu/hu-el").then(m => m.huEl),
+  huru: () => import("converters/hu/hu-ru").then(m => m.huRu),
+  huuk: () => import("converters/hu/hu-uk").then(m => m.huUk),
+  hubg: () => import("converters/hu/hu-bg").then(m => m.huBg),
+  humk: () => import("converters/hu/hu-mk").then(m => m.huMk),
+  hukk: () => import("converters/hu/hu-kk").then(m => m.huKk),
+  hutg: () => import("converters/hu/hu-tg").then(m => m.huTg),
+  huaz: () => import("converters/hu/hu-az").then(m => m.huAz),
+  hubs: () => import("converters/hu/hu-bs").then(m => m.huBs),
+  huca: () => import("converters/hu/hu-ca").then(m => m.huCa),
+  hucs: () => import("converters/hu/hu-cs").then(m => m.huCs),
+  huda: () => import("converters/hu/hu-da").then(m => m.huDa),
+  hude: () => import("converters/hu/hu-de").then(m => m.huDe),
+  huen: () => import("converters/hu/hu-en").then(m => m.huEn),
+  hues: () => import("converters/hu/hu-es").then(m => m.huEs),
+  huet: () => import("converters/hu/hu-et").then(m => m.huEt),
+  hufi: () => import("converters/hu/hu-fi").then(m => m.huFi),
+  hufr: () => import("converters/hu/hu-fr").then(m => m.huFr),
+  huhr: () => import("converters/hu/hu-hr").then(m => m.huHr),
+  huid: () => import("converters/hu/hu-id").then(m => m.huId),
+  huis: () => import("converters/hu/hu-is").then(m => m.huIs),
+  huit: () => import("converters/hu/hu-it").then(m => m.huIt),
+  hulb: () => import("converters/hu/hu-lb").then(m => m.huLb),
+  hult: () => import("converters/hu/hu-lt").then(m => m.huLt),
+  hulv: () => import("converters/hu/hu-lv").then(m => m.huLv),
+  hums: () => import("converters/hu/hu-ms").then(m => m.huMs),
+  humt: () => import("converters/hu/hu-mt").then(m => m.huMt),
+  hunl: () => import("converters/hu/hu-nl").then(m => m.huNl),
+  huno: () => import("converters/hu/hu-no").then(m => m.huNo),
+  hupl: () => import("converters/hu/hu-pl").then(m => m.huPl),
+  hupt: () => import("converters/hu/hu-pt").then(m => m.huPt),
+  huro: () => import("converters/hu/hu-ro").then(m => m.huRo),
+  husk: () => import("converters/hu/hu-sk").then(m => m.huSk),
+  husl: () => import("converters/hu/hu-sl").then(m => m.huSl),
+  husq: () => import("converters/hu/hu-sq").then(m => m.huSq),
+  husr: () => import("converters/hu/hu-sr").then(m => m.huSr),
+  husv: () => import("converters/hu/hu-sv").then(m => m.huSv),
+  hutr: () => import("converters/hu/hu-tr").then(m => m.huTr),
+  huvi: () => import("converters/hu/hu-vi").then(m => m.huVi),
+  idzh: () => import("converters/id/id-zh").then(m => m.idZh),
+  idja: () => import("converters/id/id-ja").then(m => m.idJa),
+  idko: () => import("converters/id/id-ko").then(m => m.idKo),
+  idth: () => import("converters/id/id-th").then(m => m.idTh),
+  idhi: () => import("converters/id/id-hi").then(m => m.idHi),
+  idbn: () => import("converters/id/id-bn").then(m => m.idBn),
+  idur: () => import("converters/id/id-ur").then(m => m.idUr),
+  idfa: () => import("converters/id/id-fa").then(m => m.idFa),
+  idar: () => import("converters/id/id-ar").then(m => m.idAr),
+  idhe: () => import("converters/id/id-he").then(m => m.idHe),
+  idka: () => import("converters/id/id-ka").then(m => m.idKa),
+  idhy: () => import("converters/id/id-hy").then(m => m.idHy),
+  idel: () => import("converters/id/id-el").then(m => m.idEl),
+  idru: () => import("converters/id/id-ru").then(m => m.idRu),
+  iduk: () => import("converters/id/id-uk").then(m => m.idUk),
+  idbg: () => import("converters/id/id-bg").then(m => m.idBg),
+  idmk: () => import("converters/id/id-mk").then(m => m.idMk),
+  idkk: () => import("converters/id/id-kk").then(m => m.idKk),
+  idtg: () => import("converters/id/id-tg").then(m => m.idTg),
+  idaz: () => import("converters/id/id-az").then(m => m.idAz),
+  idbs: () => import("converters/id/id-bs").then(m => m.idBs),
+  idca: () => import("converters/id/id-ca").then(m => m.idCa),
+  idcs: () => import("converters/id/id-cs").then(m => m.idCs),
+  idda: () => import("converters/id/id-da").then(m => m.idDa),
+  idde: () => import("converters/id/id-de").then(m => m.idDe),
+  iden: () => import("converters/id/id-en").then(m => m.idEn),
+  ides: () => import("converters/id/id-es").then(m => m.idEs),
+  idet: () => import("converters/id/id-et").then(m => m.idEt),
+  idfi: () => import("converters/id/id-fi").then(m => m.idFi),
+  idfr: () => import("converters/id/id-fr").then(m => m.idFr),
+  idhr: () => import("converters/id/id-hr").then(m => m.idHr),
+  idhu: () => import("converters/id/id-hu").then(m => m.idHu),
+  idis: () => import("converters/id/id-is").then(m => m.idIs),
+  idit: () => import("converters/id/id-it").then(m => m.idIt),
+  idlb: () => import("converters/id/id-lb").then(m => m.idLb),
+  idlt: () => import("converters/id/id-lt").then(m => m.idLt),
+  idlv: () => import("converters/id/id-lv").then(m => m.idLv),
+  idms: () => import("converters/id/id-ms").then(m => m.idMs),
+  idmt: () => import("converters/id/id-mt").then(m => m.idMt),
+  idnl: () => import("converters/id/id-nl").then(m => m.idNl),
+  idno: () => import("converters/id/id-no").then(m => m.idNo),
+  idpl: () => import("converters/id/id-pl").then(m => m.idPl),
+  idpt: () => import("converters/id/id-pt").then(m => m.idPt),
+  idro: () => import("converters/id/id-ro").then(m => m.idRo),
+  idsk: () => import("converters/id/id-sk").then(m => m.idSk),
+  idsl: () => import("converters/id/id-sl").then(m => m.idSl),
+  idsq: () => import("converters/id/id-sq").then(m => m.idSq),
+  idsr: () => import("converters/id/id-sr").then(m => m.idSr),
+  idsv: () => import("converters/id/id-sv").then(m => m.idSv),
+  idtr: () => import("converters/id/id-tr").then(m => m.idTr),
+  idvi: () => import("converters/id/id-vi").then(m => m.idVi),
+  iszh: () => import("converters/is/is-zh").then(m => m.isZh),
+  isja: () => import("converters/is/is-ja").then(m => m.isJa),
+  isko: () => import("converters/is/is-ko").then(m => m.isKo),
+  isth: () => import("converters/is/is-th").then(m => m.isTh),
+  ishi: () => import("converters/is/is-hi").then(m => m.isHi),
+  isbn: () => import("converters/is/is-bn").then(m => m.isBn),
+  isur: () => import("converters/is/is-ur").then(m => m.isUr),
+  isfa: () => import("converters/is/is-fa").then(m => m.isFa),
+  isar: () => import("converters/is/is-ar").then(m => m.isAr),
+  ishe: () => import("converters/is/is-he").then(m => m.isHe),
+  iska: () => import("converters/is/is-ka").then(m => m.isKa),
+  ishy: () => import("converters/is/is-hy").then(m => m.isHy),
+  isel: () => import("converters/is/is-el").then(m => m.isEl),
+  isru: () => import("converters/is/is-ru").then(m => m.isRu),
+  isuk: () => import("converters/is/is-uk").then(m => m.isUk),
+  isbg: () => import("converters/is/is-bg").then(m => m.isBg),
+  ismk: () => import("converters/is/is-mk").then(m => m.isMk),
+  iskk: () => import("converters/is/is-kk").then(m => m.isKk),
+  istg: () => import("converters/is/is-tg").then(m => m.isTg),
+  isaz: () => import("converters/is/is-az").then(m => m.isAz),
+  isbs: () => import("converters/is/is-bs").then(m => m.isBs),
+  isca: () => import("converters/is/is-ca").then(m => m.isCa),
+  iscs: () => import("converters/is/is-cs").then(m => m.isCs),
+  isda: () => import("converters/is/is-da").then(m => m.isDa),
+  isde: () => import("converters/is/is-de").then(m => m.isDe),
+  isen: () => import("converters/is/is-en").then(m => m.isEn),
+  ises: () => import("converters/is/is-es").then(m => m.isEs),
+  iset: () => import("converters/is/is-et").then(m => m.isEt),
+  isfi: () => import("converters/is/is-fi").then(m => m.isFi),
+  isfr: () => import("converters/is/is-fr").then(m => m.isFr),
+  ishr: () => import("converters/is/is-hr").then(m => m.isHr),
+  ishu: () => import("converters/is/is-hu").then(m => m.isHu),
+  isid: () => import("converters/is/is-id").then(m => m.isId),
+  isit: () => import("converters/is/is-it").then(m => m.isIt),
+  islb: () => import("converters/is/is-lb").then(m => m.isLb),
+  islt: () => import("converters/is/is-lt").then(m => m.isLt),
+  islv: () => import("converters/is/is-lv").then(m => m.isLv),
+  isms: () => import("converters/is/is-ms").then(m => m.isMs),
+  ismt: () => import("converters/is/is-mt").then(m => m.isMt),
+  isnl: () => import("converters/is/is-nl").then(m => m.isNl),
+  isno: () => import("converters/is/is-no").then(m => m.isNo),
+  ispl: () => import("converters/is/is-pl").then(m => m.isPl),
+  ispt: () => import("converters/is/is-pt").then(m => m.isPt),
+  isro: () => import("converters/is/is-ro").then(m => m.isRo),
+  issk: () => import("converters/is/is-sk").then(m => m.isSk),
+  issl: () => import("converters/is/is-sl").then(m => m.isSl),
+  issq: () => import("converters/is/is-sq").then(m => m.isSq),
+  issr: () => import("converters/is/is-sr").then(m => m.isSr),
+  issv: () => import("converters/is/is-sv").then(m => m.isSv),
+  istr: () => import("converters/is/is-tr").then(m => m.isTr),
+  isvi: () => import("converters/is/is-vi").then(m => m.isVi),
+  itzh: () => import("converters/it/it-zh").then(m => m.itZh),
+  itja: () => import("converters/it/it-ja").then(m => m.itJa),
+  itko: () => import("converters/it/it-ko").then(m => m.itKo),
+  itth: () => import("converters/it/it-th").then(m => m.itTh),
+  ithi: () => import("converters/it/it-hi").then(m => m.itHi),
+  itbn: () => import("converters/it/it-bn").then(m => m.itBn),
+  itur: () => import("converters/it/it-ur").then(m => m.itUr),
+  itfa: () => import("converters/it/it-fa").then(m => m.itFa),
+  itar: () => import("converters/it/it-ar").then(m => m.itAr),
+  ithe: () => import("converters/it/it-he").then(m => m.itHe),
+  itka: () => import("converters/it/it-ka").then(m => m.itKa),
+  ithy: () => import("converters/it/it-hy").then(m => m.itHy),
+  itel: () => import("converters/it/it-el").then(m => m.itEl),
+  itru: () => import("converters/it/it-ru").then(m => m.itRu),
+  ituk: () => import("converters/it/it-uk").then(m => m.itUk),
+  itbg: () => import("converters/it/it-bg").then(m => m.itBg),
+  itmk: () => import("converters/it/it-mk").then(m => m.itMk),
+  itkk: () => import("converters/it/it-kk").then(m => m.itKk),
+  ittg: () => import("converters/it/it-tg").then(m => m.itTg),
+  itaz: () => import("converters/it/it-az").then(m => m.itAz),
+  itbs: () => import("converters/it/it-bs").then(m => m.itBs),
+  itca: () => import("converters/it/it-ca").then(m => m.itCa),
+  itcs: () => import("converters/it/it-cs").then(m => m.itCs),
+  itda: () => import("converters/it/it-da").then(m => m.itDa),
+  itde: () => import("converters/it/it-de").then(m => m.itDe),
+  iten: () => import("converters/it/it-en").then(m => m.itEn),
+  ites: () => import("converters/it/it-es").then(m => m.itEs),
+  itet: () => import("converters/it/it-et").then(m => m.itEt),
+  itfi: () => import("converters/it/it-fi").then(m => m.itFi),
+  itfr: () => import("converters/it/it-fr").then(m => m.itFr),
+  ithr: () => import("converters/it/it-hr").then(m => m.itHr),
+  ithu: () => import("converters/it/it-hu").then(m => m.itHu),
+  itid: () => import("converters/it/it-id").then(m => m.itId),
+  itis: () => import("converters/it/it-is").then(m => m.itIs),
+  itlb: () => import("converters/it/it-lb").then(m => m.itLb),
+  itlt: () => import("converters/it/it-lt").then(m => m.itLt),
+  itlv: () => import("converters/it/it-lv").then(m => m.itLv),
+  itms: () => import("converters/it/it-ms").then(m => m.itMs),
+  itmt: () => import("converters/it/it-mt").then(m => m.itMt),
+  itnl: () => import("converters/it/it-nl").then(m => m.itNl),
+  itno: () => import("converters/it/it-no").then(m => m.itNo),
+  itpl: () => import("converters/it/it-pl").then(m => m.itPl),
+  itpt: () => import("converters/it/it-pt").then(m => m.itPt),
+  itro: () => import("converters/it/it-ro").then(m => m.itRo),
+  itsk: () => import("converters/it/it-sk").then(m => m.itSk),
+  itsl: () => import("converters/it/it-sl").then(m => m.itSl),
+  itsq: () => import("converters/it/it-sq").then(m => m.itSq),
+  itsr: () => import("converters/it/it-sr").then(m => m.itSr),
+  itsv: () => import("converters/it/it-sv").then(m => m.itSv),
+  ittr: () => import("converters/it/it-tr").then(m => m.itTr),
+  itvi: () => import("converters/it/it-vi").then(m => m.itVi),
+  lbzh: () => import("converters/lb/lb-zh").then(m => m.lbZh),
+  lbja: () => import("converters/lb/lb-ja").then(m => m.lbJa),
+  lbko: () => import("converters/lb/lb-ko").then(m => m.lbKo),
+  lbth: () => import("converters/lb/lb-th").then(m => m.lbTh),
+  lbhi: () => import("converters/lb/lb-hi").then(m => m.lbHi),
+  lbbn: () => import("converters/lb/lb-bn").then(m => m.lbBn),
+  lbur: () => import("converters/lb/lb-ur").then(m => m.lbUr),
+  lbfa: () => import("converters/lb/lb-fa").then(m => m.lbFa),
+  lbar: () => import("converters/lb/lb-ar").then(m => m.lbAr),
+  lbhe: () => import("converters/lb/lb-he").then(m => m.lbHe),
+  lbka: () => import("converters/lb/lb-ka").then(m => m.lbKa),
+  lbhy: () => import("converters/lb/lb-hy").then(m => m.lbHy),
+  lbel: () => import("converters/lb/lb-el").then(m => m.lbEl),
+  lbru: () => import("converters/lb/lb-ru").then(m => m.lbRu),
+  lbuk: () => import("converters/lb/lb-uk").then(m => m.lbUk),
+  lbbg: () => import("converters/lb/lb-bg").then(m => m.lbBg),
+  lbmk: () => import("converters/lb/lb-mk").then(m => m.lbMk),
+  lbkk: () => import("converters/lb/lb-kk").then(m => m.lbKk),
+  lbtg: () => import("converters/lb/lb-tg").then(m => m.lbTg),
+  lbaz: () => import("converters/lb/lb-az").then(m => m.lbAz),
+  lbbs: () => import("converters/lb/lb-bs").then(m => m.lbBs),
+  lbca: () => import("converters/lb/lb-ca").then(m => m.lbCa),
+  lbcs: () => import("converters/lb/lb-cs").then(m => m.lbCs),
+  lbda: () => import("converters/lb/lb-da").then(m => m.lbDa),
+  lbde: () => import("converters/lb/lb-de").then(m => m.lbDe),
+  lben: () => import("converters/lb/lb-en").then(m => m.lbEn),
+  lbes: () => import("converters/lb/lb-es").then(m => m.lbEs),
+  lbet: () => import("converters/lb/lb-et").then(m => m.lbEt),
+  lbfi: () => import("converters/lb/lb-fi").then(m => m.lbFi),
+  lbfr: () => import("converters/lb/lb-fr").then(m => m.lbFr),
+  lbhr: () => import("converters/lb/lb-hr").then(m => m.lbHr),
+  lbhu: () => import("converters/lb/lb-hu").then(m => m.lbHu),
+  lbid: () => import("converters/lb/lb-id").then(m => m.lbId),
+  lbis: () => import("converters/lb/lb-is").then(m => m.lbIs),
+  lbit: () => import("converters/lb/lb-it").then(m => m.lbIt),
+  lblt: () => import("converters/lb/lb-lt").then(m => m.lbLt),
+  lblv: () => import("converters/lb/lb-lv").then(m => m.lbLv),
+  lbms: () => import("converters/lb/lb-ms").then(m => m.lbMs),
+  lbmt: () => import("converters/lb/lb-mt").then(m => m.lbMt),
+  lbnl: () => import("converters/lb/lb-nl").then(m => m.lbNl),
+  lbno: () => import("converters/lb/lb-no").then(m => m.lbNo),
+  lbpl: () => import("converters/lb/lb-pl").then(m => m.lbPl),
+  lbpt: () => import("converters/lb/lb-pt").then(m => m.lbPt),
+  lbro: () => import("converters/lb/lb-ro").then(m => m.lbRo),
+  lbsk: () => import("converters/lb/lb-sk").then(m => m.lbSk),
+  lbsl: () => import("converters/lb/lb-sl").then(m => m.lbSl),
+  lbsq: () => import("converters/lb/lb-sq").then(m => m.lbSq),
+  lbsr: () => import("converters/lb/lb-sr").then(m => m.lbSr),
+  lbsv: () => import("converters/lb/lb-sv").then(m => m.lbSv),
+  lbtr: () => import("converters/lb/lb-tr").then(m => m.lbTr),
+  lbvi: () => import("converters/lb/lb-vi").then(m => m.lbVi),
+  ltzh: () => import("converters/lt/lt-zh").then(m => m.ltZh),
+  ltja: () => import("converters/lt/lt-ja").then(m => m.ltJa),
+  ltko: () => import("converters/lt/lt-ko").then(m => m.ltKo),
+  ltth: () => import("converters/lt/lt-th").then(m => m.ltTh),
+  lthi: () => import("converters/lt/lt-hi").then(m => m.ltHi),
+  ltbn: () => import("converters/lt/lt-bn").then(m => m.ltBn),
+  ltur: () => import("converters/lt/lt-ur").then(m => m.ltUr),
+  ltfa: () => import("converters/lt/lt-fa").then(m => m.ltFa),
+  ltar: () => import("converters/lt/lt-ar").then(m => m.ltAr),
+  lthe: () => import("converters/lt/lt-he").then(m => m.ltHe),
+  ltka: () => import("converters/lt/lt-ka").then(m => m.ltKa),
+  lthy: () => import("converters/lt/lt-hy").then(m => m.ltHy),
+  ltel: () => import("converters/lt/lt-el").then(m => m.ltEl),
+  ltru: () => import("converters/lt/lt-ru").then(m => m.ltRu),
+  ltuk: () => import("converters/lt/lt-uk").then(m => m.ltUk),
+  ltbg: () => import("converters/lt/lt-bg").then(m => m.ltBg),
+  ltmk: () => import("converters/lt/lt-mk").then(m => m.ltMk),
+  ltkk: () => import("converters/lt/lt-kk").then(m => m.ltKk),
+  lttg: () => import("converters/lt/lt-tg").then(m => m.ltTg),
+  ltaz: () => import("converters/lt/lt-az").then(m => m.ltAz),
+  ltbs: () => import("converters/lt/lt-bs").then(m => m.ltBs),
+  ltca: () => import("converters/lt/lt-ca").then(m => m.ltCa),
+  ltcs: () => import("converters/lt/lt-cs").then(m => m.ltCs),
+  ltda: () => import("converters/lt/lt-da").then(m => m.ltDa),
+  ltde: () => import("converters/lt/lt-de").then(m => m.ltDe),
+  lten: () => import("converters/lt/lt-en").then(m => m.ltEn),
+  ltes: () => import("converters/lt/lt-es").then(m => m.ltEs),
+  ltet: () => import("converters/lt/lt-et").then(m => m.ltEt),
+  ltfi: () => import("converters/lt/lt-fi").then(m => m.ltFi),
+  ltfr: () => import("converters/lt/lt-fr").then(m => m.ltFr),
+  lthr: () => import("converters/lt/lt-hr").then(m => m.ltHr),
+  lthu: () => import("converters/lt/lt-hu").then(m => m.ltHu),
+  ltid: () => import("converters/lt/lt-id").then(m => m.ltId),
+  ltis: () => import("converters/lt/lt-is").then(m => m.ltIs),
+  ltit: () => import("converters/lt/lt-it").then(m => m.ltIt),
+  ltlb: () => import("converters/lt/lt-lb").then(m => m.ltLb),
+  ltlv: () => import("converters/lt/lt-lv").then(m => m.ltLv),
+  ltms: () => import("converters/lt/lt-ms").then(m => m.ltMs),
+  ltmt: () => import("converters/lt/lt-mt").then(m => m.ltMt),
+  ltnl: () => import("converters/lt/lt-nl").then(m => m.ltNl),
+  ltno: () => import("converters/lt/lt-no").then(m => m.ltNo),
+  ltpl: () => import("converters/lt/lt-pl").then(m => m.ltPl),
+  ltpt: () => import("converters/lt/lt-pt").then(m => m.ltPt),
+  ltro: () => import("converters/lt/lt-ro").then(m => m.ltRo),
+  ltsk: () => import("converters/lt/lt-sk").then(m => m.ltSk),
+  ltsl: () => import("converters/lt/lt-sl").then(m => m.ltSl),
+  ltsq: () => import("converters/lt/lt-sq").then(m => m.ltSq),
+  ltsr: () => import("converters/lt/lt-sr").then(m => m.ltSr),
+  ltsv: () => import("converters/lt/lt-sv").then(m => m.ltSv),
+  lttr: () => import("converters/lt/lt-tr").then(m => m.ltTr),
+  ltvi: () => import("converters/lt/lt-vi").then(m => m.ltVi),
+  lvzh: () => import("converters/lv/lv-zh").then(m => m.lvZh),
+  lvja: () => import("converters/lv/lv-ja").then(m => m.lvJa),
+  lvko: () => import("converters/lv/lv-ko").then(m => m.lvKo),
+  lvth: () => import("converters/lv/lv-th").then(m => m.lvTh),
+  lvhi: () => import("converters/lv/lv-hi").then(m => m.lvHi),
+  lvbn: () => import("converters/lv/lv-bn").then(m => m.lvBn),
+  lvur: () => import("converters/lv/lv-ur").then(m => m.lvUr),
+  lvfa: () => import("converters/lv/lv-fa").then(m => m.lvFa),
+  lvar: () => import("converters/lv/lv-ar").then(m => m.lvAr),
+  lvhe: () => import("converters/lv/lv-he").then(m => m.lvHe),
+  lvka: () => import("converters/lv/lv-ka").then(m => m.lvKa),
+  lvhy: () => import("converters/lv/lv-hy").then(m => m.lvHy),
+  lvel: () => import("converters/lv/lv-el").then(m => m.lvEl),
+  lvru: () => import("converters/lv/lv-ru").then(m => m.lvRu),
+  lvuk: () => import("converters/lv/lv-uk").then(m => m.lvUk),
+  lvbg: () => import("converters/lv/lv-bg").then(m => m.lvBg),
+  lvmk: () => import("converters/lv/lv-mk").then(m => m.lvMk),
+  lvkk: () => import("converters/lv/lv-kk").then(m => m.lvKk),
+  lvtg: () => import("converters/lv/lv-tg").then(m => m.lvTg),
+  lvaz: () => import("converters/lv/lv-az").then(m => m.lvAz),
+  lvbs: () => import("converters/lv/lv-bs").then(m => m.lvBs),
+  lvca: () => import("converters/lv/lv-ca").then(m => m.lvCa),
+  lvcs: () => import("converters/lv/lv-cs").then(m => m.lvCs),
+  lvda: () => import("converters/lv/lv-da").then(m => m.lvDa),
+  lvde: () => import("converters/lv/lv-de").then(m => m.lvDe),
+  lven: () => import("converters/lv/lv-en").then(m => m.lvEn),
+  lves: () => import("converters/lv/lv-es").then(m => m.lvEs),
+  lvet: () => import("converters/lv/lv-et").then(m => m.lvEt),
+  lvfi: () => import("converters/lv/lv-fi").then(m => m.lvFi),
+  lvfr: () => import("converters/lv/lv-fr").then(m => m.lvFr),
+  lvhr: () => import("converters/lv/lv-hr").then(m => m.lvHr),
+  lvhu: () => import("converters/lv/lv-hu").then(m => m.lvHu),
+  lvid: () => import("converters/lv/lv-id").then(m => m.lvId),
+  lvis: () => import("converters/lv/lv-is").then(m => m.lvIs),
+  lvit: () => import("converters/lv/lv-it").then(m => m.lvIt),
+  lvlb: () => import("converters/lv/lv-lb").then(m => m.lvLb),
+  lvlt: () => import("converters/lv/lv-lt").then(m => m.lvLt),
+  lvms: () => import("converters/lv/lv-ms").then(m => m.lvMs),
+  lvmt: () => import("converters/lv/lv-mt").then(m => m.lvMt),
+  lvnl: () => import("converters/lv/lv-nl").then(m => m.lvNl),
+  lvno: () => import("converters/lv/lv-no").then(m => m.lvNo),
+  lvpl: () => import("converters/lv/lv-pl").then(m => m.lvPl),
+  lvpt: () => import("converters/lv/lv-pt").then(m => m.lvPt),
+  lvro: () => import("converters/lv/lv-ro").then(m => m.lvRo),
+  lvsk: () => import("converters/lv/lv-sk").then(m => m.lvSk),
+  lvsl: () => import("converters/lv/lv-sl").then(m => m.lvSl),
+  lvsq: () => import("converters/lv/lv-sq").then(m => m.lvSq),
+  lvsr: () => import("converters/lv/lv-sr").then(m => m.lvSr),
+  lvsv: () => import("converters/lv/lv-sv").then(m => m.lvSv),
+  lvtr: () => import("converters/lv/lv-tr").then(m => m.lvTr),
+  lvvi: () => import("converters/lv/lv-vi").then(m => m.lvVi),
+  mszh: () => import("converters/ms/ms-zh").then(m => m.msZh),
+  msja: () => import("converters/ms/ms-ja").then(m => m.msJa),
+  msko: () => import("converters/ms/ms-ko").then(m => m.msKo),
+  msth: () => import("converters/ms/ms-th").then(m => m.msTh),
+  mshi: () => import("converters/ms/ms-hi").then(m => m.msHi),
+  msbn: () => import("converters/ms/ms-bn").then(m => m.msBn),
+  msur: () => import("converters/ms/ms-ur").then(m => m.msUr),
+  msfa: () => import("converters/ms/ms-fa").then(m => m.msFa),
+  msar: () => import("converters/ms/ms-ar").then(m => m.msAr),
+  mshe: () => import("converters/ms/ms-he").then(m => m.msHe),
+  mska: () => import("converters/ms/ms-ka").then(m => m.msKa),
+  mshy: () => import("converters/ms/ms-hy").then(m => m.msHy),
+  msel: () => import("converters/ms/ms-el").then(m => m.msEl),
+  msru: () => import("converters/ms/ms-ru").then(m => m.msRu),
+  msuk: () => import("converters/ms/ms-uk").then(m => m.msUk),
+  msbg: () => import("converters/ms/ms-bg").then(m => m.msBg),
+  msmk: () => import("converters/ms/ms-mk").then(m => m.msMk),
+  mskk: () => import("converters/ms/ms-kk").then(m => m.msKk),
+  mstg: () => import("converters/ms/ms-tg").then(m => m.msTg),
+  msaz: () => import("converters/ms/ms-az").then(m => m.msAz),
+  msbs: () => import("converters/ms/ms-bs").then(m => m.msBs),
+  msca: () => import("converters/ms/ms-ca").then(m => m.msCa),
+  mscs: () => import("converters/ms/ms-cs").then(m => m.msCs),
+  msda: () => import("converters/ms/ms-da").then(m => m.msDa),
+  msde: () => import("converters/ms/ms-de").then(m => m.msDe),
+  msen: () => import("converters/ms/ms-en").then(m => m.msEn),
+  mses: () => import("converters/ms/ms-es").then(m => m.msEs),
+  mset: () => import("converters/ms/ms-et").then(m => m.msEt),
+  msfi: () => import("converters/ms/ms-fi").then(m => m.msFi),
+  msfr: () => import("converters/ms/ms-fr").then(m => m.msFr),
+  mshr: () => import("converters/ms/ms-hr").then(m => m.msHr),
+  mshu: () => import("converters/ms/ms-hu").then(m => m.msHu),
+  msid: () => import("converters/ms/ms-id").then(m => m.msId),
+  msis: () => import("converters/ms/ms-is").then(m => m.msIs),
+  msit: () => import("converters/ms/ms-it").then(m => m.msIt),
+  mslb: () => import("converters/ms/ms-lb").then(m => m.msLb),
+  mslt: () => import("converters/ms/ms-lt").then(m => m.msLt),
+  mslv: () => import("converters/ms/ms-lv").then(m => m.msLv),
+  msmt: () => import("converters/ms/ms-mt").then(m => m.msMt),
+  msnl: () => import("converters/ms/ms-nl").then(m => m.msNl),
+  msno: () => import("converters/ms/ms-no").then(m => m.msNo),
+  mspl: () => import("converters/ms/ms-pl").then(m => m.msPl),
+  mspt: () => import("converters/ms/ms-pt").then(m => m.msPt),
+  msro: () => import("converters/ms/ms-ro").then(m => m.msRo),
+  mssk: () => import("converters/ms/ms-sk").then(m => m.msSk),
+  mssl: () => import("converters/ms/ms-sl").then(m => m.msSl),
+  mssq: () => import("converters/ms/ms-sq").then(m => m.msSq),
+  mssr: () => import("converters/ms/ms-sr").then(m => m.msSr),
+  mssv: () => import("converters/ms/ms-sv").then(m => m.msSv),
+  mstr: () => import("converters/ms/ms-tr").then(m => m.msTr),
+  msvi: () => import("converters/ms/ms-vi").then(m => m.msVi),
+  mtzh: () => import("converters/mt/mt-zh").then(m => m.mtZh),
+  mtja: () => import("converters/mt/mt-ja").then(m => m.mtJa),
+  mtko: () => import("converters/mt/mt-ko").then(m => m.mtKo),
+  mtth: () => import("converters/mt/mt-th").then(m => m.mtTh),
+  mthi: () => import("converters/mt/mt-hi").then(m => m.mtHi),
+  mtbn: () => import("converters/mt/mt-bn").then(m => m.mtBn),
+  mtur: () => import("converters/mt/mt-ur").then(m => m.mtUr),
+  mtfa: () => import("converters/mt/mt-fa").then(m => m.mtFa),
+  mtar: () => import("converters/mt/mt-ar").then(m => m.mtAr),
+  mthe: () => import("converters/mt/mt-he").then(m => m.mtHe),
+  mtka: () => import("converters/mt/mt-ka").then(m => m.mtKa),
+  mthy: () => import("converters/mt/mt-hy").then(m => m.mtHy),
+  mtel: () => import("converters/mt/mt-el").then(m => m.mtEl),
+  mtru: () => import("converters/mt/mt-ru").then(m => m.mtRu),
+  mtuk: () => import("converters/mt/mt-uk").then(m => m.mtUk),
+  mtbg: () => import("converters/mt/mt-bg").then(m => m.mtBg),
+  mtmk: () => import("converters/mt/mt-mk").then(m => m.mtMk),
+  mtkk: () => import("converters/mt/mt-kk").then(m => m.mtKk),
+  mttg: () => import("converters/mt/mt-tg").then(m => m.mtTg),
+  mtaz: () => import("converters/mt/mt-az").then(m => m.mtAz),
+  mtbs: () => import("converters/mt/mt-bs").then(m => m.mtBs),
+  mtca: () => import("converters/mt/mt-ca").then(m => m.mtCa),
+  mtcs: () => import("converters/mt/mt-cs").then(m => m.mtCs),
+  mtda: () => import("converters/mt/mt-da").then(m => m.mtDa),
+  mtde: () => import("converters/mt/mt-de").then(m => m.mtDe),
+  mten: () => import("converters/mt/mt-en").then(m => m.mtEn),
+  mtes: () => import("converters/mt/mt-es").then(m => m.mtEs),
+  mtet: () => import("converters/mt/mt-et").then(m => m.mtEt),
+  mtfi: () => import("converters/mt/mt-fi").then(m => m.mtFi),
+  mtfr: () => import("converters/mt/mt-fr").then(m => m.mtFr),
+  mthr: () => import("converters/mt/mt-hr").then(m => m.mtHr),
+  mthu: () => import("converters/mt/mt-hu").then(m => m.mtHu),
+  mtid: () => import("converters/mt/mt-id").then(m => m.mtId),
+  mtis: () => import("converters/mt/mt-is").then(m => m.mtIs),
+  mtit: () => import("converters/mt/mt-it").then(m => m.mtIt),
+  mtlb: () => import("converters/mt/mt-lb").then(m => m.mtLb),
+  mtlt: () => import("converters/mt/mt-lt").then(m => m.mtLt),
+  mtlv: () => import("converters/mt/mt-lv").then(m => m.mtLv),
+  mtms: () => import("converters/mt/mt-ms").then(m => m.mtMs),
+  mtnl: () => import("converters/mt/mt-nl").then(m => m.mtNl),
+  mtno: () => import("converters/mt/mt-no").then(m => m.mtNo),
+  mtpl: () => import("converters/mt/mt-pl").then(m => m.mtPl),
+  mtpt: () => import("converters/mt/mt-pt").then(m => m.mtPt),
+  mtro: () => import("converters/mt/mt-ro").then(m => m.mtRo),
+  mtsk: () => import("converters/mt/mt-sk").then(m => m.mtSk),
+  mtsl: () => import("converters/mt/mt-sl").then(m => m.mtSl),
+  mtsq: () => import("converters/mt/mt-sq").then(m => m.mtSq),
+  mtsr: () => import("converters/mt/mt-sr").then(m => m.mtSr),
+  mtsv: () => import("converters/mt/mt-sv").then(m => m.mtSv),
+  mttr: () => import("converters/mt/mt-tr").then(m => m.mtTr),
+  mtvi: () => import("converters/mt/mt-vi").then(m => m.mtVi),
+  nlzh: () => import("converters/nl/nl-zh").then(m => m.nlZh),
+  nlja: () => import("converters/nl/nl-ja").then(m => m.nlJa),
+  nlko: () => import("converters/nl/nl-ko").then(m => m.nlKo),
+  nlth: () => import("converters/nl/nl-th").then(m => m.nlTh),
+  nlhi: () => import("converters/nl/nl-hi").then(m => m.nlHi),
+  nlbn: () => import("converters/nl/nl-bn").then(m => m.nlBn),
+  nlur: () => import("converters/nl/nl-ur").then(m => m.nlUr),
+  nlfa: () => import("converters/nl/nl-fa").then(m => m.nlFa),
+  nlar: () => import("converters/nl/nl-ar").then(m => m.nlAr),
+  nlhe: () => import("converters/nl/nl-he").then(m => m.nlHe),
+  nlka: () => import("converters/nl/nl-ka").then(m => m.nlKa),
+  nlhy: () => import("converters/nl/nl-hy").then(m => m.nlHy),
+  nlel: () => import("converters/nl/nl-el").then(m => m.nlEl),
+  nlru: () => import("converters/nl/nl-ru").then(m => m.nlRu),
+  nluk: () => import("converters/nl/nl-uk").then(m => m.nlUk),
+  nlbg: () => import("converters/nl/nl-bg").then(m => m.nlBg),
+  nlmk: () => import("converters/nl/nl-mk").then(m => m.nlMk),
+  nlkk: () => import("converters/nl/nl-kk").then(m => m.nlKk),
+  nltg: () => import("converters/nl/nl-tg").then(m => m.nlTg),
+  nlaz: () => import("converters/nl/nl-az").then(m => m.nlAz),
+  nlbs: () => import("converters/nl/nl-bs").then(m => m.nlBs),
+  nlca: () => import("converters/nl/nl-ca").then(m => m.nlCa),
+  nlcs: () => import("converters/nl/nl-cs").then(m => m.nlCs),
+  nlda: () => import("converters/nl/nl-da").then(m => m.nlDa),
+  nlde: () => import("converters/nl/nl-de").then(m => m.nlDe),
+  nlen: () => import("converters/nl/nl-en").then(m => m.nlEn),
+  nles: () => import("converters/nl/nl-es").then(m => m.nlEs),
+  nlet: () => import("converters/nl/nl-et").then(m => m.nlEt),
+  nlfi: () => import("converters/nl/nl-fi").then(m => m.nlFi),
+  nlfr: () => import("converters/nl/nl-fr").then(m => m.nlFr),
+  nlhr: () => import("converters/nl/nl-hr").then(m => m.nlHr),
+  nlhu: () => import("converters/nl/nl-hu").then(m => m.nlHu),
+  nlid: () => import("converters/nl/nl-id").then(m => m.nlId),
+  nlis: () => import("converters/nl/nl-is").then(m => m.nlIs),
+  nlit: () => import("converters/nl/nl-it").then(m => m.nlIt),
+  nllb: () => import("converters/nl/nl-lb").then(m => m.nlLb),
+  nllt: () => import("converters/nl/nl-lt").then(m => m.nlLt),
+  nllv: () => import("converters/nl/nl-lv").then(m => m.nlLv),
+  nlms: () => import("converters/nl/nl-ms").then(m => m.nlMs),
+  nlmt: () => import("converters/nl/nl-mt").then(m => m.nlMt),
+  nlno: () => import("converters/nl/nl-no").then(m => m.nlNo),
+  nlpl: () => import("converters/nl/nl-pl").then(m => m.nlPl),
+  nlpt: () => import("converters/nl/nl-pt").then(m => m.nlPt),
+  nlro: () => import("converters/nl/nl-ro").then(m => m.nlRo),
+  nlsk: () => import("converters/nl/nl-sk").then(m => m.nlSk),
+  nlsl: () => import("converters/nl/nl-sl").then(m => m.nlSl),
+  nlsq: () => import("converters/nl/nl-sq").then(m => m.nlSq),
+  nlsr: () => import("converters/nl/nl-sr").then(m => m.nlSr),
+  nlsv: () => import("converters/nl/nl-sv").then(m => m.nlSv),
+  nltr: () => import("converters/nl/nl-tr").then(m => m.nlTr),
+  nlvi: () => import("converters/nl/nl-vi").then(m => m.nlVi),
+  nozh: () => import("converters/no/no-zh").then(m => m.noZh),
+  noja: () => import("converters/no/no-ja").then(m => m.noJa),
+  noko: () => import("converters/no/no-ko").then(m => m.noKo),
+  noth: () => import("converters/no/no-th").then(m => m.noTh),
+  nohi: () => import("converters/no/no-hi").then(m => m.noHi),
+  nobn: () => import("converters/no/no-bn").then(m => m.noBn),
+  nour: () => import("converters/no/no-ur").then(m => m.noUr),
+  nofa: () => import("converters/no/no-fa").then(m => m.noFa),
+  noar: () => import("converters/no/no-ar").then(m => m.noAr),
+  nohe: () => import("converters/no/no-he").then(m => m.noHe),
+  noka: () => import("converters/no/no-ka").then(m => m.noKa),
+  nohy: () => import("converters/no/no-hy").then(m => m.noHy),
+  noel: () => import("converters/no/no-el").then(m => m.noEl),
+  noru: () => import("converters/no/no-ru").then(m => m.noRu),
+  nouk: () => import("converters/no/no-uk").then(m => m.noUk),
+  nobg: () => import("converters/no/no-bg").then(m => m.noBg),
+  nomk: () => import("converters/no/no-mk").then(m => m.noMk),
+  nokk: () => import("converters/no/no-kk").then(m => m.noKk),
+  notg: () => import("converters/no/no-tg").then(m => m.noTg),
+  noaz: () => import("converters/no/no-az").then(m => m.noAz),
+  nobs: () => import("converters/no/no-bs").then(m => m.noBs),
+  noca: () => import("converters/no/no-ca").then(m => m.noCa),
+  nocs: () => import("converters/no/no-cs").then(m => m.noCs),
+  noda: () => import("converters/no/no-da").then(m => m.noDa),
+  node: () => import("converters/no/no-de").then(m => m.noDe),
+  noen: () => import("converters/no/no-en").then(m => m.noEn),
+  noes: () => import("converters/no/no-es").then(m => m.noEs),
+  noet: () => import("converters/no/no-et").then(m => m.noEt),
+  nofi: () => import("converters/no/no-fi").then(m => m.noFi),
+  nofr: () => import("converters/no/no-fr").then(m => m.noFr),
+  nohr: () => import("converters/no/no-hr").then(m => m.noHr),
+  nohu: () => import("converters/no/no-hu").then(m => m.noHu),
+  noid: () => import("converters/no/no-id").then(m => m.noId),
+  nois: () => import("converters/no/no-is").then(m => m.noIs),
+  noit: () => import("converters/no/no-it").then(m => m.noIt),
+  nolb: () => import("converters/no/no-lb").then(m => m.noLb),
+  nolt: () => import("converters/no/no-lt").then(m => m.noLt),
+  nolv: () => import("converters/no/no-lv").then(m => m.noLv),
+  noms: () => import("converters/no/no-ms").then(m => m.noMs),
+  nomt: () => import("converters/no/no-mt").then(m => m.noMt),
+  nonl: () => import("converters/no/no-nl").then(m => m.noNl),
+  nopl: () => import("converters/no/no-pl").then(m => m.noPl),
+  nopt: () => import("converters/no/no-pt").then(m => m.noPt),
+  noro: () => import("converters/no/no-ro").then(m => m.noRo),
+  nosk: () => import("converters/no/no-sk").then(m => m.noSk),
+  nosl: () => import("converters/no/no-sl").then(m => m.noSl),
+  nosq: () => import("converters/no/no-sq").then(m => m.noSq),
+  nosr: () => import("converters/no/no-sr").then(m => m.noSr),
+  nosv: () => import("converters/no/no-sv").then(m => m.noSv),
+  notr: () => import("converters/no/no-tr").then(m => m.noTr),
+  novi: () => import("converters/no/no-vi").then(m => m.noVi),
+  plzh: () => import("converters/pl/pl-zh").then(m => m.plZh),
+  plja: () => import("converters/pl/pl-ja").then(m => m.plJa),
+  plko: () => import("converters/pl/pl-ko").then(m => m.plKo),
+  plth: () => import("converters/pl/pl-th").then(m => m.plTh),
+  plhi: () => import("converters/pl/pl-hi").then(m => m.plHi),
+  plbn: () => import("converters/pl/pl-bn").then(m => m.plBn),
+  plur: () => import("converters/pl/pl-ur").then(m => m.plUr),
+  plfa: () => import("converters/pl/pl-fa").then(m => m.plFa),
+  plar: () => import("converters/pl/pl-ar").then(m => m.plAr),
+  plhe: () => import("converters/pl/pl-he").then(m => m.plHe),
+  plka: () => import("converters/pl/pl-ka").then(m => m.plKa),
+  plhy: () => import("converters/pl/pl-hy").then(m => m.plHy),
+  plel: () => import("converters/pl/pl-el").then(m => m.plEl),
+  plru: () => import("converters/pl/pl-ru").then(m => m.plRu),
+  pluk: () => import("converters/pl/pl-uk").then(m => m.plUk),
+  plbg: () => import("converters/pl/pl-bg").then(m => m.plBg),
+  plmk: () => import("converters/pl/pl-mk").then(m => m.plMk),
+  plkk: () => import("converters/pl/pl-kk").then(m => m.plKk),
+  pltg: () => import("converters/pl/pl-tg").then(m => m.plTg),
+  plaz: () => import("converters/pl/pl-az").then(m => m.plAz),
+  plbs: () => import("converters/pl/pl-bs").then(m => m.plBs),
+  plca: () => import("converters/pl/pl-ca").then(m => m.plCa),
+  plcs: () => import("converters/pl/pl-cs").then(m => m.plCs),
+  plda: () => import("converters/pl/pl-da").then(m => m.plDa),
+  plde: () => import("converters/pl/pl-de").then(m => m.plDe),
+  plen: () => import("converters/pl/pl-en").then(m => m.plEn),
+  ples: () => import("converters/pl/pl-es").then(m => m.plEs),
+  plet: () => import("converters/pl/pl-et").then(m => m.plEt),
+  plfi: () => import("converters/pl/pl-fi").then(m => m.plFi),
+  plfr: () => import("converters/pl/pl-fr").then(m => m.plFr),
+  plhr: () => import("converters/pl/pl-hr").then(m => m.plHr),
+  plhu: () => import("converters/pl/pl-hu").then(m => m.plHu),
+  plid: () => import("converters/pl/pl-id").then(m => m.plId),
+  plis: () => import("converters/pl/pl-is").then(m => m.plIs),
+  plit: () => import("converters/pl/pl-it").then(m => m.plIt),
+  pllb: () => import("converters/pl/pl-lb").then(m => m.plLb),
+  pllt: () => import("converters/pl/pl-lt").then(m => m.plLt),
+  pllv: () => import("converters/pl/pl-lv").then(m => m.plLv),
+  plms: () => import("converters/pl/pl-ms").then(m => m.plMs),
+  plmt: () => import("converters/pl/pl-mt").then(m => m.plMt),
+  plnl: () => import("converters/pl/pl-nl").then(m => m.plNl),
+  plno: () => import("converters/pl/pl-no").then(m => m.plNo),
+  plpt: () => import("converters/pl/pl-pt").then(m => m.plPt),
+  plro: () => import("converters/pl/pl-ro").then(m => m.plRo),
+  plsk: () => import("converters/pl/pl-sk").then(m => m.plSk),
+  plsl: () => import("converters/pl/pl-sl").then(m => m.plSl),
+  plsq: () => import("converters/pl/pl-sq").then(m => m.plSq),
+  plsr: () => import("converters/pl/pl-sr").then(m => m.plSr),
+  plsv: () => import("converters/pl/pl-sv").then(m => m.plSv),
+  pltr: () => import("converters/pl/pl-tr").then(m => m.plTr),
+  plvi: () => import("converters/pl/pl-vi").then(m => m.plVi),
+  ptzh: () => import("converters/pt/pt-zh").then(m => m.ptZh),
+  ptja: () => import("converters/pt/pt-ja").then(m => m.ptJa),
+  ptko: () => import("converters/pt/pt-ko").then(m => m.ptKo),
+  ptth: () => import("converters/pt/pt-th").then(m => m.ptTh),
+  pthi: () => import("converters/pt/pt-hi").then(m => m.ptHi),
+  ptbn: () => import("converters/pt/pt-bn").then(m => m.ptBn),
+  ptur: () => import("converters/pt/pt-ur").then(m => m.ptUr),
+  ptfa: () => import("converters/pt/pt-fa").then(m => m.ptFa),
+  ptar: () => import("converters/pt/pt-ar").then(m => m.ptAr),
+  pthe: () => import("converters/pt/pt-he").then(m => m.ptHe),
+  ptka: () => import("converters/pt/pt-ka").then(m => m.ptKa),
+  pthy: () => import("converters/pt/pt-hy").then(m => m.ptHy),
+  ptel: () => import("converters/pt/pt-el").then(m => m.ptEl),
+  ptru: () => import("converters/pt/pt-ru").then(m => m.ptRu),
+  ptuk: () => import("converters/pt/pt-uk").then(m => m.ptUk),
+  ptbg: () => import("converters/pt/pt-bg").then(m => m.ptBg),
+  ptmk: () => import("converters/pt/pt-mk").then(m => m.ptMk),
+  ptkk: () => import("converters/pt/pt-kk").then(m => m.ptKk),
+  pttg: () => import("converters/pt/pt-tg").then(m => m.ptTg),
+  ptaz: () => import("converters/pt/pt-az").then(m => m.ptAz),
+  ptbs: () => import("converters/pt/pt-bs").then(m => m.ptBs),
+  ptca: () => import("converters/pt/pt-ca").then(m => m.ptCa),
+  ptcs: () => import("converters/pt/pt-cs").then(m => m.ptCs),
+  ptda: () => import("converters/pt/pt-da").then(m => m.ptDa),
+  ptde: () => import("converters/pt/pt-de").then(m => m.ptDe),
+  pten: () => import("converters/pt/pt-en").then(m => m.ptEn),
+  ptes: () => import("converters/pt/pt-es").then(m => m.ptEs),
+  ptet: () => import("converters/pt/pt-et").then(m => m.ptEt),
+  ptfi: () => import("converters/pt/pt-fi").then(m => m.ptFi),
+  ptfr: () => import("converters/pt/pt-fr").then(m => m.ptFr),
+  pthr: () => import("converters/pt/pt-hr").then(m => m.ptHr),
+  pthu: () => import("converters/pt/pt-hu").then(m => m.ptHu),
+  ptid: () => import("converters/pt/pt-id").then(m => m.ptId),
+  ptis: () => import("converters/pt/pt-is").then(m => m.ptIs),
+  ptit: () => import("converters/pt/pt-it").then(m => m.ptIt),
+  ptlb: () => import("converters/pt/pt-lb").then(m => m.ptLb),
+  ptlt: () => import("converters/pt/pt-lt").then(m => m.ptLt),
+  ptlv: () => import("converters/pt/pt-lv").then(m => m.ptLv),
+  ptms: () => import("converters/pt/pt-ms").then(m => m.ptMs),
+  ptmt: () => import("converters/pt/pt-mt").then(m => m.ptMt),
+  ptnl: () => import("converters/pt/pt-nl").then(m => m.ptNl),
+  ptno: () => import("converters/pt/pt-no").then(m => m.ptNo),
+  ptpl: () => import("converters/pt/pt-pl").then(m => m.ptPl),
+  ptro: () => import("converters/pt/pt-ro").then(m => m.ptRo),
+  ptsk: () => import("converters/pt/pt-sk").then(m => m.ptSk),
+  ptsl: () => import("converters/pt/pt-sl").then(m => m.ptSl),
+  ptsq: () => import("converters/pt/pt-sq").then(m => m.ptSq),
+  ptsr: () => import("converters/pt/pt-sr").then(m => m.ptSr),
+  ptsv: () => import("converters/pt/pt-sv").then(m => m.ptSv),
+  pttr: () => import("converters/pt/pt-tr").then(m => m.ptTr),
+  ptvi: () => import("converters/pt/pt-vi").then(m => m.ptVi),
+  rozh: () => import("converters/ro/ro-zh").then(m => m.roZh),
+  roja: () => import("converters/ro/ro-ja").then(m => m.roJa),
+  roko: () => import("converters/ro/ro-ko").then(m => m.roKo),
+  roth: () => import("converters/ro/ro-th").then(m => m.roTh),
+  rohi: () => import("converters/ro/ro-hi").then(m => m.roHi),
+  robn: () => import("converters/ro/ro-bn").then(m => m.roBn),
+  rour: () => import("converters/ro/ro-ur").then(m => m.roUr),
+  rofa: () => import("converters/ro/ro-fa").then(m => m.roFa),
+  roar: () => import("converters/ro/ro-ar").then(m => m.roAr),
+  rohe: () => import("converters/ro/ro-he").then(m => m.roHe),
+  roka: () => import("converters/ro/ro-ka").then(m => m.roKa),
+  rohy: () => import("converters/ro/ro-hy").then(m => m.roHy),
+  roel: () => import("converters/ro/ro-el").then(m => m.roEl),
+  roru: () => import("converters/ro/ro-ru").then(m => m.roRu),
+  rouk: () => import("converters/ro/ro-uk").then(m => m.roUk),
+  robg: () => import("converters/ro/ro-bg").then(m => m.roBg),
+  romk: () => import("converters/ro/ro-mk").then(m => m.roMk),
+  rokk: () => import("converters/ro/ro-kk").then(m => m.roKk),
+  rotg: () => import("converters/ro/ro-tg").then(m => m.roTg),
+  roaz: () => import("converters/ro/ro-az").then(m => m.roAz),
+  robs: () => import("converters/ro/ro-bs").then(m => m.roBs),
+  roca: () => import("converters/ro/ro-ca").then(m => m.roCa),
+  rocs: () => import("converters/ro/ro-cs").then(m => m.roCs),
+  roda: () => import("converters/ro/ro-da").then(m => m.roDa),
+  rode: () => import("converters/ro/ro-de").then(m => m.roDe),
+  roen: () => import("converters/ro/ro-en").then(m => m.roEn),
+  roes: () => import("converters/ro/ro-es").then(m => m.roEs),
+  roet: () => import("converters/ro/ro-et").then(m => m.roEt),
+  rofi: () => import("converters/ro/ro-fi").then(m => m.roFi),
+  rofr: () => import("converters/ro/ro-fr").then(m => m.roFr),
+  rohr: () => import("converters/ro/ro-hr").then(m => m.roHr),
+  rohu: () => import("converters/ro/ro-hu").then(m => m.roHu),
+  roid: () => import("converters/ro/ro-id").then(m => m.roId),
+  rois: () => import("converters/ro/ro-is").then(m => m.roIs),
+  roit: () => import("converters/ro/ro-it").then(m => m.roIt),
+  rolb: () => import("converters/ro/ro-lb").then(m => m.roLb),
+  rolt: () => import("converters/ro/ro-lt").then(m => m.roLt),
+  rolv: () => import("converters/ro/ro-lv").then(m => m.roLv),
+  roms: () => import("converters/ro/ro-ms").then(m => m.roMs),
+  romt: () => import("converters/ro/ro-mt").then(m => m.roMt),
+  ronl: () => import("converters/ro/ro-nl").then(m => m.roNl),
+  rono: () => import("converters/ro/ro-no").then(m => m.roNo),
+  ropl: () => import("converters/ro/ro-pl").then(m => m.roPl),
+  ropt: () => import("converters/ro/ro-pt").then(m => m.roPt),
+  rosk: () => import("converters/ro/ro-sk").then(m => m.roSk),
+  rosl: () => import("converters/ro/ro-sl").then(m => m.roSl),
+  rosq: () => import("converters/ro/ro-sq").then(m => m.roSq),
+  rosr: () => import("converters/ro/ro-sr").then(m => m.roSr),
+  rosv: () => import("converters/ro/ro-sv").then(m => m.roSv),
+  rotr: () => import("converters/ro/ro-tr").then(m => m.roTr),
+  rovi: () => import("converters/ro/ro-vi").then(m => m.roVi),
+  skzh: () => import("converters/sk/sk-zh").then(m => m.skZh),
+  skja: () => import("converters/sk/sk-ja").then(m => m.skJa),
+  skko: () => import("converters/sk/sk-ko").then(m => m.skKo),
+  skth: () => import("converters/sk/sk-th").then(m => m.skTh),
+  skhi: () => import("converters/sk/sk-hi").then(m => m.skHi),
+  skbn: () => import("converters/sk/sk-bn").then(m => m.skBn),
+  skur: () => import("converters/sk/sk-ur").then(m => m.skUr),
+  skfa: () => import("converters/sk/sk-fa").then(m => m.skFa),
+  skar: () => import("converters/sk/sk-ar").then(m => m.skAr),
+  skhe: () => import("converters/sk/sk-he").then(m => m.skHe),
+  skka: () => import("converters/sk/sk-ka").then(m => m.skKa),
+  skhy: () => import("converters/sk/sk-hy").then(m => m.skHy),
+  skel: () => import("converters/sk/sk-el").then(m => m.skEl),
+  skru: () => import("converters/sk/sk-ru").then(m => m.skRu),
+  skuk: () => import("converters/sk/sk-uk").then(m => m.skUk),
+  skbg: () => import("converters/sk/sk-bg").then(m => m.skBg),
+  skmk: () => import("converters/sk/sk-mk").then(m => m.skMk),
+  skkk: () => import("converters/sk/sk-kk").then(m => m.skKk),
+  sktg: () => import("converters/sk/sk-tg").then(m => m.skTg),
+  skaz: () => import("converters/sk/sk-az").then(m => m.skAz),
+  skbs: () => import("converters/sk/sk-bs").then(m => m.skBs),
+  skca: () => import("converters/sk/sk-ca").then(m => m.skCa),
+  skcs: () => import("converters/sk/sk-cs").then(m => m.skCs),
+  skda: () => import("converters/sk/sk-da").then(m => m.skDa),
+  skde: () => import("converters/sk/sk-de").then(m => m.skDe),
+  sken: () => import("converters/sk/sk-en").then(m => m.skEn),
+  skes: () => import("converters/sk/sk-es").then(m => m.skEs),
+  sket: () => import("converters/sk/sk-et").then(m => m.skEt),
+  skfi: () => import("converters/sk/sk-fi").then(m => m.skFi),
+  skfr: () => import("converters/sk/sk-fr").then(m => m.skFr),
+  skhr: () => import("converters/sk/sk-hr").then(m => m.skHr),
+  skhu: () => import("converters/sk/sk-hu").then(m => m.skHu),
+  skid: () => import("converters/sk/sk-id").then(m => m.skId),
+  skis: () => import("converters/sk/sk-is").then(m => m.skIs),
+  skit: () => import("converters/sk/sk-it").then(m => m.skIt),
+  sklb: () => import("converters/sk/sk-lb").then(m => m.skLb),
+  sklt: () => import("converters/sk/sk-lt").then(m => m.skLt),
+  sklv: () => import("converters/sk/sk-lv").then(m => m.skLv),
+  skms: () => import("converters/sk/sk-ms").then(m => m.skMs),
+  skmt: () => import("converters/sk/sk-mt").then(m => m.skMt),
+  sknl: () => import("converters/sk/sk-nl").then(m => m.skNl),
+  skno: () => import("converters/sk/sk-no").then(m => m.skNo),
+  skpl: () => import("converters/sk/sk-pl").then(m => m.skPl),
+  skpt: () => import("converters/sk/sk-pt").then(m => m.skPt),
+  skro: () => import("converters/sk/sk-ro").then(m => m.skRo),
+  sksl: () => import("converters/sk/sk-sl").then(m => m.skSl),
+  sksq: () => import("converters/sk/sk-sq").then(m => m.skSq),
+  sksr: () => import("converters/sk/sk-sr").then(m => m.skSr),
+  sksv: () => import("converters/sk/sk-sv").then(m => m.skSv),
+  sktr: () => import("converters/sk/sk-tr").then(m => m.skTr),
+  skvi: () => import("converters/sk/sk-vi").then(m => m.skVi),
+  slzh: () => import("converters/sl/sl-zh").then(m => m.slZh),
+  slja: () => import("converters/sl/sl-ja").then(m => m.slJa),
+  slko: () => import("converters/sl/sl-ko").then(m => m.slKo),
+  slth: () => import("converters/sl/sl-th").then(m => m.slTh),
+  slhi: () => import("converters/sl/sl-hi").then(m => m.slHi),
+  slbn: () => import("converters/sl/sl-bn").then(m => m.slBn),
+  slur: () => import("converters/sl/sl-ur").then(m => m.slUr),
+  slfa: () => import("converters/sl/sl-fa").then(m => m.slFa),
+  slar: () => import("converters/sl/sl-ar").then(m => m.slAr),
+  slhe: () => import("converters/sl/sl-he").then(m => m.slHe),
+  slka: () => import("converters/sl/sl-ka").then(m => m.slKa),
+  slhy: () => import("converters/sl/sl-hy").then(m => m.slHy),
+  slel: () => import("converters/sl/sl-el").then(m => m.slEl),
+  slru: () => import("converters/sl/sl-ru").then(m => m.slRu),
+  sluk: () => import("converters/sl/sl-uk").then(m => m.slUk),
+  slbg: () => import("converters/sl/sl-bg").then(m => m.slBg),
+  slmk: () => import("converters/sl/sl-mk").then(m => m.slMk),
+  slkk: () => import("converters/sl/sl-kk").then(m => m.slKk),
+  sltg: () => import("converters/sl/sl-tg").then(m => m.slTg),
+  slaz: () => import("converters/sl/sl-az").then(m => m.slAz),
+  slbs: () => import("converters/sl/sl-bs").then(m => m.slBs),
+  slca: () => import("converters/sl/sl-ca").then(m => m.slCa),
+  slcs: () => import("converters/sl/sl-cs").then(m => m.slCs),
+  slda: () => import("converters/sl/sl-da").then(m => m.slDa),
+  slde: () => import("converters/sl/sl-de").then(m => m.slDe),
+  slen: () => import("converters/sl/sl-en").then(m => m.slEn),
+  sles: () => import("converters/sl/sl-es").then(m => m.slEs),
+  slet: () => import("converters/sl/sl-et").then(m => m.slEt),
+  slfi: () => import("converters/sl/sl-fi").then(m => m.slFi),
+  slfr: () => import("converters/sl/sl-fr").then(m => m.slFr),
+  slhr: () => import("converters/sl/sl-hr").then(m => m.slHr),
+  slhu: () => import("converters/sl/sl-hu").then(m => m.slHu),
+  slid: () => import("converters/sl/sl-id").then(m => m.slId),
+  slis: () => import("converters/sl/sl-is").then(m => m.slIs),
+  slit: () => import("converters/sl/sl-it").then(m => m.slIt),
+  sllb: () => import("converters/sl/sl-lb").then(m => m.slLb),
+  sllt: () => import("converters/sl/sl-lt").then(m => m.slLt),
+  sllv: () => import("converters/sl/sl-lv").then(m => m.slLv),
+  slms: () => import("converters/sl/sl-ms").then(m => m.slMs),
+  slmt: () => import("converters/sl/sl-mt").then(m => m.slMt),
+  slnl: () => import("converters/sl/sl-nl").then(m => m.slNl),
+  slno: () => import("converters/sl/sl-no").then(m => m.slNo),
+  slpl: () => import("converters/sl/sl-pl").then(m => m.slPl),
+  slpt: () => import("converters/sl/sl-pt").then(m => m.slPt),
+  slro: () => import("converters/sl/sl-ro").then(m => m.slRo),
+  slsk: () => import("converters/sl/sl-sk").then(m => m.slSk),
+  slsq: () => import("converters/sl/sl-sq").then(m => m.slSq),
+  slsr: () => import("converters/sl/sl-sr").then(m => m.slSr),
+  slsv: () => import("converters/sl/sl-sv").then(m => m.slSv),
+  sltr: () => import("converters/sl/sl-tr").then(m => m.slTr),
+  slvi: () => import("converters/sl/sl-vi").then(m => m.slVi),
+  sqzh: () => import("converters/sq/sq-zh").then(m => m.sqZh),
+  sqja: () => import("converters/sq/sq-ja").then(m => m.sqJa),
+  sqko: () => import("converters/sq/sq-ko").then(m => m.sqKo),
+  sqth: () => import("converters/sq/sq-th").then(m => m.sqTh),
+  sqhi: () => import("converters/sq/sq-hi").then(m => m.sqHi),
+  sqbn: () => import("converters/sq/sq-bn").then(m => m.sqBn),
+  squr: () => import("converters/sq/sq-ur").then(m => m.sqUr),
+  sqfa: () => import("converters/sq/sq-fa").then(m => m.sqFa),
+  sqar: () => import("converters/sq/sq-ar").then(m => m.sqAr),
+  sqhe: () => import("converters/sq/sq-he").then(m => m.sqHe),
+  sqka: () => import("converters/sq/sq-ka").then(m => m.sqKa),
+  sqhy: () => import("converters/sq/sq-hy").then(m => m.sqHy),
+  sqel: () => import("converters/sq/sq-el").then(m => m.sqEl),
+  sqru: () => import("converters/sq/sq-ru").then(m => m.sqRu),
+  squk: () => import("converters/sq/sq-uk").then(m => m.sqUk),
+  sqbg: () => import("converters/sq/sq-bg").then(m => m.sqBg),
+  sqmk: () => import("converters/sq/sq-mk").then(m => m.sqMk),
+  sqkk: () => import("converters/sq/sq-kk").then(m => m.sqKk),
+  sqtg: () => import("converters/sq/sq-tg").then(m => m.sqTg),
+  sqaz: () => import("converters/sq/sq-az").then(m => m.sqAz),
+  sqbs: () => import("converters/sq/sq-bs").then(m => m.sqBs),
+  sqca: () => import("converters/sq/sq-ca").then(m => m.sqCa),
+  sqcs: () => import("converters/sq/sq-cs").then(m => m.sqCs),
+  sqda: () => import("converters/sq/sq-da").then(m => m.sqDa),
+  sqde: () => import("converters/sq/sq-de").then(m => m.sqDe),
+  sqen: () => import("converters/sq/sq-en").then(m => m.sqEn),
+  sqes: () => import("converters/sq/sq-es").then(m => m.sqEs),
+  sqet: () => import("converters/sq/sq-et").then(m => m.sqEt),
+  sqfi: () => import("converters/sq/sq-fi").then(m => m.sqFi),
+  sqfr: () => import("converters/sq/sq-fr").then(m => m.sqFr),
+  sqhr: () => import("converters/sq/sq-hr").then(m => m.sqHr),
+  sqhu: () => import("converters/sq/sq-hu").then(m => m.sqHu),
+  sqid: () => import("converters/sq/sq-id").then(m => m.sqId),
+  sqis: () => import("converters/sq/sq-is").then(m => m.sqIs),
+  sqit: () => import("converters/sq/sq-it").then(m => m.sqIt),
+  sqlb: () => import("converters/sq/sq-lb").then(m => m.sqLb),
+  sqlt: () => import("converters/sq/sq-lt").then(m => m.sqLt),
+  sqlv: () => import("converters/sq/sq-lv").then(m => m.sqLv),
+  sqms: () => import("converters/sq/sq-ms").then(m => m.sqMs),
+  sqmt: () => import("converters/sq/sq-mt").then(m => m.sqMt),
+  sqnl: () => import("converters/sq/sq-nl").then(m => m.sqNl),
+  sqno: () => import("converters/sq/sq-no").then(m => m.sqNo),
+  sqpl: () => import("converters/sq/sq-pl").then(m => m.sqPl),
+  sqpt: () => import("converters/sq/sq-pt").then(m => m.sqPt),
+  sqro: () => import("converters/sq/sq-ro").then(m => m.sqRo),
+  sqsk: () => import("converters/sq/sq-sk").then(m => m.sqSk),
+  sqsl: () => import("converters/sq/sq-sl").then(m => m.sqSl),
+  sqsr: () => import("converters/sq/sq-sr").then(m => m.sqSr),
+  sqsv: () => import("converters/sq/sq-sv").then(m => m.sqSv),
+  sqtr: () => import("converters/sq/sq-tr").then(m => m.sqTr),
+  sqvi: () => import("converters/sq/sq-vi").then(m => m.sqVi),
+  srzh: () => import("converters/sr/sr-zh").then(m => m.srZh),
+  srja: () => import("converters/sr/sr-ja").then(m => m.srJa),
+  srko: () => import("converters/sr/sr-ko").then(m => m.srKo),
+  srth: () => import("converters/sr/sr-th").then(m => m.srTh),
+  srhi: () => import("converters/sr/sr-hi").then(m => m.srHi),
+  srbn: () => import("converters/sr/sr-bn").then(m => m.srBn),
+  srur: () => import("converters/sr/sr-ur").then(m => m.srUr),
+  srfa: () => import("converters/sr/sr-fa").then(m => m.srFa),
+  srar: () => import("converters/sr/sr-ar").then(m => m.srAr),
+  srhe: () => import("converters/sr/sr-he").then(m => m.srHe),
+  srka: () => import("converters/sr/sr-ka").then(m => m.srKa),
+  srhy: () => import("converters/sr/sr-hy").then(m => m.srHy),
+  srel: () => import("converters/sr/sr-el").then(m => m.srEl),
+  srru: () => import("converters/sr/sr-ru").then(m => m.srRu),
+  sruk: () => import("converters/sr/sr-uk").then(m => m.srUk),
+  srbg: () => import("converters/sr/sr-bg").then(m => m.srBg),
+  srmk: () => import("converters/sr/sr-mk").then(m => m.srMk),
+  srkk: () => import("converters/sr/sr-kk").then(m => m.srKk),
+  srtg: () => import("converters/sr/sr-tg").then(m => m.srTg),
+  sraz: () => import("converters/sr/sr-az").then(m => m.srAz),
+  srbs: () => import("converters/sr/sr-bs").then(m => m.srBs),
+  srca: () => import("converters/sr/sr-ca").then(m => m.srCa),
+  srcs: () => import("converters/sr/sr-cs").then(m => m.srCs),
+  srda: () => import("converters/sr/sr-da").then(m => m.srDa),
+  srde: () => import("converters/sr/sr-de").then(m => m.srDe),
+  sren: () => import("converters/sr/sr-en").then(m => m.srEn),
+  sres: () => import("converters/sr/sr-es").then(m => m.srEs),
+  sret: () => import("converters/sr/sr-et").then(m => m.srEt),
+  srfi: () => import("converters/sr/sr-fi").then(m => m.srFi),
+  srfr: () => import("converters/sr/sr-fr").then(m => m.srFr),
+  srhr: () => import("converters/sr/sr-hr").then(m => m.srHr),
+  srhu: () => import("converters/sr/sr-hu").then(m => m.srHu),
+  srid: () => import("converters/sr/sr-id").then(m => m.srId),
+  sris: () => import("converters/sr/sr-is").then(m => m.srIs),
+  srit: () => import("converters/sr/sr-it").then(m => m.srIt),
+  srlb: () => import("converters/sr/sr-lb").then(m => m.srLb),
+  srlt: () => import("converters/sr/sr-lt").then(m => m.srLt),
+  srlv: () => import("converters/sr/sr-lv").then(m => m.srLv),
+  srms: () => import("converters/sr/sr-ms").then(m => m.srMs),
+  srmt: () => import("converters/sr/sr-mt").then(m => m.srMt),
+  srnl: () => import("converters/sr/sr-nl").then(m => m.srNl),
+  srno: () => import("converters/sr/sr-no").then(m => m.srNo),
+  srpl: () => import("converters/sr/sr-pl").then(m => m.srPl),
+  srpt: () => import("converters/sr/sr-pt").then(m => m.srPt),
+  srro: () => import("converters/sr/sr-ro").then(m => m.srRo),
+  srsk: () => import("converters/sr/sr-sk").then(m => m.srSk),
+  srsl: () => import("converters/sr/sr-sl").then(m => m.srSl),
+  srsq: () => import("converters/sr/sr-sq").then(m => m.srSq),
+  srsv: () => import("converters/sr/sr-sv").then(m => m.srSv),
+  srtr: () => import("converters/sr/sr-tr").then(m => m.srTr),
+  srvi: () => import("converters/sr/sr-vi").then(m => m.srVi),
+  svzh: () => import("converters/sv/sv-zh").then(m => m.svZh),
+  svja: () => import("converters/sv/sv-ja").then(m => m.svJa),
+  svko: () => import("converters/sv/sv-ko").then(m => m.svKo),
+  svth: () => import("converters/sv/sv-th").then(m => m.svTh),
+  svhi: () => import("converters/sv/sv-hi").then(m => m.svHi),
+  svbn: () => import("converters/sv/sv-bn").then(m => m.svBn),
+  svur: () => import("converters/sv/sv-ur").then(m => m.svUr),
+  svfa: () => import("converters/sv/sv-fa").then(m => m.svFa),
+  svar: () => import("converters/sv/sv-ar").then(m => m.svAr),
+  svhe: () => import("converters/sv/sv-he").then(m => m.svHe),
+  svka: () => import("converters/sv/sv-ka").then(m => m.svKa),
+  svhy: () => import("converters/sv/sv-hy").then(m => m.svHy),
+  svel: () => import("converters/sv/sv-el").then(m => m.svEl),
+  svru: () => import("converters/sv/sv-ru").then(m => m.svRu),
+  svuk: () => import("converters/sv/sv-uk").then(m => m.svUk),
+  svbg: () => import("converters/sv/sv-bg").then(m => m.svBg),
+  svmk: () => import("converters/sv/sv-mk").then(m => m.svMk),
+  svkk: () => import("converters/sv/sv-kk").then(m => m.svKk),
+  svtg: () => import("converters/sv/sv-tg").then(m => m.svTg),
+  svaz: () => import("converters/sv/sv-az").then(m => m.svAz),
+  svbs: () => import("converters/sv/sv-bs").then(m => m.svBs),
+  svca: () => import("converters/sv/sv-ca").then(m => m.svCa),
+  svcs: () => import("converters/sv/sv-cs").then(m => m.svCs),
+  svda: () => import("converters/sv/sv-da").then(m => m.svDa),
+  svde: () => import("converters/sv/sv-de").then(m => m.svDe),
+  sven: () => import("converters/sv/sv-en").then(m => m.svEn),
+  sves: () => import("converters/sv/sv-es").then(m => m.svEs),
+  svet: () => import("converters/sv/sv-et").then(m => m.svEt),
+  svfi: () => import("converters/sv/sv-fi").then(m => m.svFi),
+  svfr: () => import("converters/sv/sv-fr").then(m => m.svFr),
+  svhr: () => import("converters/sv/sv-hr").then(m => m.svHr),
+  svhu: () => import("converters/sv/sv-hu").then(m => m.svHu),
+  svid: () => import("converters/sv/sv-id").then(m => m.svId),
+  svis: () => import("converters/sv/sv-is").then(m => m.svIs),
+  svit: () => import("converters/sv/sv-it").then(m => m.svIt),
+  svlb: () => import("converters/sv/sv-lb").then(m => m.svLb),
+  svlt: () => import("converters/sv/sv-lt").then(m => m.svLt),
+  svlv: () => import("converters/sv/sv-lv").then(m => m.svLv),
+  svms: () => import("converters/sv/sv-ms").then(m => m.svMs),
+  svmt: () => import("converters/sv/sv-mt").then(m => m.svMt),
+  svnl: () => import("converters/sv/sv-nl").then(m => m.svNl),
+  svno: () => import("converters/sv/sv-no").then(m => m.svNo),
+  svpl: () => import("converters/sv/sv-pl").then(m => m.svPl),
+  svpt: () => import("converters/sv/sv-pt").then(m => m.svPt),
+  svro: () => import("converters/sv/sv-ro").then(m => m.svRo),
+  svsk: () => import("converters/sv/sv-sk").then(m => m.svSk),
+  svsl: () => import("converters/sv/sv-sl").then(m => m.svSl),
+  svsq: () => import("converters/sv/sv-sq").then(m => m.svSq),
+  svsr: () => import("converters/sv/sv-sr").then(m => m.svSr),
+  svtr: () => import("converters/sv/sv-tr").then(m => m.svTr),
+  svvi: () => import("converters/sv/sv-vi").then(m => m.svVi),
+  trzh: () => import("converters/tr/tr-zh").then(m => m.trZh),
+  trja: () => import("converters/tr/tr-ja").then(m => m.trJa),
+  trko: () => import("converters/tr/tr-ko").then(m => m.trKo),
+  trth: () => import("converters/tr/tr-th").then(m => m.trTh),
+  trhi: () => import("converters/tr/tr-hi").then(m => m.trHi),
+  trbn: () => import("converters/tr/tr-bn").then(m => m.trBn),
+  trur: () => import("converters/tr/tr-ur").then(m => m.trUr),
+  trfa: () => import("converters/tr/tr-fa").then(m => m.trFa),
+  trar: () => import("converters/tr/tr-ar").then(m => m.trAr),
+  trhe: () => import("converters/tr/tr-he").then(m => m.trHe),
+  trka: () => import("converters/tr/tr-ka").then(m => m.trKa),
+  trhy: () => import("converters/tr/tr-hy").then(m => m.trHy),
+  trel: () => import("converters/tr/tr-el").then(m => m.trEl),
+  trru: () => import("converters/tr/tr-ru").then(m => m.trRu),
+  truk: () => import("converters/tr/tr-uk").then(m => m.trUk),
+  trbg: () => import("converters/tr/tr-bg").then(m => m.trBg),
+  trmk: () => import("converters/tr/tr-mk").then(m => m.trMk),
+  trkk: () => import("converters/tr/tr-kk").then(m => m.trKk),
+  trtg: () => import("converters/tr/tr-tg").then(m => m.trTg),
+  traz: () => import("converters/tr/tr-az").then(m => m.trAz),
+  trbs: () => import("converters/tr/tr-bs").then(m => m.trBs),
+  trca: () => import("converters/tr/tr-ca").then(m => m.trCa),
+  trcs: () => import("converters/tr/tr-cs").then(m => m.trCs),
+  trda: () => import("converters/tr/tr-da").then(m => m.trDa),
+  trde: () => import("converters/tr/tr-de").then(m => m.trDe),
+  tren: () => import("converters/tr/tr-en").then(m => m.trEn),
+  tres: () => import("converters/tr/tr-es").then(m => m.trEs),
+  tret: () => import("converters/tr/tr-et").then(m => m.trEt),
+  trfi: () => import("converters/tr/tr-fi").then(m => m.trFi),
+  trfr: () => import("converters/tr/tr-fr").then(m => m.trFr),
+  trhr: () => import("converters/tr/tr-hr").then(m => m.trHr),
+  trhu: () => import("converters/tr/tr-hu").then(m => m.trHu),
+  trid: () => import("converters/tr/tr-id").then(m => m.trId),
+  tris: () => import("converters/tr/tr-is").then(m => m.trIs),
+  trit: () => import("converters/tr/tr-it").then(m => m.trIt),
+  trlb: () => import("converters/tr/tr-lb").then(m => m.trLb),
+  trlt: () => import("converters/tr/tr-lt").then(m => m.trLt),
+  trlv: () => import("converters/tr/tr-lv").then(m => m.trLv),
+  trms: () => import("converters/tr/tr-ms").then(m => m.trMs),
+  trmt: () => import("converters/tr/tr-mt").then(m => m.trMt),
+  trnl: () => import("converters/tr/tr-nl").then(m => m.trNl),
+  trno: () => import("converters/tr/tr-no").then(m => m.trNo),
+  trpl: () => import("converters/tr/tr-pl").then(m => m.trPl),
+  trpt: () => import("converters/tr/tr-pt").then(m => m.trPt),
+  trro: () => import("converters/tr/tr-ro").then(m => m.trRo),
+  trsk: () => import("converters/tr/tr-sk").then(m => m.trSk),
+  trsl: () => import("converters/tr/tr-sl").then(m => m.trSl),
+  trsq: () => import("converters/tr/tr-sq").then(m => m.trSq),
+  trsr: () => import("converters/tr/tr-sr").then(m => m.trSr),
+  trsv: () => import("converters/tr/tr-sv").then(m => m.trSv),
+  trvi: () => import("converters/tr/tr-vi").then(m => m.trVi),
+  vizh: () => import("converters/vi/vi-zh").then(m => m.viZh),
+  vija: () => import("converters/vi/vi-ja").then(m => m.viJa),
+  viko: () => import("converters/vi/vi-ko").then(m => m.viKo),
+  vith: () => import("converters/vi/vi-th").then(m => m.viTh),
+  vihi: () => import("converters/vi/vi-hi").then(m => m.viHi),
+  vibn: () => import("converters/vi/vi-bn").then(m => m.viBn),
+  viur: () => import("converters/vi/vi-ur").then(m => m.viUr),
+  vifa: () => import("converters/vi/vi-fa").then(m => m.viFa),
+  viar: () => import("converters/vi/vi-ar").then(m => m.viAr),
+  vihe: () => import("converters/vi/vi-he").then(m => m.viHe),
+  vika: () => import("converters/vi/vi-ka").then(m => m.viKa),
+  vihy: () => import("converters/vi/vi-hy").then(m => m.viHy),
+  viel: () => import("converters/vi/vi-el").then(m => m.viEl),
+  viru: () => import("converters/vi/vi-ru").then(m => m.viRu),
+  viuk: () => import("converters/vi/vi-uk").then(m => m.viUk),
+  vibg: () => import("converters/vi/vi-bg").then(m => m.viBg),
+  vimk: () => import("converters/vi/vi-mk").then(m => m.viMk),
+  vikk: () => import("converters/vi/vi-kk").then(m => m.viKk),
+  vitg: () => import("converters/vi/vi-tg").then(m => m.viTg),
+  viaz: () => import("converters/vi/vi-az").then(m => m.viAz),
+  vibs: () => import("converters/vi/vi-bs").then(m => m.viBs),
+  vica: () => import("converters/vi/vi-ca").then(m => m.viCa),
+  vics: () => import("converters/vi/vi-cs").then(m => m.viCs),
+  vida: () => import("converters/vi/vi-da").then(m => m.viDa),
+  vide: () => import("converters/vi/vi-de").then(m => m.viDe),
+  vien: () => import("converters/vi/vi-en").then(m => m.viEn),
+  vies: () => import("converters/vi/vi-es").then(m => m.viEs),
+  viet: () => import("converters/vi/vi-et").then(m => m.viEt),
+  vifi: () => import("converters/vi/vi-fi").then(m => m.viFi),
+  vifr: () => import("converters/vi/vi-fr").then(m => m.viFr),
+  vihr: () => import("converters/vi/vi-hr").then(m => m.viHr),
+  vihu: () => import("converters/vi/vi-hu").then(m => m.viHu),
+  viid: () => import("converters/vi/vi-id").then(m => m.viId),
+  viis: () => import("converters/vi/vi-is").then(m => m.viIs),
+  viit: () => import("converters/vi/vi-it").then(m => m.viIt),
+  vilb: () => import("converters/vi/vi-lb").then(m => m.viLb),
+  vilt: () => import("converters/vi/vi-lt").then(m => m.viLt),
+  vilv: () => import("converters/vi/vi-lv").then(m => m.viLv),
+  vims: () => import("converters/vi/vi-ms").then(m => m.viMs),
+  vimt: () => import("converters/vi/vi-mt").then(m => m.viMt),
+  vinl: () => import("converters/vi/vi-nl").then(m => m.viNl),
+  vino: () => import("converters/vi/vi-no").then(m => m.viNo),
+  vipl: () => import("converters/vi/vi-pl").then(m => m.viPl),
+  vipt: () => import("converters/vi/vi-pt").then(m => m.viPt),
+  viro: () => import("converters/vi/vi-ro").then(m => m.viRo),
+  visk: () => import("converters/vi/vi-sk").then(m => m.viSk),
+  visl: () => import("converters/vi/vi-sl").then(m => m.viSl),
+  visq: () => import("converters/vi/vi-sq").then(m => m.viSq),
+  visr: () => import("converters/vi/vi-sr").then(m => m.viSr),
+  visv: () => import("converters/vi/vi-sv").then(m => m.viSv),
+  vitr: () => import("converters/vi/vi-tr").then(m => m.viTr),
+};
 
 export const transliterate = async <T extends Text>(text: T, options: Options): Promise<T> => {
   const { from, to } = options || {};
@@ -34,10828 +2693,15 @@ export const transliterate = async <T extends Text>(text: T, options: Options): 
 
   text = (Array.isArray(text) ? text.map(s => s.normalize("NFC")) : text.normalize("NFC")) as T;
 
+  const load = converters[`${from}${to}`];
+  if (!load) {
+    throw new Error(`Transliteration failed: the language pair is not supported: ${from} -> ${to}`);
+  }
+
   try {
-    switch (from) {
-      case "zh":
-        switch (to) {
-          case "ja": {
-            const { zhJa } = await import("converters/zh/zh-ja");
-            return (await zhJa(text)) as T;
-          }
-          case "ko": {
-            const { zhKo } = await import("converters/zh/zh-ko");
-            return (await zhKo(text)) as T;
-          }
-          case "th": {
-            const { zhTh } = await import("converters/zh/zh-th");
-            return (await zhTh(text)) as T;
-          }
-          case "hi": {
-            const { zhHi } = await import("converters/zh/zh-hi");
-            return (await zhHi(text)) as T;
-          }
-          case "bn": {
-            const { zhBn } = await import("converters/zh/zh-bn");
-            return (await zhBn(text)) as T;
-          }
-          case "ur": {
-            const { zhUr } = await import("converters/zh/zh-ur");
-            return (await zhUr(text)) as T;
-          }
-          case "fa": {
-            const { zhFa } = await import("converters/zh/zh-fa");
-            return (await zhFa(text)) as T;
-          }
-          case "ar": {
-            const { zhAr } = await import("converters/zh/zh-ar");
-            return (await zhAr(text)) as T;
-          }
-          case "he": {
-            const { zhHe } = await import("converters/zh/zh-he");
-            return (await zhHe(text)) as T;
-          }
-          case "ka": {
-            const { zhKa } = await import("converters/zh/zh-ka");
-            return (await zhKa(text)) as T;
-          }
-          case "hy": {
-            const { zhHy } = await import("converters/zh/zh-hy");
-            return (await zhHy(text)) as T;
-          }
-          case "el": {
-            const { zhEl } = await import("converters/zh/zh-el");
-            return (await zhEl(text)) as T;
-          }
-          case "ru": {
-            const { zhRu } = await import("converters/zh/zh-ru");
-            return (await zhRu(text)) as T;
-          }
-          case "uk": {
-            const { zhUk } = await import("converters/zh/zh-uk");
-            return (await zhUk(text)) as T;
-          }
-          case "bg": {
-            const { zhBg } = await import("converters/zh/zh-bg");
-            return (await zhBg(text)) as T;
-          }
-          case "mk": {
-            const { zhMk } = await import("converters/zh/zh-mk");
-            return (await zhMk(text)) as T;
-          }
-          case "kk": {
-            const { zhKk } = await import("converters/zh/zh-kk");
-            return (await zhKk(text)) as T;
-          }
-          case "tg": {
-            const { zhTg } = await import("converters/zh/zh-tg");
-            return (await zhTg(text)) as T;
-          }
-          case "az": {
-            const { zhAz } = await import("converters/zh/zh-az");
-            return (await zhAz(text)) as T;
-          }
-          case "bs": {
-            const { zhBs } = await import("converters/zh/zh-bs");
-            return (await zhBs(text)) as T;
-          }
-          case "ca": {
-            const { zhCa } = await import("converters/zh/zh-ca");
-            return (await zhCa(text)) as T;
-          }
-          case "cs": {
-            const { zhCs } = await import("converters/zh/zh-cs");
-            return (await zhCs(text)) as T;
-          }
-          case "da": {
-            const { zhDa } = await import("converters/zh/zh-da");
-            return (await zhDa(text)) as T;
-          }
-          case "de": {
-            const { zhDe } = await import("converters/zh/zh-de");
-            return (await zhDe(text)) as T;
-          }
-          case "en": {
-            const { zhEn } = await import("converters/zh/zh-en");
-            return (await zhEn(text)) as T;
-          }
-          case "es": {
-            const { zhEs } = await import("converters/zh/zh-es");
-            return (await zhEs(text)) as T;
-          }
-          case "et": {
-            const { zhEt } = await import("converters/zh/zh-et");
-            return (await zhEt(text)) as T;
-          }
-          case "fi": {
-            const { zhFi } = await import("converters/zh/zh-fi");
-            return (await zhFi(text)) as T;
-          }
-          case "fr": {
-            const { zhFr } = await import("converters/zh/zh-fr");
-            return (await zhFr(text)) as T;
-          }
-          case "hr": {
-            const { zhHr } = await import("converters/zh/zh-hr");
-            return (await zhHr(text)) as T;
-          }
-          case "hu": {
-            const { zhHu } = await import("converters/zh/zh-hu");
-            return (await zhHu(text)) as T;
-          }
-          case "id": {
-            const { zhId } = await import("converters/zh/zh-id");
-            return (await zhId(text)) as T;
-          }
-          case "is": {
-            const { zhIs } = await import("converters/zh/zh-is");
-            return (await zhIs(text)) as T;
-          }
-          case "it": {
-            const { zhIt } = await import("converters/zh/zh-it");
-            return (await zhIt(text)) as T;
-          }
-          case "lb": {
-            const { zhLb } = await import("converters/zh/zh-lb");
-            return (await zhLb(text)) as T;
-          }
-          case "lt": {
-            const { zhLt } = await import("converters/zh/zh-lt");
-            return (await zhLt(text)) as T;
-          }
-          case "lv": {
-            const { zhLv } = await import("converters/zh/zh-lv");
-            return (await zhLv(text)) as T;
-          }
-          case "ms": {
-            const { zhMs } = await import("converters/zh/zh-ms");
-            return (await zhMs(text)) as T;
-          }
-          case "mt": {
-            const { zhMt } = await import("converters/zh/zh-mt");
-            return (await zhMt(text)) as T;
-          }
-          case "nl": {
-            const { zhNl } = await import("converters/zh/zh-nl");
-            return (await zhNl(text)) as T;
-          }
-          case "no": {
-            const { zhNo } = await import("converters/zh/zh-no");
-            return (await zhNo(text)) as T;
-          }
-          case "pl": {
-            const { zhPl } = await import("converters/zh/zh-pl");
-            return (await zhPl(text)) as T;
-          }
-          case "pt": {
-            const { zhPt } = await import("converters/zh/zh-pt");
-            return (await zhPt(text)) as T;
-          }
-          case "ro": {
-            const { zhRo } = await import("converters/zh/zh-ro");
-            return (await zhRo(text)) as T;
-          }
-          case "sk": {
-            const { zhSk } = await import("converters/zh/zh-sk");
-            return (await zhSk(text)) as T;
-          }
-          case "sl": {
-            const { zhSl } = await import("converters/zh/zh-sl");
-            return (await zhSl(text)) as T;
-          }
-          case "sq": {
-            const { zhSq } = await import("converters/zh/zh-sq");
-            return (await zhSq(text)) as T;
-          }
-          case "sr": {
-            const { zhSr } = await import("converters/zh/zh-sr");
-            return (await zhSr(text)) as T;
-          }
-          case "sv": {
-            const { zhSv } = await import("converters/zh/zh-sv");
-            return (await zhSv(text)) as T;
-          }
-          case "tr": {
-            const { zhTr } = await import("converters/zh/zh-tr");
-            return (await zhTr(text)) as T;
-          }
-          case "vi": {
-            const { zhVi } = await import("converters/zh/zh-vi");
-            return (await zhVi(text)) as T;
-          }
-        }
-        break;
-      case "ja":
-        switch (to) {
-          case "zh": {
-            const { jaZh } = await import("converters/ja/ja-zh");
-            return (await jaZh(text)) as T;
-          }
-          case "ko": {
-            const { jaKo } = await import("converters/ja/ja-ko");
-            return (await jaKo(text)) as T;
-          }
-          case "th": {
-            const { jaTh } = await import("converters/ja/ja-th");
-            return (await jaTh(text)) as T;
-          }
-          case "hi": {
-            const { jaHi } = await import("converters/ja/ja-hi");
-            return (await jaHi(text)) as T;
-          }
-          case "bn": {
-            const { jaBn } = await import("converters/ja/ja-bn");
-            return (await jaBn(text)) as T;
-          }
-          case "ur": {
-            const { jaUr } = await import("converters/ja/ja-ur");
-            return (await jaUr(text)) as T;
-          }
-          case "fa": {
-            const { jaFa } = await import("converters/ja/ja-fa");
-            return (await jaFa(text)) as T;
-          }
-          case "ar": {
-            const { jaAr } = await import("converters/ja/ja-ar");
-            return (await jaAr(text)) as T;
-          }
-          case "he": {
-            const { jaHe } = await import("converters/ja/ja-he");
-            return (await jaHe(text)) as T;
-          }
-          case "ka": {
-            const { jaKa } = await import("converters/ja/ja-ka");
-            return (await jaKa(text)) as T;
-          }
-          case "hy": {
-            const { jaHy } = await import("converters/ja/ja-hy");
-            return (await jaHy(text)) as T;
-          }
-          case "el": {
-            const { jaEl } = await import("converters/ja/ja-el");
-            return (await jaEl(text)) as T;
-          }
-          case "ru": {
-            const { jaRu } = await import("converters/ja/ja-ru");
-            return (await jaRu(text)) as T;
-          }
-          case "uk": {
-            const { jaUk } = await import("converters/ja/ja-uk");
-            return (await jaUk(text)) as T;
-          }
-          case "bg": {
-            const { jaBg } = await import("converters/ja/ja-bg");
-            return (await jaBg(text)) as T;
-          }
-          case "mk": {
-            const { jaMk } = await import("converters/ja/ja-mk");
-            return (await jaMk(text)) as T;
-          }
-          case "kk": {
-            const { jaKk } = await import("converters/ja/ja-kk");
-            return (await jaKk(text)) as T;
-          }
-          case "tg": {
-            const { jaTg } = await import("converters/ja/ja-tg");
-            return (await jaTg(text)) as T;
-          }
-          case "az": {
-            const { jaAz } = await import("converters/ja/ja-az");
-            return (await jaAz(text)) as T;
-          }
-          case "bs": {
-            const { jaBs } = await import("converters/ja/ja-bs");
-            return (await jaBs(text)) as T;
-          }
-          case "ca": {
-            const { jaCa } = await import("converters/ja/ja-ca");
-            return (await jaCa(text)) as T;
-          }
-          case "cs": {
-            const { jaCs } = await import("converters/ja/ja-cs");
-            return (await jaCs(text)) as T;
-          }
-          case "da": {
-            const { jaDa } = await import("converters/ja/ja-da");
-            return (await jaDa(text)) as T;
-          }
-          case "de": {
-            const { jaDe } = await import("converters/ja/ja-de");
-            return (await jaDe(text)) as T;
-          }
-          case "en": {
-            const { jaEn } = await import("converters/ja/ja-en");
-            return (await jaEn(text)) as T;
-          }
-          case "es": {
-            const { jaEs } = await import("converters/ja/ja-es");
-            return (await jaEs(text)) as T;
-          }
-          case "et": {
-            const { jaEt } = await import("converters/ja/ja-et");
-            return (await jaEt(text)) as T;
-          }
-          case "fi": {
-            const { jaFi } = await import("converters/ja/ja-fi");
-            return (await jaFi(text)) as T;
-          }
-          case "fr": {
-            const { jaFr } = await import("converters/ja/ja-fr");
-            return (await jaFr(text)) as T;
-          }
-          case "hr": {
-            const { jaHr } = await import("converters/ja/ja-hr");
-            return (await jaHr(text)) as T;
-          }
-          case "hu": {
-            const { jaHu } = await import("converters/ja/ja-hu");
-            return (await jaHu(text)) as T;
-          }
-          case "id": {
-            const { jaId } = await import("converters/ja/ja-id");
-            return (await jaId(text)) as T;
-          }
-          case "is": {
-            const { jaIs } = await import("converters/ja/ja-is");
-            return (await jaIs(text)) as T;
-          }
-          case "it": {
-            const { jaIt } = await import("converters/ja/ja-it");
-            return (await jaIt(text)) as T;
-          }
-          case "lb": {
-            const { jaLb } = await import("converters/ja/ja-lb");
-            return (await jaLb(text)) as T;
-          }
-          case "lt": {
-            const { jaLt } = await import("converters/ja/ja-lt");
-            return (await jaLt(text)) as T;
-          }
-          case "lv": {
-            const { jaLv } = await import("converters/ja/ja-lv");
-            return (await jaLv(text)) as T;
-          }
-          case "ms": {
-            const { jaMs } = await import("converters/ja/ja-ms");
-            return (await jaMs(text)) as T;
-          }
-          case "mt": {
-            const { jaMt } = await import("converters/ja/ja-mt");
-            return (await jaMt(text)) as T;
-          }
-          case "nl": {
-            const { jaNl } = await import("converters/ja/ja-nl");
-            return (await jaNl(text)) as T;
-          }
-          case "no": {
-            const { jaNo } = await import("converters/ja/ja-no");
-            return (await jaNo(text)) as T;
-          }
-          case "pl": {
-            const { jaPl } = await import("converters/ja/ja-pl");
-            return (await jaPl(text)) as T;
-          }
-          case "pt": {
-            const { jaPt } = await import("converters/ja/ja-pt");
-            return (await jaPt(text)) as T;
-          }
-          case "ro": {
-            const { jaRo } = await import("converters/ja/ja-ro");
-            return (await jaRo(text)) as T;
-          }
-          case "sk": {
-            const { jaSk } = await import("converters/ja/ja-sk");
-            return (await jaSk(text)) as T;
-          }
-          case "sl": {
-            const { jaSl } = await import("converters/ja/ja-sl");
-            return (await jaSl(text)) as T;
-          }
-          case "sq": {
-            const { jaSq } = await import("converters/ja/ja-sq");
-            return (await jaSq(text)) as T;
-          }
-          case "sr": {
-            const { jaSr } = await import("converters/ja/ja-sr");
-            return (await jaSr(text)) as T;
-          }
-          case "sv": {
-            const { jaSv } = await import("converters/ja/ja-sv");
-            return (await jaSv(text)) as T;
-          }
-          case "tr": {
-            const { jaTr } = await import("converters/ja/ja-tr");
-            return (await jaTr(text)) as T;
-          }
-          case "vi": {
-            const { jaVi } = await import("converters/ja/ja-vi");
-            return (await jaVi(text)) as T;
-          }
-        }
-        break;
-      case "ko":
-        switch (to) {
-          case "zh": {
-            const { koZh } = await import("converters/ko/ko-zh");
-            return (await koZh(text)) as T;
-          }
-          case "ja": {
-            const { koJa } = await import("converters/ko/ko-ja");
-            return (await koJa(text)) as T;
-          }
-          case "th": {
-            const { koTh } = await import("converters/ko/ko-th");
-            return (await koTh(text)) as T;
-          }
-          case "hi": {
-            const { koHi } = await import("converters/ko/ko-hi");
-            return (await koHi(text)) as T;
-          }
-          case "bn": {
-            const { koBn } = await import("converters/ko/ko-bn");
-            return (await koBn(text)) as T;
-          }
-          case "ur": {
-            const { koUr } = await import("converters/ko/ko-ur");
-            return (await koUr(text)) as T;
-          }
-          case "fa": {
-            const { koFa } = await import("converters/ko/ko-fa");
-            return (await koFa(text)) as T;
-          }
-          case "ar": {
-            const { koAr } = await import("converters/ko/ko-ar");
-            return (await koAr(text)) as T;
-          }
-          case "he": {
-            const { koHe } = await import("converters/ko/ko-he");
-            return (await koHe(text)) as T;
-          }
-          case "ka": {
-            const { koKa } = await import("converters/ko/ko-ka");
-            return (await koKa(text)) as T;
-          }
-          case "hy": {
-            const { koHy } = await import("converters/ko/ko-hy");
-            return (await koHy(text)) as T;
-          }
-          case "el": {
-            const { koEl } = await import("converters/ko/ko-el");
-            return (await koEl(text)) as T;
-          }
-          case "ru": {
-            const { koRu } = await import("converters/ko/ko-ru");
-            return (await koRu(text)) as T;
-          }
-          case "uk": {
-            const { koUk } = await import("converters/ko/ko-uk");
-            return (await koUk(text)) as T;
-          }
-          case "bg": {
-            const { koBg } = await import("converters/ko/ko-bg");
-            return (await koBg(text)) as T;
-          }
-          case "mk": {
-            const { koMk } = await import("converters/ko/ko-mk");
-            return (await koMk(text)) as T;
-          }
-          case "kk": {
-            const { koKk } = await import("converters/ko/ko-kk");
-            return (await koKk(text)) as T;
-          }
-          case "tg": {
-            const { koTg } = await import("converters/ko/ko-tg");
-            return (await koTg(text)) as T;
-          }
-          case "az": {
-            const { koAz } = await import("converters/ko/ko-az");
-            return (await koAz(text)) as T;
-          }
-          case "bs": {
-            const { koBs } = await import("converters/ko/ko-bs");
-            return (await koBs(text)) as T;
-          }
-          case "ca": {
-            const { koCa } = await import("converters/ko/ko-ca");
-            return (await koCa(text)) as T;
-          }
-          case "cs": {
-            const { koCs } = await import("converters/ko/ko-cs");
-            return (await koCs(text)) as T;
-          }
-          case "da": {
-            const { koDa } = await import("converters/ko/ko-da");
-            return (await koDa(text)) as T;
-          }
-          case "de": {
-            const { koDe } = await import("converters/ko/ko-de");
-            return (await koDe(text)) as T;
-          }
-          case "en": {
-            const { koEn } = await import("converters/ko/ko-en");
-            return (await koEn(text)) as T;
-          }
-          case "es": {
-            const { koEs } = await import("converters/ko/ko-es");
-            return (await koEs(text)) as T;
-          }
-          case "et": {
-            const { koEt } = await import("converters/ko/ko-et");
-            return (await koEt(text)) as T;
-          }
-          case "fi": {
-            const { koFi } = await import("converters/ko/ko-fi");
-            return (await koFi(text)) as T;
-          }
-          case "fr": {
-            const { koFr } = await import("converters/ko/ko-fr");
-            return (await koFr(text)) as T;
-          }
-          case "hr": {
-            const { koHr } = await import("converters/ko/ko-hr");
-            return (await koHr(text)) as T;
-          }
-          case "hu": {
-            const { koHu } = await import("converters/ko/ko-hu");
-            return (await koHu(text)) as T;
-          }
-          case "id": {
-            const { koId } = await import("converters/ko/ko-id");
-            return (await koId(text)) as T;
-          }
-          case "is": {
-            const { koIs } = await import("converters/ko/ko-is");
-            return (await koIs(text)) as T;
-          }
-          case "it": {
-            const { koIt } = await import("converters/ko/ko-it");
-            return (await koIt(text)) as T;
-          }
-          case "lb": {
-            const { koLb } = await import("converters/ko/ko-lb");
-            return (await koLb(text)) as T;
-          }
-          case "lt": {
-            const { koLt } = await import("converters/ko/ko-lt");
-            return (await koLt(text)) as T;
-          }
-          case "lv": {
-            const { koLv } = await import("converters/ko/ko-lv");
-            return (await koLv(text)) as T;
-          }
-          case "ms": {
-            const { koMs } = await import("converters/ko/ko-ms");
-            return (await koMs(text)) as T;
-          }
-          case "mt": {
-            const { koMt } = await import("converters/ko/ko-mt");
-            return (await koMt(text)) as T;
-          }
-          case "nl": {
-            const { koNl } = await import("converters/ko/ko-nl");
-            return (await koNl(text)) as T;
-          }
-          case "no": {
-            const { koNo } = await import("converters/ko/ko-no");
-            return (await koNo(text)) as T;
-          }
-          case "pl": {
-            const { koPl } = await import("converters/ko/ko-pl");
-            return (await koPl(text)) as T;
-          }
-          case "pt": {
-            const { koPt } = await import("converters/ko/ko-pt");
-            return (await koPt(text)) as T;
-          }
-          case "ro": {
-            const { koRo } = await import("converters/ko/ko-ro");
-            return (await koRo(text)) as T;
-          }
-          case "sk": {
-            const { koSk } = await import("converters/ko/ko-sk");
-            return (await koSk(text)) as T;
-          }
-          case "sl": {
-            const { koSl } = await import("converters/ko/ko-sl");
-            return (await koSl(text)) as T;
-          }
-          case "sq": {
-            const { koSq } = await import("converters/ko/ko-sq");
-            return (await koSq(text)) as T;
-          }
-          case "sr": {
-            const { koSr } = await import("converters/ko/ko-sr");
-            return (await koSr(text)) as T;
-          }
-          case "sv": {
-            const { koSv } = await import("converters/ko/ko-sv");
-            return (await koSv(text)) as T;
-          }
-          case "tr": {
-            const { koTr } = await import("converters/ko/ko-tr");
-            return (await koTr(text)) as T;
-          }
-          case "vi": {
-            const { koVi } = await import("converters/ko/ko-vi");
-            return (await koVi(text)) as T;
-          }
-        }
-        break;
-      case "th":
-        switch (to) {
-          case "zh": {
-            const { thZh } = await import("converters/th/th-zh");
-            return (await thZh(text)) as T;
-          }
-          case "ja": {
-            const { thJa } = await import("converters/th/th-ja");
-            return (await thJa(text)) as T;
-          }
-          case "ko": {
-            const { thKo } = await import("converters/th/th-ko");
-            return (await thKo(text)) as T;
-          }
-          case "hi": {
-            const { thHi } = await import("converters/th/th-hi");
-            return (await thHi(text)) as T;
-          }
-          case "bn": {
-            const { thBn } = await import("converters/th/th-bn");
-            return (await thBn(text)) as T;
-          }
-          case "ur": {
-            const { thUr } = await import("converters/th/th-ur");
-            return (await thUr(text)) as T;
-          }
-          case "fa": {
-            const { thFa } = await import("converters/th/th-fa");
-            return (await thFa(text)) as T;
-          }
-          case "ar": {
-            const { thAr } = await import("converters/th/th-ar");
-            return (await thAr(text)) as T;
-          }
-          case "he": {
-            const { thHe } = await import("converters/th/th-he");
-            return (await thHe(text)) as T;
-          }
-          case "ka": {
-            const { thKa } = await import("converters/th/th-ka");
-            return (await thKa(text)) as T;
-          }
-          case "hy": {
-            const { thHy } = await import("converters/th/th-hy");
-            return (await thHy(text)) as T;
-          }
-          case "el": {
-            const { thEl } = await import("converters/th/th-el");
-            return (await thEl(text)) as T;
-          }
-          case "ru": {
-            const { thRu } = await import("converters/th/th-ru");
-            return (await thRu(text)) as T;
-          }
-          case "uk": {
-            const { thUk } = await import("converters/th/th-uk");
-            return (await thUk(text)) as T;
-          }
-          case "bg": {
-            const { thBg } = await import("converters/th/th-bg");
-            return (await thBg(text)) as T;
-          }
-          case "mk": {
-            const { thMk } = await import("converters/th/th-mk");
-            return (await thMk(text)) as T;
-          }
-          case "kk": {
-            const { thKk } = await import("converters/th/th-kk");
-            return (await thKk(text)) as T;
-          }
-          case "tg": {
-            const { thTg } = await import("converters/th/th-tg");
-            return (await thTg(text)) as T;
-          }
-          case "az": {
-            const { thAz } = await import("converters/th/th-az");
-            return (await thAz(text)) as T;
-          }
-          case "bs": {
-            const { thBs } = await import("converters/th/th-bs");
-            return (await thBs(text)) as T;
-          }
-          case "ca": {
-            const { thCa } = await import("converters/th/th-ca");
-            return (await thCa(text)) as T;
-          }
-          case "cs": {
-            const { thCs } = await import("converters/th/th-cs");
-            return (await thCs(text)) as T;
-          }
-          case "da": {
-            const { thDa } = await import("converters/th/th-da");
-            return (await thDa(text)) as T;
-          }
-          case "de": {
-            const { thDe } = await import("converters/th/th-de");
-            return (await thDe(text)) as T;
-          }
-          case "en": {
-            const { thEn } = await import("converters/th/th-en");
-            return (await thEn(text)) as T;
-          }
-          case "es": {
-            const { thEs } = await import("converters/th/th-es");
-            return (await thEs(text)) as T;
-          }
-          case "et": {
-            const { thEt } = await import("converters/th/th-et");
-            return (await thEt(text)) as T;
-          }
-          case "fi": {
-            const { thFi } = await import("converters/th/th-fi");
-            return (await thFi(text)) as T;
-          }
-          case "fr": {
-            const { thFr } = await import("converters/th/th-fr");
-            return (await thFr(text)) as T;
-          }
-          case "hr": {
-            const { thHr } = await import("converters/th/th-hr");
-            return (await thHr(text)) as T;
-          }
-          case "hu": {
-            const { thHu } = await import("converters/th/th-hu");
-            return (await thHu(text)) as T;
-          }
-          case "id": {
-            const { thId } = await import("converters/th/th-id");
-            return (await thId(text)) as T;
-          }
-          case "is": {
-            const { thIs } = await import("converters/th/th-is");
-            return (await thIs(text)) as T;
-          }
-          case "it": {
-            const { thIt } = await import("converters/th/th-it");
-            return (await thIt(text)) as T;
-          }
-          case "lb": {
-            const { thLb } = await import("converters/th/th-lb");
-            return (await thLb(text)) as T;
-          }
-          case "lt": {
-            const { thLt } = await import("converters/th/th-lt");
-            return (await thLt(text)) as T;
-          }
-          case "lv": {
-            const { thLv } = await import("converters/th/th-lv");
-            return (await thLv(text)) as T;
-          }
-          case "ms": {
-            const { thMs } = await import("converters/th/th-ms");
-            return (await thMs(text)) as T;
-          }
-          case "mt": {
-            const { thMt } = await import("converters/th/th-mt");
-            return (await thMt(text)) as T;
-          }
-          case "nl": {
-            const { thNl } = await import("converters/th/th-nl");
-            return (await thNl(text)) as T;
-          }
-          case "no": {
-            const { thNo } = await import("converters/th/th-no");
-            return (await thNo(text)) as T;
-          }
-          case "pl": {
-            const { thPl } = await import("converters/th/th-pl");
-            return (await thPl(text)) as T;
-          }
-          case "pt": {
-            const { thPt } = await import("converters/th/th-pt");
-            return (await thPt(text)) as T;
-          }
-          case "ro": {
-            const { thRo } = await import("converters/th/th-ro");
-            return (await thRo(text)) as T;
-          }
-          case "sk": {
-            const { thSk } = await import("converters/th/th-sk");
-            return (await thSk(text)) as T;
-          }
-          case "sl": {
-            const { thSl } = await import("converters/th/th-sl");
-            return (await thSl(text)) as T;
-          }
-          case "sq": {
-            const { thSq } = await import("converters/th/th-sq");
-            return (await thSq(text)) as T;
-          }
-          case "sr": {
-            const { thSr } = await import("converters/th/th-sr");
-            return (await thSr(text)) as T;
-          }
-          case "sv": {
-            const { thSv } = await import("converters/th/th-sv");
-            return (await thSv(text)) as T;
-          }
-          case "tr": {
-            const { thTr } = await import("converters/th/th-tr");
-            return (await thTr(text)) as T;
-          }
-          case "vi": {
-            const { thVi } = await import("converters/th/th-vi");
-            return (await thVi(text)) as T;
-          }
-        }
-        break;
-      case "hi":
-        switch (to) {
-          case "zh": {
-            const { hiZh } = await import("converters/hi/hi-zh");
-            return (await hiZh(text)) as T;
-          }
-          case "ja": {
-            const { hiJa } = await import("converters/hi/hi-ja");
-            return (await hiJa(text)) as T;
-          }
-          case "ko": {
-            const { hiKo } = await import("converters/hi/hi-ko");
-            return (await hiKo(text)) as T;
-          }
-          case "th": {
-            const { hiTh } = await import("converters/hi/hi-th");
-            return (await hiTh(text)) as T;
-          }
-          case "bn": {
-            const { hiBn } = await import("converters/hi/hi-bn");
-            return (await hiBn(text)) as T;
-          }
-          case "ur": {
-            const { hiUr } = await import("converters/hi/hi-ur");
-            return (await hiUr(text)) as T;
-          }
-          case "fa": {
-            const { hiFa } = await import("converters/hi/hi-fa");
-            return (await hiFa(text)) as T;
-          }
-          case "ar": {
-            const { hiAr } = await import("converters/hi/hi-ar");
-            return (await hiAr(text)) as T;
-          }
-          case "he": {
-            const { hiHe } = await import("converters/hi/hi-he");
-            return (await hiHe(text)) as T;
-          }
-          case "ka": {
-            const { hiKa } = await import("converters/hi/hi-ka");
-            return (await hiKa(text)) as T;
-          }
-          case "hy": {
-            const { hiHy } = await import("converters/hi/hi-hy");
-            return (await hiHy(text)) as T;
-          }
-          case "el": {
-            const { hiEl } = await import("converters/hi/hi-el");
-            return (await hiEl(text)) as T;
-          }
-          case "ru": {
-            const { hiRu } = await import("converters/hi/hi-ru");
-            return (await hiRu(text)) as T;
-          }
-          case "uk": {
-            const { hiUk } = await import("converters/hi/hi-uk");
-            return (await hiUk(text)) as T;
-          }
-          case "bg": {
-            const { hiBg } = await import("converters/hi/hi-bg");
-            return (await hiBg(text)) as T;
-          }
-          case "mk": {
-            const { hiMk } = await import("converters/hi/hi-mk");
-            return (await hiMk(text)) as T;
-          }
-          case "kk": {
-            const { hiKk } = await import("converters/hi/hi-kk");
-            return (await hiKk(text)) as T;
-          }
-          case "tg": {
-            const { hiTg } = await import("converters/hi/hi-tg");
-            return (await hiTg(text)) as T;
-          }
-          case "az": {
-            const { hiAz } = await import("converters/hi/hi-az");
-            return (await hiAz(text)) as T;
-          }
-          case "bs": {
-            const { hiBs } = await import("converters/hi/hi-bs");
-            return (await hiBs(text)) as T;
-          }
-          case "ca": {
-            const { hiCa } = await import("converters/hi/hi-ca");
-            return (await hiCa(text)) as T;
-          }
-          case "cs": {
-            const { hiCs } = await import("converters/hi/hi-cs");
-            return (await hiCs(text)) as T;
-          }
-          case "da": {
-            const { hiDa } = await import("converters/hi/hi-da");
-            return (await hiDa(text)) as T;
-          }
-          case "de": {
-            const { hiDe } = await import("converters/hi/hi-de");
-            return (await hiDe(text)) as T;
-          }
-          case "en": {
-            const { hiEn } = await import("converters/hi/hi-en");
-            return (await hiEn(text)) as T;
-          }
-          case "es": {
-            const { hiEs } = await import("converters/hi/hi-es");
-            return (await hiEs(text)) as T;
-          }
-          case "et": {
-            const { hiEt } = await import("converters/hi/hi-et");
-            return (await hiEt(text)) as T;
-          }
-          case "fi": {
-            const { hiFi } = await import("converters/hi/hi-fi");
-            return (await hiFi(text)) as T;
-          }
-          case "fr": {
-            const { hiFr } = await import("converters/hi/hi-fr");
-            return (await hiFr(text)) as T;
-          }
-          case "hr": {
-            const { hiHr } = await import("converters/hi/hi-hr");
-            return (await hiHr(text)) as T;
-          }
-          case "hu": {
-            const { hiHu } = await import("converters/hi/hi-hu");
-            return (await hiHu(text)) as T;
-          }
-          case "id": {
-            const { hiId } = await import("converters/hi/hi-id");
-            return (await hiId(text)) as T;
-          }
-          case "is": {
-            const { hiIs } = await import("converters/hi/hi-is");
-            return (await hiIs(text)) as T;
-          }
-          case "it": {
-            const { hiIt } = await import("converters/hi/hi-it");
-            return (await hiIt(text)) as T;
-          }
-          case "lb": {
-            const { hiLb } = await import("converters/hi/hi-lb");
-            return (await hiLb(text)) as T;
-          }
-          case "lt": {
-            const { hiLt } = await import("converters/hi/hi-lt");
-            return (await hiLt(text)) as T;
-          }
-          case "lv": {
-            const { hiLv } = await import("converters/hi/hi-lv");
-            return (await hiLv(text)) as T;
-          }
-          case "ms": {
-            const { hiMs } = await import("converters/hi/hi-ms");
-            return (await hiMs(text)) as T;
-          }
-          case "mt": {
-            const { hiMt } = await import("converters/hi/hi-mt");
-            return (await hiMt(text)) as T;
-          }
-          case "nl": {
-            const { hiNl } = await import("converters/hi/hi-nl");
-            return (await hiNl(text)) as T;
-          }
-          case "no": {
-            const { hiNo } = await import("converters/hi/hi-no");
-            return (await hiNo(text)) as T;
-          }
-          case "pl": {
-            const { hiPl } = await import("converters/hi/hi-pl");
-            return (await hiPl(text)) as T;
-          }
-          case "pt": {
-            const { hiPt } = await import("converters/hi/hi-pt");
-            return (await hiPt(text)) as T;
-          }
-          case "ro": {
-            const { hiRo } = await import("converters/hi/hi-ro");
-            return (await hiRo(text)) as T;
-          }
-          case "sk": {
-            const { hiSk } = await import("converters/hi/hi-sk");
-            return (await hiSk(text)) as T;
-          }
-          case "sl": {
-            const { hiSl } = await import("converters/hi/hi-sl");
-            return (await hiSl(text)) as T;
-          }
-          case "sq": {
-            const { hiSq } = await import("converters/hi/hi-sq");
-            return (await hiSq(text)) as T;
-          }
-          case "sr": {
-            const { hiSr } = await import("converters/hi/hi-sr");
-            return (await hiSr(text)) as T;
-          }
-          case "sv": {
-            const { hiSv } = await import("converters/hi/hi-sv");
-            return (await hiSv(text)) as T;
-          }
-          case "tr": {
-            const { hiTr } = await import("converters/hi/hi-tr");
-            return (await hiTr(text)) as T;
-          }
-          case "vi": {
-            const { hiVi } = await import("converters/hi/hi-vi");
-            return (await hiVi(text)) as T;
-          }
-        }
-        break;
-      case "bn":
-        switch (to) {
-          case "zh": {
-            const { bnZh } = await import("converters/bn/bn-zh");
-            return (await bnZh(text)) as T;
-          }
-          case "ja": {
-            const { bnJa } = await import("converters/bn/bn-ja");
-            return (await bnJa(text)) as T;
-          }
-          case "ko": {
-            const { bnKo } = await import("converters/bn/bn-ko");
-            return (await bnKo(text)) as T;
-          }
-          case "th": {
-            const { bnTh } = await import("converters/bn/bn-th");
-            return (await bnTh(text)) as T;
-          }
-          case "hi": {
-            const { bnHi } = await import("converters/bn/bn-hi");
-            return (await bnHi(text)) as T;
-          }
-          case "ur": {
-            const { bnUr } = await import("converters/bn/bn-ur");
-            return (await bnUr(text)) as T;
-          }
-          case "fa": {
-            const { bnFa } = await import("converters/bn/bn-fa");
-            return (await bnFa(text)) as T;
-          }
-          case "ar": {
-            const { bnAr } = await import("converters/bn/bn-ar");
-            return (await bnAr(text)) as T;
-          }
-          case "he": {
-            const { bnHe } = await import("converters/bn/bn-he");
-            return (await bnHe(text)) as T;
-          }
-          case "ka": {
-            const { bnKa } = await import("converters/bn/bn-ka");
-            return (await bnKa(text)) as T;
-          }
-          case "hy": {
-            const { bnHy } = await import("converters/bn/bn-hy");
-            return (await bnHy(text)) as T;
-          }
-          case "el": {
-            const { bnEl } = await import("converters/bn/bn-el");
-            return (await bnEl(text)) as T;
-          }
-          case "ru": {
-            const { bnRu } = await import("converters/bn/bn-ru");
-            return (await bnRu(text)) as T;
-          }
-          case "uk": {
-            const { bnUk } = await import("converters/bn/bn-uk");
-            return (await bnUk(text)) as T;
-          }
-          case "bg": {
-            const { bnBg } = await import("converters/bn/bn-bg");
-            return (await bnBg(text)) as T;
-          }
-          case "mk": {
-            const { bnMk } = await import("converters/bn/bn-mk");
-            return (await bnMk(text)) as T;
-          }
-          case "kk": {
-            const { bnKk } = await import("converters/bn/bn-kk");
-            return (await bnKk(text)) as T;
-          }
-          case "tg": {
-            const { bnTg } = await import("converters/bn/bn-tg");
-            return (await bnTg(text)) as T;
-          }
-          case "az": {
-            const { bnAz } = await import("converters/bn/bn-az");
-            return (await bnAz(text)) as T;
-          }
-          case "bs": {
-            const { bnBs } = await import("converters/bn/bn-bs");
-            return (await bnBs(text)) as T;
-          }
-          case "ca": {
-            const { bnCa } = await import("converters/bn/bn-ca");
-            return (await bnCa(text)) as T;
-          }
-          case "cs": {
-            const { bnCs } = await import("converters/bn/bn-cs");
-            return (await bnCs(text)) as T;
-          }
-          case "da": {
-            const { bnDa } = await import("converters/bn/bn-da");
-            return (await bnDa(text)) as T;
-          }
-          case "de": {
-            const { bnDe } = await import("converters/bn/bn-de");
-            return (await bnDe(text)) as T;
-          }
-          case "en": {
-            const { bnEn } = await import("converters/bn/bn-en");
-            return (await bnEn(text)) as T;
-          }
-          case "es": {
-            const { bnEs } = await import("converters/bn/bn-es");
-            return (await bnEs(text)) as T;
-          }
-          case "et": {
-            const { bnEt } = await import("converters/bn/bn-et");
-            return (await bnEt(text)) as T;
-          }
-          case "fi": {
-            const { bnFi } = await import("converters/bn/bn-fi");
-            return (await bnFi(text)) as T;
-          }
-          case "fr": {
-            const { bnFr } = await import("converters/bn/bn-fr");
-            return (await bnFr(text)) as T;
-          }
-          case "hr": {
-            const { bnHr } = await import("converters/bn/bn-hr");
-            return (await bnHr(text)) as T;
-          }
-          case "hu": {
-            const { bnHu } = await import("converters/bn/bn-hu");
-            return (await bnHu(text)) as T;
-          }
-          case "id": {
-            const { bnId } = await import("converters/bn/bn-id");
-            return (await bnId(text)) as T;
-          }
-          case "is": {
-            const { bnIs } = await import("converters/bn/bn-is");
-            return (await bnIs(text)) as T;
-          }
-          case "it": {
-            const { bnIt } = await import("converters/bn/bn-it");
-            return (await bnIt(text)) as T;
-          }
-          case "lb": {
-            const { bnLb } = await import("converters/bn/bn-lb");
-            return (await bnLb(text)) as T;
-          }
-          case "lt": {
-            const { bnLt } = await import("converters/bn/bn-lt");
-            return (await bnLt(text)) as T;
-          }
-          case "lv": {
-            const { bnLv } = await import("converters/bn/bn-lv");
-            return (await bnLv(text)) as T;
-          }
-          case "ms": {
-            const { bnMs } = await import("converters/bn/bn-ms");
-            return (await bnMs(text)) as T;
-          }
-          case "mt": {
-            const { bnMt } = await import("converters/bn/bn-mt");
-            return (await bnMt(text)) as T;
-          }
-          case "nl": {
-            const { bnNl } = await import("converters/bn/bn-nl");
-            return (await bnNl(text)) as T;
-          }
-          case "no": {
-            const { bnNo } = await import("converters/bn/bn-no");
-            return (await bnNo(text)) as T;
-          }
-          case "pl": {
-            const { bnPl } = await import("converters/bn/bn-pl");
-            return (await bnPl(text)) as T;
-          }
-          case "pt": {
-            const { bnPt } = await import("converters/bn/bn-pt");
-            return (await bnPt(text)) as T;
-          }
-          case "ro": {
-            const { bnRo } = await import("converters/bn/bn-ro");
-            return (await bnRo(text)) as T;
-          }
-          case "sk": {
-            const { bnSk } = await import("converters/bn/bn-sk");
-            return (await bnSk(text)) as T;
-          }
-          case "sl": {
-            const { bnSl } = await import("converters/bn/bn-sl");
-            return (await bnSl(text)) as T;
-          }
-          case "sq": {
-            const { bnSq } = await import("converters/bn/bn-sq");
-            return (await bnSq(text)) as T;
-          }
-          case "sr": {
-            const { bnSr } = await import("converters/bn/bn-sr");
-            return (await bnSr(text)) as T;
-          }
-          case "sv": {
-            const { bnSv } = await import("converters/bn/bn-sv");
-            return (await bnSv(text)) as T;
-          }
-          case "tr": {
-            const { bnTr } = await import("converters/bn/bn-tr");
-            return (await bnTr(text)) as T;
-          }
-          case "vi": {
-            const { bnVi } = await import("converters/bn/bn-vi");
-            return (await bnVi(text)) as T;
-          }
-        }
-        break;
-      case "ur":
-        switch (to) {
-          case "zh": {
-            const { urZh } = await import("converters/ur/ur-zh");
-            return (await urZh(text)) as T;
-          }
-          case "ja": {
-            const { urJa } = await import("converters/ur/ur-ja");
-            return (await urJa(text)) as T;
-          }
-          case "ko": {
-            const { urKo } = await import("converters/ur/ur-ko");
-            return (await urKo(text)) as T;
-          }
-          case "th": {
-            const { urTh } = await import("converters/ur/ur-th");
-            return (await urTh(text)) as T;
-          }
-          case "hi": {
-            const { urHi } = await import("converters/ur/ur-hi");
-            return (await urHi(text)) as T;
-          }
-          case "bn": {
-            const { urBn } = await import("converters/ur/ur-bn");
-            return (await urBn(text)) as T;
-          }
-          case "fa": {
-            const { urFa } = await import("converters/ur/ur-fa");
-            return (await urFa(text)) as T;
-          }
-          case "ar": {
-            const { urAr } = await import("converters/ur/ur-ar");
-            return (await urAr(text)) as T;
-          }
-          case "he": {
-            const { urHe } = await import("converters/ur/ur-he");
-            return (await urHe(text)) as T;
-          }
-          case "ka": {
-            const { urKa } = await import("converters/ur/ur-ka");
-            return (await urKa(text)) as T;
-          }
-          case "hy": {
-            const { urHy } = await import("converters/ur/ur-hy");
-            return (await urHy(text)) as T;
-          }
-          case "el": {
-            const { urEl } = await import("converters/ur/ur-el");
-            return (await urEl(text)) as T;
-          }
-          case "ru": {
-            const { urRu } = await import("converters/ur/ur-ru");
-            return (await urRu(text)) as T;
-          }
-          case "uk": {
-            const { urUk } = await import("converters/ur/ur-uk");
-            return (await urUk(text)) as T;
-          }
-          case "bg": {
-            const { urBg } = await import("converters/ur/ur-bg");
-            return (await urBg(text)) as T;
-          }
-          case "mk": {
-            const { urMk } = await import("converters/ur/ur-mk");
-            return (await urMk(text)) as T;
-          }
-          case "kk": {
-            const { urKk } = await import("converters/ur/ur-kk");
-            return (await urKk(text)) as T;
-          }
-          case "tg": {
-            const { urTg } = await import("converters/ur/ur-tg");
-            return (await urTg(text)) as T;
-          }
-          case "az": {
-            const { urAz } = await import("converters/ur/ur-az");
-            return (await urAz(text)) as T;
-          }
-          case "bs": {
-            const { urBs } = await import("converters/ur/ur-bs");
-            return (await urBs(text)) as T;
-          }
-          case "ca": {
-            const { urCa } = await import("converters/ur/ur-ca");
-            return (await urCa(text)) as T;
-          }
-          case "cs": {
-            const { urCs } = await import("converters/ur/ur-cs");
-            return (await urCs(text)) as T;
-          }
-          case "da": {
-            const { urDa } = await import("converters/ur/ur-da");
-            return (await urDa(text)) as T;
-          }
-          case "de": {
-            const { urDe } = await import("converters/ur/ur-de");
-            return (await urDe(text)) as T;
-          }
-          case "en": {
-            const { urEn } = await import("converters/ur/ur-en");
-            return (await urEn(text)) as T;
-          }
-          case "es": {
-            const { urEs } = await import("converters/ur/ur-es");
-            return (await urEs(text)) as T;
-          }
-          case "et": {
-            const { urEt } = await import("converters/ur/ur-et");
-            return (await urEt(text)) as T;
-          }
-          case "fi": {
-            const { urFi } = await import("converters/ur/ur-fi");
-            return (await urFi(text)) as T;
-          }
-          case "fr": {
-            const { urFr } = await import("converters/ur/ur-fr");
-            return (await urFr(text)) as T;
-          }
-          case "hr": {
-            const { urHr } = await import("converters/ur/ur-hr");
-            return (await urHr(text)) as T;
-          }
-          case "hu": {
-            const { urHu } = await import("converters/ur/ur-hu");
-            return (await urHu(text)) as T;
-          }
-          case "id": {
-            const { urId } = await import("converters/ur/ur-id");
-            return (await urId(text)) as T;
-          }
-          case "is": {
-            const { urIs } = await import("converters/ur/ur-is");
-            return (await urIs(text)) as T;
-          }
-          case "it": {
-            const { urIt } = await import("converters/ur/ur-it");
-            return (await urIt(text)) as T;
-          }
-          case "lb": {
-            const { urLb } = await import("converters/ur/ur-lb");
-            return (await urLb(text)) as T;
-          }
-          case "lt": {
-            const { urLt } = await import("converters/ur/ur-lt");
-            return (await urLt(text)) as T;
-          }
-          case "lv": {
-            const { urLv } = await import("converters/ur/ur-lv");
-            return (await urLv(text)) as T;
-          }
-          case "ms": {
-            const { urMs } = await import("converters/ur/ur-ms");
-            return (await urMs(text)) as T;
-          }
-          case "mt": {
-            const { urMt } = await import("converters/ur/ur-mt");
-            return (await urMt(text)) as T;
-          }
-          case "nl": {
-            const { urNl } = await import("converters/ur/ur-nl");
-            return (await urNl(text)) as T;
-          }
-          case "no": {
-            const { urNo } = await import("converters/ur/ur-no");
-            return (await urNo(text)) as T;
-          }
-          case "pl": {
-            const { urPl } = await import("converters/ur/ur-pl");
-            return (await urPl(text)) as T;
-          }
-          case "pt": {
-            const { urPt } = await import("converters/ur/ur-pt");
-            return (await urPt(text)) as T;
-          }
-          case "ro": {
-            const { urRo } = await import("converters/ur/ur-ro");
-            return (await urRo(text)) as T;
-          }
-          case "sk": {
-            const { urSk } = await import("converters/ur/ur-sk");
-            return (await urSk(text)) as T;
-          }
-          case "sl": {
-            const { urSl } = await import("converters/ur/ur-sl");
-            return (await urSl(text)) as T;
-          }
-          case "sq": {
-            const { urSq } = await import("converters/ur/ur-sq");
-            return (await urSq(text)) as T;
-          }
-          case "sr": {
-            const { urSr } = await import("converters/ur/ur-sr");
-            return (await urSr(text)) as T;
-          }
-          case "sv": {
-            const { urSv } = await import("converters/ur/ur-sv");
-            return (await urSv(text)) as T;
-          }
-          case "tr": {
-            const { urTr } = await import("converters/ur/ur-tr");
-            return (await urTr(text)) as T;
-          }
-          case "vi": {
-            const { urVi } = await import("converters/ur/ur-vi");
-            return (await urVi(text)) as T;
-          }
-        }
-        break;
-      case "fa":
-        switch (to) {
-          case "zh": {
-            const { faZh } = await import("converters/fa/fa-zh");
-            return (await faZh(text)) as T;
-          }
-          case "ja": {
-            const { faJa } = await import("converters/fa/fa-ja");
-            return (await faJa(text)) as T;
-          }
-          case "ko": {
-            const { faKo } = await import("converters/fa/fa-ko");
-            return (await faKo(text)) as T;
-          }
-          case "th": {
-            const { faTh } = await import("converters/fa/fa-th");
-            return (await faTh(text)) as T;
-          }
-          case "hi": {
-            const { faHi } = await import("converters/fa/fa-hi");
-            return (await faHi(text)) as T;
-          }
-          case "bn": {
-            const { faBn } = await import("converters/fa/fa-bn");
-            return (await faBn(text)) as T;
-          }
-          case "ur": {
-            const { faUr } = await import("converters/fa/fa-ur");
-            return (await faUr(text)) as T;
-          }
-          case "ar": {
-            const { faAr } = await import("converters/fa/fa-ar");
-            return (await faAr(text)) as T;
-          }
-          case "he": {
-            const { faHe } = await import("converters/fa/fa-he");
-            return (await faHe(text)) as T;
-          }
-          case "ka": {
-            const { faKa } = await import("converters/fa/fa-ka");
-            return (await faKa(text)) as T;
-          }
-          case "hy": {
-            const { faHy } = await import("converters/fa/fa-hy");
-            return (await faHy(text)) as T;
-          }
-          case "el": {
-            const { faEl } = await import("converters/fa/fa-el");
-            return (await faEl(text)) as T;
-          }
-          case "ru": {
-            const { faRu } = await import("converters/fa/fa-ru");
-            return (await faRu(text)) as T;
-          }
-          case "uk": {
-            const { faUk } = await import("converters/fa/fa-uk");
-            return (await faUk(text)) as T;
-          }
-          case "bg": {
-            const { faBg } = await import("converters/fa/fa-bg");
-            return (await faBg(text)) as T;
-          }
-          case "mk": {
-            const { faMk } = await import("converters/fa/fa-mk");
-            return (await faMk(text)) as T;
-          }
-          case "kk": {
-            const { faKk } = await import("converters/fa/fa-kk");
-            return (await faKk(text)) as T;
-          }
-          case "tg": {
-            const { faTg } = await import("converters/fa/fa-tg");
-            return (await faTg(text)) as T;
-          }
-          case "az": {
-            const { faAz } = await import("converters/fa/fa-az");
-            return (await faAz(text)) as T;
-          }
-          case "bs": {
-            const { faBs } = await import("converters/fa/fa-bs");
-            return (await faBs(text)) as T;
-          }
-          case "ca": {
-            const { faCa } = await import("converters/fa/fa-ca");
-            return (await faCa(text)) as T;
-          }
-          case "cs": {
-            const { faCs } = await import("converters/fa/fa-cs");
-            return (await faCs(text)) as T;
-          }
-          case "da": {
-            const { faDa } = await import("converters/fa/fa-da");
-            return (await faDa(text)) as T;
-          }
-          case "de": {
-            const { faDe } = await import("converters/fa/fa-de");
-            return (await faDe(text)) as T;
-          }
-          case "en": {
-            const { faEn } = await import("converters/fa/fa-en");
-            return (await faEn(text)) as T;
-          }
-          case "es": {
-            const { faEs } = await import("converters/fa/fa-es");
-            return (await faEs(text)) as T;
-          }
-          case "et": {
-            const { faEt } = await import("converters/fa/fa-et");
-            return (await faEt(text)) as T;
-          }
-          case "fi": {
-            const { faFi } = await import("converters/fa/fa-fi");
-            return (await faFi(text)) as T;
-          }
-          case "fr": {
-            const { faFr } = await import("converters/fa/fa-fr");
-            return (await faFr(text)) as T;
-          }
-          case "hr": {
-            const { faHr } = await import("converters/fa/fa-hr");
-            return (await faHr(text)) as T;
-          }
-          case "hu": {
-            const { faHu } = await import("converters/fa/fa-hu");
-            return (await faHu(text)) as T;
-          }
-          case "id": {
-            const { faId } = await import("converters/fa/fa-id");
-            return (await faId(text)) as T;
-          }
-          case "is": {
-            const { faIs } = await import("converters/fa/fa-is");
-            return (await faIs(text)) as T;
-          }
-          case "it": {
-            const { faIt } = await import("converters/fa/fa-it");
-            return (await faIt(text)) as T;
-          }
-          case "lb": {
-            const { faLb } = await import("converters/fa/fa-lb");
-            return (await faLb(text)) as T;
-          }
-          case "lt": {
-            const { faLt } = await import("converters/fa/fa-lt");
-            return (await faLt(text)) as T;
-          }
-          case "lv": {
-            const { faLv } = await import("converters/fa/fa-lv");
-            return (await faLv(text)) as T;
-          }
-          case "ms": {
-            const { faMs } = await import("converters/fa/fa-ms");
-            return (await faMs(text)) as T;
-          }
-          case "mt": {
-            const { faMt } = await import("converters/fa/fa-mt");
-            return (await faMt(text)) as T;
-          }
-          case "nl": {
-            const { faNl } = await import("converters/fa/fa-nl");
-            return (await faNl(text)) as T;
-          }
-          case "no": {
-            const { faNo } = await import("converters/fa/fa-no");
-            return (await faNo(text)) as T;
-          }
-          case "pl": {
-            const { faPl } = await import("converters/fa/fa-pl");
-            return (await faPl(text)) as T;
-          }
-          case "pt": {
-            const { faPt } = await import("converters/fa/fa-pt");
-            return (await faPt(text)) as T;
-          }
-          case "ro": {
-            const { faRo } = await import("converters/fa/fa-ro");
-            return (await faRo(text)) as T;
-          }
-          case "sk": {
-            const { faSk } = await import("converters/fa/fa-sk");
-            return (await faSk(text)) as T;
-          }
-          case "sl": {
-            const { faSl } = await import("converters/fa/fa-sl");
-            return (await faSl(text)) as T;
-          }
-          case "sq": {
-            const { faSq } = await import("converters/fa/fa-sq");
-            return (await faSq(text)) as T;
-          }
-          case "sr": {
-            const { faSr } = await import("converters/fa/fa-sr");
-            return (await faSr(text)) as T;
-          }
-          case "sv": {
-            const { faSv } = await import("converters/fa/fa-sv");
-            return (await faSv(text)) as T;
-          }
-          case "tr": {
-            const { faTr } = await import("converters/fa/fa-tr");
-            return (await faTr(text)) as T;
-          }
-          case "vi": {
-            const { faVi } = await import("converters/fa/fa-vi");
-            return (await faVi(text)) as T;
-          }
-        }
-        break;
-      case "ar":
-        switch (to) {
-          case "zh": {
-            const { arZh } = await import("converters/ar/ar-zh");
-            return (await arZh(text)) as T;
-          }
-          case "ja": {
-            const { arJa } = await import("converters/ar/ar-ja");
-            return (await arJa(text)) as T;
-          }
-          case "ko": {
-            const { arKo } = await import("converters/ar/ar-ko");
-            return (await arKo(text)) as T;
-          }
-          case "th": {
-            const { arTh } = await import("converters/ar/ar-th");
-            return (await arTh(text)) as T;
-          }
-          case "hi": {
-            const { arHi } = await import("converters/ar/ar-hi");
-            return (await arHi(text)) as T;
-          }
-          case "bn": {
-            const { arBn } = await import("converters/ar/ar-bn");
-            return (await arBn(text)) as T;
-          }
-          case "ur": {
-            const { arUr } = await import("converters/ar/ar-ur");
-            return (await arUr(text)) as T;
-          }
-          case "fa": {
-            const { arFa } = await import("converters/ar/ar-fa");
-            return (await arFa(text)) as T;
-          }
-          case "he": {
-            const { arHe } = await import("converters/ar/ar-he");
-            return (await arHe(text)) as T;
-          }
-          case "ka": {
-            const { arKa } = await import("converters/ar/ar-ka");
-            return (await arKa(text)) as T;
-          }
-          case "hy": {
-            const { arHy } = await import("converters/ar/ar-hy");
-            return (await arHy(text)) as T;
-          }
-          case "el": {
-            const { arEl } = await import("converters/ar/ar-el");
-            return (await arEl(text)) as T;
-          }
-          case "ru": {
-            const { arRu } = await import("converters/ar/ar-ru");
-            return (await arRu(text)) as T;
-          }
-          case "uk": {
-            const { arUk } = await import("converters/ar/ar-uk");
-            return (await arUk(text)) as T;
-          }
-          case "bg": {
-            const { arBg } = await import("converters/ar/ar-bg");
-            return (await arBg(text)) as T;
-          }
-          case "mk": {
-            const { arMk } = await import("converters/ar/ar-mk");
-            return (await arMk(text)) as T;
-          }
-          case "kk": {
-            const { arKk } = await import("converters/ar/ar-kk");
-            return (await arKk(text)) as T;
-          }
-          case "tg": {
-            const { arTg } = await import("converters/ar/ar-tg");
-            return (await arTg(text)) as T;
-          }
-          case "az": {
-            const { arAz } = await import("converters/ar/ar-az");
-            return (await arAz(text)) as T;
-          }
-          case "bs": {
-            const { arBs } = await import("converters/ar/ar-bs");
-            return (await arBs(text)) as T;
-          }
-          case "ca": {
-            const { arCa } = await import("converters/ar/ar-ca");
-            return (await arCa(text)) as T;
-          }
-          case "cs": {
-            const { arCs } = await import("converters/ar/ar-cs");
-            return (await arCs(text)) as T;
-          }
-          case "da": {
-            const { arDa } = await import("converters/ar/ar-da");
-            return (await arDa(text)) as T;
-          }
-          case "de": {
-            const { arDe } = await import("converters/ar/ar-de");
-            return (await arDe(text)) as T;
-          }
-          case "en": {
-            const { arEn } = await import("converters/ar/ar-en");
-            return (await arEn(text)) as T;
-          }
-          case "es": {
-            const { arEs } = await import("converters/ar/ar-es");
-            return (await arEs(text)) as T;
-          }
-          case "et": {
-            const { arEt } = await import("converters/ar/ar-et");
-            return (await arEt(text)) as T;
-          }
-          case "fi": {
-            const { arFi } = await import("converters/ar/ar-fi");
-            return (await arFi(text)) as T;
-          }
-          case "fr": {
-            const { arFr } = await import("converters/ar/ar-fr");
-            return (await arFr(text)) as T;
-          }
-          case "hr": {
-            const { arHr } = await import("converters/ar/ar-hr");
-            return (await arHr(text)) as T;
-          }
-          case "hu": {
-            const { arHu } = await import("converters/ar/ar-hu");
-            return (await arHu(text)) as T;
-          }
-          case "id": {
-            const { arId } = await import("converters/ar/ar-id");
-            return (await arId(text)) as T;
-          }
-          case "is": {
-            const { arIs } = await import("converters/ar/ar-is");
-            return (await arIs(text)) as T;
-          }
-          case "it": {
-            const { arIt } = await import("converters/ar/ar-it");
-            return (await arIt(text)) as T;
-          }
-          case "lb": {
-            const { arLb } = await import("converters/ar/ar-lb");
-            return (await arLb(text)) as T;
-          }
-          case "lt": {
-            const { arLt } = await import("converters/ar/ar-lt");
-            return (await arLt(text)) as T;
-          }
-          case "lv": {
-            const { arLv } = await import("converters/ar/ar-lv");
-            return (await arLv(text)) as T;
-          }
-          case "ms": {
-            const { arMs } = await import("converters/ar/ar-ms");
-            return (await arMs(text)) as T;
-          }
-          case "mt": {
-            const { arMt } = await import("converters/ar/ar-mt");
-            return (await arMt(text)) as T;
-          }
-          case "nl": {
-            const { arNl } = await import("converters/ar/ar-nl");
-            return (await arNl(text)) as T;
-          }
-          case "no": {
-            const { arNo } = await import("converters/ar/ar-no");
-            return (await arNo(text)) as T;
-          }
-          case "pl": {
-            const { arPl } = await import("converters/ar/ar-pl");
-            return (await arPl(text)) as T;
-          }
-          case "pt": {
-            const { arPt } = await import("converters/ar/ar-pt");
-            return (await arPt(text)) as T;
-          }
-          case "ro": {
-            const { arRo } = await import("converters/ar/ar-ro");
-            return (await arRo(text)) as T;
-          }
-          case "sk": {
-            const { arSk } = await import("converters/ar/ar-sk");
-            return (await arSk(text)) as T;
-          }
-          case "sl": {
-            const { arSl } = await import("converters/ar/ar-sl");
-            return (await arSl(text)) as T;
-          }
-          case "sq": {
-            const { arSq } = await import("converters/ar/ar-sq");
-            return (await arSq(text)) as T;
-          }
-          case "sr": {
-            const { arSr } = await import("converters/ar/ar-sr");
-            return (await arSr(text)) as T;
-          }
-          case "sv": {
-            const { arSv } = await import("converters/ar/ar-sv");
-            return (await arSv(text)) as T;
-          }
-          case "tr": {
-            const { arTr } = await import("converters/ar/ar-tr");
-            return (await arTr(text)) as T;
-          }
-          case "vi": {
-            const { arVi } = await import("converters/ar/ar-vi");
-            return (await arVi(text)) as T;
-          }
-        }
-        break;
-      case "he":
-        switch (to) {
-          case "zh": {
-            const { heZh } = await import("converters/he/he-zh");
-            return (await heZh(text)) as T;
-          }
-          case "ja": {
-            const { heJa } = await import("converters/he/he-ja");
-            return (await heJa(text)) as T;
-          }
-          case "ko": {
-            const { heKo } = await import("converters/he/he-ko");
-            return (await heKo(text)) as T;
-          }
-          case "th": {
-            const { heTh } = await import("converters/he/he-th");
-            return (await heTh(text)) as T;
-          }
-          case "hi": {
-            const { heHi } = await import("converters/he/he-hi");
-            return (await heHi(text)) as T;
-          }
-          case "bn": {
-            const { heBn } = await import("converters/he/he-bn");
-            return (await heBn(text)) as T;
-          }
-          case "ur": {
-            const { heUr } = await import("converters/he/he-ur");
-            return (await heUr(text)) as T;
-          }
-          case "fa": {
-            const { heFa } = await import("converters/he/he-fa");
-            return (await heFa(text)) as T;
-          }
-          case "ar": {
-            const { heAr } = await import("converters/he/he-ar");
-            return (await heAr(text)) as T;
-          }
-          case "ka": {
-            const { heKa } = await import("converters/he/he-ka");
-            return (await heKa(text)) as T;
-          }
-          case "hy": {
-            const { heHy } = await import("converters/he/he-hy");
-            return (await heHy(text)) as T;
-          }
-          case "el": {
-            const { heEl } = await import("converters/he/he-el");
-            return (await heEl(text)) as T;
-          }
-          case "ru": {
-            const { heRu } = await import("converters/he/he-ru");
-            return (await heRu(text)) as T;
-          }
-          case "uk": {
-            const { heUk } = await import("converters/he/he-uk");
-            return (await heUk(text)) as T;
-          }
-          case "bg": {
-            const { heBg } = await import("converters/he/he-bg");
-            return (await heBg(text)) as T;
-          }
-          case "mk": {
-            const { heMk } = await import("converters/he/he-mk");
-            return (await heMk(text)) as T;
-          }
-          case "kk": {
-            const { heKk } = await import("converters/he/he-kk");
-            return (await heKk(text)) as T;
-          }
-          case "tg": {
-            const { heTg } = await import("converters/he/he-tg");
-            return (await heTg(text)) as T;
-          }
-          case "az": {
-            const { heAz } = await import("converters/he/he-az");
-            return (await heAz(text)) as T;
-          }
-          case "bs": {
-            const { heBs } = await import("converters/he/he-bs");
-            return (await heBs(text)) as T;
-          }
-          case "ca": {
-            const { heCa } = await import("converters/he/he-ca");
-            return (await heCa(text)) as T;
-          }
-          case "cs": {
-            const { heCs } = await import("converters/he/he-cs");
-            return (await heCs(text)) as T;
-          }
-          case "da": {
-            const { heDa } = await import("converters/he/he-da");
-            return (await heDa(text)) as T;
-          }
-          case "de": {
-            const { heDe } = await import("converters/he/he-de");
-            return (await heDe(text)) as T;
-          }
-          case "en": {
-            const { heEn } = await import("converters/he/he-en");
-            return (await heEn(text)) as T;
-          }
-          case "es": {
-            const { heEs } = await import("converters/he/he-es");
-            return (await heEs(text)) as T;
-          }
-          case "et": {
-            const { heEt } = await import("converters/he/he-et");
-            return (await heEt(text)) as T;
-          }
-          case "fi": {
-            const { heFi } = await import("converters/he/he-fi");
-            return (await heFi(text)) as T;
-          }
-          case "fr": {
-            const { heFr } = await import("converters/he/he-fr");
-            return (await heFr(text)) as T;
-          }
-          case "hr": {
-            const { heHr } = await import("converters/he/he-hr");
-            return (await heHr(text)) as T;
-          }
-          case "hu": {
-            const { heHu } = await import("converters/he/he-hu");
-            return (await heHu(text)) as T;
-          }
-          case "id": {
-            const { heId } = await import("converters/he/he-id");
-            return (await heId(text)) as T;
-          }
-          case "is": {
-            const { heIs } = await import("converters/he/he-is");
-            return (await heIs(text)) as T;
-          }
-          case "it": {
-            const { heIt } = await import("converters/he/he-it");
-            return (await heIt(text)) as T;
-          }
-          case "lb": {
-            const { heLb } = await import("converters/he/he-lb");
-            return (await heLb(text)) as T;
-          }
-          case "lt": {
-            const { heLt } = await import("converters/he/he-lt");
-            return (await heLt(text)) as T;
-          }
-          case "lv": {
-            const { heLv } = await import("converters/he/he-lv");
-            return (await heLv(text)) as T;
-          }
-          case "ms": {
-            const { heMs } = await import("converters/he/he-ms");
-            return (await heMs(text)) as T;
-          }
-          case "mt": {
-            const { heMt } = await import("converters/he/he-mt");
-            return (await heMt(text)) as T;
-          }
-          case "nl": {
-            const { heNl } = await import("converters/he/he-nl");
-            return (await heNl(text)) as T;
-          }
-          case "no": {
-            const { heNo } = await import("converters/he/he-no");
-            return (await heNo(text)) as T;
-          }
-          case "pl": {
-            const { hePl } = await import("converters/he/he-pl");
-            return (await hePl(text)) as T;
-          }
-          case "pt": {
-            const { hePt } = await import("converters/he/he-pt");
-            return (await hePt(text)) as T;
-          }
-          case "ro": {
-            const { heRo } = await import("converters/he/he-ro");
-            return (await heRo(text)) as T;
-          }
-          case "sk": {
-            const { heSk } = await import("converters/he/he-sk");
-            return (await heSk(text)) as T;
-          }
-          case "sl": {
-            const { heSl } = await import("converters/he/he-sl");
-            return (await heSl(text)) as T;
-          }
-          case "sq": {
-            const { heSq } = await import("converters/he/he-sq");
-            return (await heSq(text)) as T;
-          }
-          case "sr": {
-            const { heSr } = await import("converters/he/he-sr");
-            return (await heSr(text)) as T;
-          }
-          case "sv": {
-            const { heSv } = await import("converters/he/he-sv");
-            return (await heSv(text)) as T;
-          }
-          case "tr": {
-            const { heTr } = await import("converters/he/he-tr");
-            return (await heTr(text)) as T;
-          }
-          case "vi": {
-            const { heVi } = await import("converters/he/he-vi");
-            return (await heVi(text)) as T;
-          }
-        }
-        break;
-      case "ka":
-        switch (to) {
-          case "zh": {
-            const { kaZh } = await import("converters/ka/ka-zh");
-            return (await kaZh(text)) as T;
-          }
-          case "ja": {
-            const { kaJa } = await import("converters/ka/ka-ja");
-            return (await kaJa(text)) as T;
-          }
-          case "ko": {
-            const { kaKo } = await import("converters/ka/ka-ko");
-            return (await kaKo(text)) as T;
-          }
-          case "th": {
-            const { kaTh } = await import("converters/ka/ka-th");
-            return (await kaTh(text)) as T;
-          }
-          case "hi": {
-            const { kaHi } = await import("converters/ka/ka-hi");
-            return (await kaHi(text)) as T;
-          }
-          case "bn": {
-            const { kaBn } = await import("converters/ka/ka-bn");
-            return (await kaBn(text)) as T;
-          }
-          case "ur": {
-            const { kaUr } = await import("converters/ka/ka-ur");
-            return (await kaUr(text)) as T;
-          }
-          case "fa": {
-            const { kaFa } = await import("converters/ka/ka-fa");
-            return (await kaFa(text)) as T;
-          }
-          case "ar": {
-            const { kaAr } = await import("converters/ka/ka-ar");
-            return (await kaAr(text)) as T;
-          }
-          case "he": {
-            const { kaHe } = await import("converters/ka/ka-he");
-            return (await kaHe(text)) as T;
-          }
-          case "hy": {
-            const { kaHy } = await import("converters/ka/ka-hy");
-            return (await kaHy(text)) as T;
-          }
-          case "el": {
-            const { kaEl } = await import("converters/ka/ka-el");
-            return (await kaEl(text)) as T;
-          }
-          case "ru": {
-            const { kaRu } = await import("converters/ka/ka-ru");
-            return (await kaRu(text)) as T;
-          }
-          case "uk": {
-            const { kaUk } = await import("converters/ka/ka-uk");
-            return (await kaUk(text)) as T;
-          }
-          case "bg": {
-            const { kaBg } = await import("converters/ka/ka-bg");
-            return (await kaBg(text)) as T;
-          }
-          case "mk": {
-            const { kaMk } = await import("converters/ka/ka-mk");
-            return (await kaMk(text)) as T;
-          }
-          case "kk": {
-            const { kaKk } = await import("converters/ka/ka-kk");
-            return (await kaKk(text)) as T;
-          }
-          case "tg": {
-            const { kaTg } = await import("converters/ka/ka-tg");
-            return (await kaTg(text)) as T;
-          }
-          case "az": {
-            const { kaAz } = await import("converters/ka/ka-az");
-            return (await kaAz(text)) as T;
-          }
-          case "bs": {
-            const { kaBs } = await import("converters/ka/ka-bs");
-            return (await kaBs(text)) as T;
-          }
-          case "ca": {
-            const { kaCa } = await import("converters/ka/ka-ca");
-            return (await kaCa(text)) as T;
-          }
-          case "cs": {
-            const { kaCs } = await import("converters/ka/ka-cs");
-            return (await kaCs(text)) as T;
-          }
-          case "da": {
-            const { kaDa } = await import("converters/ka/ka-da");
-            return (await kaDa(text)) as T;
-          }
-          case "de": {
-            const { kaDe } = await import("converters/ka/ka-de");
-            return (await kaDe(text)) as T;
-          }
-          case "en": {
-            const { kaEn } = await import("converters/ka/ka-en");
-            return (await kaEn(text)) as T;
-          }
-          case "es": {
-            const { kaEs } = await import("converters/ka/ka-es");
-            return (await kaEs(text)) as T;
-          }
-          case "et": {
-            const { kaEt } = await import("converters/ka/ka-et");
-            return (await kaEt(text)) as T;
-          }
-          case "fi": {
-            const { kaFi } = await import("converters/ka/ka-fi");
-            return (await kaFi(text)) as T;
-          }
-          case "fr": {
-            const { kaFr } = await import("converters/ka/ka-fr");
-            return (await kaFr(text)) as T;
-          }
-          case "hr": {
-            const { kaHr } = await import("converters/ka/ka-hr");
-            return (await kaHr(text)) as T;
-          }
-          case "hu": {
-            const { kaHu } = await import("converters/ka/ka-hu");
-            return (await kaHu(text)) as T;
-          }
-          case "id": {
-            const { kaId } = await import("converters/ka/ka-id");
-            return (await kaId(text)) as T;
-          }
-          case "is": {
-            const { kaIs } = await import("converters/ka/ka-is");
-            return (await kaIs(text)) as T;
-          }
-          case "it": {
-            const { kaIt } = await import("converters/ka/ka-it");
-            return (await kaIt(text)) as T;
-          }
-          case "lb": {
-            const { kaLb } = await import("converters/ka/ka-lb");
-            return (await kaLb(text)) as T;
-          }
-          case "lt": {
-            const { kaLt } = await import("converters/ka/ka-lt");
-            return (await kaLt(text)) as T;
-          }
-          case "lv": {
-            const { kaLv } = await import("converters/ka/ka-lv");
-            return (await kaLv(text)) as T;
-          }
-          case "ms": {
-            const { kaMs } = await import("converters/ka/ka-ms");
-            return (await kaMs(text)) as T;
-          }
-          case "mt": {
-            const { kaMt } = await import("converters/ka/ka-mt");
-            return (await kaMt(text)) as T;
-          }
-          case "nl": {
-            const { kaNl } = await import("converters/ka/ka-nl");
-            return (await kaNl(text)) as T;
-          }
-          case "no": {
-            const { kaNo } = await import("converters/ka/ka-no");
-            return (await kaNo(text)) as T;
-          }
-          case "pl": {
-            const { kaPl } = await import("converters/ka/ka-pl");
-            return (await kaPl(text)) as T;
-          }
-          case "pt": {
-            const { kaPt } = await import("converters/ka/ka-pt");
-            return (await kaPt(text)) as T;
-          }
-          case "ro": {
-            const { kaRo } = await import("converters/ka/ka-ro");
-            return (await kaRo(text)) as T;
-          }
-          case "sk": {
-            const { kaSk } = await import("converters/ka/ka-sk");
-            return (await kaSk(text)) as T;
-          }
-          case "sl": {
-            const { kaSl } = await import("converters/ka/ka-sl");
-            return (await kaSl(text)) as T;
-          }
-          case "sq": {
-            const { kaSq } = await import("converters/ka/ka-sq");
-            return (await kaSq(text)) as T;
-          }
-          case "sr": {
-            const { kaSr } = await import("converters/ka/ka-sr");
-            return (await kaSr(text)) as T;
-          }
-          case "sv": {
-            const { kaSv } = await import("converters/ka/ka-sv");
-            return (await kaSv(text)) as T;
-          }
-          case "tr": {
-            const { kaTr } = await import("converters/ka/ka-tr");
-            return (await kaTr(text)) as T;
-          }
-          case "vi": {
-            const { kaVi } = await import("converters/ka/ka-vi");
-            return (await kaVi(text)) as T;
-          }
-        }
-        break;
-      case "hy":
-        switch (to) {
-          case "zh": {
-            const { hyZh } = await import("converters/hy/hy-zh");
-            return (await hyZh(text)) as T;
-          }
-          case "ja": {
-            const { hyJa } = await import("converters/hy/hy-ja");
-            return (await hyJa(text)) as T;
-          }
-          case "ko": {
-            const { hyKo } = await import("converters/hy/hy-ko");
-            return (await hyKo(text)) as T;
-          }
-          case "th": {
-            const { hyTh } = await import("converters/hy/hy-th");
-            return (await hyTh(text)) as T;
-          }
-          case "hi": {
-            const { hyHi } = await import("converters/hy/hy-hi");
-            return (await hyHi(text)) as T;
-          }
-          case "bn": {
-            const { hyBn } = await import("converters/hy/hy-bn");
-            return (await hyBn(text)) as T;
-          }
-          case "ur": {
-            const { hyUr } = await import("converters/hy/hy-ur");
-            return (await hyUr(text)) as T;
-          }
-          case "fa": {
-            const { hyFa } = await import("converters/hy/hy-fa");
-            return (await hyFa(text)) as T;
-          }
-          case "ar": {
-            const { hyAr } = await import("converters/hy/hy-ar");
-            return (await hyAr(text)) as T;
-          }
-          case "he": {
-            const { hyHe } = await import("converters/hy/hy-he");
-            return (await hyHe(text)) as T;
-          }
-          case "ka": {
-            const { hyKa } = await import("converters/hy/hy-ka");
-            return (await hyKa(text)) as T;
-          }
-          case "el": {
-            const { hyEl } = await import("converters/hy/hy-el");
-            return (await hyEl(text)) as T;
-          }
-          case "ru": {
-            const { hyRu } = await import("converters/hy/hy-ru");
-            return (await hyRu(text)) as T;
-          }
-          case "uk": {
-            const { hyUk } = await import("converters/hy/hy-uk");
-            return (await hyUk(text)) as T;
-          }
-          case "bg": {
-            const { hyBg } = await import("converters/hy/hy-bg");
-            return (await hyBg(text)) as T;
-          }
-          case "mk": {
-            const { hyMk } = await import("converters/hy/hy-mk");
-            return (await hyMk(text)) as T;
-          }
-          case "kk": {
-            const { hyKk } = await import("converters/hy/hy-kk");
-            return (await hyKk(text)) as T;
-          }
-          case "tg": {
-            const { hyTg } = await import("converters/hy/hy-tg");
-            return (await hyTg(text)) as T;
-          }
-          case "az": {
-            const { hyAz } = await import("converters/hy/hy-az");
-            return (await hyAz(text)) as T;
-          }
-          case "bs": {
-            const { hyBs } = await import("converters/hy/hy-bs");
-            return (await hyBs(text)) as T;
-          }
-          case "ca": {
-            const { hyCa } = await import("converters/hy/hy-ca");
-            return (await hyCa(text)) as T;
-          }
-          case "cs": {
-            const { hyCs } = await import("converters/hy/hy-cs");
-            return (await hyCs(text)) as T;
-          }
-          case "da": {
-            const { hyDa } = await import("converters/hy/hy-da");
-            return (await hyDa(text)) as T;
-          }
-          case "de": {
-            const { hyDe } = await import("converters/hy/hy-de");
-            return (await hyDe(text)) as T;
-          }
-          case "en": {
-            const { hyEn } = await import("converters/hy/hy-en");
-            return (await hyEn(text)) as T;
-          }
-          case "es": {
-            const { hyEs } = await import("converters/hy/hy-es");
-            return (await hyEs(text)) as T;
-          }
-          case "et": {
-            const { hyEt } = await import("converters/hy/hy-et");
-            return (await hyEt(text)) as T;
-          }
-          case "fi": {
-            const { hyFi } = await import("converters/hy/hy-fi");
-            return (await hyFi(text)) as T;
-          }
-          case "fr": {
-            const { hyFr } = await import("converters/hy/hy-fr");
-            return (await hyFr(text)) as T;
-          }
-          case "hr": {
-            const { hyHr } = await import("converters/hy/hy-hr");
-            return (await hyHr(text)) as T;
-          }
-          case "hu": {
-            const { hyHu } = await import("converters/hy/hy-hu");
-            return (await hyHu(text)) as T;
-          }
-          case "id": {
-            const { hyId } = await import("converters/hy/hy-id");
-            return (await hyId(text)) as T;
-          }
-          case "is": {
-            const { hyIs } = await import("converters/hy/hy-is");
-            return (await hyIs(text)) as T;
-          }
-          case "it": {
-            const { hyIt } = await import("converters/hy/hy-it");
-            return (await hyIt(text)) as T;
-          }
-          case "lb": {
-            const { hyLb } = await import("converters/hy/hy-lb");
-            return (await hyLb(text)) as T;
-          }
-          case "lt": {
-            const { hyLt } = await import("converters/hy/hy-lt");
-            return (await hyLt(text)) as T;
-          }
-          case "lv": {
-            const { hyLv } = await import("converters/hy/hy-lv");
-            return (await hyLv(text)) as T;
-          }
-          case "ms": {
-            const { hyMs } = await import("converters/hy/hy-ms");
-            return (await hyMs(text)) as T;
-          }
-          case "mt": {
-            const { hyMt } = await import("converters/hy/hy-mt");
-            return (await hyMt(text)) as T;
-          }
-          case "nl": {
-            const { hyNl } = await import("converters/hy/hy-nl");
-            return (await hyNl(text)) as T;
-          }
-          case "no": {
-            const { hyNo } = await import("converters/hy/hy-no");
-            return (await hyNo(text)) as T;
-          }
-          case "pl": {
-            const { hyPl } = await import("converters/hy/hy-pl");
-            return (await hyPl(text)) as T;
-          }
-          case "pt": {
-            const { hyPt } = await import("converters/hy/hy-pt");
-            return (await hyPt(text)) as T;
-          }
-          case "ro": {
-            const { hyRo } = await import("converters/hy/hy-ro");
-            return (await hyRo(text)) as T;
-          }
-          case "sk": {
-            const { hySk } = await import("converters/hy/hy-sk");
-            return (await hySk(text)) as T;
-          }
-          case "sl": {
-            const { hySl } = await import("converters/hy/hy-sl");
-            return (await hySl(text)) as T;
-          }
-          case "sq": {
-            const { hySq } = await import("converters/hy/hy-sq");
-            return (await hySq(text)) as T;
-          }
-          case "sr": {
-            const { hySr } = await import("converters/hy/hy-sr");
-            return (await hySr(text)) as T;
-          }
-          case "sv": {
-            const { hySv } = await import("converters/hy/hy-sv");
-            return (await hySv(text)) as T;
-          }
-          case "tr": {
-            const { hyTr } = await import("converters/hy/hy-tr");
-            return (await hyTr(text)) as T;
-          }
-          case "vi": {
-            const { hyVi } = await import("converters/hy/hy-vi");
-            return (await hyVi(text)) as T;
-          }
-        }
-        break;
-      case "el":
-        switch (to) {
-          case "zh": {
-            const { elZh } = await import("converters/el/el-zh");
-            return (await elZh(text)) as T;
-          }
-          case "ja": {
-            const { elJa } = await import("converters/el/el-ja");
-            return (await elJa(text)) as T;
-          }
-          case "ko": {
-            const { elKo } = await import("converters/el/el-ko");
-            return (await elKo(text)) as T;
-          }
-          case "th": {
-            const { elTh } = await import("converters/el/el-th");
-            return (await elTh(text)) as T;
-          }
-          case "hi": {
-            const { elHi } = await import("converters/el/el-hi");
-            return (await elHi(text)) as T;
-          }
-          case "bn": {
-            const { elBn } = await import("converters/el/el-bn");
-            return (await elBn(text)) as T;
-          }
-          case "ur": {
-            const { elUr } = await import("converters/el/el-ur");
-            return (await elUr(text)) as T;
-          }
-          case "fa": {
-            const { elFa } = await import("converters/el/el-fa");
-            return (await elFa(text)) as T;
-          }
-          case "ar": {
-            const { elAr } = await import("converters/el/el-ar");
-            return (await elAr(text)) as T;
-          }
-          case "he": {
-            const { elHe } = await import("converters/el/el-he");
-            return (await elHe(text)) as T;
-          }
-          case "ka": {
-            const { elKa } = await import("converters/el/el-ka");
-            return (await elKa(text)) as T;
-          }
-          case "hy": {
-            const { elHy } = await import("converters/el/el-hy");
-            return (await elHy(text)) as T;
-          }
-          case "ru": {
-            const { elRu } = await import("converters/el/el-ru");
-            return (await elRu(text)) as T;
-          }
-          case "uk": {
-            const { elUk } = await import("converters/el/el-uk");
-            return (await elUk(text)) as T;
-          }
-          case "bg": {
-            const { elBg } = await import("converters/el/el-bg");
-            return (await elBg(text)) as T;
-          }
-          case "mk": {
-            const { elMk } = await import("converters/el/el-mk");
-            return (await elMk(text)) as T;
-          }
-          case "kk": {
-            const { elKk } = await import("converters/el/el-kk");
-            return (await elKk(text)) as T;
-          }
-          case "tg": {
-            const { elTg } = await import("converters/el/el-tg");
-            return (await elTg(text)) as T;
-          }
-          case "az": {
-            const { elAz } = await import("converters/el/el-az");
-            return (await elAz(text)) as T;
-          }
-          case "bs": {
-            const { elBs } = await import("converters/el/el-bs");
-            return (await elBs(text)) as T;
-          }
-          case "ca": {
-            const { elCa } = await import("converters/el/el-ca");
-            return (await elCa(text)) as T;
-          }
-          case "cs": {
-            const { elCs } = await import("converters/el/el-cs");
-            return (await elCs(text)) as T;
-          }
-          case "da": {
-            const { elDa } = await import("converters/el/el-da");
-            return (await elDa(text)) as T;
-          }
-          case "de": {
-            const { elDe } = await import("converters/el/el-de");
-            return (await elDe(text)) as T;
-          }
-          case "en": {
-            const { elEn } = await import("converters/el/el-en");
-            return (await elEn(text)) as T;
-          }
-          case "es": {
-            const { elEs } = await import("converters/el/el-es");
-            return (await elEs(text)) as T;
-          }
-          case "et": {
-            const { elEt } = await import("converters/el/el-et");
-            return (await elEt(text)) as T;
-          }
-          case "fi": {
-            const { elFi } = await import("converters/el/el-fi");
-            return (await elFi(text)) as T;
-          }
-          case "fr": {
-            const { elFr } = await import("converters/el/el-fr");
-            return (await elFr(text)) as T;
-          }
-          case "hr": {
-            const { elHr } = await import("converters/el/el-hr");
-            return (await elHr(text)) as T;
-          }
-          case "hu": {
-            const { elHu } = await import("converters/el/el-hu");
-            return (await elHu(text)) as T;
-          }
-          case "id": {
-            const { elId } = await import("converters/el/el-id");
-            return (await elId(text)) as T;
-          }
-          case "is": {
-            const { elIs } = await import("converters/el/el-is");
-            return (await elIs(text)) as T;
-          }
-          case "it": {
-            const { elIt } = await import("converters/el/el-it");
-            return (await elIt(text)) as T;
-          }
-          case "lb": {
-            const { elLb } = await import("converters/el/el-lb");
-            return (await elLb(text)) as T;
-          }
-          case "lt": {
-            const { elLt } = await import("converters/el/el-lt");
-            return (await elLt(text)) as T;
-          }
-          case "lv": {
-            const { elLv } = await import("converters/el/el-lv");
-            return (await elLv(text)) as T;
-          }
-          case "ms": {
-            const { elMs } = await import("converters/el/el-ms");
-            return (await elMs(text)) as T;
-          }
-          case "mt": {
-            const { elMt } = await import("converters/el/el-mt");
-            return (await elMt(text)) as T;
-          }
-          case "nl": {
-            const { elNl } = await import("converters/el/el-nl");
-            return (await elNl(text)) as T;
-          }
-          case "no": {
-            const { elNo } = await import("converters/el/el-no");
-            return (await elNo(text)) as T;
-          }
-          case "pl": {
-            const { elPl } = await import("converters/el/el-pl");
-            return (await elPl(text)) as T;
-          }
-          case "pt": {
-            const { elPt } = await import("converters/el/el-pt");
-            return (await elPt(text)) as T;
-          }
-          case "ro": {
-            const { elRo } = await import("converters/el/el-ro");
-            return (await elRo(text)) as T;
-          }
-          case "sk": {
-            const { elSk } = await import("converters/el/el-sk");
-            return (await elSk(text)) as T;
-          }
-          case "sl": {
-            const { elSl } = await import("converters/el/el-sl");
-            return (await elSl(text)) as T;
-          }
-          case "sq": {
-            const { elSq } = await import("converters/el/el-sq");
-            return (await elSq(text)) as T;
-          }
-          case "sr": {
-            const { elSr } = await import("converters/el/el-sr");
-            return (await elSr(text)) as T;
-          }
-          case "sv": {
-            const { elSv } = await import("converters/el/el-sv");
-            return (await elSv(text)) as T;
-          }
-          case "tr": {
-            const { elTr } = await import("converters/el/el-tr");
-            return (await elTr(text)) as T;
-          }
-          case "vi": {
-            const { elVi } = await import("converters/el/el-vi");
-            return (await elVi(text)) as T;
-          }
-        }
-        break;
-      case "ru":
-        switch (to) {
-          case "zh": {
-            const { ruZh } = await import("converters/ru/ru-zh");
-            return (await ruZh(text)) as T;
-          }
-          case "ja": {
-            const { ruJa } = await import("converters/ru/ru-ja");
-            return (await ruJa(text)) as T;
-          }
-          case "ko": {
-            const { ruKo } = await import("converters/ru/ru-ko");
-            return (await ruKo(text)) as T;
-          }
-          case "th": {
-            const { ruTh } = await import("converters/ru/ru-th");
-            return (await ruTh(text)) as T;
-          }
-          case "hi": {
-            const { ruHi } = await import("converters/ru/ru-hi");
-            return (await ruHi(text)) as T;
-          }
-          case "bn": {
-            const { ruBn } = await import("converters/ru/ru-bn");
-            return (await ruBn(text)) as T;
-          }
-          case "ur": {
-            const { ruUr } = await import("converters/ru/ru-ur");
-            return (await ruUr(text)) as T;
-          }
-          case "fa": {
-            const { ruFa } = await import("converters/ru/ru-fa");
-            return (await ruFa(text)) as T;
-          }
-          case "ar": {
-            const { ruAr } = await import("converters/ru/ru-ar");
-            return (await ruAr(text)) as T;
-          }
-          case "he": {
-            const { ruHe } = await import("converters/ru/ru-he");
-            return (await ruHe(text)) as T;
-          }
-          case "ka": {
-            const { ruKa } = await import("converters/ru/ru-ka");
-            return (await ruKa(text)) as T;
-          }
-          case "hy": {
-            const { ruHy } = await import("converters/ru/ru-hy");
-            return (await ruHy(text)) as T;
-          }
-          case "el": {
-            const { ruEl } = await import("converters/ru/ru-el");
-            return (await ruEl(text)) as T;
-          }
-          case "uk": {
-            const { ruUk } = await import("converters/ru/ru-uk");
-            return (await ruUk(text)) as T;
-          }
-          case "bg": {
-            const { ruBg } = await import("converters/ru/ru-bg");
-            return (await ruBg(text)) as T;
-          }
-          case "mk": {
-            const { ruMk } = await import("converters/ru/ru-mk");
-            return (await ruMk(text)) as T;
-          }
-          case "kk": {
-            const { ruKk } = await import("converters/ru/ru-kk");
-            return (await ruKk(text)) as T;
-          }
-          case "tg": {
-            const { ruTg } = await import("converters/ru/ru-tg");
-            return (await ruTg(text)) as T;
-          }
-          case "az": {
-            const { ruAz } = await import("converters/ru/ru-az");
-            return (await ruAz(text)) as T;
-          }
-          case "bs": {
-            const { ruBs } = await import("converters/ru/ru-bs");
-            return (await ruBs(text)) as T;
-          }
-          case "ca": {
-            const { ruCa } = await import("converters/ru/ru-ca");
-            return (await ruCa(text)) as T;
-          }
-          case "cs": {
-            const { ruCs } = await import("converters/ru/ru-cs");
-            return (await ruCs(text)) as T;
-          }
-          case "da": {
-            const { ruDa } = await import("converters/ru/ru-da");
-            return (await ruDa(text)) as T;
-          }
-          case "de": {
-            const { ruDe } = await import("converters/ru/ru-de");
-            return (await ruDe(text)) as T;
-          }
-          case "en": {
-            const { ruEn } = await import("converters/ru/ru-en");
-            return (await ruEn(text)) as T;
-          }
-          case "es": {
-            const { ruEs } = await import("converters/ru/ru-es");
-            return (await ruEs(text)) as T;
-          }
-          case "et": {
-            const { ruEt } = await import("converters/ru/ru-et");
-            return (await ruEt(text)) as T;
-          }
-          case "fi": {
-            const { ruFi } = await import("converters/ru/ru-fi");
-            return (await ruFi(text)) as T;
-          }
-          case "fr": {
-            const { ruFr } = await import("converters/ru/ru-fr");
-            return (await ruFr(text)) as T;
-          }
-          case "hr": {
-            const { ruHr } = await import("converters/ru/ru-hr");
-            return (await ruHr(text)) as T;
-          }
-          case "hu": {
-            const { ruHu } = await import("converters/ru/ru-hu");
-            return (await ruHu(text)) as T;
-          }
-          case "id": {
-            const { ruId } = await import("converters/ru/ru-id");
-            return (await ruId(text)) as T;
-          }
-          case "is": {
-            const { ruIs } = await import("converters/ru/ru-is");
-            return (await ruIs(text)) as T;
-          }
-          case "it": {
-            const { ruIt } = await import("converters/ru/ru-it");
-            return (await ruIt(text)) as T;
-          }
-          case "lb": {
-            const { ruLb } = await import("converters/ru/ru-lb");
-            return (await ruLb(text)) as T;
-          }
-          case "lt": {
-            const { ruLt } = await import("converters/ru/ru-lt");
-            return (await ruLt(text)) as T;
-          }
-          case "lv": {
-            const { ruLv } = await import("converters/ru/ru-lv");
-            return (await ruLv(text)) as T;
-          }
-          case "ms": {
-            const { ruMs } = await import("converters/ru/ru-ms");
-            return (await ruMs(text)) as T;
-          }
-          case "mt": {
-            const { ruMt } = await import("converters/ru/ru-mt");
-            return (await ruMt(text)) as T;
-          }
-          case "nl": {
-            const { ruNl } = await import("converters/ru/ru-nl");
-            return (await ruNl(text)) as T;
-          }
-          case "no": {
-            const { ruNo } = await import("converters/ru/ru-no");
-            return (await ruNo(text)) as T;
-          }
-          case "pl": {
-            const { ruPl } = await import("converters/ru/ru-pl");
-            return (await ruPl(text)) as T;
-          }
-          case "pt": {
-            const { ruPt } = await import("converters/ru/ru-pt");
-            return (await ruPt(text)) as T;
-          }
-          case "ro": {
-            const { ruRo } = await import("converters/ru/ru-ro");
-            return (await ruRo(text)) as T;
-          }
-          case "sk": {
-            const { ruSk } = await import("converters/ru/ru-sk");
-            return (await ruSk(text)) as T;
-          }
-          case "sl": {
-            const { ruSl } = await import("converters/ru/ru-sl");
-            return (await ruSl(text)) as T;
-          }
-          case "sq": {
-            const { ruSq } = await import("converters/ru/ru-sq");
-            return (await ruSq(text)) as T;
-          }
-          case "sr": {
-            const { ruSr } = await import("converters/ru/ru-sr");
-            return (await ruSr(text)) as T;
-          }
-          case "sv": {
-            const { ruSv } = await import("converters/ru/ru-sv");
-            return (await ruSv(text)) as T;
-          }
-          case "tr": {
-            const { ruTr } = await import("converters/ru/ru-tr");
-            return (await ruTr(text)) as T;
-          }
-          case "vi": {
-            const { ruVi } = await import("converters/ru/ru-vi");
-            return (await ruVi(text)) as T;
-          }
-        }
-        break;
-      case "uk":
-        switch (to) {
-          case "zh": {
-            const { ukZh } = await import("converters/uk/uk-zh");
-            return (await ukZh(text)) as T;
-          }
-          case "ja": {
-            const { ukJa } = await import("converters/uk/uk-ja");
-            return (await ukJa(text)) as T;
-          }
-          case "ko": {
-            const { ukKo } = await import("converters/uk/uk-ko");
-            return (await ukKo(text)) as T;
-          }
-          case "th": {
-            const { ukTh } = await import("converters/uk/uk-th");
-            return (await ukTh(text)) as T;
-          }
-          case "hi": {
-            const { ukHi } = await import("converters/uk/uk-hi");
-            return (await ukHi(text)) as T;
-          }
-          case "bn": {
-            const { ukBn } = await import("converters/uk/uk-bn");
-            return (await ukBn(text)) as T;
-          }
-          case "ur": {
-            const { ukUr } = await import("converters/uk/uk-ur");
-            return (await ukUr(text)) as T;
-          }
-          case "fa": {
-            const { ukFa } = await import("converters/uk/uk-fa");
-            return (await ukFa(text)) as T;
-          }
-          case "ar": {
-            const { ukAr } = await import("converters/uk/uk-ar");
-            return (await ukAr(text)) as T;
-          }
-          case "he": {
-            const { ukHe } = await import("converters/uk/uk-he");
-            return (await ukHe(text)) as T;
-          }
-          case "ka": {
-            const { ukKa } = await import("converters/uk/uk-ka");
-            return (await ukKa(text)) as T;
-          }
-          case "hy": {
-            const { ukHy } = await import("converters/uk/uk-hy");
-            return (await ukHy(text)) as T;
-          }
-          case "el": {
-            const { ukEl } = await import("converters/uk/uk-el");
-            return (await ukEl(text)) as T;
-          }
-          case "ru": {
-            const { ukRu } = await import("converters/uk/uk-ru");
-            return (await ukRu(text)) as T;
-          }
-          case "bg": {
-            const { ukBg } = await import("converters/uk/uk-bg");
-            return (await ukBg(text)) as T;
-          }
-          case "mk": {
-            const { ukMk } = await import("converters/uk/uk-mk");
-            return (await ukMk(text)) as T;
-          }
-          case "kk": {
-            const { ukKk } = await import("converters/uk/uk-kk");
-            return (await ukKk(text)) as T;
-          }
-          case "tg": {
-            const { ukTg } = await import("converters/uk/uk-tg");
-            return (await ukTg(text)) as T;
-          }
-          case "az": {
-            const { ukAz } = await import("converters/uk/uk-az");
-            return (await ukAz(text)) as T;
-          }
-          case "bs": {
-            const { ukBs } = await import("converters/uk/uk-bs");
-            return (await ukBs(text)) as T;
-          }
-          case "ca": {
-            const { ukCa } = await import("converters/uk/uk-ca");
-            return (await ukCa(text)) as T;
-          }
-          case "cs": {
-            const { ukCs } = await import("converters/uk/uk-cs");
-            return (await ukCs(text)) as T;
-          }
-          case "da": {
-            const { ukDa } = await import("converters/uk/uk-da");
-            return (await ukDa(text)) as T;
-          }
-          case "de": {
-            const { ukDe } = await import("converters/uk/uk-de");
-            return (await ukDe(text)) as T;
-          }
-          case "en": {
-            const { ukEn } = await import("converters/uk/uk-en");
-            return (await ukEn(text)) as T;
-          }
-          case "es": {
-            const { ukEs } = await import("converters/uk/uk-es");
-            return (await ukEs(text)) as T;
-          }
-          case "et": {
-            const { ukEt } = await import("converters/uk/uk-et");
-            return (await ukEt(text)) as T;
-          }
-          case "fi": {
-            const { ukFi } = await import("converters/uk/uk-fi");
-            return (await ukFi(text)) as T;
-          }
-          case "fr": {
-            const { ukFr } = await import("converters/uk/uk-fr");
-            return (await ukFr(text)) as T;
-          }
-          case "hr": {
-            const { ukHr } = await import("converters/uk/uk-hr");
-            return (await ukHr(text)) as T;
-          }
-          case "hu": {
-            const { ukHu } = await import("converters/uk/uk-hu");
-            return (await ukHu(text)) as T;
-          }
-          case "id": {
-            const { ukId } = await import("converters/uk/uk-id");
-            return (await ukId(text)) as T;
-          }
-          case "is": {
-            const { ukIs } = await import("converters/uk/uk-is");
-            return (await ukIs(text)) as T;
-          }
-          case "it": {
-            const { ukIt } = await import("converters/uk/uk-it");
-            return (await ukIt(text)) as T;
-          }
-          case "lb": {
-            const { ukLb } = await import("converters/uk/uk-lb");
-            return (await ukLb(text)) as T;
-          }
-          case "lt": {
-            const { ukLt } = await import("converters/uk/uk-lt");
-            return (await ukLt(text)) as T;
-          }
-          case "lv": {
-            const { ukLv } = await import("converters/uk/uk-lv");
-            return (await ukLv(text)) as T;
-          }
-          case "ms": {
-            const { ukMs } = await import("converters/uk/uk-ms");
-            return (await ukMs(text)) as T;
-          }
-          case "mt": {
-            const { ukMt } = await import("converters/uk/uk-mt");
-            return (await ukMt(text)) as T;
-          }
-          case "nl": {
-            const { ukNl } = await import("converters/uk/uk-nl");
-            return (await ukNl(text)) as T;
-          }
-          case "no": {
-            const { ukNo } = await import("converters/uk/uk-no");
-            return (await ukNo(text)) as T;
-          }
-          case "pl": {
-            const { ukPl } = await import("converters/uk/uk-pl");
-            return (await ukPl(text)) as T;
-          }
-          case "pt": {
-            const { ukPt } = await import("converters/uk/uk-pt");
-            return (await ukPt(text)) as T;
-          }
-          case "ro": {
-            const { ukRo } = await import("converters/uk/uk-ro");
-            return (await ukRo(text)) as T;
-          }
-          case "sk": {
-            const { ukSk } = await import("converters/uk/uk-sk");
-            return (await ukSk(text)) as T;
-          }
-          case "sl": {
-            const { ukSl } = await import("converters/uk/uk-sl");
-            return (await ukSl(text)) as T;
-          }
-          case "sq": {
-            const { ukSq } = await import("converters/uk/uk-sq");
-            return (await ukSq(text)) as T;
-          }
-          case "sr": {
-            const { ukSr } = await import("converters/uk/uk-sr");
-            return (await ukSr(text)) as T;
-          }
-          case "sv": {
-            const { ukSv } = await import("converters/uk/uk-sv");
-            return (await ukSv(text)) as T;
-          }
-          case "tr": {
-            const { ukTr } = await import("converters/uk/uk-tr");
-            return (await ukTr(text)) as T;
-          }
-          case "vi": {
-            const { ukVi } = await import("converters/uk/uk-vi");
-            return (await ukVi(text)) as T;
-          }
-        }
-        break;
-      case "bg":
-        switch (to) {
-          case "zh": {
-            const { bgZh } = await import("converters/bg/bg-zh");
-            return (await bgZh(text)) as T;
-          }
-          case "ja": {
-            const { bgJa } = await import("converters/bg/bg-ja");
-            return (await bgJa(text)) as T;
-          }
-          case "ko": {
-            const { bgKo } = await import("converters/bg/bg-ko");
-            return (await bgKo(text)) as T;
-          }
-          case "th": {
-            const { bgTh } = await import("converters/bg/bg-th");
-            return (await bgTh(text)) as T;
-          }
-          case "hi": {
-            const { bgHi } = await import("converters/bg/bg-hi");
-            return (await bgHi(text)) as T;
-          }
-          case "bn": {
-            const { bgBn } = await import("converters/bg/bg-bn");
-            return (await bgBn(text)) as T;
-          }
-          case "ur": {
-            const { bgUr } = await import("converters/bg/bg-ur");
-            return (await bgUr(text)) as T;
-          }
-          case "fa": {
-            const { bgFa } = await import("converters/bg/bg-fa");
-            return (await bgFa(text)) as T;
-          }
-          case "ar": {
-            const { bgAr } = await import("converters/bg/bg-ar");
-            return (await bgAr(text)) as T;
-          }
-          case "he": {
-            const { bgHe } = await import("converters/bg/bg-he");
-            return (await bgHe(text)) as T;
-          }
-          case "ka": {
-            const { bgKa } = await import("converters/bg/bg-ka");
-            return (await bgKa(text)) as T;
-          }
-          case "hy": {
-            const { bgHy } = await import("converters/bg/bg-hy");
-            return (await bgHy(text)) as T;
-          }
-          case "el": {
-            const { bgEl } = await import("converters/bg/bg-el");
-            return (await bgEl(text)) as T;
-          }
-          case "ru": {
-            const { bgRu } = await import("converters/bg/bg-ru");
-            return (await bgRu(text)) as T;
-          }
-          case "uk": {
-            const { bgUk } = await import("converters/bg/bg-uk");
-            return (await bgUk(text)) as T;
-          }
-          case "mk": {
-            const { bgMk } = await import("converters/bg/bg-mk");
-            return (await bgMk(text)) as T;
-          }
-          case "kk": {
-            const { bgKk } = await import("converters/bg/bg-kk");
-            return (await bgKk(text)) as T;
-          }
-          case "tg": {
-            const { bgTg } = await import("converters/bg/bg-tg");
-            return (await bgTg(text)) as T;
-          }
-          case "az": {
-            const { bgAz } = await import("converters/bg/bg-az");
-            return (await bgAz(text)) as T;
-          }
-          case "bs": {
-            const { bgBs } = await import("converters/bg/bg-bs");
-            return (await bgBs(text)) as T;
-          }
-          case "ca": {
-            const { bgCa } = await import("converters/bg/bg-ca");
-            return (await bgCa(text)) as T;
-          }
-          case "cs": {
-            const { bgCs } = await import("converters/bg/bg-cs");
-            return (await bgCs(text)) as T;
-          }
-          case "da": {
-            const { bgDa } = await import("converters/bg/bg-da");
-            return (await bgDa(text)) as T;
-          }
-          case "de": {
-            const { bgDe } = await import("converters/bg/bg-de");
-            return (await bgDe(text)) as T;
-          }
-          case "en": {
-            const { bgEn } = await import("converters/bg/bg-en");
-            return (await bgEn(text)) as T;
-          }
-          case "es": {
-            const { bgEs } = await import("converters/bg/bg-es");
-            return (await bgEs(text)) as T;
-          }
-          case "et": {
-            const { bgEt } = await import("converters/bg/bg-et");
-            return (await bgEt(text)) as T;
-          }
-          case "fi": {
-            const { bgFi } = await import("converters/bg/bg-fi");
-            return (await bgFi(text)) as T;
-          }
-          case "fr": {
-            const { bgFr } = await import("converters/bg/bg-fr");
-            return (await bgFr(text)) as T;
-          }
-          case "hr": {
-            const { bgHr } = await import("converters/bg/bg-hr");
-            return (await bgHr(text)) as T;
-          }
-          case "hu": {
-            const { bgHu } = await import("converters/bg/bg-hu");
-            return (await bgHu(text)) as T;
-          }
-          case "id": {
-            const { bgId } = await import("converters/bg/bg-id");
-            return (await bgId(text)) as T;
-          }
-          case "is": {
-            const { bgIs } = await import("converters/bg/bg-is");
-            return (await bgIs(text)) as T;
-          }
-          case "it": {
-            const { bgIt } = await import("converters/bg/bg-it");
-            return (await bgIt(text)) as T;
-          }
-          case "lb": {
-            const { bgLb } = await import("converters/bg/bg-lb");
-            return (await bgLb(text)) as T;
-          }
-          case "lt": {
-            const { bgLt } = await import("converters/bg/bg-lt");
-            return (await bgLt(text)) as T;
-          }
-          case "lv": {
-            const { bgLv } = await import("converters/bg/bg-lv");
-            return (await bgLv(text)) as T;
-          }
-          case "ms": {
-            const { bgMs } = await import("converters/bg/bg-ms");
-            return (await bgMs(text)) as T;
-          }
-          case "mt": {
-            const { bgMt } = await import("converters/bg/bg-mt");
-            return (await bgMt(text)) as T;
-          }
-          case "nl": {
-            const { bgNl } = await import("converters/bg/bg-nl");
-            return (await bgNl(text)) as T;
-          }
-          case "no": {
-            const { bgNo } = await import("converters/bg/bg-no");
-            return (await bgNo(text)) as T;
-          }
-          case "pl": {
-            const { bgPl } = await import("converters/bg/bg-pl");
-            return (await bgPl(text)) as T;
-          }
-          case "pt": {
-            const { bgPt } = await import("converters/bg/bg-pt");
-            return (await bgPt(text)) as T;
-          }
-          case "ro": {
-            const { bgRo } = await import("converters/bg/bg-ro");
-            return (await bgRo(text)) as T;
-          }
-          case "sk": {
-            const { bgSk } = await import("converters/bg/bg-sk");
-            return (await bgSk(text)) as T;
-          }
-          case "sl": {
-            const { bgSl } = await import("converters/bg/bg-sl");
-            return (await bgSl(text)) as T;
-          }
-          case "sq": {
-            const { bgSq } = await import("converters/bg/bg-sq");
-            return (await bgSq(text)) as T;
-          }
-          case "sr": {
-            const { bgSr } = await import("converters/bg/bg-sr");
-            return (await bgSr(text)) as T;
-          }
-          case "sv": {
-            const { bgSv } = await import("converters/bg/bg-sv");
-            return (await bgSv(text)) as T;
-          }
-          case "tr": {
-            const { bgTr } = await import("converters/bg/bg-tr");
-            return (await bgTr(text)) as T;
-          }
-          case "vi": {
-            const { bgVi } = await import("converters/bg/bg-vi");
-            return (await bgVi(text)) as T;
-          }
-        }
-        break;
-      case "mk":
-        switch (to) {
-          case "zh": {
-            const { mkZh } = await import("converters/mk/mk-zh");
-            return (await mkZh(text)) as T;
-          }
-          case "ja": {
-            const { mkJa } = await import("converters/mk/mk-ja");
-            return (await mkJa(text)) as T;
-          }
-          case "ko": {
-            const { mkKo } = await import("converters/mk/mk-ko");
-            return (await mkKo(text)) as T;
-          }
-          case "th": {
-            const { mkTh } = await import("converters/mk/mk-th");
-            return (await mkTh(text)) as T;
-          }
-          case "hi": {
-            const { mkHi } = await import("converters/mk/mk-hi");
-            return (await mkHi(text)) as T;
-          }
-          case "bn": {
-            const { mkBn } = await import("converters/mk/mk-bn");
-            return (await mkBn(text)) as T;
-          }
-          case "ur": {
-            const { mkUr } = await import("converters/mk/mk-ur");
-            return (await mkUr(text)) as T;
-          }
-          case "fa": {
-            const { mkFa } = await import("converters/mk/mk-fa");
-            return (await mkFa(text)) as T;
-          }
-          case "ar": {
-            const { mkAr } = await import("converters/mk/mk-ar");
-            return (await mkAr(text)) as T;
-          }
-          case "he": {
-            const { mkHe } = await import("converters/mk/mk-he");
-            return (await mkHe(text)) as T;
-          }
-          case "ka": {
-            const { mkKa } = await import("converters/mk/mk-ka");
-            return (await mkKa(text)) as T;
-          }
-          case "hy": {
-            const { mkHy } = await import("converters/mk/mk-hy");
-            return (await mkHy(text)) as T;
-          }
-          case "el": {
-            const { mkEl } = await import("converters/mk/mk-el");
-            return (await mkEl(text)) as T;
-          }
-          case "ru": {
-            const { mkRu } = await import("converters/mk/mk-ru");
-            return (await mkRu(text)) as T;
-          }
-          case "uk": {
-            const { mkUk } = await import("converters/mk/mk-uk");
-            return (await mkUk(text)) as T;
-          }
-          case "bg": {
-            const { mkBg } = await import("converters/mk/mk-bg");
-            return (await mkBg(text)) as T;
-          }
-          case "kk": {
-            const { mkKk } = await import("converters/mk/mk-kk");
-            return (await mkKk(text)) as T;
-          }
-          case "tg": {
-            const { mkTg } = await import("converters/mk/mk-tg");
-            return (await mkTg(text)) as T;
-          }
-          case "az": {
-            const { mkAz } = await import("converters/mk/mk-az");
-            return (await mkAz(text)) as T;
-          }
-          case "bs": {
-            const { mkBs } = await import("converters/mk/mk-bs");
-            return (await mkBs(text)) as T;
-          }
-          case "ca": {
-            const { mkCa } = await import("converters/mk/mk-ca");
-            return (await mkCa(text)) as T;
-          }
-          case "cs": {
-            const { mkCs } = await import("converters/mk/mk-cs");
-            return (await mkCs(text)) as T;
-          }
-          case "da": {
-            const { mkDa } = await import("converters/mk/mk-da");
-            return (await mkDa(text)) as T;
-          }
-          case "de": {
-            const { mkDe } = await import("converters/mk/mk-de");
-            return (await mkDe(text)) as T;
-          }
-          case "en": {
-            const { mkEn } = await import("converters/mk/mk-en");
-            return (await mkEn(text)) as T;
-          }
-          case "es": {
-            const { mkEs } = await import("converters/mk/mk-es");
-            return (await mkEs(text)) as T;
-          }
-          case "et": {
-            const { mkEt } = await import("converters/mk/mk-et");
-            return (await mkEt(text)) as T;
-          }
-          case "fi": {
-            const { mkFi } = await import("converters/mk/mk-fi");
-            return (await mkFi(text)) as T;
-          }
-          case "fr": {
-            const { mkFr } = await import("converters/mk/mk-fr");
-            return (await mkFr(text)) as T;
-          }
-          case "hr": {
-            const { mkHr } = await import("converters/mk/mk-hr");
-            return (await mkHr(text)) as T;
-          }
-          case "hu": {
-            const { mkHu } = await import("converters/mk/mk-hu");
-            return (await mkHu(text)) as T;
-          }
-          case "id": {
-            const { mkId } = await import("converters/mk/mk-id");
-            return (await mkId(text)) as T;
-          }
-          case "is": {
-            const { mkIs } = await import("converters/mk/mk-is");
-            return (await mkIs(text)) as T;
-          }
-          case "it": {
-            const { mkIt } = await import("converters/mk/mk-it");
-            return (await mkIt(text)) as T;
-          }
-          case "lb": {
-            const { mkLb } = await import("converters/mk/mk-lb");
-            return (await mkLb(text)) as T;
-          }
-          case "lt": {
-            const { mkLt } = await import("converters/mk/mk-lt");
-            return (await mkLt(text)) as T;
-          }
-          case "lv": {
-            const { mkLv } = await import("converters/mk/mk-lv");
-            return (await mkLv(text)) as T;
-          }
-          case "ms": {
-            const { mkMs } = await import("converters/mk/mk-ms");
-            return (await mkMs(text)) as T;
-          }
-          case "mt": {
-            const { mkMt } = await import("converters/mk/mk-mt");
-            return (await mkMt(text)) as T;
-          }
-          case "nl": {
-            const { mkNl } = await import("converters/mk/mk-nl");
-            return (await mkNl(text)) as T;
-          }
-          case "no": {
-            const { mkNo } = await import("converters/mk/mk-no");
-            return (await mkNo(text)) as T;
-          }
-          case "pl": {
-            const { mkPl } = await import("converters/mk/mk-pl");
-            return (await mkPl(text)) as T;
-          }
-          case "pt": {
-            const { mkPt } = await import("converters/mk/mk-pt");
-            return (await mkPt(text)) as T;
-          }
-          case "ro": {
-            const { mkRo } = await import("converters/mk/mk-ro");
-            return (await mkRo(text)) as T;
-          }
-          case "sk": {
-            const { mkSk } = await import("converters/mk/mk-sk");
-            return (await mkSk(text)) as T;
-          }
-          case "sl": {
-            const { mkSl } = await import("converters/mk/mk-sl");
-            return (await mkSl(text)) as T;
-          }
-          case "sq": {
-            const { mkSq } = await import("converters/mk/mk-sq");
-            return (await mkSq(text)) as T;
-          }
-          case "sr": {
-            const { mkSr } = await import("converters/mk/mk-sr");
-            return (await mkSr(text)) as T;
-          }
-          case "sv": {
-            const { mkSv } = await import("converters/mk/mk-sv");
-            return (await mkSv(text)) as T;
-          }
-          case "tr": {
-            const { mkTr } = await import("converters/mk/mk-tr");
-            return (await mkTr(text)) as T;
-          }
-          case "vi": {
-            const { mkVi } = await import("converters/mk/mk-vi");
-            return (await mkVi(text)) as T;
-          }
-        }
-        break;
-      case "kk":
-        switch (to) {
-          case "zh": {
-            const { kkZh } = await import("converters/kk/kk-zh");
-            return (await kkZh(text)) as T;
-          }
-          case "ja": {
-            const { kkJa } = await import("converters/kk/kk-ja");
-            return (await kkJa(text)) as T;
-          }
-          case "ko": {
-            const { kkKo } = await import("converters/kk/kk-ko");
-            return (await kkKo(text)) as T;
-          }
-          case "th": {
-            const { kkTh } = await import("converters/kk/kk-th");
-            return (await kkTh(text)) as T;
-          }
-          case "hi": {
-            const { kkHi } = await import("converters/kk/kk-hi");
-            return (await kkHi(text)) as T;
-          }
-          case "bn": {
-            const { kkBn } = await import("converters/kk/kk-bn");
-            return (await kkBn(text)) as T;
-          }
-          case "ur": {
-            const { kkUr } = await import("converters/kk/kk-ur");
-            return (await kkUr(text)) as T;
-          }
-          case "fa": {
-            const { kkFa } = await import("converters/kk/kk-fa");
-            return (await kkFa(text)) as T;
-          }
-          case "ar": {
-            const { kkAr } = await import("converters/kk/kk-ar");
-            return (await kkAr(text)) as T;
-          }
-          case "he": {
-            const { kkHe } = await import("converters/kk/kk-he");
-            return (await kkHe(text)) as T;
-          }
-          case "ka": {
-            const { kkKa } = await import("converters/kk/kk-ka");
-            return (await kkKa(text)) as T;
-          }
-          case "hy": {
-            const { kkHy } = await import("converters/kk/kk-hy");
-            return (await kkHy(text)) as T;
-          }
-          case "el": {
-            const { kkEl } = await import("converters/kk/kk-el");
-            return (await kkEl(text)) as T;
-          }
-          case "ru": {
-            const { kkRu } = await import("converters/kk/kk-ru");
-            return (await kkRu(text)) as T;
-          }
-          case "uk": {
-            const { kkUk } = await import("converters/kk/kk-uk");
-            return (await kkUk(text)) as T;
-          }
-          case "bg": {
-            const { kkBg } = await import("converters/kk/kk-bg");
-            return (await kkBg(text)) as T;
-          }
-          case "mk": {
-            const { kkMk } = await import("converters/kk/kk-mk");
-            return (await kkMk(text)) as T;
-          }
-          case "tg": {
-            const { kkTg } = await import("converters/kk/kk-tg");
-            return (await kkTg(text)) as T;
-          }
-          case "az": {
-            const { kkAz } = await import("converters/kk/kk-az");
-            return (await kkAz(text)) as T;
-          }
-          case "bs": {
-            const { kkBs } = await import("converters/kk/kk-bs");
-            return (await kkBs(text)) as T;
-          }
-          case "ca": {
-            const { kkCa } = await import("converters/kk/kk-ca");
-            return (await kkCa(text)) as T;
-          }
-          case "cs": {
-            const { kkCs } = await import("converters/kk/kk-cs");
-            return (await kkCs(text)) as T;
-          }
-          case "da": {
-            const { kkDa } = await import("converters/kk/kk-da");
-            return (await kkDa(text)) as T;
-          }
-          case "de": {
-            const { kkDe } = await import("converters/kk/kk-de");
-            return (await kkDe(text)) as T;
-          }
-          case "en": {
-            const { kkEn } = await import("converters/kk/kk-en");
-            return (await kkEn(text)) as T;
-          }
-          case "es": {
-            const { kkEs } = await import("converters/kk/kk-es");
-            return (await kkEs(text)) as T;
-          }
-          case "et": {
-            const { kkEt } = await import("converters/kk/kk-et");
-            return (await kkEt(text)) as T;
-          }
-          case "fi": {
-            const { kkFi } = await import("converters/kk/kk-fi");
-            return (await kkFi(text)) as T;
-          }
-          case "fr": {
-            const { kkFr } = await import("converters/kk/kk-fr");
-            return (await kkFr(text)) as T;
-          }
-          case "hr": {
-            const { kkHr } = await import("converters/kk/kk-hr");
-            return (await kkHr(text)) as T;
-          }
-          case "hu": {
-            const { kkHu } = await import("converters/kk/kk-hu");
-            return (await kkHu(text)) as T;
-          }
-          case "id": {
-            const { kkId } = await import("converters/kk/kk-id");
-            return (await kkId(text)) as T;
-          }
-          case "is": {
-            const { kkIs } = await import("converters/kk/kk-is");
-            return (await kkIs(text)) as T;
-          }
-          case "it": {
-            const { kkIt } = await import("converters/kk/kk-it");
-            return (await kkIt(text)) as T;
-          }
-          case "lb": {
-            const { kkLb } = await import("converters/kk/kk-lb");
-            return (await kkLb(text)) as T;
-          }
-          case "lt": {
-            const { kkLt } = await import("converters/kk/kk-lt");
-            return (await kkLt(text)) as T;
-          }
-          case "lv": {
-            const { kkLv } = await import("converters/kk/kk-lv");
-            return (await kkLv(text)) as T;
-          }
-          case "ms": {
-            const { kkMs } = await import("converters/kk/kk-ms");
-            return (await kkMs(text)) as T;
-          }
-          case "mt": {
-            const { kkMt } = await import("converters/kk/kk-mt");
-            return (await kkMt(text)) as T;
-          }
-          case "nl": {
-            const { kkNl } = await import("converters/kk/kk-nl");
-            return (await kkNl(text)) as T;
-          }
-          case "no": {
-            const { kkNo } = await import("converters/kk/kk-no");
-            return (await kkNo(text)) as T;
-          }
-          case "pl": {
-            const { kkPl } = await import("converters/kk/kk-pl");
-            return (await kkPl(text)) as T;
-          }
-          case "pt": {
-            const { kkPt } = await import("converters/kk/kk-pt");
-            return (await kkPt(text)) as T;
-          }
-          case "ro": {
-            const { kkRo } = await import("converters/kk/kk-ro");
-            return (await kkRo(text)) as T;
-          }
-          case "sk": {
-            const { kkSk } = await import("converters/kk/kk-sk");
-            return (await kkSk(text)) as T;
-          }
-          case "sl": {
-            const { kkSl } = await import("converters/kk/kk-sl");
-            return (await kkSl(text)) as T;
-          }
-          case "sq": {
-            const { kkSq } = await import("converters/kk/kk-sq");
-            return (await kkSq(text)) as T;
-          }
-          case "sr": {
-            const { kkSr } = await import("converters/kk/kk-sr");
-            return (await kkSr(text)) as T;
-          }
-          case "sv": {
-            const { kkSv } = await import("converters/kk/kk-sv");
-            return (await kkSv(text)) as T;
-          }
-          case "tr": {
-            const { kkTr } = await import("converters/kk/kk-tr");
-            return (await kkTr(text)) as T;
-          }
-          case "vi": {
-            const { kkVi } = await import("converters/kk/kk-vi");
-            return (await kkVi(text)) as T;
-          }
-        }
-        break;
-      case "tg":
-        switch (to) {
-          case "zh": {
-            const { tgZh } = await import("converters/tg/tg-zh");
-            return (await tgZh(text)) as T;
-          }
-          case "ja": {
-            const { tgJa } = await import("converters/tg/tg-ja");
-            return (await tgJa(text)) as T;
-          }
-          case "ko": {
-            const { tgKo } = await import("converters/tg/tg-ko");
-            return (await tgKo(text)) as T;
-          }
-          case "th": {
-            const { tgTh } = await import("converters/tg/tg-th");
-            return (await tgTh(text)) as T;
-          }
-          case "hi": {
-            const { tgHi } = await import("converters/tg/tg-hi");
-            return (await tgHi(text)) as T;
-          }
-          case "bn": {
-            const { tgBn } = await import("converters/tg/tg-bn");
-            return (await tgBn(text)) as T;
-          }
-          case "ur": {
-            const { tgUr } = await import("converters/tg/tg-ur");
-            return (await tgUr(text)) as T;
-          }
-          case "fa": {
-            const { tgFa } = await import("converters/tg/tg-fa");
-            return (await tgFa(text)) as T;
-          }
-          case "ar": {
-            const { tgAr } = await import("converters/tg/tg-ar");
-            return (await tgAr(text)) as T;
-          }
-          case "he": {
-            const { tgHe } = await import("converters/tg/tg-he");
-            return (await tgHe(text)) as T;
-          }
-          case "ka": {
-            const { tgKa } = await import("converters/tg/tg-ka");
-            return (await tgKa(text)) as T;
-          }
-          case "hy": {
-            const { tgHy } = await import("converters/tg/tg-hy");
-            return (await tgHy(text)) as T;
-          }
-          case "el": {
-            const { tgEl } = await import("converters/tg/tg-el");
-            return (await tgEl(text)) as T;
-          }
-          case "ru": {
-            const { tgRu } = await import("converters/tg/tg-ru");
-            return (await tgRu(text)) as T;
-          }
-          case "uk": {
-            const { tgUk } = await import("converters/tg/tg-uk");
-            return (await tgUk(text)) as T;
-          }
-          case "bg": {
-            const { tgBg } = await import("converters/tg/tg-bg");
-            return (await tgBg(text)) as T;
-          }
-          case "mk": {
-            const { tgMk } = await import("converters/tg/tg-mk");
-            return (await tgMk(text)) as T;
-          }
-          case "kk": {
-            const { tgKk } = await import("converters/tg/tg-kk");
-            return (await tgKk(text)) as T;
-          }
-          case "az": {
-            const { tgAz } = await import("converters/tg/tg-az");
-            return (await tgAz(text)) as T;
-          }
-          case "bs": {
-            const { tgBs } = await import("converters/tg/tg-bs");
-            return (await tgBs(text)) as T;
-          }
-          case "ca": {
-            const { tgCa } = await import("converters/tg/tg-ca");
-            return (await tgCa(text)) as T;
-          }
-          case "cs": {
-            const { tgCs } = await import("converters/tg/tg-cs");
-            return (await tgCs(text)) as T;
-          }
-          case "da": {
-            const { tgDa } = await import("converters/tg/tg-da");
-            return (await tgDa(text)) as T;
-          }
-          case "de": {
-            const { tgDe } = await import("converters/tg/tg-de");
-            return (await tgDe(text)) as T;
-          }
-          case "en": {
-            const { tgEn } = await import("converters/tg/tg-en");
-            return (await tgEn(text)) as T;
-          }
-          case "es": {
-            const { tgEs } = await import("converters/tg/tg-es");
-            return (await tgEs(text)) as T;
-          }
-          case "et": {
-            const { tgEt } = await import("converters/tg/tg-et");
-            return (await tgEt(text)) as T;
-          }
-          case "fi": {
-            const { tgFi } = await import("converters/tg/tg-fi");
-            return (await tgFi(text)) as T;
-          }
-          case "fr": {
-            const { tgFr } = await import("converters/tg/tg-fr");
-            return (await tgFr(text)) as T;
-          }
-          case "hr": {
-            const { tgHr } = await import("converters/tg/tg-hr");
-            return (await tgHr(text)) as T;
-          }
-          case "hu": {
-            const { tgHu } = await import("converters/tg/tg-hu");
-            return (await tgHu(text)) as T;
-          }
-          case "id": {
-            const { tgId } = await import("converters/tg/tg-id");
-            return (await tgId(text)) as T;
-          }
-          case "is": {
-            const { tgIs } = await import("converters/tg/tg-is");
-            return (await tgIs(text)) as T;
-          }
-          case "it": {
-            const { tgIt } = await import("converters/tg/tg-it");
-            return (await tgIt(text)) as T;
-          }
-          case "lb": {
-            const { tgLb } = await import("converters/tg/tg-lb");
-            return (await tgLb(text)) as T;
-          }
-          case "lt": {
-            const { tgLt } = await import("converters/tg/tg-lt");
-            return (await tgLt(text)) as T;
-          }
-          case "lv": {
-            const { tgLv } = await import("converters/tg/tg-lv");
-            return (await tgLv(text)) as T;
-          }
-          case "ms": {
-            const { tgMs } = await import("converters/tg/tg-ms");
-            return (await tgMs(text)) as T;
-          }
-          case "mt": {
-            const { tgMt } = await import("converters/tg/tg-mt");
-            return (await tgMt(text)) as T;
-          }
-          case "nl": {
-            const { tgNl } = await import("converters/tg/tg-nl");
-            return (await tgNl(text)) as T;
-          }
-          case "no": {
-            const { tgNo } = await import("converters/tg/tg-no");
-            return (await tgNo(text)) as T;
-          }
-          case "pl": {
-            const { tgPl } = await import("converters/tg/tg-pl");
-            return (await tgPl(text)) as T;
-          }
-          case "pt": {
-            const { tgPt } = await import("converters/tg/tg-pt");
-            return (await tgPt(text)) as T;
-          }
-          case "ro": {
-            const { tgRo } = await import("converters/tg/tg-ro");
-            return (await tgRo(text)) as T;
-          }
-          case "sk": {
-            const { tgSk } = await import("converters/tg/tg-sk");
-            return (await tgSk(text)) as T;
-          }
-          case "sl": {
-            const { tgSl } = await import("converters/tg/tg-sl");
-            return (await tgSl(text)) as T;
-          }
-          case "sq": {
-            const { tgSq } = await import("converters/tg/tg-sq");
-            return (await tgSq(text)) as T;
-          }
-          case "sr": {
-            const { tgSr } = await import("converters/tg/tg-sr");
-            return (await tgSr(text)) as T;
-          }
-          case "sv": {
-            const { tgSv } = await import("converters/tg/tg-sv");
-            return (await tgSv(text)) as T;
-          }
-          case "tr": {
-            const { tgTr } = await import("converters/tg/tg-tr");
-            return (await tgTr(text)) as T;
-          }
-          case "vi": {
-            const { tgVi } = await import("converters/tg/tg-vi");
-            return (await tgVi(text)) as T;
-          }
-        }
-        break;
-      case "az":
-        switch (to) {
-          case "zh": {
-            const { azZh } = await import("converters/az/az-zh");
-            return (await azZh(text)) as T;
-          }
-          case "ja": {
-            const { azJa } = await import("converters/az/az-ja");
-            return (await azJa(text)) as T;
-          }
-          case "ko": {
-            const { azKo } = await import("converters/az/az-ko");
-            return (await azKo(text)) as T;
-          }
-          case "th": {
-            const { azTh } = await import("converters/az/az-th");
-            return (await azTh(text)) as T;
-          }
-          case "hi": {
-            const { azHi } = await import("converters/az/az-hi");
-            return (await azHi(text)) as T;
-          }
-          case "bn": {
-            const { azBn } = await import("converters/az/az-bn");
-            return (await azBn(text)) as T;
-          }
-          case "ur": {
-            const { azUr } = await import("converters/az/az-ur");
-            return (await azUr(text)) as T;
-          }
-          case "fa": {
-            const { azFa } = await import("converters/az/az-fa");
-            return (await azFa(text)) as T;
-          }
-          case "ar": {
-            const { azAr } = await import("converters/az/az-ar");
-            return (await azAr(text)) as T;
-          }
-          case "he": {
-            const { azHe } = await import("converters/az/az-he");
-            return (await azHe(text)) as T;
-          }
-          case "ka": {
-            const { azKa } = await import("converters/az/az-ka");
-            return (await azKa(text)) as T;
-          }
-          case "hy": {
-            const { azHy } = await import("converters/az/az-hy");
-            return (await azHy(text)) as T;
-          }
-          case "el": {
-            const { azEl } = await import("converters/az/az-el");
-            return (await azEl(text)) as T;
-          }
-          case "ru": {
-            const { azRu } = await import("converters/az/az-ru");
-            return (await azRu(text)) as T;
-          }
-          case "uk": {
-            const { azUk } = await import("converters/az/az-uk");
-            return (await azUk(text)) as T;
-          }
-          case "bg": {
-            const { azBg } = await import("converters/az/az-bg");
-            return (await azBg(text)) as T;
-          }
-          case "mk": {
-            const { azMk } = await import("converters/az/az-mk");
-            return (await azMk(text)) as T;
-          }
-          case "kk": {
-            const { azKk } = await import("converters/az/az-kk");
-            return (await azKk(text)) as T;
-          }
-          case "tg": {
-            const { azTg } = await import("converters/az/az-tg");
-            return (await azTg(text)) as T;
-          }
-          case "bs": {
-            const { azBs } = await import("converters/az/az-bs");
-            return (await azBs(text)) as T;
-          }
-          case "ca": {
-            const { azCa } = await import("converters/az/az-ca");
-            return (await azCa(text)) as T;
-          }
-          case "cs": {
-            const { azCs } = await import("converters/az/az-cs");
-            return (await azCs(text)) as T;
-          }
-          case "da": {
-            const { azDa } = await import("converters/az/az-da");
-            return (await azDa(text)) as T;
-          }
-          case "de": {
-            const { azDe } = await import("converters/az/az-de");
-            return (await azDe(text)) as T;
-          }
-          case "en": {
-            const { azEn } = await import("converters/az/az-en");
-            return (await azEn(text)) as T;
-          }
-          case "es": {
-            const { azEs } = await import("converters/az/az-es");
-            return (await azEs(text)) as T;
-          }
-          case "et": {
-            const { azEt } = await import("converters/az/az-et");
-            return (await azEt(text)) as T;
-          }
-          case "fi": {
-            const { azFi } = await import("converters/az/az-fi");
-            return (await azFi(text)) as T;
-          }
-          case "fr": {
-            const { azFr } = await import("converters/az/az-fr");
-            return (await azFr(text)) as T;
-          }
-          case "hr": {
-            const { azHr } = await import("converters/az/az-hr");
-            return (await azHr(text)) as T;
-          }
-          case "hu": {
-            const { azHu } = await import("converters/az/az-hu");
-            return (await azHu(text)) as T;
-          }
-          case "id": {
-            const { azId } = await import("converters/az/az-id");
-            return (await azId(text)) as T;
-          }
-          case "is": {
-            const { azIs } = await import("converters/az/az-is");
-            return (await azIs(text)) as T;
-          }
-          case "it": {
-            const { azIt } = await import("converters/az/az-it");
-            return (await azIt(text)) as T;
-          }
-          case "lb": {
-            const { azLb } = await import("converters/az/az-lb");
-            return (await azLb(text)) as T;
-          }
-          case "lt": {
-            const { azLt } = await import("converters/az/az-lt");
-            return (await azLt(text)) as T;
-          }
-          case "lv": {
-            const { azLv } = await import("converters/az/az-lv");
-            return (await azLv(text)) as T;
-          }
-          case "ms": {
-            const { azMs } = await import("converters/az/az-ms");
-            return (await azMs(text)) as T;
-          }
-          case "mt": {
-            const { azMt } = await import("converters/az/az-mt");
-            return (await azMt(text)) as T;
-          }
-          case "nl": {
-            const { azNl } = await import("converters/az/az-nl");
-            return (await azNl(text)) as T;
-          }
-          case "no": {
-            const { azNo } = await import("converters/az/az-no");
-            return (await azNo(text)) as T;
-          }
-          case "pl": {
-            const { azPl } = await import("converters/az/az-pl");
-            return (await azPl(text)) as T;
-          }
-          case "pt": {
-            const { azPt } = await import("converters/az/az-pt");
-            return (await azPt(text)) as T;
-          }
-          case "ro": {
-            const { azRo } = await import("converters/az/az-ro");
-            return (await azRo(text)) as T;
-          }
-          case "sk": {
-            const { azSk } = await import("converters/az/az-sk");
-            return (await azSk(text)) as T;
-          }
-          case "sl": {
-            const { azSl } = await import("converters/az/az-sl");
-            return (await azSl(text)) as T;
-          }
-          case "sq": {
-            const { azSq } = await import("converters/az/az-sq");
-            return (await azSq(text)) as T;
-          }
-          case "sr": {
-            const { azSr } = await import("converters/az/az-sr");
-            return (await azSr(text)) as T;
-          }
-          case "sv": {
-            const { azSv } = await import("converters/az/az-sv");
-            return (await azSv(text)) as T;
-          }
-          case "tr": {
-            const { azTr } = await import("converters/az/az-tr");
-            return (await azTr(text)) as T;
-          }
-          case "vi": {
-            const { azVi } = await import("converters/az/az-vi");
-            return (await azVi(text)) as T;
-          }
-        }
-        break;
-      case "bs":
-        switch (to) {
-          case "zh": {
-            const { bsZh } = await import("converters/bs/bs-zh");
-            return (await bsZh(text)) as T;
-          }
-          case "ja": {
-            const { bsJa } = await import("converters/bs/bs-ja");
-            return (await bsJa(text)) as T;
-          }
-          case "ko": {
-            const { bsKo } = await import("converters/bs/bs-ko");
-            return (await bsKo(text)) as T;
-          }
-          case "th": {
-            const { bsTh } = await import("converters/bs/bs-th");
-            return (await bsTh(text)) as T;
-          }
-          case "hi": {
-            const { bsHi } = await import("converters/bs/bs-hi");
-            return (await bsHi(text)) as T;
-          }
-          case "bn": {
-            const { bsBn } = await import("converters/bs/bs-bn");
-            return (await bsBn(text)) as T;
-          }
-          case "ur": {
-            const { bsUr } = await import("converters/bs/bs-ur");
-            return (await bsUr(text)) as T;
-          }
-          case "fa": {
-            const { bsFa } = await import("converters/bs/bs-fa");
-            return (await bsFa(text)) as T;
-          }
-          case "ar": {
-            const { bsAr } = await import("converters/bs/bs-ar");
-            return (await bsAr(text)) as T;
-          }
-          case "he": {
-            const { bsHe } = await import("converters/bs/bs-he");
-            return (await bsHe(text)) as T;
-          }
-          case "ka": {
-            const { bsKa } = await import("converters/bs/bs-ka");
-            return (await bsKa(text)) as T;
-          }
-          case "hy": {
-            const { bsHy } = await import("converters/bs/bs-hy");
-            return (await bsHy(text)) as T;
-          }
-          case "el": {
-            const { bsEl } = await import("converters/bs/bs-el");
-            return (await bsEl(text)) as T;
-          }
-          case "ru": {
-            const { bsRu } = await import("converters/bs/bs-ru");
-            return (await bsRu(text)) as T;
-          }
-          case "uk": {
-            const { bsUk } = await import("converters/bs/bs-uk");
-            return (await bsUk(text)) as T;
-          }
-          case "bg": {
-            const { bsBg } = await import("converters/bs/bs-bg");
-            return (await bsBg(text)) as T;
-          }
-          case "mk": {
-            const { bsMk } = await import("converters/bs/bs-mk");
-            return (await bsMk(text)) as T;
-          }
-          case "kk": {
-            const { bsKk } = await import("converters/bs/bs-kk");
-            return (await bsKk(text)) as T;
-          }
-          case "tg": {
-            const { bsTg } = await import("converters/bs/bs-tg");
-            return (await bsTg(text)) as T;
-          }
-          case "az": {
-            const { bsAz } = await import("converters/bs/bs-az");
-            return (await bsAz(text)) as T;
-          }
-          case "ca": {
-            const { bsCa } = await import("converters/bs/bs-ca");
-            return (await bsCa(text)) as T;
-          }
-          case "cs": {
-            const { bsCs } = await import("converters/bs/bs-cs");
-            return (await bsCs(text)) as T;
-          }
-          case "da": {
-            const { bsDa } = await import("converters/bs/bs-da");
-            return (await bsDa(text)) as T;
-          }
-          case "de": {
-            const { bsDe } = await import("converters/bs/bs-de");
-            return (await bsDe(text)) as T;
-          }
-          case "en": {
-            const { bsEn } = await import("converters/bs/bs-en");
-            return (await bsEn(text)) as T;
-          }
-          case "es": {
-            const { bsEs } = await import("converters/bs/bs-es");
-            return (await bsEs(text)) as T;
-          }
-          case "et": {
-            const { bsEt } = await import("converters/bs/bs-et");
-            return (await bsEt(text)) as T;
-          }
-          case "fi": {
-            const { bsFi } = await import("converters/bs/bs-fi");
-            return (await bsFi(text)) as T;
-          }
-          case "fr": {
-            const { bsFr } = await import("converters/bs/bs-fr");
-            return (await bsFr(text)) as T;
-          }
-          case "hr": {
-            const { bsHr } = await import("converters/bs/bs-hr");
-            return (await bsHr(text)) as T;
-          }
-          case "hu": {
-            const { bsHu } = await import("converters/bs/bs-hu");
-            return (await bsHu(text)) as T;
-          }
-          case "id": {
-            const { bsId } = await import("converters/bs/bs-id");
-            return (await bsId(text)) as T;
-          }
-          case "is": {
-            const { bsIs } = await import("converters/bs/bs-is");
-            return (await bsIs(text)) as T;
-          }
-          case "it": {
-            const { bsIt } = await import("converters/bs/bs-it");
-            return (await bsIt(text)) as T;
-          }
-          case "lb": {
-            const { bsLb } = await import("converters/bs/bs-lb");
-            return (await bsLb(text)) as T;
-          }
-          case "lt": {
-            const { bsLt } = await import("converters/bs/bs-lt");
-            return (await bsLt(text)) as T;
-          }
-          case "lv": {
-            const { bsLv } = await import("converters/bs/bs-lv");
-            return (await bsLv(text)) as T;
-          }
-          case "ms": {
-            const { bsMs } = await import("converters/bs/bs-ms");
-            return (await bsMs(text)) as T;
-          }
-          case "mt": {
-            const { bsMt } = await import("converters/bs/bs-mt");
-            return (await bsMt(text)) as T;
-          }
-          case "nl": {
-            const { bsNl } = await import("converters/bs/bs-nl");
-            return (await bsNl(text)) as T;
-          }
-          case "no": {
-            const { bsNo } = await import("converters/bs/bs-no");
-            return (await bsNo(text)) as T;
-          }
-          case "pl": {
-            const { bsPl } = await import("converters/bs/bs-pl");
-            return (await bsPl(text)) as T;
-          }
-          case "pt": {
-            const { bsPt } = await import("converters/bs/bs-pt");
-            return (await bsPt(text)) as T;
-          }
-          case "ro": {
-            const { bsRo } = await import("converters/bs/bs-ro");
-            return (await bsRo(text)) as T;
-          }
-          case "sk": {
-            const { bsSk } = await import("converters/bs/bs-sk");
-            return (await bsSk(text)) as T;
-          }
-          case "sl": {
-            const { bsSl } = await import("converters/bs/bs-sl");
-            return (await bsSl(text)) as T;
-          }
-          case "sq": {
-            const { bsSq } = await import("converters/bs/bs-sq");
-            return (await bsSq(text)) as T;
-          }
-          case "sr": {
-            const { bsSr } = await import("converters/bs/bs-sr");
-            return (await bsSr(text)) as T;
-          }
-          case "sv": {
-            const { bsSv } = await import("converters/bs/bs-sv");
-            return (await bsSv(text)) as T;
-          }
-          case "tr": {
-            const { bsTr } = await import("converters/bs/bs-tr");
-            return (await bsTr(text)) as T;
-          }
-          case "vi": {
-            const { bsVi } = await import("converters/bs/bs-vi");
-            return (await bsVi(text)) as T;
-          }
-        }
-        break;
-      case "ca":
-        switch (to) {
-          case "zh": {
-            const { caZh } = await import("converters/ca/ca-zh");
-            return (await caZh(text)) as T;
-          }
-          case "ja": {
-            const { caJa } = await import("converters/ca/ca-ja");
-            return (await caJa(text)) as T;
-          }
-          case "ko": {
-            const { caKo } = await import("converters/ca/ca-ko");
-            return (await caKo(text)) as T;
-          }
-          case "th": {
-            const { caTh } = await import("converters/ca/ca-th");
-            return (await caTh(text)) as T;
-          }
-          case "hi": {
-            const { caHi } = await import("converters/ca/ca-hi");
-            return (await caHi(text)) as T;
-          }
-          case "bn": {
-            const { caBn } = await import("converters/ca/ca-bn");
-            return (await caBn(text)) as T;
-          }
-          case "ur": {
-            const { caUr } = await import("converters/ca/ca-ur");
-            return (await caUr(text)) as T;
-          }
-          case "fa": {
-            const { caFa } = await import("converters/ca/ca-fa");
-            return (await caFa(text)) as T;
-          }
-          case "ar": {
-            const { caAr } = await import("converters/ca/ca-ar");
-            return (await caAr(text)) as T;
-          }
-          case "he": {
-            const { caHe } = await import("converters/ca/ca-he");
-            return (await caHe(text)) as T;
-          }
-          case "ka": {
-            const { caKa } = await import("converters/ca/ca-ka");
-            return (await caKa(text)) as T;
-          }
-          case "hy": {
-            const { caHy } = await import("converters/ca/ca-hy");
-            return (await caHy(text)) as T;
-          }
-          case "el": {
-            const { caEl } = await import("converters/ca/ca-el");
-            return (await caEl(text)) as T;
-          }
-          case "ru": {
-            const { caRu } = await import("converters/ca/ca-ru");
-            return (await caRu(text)) as T;
-          }
-          case "uk": {
-            const { caUk } = await import("converters/ca/ca-uk");
-            return (await caUk(text)) as T;
-          }
-          case "bg": {
-            const { caBg } = await import("converters/ca/ca-bg");
-            return (await caBg(text)) as T;
-          }
-          case "mk": {
-            const { caMk } = await import("converters/ca/ca-mk");
-            return (await caMk(text)) as T;
-          }
-          case "kk": {
-            const { caKk } = await import("converters/ca/ca-kk");
-            return (await caKk(text)) as T;
-          }
-          case "tg": {
-            const { caTg } = await import("converters/ca/ca-tg");
-            return (await caTg(text)) as T;
-          }
-          case "az": {
-            const { caAz } = await import("converters/ca/ca-az");
-            return (await caAz(text)) as T;
-          }
-          case "bs": {
-            const { caBs } = await import("converters/ca/ca-bs");
-            return (await caBs(text)) as T;
-          }
-          case "cs": {
-            const { caCs } = await import("converters/ca/ca-cs");
-            return (await caCs(text)) as T;
-          }
-          case "da": {
-            const { caDa } = await import("converters/ca/ca-da");
-            return (await caDa(text)) as T;
-          }
-          case "de": {
-            const { caDe } = await import("converters/ca/ca-de");
-            return (await caDe(text)) as T;
-          }
-          case "en": {
-            const { caEn } = await import("converters/ca/ca-en");
-            return (await caEn(text)) as T;
-          }
-          case "es": {
-            const { caEs } = await import("converters/ca/ca-es");
-            return (await caEs(text)) as T;
-          }
-          case "et": {
-            const { caEt } = await import("converters/ca/ca-et");
-            return (await caEt(text)) as T;
-          }
-          case "fi": {
-            const { caFi } = await import("converters/ca/ca-fi");
-            return (await caFi(text)) as T;
-          }
-          case "fr": {
-            const { caFr } = await import("converters/ca/ca-fr");
-            return (await caFr(text)) as T;
-          }
-          case "hr": {
-            const { caHr } = await import("converters/ca/ca-hr");
-            return (await caHr(text)) as T;
-          }
-          case "hu": {
-            const { caHu } = await import("converters/ca/ca-hu");
-            return (await caHu(text)) as T;
-          }
-          case "id": {
-            const { caId } = await import("converters/ca/ca-id");
-            return (await caId(text)) as T;
-          }
-          case "is": {
-            const { caIs } = await import("converters/ca/ca-is");
-            return (await caIs(text)) as T;
-          }
-          case "it": {
-            const { caIt } = await import("converters/ca/ca-it");
-            return (await caIt(text)) as T;
-          }
-          case "lb": {
-            const { caLb } = await import("converters/ca/ca-lb");
-            return (await caLb(text)) as T;
-          }
-          case "lt": {
-            const { caLt } = await import("converters/ca/ca-lt");
-            return (await caLt(text)) as T;
-          }
-          case "lv": {
-            const { caLv } = await import("converters/ca/ca-lv");
-            return (await caLv(text)) as T;
-          }
-          case "ms": {
-            const { caMs } = await import("converters/ca/ca-ms");
-            return (await caMs(text)) as T;
-          }
-          case "mt": {
-            const { caMt } = await import("converters/ca/ca-mt");
-            return (await caMt(text)) as T;
-          }
-          case "nl": {
-            const { caNl } = await import("converters/ca/ca-nl");
-            return (await caNl(text)) as T;
-          }
-          case "no": {
-            const { caNo } = await import("converters/ca/ca-no");
-            return (await caNo(text)) as T;
-          }
-          case "pl": {
-            const { caPl } = await import("converters/ca/ca-pl");
-            return (await caPl(text)) as T;
-          }
-          case "pt": {
-            const { caPt } = await import("converters/ca/ca-pt");
-            return (await caPt(text)) as T;
-          }
-          case "ro": {
-            const { caRo } = await import("converters/ca/ca-ro");
-            return (await caRo(text)) as T;
-          }
-          case "sk": {
-            const { caSk } = await import("converters/ca/ca-sk");
-            return (await caSk(text)) as T;
-          }
-          case "sl": {
-            const { caSl } = await import("converters/ca/ca-sl");
-            return (await caSl(text)) as T;
-          }
-          case "sq": {
-            const { caSq } = await import("converters/ca/ca-sq");
-            return (await caSq(text)) as T;
-          }
-          case "sr": {
-            const { caSr } = await import("converters/ca/ca-sr");
-            return (await caSr(text)) as T;
-          }
-          case "sv": {
-            const { caSv } = await import("converters/ca/ca-sv");
-            return (await caSv(text)) as T;
-          }
-          case "tr": {
-            const { caTr } = await import("converters/ca/ca-tr");
-            return (await caTr(text)) as T;
-          }
-          case "vi": {
-            const { caVi } = await import("converters/ca/ca-vi");
-            return (await caVi(text)) as T;
-          }
-        }
-        break;
-      case "cs":
-        switch (to) {
-          case "zh": {
-            const { csZh } = await import("converters/cs/cs-zh");
-            return (await csZh(text)) as T;
-          }
-          case "ja": {
-            const { csJa } = await import("converters/cs/cs-ja");
-            return (await csJa(text)) as T;
-          }
-          case "ko": {
-            const { csKo } = await import("converters/cs/cs-ko");
-            return (await csKo(text)) as T;
-          }
-          case "th": {
-            const { csTh } = await import("converters/cs/cs-th");
-            return (await csTh(text)) as T;
-          }
-          case "hi": {
-            const { csHi } = await import("converters/cs/cs-hi");
-            return (await csHi(text)) as T;
-          }
-          case "bn": {
-            const { csBn } = await import("converters/cs/cs-bn");
-            return (await csBn(text)) as T;
-          }
-          case "ur": {
-            const { csUr } = await import("converters/cs/cs-ur");
-            return (await csUr(text)) as T;
-          }
-          case "fa": {
-            const { csFa } = await import("converters/cs/cs-fa");
-            return (await csFa(text)) as T;
-          }
-          case "ar": {
-            const { csAr } = await import("converters/cs/cs-ar");
-            return (await csAr(text)) as T;
-          }
-          case "he": {
-            const { csHe } = await import("converters/cs/cs-he");
-            return (await csHe(text)) as T;
-          }
-          case "ka": {
-            const { csKa } = await import("converters/cs/cs-ka");
-            return (await csKa(text)) as T;
-          }
-          case "hy": {
-            const { csHy } = await import("converters/cs/cs-hy");
-            return (await csHy(text)) as T;
-          }
-          case "el": {
-            const { csEl } = await import("converters/cs/cs-el");
-            return (await csEl(text)) as T;
-          }
-          case "ru": {
-            const { csRu } = await import("converters/cs/cs-ru");
-            return (await csRu(text)) as T;
-          }
-          case "uk": {
-            const { csUk } = await import("converters/cs/cs-uk");
-            return (await csUk(text)) as T;
-          }
-          case "bg": {
-            const { csBg } = await import("converters/cs/cs-bg");
-            return (await csBg(text)) as T;
-          }
-          case "mk": {
-            const { csMk } = await import("converters/cs/cs-mk");
-            return (await csMk(text)) as T;
-          }
-          case "kk": {
-            const { csKk } = await import("converters/cs/cs-kk");
-            return (await csKk(text)) as T;
-          }
-          case "tg": {
-            const { csTg } = await import("converters/cs/cs-tg");
-            return (await csTg(text)) as T;
-          }
-          case "az": {
-            const { csAz } = await import("converters/cs/cs-az");
-            return (await csAz(text)) as T;
-          }
-          case "bs": {
-            const { csBs } = await import("converters/cs/cs-bs");
-            return (await csBs(text)) as T;
-          }
-          case "ca": {
-            const { csCa } = await import("converters/cs/cs-ca");
-            return (await csCa(text)) as T;
-          }
-          case "da": {
-            const { csDa } = await import("converters/cs/cs-da");
-            return (await csDa(text)) as T;
-          }
-          case "de": {
-            const { csDe } = await import("converters/cs/cs-de");
-            return (await csDe(text)) as T;
-          }
-          case "en": {
-            const { csEn } = await import("converters/cs/cs-en");
-            return (await csEn(text)) as T;
-          }
-          case "es": {
-            const { csEs } = await import("converters/cs/cs-es");
-            return (await csEs(text)) as T;
-          }
-          case "et": {
-            const { csEt } = await import("converters/cs/cs-et");
-            return (await csEt(text)) as T;
-          }
-          case "fi": {
-            const { csFi } = await import("converters/cs/cs-fi");
-            return (await csFi(text)) as T;
-          }
-          case "fr": {
-            const { csFr } = await import("converters/cs/cs-fr");
-            return (await csFr(text)) as T;
-          }
-          case "hr": {
-            const { csHr } = await import("converters/cs/cs-hr");
-            return (await csHr(text)) as T;
-          }
-          case "hu": {
-            const { csHu } = await import("converters/cs/cs-hu");
-            return (await csHu(text)) as T;
-          }
-          case "id": {
-            const { csId } = await import("converters/cs/cs-id");
-            return (await csId(text)) as T;
-          }
-          case "is": {
-            const { csIs } = await import("converters/cs/cs-is");
-            return (await csIs(text)) as T;
-          }
-          case "it": {
-            const { csIt } = await import("converters/cs/cs-it");
-            return (await csIt(text)) as T;
-          }
-          case "lb": {
-            const { csLb } = await import("converters/cs/cs-lb");
-            return (await csLb(text)) as T;
-          }
-          case "lt": {
-            const { csLt } = await import("converters/cs/cs-lt");
-            return (await csLt(text)) as T;
-          }
-          case "lv": {
-            const { csLv } = await import("converters/cs/cs-lv");
-            return (await csLv(text)) as T;
-          }
-          case "ms": {
-            const { csMs } = await import("converters/cs/cs-ms");
-            return (await csMs(text)) as T;
-          }
-          case "mt": {
-            const { csMt } = await import("converters/cs/cs-mt");
-            return (await csMt(text)) as T;
-          }
-          case "nl": {
-            const { csNl } = await import("converters/cs/cs-nl");
-            return (await csNl(text)) as T;
-          }
-          case "no": {
-            const { csNo } = await import("converters/cs/cs-no");
-            return (await csNo(text)) as T;
-          }
-          case "pl": {
-            const { csPl } = await import("converters/cs/cs-pl");
-            return (await csPl(text)) as T;
-          }
-          case "pt": {
-            const { csPt } = await import("converters/cs/cs-pt");
-            return (await csPt(text)) as T;
-          }
-          case "ro": {
-            const { csRo } = await import("converters/cs/cs-ro");
-            return (await csRo(text)) as T;
-          }
-          case "sk": {
-            const { csSk } = await import("converters/cs/cs-sk");
-            return (await csSk(text)) as T;
-          }
-          case "sl": {
-            const { csSl } = await import("converters/cs/cs-sl");
-            return (await csSl(text)) as T;
-          }
-          case "sq": {
-            const { csSq } = await import("converters/cs/cs-sq");
-            return (await csSq(text)) as T;
-          }
-          case "sr": {
-            const { csSr } = await import("converters/cs/cs-sr");
-            return (await csSr(text)) as T;
-          }
-          case "sv": {
-            const { csSv } = await import("converters/cs/cs-sv");
-            return (await csSv(text)) as T;
-          }
-          case "tr": {
-            const { csTr } = await import("converters/cs/cs-tr");
-            return (await csTr(text)) as T;
-          }
-          case "vi": {
-            const { csVi } = await import("converters/cs/cs-vi");
-            return (await csVi(text)) as T;
-          }
-        }
-        break;
-      case "da":
-        switch (to) {
-          case "zh": {
-            const { daZh } = await import("converters/da/da-zh");
-            return (await daZh(text)) as T;
-          }
-          case "ja": {
-            const { daJa } = await import("converters/da/da-ja");
-            return (await daJa(text)) as T;
-          }
-          case "ko": {
-            const { daKo } = await import("converters/da/da-ko");
-            return (await daKo(text)) as T;
-          }
-          case "th": {
-            const { daTh } = await import("converters/da/da-th");
-            return (await daTh(text)) as T;
-          }
-          case "hi": {
-            const { daHi } = await import("converters/da/da-hi");
-            return (await daHi(text)) as T;
-          }
-          case "bn": {
-            const { daBn } = await import("converters/da/da-bn");
-            return (await daBn(text)) as T;
-          }
-          case "ur": {
-            const { daUr } = await import("converters/da/da-ur");
-            return (await daUr(text)) as T;
-          }
-          case "fa": {
-            const { daFa } = await import("converters/da/da-fa");
-            return (await daFa(text)) as T;
-          }
-          case "ar": {
-            const { daAr } = await import("converters/da/da-ar");
-            return (await daAr(text)) as T;
-          }
-          case "he": {
-            const { daHe } = await import("converters/da/da-he");
-            return (await daHe(text)) as T;
-          }
-          case "ka": {
-            const { daKa } = await import("converters/da/da-ka");
-            return (await daKa(text)) as T;
-          }
-          case "hy": {
-            const { daHy } = await import("converters/da/da-hy");
-            return (await daHy(text)) as T;
-          }
-          case "el": {
-            const { daEl } = await import("converters/da/da-el");
-            return (await daEl(text)) as T;
-          }
-          case "ru": {
-            const { daRu } = await import("converters/da/da-ru");
-            return (await daRu(text)) as T;
-          }
-          case "uk": {
-            const { daUk } = await import("converters/da/da-uk");
-            return (await daUk(text)) as T;
-          }
-          case "bg": {
-            const { daBg } = await import("converters/da/da-bg");
-            return (await daBg(text)) as T;
-          }
-          case "mk": {
-            const { daMk } = await import("converters/da/da-mk");
-            return (await daMk(text)) as T;
-          }
-          case "kk": {
-            const { daKk } = await import("converters/da/da-kk");
-            return (await daKk(text)) as T;
-          }
-          case "tg": {
-            const { daTg } = await import("converters/da/da-tg");
-            return (await daTg(text)) as T;
-          }
-          case "az": {
-            const { daAz } = await import("converters/da/da-az");
-            return (await daAz(text)) as T;
-          }
-          case "bs": {
-            const { daBs } = await import("converters/da/da-bs");
-            return (await daBs(text)) as T;
-          }
-          case "ca": {
-            const { daCa } = await import("converters/da/da-ca");
-            return (await daCa(text)) as T;
-          }
-          case "cs": {
-            const { daCs } = await import("converters/da/da-cs");
-            return (await daCs(text)) as T;
-          }
-          case "de": {
-            const { daDe } = await import("converters/da/da-de");
-            return (await daDe(text)) as T;
-          }
-          case "en": {
-            const { daEn } = await import("converters/da/da-en");
-            return (await daEn(text)) as T;
-          }
-          case "es": {
-            const { daEs } = await import("converters/da/da-es");
-            return (await daEs(text)) as T;
-          }
-          case "et": {
-            const { daEt } = await import("converters/da/da-et");
-            return (await daEt(text)) as T;
-          }
-          case "fi": {
-            const { daFi } = await import("converters/da/da-fi");
-            return (await daFi(text)) as T;
-          }
-          case "fr": {
-            const { daFr } = await import("converters/da/da-fr");
-            return (await daFr(text)) as T;
-          }
-          case "hr": {
-            const { daHr } = await import("converters/da/da-hr");
-            return (await daHr(text)) as T;
-          }
-          case "hu": {
-            const { daHu } = await import("converters/da/da-hu");
-            return (await daHu(text)) as T;
-          }
-          case "id": {
-            const { daId } = await import("converters/da/da-id");
-            return (await daId(text)) as T;
-          }
-          case "is": {
-            const { daIs } = await import("converters/da/da-is");
-            return (await daIs(text)) as T;
-          }
-          case "it": {
-            const { daIt } = await import("converters/da/da-it");
-            return (await daIt(text)) as T;
-          }
-          case "lb": {
-            const { daLb } = await import("converters/da/da-lb");
-            return (await daLb(text)) as T;
-          }
-          case "lt": {
-            const { daLt } = await import("converters/da/da-lt");
-            return (await daLt(text)) as T;
-          }
-          case "lv": {
-            const { daLv } = await import("converters/da/da-lv");
-            return (await daLv(text)) as T;
-          }
-          case "ms": {
-            const { daMs } = await import("converters/da/da-ms");
-            return (await daMs(text)) as T;
-          }
-          case "mt": {
-            const { daMt } = await import("converters/da/da-mt");
-            return (await daMt(text)) as T;
-          }
-          case "nl": {
-            const { daNl } = await import("converters/da/da-nl");
-            return (await daNl(text)) as T;
-          }
-          case "no": {
-            const { daNo } = await import("converters/da/da-no");
-            return (await daNo(text)) as T;
-          }
-          case "pl": {
-            const { daPl } = await import("converters/da/da-pl");
-            return (await daPl(text)) as T;
-          }
-          case "pt": {
-            const { daPt } = await import("converters/da/da-pt");
-            return (await daPt(text)) as T;
-          }
-          case "ro": {
-            const { daRo } = await import("converters/da/da-ro");
-            return (await daRo(text)) as T;
-          }
-          case "sk": {
-            const { daSk } = await import("converters/da/da-sk");
-            return (await daSk(text)) as T;
-          }
-          case "sl": {
-            const { daSl } = await import("converters/da/da-sl");
-            return (await daSl(text)) as T;
-          }
-          case "sq": {
-            const { daSq } = await import("converters/da/da-sq");
-            return (await daSq(text)) as T;
-          }
-          case "sr": {
-            const { daSr } = await import("converters/da/da-sr");
-            return (await daSr(text)) as T;
-          }
-          case "sv": {
-            const { daSv } = await import("converters/da/da-sv");
-            return (await daSv(text)) as T;
-          }
-          case "tr": {
-            const { daTr } = await import("converters/da/da-tr");
-            return (await daTr(text)) as T;
-          }
-          case "vi": {
-            const { daVi } = await import("converters/da/da-vi");
-            return (await daVi(text)) as T;
-          }
-        }
-        break;
-      case "de":
-        switch (to) {
-          case "zh": {
-            const { deZh } = await import("converters/de/de-zh");
-            return (await deZh(text)) as T;
-          }
-          case "ja": {
-            const { deJa } = await import("converters/de/de-ja");
-            return (await deJa(text)) as T;
-          }
-          case "ko": {
-            const { deKo } = await import("converters/de/de-ko");
-            return (await deKo(text)) as T;
-          }
-          case "th": {
-            const { deTh } = await import("converters/de/de-th");
-            return (await deTh(text)) as T;
-          }
-          case "hi": {
-            const { deHi } = await import("converters/de/de-hi");
-            return (await deHi(text)) as T;
-          }
-          case "bn": {
-            const { deBn } = await import("converters/de/de-bn");
-            return (await deBn(text)) as T;
-          }
-          case "ur": {
-            const { deUr } = await import("converters/de/de-ur");
-            return (await deUr(text)) as T;
-          }
-          case "fa": {
-            const { deFa } = await import("converters/de/de-fa");
-            return (await deFa(text)) as T;
-          }
-          case "ar": {
-            const { deAr } = await import("converters/de/de-ar");
-            return (await deAr(text)) as T;
-          }
-          case "he": {
-            const { deHe } = await import("converters/de/de-he");
-            return (await deHe(text)) as T;
-          }
-          case "ka": {
-            const { deKa } = await import("converters/de/de-ka");
-            return (await deKa(text)) as T;
-          }
-          case "hy": {
-            const { deHy } = await import("converters/de/de-hy");
-            return (await deHy(text)) as T;
-          }
-          case "el": {
-            const { deEl } = await import("converters/de/de-el");
-            return (await deEl(text)) as T;
-          }
-          case "ru": {
-            const { deRu } = await import("converters/de/de-ru");
-            return (await deRu(text)) as T;
-          }
-          case "uk": {
-            const { deUk } = await import("converters/de/de-uk");
-            return (await deUk(text)) as T;
-          }
-          case "bg": {
-            const { deBg } = await import("converters/de/de-bg");
-            return (await deBg(text)) as T;
-          }
-          case "mk": {
-            const { deMk } = await import("converters/de/de-mk");
-            return (await deMk(text)) as T;
-          }
-          case "kk": {
-            const { deKk } = await import("converters/de/de-kk");
-            return (await deKk(text)) as T;
-          }
-          case "tg": {
-            const { deTg } = await import("converters/de/de-tg");
-            return (await deTg(text)) as T;
-          }
-          case "az": {
-            const { deAz } = await import("converters/de/de-az");
-            return (await deAz(text)) as T;
-          }
-          case "bs": {
-            const { deBs } = await import("converters/de/de-bs");
-            return (await deBs(text)) as T;
-          }
-          case "ca": {
-            const { deCa } = await import("converters/de/de-ca");
-            return (await deCa(text)) as T;
-          }
-          case "cs": {
-            const { deCs } = await import("converters/de/de-cs");
-            return (await deCs(text)) as T;
-          }
-          case "da": {
-            const { deDa } = await import("converters/de/de-da");
-            return (await deDa(text)) as T;
-          }
-          case "en": {
-            const { deEn } = await import("converters/de/de-en");
-            return (await deEn(text)) as T;
-          }
-          case "es": {
-            const { deEs } = await import("converters/de/de-es");
-            return (await deEs(text)) as T;
-          }
-          case "et": {
-            const { deEt } = await import("converters/de/de-et");
-            return (await deEt(text)) as T;
-          }
-          case "fi": {
-            const { deFi } = await import("converters/de/de-fi");
-            return (await deFi(text)) as T;
-          }
-          case "fr": {
-            const { deFr } = await import("converters/de/de-fr");
-            return (await deFr(text)) as T;
-          }
-          case "hr": {
-            const { deHr } = await import("converters/de/de-hr");
-            return (await deHr(text)) as T;
-          }
-          case "hu": {
-            const { deHu } = await import("converters/de/de-hu");
-            return (await deHu(text)) as T;
-          }
-          case "id": {
-            const { deId } = await import("converters/de/de-id");
-            return (await deId(text)) as T;
-          }
-          case "is": {
-            const { deIs } = await import("converters/de/de-is");
-            return (await deIs(text)) as T;
-          }
-          case "it": {
-            const { deIt } = await import("converters/de/de-it");
-            return (await deIt(text)) as T;
-          }
-          case "lb": {
-            const { deLb } = await import("converters/de/de-lb");
-            return (await deLb(text)) as T;
-          }
-          case "lt": {
-            const { deLt } = await import("converters/de/de-lt");
-            return (await deLt(text)) as T;
-          }
-          case "lv": {
-            const { deLv } = await import("converters/de/de-lv");
-            return (await deLv(text)) as T;
-          }
-          case "ms": {
-            const { deMs } = await import("converters/de/de-ms");
-            return (await deMs(text)) as T;
-          }
-          case "mt": {
-            const { deMt } = await import("converters/de/de-mt");
-            return (await deMt(text)) as T;
-          }
-          case "nl": {
-            const { deNl } = await import("converters/de/de-nl");
-            return (await deNl(text)) as T;
-          }
-          case "no": {
-            const { deNo } = await import("converters/de/de-no");
-            return (await deNo(text)) as T;
-          }
-          case "pl": {
-            const { dePl } = await import("converters/de/de-pl");
-            return (await dePl(text)) as T;
-          }
-          case "pt": {
-            const { dePt } = await import("converters/de/de-pt");
-            return (await dePt(text)) as T;
-          }
-          case "ro": {
-            const { deRo } = await import("converters/de/de-ro");
-            return (await deRo(text)) as T;
-          }
-          case "sk": {
-            const { deSk } = await import("converters/de/de-sk");
-            return (await deSk(text)) as T;
-          }
-          case "sl": {
-            const { deSl } = await import("converters/de/de-sl");
-            return (await deSl(text)) as T;
-          }
-          case "sq": {
-            const { deSq } = await import("converters/de/de-sq");
-            return (await deSq(text)) as T;
-          }
-          case "sr": {
-            const { deSr } = await import("converters/de/de-sr");
-            return (await deSr(text)) as T;
-          }
-          case "sv": {
-            const { deSv } = await import("converters/de/de-sv");
-            return (await deSv(text)) as T;
-          }
-          case "tr": {
-            const { deTr } = await import("converters/de/de-tr");
-            return (await deTr(text)) as T;
-          }
-          case "vi": {
-            const { deVi } = await import("converters/de/de-vi");
-            return (await deVi(text)) as T;
-          }
-        }
-        break;
-      case "en":
-        switch (to) {
-          case "zh": {
-            const { enZh } = await import("converters/en/en-zh");
-            return (await enZh(text)) as T;
-          }
-          case "ja": {
-            const { enJa } = await import("converters/en/en-ja");
-            return (await enJa(text)) as T;
-          }
-          case "ko": {
-            const { enKo } = await import("converters/en/en-ko");
-            return (await enKo(text)) as T;
-          }
-          case "th": {
-            const { enTh } = await import("converters/en/en-th");
-            return (await enTh(text)) as T;
-          }
-          case "hi": {
-            const { enHi } = await import("converters/en/en-hi");
-            return (await enHi(text)) as T;
-          }
-          case "bn": {
-            const { enBn } = await import("converters/en/en-bn");
-            return (await enBn(text)) as T;
-          }
-          case "ur": {
-            const { enUr } = await import("converters/en/en-ur");
-            return (await enUr(text)) as T;
-          }
-          case "fa": {
-            const { enFa } = await import("converters/en/en-fa");
-            return (await enFa(text)) as T;
-          }
-          case "ar": {
-            const { enAr } = await import("converters/en/en-ar");
-            return (await enAr(text)) as T;
-          }
-          case "he": {
-            const { enHe } = await import("converters/en/en-he");
-            return (await enHe(text)) as T;
-          }
-          case "ka": {
-            const { enKa } = await import("converters/en/en-ka");
-            return (await enKa(text)) as T;
-          }
-          case "hy": {
-            const { enHy } = await import("converters/en/en-hy");
-            return (await enHy(text)) as T;
-          }
-          case "el": {
-            const { enEl } = await import("converters/en/en-el");
-            return (await enEl(text)) as T;
-          }
-          case "ru": {
-            const { enRu } = await import("converters/en/en-ru");
-            return (await enRu(text)) as T;
-          }
-          case "uk": {
-            const { enUk } = await import("converters/en/en-uk");
-            return (await enUk(text)) as T;
-          }
-          case "bg": {
-            const { enBg } = await import("converters/en/en-bg");
-            return (await enBg(text)) as T;
-          }
-          case "mk": {
-            const { enMk } = await import("converters/en/en-mk");
-            return (await enMk(text)) as T;
-          }
-          case "kk": {
-            const { enKk } = await import("converters/en/en-kk");
-            return (await enKk(text)) as T;
-          }
-          case "tg": {
-            const { enTg } = await import("converters/en/en-tg");
-            return (await enTg(text)) as T;
-          }
-          case "az": {
-            const { enAz } = await import("converters/en/en-az");
-            return (await enAz(text)) as T;
-          }
-          case "bs": {
-            const { enBs } = await import("converters/en/en-bs");
-            return (await enBs(text)) as T;
-          }
-          case "ca": {
-            const { enCa } = await import("converters/en/en-ca");
-            return (await enCa(text)) as T;
-          }
-          case "cs": {
-            const { enCs } = await import("converters/en/en-cs");
-            return (await enCs(text)) as T;
-          }
-          case "da": {
-            const { enDa } = await import("converters/en/en-da");
-            return (await enDa(text)) as T;
-          }
-          case "de": {
-            const { enDe } = await import("converters/en/en-de");
-            return (await enDe(text)) as T;
-          }
-          case "es": {
-            const { enEs } = await import("converters/en/en-es");
-            return (await enEs(text)) as T;
-          }
-          case "et": {
-            const { enEt } = await import("converters/en/en-et");
-            return (await enEt(text)) as T;
-          }
-          case "fi": {
-            const { enFi } = await import("converters/en/en-fi");
-            return (await enFi(text)) as T;
-          }
-          case "fr": {
-            const { enFr } = await import("converters/en/en-fr");
-            return (await enFr(text)) as T;
-          }
-          case "hr": {
-            const { enHr } = await import("converters/en/en-hr");
-            return (await enHr(text)) as T;
-          }
-          case "hu": {
-            const { enHu } = await import("converters/en/en-hu");
-            return (await enHu(text)) as T;
-          }
-          case "id": {
-            const { enId } = await import("converters/en/en-id");
-            return (await enId(text)) as T;
-          }
-          case "is": {
-            const { enIs } = await import("converters/en/en-is");
-            return (await enIs(text)) as T;
-          }
-          case "it": {
-            const { enIt } = await import("converters/en/en-it");
-            return (await enIt(text)) as T;
-          }
-          case "lb": {
-            const { enLb } = await import("converters/en/en-lb");
-            return (await enLb(text)) as T;
-          }
-          case "lt": {
-            const { enLt } = await import("converters/en/en-lt");
-            return (await enLt(text)) as T;
-          }
-          case "lv": {
-            const { enLv } = await import("converters/en/en-lv");
-            return (await enLv(text)) as T;
-          }
-          case "ms": {
-            const { enMs } = await import("converters/en/en-ms");
-            return (await enMs(text)) as T;
-          }
-          case "mt": {
-            const { enMt } = await import("converters/en/en-mt");
-            return (await enMt(text)) as T;
-          }
-          case "nl": {
-            const { enNl } = await import("converters/en/en-nl");
-            return (await enNl(text)) as T;
-          }
-          case "no": {
-            const { enNo } = await import("converters/en/en-no");
-            return (await enNo(text)) as T;
-          }
-          case "pl": {
-            const { enPl } = await import("converters/en/en-pl");
-            return (await enPl(text)) as T;
-          }
-          case "pt": {
-            const { enPt } = await import("converters/en/en-pt");
-            return (await enPt(text)) as T;
-          }
-          case "ro": {
-            const { enRo } = await import("converters/en/en-ro");
-            return (await enRo(text)) as T;
-          }
-          case "sk": {
-            const { enSk } = await import("converters/en/en-sk");
-            return (await enSk(text)) as T;
-          }
-          case "sl": {
-            const { enSl } = await import("converters/en/en-sl");
-            return (await enSl(text)) as T;
-          }
-          case "sq": {
-            const { enSq } = await import("converters/en/en-sq");
-            return (await enSq(text)) as T;
-          }
-          case "sr": {
-            const { enSr } = await import("converters/en/en-sr");
-            return (await enSr(text)) as T;
-          }
-          case "sv": {
-            const { enSv } = await import("converters/en/en-sv");
-            return (await enSv(text)) as T;
-          }
-          case "tr": {
-            const { enTr } = await import("converters/en/en-tr");
-            return (await enTr(text)) as T;
-          }
-          case "vi": {
-            const { enVi } = await import("converters/en/en-vi");
-            return (await enVi(text)) as T;
-          }
-        }
-        break;
-      case "es":
-        switch (to) {
-          case "zh": {
-            const { esZh } = await import("converters/es/es-zh");
-            return (await esZh(text)) as T;
-          }
-          case "ja": {
-            const { esJa } = await import("converters/es/es-ja");
-            return (await esJa(text)) as T;
-          }
-          case "ko": {
-            const { esKo } = await import("converters/es/es-ko");
-            return (await esKo(text)) as T;
-          }
-          case "th": {
-            const { esTh } = await import("converters/es/es-th");
-            return (await esTh(text)) as T;
-          }
-          case "hi": {
-            const { esHi } = await import("converters/es/es-hi");
-            return (await esHi(text)) as T;
-          }
-          case "bn": {
-            const { esBn } = await import("converters/es/es-bn");
-            return (await esBn(text)) as T;
-          }
-          case "ur": {
-            const { esUr } = await import("converters/es/es-ur");
-            return (await esUr(text)) as T;
-          }
-          case "fa": {
-            const { esFa } = await import("converters/es/es-fa");
-            return (await esFa(text)) as T;
-          }
-          case "ar": {
-            const { esAr } = await import("converters/es/es-ar");
-            return (await esAr(text)) as T;
-          }
-          case "he": {
-            const { esHe } = await import("converters/es/es-he");
-            return (await esHe(text)) as T;
-          }
-          case "ka": {
-            const { esKa } = await import("converters/es/es-ka");
-            return (await esKa(text)) as T;
-          }
-          case "hy": {
-            const { esHy } = await import("converters/es/es-hy");
-            return (await esHy(text)) as T;
-          }
-          case "el": {
-            const { esEl } = await import("converters/es/es-el");
-            return (await esEl(text)) as T;
-          }
-          case "ru": {
-            const { esRu } = await import("converters/es/es-ru");
-            return (await esRu(text)) as T;
-          }
-          case "uk": {
-            const { esUk } = await import("converters/es/es-uk");
-            return (await esUk(text)) as T;
-          }
-          case "bg": {
-            const { esBg } = await import("converters/es/es-bg");
-            return (await esBg(text)) as T;
-          }
-          case "mk": {
-            const { esMk } = await import("converters/es/es-mk");
-            return (await esMk(text)) as T;
-          }
-          case "kk": {
-            const { esKk } = await import("converters/es/es-kk");
-            return (await esKk(text)) as T;
-          }
-          case "tg": {
-            const { esTg } = await import("converters/es/es-tg");
-            return (await esTg(text)) as T;
-          }
-          case "az": {
-            const { esAz } = await import("converters/es/es-az");
-            return (await esAz(text)) as T;
-          }
-          case "bs": {
-            const { esBs } = await import("converters/es/es-bs");
-            return (await esBs(text)) as T;
-          }
-          case "ca": {
-            const { esCa } = await import("converters/es/es-ca");
-            return (await esCa(text)) as T;
-          }
-          case "cs": {
-            const { esCs } = await import("converters/es/es-cs");
-            return (await esCs(text)) as T;
-          }
-          case "da": {
-            const { esDa } = await import("converters/es/es-da");
-            return (await esDa(text)) as T;
-          }
-          case "de": {
-            const { esDe } = await import("converters/es/es-de");
-            return (await esDe(text)) as T;
-          }
-          case "en": {
-            const { esEn } = await import("converters/es/es-en");
-            return (await esEn(text)) as T;
-          }
-          case "et": {
-            const { esEt } = await import("converters/es/es-et");
-            return (await esEt(text)) as T;
-          }
-          case "fi": {
-            const { esFi } = await import("converters/es/es-fi");
-            return (await esFi(text)) as T;
-          }
-          case "fr": {
-            const { esFr } = await import("converters/es/es-fr");
-            return (await esFr(text)) as T;
-          }
-          case "hr": {
-            const { esHr } = await import("converters/es/es-hr");
-            return (await esHr(text)) as T;
-          }
-          case "hu": {
-            const { esHu } = await import("converters/es/es-hu");
-            return (await esHu(text)) as T;
-          }
-          case "id": {
-            const { esId } = await import("converters/es/es-id");
-            return (await esId(text)) as T;
-          }
-          case "is": {
-            const { esIs } = await import("converters/es/es-is");
-            return (await esIs(text)) as T;
-          }
-          case "it": {
-            const { esIt } = await import("converters/es/es-it");
-            return (await esIt(text)) as T;
-          }
-          case "lb": {
-            const { esLb } = await import("converters/es/es-lb");
-            return (await esLb(text)) as T;
-          }
-          case "lt": {
-            const { esLt } = await import("converters/es/es-lt");
-            return (await esLt(text)) as T;
-          }
-          case "lv": {
-            const { esLv } = await import("converters/es/es-lv");
-            return (await esLv(text)) as T;
-          }
-          case "ms": {
-            const { esMs } = await import("converters/es/es-ms");
-            return (await esMs(text)) as T;
-          }
-          case "mt": {
-            const { esMt } = await import("converters/es/es-mt");
-            return (await esMt(text)) as T;
-          }
-          case "nl": {
-            const { esNl } = await import("converters/es/es-nl");
-            return (await esNl(text)) as T;
-          }
-          case "no": {
-            const { esNo } = await import("converters/es/es-no");
-            return (await esNo(text)) as T;
-          }
-          case "pl": {
-            const { esPl } = await import("converters/es/es-pl");
-            return (await esPl(text)) as T;
-          }
-          case "pt": {
-            const { esPt } = await import("converters/es/es-pt");
-            return (await esPt(text)) as T;
-          }
-          case "ro": {
-            const { esRo } = await import("converters/es/es-ro");
-            return (await esRo(text)) as T;
-          }
-          case "sk": {
-            const { esSk } = await import("converters/es/es-sk");
-            return (await esSk(text)) as T;
-          }
-          case "sl": {
-            const { esSl } = await import("converters/es/es-sl");
-            return (await esSl(text)) as T;
-          }
-          case "sq": {
-            const { esSq } = await import("converters/es/es-sq");
-            return (await esSq(text)) as T;
-          }
-          case "sr": {
-            const { esSr } = await import("converters/es/es-sr");
-            return (await esSr(text)) as T;
-          }
-          case "sv": {
-            const { esSv } = await import("converters/es/es-sv");
-            return (await esSv(text)) as T;
-          }
-          case "tr": {
-            const { esTr } = await import("converters/es/es-tr");
-            return (await esTr(text)) as T;
-          }
-          case "vi": {
-            const { esVi } = await import("converters/es/es-vi");
-            return (await esVi(text)) as T;
-          }
-        }
-        break;
-      case "et":
-        switch (to) {
-          case "zh": {
-            const { etZh } = await import("converters/et/et-zh");
-            return (await etZh(text)) as T;
-          }
-          case "ja": {
-            const { etJa } = await import("converters/et/et-ja");
-            return (await etJa(text)) as T;
-          }
-          case "ko": {
-            const { etKo } = await import("converters/et/et-ko");
-            return (await etKo(text)) as T;
-          }
-          case "th": {
-            const { etTh } = await import("converters/et/et-th");
-            return (await etTh(text)) as T;
-          }
-          case "hi": {
-            const { etHi } = await import("converters/et/et-hi");
-            return (await etHi(text)) as T;
-          }
-          case "bn": {
-            const { etBn } = await import("converters/et/et-bn");
-            return (await etBn(text)) as T;
-          }
-          case "ur": {
-            const { etUr } = await import("converters/et/et-ur");
-            return (await etUr(text)) as T;
-          }
-          case "fa": {
-            const { etFa } = await import("converters/et/et-fa");
-            return (await etFa(text)) as T;
-          }
-          case "ar": {
-            const { etAr } = await import("converters/et/et-ar");
-            return (await etAr(text)) as T;
-          }
-          case "he": {
-            const { etHe } = await import("converters/et/et-he");
-            return (await etHe(text)) as T;
-          }
-          case "ka": {
-            const { etKa } = await import("converters/et/et-ka");
-            return (await etKa(text)) as T;
-          }
-          case "hy": {
-            const { etHy } = await import("converters/et/et-hy");
-            return (await etHy(text)) as T;
-          }
-          case "el": {
-            const { etEl } = await import("converters/et/et-el");
-            return (await etEl(text)) as T;
-          }
-          case "ru": {
-            const { etRu } = await import("converters/et/et-ru");
-            return (await etRu(text)) as T;
-          }
-          case "uk": {
-            const { etUk } = await import("converters/et/et-uk");
-            return (await etUk(text)) as T;
-          }
-          case "bg": {
-            const { etBg } = await import("converters/et/et-bg");
-            return (await etBg(text)) as T;
-          }
-          case "mk": {
-            const { etMk } = await import("converters/et/et-mk");
-            return (await etMk(text)) as T;
-          }
-          case "kk": {
-            const { etKk } = await import("converters/et/et-kk");
-            return (await etKk(text)) as T;
-          }
-          case "tg": {
-            const { etTg } = await import("converters/et/et-tg");
-            return (await etTg(text)) as T;
-          }
-          case "az": {
-            const { etAz } = await import("converters/et/et-az");
-            return (await etAz(text)) as T;
-          }
-          case "bs": {
-            const { etBs } = await import("converters/et/et-bs");
-            return (await etBs(text)) as T;
-          }
-          case "ca": {
-            const { etCa } = await import("converters/et/et-ca");
-            return (await etCa(text)) as T;
-          }
-          case "cs": {
-            const { etCs } = await import("converters/et/et-cs");
-            return (await etCs(text)) as T;
-          }
-          case "da": {
-            const { etDa } = await import("converters/et/et-da");
-            return (await etDa(text)) as T;
-          }
-          case "de": {
-            const { etDe } = await import("converters/et/et-de");
-            return (await etDe(text)) as T;
-          }
-          case "en": {
-            const { etEn } = await import("converters/et/et-en");
-            return (await etEn(text)) as T;
-          }
-          case "es": {
-            const { etEs } = await import("converters/et/et-es");
-            return (await etEs(text)) as T;
-          }
-          case "fi": {
-            const { etFi } = await import("converters/et/et-fi");
-            return (await etFi(text)) as T;
-          }
-          case "fr": {
-            const { etFr } = await import("converters/et/et-fr");
-            return (await etFr(text)) as T;
-          }
-          case "hr": {
-            const { etHr } = await import("converters/et/et-hr");
-            return (await etHr(text)) as T;
-          }
-          case "hu": {
-            const { etHu } = await import("converters/et/et-hu");
-            return (await etHu(text)) as T;
-          }
-          case "id": {
-            const { etId } = await import("converters/et/et-id");
-            return (await etId(text)) as T;
-          }
-          case "is": {
-            const { etIs } = await import("converters/et/et-is");
-            return (await etIs(text)) as T;
-          }
-          case "it": {
-            const { etIt } = await import("converters/et/et-it");
-            return (await etIt(text)) as T;
-          }
-          case "lb": {
-            const { etLb } = await import("converters/et/et-lb");
-            return (await etLb(text)) as T;
-          }
-          case "lt": {
-            const { etLt } = await import("converters/et/et-lt");
-            return (await etLt(text)) as T;
-          }
-          case "lv": {
-            const { etLv } = await import("converters/et/et-lv");
-            return (await etLv(text)) as T;
-          }
-          case "ms": {
-            const { etMs } = await import("converters/et/et-ms");
-            return (await etMs(text)) as T;
-          }
-          case "mt": {
-            const { etMt } = await import("converters/et/et-mt");
-            return (await etMt(text)) as T;
-          }
-          case "nl": {
-            const { etNl } = await import("converters/et/et-nl");
-            return (await etNl(text)) as T;
-          }
-          case "no": {
-            const { etNo } = await import("converters/et/et-no");
-            return (await etNo(text)) as T;
-          }
-          case "pl": {
-            const { etPl } = await import("converters/et/et-pl");
-            return (await etPl(text)) as T;
-          }
-          case "pt": {
-            const { etPt } = await import("converters/et/et-pt");
-            return (await etPt(text)) as T;
-          }
-          case "ro": {
-            const { etRo } = await import("converters/et/et-ro");
-            return (await etRo(text)) as T;
-          }
-          case "sk": {
-            const { etSk } = await import("converters/et/et-sk");
-            return (await etSk(text)) as T;
-          }
-          case "sl": {
-            const { etSl } = await import("converters/et/et-sl");
-            return (await etSl(text)) as T;
-          }
-          case "sq": {
-            const { etSq } = await import("converters/et/et-sq");
-            return (await etSq(text)) as T;
-          }
-          case "sr": {
-            const { etSr } = await import("converters/et/et-sr");
-            return (await etSr(text)) as T;
-          }
-          case "sv": {
-            const { etSv } = await import("converters/et/et-sv");
-            return (await etSv(text)) as T;
-          }
-          case "tr": {
-            const { etTr } = await import("converters/et/et-tr");
-            return (await etTr(text)) as T;
-          }
-          case "vi": {
-            const { etVi } = await import("converters/et/et-vi");
-            return (await etVi(text)) as T;
-          }
-        }
-        break;
-      case "fi":
-        switch (to) {
-          case "zh": {
-            const { fiZh } = await import("converters/fi/fi-zh");
-            return (await fiZh(text)) as T;
-          }
-          case "ja": {
-            const { fiJa } = await import("converters/fi/fi-ja");
-            return (await fiJa(text)) as T;
-          }
-          case "ko": {
-            const { fiKo } = await import("converters/fi/fi-ko");
-            return (await fiKo(text)) as T;
-          }
-          case "th": {
-            const { fiTh } = await import("converters/fi/fi-th");
-            return (await fiTh(text)) as T;
-          }
-          case "hi": {
-            const { fiHi } = await import("converters/fi/fi-hi");
-            return (await fiHi(text)) as T;
-          }
-          case "bn": {
-            const { fiBn } = await import("converters/fi/fi-bn");
-            return (await fiBn(text)) as T;
-          }
-          case "ur": {
-            const { fiUr } = await import("converters/fi/fi-ur");
-            return (await fiUr(text)) as T;
-          }
-          case "fa": {
-            const { fiFa } = await import("converters/fi/fi-fa");
-            return (await fiFa(text)) as T;
-          }
-          case "ar": {
-            const { fiAr } = await import("converters/fi/fi-ar");
-            return (await fiAr(text)) as T;
-          }
-          case "he": {
-            const { fiHe } = await import("converters/fi/fi-he");
-            return (await fiHe(text)) as T;
-          }
-          case "ka": {
-            const { fiKa } = await import("converters/fi/fi-ka");
-            return (await fiKa(text)) as T;
-          }
-          case "hy": {
-            const { fiHy } = await import("converters/fi/fi-hy");
-            return (await fiHy(text)) as T;
-          }
-          case "el": {
-            const { fiEl } = await import("converters/fi/fi-el");
-            return (await fiEl(text)) as T;
-          }
-          case "ru": {
-            const { fiRu } = await import("converters/fi/fi-ru");
-            return (await fiRu(text)) as T;
-          }
-          case "uk": {
-            const { fiUk } = await import("converters/fi/fi-uk");
-            return (await fiUk(text)) as T;
-          }
-          case "bg": {
-            const { fiBg } = await import("converters/fi/fi-bg");
-            return (await fiBg(text)) as T;
-          }
-          case "mk": {
-            const { fiMk } = await import("converters/fi/fi-mk");
-            return (await fiMk(text)) as T;
-          }
-          case "kk": {
-            const { fiKk } = await import("converters/fi/fi-kk");
-            return (await fiKk(text)) as T;
-          }
-          case "tg": {
-            const { fiTg } = await import("converters/fi/fi-tg");
-            return (await fiTg(text)) as T;
-          }
-          case "az": {
-            const { fiAz } = await import("converters/fi/fi-az");
-            return (await fiAz(text)) as T;
-          }
-          case "bs": {
-            const { fiBs } = await import("converters/fi/fi-bs");
-            return (await fiBs(text)) as T;
-          }
-          case "ca": {
-            const { fiCa } = await import("converters/fi/fi-ca");
-            return (await fiCa(text)) as T;
-          }
-          case "cs": {
-            const { fiCs } = await import("converters/fi/fi-cs");
-            return (await fiCs(text)) as T;
-          }
-          case "da": {
-            const { fiDa } = await import("converters/fi/fi-da");
-            return (await fiDa(text)) as T;
-          }
-          case "de": {
-            const { fiDe } = await import("converters/fi/fi-de");
-            return (await fiDe(text)) as T;
-          }
-          case "en": {
-            const { fiEn } = await import("converters/fi/fi-en");
-            return (await fiEn(text)) as T;
-          }
-          case "es": {
-            const { fiEs } = await import("converters/fi/fi-es");
-            return (await fiEs(text)) as T;
-          }
-          case "et": {
-            const { fiEt } = await import("converters/fi/fi-et");
-            return (await fiEt(text)) as T;
-          }
-          case "fr": {
-            const { fiFr } = await import("converters/fi/fi-fr");
-            return (await fiFr(text)) as T;
-          }
-          case "hr": {
-            const { fiHr } = await import("converters/fi/fi-hr");
-            return (await fiHr(text)) as T;
-          }
-          case "hu": {
-            const { fiHu } = await import("converters/fi/fi-hu");
-            return (await fiHu(text)) as T;
-          }
-          case "id": {
-            const { fiId } = await import("converters/fi/fi-id");
-            return (await fiId(text)) as T;
-          }
-          case "is": {
-            const { fiIs } = await import("converters/fi/fi-is");
-            return (await fiIs(text)) as T;
-          }
-          case "it": {
-            const { fiIt } = await import("converters/fi/fi-it");
-            return (await fiIt(text)) as T;
-          }
-          case "lb": {
-            const { fiLb } = await import("converters/fi/fi-lb");
-            return (await fiLb(text)) as T;
-          }
-          case "lt": {
-            const { fiLt } = await import("converters/fi/fi-lt");
-            return (await fiLt(text)) as T;
-          }
-          case "lv": {
-            const { fiLv } = await import("converters/fi/fi-lv");
-            return (await fiLv(text)) as T;
-          }
-          case "ms": {
-            const { fiMs } = await import("converters/fi/fi-ms");
-            return (await fiMs(text)) as T;
-          }
-          case "mt": {
-            const { fiMt } = await import("converters/fi/fi-mt");
-            return (await fiMt(text)) as T;
-          }
-          case "nl": {
-            const { fiNl } = await import("converters/fi/fi-nl");
-            return (await fiNl(text)) as T;
-          }
-          case "no": {
-            const { fiNo } = await import("converters/fi/fi-no");
-            return (await fiNo(text)) as T;
-          }
-          case "pl": {
-            const { fiPl } = await import("converters/fi/fi-pl");
-            return (await fiPl(text)) as T;
-          }
-          case "pt": {
-            const { fiPt } = await import("converters/fi/fi-pt");
-            return (await fiPt(text)) as T;
-          }
-          case "ro": {
-            const { fiRo } = await import("converters/fi/fi-ro");
-            return (await fiRo(text)) as T;
-          }
-          case "sk": {
-            const { fiSk } = await import("converters/fi/fi-sk");
-            return (await fiSk(text)) as T;
-          }
-          case "sl": {
-            const { fiSl } = await import("converters/fi/fi-sl");
-            return (await fiSl(text)) as T;
-          }
-          case "sq": {
-            const { fiSq } = await import("converters/fi/fi-sq");
-            return (await fiSq(text)) as T;
-          }
-          case "sr": {
-            const { fiSr } = await import("converters/fi/fi-sr");
-            return (await fiSr(text)) as T;
-          }
-          case "sv": {
-            const { fiSv } = await import("converters/fi/fi-sv");
-            return (await fiSv(text)) as T;
-          }
-          case "tr": {
-            const { fiTr } = await import("converters/fi/fi-tr");
-            return (await fiTr(text)) as T;
-          }
-          case "vi": {
-            const { fiVi } = await import("converters/fi/fi-vi");
-            return (await fiVi(text)) as T;
-          }
-        }
-        break;
-      case "fr":
-        switch (to) {
-          case "zh": {
-            const { frZh } = await import("converters/fr/fr-zh");
-            return (await frZh(text)) as T;
-          }
-          case "ja": {
-            const { frJa } = await import("converters/fr/fr-ja");
-            return (await frJa(text)) as T;
-          }
-          case "ko": {
-            const { frKo } = await import("converters/fr/fr-ko");
-            return (await frKo(text)) as T;
-          }
-          case "th": {
-            const { frTh } = await import("converters/fr/fr-th");
-            return (await frTh(text)) as T;
-          }
-          case "hi": {
-            const { frHi } = await import("converters/fr/fr-hi");
-            return (await frHi(text)) as T;
-          }
-          case "bn": {
-            const { frBn } = await import("converters/fr/fr-bn");
-            return (await frBn(text)) as T;
-          }
-          case "ur": {
-            const { frUr } = await import("converters/fr/fr-ur");
-            return (await frUr(text)) as T;
-          }
-          case "fa": {
-            const { frFa } = await import("converters/fr/fr-fa");
-            return (await frFa(text)) as T;
-          }
-          case "ar": {
-            const { frAr } = await import("converters/fr/fr-ar");
-            return (await frAr(text)) as T;
-          }
-          case "he": {
-            const { frHe } = await import("converters/fr/fr-he");
-            return (await frHe(text)) as T;
-          }
-          case "ka": {
-            const { frKa } = await import("converters/fr/fr-ka");
-            return (await frKa(text)) as T;
-          }
-          case "hy": {
-            const { frHy } = await import("converters/fr/fr-hy");
-            return (await frHy(text)) as T;
-          }
-          case "el": {
-            const { frEl } = await import("converters/fr/fr-el");
-            return (await frEl(text)) as T;
-          }
-          case "ru": {
-            const { frRu } = await import("converters/fr/fr-ru");
-            return (await frRu(text)) as T;
-          }
-          case "uk": {
-            const { frUk } = await import("converters/fr/fr-uk");
-            return (await frUk(text)) as T;
-          }
-          case "bg": {
-            const { frBg } = await import("converters/fr/fr-bg");
-            return (await frBg(text)) as T;
-          }
-          case "mk": {
-            const { frMk } = await import("converters/fr/fr-mk");
-            return (await frMk(text)) as T;
-          }
-          case "kk": {
-            const { frKk } = await import("converters/fr/fr-kk");
-            return (await frKk(text)) as T;
-          }
-          case "tg": {
-            const { frTg } = await import("converters/fr/fr-tg");
-            return (await frTg(text)) as T;
-          }
-          case "az": {
-            const { frAz } = await import("converters/fr/fr-az");
-            return (await frAz(text)) as T;
-          }
-          case "bs": {
-            const { frBs } = await import("converters/fr/fr-bs");
-            return (await frBs(text)) as T;
-          }
-          case "ca": {
-            const { frCa } = await import("converters/fr/fr-ca");
-            return (await frCa(text)) as T;
-          }
-          case "cs": {
-            const { frCs } = await import("converters/fr/fr-cs");
-            return (await frCs(text)) as T;
-          }
-          case "da": {
-            const { frDa } = await import("converters/fr/fr-da");
-            return (await frDa(text)) as T;
-          }
-          case "de": {
-            const { frDe } = await import("converters/fr/fr-de");
-            return (await frDe(text)) as T;
-          }
-          case "en": {
-            const { frEn } = await import("converters/fr/fr-en");
-            return (await frEn(text)) as T;
-          }
-          case "es": {
-            const { frEs } = await import("converters/fr/fr-es");
-            return (await frEs(text)) as T;
-          }
-          case "et": {
-            const { frEt } = await import("converters/fr/fr-et");
-            return (await frEt(text)) as T;
-          }
-          case "fi": {
-            const { frFi } = await import("converters/fr/fr-fi");
-            return (await frFi(text)) as T;
-          }
-          case "hr": {
-            const { frHr } = await import("converters/fr/fr-hr");
-            return (await frHr(text)) as T;
-          }
-          case "hu": {
-            const { frHu } = await import("converters/fr/fr-hu");
-            return (await frHu(text)) as T;
-          }
-          case "id": {
-            const { frId } = await import("converters/fr/fr-id");
-            return (await frId(text)) as T;
-          }
-          case "is": {
-            const { frIs } = await import("converters/fr/fr-is");
-            return (await frIs(text)) as T;
-          }
-          case "it": {
-            const { frIt } = await import("converters/fr/fr-it");
-            return (await frIt(text)) as T;
-          }
-          case "lb": {
-            const { frLb } = await import("converters/fr/fr-lb");
-            return (await frLb(text)) as T;
-          }
-          case "lt": {
-            const { frLt } = await import("converters/fr/fr-lt");
-            return (await frLt(text)) as T;
-          }
-          case "lv": {
-            const { frLv } = await import("converters/fr/fr-lv");
-            return (await frLv(text)) as T;
-          }
-          case "ms": {
-            const { frMs } = await import("converters/fr/fr-ms");
-            return (await frMs(text)) as T;
-          }
-          case "mt": {
-            const { frMt } = await import("converters/fr/fr-mt");
-            return (await frMt(text)) as T;
-          }
-          case "nl": {
-            const { frNl } = await import("converters/fr/fr-nl");
-            return (await frNl(text)) as T;
-          }
-          case "no": {
-            const { frNo } = await import("converters/fr/fr-no");
-            return (await frNo(text)) as T;
-          }
-          case "pl": {
-            const { frPl } = await import("converters/fr/fr-pl");
-            return (await frPl(text)) as T;
-          }
-          case "pt": {
-            const { frPt } = await import("converters/fr/fr-pt");
-            return (await frPt(text)) as T;
-          }
-          case "ro": {
-            const { frRo } = await import("converters/fr/fr-ro");
-            return (await frRo(text)) as T;
-          }
-          case "sk": {
-            const { frSk } = await import("converters/fr/fr-sk");
-            return (await frSk(text)) as T;
-          }
-          case "sl": {
-            const { frSl } = await import("converters/fr/fr-sl");
-            return (await frSl(text)) as T;
-          }
-          case "sq": {
-            const { frSq } = await import("converters/fr/fr-sq");
-            return (await frSq(text)) as T;
-          }
-          case "sr": {
-            const { frSr } = await import("converters/fr/fr-sr");
-            return (await frSr(text)) as T;
-          }
-          case "sv": {
-            const { frSv } = await import("converters/fr/fr-sv");
-            return (await frSv(text)) as T;
-          }
-          case "tr": {
-            const { frTr } = await import("converters/fr/fr-tr");
-            return (await frTr(text)) as T;
-          }
-          case "vi": {
-            const { frVi } = await import("converters/fr/fr-vi");
-            return (await frVi(text)) as T;
-          }
-        }
-        break;
-      case "hr":
-        switch (to) {
-          case "zh": {
-            const { hrZh } = await import("converters/hr/hr-zh");
-            return (await hrZh(text)) as T;
-          }
-          case "ja": {
-            const { hrJa } = await import("converters/hr/hr-ja");
-            return (await hrJa(text)) as T;
-          }
-          case "ko": {
-            const { hrKo } = await import("converters/hr/hr-ko");
-            return (await hrKo(text)) as T;
-          }
-          case "th": {
-            const { hrTh } = await import("converters/hr/hr-th");
-            return (await hrTh(text)) as T;
-          }
-          case "hi": {
-            const { hrHi } = await import("converters/hr/hr-hi");
-            return (await hrHi(text)) as T;
-          }
-          case "bn": {
-            const { hrBn } = await import("converters/hr/hr-bn");
-            return (await hrBn(text)) as T;
-          }
-          case "ur": {
-            const { hrUr } = await import("converters/hr/hr-ur");
-            return (await hrUr(text)) as T;
-          }
-          case "fa": {
-            const { hrFa } = await import("converters/hr/hr-fa");
-            return (await hrFa(text)) as T;
-          }
-          case "ar": {
-            const { hrAr } = await import("converters/hr/hr-ar");
-            return (await hrAr(text)) as T;
-          }
-          case "he": {
-            const { hrHe } = await import("converters/hr/hr-he");
-            return (await hrHe(text)) as T;
-          }
-          case "ka": {
-            const { hrKa } = await import("converters/hr/hr-ka");
-            return (await hrKa(text)) as T;
-          }
-          case "hy": {
-            const { hrHy } = await import("converters/hr/hr-hy");
-            return (await hrHy(text)) as T;
-          }
-          case "el": {
-            const { hrEl } = await import("converters/hr/hr-el");
-            return (await hrEl(text)) as T;
-          }
-          case "ru": {
-            const { hrRu } = await import("converters/hr/hr-ru");
-            return (await hrRu(text)) as T;
-          }
-          case "uk": {
-            const { hrUk } = await import("converters/hr/hr-uk");
-            return (await hrUk(text)) as T;
-          }
-          case "bg": {
-            const { hrBg } = await import("converters/hr/hr-bg");
-            return (await hrBg(text)) as T;
-          }
-          case "mk": {
-            const { hrMk } = await import("converters/hr/hr-mk");
-            return (await hrMk(text)) as T;
-          }
-          case "kk": {
-            const { hrKk } = await import("converters/hr/hr-kk");
-            return (await hrKk(text)) as T;
-          }
-          case "tg": {
-            const { hrTg } = await import("converters/hr/hr-tg");
-            return (await hrTg(text)) as T;
-          }
-          case "az": {
-            const { hrAz } = await import("converters/hr/hr-az");
-            return (await hrAz(text)) as T;
-          }
-          case "bs": {
-            const { hrBs } = await import("converters/hr/hr-bs");
-            return (await hrBs(text)) as T;
-          }
-          case "ca": {
-            const { hrCa } = await import("converters/hr/hr-ca");
-            return (await hrCa(text)) as T;
-          }
-          case "cs": {
-            const { hrCs } = await import("converters/hr/hr-cs");
-            return (await hrCs(text)) as T;
-          }
-          case "da": {
-            const { hrDa } = await import("converters/hr/hr-da");
-            return (await hrDa(text)) as T;
-          }
-          case "de": {
-            const { hrDe } = await import("converters/hr/hr-de");
-            return (await hrDe(text)) as T;
-          }
-          case "en": {
-            const { hrEn } = await import("converters/hr/hr-en");
-            return (await hrEn(text)) as T;
-          }
-          case "es": {
-            const { hrEs } = await import("converters/hr/hr-es");
-            return (await hrEs(text)) as T;
-          }
-          case "et": {
-            const { hrEt } = await import("converters/hr/hr-et");
-            return (await hrEt(text)) as T;
-          }
-          case "fi": {
-            const { hrFi } = await import("converters/hr/hr-fi");
-            return (await hrFi(text)) as T;
-          }
-          case "fr": {
-            const { hrFr } = await import("converters/hr/hr-fr");
-            return (await hrFr(text)) as T;
-          }
-          case "hu": {
-            const { hrHu } = await import("converters/hr/hr-hu");
-            return (await hrHu(text)) as T;
-          }
-          case "id": {
-            const { hrId } = await import("converters/hr/hr-id");
-            return (await hrId(text)) as T;
-          }
-          case "is": {
-            const { hrIs } = await import("converters/hr/hr-is");
-            return (await hrIs(text)) as T;
-          }
-          case "it": {
-            const { hrIt } = await import("converters/hr/hr-it");
-            return (await hrIt(text)) as T;
-          }
-          case "lb": {
-            const { hrLb } = await import("converters/hr/hr-lb");
-            return (await hrLb(text)) as T;
-          }
-          case "lt": {
-            const { hrLt } = await import("converters/hr/hr-lt");
-            return (await hrLt(text)) as T;
-          }
-          case "lv": {
-            const { hrLv } = await import("converters/hr/hr-lv");
-            return (await hrLv(text)) as T;
-          }
-          case "ms": {
-            const { hrMs } = await import("converters/hr/hr-ms");
-            return (await hrMs(text)) as T;
-          }
-          case "mt": {
-            const { hrMt } = await import("converters/hr/hr-mt");
-            return (await hrMt(text)) as T;
-          }
-          case "nl": {
-            const { hrNl } = await import("converters/hr/hr-nl");
-            return (await hrNl(text)) as T;
-          }
-          case "no": {
-            const { hrNo } = await import("converters/hr/hr-no");
-            return (await hrNo(text)) as T;
-          }
-          case "pl": {
-            const { hrPl } = await import("converters/hr/hr-pl");
-            return (await hrPl(text)) as T;
-          }
-          case "pt": {
-            const { hrPt } = await import("converters/hr/hr-pt");
-            return (await hrPt(text)) as T;
-          }
-          case "ro": {
-            const { hrRo } = await import("converters/hr/hr-ro");
-            return (await hrRo(text)) as T;
-          }
-          case "sk": {
-            const { hrSk } = await import("converters/hr/hr-sk");
-            return (await hrSk(text)) as T;
-          }
-          case "sl": {
-            const { hrSl } = await import("converters/hr/hr-sl");
-            return (await hrSl(text)) as T;
-          }
-          case "sq": {
-            const { hrSq } = await import("converters/hr/hr-sq");
-            return (await hrSq(text)) as T;
-          }
-          case "sr": {
-            const { hrSr } = await import("converters/hr/hr-sr");
-            return (await hrSr(text)) as T;
-          }
-          case "sv": {
-            const { hrSv } = await import("converters/hr/hr-sv");
-            return (await hrSv(text)) as T;
-          }
-          case "tr": {
-            const { hrTr } = await import("converters/hr/hr-tr");
-            return (await hrTr(text)) as T;
-          }
-          case "vi": {
-            const { hrVi } = await import("converters/hr/hr-vi");
-            return (await hrVi(text)) as T;
-          }
-        }
-        break;
-      case "hu":
-        switch (to) {
-          case "zh": {
-            const { huZh } = await import("converters/hu/hu-zh");
-            return (await huZh(text)) as T;
-          }
-          case "ja": {
-            const { huJa } = await import("converters/hu/hu-ja");
-            return (await huJa(text)) as T;
-          }
-          case "ko": {
-            const { huKo } = await import("converters/hu/hu-ko");
-            return (await huKo(text)) as T;
-          }
-          case "th": {
-            const { huTh } = await import("converters/hu/hu-th");
-            return (await huTh(text)) as T;
-          }
-          case "hi": {
-            const { huHi } = await import("converters/hu/hu-hi");
-            return (await huHi(text)) as T;
-          }
-          case "bn": {
-            const { huBn } = await import("converters/hu/hu-bn");
-            return (await huBn(text)) as T;
-          }
-          case "ur": {
-            const { huUr } = await import("converters/hu/hu-ur");
-            return (await huUr(text)) as T;
-          }
-          case "fa": {
-            const { huFa } = await import("converters/hu/hu-fa");
-            return (await huFa(text)) as T;
-          }
-          case "ar": {
-            const { huAr } = await import("converters/hu/hu-ar");
-            return (await huAr(text)) as T;
-          }
-          case "he": {
-            const { huHe } = await import("converters/hu/hu-he");
-            return (await huHe(text)) as T;
-          }
-          case "ka": {
-            const { huKa } = await import("converters/hu/hu-ka");
-            return (await huKa(text)) as T;
-          }
-          case "hy": {
-            const { huHy } = await import("converters/hu/hu-hy");
-            return (await huHy(text)) as T;
-          }
-          case "el": {
-            const { huEl } = await import("converters/hu/hu-el");
-            return (await huEl(text)) as T;
-          }
-          case "ru": {
-            const { huRu } = await import("converters/hu/hu-ru");
-            return (await huRu(text)) as T;
-          }
-          case "uk": {
-            const { huUk } = await import("converters/hu/hu-uk");
-            return (await huUk(text)) as T;
-          }
-          case "bg": {
-            const { huBg } = await import("converters/hu/hu-bg");
-            return (await huBg(text)) as T;
-          }
-          case "mk": {
-            const { huMk } = await import("converters/hu/hu-mk");
-            return (await huMk(text)) as T;
-          }
-          case "kk": {
-            const { huKk } = await import("converters/hu/hu-kk");
-            return (await huKk(text)) as T;
-          }
-          case "tg": {
-            const { huTg } = await import("converters/hu/hu-tg");
-            return (await huTg(text)) as T;
-          }
-          case "az": {
-            const { huAz } = await import("converters/hu/hu-az");
-            return (await huAz(text)) as T;
-          }
-          case "bs": {
-            const { huBs } = await import("converters/hu/hu-bs");
-            return (await huBs(text)) as T;
-          }
-          case "ca": {
-            const { huCa } = await import("converters/hu/hu-ca");
-            return (await huCa(text)) as T;
-          }
-          case "cs": {
-            const { huCs } = await import("converters/hu/hu-cs");
-            return (await huCs(text)) as T;
-          }
-          case "da": {
-            const { huDa } = await import("converters/hu/hu-da");
-            return (await huDa(text)) as T;
-          }
-          case "de": {
-            const { huDe } = await import("converters/hu/hu-de");
-            return (await huDe(text)) as T;
-          }
-          case "en": {
-            const { huEn } = await import("converters/hu/hu-en");
-            return (await huEn(text)) as T;
-          }
-          case "es": {
-            const { huEs } = await import("converters/hu/hu-es");
-            return (await huEs(text)) as T;
-          }
-          case "et": {
-            const { huEt } = await import("converters/hu/hu-et");
-            return (await huEt(text)) as T;
-          }
-          case "fi": {
-            const { huFi } = await import("converters/hu/hu-fi");
-            return (await huFi(text)) as T;
-          }
-          case "fr": {
-            const { huFr } = await import("converters/hu/hu-fr");
-            return (await huFr(text)) as T;
-          }
-          case "hr": {
-            const { huHr } = await import("converters/hu/hu-hr");
-            return (await huHr(text)) as T;
-          }
-          case "id": {
-            const { huId } = await import("converters/hu/hu-id");
-            return (await huId(text)) as T;
-          }
-          case "is": {
-            const { huIs } = await import("converters/hu/hu-is");
-            return (await huIs(text)) as T;
-          }
-          case "it": {
-            const { huIt } = await import("converters/hu/hu-it");
-            return (await huIt(text)) as T;
-          }
-          case "lb": {
-            const { huLb } = await import("converters/hu/hu-lb");
-            return (await huLb(text)) as T;
-          }
-          case "lt": {
-            const { huLt } = await import("converters/hu/hu-lt");
-            return (await huLt(text)) as T;
-          }
-          case "lv": {
-            const { huLv } = await import("converters/hu/hu-lv");
-            return (await huLv(text)) as T;
-          }
-          case "ms": {
-            const { huMs } = await import("converters/hu/hu-ms");
-            return (await huMs(text)) as T;
-          }
-          case "mt": {
-            const { huMt } = await import("converters/hu/hu-mt");
-            return (await huMt(text)) as T;
-          }
-          case "nl": {
-            const { huNl } = await import("converters/hu/hu-nl");
-            return (await huNl(text)) as T;
-          }
-          case "no": {
-            const { huNo } = await import("converters/hu/hu-no");
-            return (await huNo(text)) as T;
-          }
-          case "pl": {
-            const { huPl } = await import("converters/hu/hu-pl");
-            return (await huPl(text)) as T;
-          }
-          case "pt": {
-            const { huPt } = await import("converters/hu/hu-pt");
-            return (await huPt(text)) as T;
-          }
-          case "ro": {
-            const { huRo } = await import("converters/hu/hu-ro");
-            return (await huRo(text)) as T;
-          }
-          case "sk": {
-            const { huSk } = await import("converters/hu/hu-sk");
-            return (await huSk(text)) as T;
-          }
-          case "sl": {
-            const { huSl } = await import("converters/hu/hu-sl");
-            return (await huSl(text)) as T;
-          }
-          case "sq": {
-            const { huSq } = await import("converters/hu/hu-sq");
-            return (await huSq(text)) as T;
-          }
-          case "sr": {
-            const { huSr } = await import("converters/hu/hu-sr");
-            return (await huSr(text)) as T;
-          }
-          case "sv": {
-            const { huSv } = await import("converters/hu/hu-sv");
-            return (await huSv(text)) as T;
-          }
-          case "tr": {
-            const { huTr } = await import("converters/hu/hu-tr");
-            return (await huTr(text)) as T;
-          }
-          case "vi": {
-            const { huVi } = await import("converters/hu/hu-vi");
-            return (await huVi(text)) as T;
-          }
-        }
-        break;
-      case "id":
-        switch (to) {
-          case "zh": {
-            const { idZh } = await import("converters/id/id-zh");
-            return (await idZh(text)) as T;
-          }
-          case "ja": {
-            const { idJa } = await import("converters/id/id-ja");
-            return (await idJa(text)) as T;
-          }
-          case "ko": {
-            const { idKo } = await import("converters/id/id-ko");
-            return (await idKo(text)) as T;
-          }
-          case "th": {
-            const { idTh } = await import("converters/id/id-th");
-            return (await idTh(text)) as T;
-          }
-          case "hi": {
-            const { idHi } = await import("converters/id/id-hi");
-            return (await idHi(text)) as T;
-          }
-          case "bn": {
-            const { idBn } = await import("converters/id/id-bn");
-            return (await idBn(text)) as T;
-          }
-          case "ur": {
-            const { idUr } = await import("converters/id/id-ur");
-            return (await idUr(text)) as T;
-          }
-          case "fa": {
-            const { idFa } = await import("converters/id/id-fa");
-            return (await idFa(text)) as T;
-          }
-          case "ar": {
-            const { idAr } = await import("converters/id/id-ar");
-            return (await idAr(text)) as T;
-          }
-          case "he": {
-            const { idHe } = await import("converters/id/id-he");
-            return (await idHe(text)) as T;
-          }
-          case "ka": {
-            const { idKa } = await import("converters/id/id-ka");
-            return (await idKa(text)) as T;
-          }
-          case "hy": {
-            const { idHy } = await import("converters/id/id-hy");
-            return (await idHy(text)) as T;
-          }
-          case "el": {
-            const { idEl } = await import("converters/id/id-el");
-            return (await idEl(text)) as T;
-          }
-          case "ru": {
-            const { idRu } = await import("converters/id/id-ru");
-            return (await idRu(text)) as T;
-          }
-          case "uk": {
-            const { idUk } = await import("converters/id/id-uk");
-            return (await idUk(text)) as T;
-          }
-          case "bg": {
-            const { idBg } = await import("converters/id/id-bg");
-            return (await idBg(text)) as T;
-          }
-          case "mk": {
-            const { idMk } = await import("converters/id/id-mk");
-            return (await idMk(text)) as T;
-          }
-          case "kk": {
-            const { idKk } = await import("converters/id/id-kk");
-            return (await idKk(text)) as T;
-          }
-          case "tg": {
-            const { idTg } = await import("converters/id/id-tg");
-            return (await idTg(text)) as T;
-          }
-          case "az": {
-            const { idAz } = await import("converters/id/id-az");
-            return (await idAz(text)) as T;
-          }
-          case "bs": {
-            const { idBs } = await import("converters/id/id-bs");
-            return (await idBs(text)) as T;
-          }
-          case "ca": {
-            const { idCa } = await import("converters/id/id-ca");
-            return (await idCa(text)) as T;
-          }
-          case "cs": {
-            const { idCs } = await import("converters/id/id-cs");
-            return (await idCs(text)) as T;
-          }
-          case "da": {
-            const { idDa } = await import("converters/id/id-da");
-            return (await idDa(text)) as T;
-          }
-          case "de": {
-            const { idDe } = await import("converters/id/id-de");
-            return (await idDe(text)) as T;
-          }
-          case "en": {
-            const { idEn } = await import("converters/id/id-en");
-            return (await idEn(text)) as T;
-          }
-          case "es": {
-            const { idEs } = await import("converters/id/id-es");
-            return (await idEs(text)) as T;
-          }
-          case "et": {
-            const { idEt } = await import("converters/id/id-et");
-            return (await idEt(text)) as T;
-          }
-          case "fi": {
-            const { idFi } = await import("converters/id/id-fi");
-            return (await idFi(text)) as T;
-          }
-          case "fr": {
-            const { idFr } = await import("converters/id/id-fr");
-            return (await idFr(text)) as T;
-          }
-          case "hr": {
-            const { idHr } = await import("converters/id/id-hr");
-            return (await idHr(text)) as T;
-          }
-          case "hu": {
-            const { idHu } = await import("converters/id/id-hu");
-            return (await idHu(text)) as T;
-          }
-          case "is": {
-            const { idIs } = await import("converters/id/id-is");
-            return (await idIs(text)) as T;
-          }
-          case "it": {
-            const { idIt } = await import("converters/id/id-it");
-            return (await idIt(text)) as T;
-          }
-          case "lb": {
-            const { idLb } = await import("converters/id/id-lb");
-            return (await idLb(text)) as T;
-          }
-          case "lt": {
-            const { idLt } = await import("converters/id/id-lt");
-            return (await idLt(text)) as T;
-          }
-          case "lv": {
-            const { idLv } = await import("converters/id/id-lv");
-            return (await idLv(text)) as T;
-          }
-          case "ms": {
-            const { idMs } = await import("converters/id/id-ms");
-            return (await idMs(text)) as T;
-          }
-          case "mt": {
-            const { idMt } = await import("converters/id/id-mt");
-            return (await idMt(text)) as T;
-          }
-          case "nl": {
-            const { idNl } = await import("converters/id/id-nl");
-            return (await idNl(text)) as T;
-          }
-          case "no": {
-            const { idNo } = await import("converters/id/id-no");
-            return (await idNo(text)) as T;
-          }
-          case "pl": {
-            const { idPl } = await import("converters/id/id-pl");
-            return (await idPl(text)) as T;
-          }
-          case "pt": {
-            const { idPt } = await import("converters/id/id-pt");
-            return (await idPt(text)) as T;
-          }
-          case "ro": {
-            const { idRo } = await import("converters/id/id-ro");
-            return (await idRo(text)) as T;
-          }
-          case "sk": {
-            const { idSk } = await import("converters/id/id-sk");
-            return (await idSk(text)) as T;
-          }
-          case "sl": {
-            const { idSl } = await import("converters/id/id-sl");
-            return (await idSl(text)) as T;
-          }
-          case "sq": {
-            const { idSq } = await import("converters/id/id-sq");
-            return (await idSq(text)) as T;
-          }
-          case "sr": {
-            const { idSr } = await import("converters/id/id-sr");
-            return (await idSr(text)) as T;
-          }
-          case "sv": {
-            const { idSv } = await import("converters/id/id-sv");
-            return (await idSv(text)) as T;
-          }
-          case "tr": {
-            const { idTr } = await import("converters/id/id-tr");
-            return (await idTr(text)) as T;
-          }
-          case "vi": {
-            const { idVi } = await import("converters/id/id-vi");
-            return (await idVi(text)) as T;
-          }
-        }
-        break;
-      case "is":
-        switch (to) {
-          case "zh": {
-            const { isZh } = await import("converters/is/is-zh");
-            return (await isZh(text)) as T;
-          }
-          case "ja": {
-            const { isJa } = await import("converters/is/is-ja");
-            return (await isJa(text)) as T;
-          }
-          case "ko": {
-            const { isKo } = await import("converters/is/is-ko");
-            return (await isKo(text)) as T;
-          }
-          case "th": {
-            const { isTh } = await import("converters/is/is-th");
-            return (await isTh(text)) as T;
-          }
-          case "hi": {
-            const { isHi } = await import("converters/is/is-hi");
-            return (await isHi(text)) as T;
-          }
-          case "bn": {
-            const { isBn } = await import("converters/is/is-bn");
-            return (await isBn(text)) as T;
-          }
-          case "ur": {
-            const { isUr } = await import("converters/is/is-ur");
-            return (await isUr(text)) as T;
-          }
-          case "fa": {
-            const { isFa } = await import("converters/is/is-fa");
-            return (await isFa(text)) as T;
-          }
-          case "ar": {
-            const { isAr } = await import("converters/is/is-ar");
-            return (await isAr(text)) as T;
-          }
-          case "he": {
-            const { isHe } = await import("converters/is/is-he");
-            return (await isHe(text)) as T;
-          }
-          case "ka": {
-            const { isKa } = await import("converters/is/is-ka");
-            return (await isKa(text)) as T;
-          }
-          case "hy": {
-            const { isHy } = await import("converters/is/is-hy");
-            return (await isHy(text)) as T;
-          }
-          case "el": {
-            const { isEl } = await import("converters/is/is-el");
-            return (await isEl(text)) as T;
-          }
-          case "ru": {
-            const { isRu } = await import("converters/is/is-ru");
-            return (await isRu(text)) as T;
-          }
-          case "uk": {
-            const { isUk } = await import("converters/is/is-uk");
-            return (await isUk(text)) as T;
-          }
-          case "bg": {
-            const { isBg } = await import("converters/is/is-bg");
-            return (await isBg(text)) as T;
-          }
-          case "mk": {
-            const { isMk } = await import("converters/is/is-mk");
-            return (await isMk(text)) as T;
-          }
-          case "kk": {
-            const { isKk } = await import("converters/is/is-kk");
-            return (await isKk(text)) as T;
-          }
-          case "tg": {
-            const { isTg } = await import("converters/is/is-tg");
-            return (await isTg(text)) as T;
-          }
-          case "az": {
-            const { isAz } = await import("converters/is/is-az");
-            return (await isAz(text)) as T;
-          }
-          case "bs": {
-            const { isBs } = await import("converters/is/is-bs");
-            return (await isBs(text)) as T;
-          }
-          case "ca": {
-            const { isCa } = await import("converters/is/is-ca");
-            return (await isCa(text)) as T;
-          }
-          case "cs": {
-            const { isCs } = await import("converters/is/is-cs");
-            return (await isCs(text)) as T;
-          }
-          case "da": {
-            const { isDa } = await import("converters/is/is-da");
-            return (await isDa(text)) as T;
-          }
-          case "de": {
-            const { isDe } = await import("converters/is/is-de");
-            return (await isDe(text)) as T;
-          }
-          case "en": {
-            const { isEn } = await import("converters/is/is-en");
-            return (await isEn(text)) as T;
-          }
-          case "es": {
-            const { isEs } = await import("converters/is/is-es");
-            return (await isEs(text)) as T;
-          }
-          case "et": {
-            const { isEt } = await import("converters/is/is-et");
-            return (await isEt(text)) as T;
-          }
-          case "fi": {
-            const { isFi } = await import("converters/is/is-fi");
-            return (await isFi(text)) as T;
-          }
-          case "fr": {
-            const { isFr } = await import("converters/is/is-fr");
-            return (await isFr(text)) as T;
-          }
-          case "hr": {
-            const { isHr } = await import("converters/is/is-hr");
-            return (await isHr(text)) as T;
-          }
-          case "hu": {
-            const { isHu } = await import("converters/is/is-hu");
-            return (await isHu(text)) as T;
-          }
-          case "id": {
-            const { isId } = await import("converters/is/is-id");
-            return (await isId(text)) as T;
-          }
-          case "it": {
-            const { isIt } = await import("converters/is/is-it");
-            return (await isIt(text)) as T;
-          }
-          case "lb": {
-            const { isLb } = await import("converters/is/is-lb");
-            return (await isLb(text)) as T;
-          }
-          case "lt": {
-            const { isLt } = await import("converters/is/is-lt");
-            return (await isLt(text)) as T;
-          }
-          case "lv": {
-            const { isLv } = await import("converters/is/is-lv");
-            return (await isLv(text)) as T;
-          }
-          case "ms": {
-            const { isMs } = await import("converters/is/is-ms");
-            return (await isMs(text)) as T;
-          }
-          case "mt": {
-            const { isMt } = await import("converters/is/is-mt");
-            return (await isMt(text)) as T;
-          }
-          case "nl": {
-            const { isNl } = await import("converters/is/is-nl");
-            return (await isNl(text)) as T;
-          }
-          case "no": {
-            const { isNo } = await import("converters/is/is-no");
-            return (await isNo(text)) as T;
-          }
-          case "pl": {
-            const { isPl } = await import("converters/is/is-pl");
-            return (await isPl(text)) as T;
-          }
-          case "pt": {
-            const { isPt } = await import("converters/is/is-pt");
-            return (await isPt(text)) as T;
-          }
-          case "ro": {
-            const { isRo } = await import("converters/is/is-ro");
-            return (await isRo(text)) as T;
-          }
-          case "sk": {
-            const { isSk } = await import("converters/is/is-sk");
-            return (await isSk(text)) as T;
-          }
-          case "sl": {
-            const { isSl } = await import("converters/is/is-sl");
-            return (await isSl(text)) as T;
-          }
-          case "sq": {
-            const { isSq } = await import("converters/is/is-sq");
-            return (await isSq(text)) as T;
-          }
-          case "sr": {
-            const { isSr } = await import("converters/is/is-sr");
-            return (await isSr(text)) as T;
-          }
-          case "sv": {
-            const { isSv } = await import("converters/is/is-sv");
-            return (await isSv(text)) as T;
-          }
-          case "tr": {
-            const { isTr } = await import("converters/is/is-tr");
-            return (await isTr(text)) as T;
-          }
-          case "vi": {
-            const { isVi } = await import("converters/is/is-vi");
-            return (await isVi(text)) as T;
-          }
-        }
-        break;
-      case "it":
-        switch (to) {
-          case "zh": {
-            const { itZh } = await import("converters/it/it-zh");
-            return (await itZh(text)) as T;
-          }
-          case "ja": {
-            const { itJa } = await import("converters/it/it-ja");
-            return (await itJa(text)) as T;
-          }
-          case "ko": {
-            const { itKo } = await import("converters/it/it-ko");
-            return (await itKo(text)) as T;
-          }
-          case "th": {
-            const { itTh } = await import("converters/it/it-th");
-            return (await itTh(text)) as T;
-          }
-          case "hi": {
-            const { itHi } = await import("converters/it/it-hi");
-            return (await itHi(text)) as T;
-          }
-          case "bn": {
-            const { itBn } = await import("converters/it/it-bn");
-            return (await itBn(text)) as T;
-          }
-          case "ur": {
-            const { itUr } = await import("converters/it/it-ur");
-            return (await itUr(text)) as T;
-          }
-          case "fa": {
-            const { itFa } = await import("converters/it/it-fa");
-            return (await itFa(text)) as T;
-          }
-          case "ar": {
-            const { itAr } = await import("converters/it/it-ar");
-            return (await itAr(text)) as T;
-          }
-          case "he": {
-            const { itHe } = await import("converters/it/it-he");
-            return (await itHe(text)) as T;
-          }
-          case "ka": {
-            const { itKa } = await import("converters/it/it-ka");
-            return (await itKa(text)) as T;
-          }
-          case "hy": {
-            const { itHy } = await import("converters/it/it-hy");
-            return (await itHy(text)) as T;
-          }
-          case "el": {
-            const { itEl } = await import("converters/it/it-el");
-            return (await itEl(text)) as T;
-          }
-          case "ru": {
-            const { itRu } = await import("converters/it/it-ru");
-            return (await itRu(text)) as T;
-          }
-          case "uk": {
-            const { itUk } = await import("converters/it/it-uk");
-            return (await itUk(text)) as T;
-          }
-          case "bg": {
-            const { itBg } = await import("converters/it/it-bg");
-            return (await itBg(text)) as T;
-          }
-          case "mk": {
-            const { itMk } = await import("converters/it/it-mk");
-            return (await itMk(text)) as T;
-          }
-          case "kk": {
-            const { itKk } = await import("converters/it/it-kk");
-            return (await itKk(text)) as T;
-          }
-          case "tg": {
-            const { itTg } = await import("converters/it/it-tg");
-            return (await itTg(text)) as T;
-          }
-          case "az": {
-            const { itAz } = await import("converters/it/it-az");
-            return (await itAz(text)) as T;
-          }
-          case "bs": {
-            const { itBs } = await import("converters/it/it-bs");
-            return (await itBs(text)) as T;
-          }
-          case "ca": {
-            const { itCa } = await import("converters/it/it-ca");
-            return (await itCa(text)) as T;
-          }
-          case "cs": {
-            const { itCs } = await import("converters/it/it-cs");
-            return (await itCs(text)) as T;
-          }
-          case "da": {
-            const { itDa } = await import("converters/it/it-da");
-            return (await itDa(text)) as T;
-          }
-          case "de": {
-            const { itDe } = await import("converters/it/it-de");
-            return (await itDe(text)) as T;
-          }
-          case "en": {
-            const { itEn } = await import("converters/it/it-en");
-            return (await itEn(text)) as T;
-          }
-          case "es": {
-            const { itEs } = await import("converters/it/it-es");
-            return (await itEs(text)) as T;
-          }
-          case "et": {
-            const { itEt } = await import("converters/it/it-et");
-            return (await itEt(text)) as T;
-          }
-          case "fi": {
-            const { itFi } = await import("converters/it/it-fi");
-            return (await itFi(text)) as T;
-          }
-          case "fr": {
-            const { itFr } = await import("converters/it/it-fr");
-            return (await itFr(text)) as T;
-          }
-          case "hr": {
-            const { itHr } = await import("converters/it/it-hr");
-            return (await itHr(text)) as T;
-          }
-          case "hu": {
-            const { itHu } = await import("converters/it/it-hu");
-            return (await itHu(text)) as T;
-          }
-          case "id": {
-            const { itId } = await import("converters/it/it-id");
-            return (await itId(text)) as T;
-          }
-          case "is": {
-            const { itIs } = await import("converters/it/it-is");
-            return (await itIs(text)) as T;
-          }
-          case "lb": {
-            const { itLb } = await import("converters/it/it-lb");
-            return (await itLb(text)) as T;
-          }
-          case "lt": {
-            const { itLt } = await import("converters/it/it-lt");
-            return (await itLt(text)) as T;
-          }
-          case "lv": {
-            const { itLv } = await import("converters/it/it-lv");
-            return (await itLv(text)) as T;
-          }
-          case "ms": {
-            const { itMs } = await import("converters/it/it-ms");
-            return (await itMs(text)) as T;
-          }
-          case "mt": {
-            const { itMt } = await import("converters/it/it-mt");
-            return (await itMt(text)) as T;
-          }
-          case "nl": {
-            const { itNl } = await import("converters/it/it-nl");
-            return (await itNl(text)) as T;
-          }
-          case "no": {
-            const { itNo } = await import("converters/it/it-no");
-            return (await itNo(text)) as T;
-          }
-          case "pl": {
-            const { itPl } = await import("converters/it/it-pl");
-            return (await itPl(text)) as T;
-          }
-          case "pt": {
-            const { itPt } = await import("converters/it/it-pt");
-            return (await itPt(text)) as T;
-          }
-          case "ro": {
-            const { itRo } = await import("converters/it/it-ro");
-            return (await itRo(text)) as T;
-          }
-          case "sk": {
-            const { itSk } = await import("converters/it/it-sk");
-            return (await itSk(text)) as T;
-          }
-          case "sl": {
-            const { itSl } = await import("converters/it/it-sl");
-            return (await itSl(text)) as T;
-          }
-          case "sq": {
-            const { itSq } = await import("converters/it/it-sq");
-            return (await itSq(text)) as T;
-          }
-          case "sr": {
-            const { itSr } = await import("converters/it/it-sr");
-            return (await itSr(text)) as T;
-          }
-          case "sv": {
-            const { itSv } = await import("converters/it/it-sv");
-            return (await itSv(text)) as T;
-          }
-          case "tr": {
-            const { itTr } = await import("converters/it/it-tr");
-            return (await itTr(text)) as T;
-          }
-          case "vi": {
-            const { itVi } = await import("converters/it/it-vi");
-            return (await itVi(text)) as T;
-          }
-        }
-        break;
-      case "lb":
-        switch (to) {
-          case "zh": {
-            const { lbZh } = await import("converters/lb/lb-zh");
-            return (await lbZh(text)) as T;
-          }
-          case "ja": {
-            const { lbJa } = await import("converters/lb/lb-ja");
-            return (await lbJa(text)) as T;
-          }
-          case "ko": {
-            const { lbKo } = await import("converters/lb/lb-ko");
-            return (await lbKo(text)) as T;
-          }
-          case "th": {
-            const { lbTh } = await import("converters/lb/lb-th");
-            return (await lbTh(text)) as T;
-          }
-          case "hi": {
-            const { lbHi } = await import("converters/lb/lb-hi");
-            return (await lbHi(text)) as T;
-          }
-          case "bn": {
-            const { lbBn } = await import("converters/lb/lb-bn");
-            return (await lbBn(text)) as T;
-          }
-          case "ur": {
-            const { lbUr } = await import("converters/lb/lb-ur");
-            return (await lbUr(text)) as T;
-          }
-          case "fa": {
-            const { lbFa } = await import("converters/lb/lb-fa");
-            return (await lbFa(text)) as T;
-          }
-          case "ar": {
-            const { lbAr } = await import("converters/lb/lb-ar");
-            return (await lbAr(text)) as T;
-          }
-          case "he": {
-            const { lbHe } = await import("converters/lb/lb-he");
-            return (await lbHe(text)) as T;
-          }
-          case "ka": {
-            const { lbKa } = await import("converters/lb/lb-ka");
-            return (await lbKa(text)) as T;
-          }
-          case "hy": {
-            const { lbHy } = await import("converters/lb/lb-hy");
-            return (await lbHy(text)) as T;
-          }
-          case "el": {
-            const { lbEl } = await import("converters/lb/lb-el");
-            return (await lbEl(text)) as T;
-          }
-          case "ru": {
-            const { lbRu } = await import("converters/lb/lb-ru");
-            return (await lbRu(text)) as T;
-          }
-          case "uk": {
-            const { lbUk } = await import("converters/lb/lb-uk");
-            return (await lbUk(text)) as T;
-          }
-          case "bg": {
-            const { lbBg } = await import("converters/lb/lb-bg");
-            return (await lbBg(text)) as T;
-          }
-          case "mk": {
-            const { lbMk } = await import("converters/lb/lb-mk");
-            return (await lbMk(text)) as T;
-          }
-          case "kk": {
-            const { lbKk } = await import("converters/lb/lb-kk");
-            return (await lbKk(text)) as T;
-          }
-          case "tg": {
-            const { lbTg } = await import("converters/lb/lb-tg");
-            return (await lbTg(text)) as T;
-          }
-          case "az": {
-            const { lbAz } = await import("converters/lb/lb-az");
-            return (await lbAz(text)) as T;
-          }
-          case "bs": {
-            const { lbBs } = await import("converters/lb/lb-bs");
-            return (await lbBs(text)) as T;
-          }
-          case "ca": {
-            const { lbCa } = await import("converters/lb/lb-ca");
-            return (await lbCa(text)) as T;
-          }
-          case "cs": {
-            const { lbCs } = await import("converters/lb/lb-cs");
-            return (await lbCs(text)) as T;
-          }
-          case "da": {
-            const { lbDa } = await import("converters/lb/lb-da");
-            return (await lbDa(text)) as T;
-          }
-          case "de": {
-            const { lbDe } = await import("converters/lb/lb-de");
-            return (await lbDe(text)) as T;
-          }
-          case "en": {
-            const { lbEn } = await import("converters/lb/lb-en");
-            return (await lbEn(text)) as T;
-          }
-          case "es": {
-            const { lbEs } = await import("converters/lb/lb-es");
-            return (await lbEs(text)) as T;
-          }
-          case "et": {
-            const { lbEt } = await import("converters/lb/lb-et");
-            return (await lbEt(text)) as T;
-          }
-          case "fi": {
-            const { lbFi } = await import("converters/lb/lb-fi");
-            return (await lbFi(text)) as T;
-          }
-          case "fr": {
-            const { lbFr } = await import("converters/lb/lb-fr");
-            return (await lbFr(text)) as T;
-          }
-          case "hr": {
-            const { lbHr } = await import("converters/lb/lb-hr");
-            return (await lbHr(text)) as T;
-          }
-          case "hu": {
-            const { lbHu } = await import("converters/lb/lb-hu");
-            return (await lbHu(text)) as T;
-          }
-          case "id": {
-            const { lbId } = await import("converters/lb/lb-id");
-            return (await lbId(text)) as T;
-          }
-          case "is": {
-            const { lbIs } = await import("converters/lb/lb-is");
-            return (await lbIs(text)) as T;
-          }
-          case "it": {
-            const { lbIt } = await import("converters/lb/lb-it");
-            return (await lbIt(text)) as T;
-          }
-          case "lt": {
-            const { lbLt } = await import("converters/lb/lb-lt");
-            return (await lbLt(text)) as T;
-          }
-          case "lv": {
-            const { lbLv } = await import("converters/lb/lb-lv");
-            return (await lbLv(text)) as T;
-          }
-          case "ms": {
-            const { lbMs } = await import("converters/lb/lb-ms");
-            return (await lbMs(text)) as T;
-          }
-          case "mt": {
-            const { lbMt } = await import("converters/lb/lb-mt");
-            return (await lbMt(text)) as T;
-          }
-          case "nl": {
-            const { lbNl } = await import("converters/lb/lb-nl");
-            return (await lbNl(text)) as T;
-          }
-          case "no": {
-            const { lbNo } = await import("converters/lb/lb-no");
-            return (await lbNo(text)) as T;
-          }
-          case "pl": {
-            const { lbPl } = await import("converters/lb/lb-pl");
-            return (await lbPl(text)) as T;
-          }
-          case "pt": {
-            const { lbPt } = await import("converters/lb/lb-pt");
-            return (await lbPt(text)) as T;
-          }
-          case "ro": {
-            const { lbRo } = await import("converters/lb/lb-ro");
-            return (await lbRo(text)) as T;
-          }
-          case "sk": {
-            const { lbSk } = await import("converters/lb/lb-sk");
-            return (await lbSk(text)) as T;
-          }
-          case "sl": {
-            const { lbSl } = await import("converters/lb/lb-sl");
-            return (await lbSl(text)) as T;
-          }
-          case "sq": {
-            const { lbSq } = await import("converters/lb/lb-sq");
-            return (await lbSq(text)) as T;
-          }
-          case "sr": {
-            const { lbSr } = await import("converters/lb/lb-sr");
-            return (await lbSr(text)) as T;
-          }
-          case "sv": {
-            const { lbSv } = await import("converters/lb/lb-sv");
-            return (await lbSv(text)) as T;
-          }
-          case "tr": {
-            const { lbTr } = await import("converters/lb/lb-tr");
-            return (await lbTr(text)) as T;
-          }
-          case "vi": {
-            const { lbVi } = await import("converters/lb/lb-vi");
-            return (await lbVi(text)) as T;
-          }
-        }
-        break;
-      case "lt":
-        switch (to) {
-          case "zh": {
-            const { ltZh } = await import("converters/lt/lt-zh");
-            return (await ltZh(text)) as T;
-          }
-          case "ja": {
-            const { ltJa } = await import("converters/lt/lt-ja");
-            return (await ltJa(text)) as T;
-          }
-          case "ko": {
-            const { ltKo } = await import("converters/lt/lt-ko");
-            return (await ltKo(text)) as T;
-          }
-          case "th": {
-            const { ltTh } = await import("converters/lt/lt-th");
-            return (await ltTh(text)) as T;
-          }
-          case "hi": {
-            const { ltHi } = await import("converters/lt/lt-hi");
-            return (await ltHi(text)) as T;
-          }
-          case "bn": {
-            const { ltBn } = await import("converters/lt/lt-bn");
-            return (await ltBn(text)) as T;
-          }
-          case "ur": {
-            const { ltUr } = await import("converters/lt/lt-ur");
-            return (await ltUr(text)) as T;
-          }
-          case "fa": {
-            const { ltFa } = await import("converters/lt/lt-fa");
-            return (await ltFa(text)) as T;
-          }
-          case "ar": {
-            const { ltAr } = await import("converters/lt/lt-ar");
-            return (await ltAr(text)) as T;
-          }
-          case "he": {
-            const { ltHe } = await import("converters/lt/lt-he");
-            return (await ltHe(text)) as T;
-          }
-          case "ka": {
-            const { ltKa } = await import("converters/lt/lt-ka");
-            return (await ltKa(text)) as T;
-          }
-          case "hy": {
-            const { ltHy } = await import("converters/lt/lt-hy");
-            return (await ltHy(text)) as T;
-          }
-          case "el": {
-            const { ltEl } = await import("converters/lt/lt-el");
-            return (await ltEl(text)) as T;
-          }
-          case "ru": {
-            const { ltRu } = await import("converters/lt/lt-ru");
-            return (await ltRu(text)) as T;
-          }
-          case "uk": {
-            const { ltUk } = await import("converters/lt/lt-uk");
-            return (await ltUk(text)) as T;
-          }
-          case "bg": {
-            const { ltBg } = await import("converters/lt/lt-bg");
-            return (await ltBg(text)) as T;
-          }
-          case "mk": {
-            const { ltMk } = await import("converters/lt/lt-mk");
-            return (await ltMk(text)) as T;
-          }
-          case "kk": {
-            const { ltKk } = await import("converters/lt/lt-kk");
-            return (await ltKk(text)) as T;
-          }
-          case "tg": {
-            const { ltTg } = await import("converters/lt/lt-tg");
-            return (await ltTg(text)) as T;
-          }
-          case "az": {
-            const { ltAz } = await import("converters/lt/lt-az");
-            return (await ltAz(text)) as T;
-          }
-          case "bs": {
-            const { ltBs } = await import("converters/lt/lt-bs");
-            return (await ltBs(text)) as T;
-          }
-          case "ca": {
-            const { ltCa } = await import("converters/lt/lt-ca");
-            return (await ltCa(text)) as T;
-          }
-          case "cs": {
-            const { ltCs } = await import("converters/lt/lt-cs");
-            return (await ltCs(text)) as T;
-          }
-          case "da": {
-            const { ltDa } = await import("converters/lt/lt-da");
-            return (await ltDa(text)) as T;
-          }
-          case "de": {
-            const { ltDe } = await import("converters/lt/lt-de");
-            return (await ltDe(text)) as T;
-          }
-          case "en": {
-            const { ltEn } = await import("converters/lt/lt-en");
-            return (await ltEn(text)) as T;
-          }
-          case "es": {
-            const { ltEs } = await import("converters/lt/lt-es");
-            return (await ltEs(text)) as T;
-          }
-          case "et": {
-            const { ltEt } = await import("converters/lt/lt-et");
-            return (await ltEt(text)) as T;
-          }
-          case "fi": {
-            const { ltFi } = await import("converters/lt/lt-fi");
-            return (await ltFi(text)) as T;
-          }
-          case "fr": {
-            const { ltFr } = await import("converters/lt/lt-fr");
-            return (await ltFr(text)) as T;
-          }
-          case "hr": {
-            const { ltHr } = await import("converters/lt/lt-hr");
-            return (await ltHr(text)) as T;
-          }
-          case "hu": {
-            const { ltHu } = await import("converters/lt/lt-hu");
-            return (await ltHu(text)) as T;
-          }
-          case "id": {
-            const { ltId } = await import("converters/lt/lt-id");
-            return (await ltId(text)) as T;
-          }
-          case "is": {
-            const { ltIs } = await import("converters/lt/lt-is");
-            return (await ltIs(text)) as T;
-          }
-          case "it": {
-            const { ltIt } = await import("converters/lt/lt-it");
-            return (await ltIt(text)) as T;
-          }
-          case "lb": {
-            const { ltLb } = await import("converters/lt/lt-lb");
-            return (await ltLb(text)) as T;
-          }
-          case "lv": {
-            const { ltLv } = await import("converters/lt/lt-lv");
-            return (await ltLv(text)) as T;
-          }
-          case "ms": {
-            const { ltMs } = await import("converters/lt/lt-ms");
-            return (await ltMs(text)) as T;
-          }
-          case "mt": {
-            const { ltMt } = await import("converters/lt/lt-mt");
-            return (await ltMt(text)) as T;
-          }
-          case "nl": {
-            const { ltNl } = await import("converters/lt/lt-nl");
-            return (await ltNl(text)) as T;
-          }
-          case "no": {
-            const { ltNo } = await import("converters/lt/lt-no");
-            return (await ltNo(text)) as T;
-          }
-          case "pl": {
-            const { ltPl } = await import("converters/lt/lt-pl");
-            return (await ltPl(text)) as T;
-          }
-          case "pt": {
-            const { ltPt } = await import("converters/lt/lt-pt");
-            return (await ltPt(text)) as T;
-          }
-          case "ro": {
-            const { ltRo } = await import("converters/lt/lt-ro");
-            return (await ltRo(text)) as T;
-          }
-          case "sk": {
-            const { ltSk } = await import("converters/lt/lt-sk");
-            return (await ltSk(text)) as T;
-          }
-          case "sl": {
-            const { ltSl } = await import("converters/lt/lt-sl");
-            return (await ltSl(text)) as T;
-          }
-          case "sq": {
-            const { ltSq } = await import("converters/lt/lt-sq");
-            return (await ltSq(text)) as T;
-          }
-          case "sr": {
-            const { ltSr } = await import("converters/lt/lt-sr");
-            return (await ltSr(text)) as T;
-          }
-          case "sv": {
-            const { ltSv } = await import("converters/lt/lt-sv");
-            return (await ltSv(text)) as T;
-          }
-          case "tr": {
-            const { ltTr } = await import("converters/lt/lt-tr");
-            return (await ltTr(text)) as T;
-          }
-          case "vi": {
-            const { ltVi } = await import("converters/lt/lt-vi");
-            return (await ltVi(text)) as T;
-          }
-        }
-        break;
-      case "lv":
-        switch (to) {
-          case "zh": {
-            const { lvZh } = await import("converters/lv/lv-zh");
-            return (await lvZh(text)) as T;
-          }
-          case "ja": {
-            const { lvJa } = await import("converters/lv/lv-ja");
-            return (await lvJa(text)) as T;
-          }
-          case "ko": {
-            const { lvKo } = await import("converters/lv/lv-ko");
-            return (await lvKo(text)) as T;
-          }
-          case "th": {
-            const { lvTh } = await import("converters/lv/lv-th");
-            return (await lvTh(text)) as T;
-          }
-          case "hi": {
-            const { lvHi } = await import("converters/lv/lv-hi");
-            return (await lvHi(text)) as T;
-          }
-          case "bn": {
-            const { lvBn } = await import("converters/lv/lv-bn");
-            return (await lvBn(text)) as T;
-          }
-          case "ur": {
-            const { lvUr } = await import("converters/lv/lv-ur");
-            return (await lvUr(text)) as T;
-          }
-          case "fa": {
-            const { lvFa } = await import("converters/lv/lv-fa");
-            return (await lvFa(text)) as T;
-          }
-          case "ar": {
-            const { lvAr } = await import("converters/lv/lv-ar");
-            return (await lvAr(text)) as T;
-          }
-          case "he": {
-            const { lvHe } = await import("converters/lv/lv-he");
-            return (await lvHe(text)) as T;
-          }
-          case "ka": {
-            const { lvKa } = await import("converters/lv/lv-ka");
-            return (await lvKa(text)) as T;
-          }
-          case "hy": {
-            const { lvHy } = await import("converters/lv/lv-hy");
-            return (await lvHy(text)) as T;
-          }
-          case "el": {
-            const { lvEl } = await import("converters/lv/lv-el");
-            return (await lvEl(text)) as T;
-          }
-          case "ru": {
-            const { lvRu } = await import("converters/lv/lv-ru");
-            return (await lvRu(text)) as T;
-          }
-          case "uk": {
-            const { lvUk } = await import("converters/lv/lv-uk");
-            return (await lvUk(text)) as T;
-          }
-          case "bg": {
-            const { lvBg } = await import("converters/lv/lv-bg");
-            return (await lvBg(text)) as T;
-          }
-          case "mk": {
-            const { lvMk } = await import("converters/lv/lv-mk");
-            return (await lvMk(text)) as T;
-          }
-          case "kk": {
-            const { lvKk } = await import("converters/lv/lv-kk");
-            return (await lvKk(text)) as T;
-          }
-          case "tg": {
-            const { lvTg } = await import("converters/lv/lv-tg");
-            return (await lvTg(text)) as T;
-          }
-          case "az": {
-            const { lvAz } = await import("converters/lv/lv-az");
-            return (await lvAz(text)) as T;
-          }
-          case "bs": {
-            const { lvBs } = await import("converters/lv/lv-bs");
-            return (await lvBs(text)) as T;
-          }
-          case "ca": {
-            const { lvCa } = await import("converters/lv/lv-ca");
-            return (await lvCa(text)) as T;
-          }
-          case "cs": {
-            const { lvCs } = await import("converters/lv/lv-cs");
-            return (await lvCs(text)) as T;
-          }
-          case "da": {
-            const { lvDa } = await import("converters/lv/lv-da");
-            return (await lvDa(text)) as T;
-          }
-          case "de": {
-            const { lvDe } = await import("converters/lv/lv-de");
-            return (await lvDe(text)) as T;
-          }
-          case "en": {
-            const { lvEn } = await import("converters/lv/lv-en");
-            return (await lvEn(text)) as T;
-          }
-          case "es": {
-            const { lvEs } = await import("converters/lv/lv-es");
-            return (await lvEs(text)) as T;
-          }
-          case "et": {
-            const { lvEt } = await import("converters/lv/lv-et");
-            return (await lvEt(text)) as T;
-          }
-          case "fi": {
-            const { lvFi } = await import("converters/lv/lv-fi");
-            return (await lvFi(text)) as T;
-          }
-          case "fr": {
-            const { lvFr } = await import("converters/lv/lv-fr");
-            return (await lvFr(text)) as T;
-          }
-          case "hr": {
-            const { lvHr } = await import("converters/lv/lv-hr");
-            return (await lvHr(text)) as T;
-          }
-          case "hu": {
-            const { lvHu } = await import("converters/lv/lv-hu");
-            return (await lvHu(text)) as T;
-          }
-          case "id": {
-            const { lvId } = await import("converters/lv/lv-id");
-            return (await lvId(text)) as T;
-          }
-          case "is": {
-            const { lvIs } = await import("converters/lv/lv-is");
-            return (await lvIs(text)) as T;
-          }
-          case "it": {
-            const { lvIt } = await import("converters/lv/lv-it");
-            return (await lvIt(text)) as T;
-          }
-          case "lb": {
-            const { lvLb } = await import("converters/lv/lv-lb");
-            return (await lvLb(text)) as T;
-          }
-          case "lt": {
-            const { lvLt } = await import("converters/lv/lv-lt");
-            return (await lvLt(text)) as T;
-          }
-          case "ms": {
-            const { lvMs } = await import("converters/lv/lv-ms");
-            return (await lvMs(text)) as T;
-          }
-          case "mt": {
-            const { lvMt } = await import("converters/lv/lv-mt");
-            return (await lvMt(text)) as T;
-          }
-          case "nl": {
-            const { lvNl } = await import("converters/lv/lv-nl");
-            return (await lvNl(text)) as T;
-          }
-          case "no": {
-            const { lvNo } = await import("converters/lv/lv-no");
-            return (await lvNo(text)) as T;
-          }
-          case "pl": {
-            const { lvPl } = await import("converters/lv/lv-pl");
-            return (await lvPl(text)) as T;
-          }
-          case "pt": {
-            const { lvPt } = await import("converters/lv/lv-pt");
-            return (await lvPt(text)) as T;
-          }
-          case "ro": {
-            const { lvRo } = await import("converters/lv/lv-ro");
-            return (await lvRo(text)) as T;
-          }
-          case "sk": {
-            const { lvSk } = await import("converters/lv/lv-sk");
-            return (await lvSk(text)) as T;
-          }
-          case "sl": {
-            const { lvSl } = await import("converters/lv/lv-sl");
-            return (await lvSl(text)) as T;
-          }
-          case "sq": {
-            const { lvSq } = await import("converters/lv/lv-sq");
-            return (await lvSq(text)) as T;
-          }
-          case "sr": {
-            const { lvSr } = await import("converters/lv/lv-sr");
-            return (await lvSr(text)) as T;
-          }
-          case "sv": {
-            const { lvSv } = await import("converters/lv/lv-sv");
-            return (await lvSv(text)) as T;
-          }
-          case "tr": {
-            const { lvTr } = await import("converters/lv/lv-tr");
-            return (await lvTr(text)) as T;
-          }
-          case "vi": {
-            const { lvVi } = await import("converters/lv/lv-vi");
-            return (await lvVi(text)) as T;
-          }
-        }
-        break;
-      case "ms":
-        switch (to) {
-          case "zh": {
-            const { msZh } = await import("converters/ms/ms-zh");
-            return (await msZh(text)) as T;
-          }
-          case "ja": {
-            const { msJa } = await import("converters/ms/ms-ja");
-            return (await msJa(text)) as T;
-          }
-          case "ko": {
-            const { msKo } = await import("converters/ms/ms-ko");
-            return (await msKo(text)) as T;
-          }
-          case "th": {
-            const { msTh } = await import("converters/ms/ms-th");
-            return (await msTh(text)) as T;
-          }
-          case "hi": {
-            const { msHi } = await import("converters/ms/ms-hi");
-            return (await msHi(text)) as T;
-          }
-          case "bn": {
-            const { msBn } = await import("converters/ms/ms-bn");
-            return (await msBn(text)) as T;
-          }
-          case "ur": {
-            const { msUr } = await import("converters/ms/ms-ur");
-            return (await msUr(text)) as T;
-          }
-          case "fa": {
-            const { msFa } = await import("converters/ms/ms-fa");
-            return (await msFa(text)) as T;
-          }
-          case "ar": {
-            const { msAr } = await import("converters/ms/ms-ar");
-            return (await msAr(text)) as T;
-          }
-          case "he": {
-            const { msHe } = await import("converters/ms/ms-he");
-            return (await msHe(text)) as T;
-          }
-          case "ka": {
-            const { msKa } = await import("converters/ms/ms-ka");
-            return (await msKa(text)) as T;
-          }
-          case "hy": {
-            const { msHy } = await import("converters/ms/ms-hy");
-            return (await msHy(text)) as T;
-          }
-          case "el": {
-            const { msEl } = await import("converters/ms/ms-el");
-            return (await msEl(text)) as T;
-          }
-          case "ru": {
-            const { msRu } = await import("converters/ms/ms-ru");
-            return (await msRu(text)) as T;
-          }
-          case "uk": {
-            const { msUk } = await import("converters/ms/ms-uk");
-            return (await msUk(text)) as T;
-          }
-          case "bg": {
-            const { msBg } = await import("converters/ms/ms-bg");
-            return (await msBg(text)) as T;
-          }
-          case "mk": {
-            const { msMk } = await import("converters/ms/ms-mk");
-            return (await msMk(text)) as T;
-          }
-          case "kk": {
-            const { msKk } = await import("converters/ms/ms-kk");
-            return (await msKk(text)) as T;
-          }
-          case "tg": {
-            const { msTg } = await import("converters/ms/ms-tg");
-            return (await msTg(text)) as T;
-          }
-          case "az": {
-            const { msAz } = await import("converters/ms/ms-az");
-            return (await msAz(text)) as T;
-          }
-          case "bs": {
-            const { msBs } = await import("converters/ms/ms-bs");
-            return (await msBs(text)) as T;
-          }
-          case "ca": {
-            const { msCa } = await import("converters/ms/ms-ca");
-            return (await msCa(text)) as T;
-          }
-          case "cs": {
-            const { msCs } = await import("converters/ms/ms-cs");
-            return (await msCs(text)) as T;
-          }
-          case "da": {
-            const { msDa } = await import("converters/ms/ms-da");
-            return (await msDa(text)) as T;
-          }
-          case "de": {
-            const { msDe } = await import("converters/ms/ms-de");
-            return (await msDe(text)) as T;
-          }
-          case "en": {
-            const { msEn } = await import("converters/ms/ms-en");
-            return (await msEn(text)) as T;
-          }
-          case "es": {
-            const { msEs } = await import("converters/ms/ms-es");
-            return (await msEs(text)) as T;
-          }
-          case "et": {
-            const { msEt } = await import("converters/ms/ms-et");
-            return (await msEt(text)) as T;
-          }
-          case "fi": {
-            const { msFi } = await import("converters/ms/ms-fi");
-            return (await msFi(text)) as T;
-          }
-          case "fr": {
-            const { msFr } = await import("converters/ms/ms-fr");
-            return (await msFr(text)) as T;
-          }
-          case "hr": {
-            const { msHr } = await import("converters/ms/ms-hr");
-            return (await msHr(text)) as T;
-          }
-          case "hu": {
-            const { msHu } = await import("converters/ms/ms-hu");
-            return (await msHu(text)) as T;
-          }
-          case "id": {
-            const { msId } = await import("converters/ms/ms-id");
-            return (await msId(text)) as T;
-          }
-          case "is": {
-            const { msIs } = await import("converters/ms/ms-is");
-            return (await msIs(text)) as T;
-          }
-          case "it": {
-            const { msIt } = await import("converters/ms/ms-it");
-            return (await msIt(text)) as T;
-          }
-          case "lb": {
-            const { msLb } = await import("converters/ms/ms-lb");
-            return (await msLb(text)) as T;
-          }
-          case "lt": {
-            const { msLt } = await import("converters/ms/ms-lt");
-            return (await msLt(text)) as T;
-          }
-          case "lv": {
-            const { msLv } = await import("converters/ms/ms-lv");
-            return (await msLv(text)) as T;
-          }
-          case "mt": {
-            const { msMt } = await import("converters/ms/ms-mt");
-            return (await msMt(text)) as T;
-          }
-          case "nl": {
-            const { msNl } = await import("converters/ms/ms-nl");
-            return (await msNl(text)) as T;
-          }
-          case "no": {
-            const { msNo } = await import("converters/ms/ms-no");
-            return (await msNo(text)) as T;
-          }
-          case "pl": {
-            const { msPl } = await import("converters/ms/ms-pl");
-            return (await msPl(text)) as T;
-          }
-          case "pt": {
-            const { msPt } = await import("converters/ms/ms-pt");
-            return (await msPt(text)) as T;
-          }
-          case "ro": {
-            const { msRo } = await import("converters/ms/ms-ro");
-            return (await msRo(text)) as T;
-          }
-          case "sk": {
-            const { msSk } = await import("converters/ms/ms-sk");
-            return (await msSk(text)) as T;
-          }
-          case "sl": {
-            const { msSl } = await import("converters/ms/ms-sl");
-            return (await msSl(text)) as T;
-          }
-          case "sq": {
-            const { msSq } = await import("converters/ms/ms-sq");
-            return (await msSq(text)) as T;
-          }
-          case "sr": {
-            const { msSr } = await import("converters/ms/ms-sr");
-            return (await msSr(text)) as T;
-          }
-          case "sv": {
-            const { msSv } = await import("converters/ms/ms-sv");
-            return (await msSv(text)) as T;
-          }
-          case "tr": {
-            const { msTr } = await import("converters/ms/ms-tr");
-            return (await msTr(text)) as T;
-          }
-          case "vi": {
-            const { msVi } = await import("converters/ms/ms-vi");
-            return (await msVi(text)) as T;
-          }
-        }
-        break;
-      case "mt":
-        switch (to) {
-          case "zh": {
-            const { mtZh } = await import("converters/mt/mt-zh");
-            return (await mtZh(text)) as T;
-          }
-          case "ja": {
-            const { mtJa } = await import("converters/mt/mt-ja");
-            return (await mtJa(text)) as T;
-          }
-          case "ko": {
-            const { mtKo } = await import("converters/mt/mt-ko");
-            return (await mtKo(text)) as T;
-          }
-          case "th": {
-            const { mtTh } = await import("converters/mt/mt-th");
-            return (await mtTh(text)) as T;
-          }
-          case "hi": {
-            const { mtHi } = await import("converters/mt/mt-hi");
-            return (await mtHi(text)) as T;
-          }
-          case "bn": {
-            const { mtBn } = await import("converters/mt/mt-bn");
-            return (await mtBn(text)) as T;
-          }
-          case "ur": {
-            const { mtUr } = await import("converters/mt/mt-ur");
-            return (await mtUr(text)) as T;
-          }
-          case "fa": {
-            const { mtFa } = await import("converters/mt/mt-fa");
-            return (await mtFa(text)) as T;
-          }
-          case "ar": {
-            const { mtAr } = await import("converters/mt/mt-ar");
-            return (await mtAr(text)) as T;
-          }
-          case "he": {
-            const { mtHe } = await import("converters/mt/mt-he");
-            return (await mtHe(text)) as T;
-          }
-          case "ka": {
-            const { mtKa } = await import("converters/mt/mt-ka");
-            return (await mtKa(text)) as T;
-          }
-          case "hy": {
-            const { mtHy } = await import("converters/mt/mt-hy");
-            return (await mtHy(text)) as T;
-          }
-          case "el": {
-            const { mtEl } = await import("converters/mt/mt-el");
-            return (await mtEl(text)) as T;
-          }
-          case "ru": {
-            const { mtRu } = await import("converters/mt/mt-ru");
-            return (await mtRu(text)) as T;
-          }
-          case "uk": {
-            const { mtUk } = await import("converters/mt/mt-uk");
-            return (await mtUk(text)) as T;
-          }
-          case "bg": {
-            const { mtBg } = await import("converters/mt/mt-bg");
-            return (await mtBg(text)) as T;
-          }
-          case "mk": {
-            const { mtMk } = await import("converters/mt/mt-mk");
-            return (await mtMk(text)) as T;
-          }
-          case "kk": {
-            const { mtKk } = await import("converters/mt/mt-kk");
-            return (await mtKk(text)) as T;
-          }
-          case "tg": {
-            const { mtTg } = await import("converters/mt/mt-tg");
-            return (await mtTg(text)) as T;
-          }
-          case "az": {
-            const { mtAz } = await import("converters/mt/mt-az");
-            return (await mtAz(text)) as T;
-          }
-          case "bs": {
-            const { mtBs } = await import("converters/mt/mt-bs");
-            return (await mtBs(text)) as T;
-          }
-          case "ca": {
-            const { mtCa } = await import("converters/mt/mt-ca");
-            return (await mtCa(text)) as T;
-          }
-          case "cs": {
-            const { mtCs } = await import("converters/mt/mt-cs");
-            return (await mtCs(text)) as T;
-          }
-          case "da": {
-            const { mtDa } = await import("converters/mt/mt-da");
-            return (await mtDa(text)) as T;
-          }
-          case "de": {
-            const { mtDe } = await import("converters/mt/mt-de");
-            return (await mtDe(text)) as T;
-          }
-          case "en": {
-            const { mtEn } = await import("converters/mt/mt-en");
-            return (await mtEn(text)) as T;
-          }
-          case "es": {
-            const { mtEs } = await import("converters/mt/mt-es");
-            return (await mtEs(text)) as T;
-          }
-          case "et": {
-            const { mtEt } = await import("converters/mt/mt-et");
-            return (await mtEt(text)) as T;
-          }
-          case "fi": {
-            const { mtFi } = await import("converters/mt/mt-fi");
-            return (await mtFi(text)) as T;
-          }
-          case "fr": {
-            const { mtFr } = await import("converters/mt/mt-fr");
-            return (await mtFr(text)) as T;
-          }
-          case "hr": {
-            const { mtHr } = await import("converters/mt/mt-hr");
-            return (await mtHr(text)) as T;
-          }
-          case "hu": {
-            const { mtHu } = await import("converters/mt/mt-hu");
-            return (await mtHu(text)) as T;
-          }
-          case "id": {
-            const { mtId } = await import("converters/mt/mt-id");
-            return (await mtId(text)) as T;
-          }
-          case "is": {
-            const { mtIs } = await import("converters/mt/mt-is");
-            return (await mtIs(text)) as T;
-          }
-          case "it": {
-            const { mtIt } = await import("converters/mt/mt-it");
-            return (await mtIt(text)) as T;
-          }
-          case "lb": {
-            const { mtLb } = await import("converters/mt/mt-lb");
-            return (await mtLb(text)) as T;
-          }
-          case "lt": {
-            const { mtLt } = await import("converters/mt/mt-lt");
-            return (await mtLt(text)) as T;
-          }
-          case "lv": {
-            const { mtLv } = await import("converters/mt/mt-lv");
-            return (await mtLv(text)) as T;
-          }
-          case "ms": {
-            const { mtMs } = await import("converters/mt/mt-ms");
-            return (await mtMs(text)) as T;
-          }
-          case "nl": {
-            const { mtNl } = await import("converters/mt/mt-nl");
-            return (await mtNl(text)) as T;
-          }
-          case "no": {
-            const { mtNo } = await import("converters/mt/mt-no");
-            return (await mtNo(text)) as T;
-          }
-          case "pl": {
-            const { mtPl } = await import("converters/mt/mt-pl");
-            return (await mtPl(text)) as T;
-          }
-          case "pt": {
-            const { mtPt } = await import("converters/mt/mt-pt");
-            return (await mtPt(text)) as T;
-          }
-          case "ro": {
-            const { mtRo } = await import("converters/mt/mt-ro");
-            return (await mtRo(text)) as T;
-          }
-          case "sk": {
-            const { mtSk } = await import("converters/mt/mt-sk");
-            return (await mtSk(text)) as T;
-          }
-          case "sl": {
-            const { mtSl } = await import("converters/mt/mt-sl");
-            return (await mtSl(text)) as T;
-          }
-          case "sq": {
-            const { mtSq } = await import("converters/mt/mt-sq");
-            return (await mtSq(text)) as T;
-          }
-          case "sr": {
-            const { mtSr } = await import("converters/mt/mt-sr");
-            return (await mtSr(text)) as T;
-          }
-          case "sv": {
-            const { mtSv } = await import("converters/mt/mt-sv");
-            return (await mtSv(text)) as T;
-          }
-          case "tr": {
-            const { mtTr } = await import("converters/mt/mt-tr");
-            return (await mtTr(text)) as T;
-          }
-          case "vi": {
-            const { mtVi } = await import("converters/mt/mt-vi");
-            return (await mtVi(text)) as T;
-          }
-        }
-        break;
-      case "nl":
-        switch (to) {
-          case "zh": {
-            const { nlZh } = await import("converters/nl/nl-zh");
-            return (await nlZh(text)) as T;
-          }
-          case "ja": {
-            const { nlJa } = await import("converters/nl/nl-ja");
-            return (await nlJa(text)) as T;
-          }
-          case "ko": {
-            const { nlKo } = await import("converters/nl/nl-ko");
-            return (await nlKo(text)) as T;
-          }
-          case "th": {
-            const { nlTh } = await import("converters/nl/nl-th");
-            return (await nlTh(text)) as T;
-          }
-          case "hi": {
-            const { nlHi } = await import("converters/nl/nl-hi");
-            return (await nlHi(text)) as T;
-          }
-          case "bn": {
-            const { nlBn } = await import("converters/nl/nl-bn");
-            return (await nlBn(text)) as T;
-          }
-          case "ur": {
-            const { nlUr } = await import("converters/nl/nl-ur");
-            return (await nlUr(text)) as T;
-          }
-          case "fa": {
-            const { nlFa } = await import("converters/nl/nl-fa");
-            return (await nlFa(text)) as T;
-          }
-          case "ar": {
-            const { nlAr } = await import("converters/nl/nl-ar");
-            return (await nlAr(text)) as T;
-          }
-          case "he": {
-            const { nlHe } = await import("converters/nl/nl-he");
-            return (await nlHe(text)) as T;
-          }
-          case "ka": {
-            const { nlKa } = await import("converters/nl/nl-ka");
-            return (await nlKa(text)) as T;
-          }
-          case "hy": {
-            const { nlHy } = await import("converters/nl/nl-hy");
-            return (await nlHy(text)) as T;
-          }
-          case "el": {
-            const { nlEl } = await import("converters/nl/nl-el");
-            return (await nlEl(text)) as T;
-          }
-          case "ru": {
-            const { nlRu } = await import("converters/nl/nl-ru");
-            return (await nlRu(text)) as T;
-          }
-          case "uk": {
-            const { nlUk } = await import("converters/nl/nl-uk");
-            return (await nlUk(text)) as T;
-          }
-          case "bg": {
-            const { nlBg } = await import("converters/nl/nl-bg");
-            return (await nlBg(text)) as T;
-          }
-          case "mk": {
-            const { nlMk } = await import("converters/nl/nl-mk");
-            return (await nlMk(text)) as T;
-          }
-          case "kk": {
-            const { nlKk } = await import("converters/nl/nl-kk");
-            return (await nlKk(text)) as T;
-          }
-          case "tg": {
-            const { nlTg } = await import("converters/nl/nl-tg");
-            return (await nlTg(text)) as T;
-          }
-          case "az": {
-            const { nlAz } = await import("converters/nl/nl-az");
-            return (await nlAz(text)) as T;
-          }
-          case "bs": {
-            const { nlBs } = await import("converters/nl/nl-bs");
-            return (await nlBs(text)) as T;
-          }
-          case "ca": {
-            const { nlCa } = await import("converters/nl/nl-ca");
-            return (await nlCa(text)) as T;
-          }
-          case "cs": {
-            const { nlCs } = await import("converters/nl/nl-cs");
-            return (await nlCs(text)) as T;
-          }
-          case "da": {
-            const { nlDa } = await import("converters/nl/nl-da");
-            return (await nlDa(text)) as T;
-          }
-          case "de": {
-            const { nlDe } = await import("converters/nl/nl-de");
-            return (await nlDe(text)) as T;
-          }
-          case "en": {
-            const { nlEn } = await import("converters/nl/nl-en");
-            return (await nlEn(text)) as T;
-          }
-          case "es": {
-            const { nlEs } = await import("converters/nl/nl-es");
-            return (await nlEs(text)) as T;
-          }
-          case "et": {
-            const { nlEt } = await import("converters/nl/nl-et");
-            return (await nlEt(text)) as T;
-          }
-          case "fi": {
-            const { nlFi } = await import("converters/nl/nl-fi");
-            return (await nlFi(text)) as T;
-          }
-          case "fr": {
-            const { nlFr } = await import("converters/nl/nl-fr");
-            return (await nlFr(text)) as T;
-          }
-          case "hr": {
-            const { nlHr } = await import("converters/nl/nl-hr");
-            return (await nlHr(text)) as T;
-          }
-          case "hu": {
-            const { nlHu } = await import("converters/nl/nl-hu");
-            return (await nlHu(text)) as T;
-          }
-          case "id": {
-            const { nlId } = await import("converters/nl/nl-id");
-            return (await nlId(text)) as T;
-          }
-          case "is": {
-            const { nlIs } = await import("converters/nl/nl-is");
-            return (await nlIs(text)) as T;
-          }
-          case "it": {
-            const { nlIt } = await import("converters/nl/nl-it");
-            return (await nlIt(text)) as T;
-          }
-          case "lb": {
-            const { nlLb } = await import("converters/nl/nl-lb");
-            return (await nlLb(text)) as T;
-          }
-          case "lt": {
-            const { nlLt } = await import("converters/nl/nl-lt");
-            return (await nlLt(text)) as T;
-          }
-          case "lv": {
-            const { nlLv } = await import("converters/nl/nl-lv");
-            return (await nlLv(text)) as T;
-          }
-          case "ms": {
-            const { nlMs } = await import("converters/nl/nl-ms");
-            return (await nlMs(text)) as T;
-          }
-          case "mt": {
-            const { nlMt } = await import("converters/nl/nl-mt");
-            return (await nlMt(text)) as T;
-          }
-          case "no": {
-            const { nlNo } = await import("converters/nl/nl-no");
-            return (await nlNo(text)) as T;
-          }
-          case "pl": {
-            const { nlPl } = await import("converters/nl/nl-pl");
-            return (await nlPl(text)) as T;
-          }
-          case "pt": {
-            const { nlPt } = await import("converters/nl/nl-pt");
-            return (await nlPt(text)) as T;
-          }
-          case "ro": {
-            const { nlRo } = await import("converters/nl/nl-ro");
-            return (await nlRo(text)) as T;
-          }
-          case "sk": {
-            const { nlSk } = await import("converters/nl/nl-sk");
-            return (await nlSk(text)) as T;
-          }
-          case "sl": {
-            const { nlSl } = await import("converters/nl/nl-sl");
-            return (await nlSl(text)) as T;
-          }
-          case "sq": {
-            const { nlSq } = await import("converters/nl/nl-sq");
-            return (await nlSq(text)) as T;
-          }
-          case "sr": {
-            const { nlSr } = await import("converters/nl/nl-sr");
-            return (await nlSr(text)) as T;
-          }
-          case "sv": {
-            const { nlSv } = await import("converters/nl/nl-sv");
-            return (await nlSv(text)) as T;
-          }
-          case "tr": {
-            const { nlTr } = await import("converters/nl/nl-tr");
-            return (await nlTr(text)) as T;
-          }
-          case "vi": {
-            const { nlVi } = await import("converters/nl/nl-vi");
-            return (await nlVi(text)) as T;
-          }
-        }
-        break;
-      case "no":
-        switch (to) {
-          case "zh": {
-            const { noZh } = await import("converters/no/no-zh");
-            return (await noZh(text)) as T;
-          }
-          case "ja": {
-            const { noJa } = await import("converters/no/no-ja");
-            return (await noJa(text)) as T;
-          }
-          case "ko": {
-            const { noKo } = await import("converters/no/no-ko");
-            return (await noKo(text)) as T;
-          }
-          case "th": {
-            const { noTh } = await import("converters/no/no-th");
-            return (await noTh(text)) as T;
-          }
-          case "hi": {
-            const { noHi } = await import("converters/no/no-hi");
-            return (await noHi(text)) as T;
-          }
-          case "bn": {
-            const { noBn } = await import("converters/no/no-bn");
-            return (await noBn(text)) as T;
-          }
-          case "ur": {
-            const { noUr } = await import("converters/no/no-ur");
-            return (await noUr(text)) as T;
-          }
-          case "fa": {
-            const { noFa } = await import("converters/no/no-fa");
-            return (await noFa(text)) as T;
-          }
-          case "ar": {
-            const { noAr } = await import("converters/no/no-ar");
-            return (await noAr(text)) as T;
-          }
-          case "he": {
-            const { noHe } = await import("converters/no/no-he");
-            return (await noHe(text)) as T;
-          }
-          case "ka": {
-            const { noKa } = await import("converters/no/no-ka");
-            return (await noKa(text)) as T;
-          }
-          case "hy": {
-            const { noHy } = await import("converters/no/no-hy");
-            return (await noHy(text)) as T;
-          }
-          case "el": {
-            const { noEl } = await import("converters/no/no-el");
-            return (await noEl(text)) as T;
-          }
-          case "ru": {
-            const { noRu } = await import("converters/no/no-ru");
-            return (await noRu(text)) as T;
-          }
-          case "uk": {
-            const { noUk } = await import("converters/no/no-uk");
-            return (await noUk(text)) as T;
-          }
-          case "bg": {
-            const { noBg } = await import("converters/no/no-bg");
-            return (await noBg(text)) as T;
-          }
-          case "mk": {
-            const { noMk } = await import("converters/no/no-mk");
-            return (await noMk(text)) as T;
-          }
-          case "kk": {
-            const { noKk } = await import("converters/no/no-kk");
-            return (await noKk(text)) as T;
-          }
-          case "tg": {
-            const { noTg } = await import("converters/no/no-tg");
-            return (await noTg(text)) as T;
-          }
-          case "az": {
-            const { noAz } = await import("converters/no/no-az");
-            return (await noAz(text)) as T;
-          }
-          case "bs": {
-            const { noBs } = await import("converters/no/no-bs");
-            return (await noBs(text)) as T;
-          }
-          case "ca": {
-            const { noCa } = await import("converters/no/no-ca");
-            return (await noCa(text)) as T;
-          }
-          case "cs": {
-            const { noCs } = await import("converters/no/no-cs");
-            return (await noCs(text)) as T;
-          }
-          case "da": {
-            const { noDa } = await import("converters/no/no-da");
-            return (await noDa(text)) as T;
-          }
-          case "de": {
-            const { noDe } = await import("converters/no/no-de");
-            return (await noDe(text)) as T;
-          }
-          case "en": {
-            const { noEn } = await import("converters/no/no-en");
-            return (await noEn(text)) as T;
-          }
-          case "es": {
-            const { noEs } = await import("converters/no/no-es");
-            return (await noEs(text)) as T;
-          }
-          case "et": {
-            const { noEt } = await import("converters/no/no-et");
-            return (await noEt(text)) as T;
-          }
-          case "fi": {
-            const { noFi } = await import("converters/no/no-fi");
-            return (await noFi(text)) as T;
-          }
-          case "fr": {
-            const { noFr } = await import("converters/no/no-fr");
-            return (await noFr(text)) as T;
-          }
-          case "hr": {
-            const { noHr } = await import("converters/no/no-hr");
-            return (await noHr(text)) as T;
-          }
-          case "hu": {
-            const { noHu } = await import("converters/no/no-hu");
-            return (await noHu(text)) as T;
-          }
-          case "id": {
-            const { noId } = await import("converters/no/no-id");
-            return (await noId(text)) as T;
-          }
-          case "is": {
-            const { noIs } = await import("converters/no/no-is");
-            return (await noIs(text)) as T;
-          }
-          case "it": {
-            const { noIt } = await import("converters/no/no-it");
-            return (await noIt(text)) as T;
-          }
-          case "lb": {
-            const { noLb } = await import("converters/no/no-lb");
-            return (await noLb(text)) as T;
-          }
-          case "lt": {
-            const { noLt } = await import("converters/no/no-lt");
-            return (await noLt(text)) as T;
-          }
-          case "lv": {
-            const { noLv } = await import("converters/no/no-lv");
-            return (await noLv(text)) as T;
-          }
-          case "ms": {
-            const { noMs } = await import("converters/no/no-ms");
-            return (await noMs(text)) as T;
-          }
-          case "mt": {
-            const { noMt } = await import("converters/no/no-mt");
-            return (await noMt(text)) as T;
-          }
-          case "nl": {
-            const { noNl } = await import("converters/no/no-nl");
-            return (await noNl(text)) as T;
-          }
-          case "pl": {
-            const { noPl } = await import("converters/no/no-pl");
-            return (await noPl(text)) as T;
-          }
-          case "pt": {
-            const { noPt } = await import("converters/no/no-pt");
-            return (await noPt(text)) as T;
-          }
-          case "ro": {
-            const { noRo } = await import("converters/no/no-ro");
-            return (await noRo(text)) as T;
-          }
-          case "sk": {
-            const { noSk } = await import("converters/no/no-sk");
-            return (await noSk(text)) as T;
-          }
-          case "sl": {
-            const { noSl } = await import("converters/no/no-sl");
-            return (await noSl(text)) as T;
-          }
-          case "sq": {
-            const { noSq } = await import("converters/no/no-sq");
-            return (await noSq(text)) as T;
-          }
-          case "sr": {
-            const { noSr } = await import("converters/no/no-sr");
-            return (await noSr(text)) as T;
-          }
-          case "sv": {
-            const { noSv } = await import("converters/no/no-sv");
-            return (await noSv(text)) as T;
-          }
-          case "tr": {
-            const { noTr } = await import("converters/no/no-tr");
-            return (await noTr(text)) as T;
-          }
-          case "vi": {
-            const { noVi } = await import("converters/no/no-vi");
-            return (await noVi(text)) as T;
-          }
-        }
-        break;
-      case "pl":
-        switch (to) {
-          case "zh": {
-            const { plZh } = await import("converters/pl/pl-zh");
-            return (await plZh(text)) as T;
-          }
-          case "ja": {
-            const { plJa } = await import("converters/pl/pl-ja");
-            return (await plJa(text)) as T;
-          }
-          case "ko": {
-            const { plKo } = await import("converters/pl/pl-ko");
-            return (await plKo(text)) as T;
-          }
-          case "th": {
-            const { plTh } = await import("converters/pl/pl-th");
-            return (await plTh(text)) as T;
-          }
-          case "hi": {
-            const { plHi } = await import("converters/pl/pl-hi");
-            return (await plHi(text)) as T;
-          }
-          case "bn": {
-            const { plBn } = await import("converters/pl/pl-bn");
-            return (await plBn(text)) as T;
-          }
-          case "ur": {
-            const { plUr } = await import("converters/pl/pl-ur");
-            return (await plUr(text)) as T;
-          }
-          case "fa": {
-            const { plFa } = await import("converters/pl/pl-fa");
-            return (await plFa(text)) as T;
-          }
-          case "ar": {
-            const { plAr } = await import("converters/pl/pl-ar");
-            return (await plAr(text)) as T;
-          }
-          case "he": {
-            const { plHe } = await import("converters/pl/pl-he");
-            return (await plHe(text)) as T;
-          }
-          case "ka": {
-            const { plKa } = await import("converters/pl/pl-ka");
-            return (await plKa(text)) as T;
-          }
-          case "hy": {
-            const { plHy } = await import("converters/pl/pl-hy");
-            return (await plHy(text)) as T;
-          }
-          case "el": {
-            const { plEl } = await import("converters/pl/pl-el");
-            return (await plEl(text)) as T;
-          }
-          case "ru": {
-            const { plRu } = await import("converters/pl/pl-ru");
-            return (await plRu(text)) as T;
-          }
-          case "uk": {
-            const { plUk } = await import("converters/pl/pl-uk");
-            return (await plUk(text)) as T;
-          }
-          case "bg": {
-            const { plBg } = await import("converters/pl/pl-bg");
-            return (await plBg(text)) as T;
-          }
-          case "mk": {
-            const { plMk } = await import("converters/pl/pl-mk");
-            return (await plMk(text)) as T;
-          }
-          case "kk": {
-            const { plKk } = await import("converters/pl/pl-kk");
-            return (await plKk(text)) as T;
-          }
-          case "tg": {
-            const { plTg } = await import("converters/pl/pl-tg");
-            return (await plTg(text)) as T;
-          }
-          case "az": {
-            const { plAz } = await import("converters/pl/pl-az");
-            return (await plAz(text)) as T;
-          }
-          case "bs": {
-            const { plBs } = await import("converters/pl/pl-bs");
-            return (await plBs(text)) as T;
-          }
-          case "ca": {
-            const { plCa } = await import("converters/pl/pl-ca");
-            return (await plCa(text)) as T;
-          }
-          case "cs": {
-            const { plCs } = await import("converters/pl/pl-cs");
-            return (await plCs(text)) as T;
-          }
-          case "da": {
-            const { plDa } = await import("converters/pl/pl-da");
-            return (await plDa(text)) as T;
-          }
-          case "de": {
-            const { plDe } = await import("converters/pl/pl-de");
-            return (await plDe(text)) as T;
-          }
-          case "en": {
-            const { plEn } = await import("converters/pl/pl-en");
-            return (await plEn(text)) as T;
-          }
-          case "es": {
-            const { plEs } = await import("converters/pl/pl-es");
-            return (await plEs(text)) as T;
-          }
-          case "et": {
-            const { plEt } = await import("converters/pl/pl-et");
-            return (await plEt(text)) as T;
-          }
-          case "fi": {
-            const { plFi } = await import("converters/pl/pl-fi");
-            return (await plFi(text)) as T;
-          }
-          case "fr": {
-            const { plFr } = await import("converters/pl/pl-fr");
-            return (await plFr(text)) as T;
-          }
-          case "hr": {
-            const { plHr } = await import("converters/pl/pl-hr");
-            return (await plHr(text)) as T;
-          }
-          case "hu": {
-            const { plHu } = await import("converters/pl/pl-hu");
-            return (await plHu(text)) as T;
-          }
-          case "id": {
-            const { plId } = await import("converters/pl/pl-id");
-            return (await plId(text)) as T;
-          }
-          case "is": {
-            const { plIs } = await import("converters/pl/pl-is");
-            return (await plIs(text)) as T;
-          }
-          case "it": {
-            const { plIt } = await import("converters/pl/pl-it");
-            return (await plIt(text)) as T;
-          }
-          case "lb": {
-            const { plLb } = await import("converters/pl/pl-lb");
-            return (await plLb(text)) as T;
-          }
-          case "lt": {
-            const { plLt } = await import("converters/pl/pl-lt");
-            return (await plLt(text)) as T;
-          }
-          case "lv": {
-            const { plLv } = await import("converters/pl/pl-lv");
-            return (await plLv(text)) as T;
-          }
-          case "ms": {
-            const { plMs } = await import("converters/pl/pl-ms");
-            return (await plMs(text)) as T;
-          }
-          case "mt": {
-            const { plMt } = await import("converters/pl/pl-mt");
-            return (await plMt(text)) as T;
-          }
-          case "nl": {
-            const { plNl } = await import("converters/pl/pl-nl");
-            return (await plNl(text)) as T;
-          }
-          case "no": {
-            const { plNo } = await import("converters/pl/pl-no");
-            return (await plNo(text)) as T;
-          }
-          case "pt": {
-            const { plPt } = await import("converters/pl/pl-pt");
-            return (await plPt(text)) as T;
-          }
-          case "ro": {
-            const { plRo } = await import("converters/pl/pl-ro");
-            return (await plRo(text)) as T;
-          }
-          case "sk": {
-            const { plSk } = await import("converters/pl/pl-sk");
-            return (await plSk(text)) as T;
-          }
-          case "sl": {
-            const { plSl } = await import("converters/pl/pl-sl");
-            return (await plSl(text)) as T;
-          }
-          case "sq": {
-            const { plSq } = await import("converters/pl/pl-sq");
-            return (await plSq(text)) as T;
-          }
-          case "sr": {
-            const { plSr } = await import("converters/pl/pl-sr");
-            return (await plSr(text)) as T;
-          }
-          case "sv": {
-            const { plSv } = await import("converters/pl/pl-sv");
-            return (await plSv(text)) as T;
-          }
-          case "tr": {
-            const { plTr } = await import("converters/pl/pl-tr");
-            return (await plTr(text)) as T;
-          }
-          case "vi": {
-            const { plVi } = await import("converters/pl/pl-vi");
-            return (await plVi(text)) as T;
-          }
-        }
-        break;
-      case "pt":
-        switch (to) {
-          case "zh": {
-            const { ptZh } = await import("converters/pt/pt-zh");
-            return (await ptZh(text)) as T;
-          }
-          case "ja": {
-            const { ptJa } = await import("converters/pt/pt-ja");
-            return (await ptJa(text)) as T;
-          }
-          case "ko": {
-            const { ptKo } = await import("converters/pt/pt-ko");
-            return (await ptKo(text)) as T;
-          }
-          case "th": {
-            const { ptTh } = await import("converters/pt/pt-th");
-            return (await ptTh(text)) as T;
-          }
-          case "hi": {
-            const { ptHi } = await import("converters/pt/pt-hi");
-            return (await ptHi(text)) as T;
-          }
-          case "bn": {
-            const { ptBn } = await import("converters/pt/pt-bn");
-            return (await ptBn(text)) as T;
-          }
-          case "ur": {
-            const { ptUr } = await import("converters/pt/pt-ur");
-            return (await ptUr(text)) as T;
-          }
-          case "fa": {
-            const { ptFa } = await import("converters/pt/pt-fa");
-            return (await ptFa(text)) as T;
-          }
-          case "ar": {
-            const { ptAr } = await import("converters/pt/pt-ar");
-            return (await ptAr(text)) as T;
-          }
-          case "he": {
-            const { ptHe } = await import("converters/pt/pt-he");
-            return (await ptHe(text)) as T;
-          }
-          case "ka": {
-            const { ptKa } = await import("converters/pt/pt-ka");
-            return (await ptKa(text)) as T;
-          }
-          case "hy": {
-            const { ptHy } = await import("converters/pt/pt-hy");
-            return (await ptHy(text)) as T;
-          }
-          case "el": {
-            const { ptEl } = await import("converters/pt/pt-el");
-            return (await ptEl(text)) as T;
-          }
-          case "ru": {
-            const { ptRu } = await import("converters/pt/pt-ru");
-            return (await ptRu(text)) as T;
-          }
-          case "uk": {
-            const { ptUk } = await import("converters/pt/pt-uk");
-            return (await ptUk(text)) as T;
-          }
-          case "bg": {
-            const { ptBg } = await import("converters/pt/pt-bg");
-            return (await ptBg(text)) as T;
-          }
-          case "mk": {
-            const { ptMk } = await import("converters/pt/pt-mk");
-            return (await ptMk(text)) as T;
-          }
-          case "kk": {
-            const { ptKk } = await import("converters/pt/pt-kk");
-            return (await ptKk(text)) as T;
-          }
-          case "tg": {
-            const { ptTg } = await import("converters/pt/pt-tg");
-            return (await ptTg(text)) as T;
-          }
-          case "az": {
-            const { ptAz } = await import("converters/pt/pt-az");
-            return (await ptAz(text)) as T;
-          }
-          case "bs": {
-            const { ptBs } = await import("converters/pt/pt-bs");
-            return (await ptBs(text)) as T;
-          }
-          case "ca": {
-            const { ptCa } = await import("converters/pt/pt-ca");
-            return (await ptCa(text)) as T;
-          }
-          case "cs": {
-            const { ptCs } = await import("converters/pt/pt-cs");
-            return (await ptCs(text)) as T;
-          }
-          case "da": {
-            const { ptDa } = await import("converters/pt/pt-da");
-            return (await ptDa(text)) as T;
-          }
-          case "de": {
-            const { ptDe } = await import("converters/pt/pt-de");
-            return (await ptDe(text)) as T;
-          }
-          case "en": {
-            const { ptEn } = await import("converters/pt/pt-en");
-            return (await ptEn(text)) as T;
-          }
-          case "es": {
-            const { ptEs } = await import("converters/pt/pt-es");
-            return (await ptEs(text)) as T;
-          }
-          case "et": {
-            const { ptEt } = await import("converters/pt/pt-et");
-            return (await ptEt(text)) as T;
-          }
-          case "fi": {
-            const { ptFi } = await import("converters/pt/pt-fi");
-            return (await ptFi(text)) as T;
-          }
-          case "fr": {
-            const { ptFr } = await import("converters/pt/pt-fr");
-            return (await ptFr(text)) as T;
-          }
-          case "hr": {
-            const { ptHr } = await import("converters/pt/pt-hr");
-            return (await ptHr(text)) as T;
-          }
-          case "hu": {
-            const { ptHu } = await import("converters/pt/pt-hu");
-            return (await ptHu(text)) as T;
-          }
-          case "id": {
-            const { ptId } = await import("converters/pt/pt-id");
-            return (await ptId(text)) as T;
-          }
-          case "is": {
-            const { ptIs } = await import("converters/pt/pt-is");
-            return (await ptIs(text)) as T;
-          }
-          case "it": {
-            const { ptIt } = await import("converters/pt/pt-it");
-            return (await ptIt(text)) as T;
-          }
-          case "lb": {
-            const { ptLb } = await import("converters/pt/pt-lb");
-            return (await ptLb(text)) as T;
-          }
-          case "lt": {
-            const { ptLt } = await import("converters/pt/pt-lt");
-            return (await ptLt(text)) as T;
-          }
-          case "lv": {
-            const { ptLv } = await import("converters/pt/pt-lv");
-            return (await ptLv(text)) as T;
-          }
-          case "ms": {
-            const { ptMs } = await import("converters/pt/pt-ms");
-            return (await ptMs(text)) as T;
-          }
-          case "mt": {
-            const { ptMt } = await import("converters/pt/pt-mt");
-            return (await ptMt(text)) as T;
-          }
-          case "nl": {
-            const { ptNl } = await import("converters/pt/pt-nl");
-            return (await ptNl(text)) as T;
-          }
-          case "no": {
-            const { ptNo } = await import("converters/pt/pt-no");
-            return (await ptNo(text)) as T;
-          }
-          case "pl": {
-            const { ptPl } = await import("converters/pt/pt-pl");
-            return (await ptPl(text)) as T;
-          }
-          case "ro": {
-            const { ptRo } = await import("converters/pt/pt-ro");
-            return (await ptRo(text)) as T;
-          }
-          case "sk": {
-            const { ptSk } = await import("converters/pt/pt-sk");
-            return (await ptSk(text)) as T;
-          }
-          case "sl": {
-            const { ptSl } = await import("converters/pt/pt-sl");
-            return (await ptSl(text)) as T;
-          }
-          case "sq": {
-            const { ptSq } = await import("converters/pt/pt-sq");
-            return (await ptSq(text)) as T;
-          }
-          case "sr": {
-            const { ptSr } = await import("converters/pt/pt-sr");
-            return (await ptSr(text)) as T;
-          }
-          case "sv": {
-            const { ptSv } = await import("converters/pt/pt-sv");
-            return (await ptSv(text)) as T;
-          }
-          case "tr": {
-            const { ptTr } = await import("converters/pt/pt-tr");
-            return (await ptTr(text)) as T;
-          }
-          case "vi": {
-            const { ptVi } = await import("converters/pt/pt-vi");
-            return (await ptVi(text)) as T;
-          }
-        }
-        break;
-      case "ro":
-        switch (to) {
-          case "zh": {
-            const { roZh } = await import("converters/ro/ro-zh");
-            return (await roZh(text)) as T;
-          }
-          case "ja": {
-            const { roJa } = await import("converters/ro/ro-ja");
-            return (await roJa(text)) as T;
-          }
-          case "ko": {
-            const { roKo } = await import("converters/ro/ro-ko");
-            return (await roKo(text)) as T;
-          }
-          case "th": {
-            const { roTh } = await import("converters/ro/ro-th");
-            return (await roTh(text)) as T;
-          }
-          case "hi": {
-            const { roHi } = await import("converters/ro/ro-hi");
-            return (await roHi(text)) as T;
-          }
-          case "bn": {
-            const { roBn } = await import("converters/ro/ro-bn");
-            return (await roBn(text)) as T;
-          }
-          case "ur": {
-            const { roUr } = await import("converters/ro/ro-ur");
-            return (await roUr(text)) as T;
-          }
-          case "fa": {
-            const { roFa } = await import("converters/ro/ro-fa");
-            return (await roFa(text)) as T;
-          }
-          case "ar": {
-            const { roAr } = await import("converters/ro/ro-ar");
-            return (await roAr(text)) as T;
-          }
-          case "he": {
-            const { roHe } = await import("converters/ro/ro-he");
-            return (await roHe(text)) as T;
-          }
-          case "ka": {
-            const { roKa } = await import("converters/ro/ro-ka");
-            return (await roKa(text)) as T;
-          }
-          case "hy": {
-            const { roHy } = await import("converters/ro/ro-hy");
-            return (await roHy(text)) as T;
-          }
-          case "el": {
-            const { roEl } = await import("converters/ro/ro-el");
-            return (await roEl(text)) as T;
-          }
-          case "ru": {
-            const { roRu } = await import("converters/ro/ro-ru");
-            return (await roRu(text)) as T;
-          }
-          case "uk": {
-            const { roUk } = await import("converters/ro/ro-uk");
-            return (await roUk(text)) as T;
-          }
-          case "bg": {
-            const { roBg } = await import("converters/ro/ro-bg");
-            return (await roBg(text)) as T;
-          }
-          case "mk": {
-            const { roMk } = await import("converters/ro/ro-mk");
-            return (await roMk(text)) as T;
-          }
-          case "kk": {
-            const { roKk } = await import("converters/ro/ro-kk");
-            return (await roKk(text)) as T;
-          }
-          case "tg": {
-            const { roTg } = await import("converters/ro/ro-tg");
-            return (await roTg(text)) as T;
-          }
-          case "az": {
-            const { roAz } = await import("converters/ro/ro-az");
-            return (await roAz(text)) as T;
-          }
-          case "bs": {
-            const { roBs } = await import("converters/ro/ro-bs");
-            return (await roBs(text)) as T;
-          }
-          case "ca": {
-            const { roCa } = await import("converters/ro/ro-ca");
-            return (await roCa(text)) as T;
-          }
-          case "cs": {
-            const { roCs } = await import("converters/ro/ro-cs");
-            return (await roCs(text)) as T;
-          }
-          case "da": {
-            const { roDa } = await import("converters/ro/ro-da");
-            return (await roDa(text)) as T;
-          }
-          case "de": {
-            const { roDe } = await import("converters/ro/ro-de");
-            return (await roDe(text)) as T;
-          }
-          case "en": {
-            const { roEn } = await import("converters/ro/ro-en");
-            return (await roEn(text)) as T;
-          }
-          case "es": {
-            const { roEs } = await import("converters/ro/ro-es");
-            return (await roEs(text)) as T;
-          }
-          case "et": {
-            const { roEt } = await import("converters/ro/ro-et");
-            return (await roEt(text)) as T;
-          }
-          case "fi": {
-            const { roFi } = await import("converters/ro/ro-fi");
-            return (await roFi(text)) as T;
-          }
-          case "fr": {
-            const { roFr } = await import("converters/ro/ro-fr");
-            return (await roFr(text)) as T;
-          }
-          case "hr": {
-            const { roHr } = await import("converters/ro/ro-hr");
-            return (await roHr(text)) as T;
-          }
-          case "hu": {
-            const { roHu } = await import("converters/ro/ro-hu");
-            return (await roHu(text)) as T;
-          }
-          case "id": {
-            const { roId } = await import("converters/ro/ro-id");
-            return (await roId(text)) as T;
-          }
-          case "is": {
-            const { roIs } = await import("converters/ro/ro-is");
-            return (await roIs(text)) as T;
-          }
-          case "it": {
-            const { roIt } = await import("converters/ro/ro-it");
-            return (await roIt(text)) as T;
-          }
-          case "lb": {
-            const { roLb } = await import("converters/ro/ro-lb");
-            return (await roLb(text)) as T;
-          }
-          case "lt": {
-            const { roLt } = await import("converters/ro/ro-lt");
-            return (await roLt(text)) as T;
-          }
-          case "lv": {
-            const { roLv } = await import("converters/ro/ro-lv");
-            return (await roLv(text)) as T;
-          }
-          case "ms": {
-            const { roMs } = await import("converters/ro/ro-ms");
-            return (await roMs(text)) as T;
-          }
-          case "mt": {
-            const { roMt } = await import("converters/ro/ro-mt");
-            return (await roMt(text)) as T;
-          }
-          case "nl": {
-            const { roNl } = await import("converters/ro/ro-nl");
-            return (await roNl(text)) as T;
-          }
-          case "no": {
-            const { roNo } = await import("converters/ro/ro-no");
-            return (await roNo(text)) as T;
-          }
-          case "pl": {
-            const { roPl } = await import("converters/ro/ro-pl");
-            return (await roPl(text)) as T;
-          }
-          case "pt": {
-            const { roPt } = await import("converters/ro/ro-pt");
-            return (await roPt(text)) as T;
-          }
-          case "sk": {
-            const { roSk } = await import("converters/ro/ro-sk");
-            return (await roSk(text)) as T;
-          }
-          case "sl": {
-            const { roSl } = await import("converters/ro/ro-sl");
-            return (await roSl(text)) as T;
-          }
-          case "sq": {
-            const { roSq } = await import("converters/ro/ro-sq");
-            return (await roSq(text)) as T;
-          }
-          case "sr": {
-            const { roSr } = await import("converters/ro/ro-sr");
-            return (await roSr(text)) as T;
-          }
-          case "sv": {
-            const { roSv } = await import("converters/ro/ro-sv");
-            return (await roSv(text)) as T;
-          }
-          case "tr": {
-            const { roTr } = await import("converters/ro/ro-tr");
-            return (await roTr(text)) as T;
-          }
-          case "vi": {
-            const { roVi } = await import("converters/ro/ro-vi");
-            return (await roVi(text)) as T;
-          }
-        }
-        break;
-      case "sk":
-        switch (to) {
-          case "zh": {
-            const { skZh } = await import("converters/sk/sk-zh");
-            return (await skZh(text)) as T;
-          }
-          case "ja": {
-            const { skJa } = await import("converters/sk/sk-ja");
-            return (await skJa(text)) as T;
-          }
-          case "ko": {
-            const { skKo } = await import("converters/sk/sk-ko");
-            return (await skKo(text)) as T;
-          }
-          case "th": {
-            const { skTh } = await import("converters/sk/sk-th");
-            return (await skTh(text)) as T;
-          }
-          case "hi": {
-            const { skHi } = await import("converters/sk/sk-hi");
-            return (await skHi(text)) as T;
-          }
-          case "bn": {
-            const { skBn } = await import("converters/sk/sk-bn");
-            return (await skBn(text)) as T;
-          }
-          case "ur": {
-            const { skUr } = await import("converters/sk/sk-ur");
-            return (await skUr(text)) as T;
-          }
-          case "fa": {
-            const { skFa } = await import("converters/sk/sk-fa");
-            return (await skFa(text)) as T;
-          }
-          case "ar": {
-            const { skAr } = await import("converters/sk/sk-ar");
-            return (await skAr(text)) as T;
-          }
-          case "he": {
-            const { skHe } = await import("converters/sk/sk-he");
-            return (await skHe(text)) as T;
-          }
-          case "ka": {
-            const { skKa } = await import("converters/sk/sk-ka");
-            return (await skKa(text)) as T;
-          }
-          case "hy": {
-            const { skHy } = await import("converters/sk/sk-hy");
-            return (await skHy(text)) as T;
-          }
-          case "el": {
-            const { skEl } = await import("converters/sk/sk-el");
-            return (await skEl(text)) as T;
-          }
-          case "ru": {
-            const { skRu } = await import("converters/sk/sk-ru");
-            return (await skRu(text)) as T;
-          }
-          case "uk": {
-            const { skUk } = await import("converters/sk/sk-uk");
-            return (await skUk(text)) as T;
-          }
-          case "bg": {
-            const { skBg } = await import("converters/sk/sk-bg");
-            return (await skBg(text)) as T;
-          }
-          case "mk": {
-            const { skMk } = await import("converters/sk/sk-mk");
-            return (await skMk(text)) as T;
-          }
-          case "kk": {
-            const { skKk } = await import("converters/sk/sk-kk");
-            return (await skKk(text)) as T;
-          }
-          case "tg": {
-            const { skTg } = await import("converters/sk/sk-tg");
-            return (await skTg(text)) as T;
-          }
-          case "az": {
-            const { skAz } = await import("converters/sk/sk-az");
-            return (await skAz(text)) as T;
-          }
-          case "bs": {
-            const { skBs } = await import("converters/sk/sk-bs");
-            return (await skBs(text)) as T;
-          }
-          case "ca": {
-            const { skCa } = await import("converters/sk/sk-ca");
-            return (await skCa(text)) as T;
-          }
-          case "cs": {
-            const { skCs } = await import("converters/sk/sk-cs");
-            return (await skCs(text)) as T;
-          }
-          case "da": {
-            const { skDa } = await import("converters/sk/sk-da");
-            return (await skDa(text)) as T;
-          }
-          case "de": {
-            const { skDe } = await import("converters/sk/sk-de");
-            return (await skDe(text)) as T;
-          }
-          case "en": {
-            const { skEn } = await import("converters/sk/sk-en");
-            return (await skEn(text)) as T;
-          }
-          case "es": {
-            const { skEs } = await import("converters/sk/sk-es");
-            return (await skEs(text)) as T;
-          }
-          case "et": {
-            const { skEt } = await import("converters/sk/sk-et");
-            return (await skEt(text)) as T;
-          }
-          case "fi": {
-            const { skFi } = await import("converters/sk/sk-fi");
-            return (await skFi(text)) as T;
-          }
-          case "fr": {
-            const { skFr } = await import("converters/sk/sk-fr");
-            return (await skFr(text)) as T;
-          }
-          case "hr": {
-            const { skHr } = await import("converters/sk/sk-hr");
-            return (await skHr(text)) as T;
-          }
-          case "hu": {
-            const { skHu } = await import("converters/sk/sk-hu");
-            return (await skHu(text)) as T;
-          }
-          case "id": {
-            const { skId } = await import("converters/sk/sk-id");
-            return (await skId(text)) as T;
-          }
-          case "is": {
-            const { skIs } = await import("converters/sk/sk-is");
-            return (await skIs(text)) as T;
-          }
-          case "it": {
-            const { skIt } = await import("converters/sk/sk-it");
-            return (await skIt(text)) as T;
-          }
-          case "lb": {
-            const { skLb } = await import("converters/sk/sk-lb");
-            return (await skLb(text)) as T;
-          }
-          case "lt": {
-            const { skLt } = await import("converters/sk/sk-lt");
-            return (await skLt(text)) as T;
-          }
-          case "lv": {
-            const { skLv } = await import("converters/sk/sk-lv");
-            return (await skLv(text)) as T;
-          }
-          case "ms": {
-            const { skMs } = await import("converters/sk/sk-ms");
-            return (await skMs(text)) as T;
-          }
-          case "mt": {
-            const { skMt } = await import("converters/sk/sk-mt");
-            return (await skMt(text)) as T;
-          }
-          case "nl": {
-            const { skNl } = await import("converters/sk/sk-nl");
-            return (await skNl(text)) as T;
-          }
-          case "no": {
-            const { skNo } = await import("converters/sk/sk-no");
-            return (await skNo(text)) as T;
-          }
-          case "pl": {
-            const { skPl } = await import("converters/sk/sk-pl");
-            return (await skPl(text)) as T;
-          }
-          case "pt": {
-            const { skPt } = await import("converters/sk/sk-pt");
-            return (await skPt(text)) as T;
-          }
-          case "ro": {
-            const { skRo } = await import("converters/sk/sk-ro");
-            return (await skRo(text)) as T;
-          }
-          case "sl": {
-            const { skSl } = await import("converters/sk/sk-sl");
-            return (await skSl(text)) as T;
-          }
-          case "sq": {
-            const { skSq } = await import("converters/sk/sk-sq");
-            return (await skSq(text)) as T;
-          }
-          case "sr": {
-            const { skSr } = await import("converters/sk/sk-sr");
-            return (await skSr(text)) as T;
-          }
-          case "sv": {
-            const { skSv } = await import("converters/sk/sk-sv");
-            return (await skSv(text)) as T;
-          }
-          case "tr": {
-            const { skTr } = await import("converters/sk/sk-tr");
-            return (await skTr(text)) as T;
-          }
-          case "vi": {
-            const { skVi } = await import("converters/sk/sk-vi");
-            return (await skVi(text)) as T;
-          }
-        }
-        break;
-      case "sl":
-        switch (to) {
-          case "zh": {
-            const { slZh } = await import("converters/sl/sl-zh");
-            return (await slZh(text)) as T;
-          }
-          case "ja": {
-            const { slJa } = await import("converters/sl/sl-ja");
-            return (await slJa(text)) as T;
-          }
-          case "ko": {
-            const { slKo } = await import("converters/sl/sl-ko");
-            return (await slKo(text)) as T;
-          }
-          case "th": {
-            const { slTh } = await import("converters/sl/sl-th");
-            return (await slTh(text)) as T;
-          }
-          case "hi": {
-            const { slHi } = await import("converters/sl/sl-hi");
-            return (await slHi(text)) as T;
-          }
-          case "bn": {
-            const { slBn } = await import("converters/sl/sl-bn");
-            return (await slBn(text)) as T;
-          }
-          case "ur": {
-            const { slUr } = await import("converters/sl/sl-ur");
-            return (await slUr(text)) as T;
-          }
-          case "fa": {
-            const { slFa } = await import("converters/sl/sl-fa");
-            return (await slFa(text)) as T;
-          }
-          case "ar": {
-            const { slAr } = await import("converters/sl/sl-ar");
-            return (await slAr(text)) as T;
-          }
-          case "he": {
-            const { slHe } = await import("converters/sl/sl-he");
-            return (await slHe(text)) as T;
-          }
-          case "ka": {
-            const { slKa } = await import("converters/sl/sl-ka");
-            return (await slKa(text)) as T;
-          }
-          case "hy": {
-            const { slHy } = await import("converters/sl/sl-hy");
-            return (await slHy(text)) as T;
-          }
-          case "el": {
-            const { slEl } = await import("converters/sl/sl-el");
-            return (await slEl(text)) as T;
-          }
-          case "ru": {
-            const { slRu } = await import("converters/sl/sl-ru");
-            return (await slRu(text)) as T;
-          }
-          case "uk": {
-            const { slUk } = await import("converters/sl/sl-uk");
-            return (await slUk(text)) as T;
-          }
-          case "bg": {
-            const { slBg } = await import("converters/sl/sl-bg");
-            return (await slBg(text)) as T;
-          }
-          case "mk": {
-            const { slMk } = await import("converters/sl/sl-mk");
-            return (await slMk(text)) as T;
-          }
-          case "kk": {
-            const { slKk } = await import("converters/sl/sl-kk");
-            return (await slKk(text)) as T;
-          }
-          case "tg": {
-            const { slTg } = await import("converters/sl/sl-tg");
-            return (await slTg(text)) as T;
-          }
-          case "az": {
-            const { slAz } = await import("converters/sl/sl-az");
-            return (await slAz(text)) as T;
-          }
-          case "bs": {
-            const { slBs } = await import("converters/sl/sl-bs");
-            return (await slBs(text)) as T;
-          }
-          case "ca": {
-            const { slCa } = await import("converters/sl/sl-ca");
-            return (await slCa(text)) as T;
-          }
-          case "cs": {
-            const { slCs } = await import("converters/sl/sl-cs");
-            return (await slCs(text)) as T;
-          }
-          case "da": {
-            const { slDa } = await import("converters/sl/sl-da");
-            return (await slDa(text)) as T;
-          }
-          case "de": {
-            const { slDe } = await import("converters/sl/sl-de");
-            return (await slDe(text)) as T;
-          }
-          case "en": {
-            const { slEn } = await import("converters/sl/sl-en");
-            return (await slEn(text)) as T;
-          }
-          case "es": {
-            const { slEs } = await import("converters/sl/sl-es");
-            return (await slEs(text)) as T;
-          }
-          case "et": {
-            const { slEt } = await import("converters/sl/sl-et");
-            return (await slEt(text)) as T;
-          }
-          case "fi": {
-            const { slFi } = await import("converters/sl/sl-fi");
-            return (await slFi(text)) as T;
-          }
-          case "fr": {
-            const { slFr } = await import("converters/sl/sl-fr");
-            return (await slFr(text)) as T;
-          }
-          case "hr": {
-            const { slHr } = await import("converters/sl/sl-hr");
-            return (await slHr(text)) as T;
-          }
-          case "hu": {
-            const { slHu } = await import("converters/sl/sl-hu");
-            return (await slHu(text)) as T;
-          }
-          case "id": {
-            const { slId } = await import("converters/sl/sl-id");
-            return (await slId(text)) as T;
-          }
-          case "is": {
-            const { slIs } = await import("converters/sl/sl-is");
-            return (await slIs(text)) as T;
-          }
-          case "it": {
-            const { slIt } = await import("converters/sl/sl-it");
-            return (await slIt(text)) as T;
-          }
-          case "lb": {
-            const { slLb } = await import("converters/sl/sl-lb");
-            return (await slLb(text)) as T;
-          }
-          case "lt": {
-            const { slLt } = await import("converters/sl/sl-lt");
-            return (await slLt(text)) as T;
-          }
-          case "lv": {
-            const { slLv } = await import("converters/sl/sl-lv");
-            return (await slLv(text)) as T;
-          }
-          case "ms": {
-            const { slMs } = await import("converters/sl/sl-ms");
-            return (await slMs(text)) as T;
-          }
-          case "mt": {
-            const { slMt } = await import("converters/sl/sl-mt");
-            return (await slMt(text)) as T;
-          }
-          case "nl": {
-            const { slNl } = await import("converters/sl/sl-nl");
-            return (await slNl(text)) as T;
-          }
-          case "no": {
-            const { slNo } = await import("converters/sl/sl-no");
-            return (await slNo(text)) as T;
-          }
-          case "pl": {
-            const { slPl } = await import("converters/sl/sl-pl");
-            return (await slPl(text)) as T;
-          }
-          case "pt": {
-            const { slPt } = await import("converters/sl/sl-pt");
-            return (await slPt(text)) as T;
-          }
-          case "ro": {
-            const { slRo } = await import("converters/sl/sl-ro");
-            return (await slRo(text)) as T;
-          }
-          case "sk": {
-            const { slSk } = await import("converters/sl/sl-sk");
-            return (await slSk(text)) as T;
-          }
-          case "sq": {
-            const { slSq } = await import("converters/sl/sl-sq");
-            return (await slSq(text)) as T;
-          }
-          case "sr": {
-            const { slSr } = await import("converters/sl/sl-sr");
-            return (await slSr(text)) as T;
-          }
-          case "sv": {
-            const { slSv } = await import("converters/sl/sl-sv");
-            return (await slSv(text)) as T;
-          }
-          case "tr": {
-            const { slTr } = await import("converters/sl/sl-tr");
-            return (await slTr(text)) as T;
-          }
-          case "vi": {
-            const { slVi } = await import("converters/sl/sl-vi");
-            return (await slVi(text)) as T;
-          }
-        }
-        break;
-      case "sq":
-        switch (to) {
-          case "zh": {
-            const { sqZh } = await import("converters/sq/sq-zh");
-            return (await sqZh(text)) as T;
-          }
-          case "ja": {
-            const { sqJa } = await import("converters/sq/sq-ja");
-            return (await sqJa(text)) as T;
-          }
-          case "ko": {
-            const { sqKo } = await import("converters/sq/sq-ko");
-            return (await sqKo(text)) as T;
-          }
-          case "th": {
-            const { sqTh } = await import("converters/sq/sq-th");
-            return (await sqTh(text)) as T;
-          }
-          case "hi": {
-            const { sqHi } = await import("converters/sq/sq-hi");
-            return (await sqHi(text)) as T;
-          }
-          case "bn": {
-            const { sqBn } = await import("converters/sq/sq-bn");
-            return (await sqBn(text)) as T;
-          }
-          case "ur": {
-            const { sqUr } = await import("converters/sq/sq-ur");
-            return (await sqUr(text)) as T;
-          }
-          case "fa": {
-            const { sqFa } = await import("converters/sq/sq-fa");
-            return (await sqFa(text)) as T;
-          }
-          case "ar": {
-            const { sqAr } = await import("converters/sq/sq-ar");
-            return (await sqAr(text)) as T;
-          }
-          case "he": {
-            const { sqHe } = await import("converters/sq/sq-he");
-            return (await sqHe(text)) as T;
-          }
-          case "ka": {
-            const { sqKa } = await import("converters/sq/sq-ka");
-            return (await sqKa(text)) as T;
-          }
-          case "hy": {
-            const { sqHy } = await import("converters/sq/sq-hy");
-            return (await sqHy(text)) as T;
-          }
-          case "el": {
-            const { sqEl } = await import("converters/sq/sq-el");
-            return (await sqEl(text)) as T;
-          }
-          case "ru": {
-            const { sqRu } = await import("converters/sq/sq-ru");
-            return (await sqRu(text)) as T;
-          }
-          case "uk": {
-            const { sqUk } = await import("converters/sq/sq-uk");
-            return (await sqUk(text)) as T;
-          }
-          case "bg": {
-            const { sqBg } = await import("converters/sq/sq-bg");
-            return (await sqBg(text)) as T;
-          }
-          case "mk": {
-            const { sqMk } = await import("converters/sq/sq-mk");
-            return (await sqMk(text)) as T;
-          }
-          case "kk": {
-            const { sqKk } = await import("converters/sq/sq-kk");
-            return (await sqKk(text)) as T;
-          }
-          case "tg": {
-            const { sqTg } = await import("converters/sq/sq-tg");
-            return (await sqTg(text)) as T;
-          }
-          case "az": {
-            const { sqAz } = await import("converters/sq/sq-az");
-            return (await sqAz(text)) as T;
-          }
-          case "bs": {
-            const { sqBs } = await import("converters/sq/sq-bs");
-            return (await sqBs(text)) as T;
-          }
-          case "ca": {
-            const { sqCa } = await import("converters/sq/sq-ca");
-            return (await sqCa(text)) as T;
-          }
-          case "cs": {
-            const { sqCs } = await import("converters/sq/sq-cs");
-            return (await sqCs(text)) as T;
-          }
-          case "da": {
-            const { sqDa } = await import("converters/sq/sq-da");
-            return (await sqDa(text)) as T;
-          }
-          case "de": {
-            const { sqDe } = await import("converters/sq/sq-de");
-            return (await sqDe(text)) as T;
-          }
-          case "en": {
-            const { sqEn } = await import("converters/sq/sq-en");
-            return (await sqEn(text)) as T;
-          }
-          case "es": {
-            const { sqEs } = await import("converters/sq/sq-es");
-            return (await sqEs(text)) as T;
-          }
-          case "et": {
-            const { sqEt } = await import("converters/sq/sq-et");
-            return (await sqEt(text)) as T;
-          }
-          case "fi": {
-            const { sqFi } = await import("converters/sq/sq-fi");
-            return (await sqFi(text)) as T;
-          }
-          case "fr": {
-            const { sqFr } = await import("converters/sq/sq-fr");
-            return (await sqFr(text)) as T;
-          }
-          case "hr": {
-            const { sqHr } = await import("converters/sq/sq-hr");
-            return (await sqHr(text)) as T;
-          }
-          case "hu": {
-            const { sqHu } = await import("converters/sq/sq-hu");
-            return (await sqHu(text)) as T;
-          }
-          case "id": {
-            const { sqId } = await import("converters/sq/sq-id");
-            return (await sqId(text)) as T;
-          }
-          case "is": {
-            const { sqIs } = await import("converters/sq/sq-is");
-            return (await sqIs(text)) as T;
-          }
-          case "it": {
-            const { sqIt } = await import("converters/sq/sq-it");
-            return (await sqIt(text)) as T;
-          }
-          case "lb": {
-            const { sqLb } = await import("converters/sq/sq-lb");
-            return (await sqLb(text)) as T;
-          }
-          case "lt": {
-            const { sqLt } = await import("converters/sq/sq-lt");
-            return (await sqLt(text)) as T;
-          }
-          case "lv": {
-            const { sqLv } = await import("converters/sq/sq-lv");
-            return (await sqLv(text)) as T;
-          }
-          case "ms": {
-            const { sqMs } = await import("converters/sq/sq-ms");
-            return (await sqMs(text)) as T;
-          }
-          case "mt": {
-            const { sqMt } = await import("converters/sq/sq-mt");
-            return (await sqMt(text)) as T;
-          }
-          case "nl": {
-            const { sqNl } = await import("converters/sq/sq-nl");
-            return (await sqNl(text)) as T;
-          }
-          case "no": {
-            const { sqNo } = await import("converters/sq/sq-no");
-            return (await sqNo(text)) as T;
-          }
-          case "pl": {
-            const { sqPl } = await import("converters/sq/sq-pl");
-            return (await sqPl(text)) as T;
-          }
-          case "pt": {
-            const { sqPt } = await import("converters/sq/sq-pt");
-            return (await sqPt(text)) as T;
-          }
-          case "ro": {
-            const { sqRo } = await import("converters/sq/sq-ro");
-            return (await sqRo(text)) as T;
-          }
-          case "sk": {
-            const { sqSk } = await import("converters/sq/sq-sk");
-            return (await sqSk(text)) as T;
-          }
-          case "sl": {
-            const { sqSl } = await import("converters/sq/sq-sl");
-            return (await sqSl(text)) as T;
-          }
-          case "sr": {
-            const { sqSr } = await import("converters/sq/sq-sr");
-            return (await sqSr(text)) as T;
-          }
-          case "sv": {
-            const { sqSv } = await import("converters/sq/sq-sv");
-            return (await sqSv(text)) as T;
-          }
-          case "tr": {
-            const { sqTr } = await import("converters/sq/sq-tr");
-            return (await sqTr(text)) as T;
-          }
-          case "vi": {
-            const { sqVi } = await import("converters/sq/sq-vi");
-            return (await sqVi(text)) as T;
-          }
-        }
-        break;
-      case "sr":
-        switch (to) {
-          case "zh": {
-            const { srZh } = await import("converters/sr/sr-zh");
-            return (await srZh(text)) as T;
-          }
-          case "ja": {
-            const { srJa } = await import("converters/sr/sr-ja");
-            return (await srJa(text)) as T;
-          }
-          case "ko": {
-            const { srKo } = await import("converters/sr/sr-ko");
-            return (await srKo(text)) as T;
-          }
-          case "th": {
-            const { srTh } = await import("converters/sr/sr-th");
-            return (await srTh(text)) as T;
-          }
-          case "hi": {
-            const { srHi } = await import("converters/sr/sr-hi");
-            return (await srHi(text)) as T;
-          }
-          case "bn": {
-            const { srBn } = await import("converters/sr/sr-bn");
-            return (await srBn(text)) as T;
-          }
-          case "ur": {
-            const { srUr } = await import("converters/sr/sr-ur");
-            return (await srUr(text)) as T;
-          }
-          case "fa": {
-            const { srFa } = await import("converters/sr/sr-fa");
-            return (await srFa(text)) as T;
-          }
-          case "ar": {
-            const { srAr } = await import("converters/sr/sr-ar");
-            return (await srAr(text)) as T;
-          }
-          case "he": {
-            const { srHe } = await import("converters/sr/sr-he");
-            return (await srHe(text)) as T;
-          }
-          case "ka": {
-            const { srKa } = await import("converters/sr/sr-ka");
-            return (await srKa(text)) as T;
-          }
-          case "hy": {
-            const { srHy } = await import("converters/sr/sr-hy");
-            return (await srHy(text)) as T;
-          }
-          case "el": {
-            const { srEl } = await import("converters/sr/sr-el");
-            return (await srEl(text)) as T;
-          }
-          case "ru": {
-            const { srRu } = await import("converters/sr/sr-ru");
-            return (await srRu(text)) as T;
-          }
-          case "uk": {
-            const { srUk } = await import("converters/sr/sr-uk");
-            return (await srUk(text)) as T;
-          }
-          case "bg": {
-            const { srBg } = await import("converters/sr/sr-bg");
-            return (await srBg(text)) as T;
-          }
-          case "mk": {
-            const { srMk } = await import("converters/sr/sr-mk");
-            return (await srMk(text)) as T;
-          }
-          case "kk": {
-            const { srKk } = await import("converters/sr/sr-kk");
-            return (await srKk(text)) as T;
-          }
-          case "tg": {
-            const { srTg } = await import("converters/sr/sr-tg");
-            return (await srTg(text)) as T;
-          }
-          case "az": {
-            const { srAz } = await import("converters/sr/sr-az");
-            return (await srAz(text)) as T;
-          }
-          case "bs": {
-            const { srBs } = await import("converters/sr/sr-bs");
-            return (await srBs(text)) as T;
-          }
-          case "ca": {
-            const { srCa } = await import("converters/sr/sr-ca");
-            return (await srCa(text)) as T;
-          }
-          case "cs": {
-            const { srCs } = await import("converters/sr/sr-cs");
-            return (await srCs(text)) as T;
-          }
-          case "da": {
-            const { srDa } = await import("converters/sr/sr-da");
-            return (await srDa(text)) as T;
-          }
-          case "de": {
-            const { srDe } = await import("converters/sr/sr-de");
-            return (await srDe(text)) as T;
-          }
-          case "en": {
-            const { srEn } = await import("converters/sr/sr-en");
-            return (await srEn(text)) as T;
-          }
-          case "es": {
-            const { srEs } = await import("converters/sr/sr-es");
-            return (await srEs(text)) as T;
-          }
-          case "et": {
-            const { srEt } = await import("converters/sr/sr-et");
-            return (await srEt(text)) as T;
-          }
-          case "fi": {
-            const { srFi } = await import("converters/sr/sr-fi");
-            return (await srFi(text)) as T;
-          }
-          case "fr": {
-            const { srFr } = await import("converters/sr/sr-fr");
-            return (await srFr(text)) as T;
-          }
-          case "hr": {
-            const { srHr } = await import("converters/sr/sr-hr");
-            return (await srHr(text)) as T;
-          }
-          case "hu": {
-            const { srHu } = await import("converters/sr/sr-hu");
-            return (await srHu(text)) as T;
-          }
-          case "id": {
-            const { srId } = await import("converters/sr/sr-id");
-            return (await srId(text)) as T;
-          }
-          case "is": {
-            const { srIs } = await import("converters/sr/sr-is");
-            return (await srIs(text)) as T;
-          }
-          case "it": {
-            const { srIt } = await import("converters/sr/sr-it");
-            return (await srIt(text)) as T;
-          }
-          case "lb": {
-            const { srLb } = await import("converters/sr/sr-lb");
-            return (await srLb(text)) as T;
-          }
-          case "lt": {
-            const { srLt } = await import("converters/sr/sr-lt");
-            return (await srLt(text)) as T;
-          }
-          case "lv": {
-            const { srLv } = await import("converters/sr/sr-lv");
-            return (await srLv(text)) as T;
-          }
-          case "ms": {
-            const { srMs } = await import("converters/sr/sr-ms");
-            return (await srMs(text)) as T;
-          }
-          case "mt": {
-            const { srMt } = await import("converters/sr/sr-mt");
-            return (await srMt(text)) as T;
-          }
-          case "nl": {
-            const { srNl } = await import("converters/sr/sr-nl");
-            return (await srNl(text)) as T;
-          }
-          case "no": {
-            const { srNo } = await import("converters/sr/sr-no");
-            return (await srNo(text)) as T;
-          }
-          case "pl": {
-            const { srPl } = await import("converters/sr/sr-pl");
-            return (await srPl(text)) as T;
-          }
-          case "pt": {
-            const { srPt } = await import("converters/sr/sr-pt");
-            return (await srPt(text)) as T;
-          }
-          case "ro": {
-            const { srRo } = await import("converters/sr/sr-ro");
-            return (await srRo(text)) as T;
-          }
-          case "sk": {
-            const { srSk } = await import("converters/sr/sr-sk");
-            return (await srSk(text)) as T;
-          }
-          case "sl": {
-            const { srSl } = await import("converters/sr/sr-sl");
-            return (await srSl(text)) as T;
-          }
-          case "sq": {
-            const { srSq } = await import("converters/sr/sr-sq");
-            return (await srSq(text)) as T;
-          }
-          case "sv": {
-            const { srSv } = await import("converters/sr/sr-sv");
-            return (await srSv(text)) as T;
-          }
-          case "tr": {
-            const { srTr } = await import("converters/sr/sr-tr");
-            return (await srTr(text)) as T;
-          }
-          case "vi": {
-            const { srVi } = await import("converters/sr/sr-vi");
-            return (await srVi(text)) as T;
-          }
-        }
-        break;
-      case "sv":
-        switch (to) {
-          case "zh": {
-            const { svZh } = await import("converters/sv/sv-zh");
-            return (await svZh(text)) as T;
-          }
-          case "ja": {
-            const { svJa } = await import("converters/sv/sv-ja");
-            return (await svJa(text)) as T;
-          }
-          case "ko": {
-            const { svKo } = await import("converters/sv/sv-ko");
-            return (await svKo(text)) as T;
-          }
-          case "th": {
-            const { svTh } = await import("converters/sv/sv-th");
-            return (await svTh(text)) as T;
-          }
-          case "hi": {
-            const { svHi } = await import("converters/sv/sv-hi");
-            return (await svHi(text)) as T;
-          }
-          case "bn": {
-            const { svBn } = await import("converters/sv/sv-bn");
-            return (await svBn(text)) as T;
-          }
-          case "ur": {
-            const { svUr } = await import("converters/sv/sv-ur");
-            return (await svUr(text)) as T;
-          }
-          case "fa": {
-            const { svFa } = await import("converters/sv/sv-fa");
-            return (await svFa(text)) as T;
-          }
-          case "ar": {
-            const { svAr } = await import("converters/sv/sv-ar");
-            return (await svAr(text)) as T;
-          }
-          case "he": {
-            const { svHe } = await import("converters/sv/sv-he");
-            return (await svHe(text)) as T;
-          }
-          case "ka": {
-            const { svKa } = await import("converters/sv/sv-ka");
-            return (await svKa(text)) as T;
-          }
-          case "hy": {
-            const { svHy } = await import("converters/sv/sv-hy");
-            return (await svHy(text)) as T;
-          }
-          case "el": {
-            const { svEl } = await import("converters/sv/sv-el");
-            return (await svEl(text)) as T;
-          }
-          case "ru": {
-            const { svRu } = await import("converters/sv/sv-ru");
-            return (await svRu(text)) as T;
-          }
-          case "uk": {
-            const { svUk } = await import("converters/sv/sv-uk");
-            return (await svUk(text)) as T;
-          }
-          case "bg": {
-            const { svBg } = await import("converters/sv/sv-bg");
-            return (await svBg(text)) as T;
-          }
-          case "mk": {
-            const { svMk } = await import("converters/sv/sv-mk");
-            return (await svMk(text)) as T;
-          }
-          case "kk": {
-            const { svKk } = await import("converters/sv/sv-kk");
-            return (await svKk(text)) as T;
-          }
-          case "tg": {
-            const { svTg } = await import("converters/sv/sv-tg");
-            return (await svTg(text)) as T;
-          }
-          case "az": {
-            const { svAz } = await import("converters/sv/sv-az");
-            return (await svAz(text)) as T;
-          }
-          case "bs": {
-            const { svBs } = await import("converters/sv/sv-bs");
-            return (await svBs(text)) as T;
-          }
-          case "ca": {
-            const { svCa } = await import("converters/sv/sv-ca");
-            return (await svCa(text)) as T;
-          }
-          case "cs": {
-            const { svCs } = await import("converters/sv/sv-cs");
-            return (await svCs(text)) as T;
-          }
-          case "da": {
-            const { svDa } = await import("converters/sv/sv-da");
-            return (await svDa(text)) as T;
-          }
-          case "de": {
-            const { svDe } = await import("converters/sv/sv-de");
-            return (await svDe(text)) as T;
-          }
-          case "en": {
-            const { svEn } = await import("converters/sv/sv-en");
-            return (await svEn(text)) as T;
-          }
-          case "es": {
-            const { svEs } = await import("converters/sv/sv-es");
-            return (await svEs(text)) as T;
-          }
-          case "et": {
-            const { svEt } = await import("converters/sv/sv-et");
-            return (await svEt(text)) as T;
-          }
-          case "fi": {
-            const { svFi } = await import("converters/sv/sv-fi");
-            return (await svFi(text)) as T;
-          }
-          case "fr": {
-            const { svFr } = await import("converters/sv/sv-fr");
-            return (await svFr(text)) as T;
-          }
-          case "hr": {
-            const { svHr } = await import("converters/sv/sv-hr");
-            return (await svHr(text)) as T;
-          }
-          case "hu": {
-            const { svHu } = await import("converters/sv/sv-hu");
-            return (await svHu(text)) as T;
-          }
-          case "id": {
-            const { svId } = await import("converters/sv/sv-id");
-            return (await svId(text)) as T;
-          }
-          case "is": {
-            const { svIs } = await import("converters/sv/sv-is");
-            return (await svIs(text)) as T;
-          }
-          case "it": {
-            const { svIt } = await import("converters/sv/sv-it");
-            return (await svIt(text)) as T;
-          }
-          case "lb": {
-            const { svLb } = await import("converters/sv/sv-lb");
-            return (await svLb(text)) as T;
-          }
-          case "lt": {
-            const { svLt } = await import("converters/sv/sv-lt");
-            return (await svLt(text)) as T;
-          }
-          case "lv": {
-            const { svLv } = await import("converters/sv/sv-lv");
-            return (await svLv(text)) as T;
-          }
-          case "ms": {
-            const { svMs } = await import("converters/sv/sv-ms");
-            return (await svMs(text)) as T;
-          }
-          case "mt": {
-            const { svMt } = await import("converters/sv/sv-mt");
-            return (await svMt(text)) as T;
-          }
-          case "nl": {
-            const { svNl } = await import("converters/sv/sv-nl");
-            return (await svNl(text)) as T;
-          }
-          case "no": {
-            const { svNo } = await import("converters/sv/sv-no");
-            return (await svNo(text)) as T;
-          }
-          case "pl": {
-            const { svPl } = await import("converters/sv/sv-pl");
-            return (await svPl(text)) as T;
-          }
-          case "pt": {
-            const { svPt } = await import("converters/sv/sv-pt");
-            return (await svPt(text)) as T;
-          }
-          case "ro": {
-            const { svRo } = await import("converters/sv/sv-ro");
-            return (await svRo(text)) as T;
-          }
-          case "sk": {
-            const { svSk } = await import("converters/sv/sv-sk");
-            return (await svSk(text)) as T;
-          }
-          case "sl": {
-            const { svSl } = await import("converters/sv/sv-sl");
-            return (await svSl(text)) as T;
-          }
-          case "sq": {
-            const { svSq } = await import("converters/sv/sv-sq");
-            return (await svSq(text)) as T;
-          }
-          case "sr": {
-            const { svSr } = await import("converters/sv/sv-sr");
-            return (await svSr(text)) as T;
-          }
-          case "tr": {
-            const { svTr } = await import("converters/sv/sv-tr");
-            return (await svTr(text)) as T;
-          }
-          case "vi": {
-            const { svVi } = await import("converters/sv/sv-vi");
-            return (await svVi(text)) as T;
-          }
-        }
-        break;
-      case "tr":
-        switch (to) {
-          case "zh": {
-            const { trZh } = await import("converters/tr/tr-zh");
-            return (await trZh(text)) as T;
-          }
-          case "ja": {
-            const { trJa } = await import("converters/tr/tr-ja");
-            return (await trJa(text)) as T;
-          }
-          case "ko": {
-            const { trKo } = await import("converters/tr/tr-ko");
-            return (await trKo(text)) as T;
-          }
-          case "th": {
-            const { trTh } = await import("converters/tr/tr-th");
-            return (await trTh(text)) as T;
-          }
-          case "hi": {
-            const { trHi } = await import("converters/tr/tr-hi");
-            return (await trHi(text)) as T;
-          }
-          case "bn": {
-            const { trBn } = await import("converters/tr/tr-bn");
-            return (await trBn(text)) as T;
-          }
-          case "ur": {
-            const { trUr } = await import("converters/tr/tr-ur");
-            return (await trUr(text)) as T;
-          }
-          case "fa": {
-            const { trFa } = await import("converters/tr/tr-fa");
-            return (await trFa(text)) as T;
-          }
-          case "ar": {
-            const { trAr } = await import("converters/tr/tr-ar");
-            return (await trAr(text)) as T;
-          }
-          case "he": {
-            const { trHe } = await import("converters/tr/tr-he");
-            return (await trHe(text)) as T;
-          }
-          case "ka": {
-            const { trKa } = await import("converters/tr/tr-ka");
-            return (await trKa(text)) as T;
-          }
-          case "hy": {
-            const { trHy } = await import("converters/tr/tr-hy");
-            return (await trHy(text)) as T;
-          }
-          case "el": {
-            const { trEl } = await import("converters/tr/tr-el");
-            return (await trEl(text)) as T;
-          }
-          case "ru": {
-            const { trRu } = await import("converters/tr/tr-ru");
-            return (await trRu(text)) as T;
-          }
-          case "uk": {
-            const { trUk } = await import("converters/tr/tr-uk");
-            return (await trUk(text)) as T;
-          }
-          case "bg": {
-            const { trBg } = await import("converters/tr/tr-bg");
-            return (await trBg(text)) as T;
-          }
-          case "mk": {
-            const { trMk } = await import("converters/tr/tr-mk");
-            return (await trMk(text)) as T;
-          }
-          case "kk": {
-            const { trKk } = await import("converters/tr/tr-kk");
-            return (await trKk(text)) as T;
-          }
-          case "tg": {
-            const { trTg } = await import("converters/tr/tr-tg");
-            return (await trTg(text)) as T;
-          }
-          case "az": {
-            const { trAz } = await import("converters/tr/tr-az");
-            return (await trAz(text)) as T;
-          }
-          case "bs": {
-            const { trBs } = await import("converters/tr/tr-bs");
-            return (await trBs(text)) as T;
-          }
-          case "ca": {
-            const { trCa } = await import("converters/tr/tr-ca");
-            return (await trCa(text)) as T;
-          }
-          case "cs": {
-            const { trCs } = await import("converters/tr/tr-cs");
-            return (await trCs(text)) as T;
-          }
-          case "da": {
-            const { trDa } = await import("converters/tr/tr-da");
-            return (await trDa(text)) as T;
-          }
-          case "de": {
-            const { trDe } = await import("converters/tr/tr-de");
-            return (await trDe(text)) as T;
-          }
-          case "en": {
-            const { trEn } = await import("converters/tr/tr-en");
-            return (await trEn(text)) as T;
-          }
-          case "es": {
-            const { trEs } = await import("converters/tr/tr-es");
-            return (await trEs(text)) as T;
-          }
-          case "et": {
-            const { trEt } = await import("converters/tr/tr-et");
-            return (await trEt(text)) as T;
-          }
-          case "fi": {
-            const { trFi } = await import("converters/tr/tr-fi");
-            return (await trFi(text)) as T;
-          }
-          case "fr": {
-            const { trFr } = await import("converters/tr/tr-fr");
-            return (await trFr(text)) as T;
-          }
-          case "hr": {
-            const { trHr } = await import("converters/tr/tr-hr");
-            return (await trHr(text)) as T;
-          }
-          case "hu": {
-            const { trHu } = await import("converters/tr/tr-hu");
-            return (await trHu(text)) as T;
-          }
-          case "id": {
-            const { trId } = await import("converters/tr/tr-id");
-            return (await trId(text)) as T;
-          }
-          case "is": {
-            const { trIs } = await import("converters/tr/tr-is");
-            return (await trIs(text)) as T;
-          }
-          case "it": {
-            const { trIt } = await import("converters/tr/tr-it");
-            return (await trIt(text)) as T;
-          }
-          case "lb": {
-            const { trLb } = await import("converters/tr/tr-lb");
-            return (await trLb(text)) as T;
-          }
-          case "lt": {
-            const { trLt } = await import("converters/tr/tr-lt");
-            return (await trLt(text)) as T;
-          }
-          case "lv": {
-            const { trLv } = await import("converters/tr/tr-lv");
-            return (await trLv(text)) as T;
-          }
-          case "ms": {
-            const { trMs } = await import("converters/tr/tr-ms");
-            return (await trMs(text)) as T;
-          }
-          case "mt": {
-            const { trMt } = await import("converters/tr/tr-mt");
-            return (await trMt(text)) as T;
-          }
-          case "nl": {
-            const { trNl } = await import("converters/tr/tr-nl");
-            return (await trNl(text)) as T;
-          }
-          case "no": {
-            const { trNo } = await import("converters/tr/tr-no");
-            return (await trNo(text)) as T;
-          }
-          case "pl": {
-            const { trPl } = await import("converters/tr/tr-pl");
-            return (await trPl(text)) as T;
-          }
-          case "pt": {
-            const { trPt } = await import("converters/tr/tr-pt");
-            return (await trPt(text)) as T;
-          }
-          case "ro": {
-            const { trRo } = await import("converters/tr/tr-ro");
-            return (await trRo(text)) as T;
-          }
-          case "sk": {
-            const { trSk } = await import("converters/tr/tr-sk");
-            return (await trSk(text)) as T;
-          }
-          case "sl": {
-            const { trSl } = await import("converters/tr/tr-sl");
-            return (await trSl(text)) as T;
-          }
-          case "sq": {
-            const { trSq } = await import("converters/tr/tr-sq");
-            return (await trSq(text)) as T;
-          }
-          case "sr": {
-            const { trSr } = await import("converters/tr/tr-sr");
-            return (await trSr(text)) as T;
-          }
-          case "sv": {
-            const { trSv } = await import("converters/tr/tr-sv");
-            return (await trSv(text)) as T;
-          }
-          case "vi": {
-            const { trVi } = await import("converters/tr/tr-vi");
-            return (await trVi(text)) as T;
-          }
-        }
-        break;
-      case "vi":
-        switch (to) {
-          case "zh": {
-            const { viZh } = await import("converters/vi/vi-zh");
-            return (await viZh(text)) as T;
-          }
-          case "ja": {
-            const { viJa } = await import("converters/vi/vi-ja");
-            return (await viJa(text)) as T;
-          }
-          case "ko": {
-            const { viKo } = await import("converters/vi/vi-ko");
-            return (await viKo(text)) as T;
-          }
-          case "th": {
-            const { viTh } = await import("converters/vi/vi-th");
-            return (await viTh(text)) as T;
-          }
-          case "hi": {
-            const { viHi } = await import("converters/vi/vi-hi");
-            return (await viHi(text)) as T;
-          }
-          case "bn": {
-            const { viBn } = await import("converters/vi/vi-bn");
-            return (await viBn(text)) as T;
-          }
-          case "ur": {
-            const { viUr } = await import("converters/vi/vi-ur");
-            return (await viUr(text)) as T;
-          }
-          case "fa": {
-            const { viFa } = await import("converters/vi/vi-fa");
-            return (await viFa(text)) as T;
-          }
-          case "ar": {
-            const { viAr } = await import("converters/vi/vi-ar");
-            return (await viAr(text)) as T;
-          }
-          case "he": {
-            const { viHe } = await import("converters/vi/vi-he");
-            return (await viHe(text)) as T;
-          }
-          case "ka": {
-            const { viKa } = await import("converters/vi/vi-ka");
-            return (await viKa(text)) as T;
-          }
-          case "hy": {
-            const { viHy } = await import("converters/vi/vi-hy");
-            return (await viHy(text)) as T;
-          }
-          case "el": {
-            const { viEl } = await import("converters/vi/vi-el");
-            return (await viEl(text)) as T;
-          }
-          case "ru": {
-            const { viRu } = await import("converters/vi/vi-ru");
-            return (await viRu(text)) as T;
-          }
-          case "uk": {
-            const { viUk } = await import("converters/vi/vi-uk");
-            return (await viUk(text)) as T;
-          }
-          case "bg": {
-            const { viBg } = await import("converters/vi/vi-bg");
-            return (await viBg(text)) as T;
-          }
-          case "mk": {
-            const { viMk } = await import("converters/vi/vi-mk");
-            return (await viMk(text)) as T;
-          }
-          case "kk": {
-            const { viKk } = await import("converters/vi/vi-kk");
-            return (await viKk(text)) as T;
-          }
-          case "tg": {
-            const { viTg } = await import("converters/vi/vi-tg");
-            return (await viTg(text)) as T;
-          }
-          case "az": {
-            const { viAz } = await import("converters/vi/vi-az");
-            return (await viAz(text)) as T;
-          }
-          case "bs": {
-            const { viBs } = await import("converters/vi/vi-bs");
-            return (await viBs(text)) as T;
-          }
-          case "ca": {
-            const { viCa } = await import("converters/vi/vi-ca");
-            return (await viCa(text)) as T;
-          }
-          case "cs": {
-            const { viCs } = await import("converters/vi/vi-cs");
-            return (await viCs(text)) as T;
-          }
-          case "da": {
-            const { viDa } = await import("converters/vi/vi-da");
-            return (await viDa(text)) as T;
-          }
-          case "de": {
-            const { viDe } = await import("converters/vi/vi-de");
-            return (await viDe(text)) as T;
-          }
-          case "en": {
-            const { viEn } = await import("converters/vi/vi-en");
-            return (await viEn(text)) as T;
-          }
-          case "es": {
-            const { viEs } = await import("converters/vi/vi-es");
-            return (await viEs(text)) as T;
-          }
-          case "et": {
-            const { viEt } = await import("converters/vi/vi-et");
-            return (await viEt(text)) as T;
-          }
-          case "fi": {
-            const { viFi } = await import("converters/vi/vi-fi");
-            return (await viFi(text)) as T;
-          }
-          case "fr": {
-            const { viFr } = await import("converters/vi/vi-fr");
-            return (await viFr(text)) as T;
-          }
-          case "hr": {
-            const { viHr } = await import("converters/vi/vi-hr");
-            return (await viHr(text)) as T;
-          }
-          case "hu": {
-            const { viHu } = await import("converters/vi/vi-hu");
-            return (await viHu(text)) as T;
-          }
-          case "id": {
-            const { viId } = await import("converters/vi/vi-id");
-            return (await viId(text)) as T;
-          }
-          case "is": {
-            const { viIs } = await import("converters/vi/vi-is");
-            return (await viIs(text)) as T;
-          }
-          case "it": {
-            const { viIt } = await import("converters/vi/vi-it");
-            return (await viIt(text)) as T;
-          }
-          case "lb": {
-            const { viLb } = await import("converters/vi/vi-lb");
-            return (await viLb(text)) as T;
-          }
-          case "lt": {
-            const { viLt } = await import("converters/vi/vi-lt");
-            return (await viLt(text)) as T;
-          }
-          case "lv": {
-            const { viLv } = await import("converters/vi/vi-lv");
-            return (await viLv(text)) as T;
-          }
-          case "ms": {
-            const { viMs } = await import("converters/vi/vi-ms");
-            return (await viMs(text)) as T;
-          }
-          case "mt": {
-            const { viMt } = await import("converters/vi/vi-mt");
-            return (await viMt(text)) as T;
-          }
-          case "nl": {
-            const { viNl } = await import("converters/vi/vi-nl");
-            return (await viNl(text)) as T;
-          }
-          case "no": {
-            const { viNo } = await import("converters/vi/vi-no");
-            return (await viNo(text)) as T;
-          }
-          case "pl": {
-            const { viPl } = await import("converters/vi/vi-pl");
-            return (await viPl(text)) as T;
-          }
-          case "pt": {
-            const { viPt } = await import("converters/vi/vi-pt");
-            return (await viPt(text)) as T;
-          }
-          case "ro": {
-            const { viRo } = await import("converters/vi/vi-ro");
-            return (await viRo(text)) as T;
-          }
-          case "sk": {
-            const { viSk } = await import("converters/vi/vi-sk");
-            return (await viSk(text)) as T;
-          }
-          case "sl": {
-            const { viSl } = await import("converters/vi/vi-sl");
-            return (await viSl(text)) as T;
-          }
-          case "sq": {
-            const { viSq } = await import("converters/vi/vi-sq");
-            return (await viSq(text)) as T;
-          }
-          case "sr": {
-            const { viSr } = await import("converters/vi/vi-sr");
-            return (await viSr(text)) as T;
-          }
-          case "sv": {
-            const { viSv } = await import("converters/vi/vi-sv");
-            return (await viSv(text)) as T;
-          }
-          case "tr": {
-            const { viTr } = await import("converters/vi/vi-tr");
-            return (await viTr(text)) as T;
-          }
-        }
-        break;
-    }
+    const convert = await load();
+    return (await convert(text)) as T;
   } catch (e: unknown) {
     throw new Error(e instanceof Error ? e.message : String(e), { cause: e });
   }
-
-  throw new Error(`Transliteration failed: the language pair is not supported: ${from} -> ${to}`);
 };

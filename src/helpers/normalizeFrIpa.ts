@@ -8,7 +8,7 @@ export const normalizeFrIpa = (originalWord: string, ipaWord: string): string =>
     // Restore "n"/"m" instead of tilde
     { ipaCharToBeReplaced: "̃", lettersToRestore: { n: "n", m: "m" } },
     // Restore "u"
-    { ipaCharToBeReplaced: "w", lettersToRestore: { u: "u", oi: "u" } },
+    { ipaCharToBeReplaced: "w", lettersToRestore: { u: "u", oi: "u", oî: "u" } },
     // Restore "o"
     { ipaCharToBeReplaced: "w", lettersToRestore: { o: "o" } },
     // Restore "e"
@@ -18,5 +18,6 @@ export const normalizeFrIpa = (originalWord: string, ipaWord: string): string =>
     { ipaCharToBeReplaced: "ɛj", lettersToRestore: { eil: "ɛl", eille: "ɛl" } },
     // Restore "il"
     { ipaCharToBeReplaced: "ij", lettersToRestore: { ille: "il" } },
-  ]);
+    // Tilde with no n/m letter close enough (patients, temps) is still a nasal
+  ]).replaceAll("\u0303", "n");
 };

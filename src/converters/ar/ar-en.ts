@@ -5,7 +5,7 @@ export const arEn = async (text: Text) => {
   const { arIpa } = await import("converters/ar/ar-ipa");
   const { ipaEnRules } = await import("data/ipa/ipa-en.rules");
 
-  const transliterator = RBT.fromRules(ipaEnRules + "[iy] { [iy]+ } [^[:L:][:M:]] > ; ::Title;");
+  const transliterator = RBT.fromRules(ipaEnRules + "::Title;");
 
   if (typeof text === "string") {
     const ipa = await arIpa<string>(text);

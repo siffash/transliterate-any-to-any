@@ -24,6 +24,8 @@ C [hH] > X;
 c [zZ] > č;
 C [zZ] > Č;
 
+[pPtTkKxXfFsSšŠ] { r [zZ] > š;
+[pPtTkKxXfFsSšŠ] { R [zZ] > Š;
 r [zZ] > ž;
 R [zZ] > Ž;
 
@@ -50,9 +52,10 @@ C } [:Lu:] > TS;
 C > Ts;
 c > ts;
 
-[šćđžńŠĆĐŽŃ] { [iI] } [eE] > ;
-[pbmwvPBMWV] { i } [eE] > y;
-[pbmwvPBMWV] { I } [eE] > Y;
+[šćđžńŠĆĐŽŃ] { [iI] } [aąeęoóuAĄEĘOÓU] > ;
+[kKgG] { [iI] } [eEęĘ] > ;
+[pbmwvPBMWV] { i } [aąeęoóuAĄEĘOÓU] > y;
+[pbmwvPBMWV] { I } [aąeęoóuAĄEĘOÓU] > Y;
 
 [:Lu:] { Ą > ON;
 Ą } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > ON;

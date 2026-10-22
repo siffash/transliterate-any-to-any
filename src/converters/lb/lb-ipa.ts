@@ -1,6 +1,6 @@
 import { Text } from "types";
 
-export const lbIpa = async <T = Text>(text: Text): Promise<T> => {
+export const lbIpa = async <T = Text>(text: Text, velarA = false): Promise<T> => {
   const { lbIpaMap } = await import("data/lb/lb-ipa.map");
   const { RBT } = await import("helpers/rbt");
   const { lbIpaRules } = await import("data/lb/lb-ipa.rules");
@@ -11,11 +11,12 @@ export const lbIpa = async <T = Text>(text: Text): Promise<T> => {
 
   const exception = (word: string) => {
     const key = word.normalize("NFC").toLocaleLowerCase("lb");
-    return (
+    const ipa =
       (Object.prototype.hasOwnProperty.call(lbIpaMap, key) &&
         filterIpa(lbIpaMap[key], word, "lb")) ||
-      undefined
-    );
+      undefined;
+    // The map holds French IPA with ɑ̃ already as ɑn/ɑm, so it gets frIpa's velarA here
+    return ipa && velarA ? ipa.replace(/ɑ[nm](?![aɑeɛəiɪoɔuʊyøœ])/g, "ɑŋ") : ipa;
   };
 
   const convert = (text: string) =>

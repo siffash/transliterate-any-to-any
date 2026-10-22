@@ -69,4 +69,9 @@ rr } [bcdfghjklmnpqstvwxz] > r;
 ss } [^[:L:][:M:]] > s;
 [bcdfghjklmnpqrtvwxz] { ss > s;
 ss } [bcdfghjklmnpqrtvwxz] > s;
+
+::Null;
+
+ii { i+ > ;
+uu { u+ > ;
 `;

@@ -1,18 +1,19 @@
 import { Text } from "types";
 
 export const thEl = async (text: Text) => {
-  const { romanize } = await import("@pcampus/thai-romanization");
+  const { thRtgs } = await import("converters/th/th-ipa");
   const { RBT } = await import("helpers/rbt");
   const { thLatnRules } = await import("data/th/th-latn.rules");
   const { latnElRules } = await import("data/latn/latn-el.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
   const { normalizeTh } = await import("helpers/normalizeTh");
 
+  const toRtgs = await thRtgs();
   const transliterator = RBT.fromRules(thLatnRules + latnElRules + "::Title;");
 
   const convert = async (text: string) => {
     const romanized = await wordSplitter(normalizeTh(text), "th", text =>
-      text.replace(/[^๐-๙]+/g, part => romanize(part)),
+      text.replace(/[^๐-๙]+/g, part => toRtgs(part)),
     );
     return transliterator.transliterate(romanized);
   };

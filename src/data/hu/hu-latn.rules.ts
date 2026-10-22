@@ -1,16 +1,26 @@
 export const huLatnRules = `
 ::NFC;
 
+L [yY] > Y;
+l [yY] > y;
+
+G } [yY] [AÁEÉIÍOÓÖŐUÚÜŰaáeéiíoóöőuúüű] > D;
+g } [yY] [AÁEÉIÍOÓÖŐUÚÜŰaáeéiíoóöőuúüű] > d;
+
 Á > A;
 á > a;
 É > E;
 é > e;
 Í > I;
 í > i;
-[ÓŐ] > O;
-[óő] > o;
-[ÚŰ] > U;
-[úű] > u;
+Ó > O;
+ó > o;
+Ő > Ö;
+ő > ö;
+Ú > U;
+ú > u;
+Ű > Ü;
+ű > ü;
 
 ::Null;
 

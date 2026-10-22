@@ -249,9 +249,10 @@ export const restoreLettersInIpa = (
   }
 
   // Splice right-to-left so earlier replacements don't shift later indices.
-  // Ties (same start) keep their relative processing order via `index`,
+  // At the same start a replacement goes before an insertion, which then lands
+  // in front of it; other ties keep their relative processing order via `index`,
   // covering e.g. two bare-anchor insertions landing at the same point.
-  replacements.sort((a, b) => b.start - a.start || b.index - a.index);
+  replacements.sort((a, b) => b.start - a.start || b.end - a.end || b.index - a.index);
   let result = ipa;
   for (const r of replacements) {
     result = result.slice(0, r.start) + r.value + result.slice(r.end);

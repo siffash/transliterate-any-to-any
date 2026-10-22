@@ -10,10 +10,10 @@ export const urIpa = async <T = Text>(text: Text): Promise<T> => {
   const transliterator = RBT.fromRules(urIpaRules);
 
   const convert = async (text: string) =>
-    await wordSplitter(
-      text,
-      "ur",
-      (word: string) => filterIpa(urIpaMap[word], word, "ur") || transliterator.transliterate(word),
+    await wordSplitter(text, "ur", (word: string) =>
+      (filterIpa(urIpaMap[word], word, "ur") || transliterator.transliterate(word))
+        .replaceAll("ə\u0303", "ɐ\u0303")
+        .replaceAll("ə", "a"),
     );
 
   if (typeof text === "string") {

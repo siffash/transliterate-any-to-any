@@ -35,6 +35,60 @@ const PUNCTUATION: Record<string, [replacement: string, kind: Kind]> = {
 
 type Segment = { segment: string; isWordLike?: boolean };
 
+// Intl.Segmenter splits Thai words missing from its dictionary (mostly names) into
+// pieces that can't be read alone: a bare consonant (ปรียา|ภ|รณ์), a coda silenced
+// with ์ (รณ์), or a vowel sign without a consonant (ธีร|ะ|กุล)
+const THAI_KARAN = /[ก-ฮ](?:ิ|ุ)?์/g;
+// Vowel signs ะ–ฺ, leading vowels เ–ๅ and ็ (no character class: they are combining marks)
+const isThaiVowel = (char: string) => {
+  const code = char.codePointAt(0)!;
+  return (
+    (code >= 0x0e30 && code <= 0x0e3a) || (code >= 0x0e40 && code <= 0x0e45) || code === 0x0e47
+  );
+};
+const isThaiFragment = (segment: string) => {
+  const core = segment.replace(THAI_KARAN, "");
+  const consonants = core.match(/[ก-ฮ]/g)?.length ?? 0;
+  return (
+    consonants === 0 || (consonants === 1 && !Array.from(core).some(isThaiVowel) && core !== "ณ")
+  );
+};
+
+const mergeThaiFragments = (segments: Segment[]): Segment[] => {
+  const result: Segment[] = [];
+  let carry = "";
+  for (const { segment, isWordLike } of segments) {
+    if (!isWordLike || !/[ก-๛]/.test(segment)) {
+      if (carry) result.push({ segment: carry, isWordLike: true });
+      carry = "";
+      result.push({ segment, isWordLike });
+      continue;
+    }
+    const word = carry + segment;
+    carry = "";
+    const previous = result[result.length - 1];
+    if (isThaiFragment(segment)) {
+      const core = segment.replace(THAI_KARAN, "");
+      const coda = segment.includes("์") || !/[ก-ฮ]/.test(core);
+      if (coda && previous?.isWordLike && /[ก-๛]$/.test(previous.segment)) {
+        previous.segment += word;
+        continue;
+      }
+      if (!coda) {
+        carry = word;
+        continue;
+      }
+    }
+    result.push({ segment: word, isWordLike: true });
+  }
+  if (carry) {
+    const previous = result[result.length - 1];
+    if (previous?.isWordLike && /[ก-๛]$/.test(previous.segment)) previous.segment += carry;
+    else result.push({ segment: carry, isWordLike: true });
+  }
+  return result;
+};
+
 type WordSegmenter = (text: string) => Promise<Segment[]> | Segment[];
 
 const getIntlSegmenter = (language: Language): WordSegmenter => {
@@ -112,7 +166,8 @@ export const wordSplitter = async (
       parts.push(input.slice(cursor, m.index));
     }
 
-    const segments = segment ? await segment(m[0]) : [{ segment: m[0], isWordLike: true }];
+    let segments = segment ? await segment(m[0]) : [{ segment: m[0], isWordLike: true }];
+    if (language === "th") segments = mergeThaiFragments(segments);
 
     let prev: Kind | undefined;
     const push = async (kind: Kind, text: string) => {
