@@ -4,6 +4,8 @@ export const deIpaRules = `
 
 ch } arlotte > ʃ;
 s } tadt > ʃ;
+ö } sterreich > øː;
+ster } reich > stɐ;
 [bdfgklmnprtz] { s } tein > ʃ;
 [bdfgklmnprtz] { s } traße > ʃ;
 [bdfgklmnprtz] { s } trasse > ʃ;
@@ -188,7 +190,9 @@ ie > iː;
 
 chs > ks;
 chr > kʁ;
-ch } [aou] > x;
+[aɑoɔuʊ] { ch > x;
+[aɑoɔuʊ]ː { ch > x;
+[^[:L:][:M:]] { ch } [aou] > k;
 ch > ç;
 sch > ʃ;
 [^[:L:][:M:]] { sp > ʃp;
@@ -254,7 +258,9 @@ r > ʁ;
 s } [ptkçxfsʃ] > s;
 s { ti > ti;
 ti } [aeo] > tsi;
-s > z;
+[ptkfʃçx] { s > s;
+s } [aäeéiíoöuúüyəɐ_] > z;
+s > s;
 ß > s;
 t > t;
 v > f;

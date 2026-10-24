@@ -57,12 +57,20 @@ c > ts;
 [pbmwvPBMWV] { i } [aąeęoóuAĄEĘOÓU] > y;
 [pbmwvPBMWV] { I } [aąeęoóuAĄEĘOÓU] > Y;
 
+[:Lu:] { Ą } [pbPB] > OM;
+Ą } [PB] > OM;
+Ą } [pb] > Om;
+ą } [pbPB] > om;
 [:Lu:] { Ą > ON;
 Ą } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > ON;
 Ą } [:Lu:] > ON;
 Ą > On;
 ą > on;
 
+[:Lu:] { Ę } [pbPB] > EM;
+Ę } [PB] > EM;
+Ę } [pb] > Em;
+ę } [pbPB] > em;
 [:Lu:] { Ę > EN;
 Ę } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > EN;
 Ę } [:Lu:] > EN;
