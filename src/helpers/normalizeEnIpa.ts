@@ -1,6 +1,15 @@
-import { restoreLettersInIpa } from "helpers/restoreLettersInIpa";
+import { restoreLettersInIpa, type RestoreIpaRule } from "helpers/restoreLettersInIpa";
 
-export const normalizeEnIpa = (originalWord: string, ipaWord: string): string => {
+// Extra restore for targets that write a final "-le" (not "-ile") and "Michael" with a bare l (Greek Γκουγκλ, Μαικλ)
+export const syllabicLeRestoreRules: RestoreIpaRule[] = [
+  { ipaCharToBeReplaced: "əɫ$", lettersToRestore: { ichael: "ɫ", ile: "iɫ", le: "ɫ" } },
+];
+
+export const normalizeEnIpa = (
+  originalWord: string,
+  ipaWord: string,
+  extraRules: RestoreIpaRule[] = [],
+): string => {
   return restoreLettersInIpa(originalWord, ipaWord, [
     // Restore all double letters
     { ipaCharToBeReplaced: "ɑ", lettersToRestore: { aa: "aː" } },
@@ -23,18 +32,44 @@ export const normalizeEnIpa = (originalWord: string, ipaWord: string): string =>
     { ipaCharToBeReplaced: "v", lettersToRestore: { vv: "vv" } },
     { ipaCharToBeReplaced: "w", lettersToRestore: { ww: "ww" } },
     { ipaCharToBeReplaced: "z", lettersToRestore: { zz: "zz" } },
+    // Mark the "oʊ" of "ow" (Shadow, Window) so that enIpaRules keeps it unreduced
+    { ipaCharToBeReplaced: "oʊ", lettersToRestore: { ow: "oɷ" } },
     // Restore "oa"
-    { ipaCharToBeReplaced: "oʊ", lettersToRestore: { oa: "oa" } },
+    { ipaCharToBeReplaced: ["oʊə", "oʊæ", "oʊɑ", "oʊ"], lettersToRestore: { oa: "oa" } },
+    // Preserve "eɪʃən" for "ation"
+    { ipaCharToBeReplaced: "eɪʃən", lettersToRestore: { ation: "eɪʃən" } },
     // Preserve "ʃən" for "tion"
     { ipaCharToBeReplaced: "ʃən", lettersToRestore: { tion: "ʃən" } },
     // Restore "o"
     { ipaCharToBeReplaced: ["ɑ", "ʌ", "ə"], lettersToRestore: { o: "ɔ" } },
     // Restore "a"
-    { ipaCharToBeReplaced: ["ɛ", "ə", "o"], lettersToRestore: { a: "a" } },
+    { ipaCharToBeReplaced: ["ɛ", "ə"], lettersToRestore: { a: "a" } },
+    // Drop the extra final "i" of a word-final "ei" read as "eɪi" (Bartolomei)
+    { ipaCharToBeReplaced: ["eɪi$", "eɪɪ$"], lettersToRestore: { ei: "ɛɪ" } },
     // Preserve "ei" and "ey"
     { ipaCharToBeReplaced: ["eɪ", "ɛɪ"], lettersToRestore: { ei: "ɛɪ", ey: "ɛɪ" } },
     // Restore "ei"
     { ipaCharToBeReplaced: ["e", "ɛ"], lettersToRestore: { ei: "ɛɪ", ey: "ɛɪ" } },
+    // Keep the "eɪ" of a magic "e" (Gate, Grace), which the "e" restore would take
+    {
+      ipaCharToBeReplaced: ["eɪ", "ɛɪ"],
+      lettersToRestore: {
+        abe: "eɪ",
+        ace: "eɪ",
+        ade: "eɪ",
+        afe: "eɪ",
+        age: "eɪ",
+        ake: "eɪ",
+        ale: "eɪ",
+        ame: "eɪ",
+        ane: "eɪ",
+        ape: "eɪ",
+        ase: "eɪ",
+        ate: "eɪ",
+        ave: "eɪ",
+        aze: "eɪ",
+      },
+    },
     // Restore "e"
     { ipaCharToBeReplaced: ["eɪ", "ɛɪ"], lettersToRestore: { e: "ɛ" } },
     // Restore "el"
@@ -54,7 +89,7 @@ export const normalizeEnIpa = (originalWord: string, ipaWord: string): string =>
     // Restore "u"
     { ipaCharToBeReplaced: ["w", "ə"], lettersToRestore: { u: "u" } },
     // Restore "i"
-    { ipaCharToBeReplaced: ["o", "ə"], lettersToRestore: { i: "i" } },
+    { ipaCharToBeReplaced: "ə", lettersToRestore: { i: "i" } },
     // Restore "ja"
     { ipaCharToBeReplaced: "dʒə", lettersToRestore: { ja: "dʒa" } },
     { ipaCharToBeReplaced: "jə", lettersToRestore: { ja: "ja" } },
@@ -101,5 +136,6 @@ export const normalizeEnIpa = (originalWord: string, ipaWord: string): string =>
     // Restore "burgh"
     { ipaCharToBeReplaced: "bɝoʊ", lettersToRestore: { burgh: "bɝɣ" } },
     { ipaCharToBeReplaced: "bɚoʊ", lettersToRestore: { burgh: "bɚɣ" } },
+    ...extraRules,
   ]);
 };

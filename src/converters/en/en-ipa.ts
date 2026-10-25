@@ -1,11 +1,19 @@
 import { Text } from "types";
+import type { RestoreIpaRule } from "helpers/restoreLettersInIpa";
 
-export const enIpa = async <T = Text>(text: Text): Promise<T> => {
+export const enIpa = async <T = Text>(
+  text: Text,
+  extraRestoreRules: RestoreIpaRule[] = [],
+): Promise<T> => {
   const { getPhonemize, getPhonemizeEnG2P } = await import("helpers/getPhonemize");
   const { toIPA } = await getPhonemize();
   const { filterIpa } = await import("helpers/filterIpa");
   const { wordSplitter } = await import("helpers/wordSplitter");
   const { normalizeEnIpa } = await import("helpers/normalizeEnIpa");
+  const { RBT } = await import("helpers/rbt");
+  const { enIpaRules } = await import("data/en/en-ipa.rules");
+
+  const transliterator = RBT.fromRules(enIpaRules);
 
   // toIPA looks each word's language up in a plain object, so "constructor" finds
   // Object.prototype.constructor and throws: such words go to the English G2P directly
@@ -20,7 +28,7 @@ export const enIpa = async <T = Text>(text: Text): Promise<T> => {
   const convert = async (text: string) =>
     await wordSplitter(text, "en", async (word: string) => {
       const ipa = filterIpa(await predict(word), word, "en");
-      return normalizeEnIpa(word, ipa);
+      return transliterator.transliterate(normalizeEnIpa(word, ipa, extraRestoreRules));
     });
 
   if (typeof text === "string") {
