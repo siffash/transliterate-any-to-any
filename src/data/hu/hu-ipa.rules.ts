@@ -18,6 +18,7 @@ zzs > ʒː;
 sch > ʃ;
 
 cs > t͡ʃ;
+dzs > d͡ʒ;
 dz > d͡z;
 gy > d͡ʑ;
 ly > j;

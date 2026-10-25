@@ -21,6 +21,12 @@ export const ipaJaRules = `
 
 [- {\\t}]+ > \u0020;
 
+tː [ʃɕʂ] > tch;
+dː [ʒʑʐ] > jj;
+t [ʃɕʂ] ː > tch;
+d [ʒʑʐ] ː > jj;
+tsː > tts;
+dzː > zz;
 pː > pp;
 bː > bb;
 tː > tt;
