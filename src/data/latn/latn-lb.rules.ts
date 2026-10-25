@@ -11,12 +11,6 @@ dZ > dS;
 Dz > Ds;
 dz > ds;
 
-T [sS] > Z;
-t [sS] > z;
-
-T [hH] > T;
-t [hH] > t;
-
 G [hH] > G;
 g [hH] > g;
 
@@ -90,6 +84,12 @@ q > k;
 
 V > W;
 v > w;
+
+T [hH] > T;
+t [hH] > t;
+
+T [sS] > Z;
+t [sS] > z;
 
 Z > S;
 z > s;

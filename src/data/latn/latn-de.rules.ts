@@ -16,9 +16,6 @@ iJ > eI;
 Ij > Ei;
 IJ > EI;
 
-t [hH] > t;
-T [hH] > T;
-
 g [hH] > g;
 G [hH] > G;
 
@@ -26,9 +23,6 @@ kh > ch;
 kH > cH;
 Kh > Ch;
 KH > CH;
-
-t [sS] > z;
-T [sS] > Z;
 
 ::Null;
 
@@ -95,6 +89,12 @@ V > W;
 
 y > j;
 Y > J;
+
+t [hH] > t;
+T [hH] > T;
+
+t [sS] > z;
+T [sS] > Z;
 
 z > s;
 Z > S;

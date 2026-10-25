@@ -9,17 +9,11 @@ gh > għ;
 K [hH] > Ħ;
 k [hH] > ħ;
 
-T [hH] > T;
-t [hH] > t;
-
 D [žŽ] > Ġ;
 d [žŽ] > ġ;
 
 D [zZ] > Z;
 d [zZ] > z;
-
-T [sS] > Z;
-t [sS] > z;
 
 IJ > EJ;
 iJ > eJ;
@@ -62,6 +56,12 @@ x > ħ;
 
 Y > J;
 y > j;
+
+T [hH] > T;
+t [hH] > t;
+
+T [sS] > Z;
+t [sS] > z;
 
 Z > Ż;
 z > ż;

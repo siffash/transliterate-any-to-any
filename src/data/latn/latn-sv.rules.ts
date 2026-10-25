@@ -1,6 +1,9 @@
 export const latnSvRules = `
 ::Null;
 
+ts } ts > ;
+TS } TS > ;
+
 DŽ > DJ;
 dŽ > dJ;
 Dž > Dj;

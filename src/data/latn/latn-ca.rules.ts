@@ -1,6 +1,9 @@
 export const latnCaRules = `
 ::Null;
 
+ts } ts > ;
+TS } TS > ;
+
 KH > KH;
 Kh > Kh;
 kH > kH;

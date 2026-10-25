@@ -1,6 +1,9 @@
 export const latnEsRules = `
 ::Null;
 
+ts } ts > ;
+TS } TS > ;
+
 DŽ > CH;
 dŽ > cH;
 Dž > Ch;

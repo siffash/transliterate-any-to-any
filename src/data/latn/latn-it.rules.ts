@@ -9,14 +9,8 @@ dŽ > gI;
 Dž > Gi;
 dž > gi;
 
-T [sS] > Z;
-t [sS] > z;
-
 D [zZ] > Z;
 d [zZ] > z;
-
-T [hH] > T;
-t [hH] > t;
 
 KH } [EIÏYeiïy] > CH;
 kH } [EIÏYeiïy] > cH;
@@ -105,6 +99,12 @@ g } [eiïy] > gh;
 
 W > V;
 w > v;
+
+T [hH] > T;
+t [hH] > t;
+
+T [sS] > Z;
+t [sS] > z;
 
 Z > S;
 z > s;
