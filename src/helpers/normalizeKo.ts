@@ -1,5 +1,17 @@
+import { GIVEN_NAMES, NOT_NAMES, SURNAMES } from "data/ko/ko-names";
+
 // Standalone Hangul letters (ㅋ, ㅠ), which are not part of a syllable
 const JAMO = /[ㄱ-ㅣ]+/g;
+// A word of three syllables, which may be a surname and a given name (김민준)
+const NAME = /(?<![가-힣])[가-힣]{3}(?![가-힣])/g;
+
+// Names are romanized as surname + given name (Kim Minjun), like Chinese ones
+const splitNames = (text: string) =>
+  text.replace(NAME, word =>
+    SURNAMES.has(word[0]) && GIVEN_NAMES.has(word.slice(1)) && !NOT_NAMES.has(word)
+      ? `${word[0]} ${word.slice(1)}`
+      : word,
+  );
 
 // Revised Romanization of each letter, as ICU's Hangul-Latin does it
 const LATN: Record<string, string> = {
@@ -111,6 +123,30 @@ const IPA: Record<string, string> = {
   ㅣ: "i",
 };
 
+// The vowels of a syllable (가 → ㅏ), in Unicode order
+const VOWELS = "ㅏㅐㅑㅒㅓㅔㅕㅖㅗㅘㅙㅚㅛㅜㅝㅞㅟㅠㅡㅢㅣ";
+// Revised Romanization letter pairs that are read as one vowel
+const DIGRAPHS = new Set(["ae", "eo", "eu", "oe", "ui"]);
+
+// Revised Romanization runs the vowels of two syllables together, which the rules would
+// read as another vowel (다은 daeun as 대운): the boundary is marked (da_eun), and the rules remove it
+const markVowelBoundaries = (text: string) => {
+  let result = "";
+  let previous = "";
+  for (const char of text) {
+    const index = char.charCodeAt(0) - 0xac00;
+    const syllable = index >= 0 && index <= 11171;
+    const vowel = syllable ? LATN[VOWELS[Math.floor((index % 588) / 28)]] : "";
+    // A syllable that begins with the silent ㅇ, after one that ends in a vowel
+    if (syllable && Math.floor(index / 588) === 11 && DIGRAPHS.has(previous.slice(-1) + vowel[0])) {
+      result += "_";
+    }
+    previous = syllable && index % 28 === 0 ? vowel : "";
+    result += char;
+  }
+  return result;
+};
+
 /*
  * Converts Korean text, spelling standalone letters (ㅋㅋㅋ, ㅠㅠ) letter by letter,
  * and passing everything in between to the given converter.
@@ -127,19 +163,21 @@ export const normalizeKo = async (
   convertLetters: (text: string) => string = text => text,
 ): Promise<string> => {
   const map = letters === "latn" ? LATN : IPA;
+  const prepare = (text: string) =>
+    letters === "latn" ? markVowelBoundaries(splitNames(text)) : splitNames(text);
   const parts: string[] = [];
   let cursor = 0;
 
   for (const m of text.matchAll(JAMO)) {
     if (m.index > cursor) {
-      parts.push(await convert(text.slice(cursor, m.index)));
+      parts.push(await convert(prepare(text.slice(cursor, m.index))));
     }
     parts.push(convertLetters(Array.from(m[0], jamo => map[jamo]).join("")));
     cursor = m.index + m[0].length;
   }
 
   if (cursor < text.length) {
-    parts.push(await convert(text.slice(cursor)));
+    parts.push(await convert(prepare(text.slice(cursor))));
   }
 
   return parts.join("");

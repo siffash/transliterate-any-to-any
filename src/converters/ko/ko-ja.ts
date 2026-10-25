@@ -16,7 +16,17 @@ interface NonHangulSyllable {
 type Syllable = HangulSyllable | NonHangulSyllable;
 
 export const koJa = async (text: Text) => {
-  const { BATCHIMS, INITIALS, KANA_ROWS, VOWEL_TO_IDX, VOWELS } = await import("data/ko/ko-ja.map");
+  const {
+    BATCHIMS,
+    CODAS,
+    GLIDE_KANA,
+    INITIALS,
+    KANA_ROWS,
+    LIAISON,
+    VOWEL_TO_IDX,
+    VOWELS,
+    W_KANA,
+  } = await import("data/ko/ko-ja.map");
   const { RBT } = await import("helpers/rbt");
   const { normalizeKo } = await import("helpers/normalizeKo");
   const { ipaJaRules } = await import("data/ipa/ipa-ja.rules");
@@ -50,8 +60,7 @@ export const koJa = async (text: Text) => {
       if (!curr.isHangul || !prev.isHangul) continue;
 
       if (curr.initial === "ㅇ" && prev.batchim !== "") {
-        curr.initial = prev.batchim;
-        prev.batchim = "";
+        [prev.batchim, curr.initial] = LIAISON[prev.batchim] ?? ["", prev.batchim];
       } else if (curr.initial === "ㅎ" && ["ㄱ", "ㄷ", "ㅂ", "ㅈ"].includes(prev.batchim)) {
         const aspMap: Record<string, string> = { ㄱ: "ㅋ", ㄷ: "ㅌ", ㅂ: "ㅍ", ㅈ: "ㅊ" };
         curr.initial = aspMap[prev.batchim];
@@ -106,19 +115,23 @@ export const koJa = async (text: Text) => {
       // Y-Vowel handling
       if (["ㅑ", "ㅕ", "ㅛ", "ㅠ"].includes(s.vowel) && normInit !== "ㅇ") {
         const yMod = s.vowel === "ㅑ" ? "ャ" : s.vowel === "ㅠ" ? "ュ" : "ョ";
-        kana = ["ㅅ", "ㅈ"].includes(normInit)
-          ? KANA_ROWS[rowKey][0].replace("ャ", "") + yMod
-          : KANA_ROWS[rowKey][normInit === "ㄷ" ? 3 : 1] + yMod;
+        kana = KANA_ROWS[rowKey][normInit === "ㄷ" ? 3 : 1] + yMod;
+      }
+
+      if (normInit === "ㅇ") kana = GLIDE_KANA[s.vowel] ?? kana;
+      else if ((normInit === "ㄱ" || normInit === "ㅎ") && W_KANA[s.vowel]) {
+        kana = KANA_ROWS[rowKey][2] + W_KANA[s.vowel];
       }
 
       result += kana;
 
-      if (s.batchim === "ㄱ") result += "ク";
-      else if (s.batchim === "ㄴ" || s.batchim === "ㅇ") result += "ン";
-      else if (s.batchim === "ㄹ") result += "ル";
-      else if (s.batchim === "ㅁ") result += "ム";
-      else if (s.batchim === "ㅂ" || s.batchim === "ㅍ") result += "プ";
-      else if (s.batchim !== "") result += "ッ";
+      const coda = CODAS[s.batchim] ?? s.batchim;
+      if (coda === "ㄱ") result += "ク";
+      else if (coda === "ㄴ" || coda === "ㅇ") result += "ン";
+      else if (coda === "ㄹ") result += "ル";
+      else if (coda === "ㅁ") result += "ム";
+      else if (coda === "ㅂ" || coda === "ㅍ") result += "プ";
+      else if (coda !== "") result += "ッ";
 
       isStartOfWord = false;
     }
