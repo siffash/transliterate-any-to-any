@@ -75,78 +75,8 @@ export const JONG = [
   "ㅎ",
 ];
 
-/**
- * THE NAME-STANDARD DICTIONARY
- * Includes common surnames and the "Top 50" Hanja used in Korean names.
- */
-export const HANJA_TO_HANGUL: Record<string, string> = {
-  // Surnames
-  朴: "박",
-  金: "김",
-  李: "이",
-  林: "임",
-  郑: "정",
-  鄭: "정",
-  崔: "최",
-  姜: "강",
-  赵: "조",
-  趙: "조",
-  尹: "윤",
-  张: "장",
-  張: "장",
-  // Common Name Syllables (Standard Korean Readings)
-  惠: "혜",
-  慧: "혜",
-  智: "지",
-  知: "지",
-  志: "지",
-  敏: "민",
-  珉: "민",
-  旼: "민",
-  浩: "호",
-  鎬: "호",
-  俊: "준",
-  贤: "현",
-  賢: "현",
-  炫: "현",
-  泫: "현",
-  熙: "희",
-  喜: "희",
-  希: "희",
-  姬: "희",
-  珍: "진",
-  眞: "진",
-  英: "영",
-  榮: "영",
-  永: "영",
-  秀: "수",
-  洙: "수",
-  恩: "은",
-  銀: "은",
-  成: "성",
-  在: "재",
-  宰: "재",
-  宣: "선",
-  善: "선",
-  美: "미",
-  彬: "빈",
-  // Full-width digits
-  "０": "0",
-  "１": "1",
-  "２": "2",
-  "３": "3",
-  "４": "4",
-  "５": "5",
-  "６": "6",
-  "７": "7",
-  "８": "8",
-  "９": "9",
-};
-
-/**
- * MODERN PHONETIC MAP
- */
-export const PINYIN_TO_JAMO: Record<string, string> = {
+// The pinyin initials in the official Korean table for Chinese (국립국어원 외래어 표기법)
+export const INITIALS: Record<string, string> = {
   b: "ㅂ",
   p: "ㅍ",
   m: "ㅁ",
@@ -161,18 +91,103 @@ export const PINYIN_TO_JAMO: Record<string, string> = {
   j: "ㅈ",
   q: "ㅊ",
   x: "ㅅ",
+  zh: "ㅈ",
+  ch: "ㅊ",
+  sh: "ㅅ",
   r: "ㄹ",
-  z: "ㅈ",
+  z: "ㅉ",
   c: "ㅊ",
-  s: "ㅅ",
-  w: "ㅇ",
-  y: "ㅇ",
-  a: "ㅏ",
-  o: "ㅗ",
-  e: "ㅓ",
-  i: "ㅣ",
-  u: "ㅜ",
-  v: "ㅠ",
-  ai: "ㅐ",
-  ei: "ㅔ",
+  s: "ㅆ",
+};
+
+// Finals as [vowel, final consonant, following syllables]: ai → 아이 (白 바이), uan → 완 (关 관)
+export const FINALS: Record<string, [string, string?, string?]> = {
+  a: ["ㅏ"],
+  o: ["ㅗ"],
+  e: ["ㅓ"],
+  ê: ["ㅔ"],
+  ai: ["ㅏ", "", "이"],
+  ei: ["ㅔ", "", "이"],
+  ao: ["ㅏ", "", "오"],
+  ou: ["ㅓ", "", "우"],
+  an: ["ㅏ", "ㄴ"],
+  en: ["ㅓ", "ㄴ"],
+  ang: ["ㅏ", "ㅇ"],
+  eng: ["ㅓ", "ㅇ"],
+  ong: ["ㅜ", "ㅇ"],
+  er: ["ㅓ", "ㄹ"],
+  // The i after zh ch sh r z c s (知 즈, 日 르, 四 쓰)
+  ɨ: ["ㅡ"],
+  i: ["ㅣ"],
+  ia: ["ㅑ"],
+  io: ["ㅛ"],
+  ie: ["ㅖ"],
+  iao: ["ㅑ", "", "오"],
+  iu: ["ㅠ"],
+  ian: ["ㅖ", "ㄴ"],
+  in: ["ㅣ", "ㄴ"],
+  iang: ["ㅑ", "ㅇ"],
+  ing: ["ㅣ", "ㅇ"],
+  iong: ["ㅠ", "ㅇ"],
+  u: ["ㅜ"],
+  ua: ["ㅘ"],
+  uo: ["ㅝ"],
+  uai: ["ㅘ", "", "이"],
+  ui: ["ㅜ", "", "이"],
+  uan: ["ㅘ", "ㄴ"],
+  un: ["ㅜ", "ㄴ"],
+  uang: ["ㅘ", "ㅇ"],
+  ü: ["ㅟ"],
+  üe: ["ㅞ"],
+  üan: ["ㅟ", "", "안"],
+  ün: ["ㅟ", "ㄴ"],
+  // Written alone, wei, wen and weng aren't 우이, 운, 웅 as after a consonant
+  uei: ["ㅞ", "", "이"],
+  uen: ["ㅝ", "ㄴ"],
+  ueng: ["ㅝ", "ㅇ"],
+};
+
+// Syllables without an initial, spelled with y and w (yan 옌, wei 웨이)
+export const ZERO_INITIAL: Record<string, string> = {
+  yi: "i",
+  ya: "ia",
+  yo: "io",
+  ye: "ie",
+  yao: "iao",
+  you: "iu",
+  yan: "ian",
+  yin: "in",
+  yang: "iang",
+  ying: "ing",
+  yong: "iong",
+  yu: "ü",
+  yue: "üe",
+  yuan: "üan",
+  yun: "ün",
+  wu: "u",
+  wa: "ua",
+  wo: "uo",
+  wai: "uai",
+  wei: "uei",
+  wan: "uan",
+  wen: "uen",
+  wang: "uang",
+  weng: "ueng",
+};
+
+// Syllables without a vowel (嗯 n, 呣 m)
+export const SYLLABIC: Record<string, string> = {
+  m: "음",
+  n: "은",
+  ng: "응",
+  hm: "흠",
+  hng: "흥",
+};
+
+// ㅈ, ㅉ and ㅊ take no y-vowel (家 자, 九 주, 钱 첸)
+export const PLAIN_VOWELS: Record<string, string> = {
+  ㅑ: "ㅏ",
+  ㅖ: "ㅔ",
+  ㅛ: "ㅗ",
+  ㅠ: "ㅜ",
 };

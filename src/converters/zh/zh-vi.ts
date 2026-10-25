@@ -48,7 +48,8 @@ export const zhVi = async (text: Text) => {
 
         // Fix Tone Discrepancy: pinyin-pro returns '0' for neutral tones,
         // but hanviet-pinyin-words expects '5' (e.g., shang0 -> shang5)
-        py = py.replace(/0$/, "5");
+        // and spells ü as "u:", like CC-CEDICT (呂 lu:3)
+        py = py.replace(/0$/, "5").replace("ü", "u:");
 
         if (ZH_VI_MAP[char]) {
           chunkHanViet.push(ZH_VI_MAP[char]);
@@ -62,6 +63,13 @@ export const zhVi = async (text: Text) => {
           if (hvResult === "_" || !hvResult) {
             const pyNoTone = py.replace(/[0-9]/g, "");
             hvResult = getHanviet(char, [pyNoTone]);
+          }
+
+          // Then the same syllable in another tone: pinyin-pro applies tone sandhi
+          // (不错 bu2) and reads some traditional characters differently (許 xu1)
+          for (const tone of "1234") {
+            if (hvResult && hvResult !== "_") break;
+            hvResult = getHanviet(char, [py.replace(/[0-9]$/, "") + tone]);
           }
 
           // Extract the primary (first) pronunciation for clean output

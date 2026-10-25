@@ -33,7 +33,8 @@ const PUNCTUATION: Record<string, [replacement: string, kind: Kind]> = {
   "​": ["", "separator"],
 };
 
-type Segment = { segment: string; isWordLike?: boolean };
+// surname: a Chinese surname split off its given name (see segmentChinese)
+type Segment = { segment: string; isWordLike?: boolean; surname?: boolean };
 
 // Intl.Segmenter splits Thai words missing from its dictionary (mostly names) into
 // pieces that can't be read alone: a bare consonant (ปรียา|ภ|รณ์), a coda silenced
@@ -153,6 +154,8 @@ export const wordSplitter = async (
   language: Language,
   fn?: (word: string) => string | Promise<string>,
   skipSegmenter?: boolean,
+  // Write a surname together with the given name, as Korean does (마오쩌둥)
+  joinNames?: boolean,
 ): Promise<string> => {
   const { regex } = languages[language];
   const re = new RegExp(`[${regex}\\p{L}]+`, "gu");
@@ -170,17 +173,19 @@ export const wordSplitter = async (
     if (language === "th") segments = mergeThaiFragments(segments);
 
     let prev: Kind | undefined;
+    let afterSurname = false;
     const push = async (kind: Kind, text: string) => {
-      if (needsSpace(prev, kind)) {
+      if (needsSpace(prev, kind) && !(afterSurname && kind === "word")) {
         parts.push(" ");
       }
       parts.push(kind === "word" && fn ? await fn(text) : text);
       prev = kind;
     };
 
-    for (const { segment, isWordLike } of segments) {
+    for (const { segment, isWordLike, surname } of segments) {
       if (isWordLike) {
         await push("word", segment);
+        afterSurname = Boolean(joinNames && surname);
       } else {
         for (const char of segment) {
           const [replacement, kind] = PUNCTUATION[char] ?? [char, "inline"];

@@ -2,91 +2,50 @@ import { Text } from "types";
 
 export const zhKo = async (text: Text) => {
   const { pinyin } = await import("pinyin-pro");
-  const { CHO, HANJA_TO_HANGUL, JONG, JUNG, PINYIN_TO_JAMO } = await import("data/zh/zh-ko.map");
+  const { CHO, FINALS, INITIALS, JONG, JUNG, PLAIN_VOWELS, SYLLABIC, ZERO_INITIAL } =
+    await import("data/zh/zh-ko.map");
+  const { wordSplitter } = await import("helpers/wordSplitter");
 
-  const assembleHangul = (cho: string, jung: string, jong: string = ""): string => {
-    const cIdx = CHO.indexOf(cho);
-    const uIdx = JUNG.indexOf(jung);
-    const oIdx = JONG.indexOf(jong);
+  const assembleHangul = (cho: string, jung: string, jong = "") =>
+    String.fromCharCode(
+      0xac00 + CHO.indexOf(cho) * 588 + JUNG.indexOf(jung) * 28 + JONG.indexOf(jong),
+    );
 
-    return String.fromCharCode(0xac00 + cIdx * 588 + uIdx * 28 + (oIdx < 0 ? 0 : oIdx));
+  // A toneless pinyin syllable in Hangul, by the official table (zhang 장, xiong 슝, gui 구이)
+  const syllableToHangul = (syllable: string) => {
+    if (SYLLABIC[syllable]) return SYLLABIC[syllable];
+    const initial = /^(?:[zcs]h|[bpmfdtnlgkhjqxrzcs])/.exec(syllable)?.[0] ?? "";
+    let final = initial ? syllable.slice(initial.length) : (ZERO_INITIAL[syllable] ?? syllable);
+    // ju, que, xuan, jun are jü, qüe, xüan, jün
+    if (/^[jqx]$/.test(initial)) final = final.replace(/^u/, "ü");
+    if (/^(?:[zcs]h?|r)$/.test(initial) && final === "i") final = "ɨ";
+    if (!FINALS[final]) return undefined;
+    const [vowel, coda = "", rest = ""] = FINALS[final];
+    const cho = initial ? INITIALS[initial] : "ㅇ";
+    const jung = /[ㅈㅉㅊ]/.test(cho) ? (PLAIN_VOWELS[vowel] ?? vowel) : vowel;
+    return assembleHangul(cho, jung, coda) + rest;
   };
 
-  const convert = (text: string) => {
-    let result = "";
-    const chars = Array.from(text);
+  // pinyin-pro gives one item per character; letters other than Han ones stay as they are (A股)
+  const wordToHangul = (word: string) => {
+    const chars = [...word];
+    return pinyin(word, { toneType: "none", type: "array" })
+      .map((syllable, i) =>
+        /\p{Script=Han}/u.test(chars[i] ?? "")
+          ? (syllableToHangul(syllable.replace(/v/g, "ü")) ?? chars[i])
+          : syllable,
+      )
+      .join("");
+  };
 
-    for (const char of chars) {
-      // Priority 1: Check expanded Name Dictionary (Covers 95% of Korean names)
-      if (HANJA_TO_HANGUL[char]) {
-        result += HANJA_TO_HANGUL[char];
-        continue;
-      }
-
-      if (!/[\u4e00-\u9fa5]/.test(char)) {
-        result += char;
-        continue;
-      }
-
-      // Priority 2: Modern Phonetic Logic (For non-standard names and cities)
-      const py = pinyin(char, { toneType: "none", type: "array" })[0];
-
-      // Modern convention shortcuts
-      if (py === "xi") {
-        result += assembleHangul("ㅅ", "ㅣ");
-        continue;
-      }
-      if (py === "bei") {
-        result += assembleHangul("ㅂ", "ㅔ") + assembleHangul("ㅇ", "ㅣ");
-        continue;
-      }
-
-      let initial;
-      let rest;
-      if (!"aeiou".includes(py[0])) {
-        initial = py[0];
-        rest = py.substring(1);
-      } else {
-        initial = "y";
-        rest = py;
-      }
-
-      const kCho = PINYIN_TO_JAMO[initial] || "ㅇ";
-      let kJung;
-      let kJong = "";
-
-      // Vowel/Batchim logic for Chinese sounds
-      if (rest.includes("ang")) {
-        kJung = "ㅏ";
-        kJong = "ㅇ";
-      } else if (rest.includes("an")) {
-        kJung = "ㅏ";
-        kJong = "ㄴ";
-      } else if (rest.includes("ing")) {
-        kJung = "ㅣ";
-        kJong = "ㅇ";
-      } else if (rest.includes("in")) {
-        kJung = "ㅣ";
-        kJong = "ㄴ";
-      } else if (rest.includes("eng")) {
-        kJung = "ㅓ";
-        kJong = "ㅇ";
-      } else if (rest.includes("en")) {
-        kJung = "ㅓ";
-        kJong = "ㄴ";
-      } else {
-        kJung = PINYIN_TO_JAMO[rest] || "ㅣ";
-      }
-
-      result += assembleHangul(kCho, kJung, kJong);
-    }
-
-    return result;
+  const convert = async (text: string) => {
+    const hangul = await wordSplitter(text, "zh", wordToHangul, false, true);
+    return hangul.replace(/[０-９]/g, digit => String(digit.charCodeAt(0) - 0xff10));
   };
 
   if (typeof text === "string") {
-    return convert(text);
+    return await convert(text);
   } else {
-    return text.map(convert);
+    return Promise.all(text.map(convert));
   }
 };

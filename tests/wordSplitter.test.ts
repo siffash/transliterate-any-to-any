@@ -15,6 +15,13 @@ describe("wordSplitter", () => {
       expect(await wordSplitter("ภาษาไทยง่าย", "th")).toBe("ภาษา ไทย ง่าย");
     });
 
+    it("writes a Chinese surname together with the given name when joinNames is set", async () => {
+      expect(await wordSplitter("毛泽东, 欧阳修", "zh")).toBe("毛 泽东, 欧阳 修");
+      expect(await wordSplitter("毛泽东, 欧阳修", "zh", undefined, false, true)).toBe(
+        "毛泽东, 欧阳修",
+      );
+    });
+
     it("keeps each run of letters whole when skipSegmenter is set", async () => {
       expect(await wordSplitter("日本語のテキスト", "ja", undefined, true)).toBe(
         "日本語のテキスト",
@@ -75,7 +82,10 @@ describe("wordSplitter", () => {
 
     it("doesn't pass punctuation to fn", async () => {
       const calls: string[] = [];
-      await wordSplitter("はい、そうです。", "ja", word => (calls.push(word), word));
+      await wordSplitter("はい、そうです。", "ja", word => {
+        calls.push(word);
+        return word;
+      });
       expect(calls).toEqual(["はい", "そう", "です"]);
     });
   });
@@ -129,7 +139,12 @@ describe("wordSplitter", () => {
 
     it("leaves text without letters unchanged and doesn't call fn", async () => {
       const calls: string[] = [];
-      expect(await wordSplitter("123 456", "en", word => (calls.push(word), word))).toBe("123 456");
+      expect(
+        await wordSplitter("123 456", "en", word => {
+          calls.push(word);
+          return word;
+        }),
+      ).toBe("123 456");
       expect(calls).toEqual([]);
     });
   });

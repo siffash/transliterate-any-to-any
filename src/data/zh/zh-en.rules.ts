@@ -23,6 +23,10 @@ export const zhEnRules = `
 [ūúǔù] > u;
 [ǖǘǚǜ] > ü;
 
+::Null;
+
+['’‘\`´ʼ] } [^aeoAEO] > ;
+
 
 
 ::Null;
