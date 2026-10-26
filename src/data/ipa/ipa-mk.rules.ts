@@ -5,6 +5,10 @@ export const ipaMkRules = `
 
 ::Null;
 
+[aɑɐăâæeɛęêoɔôõɵɒəɘʌɤɜ] ː? { [iĩɨ] } ː? [^[:L:][:M:]] > ɪ;
+
+::Null;
+
 dʒ > џ;
 tʃ > ч;
 dz > ѕ;

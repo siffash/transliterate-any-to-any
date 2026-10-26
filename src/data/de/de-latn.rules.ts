@@ -1,6 +1,59 @@
 export const deLatnRules = `
 ::NFC;
 
+[^[:L:][:M:]] [sS] [oO] { [eE] } [sS] [tT] > ;
+[^[:L:][:M:]] [cC] [oO] { [eE] } [sS] [fF] [eE] [lL] [dD] > ;
+[^[:L:][:M:]] [cC] [oO] { [eE] } [rR] [dD] [eE] > ;
+[^[:L:][:M:]] [vV] [oO] { [eE] } [rR] [dD] [eE] > ;
+[^[:L:][:M:]] [oO] { [eE] } [rR] [^[:L:][:M:]] > ;
+[^[:L:][:M:]] [kK] [eE] [vV] [eE] [lL] [aA] { [eE] } [rR] > ;
+[^[:L:][:M:]] [lL] [aA] { [eE] } [rR] [^[:L:][:M:]] > ;
+[^[:L:][:M:]] [sS] [tT] [rR] [aA] { [eE] } [lL] [eE] [nN] > ;
+[^[:L:][:M:]] [bB] [aA] { [eE] } [sS] [wW] [eE] [iI] [lL] [eE] [rR] > ;
+[^[:L:][:M:]] [rR] [aA] { [eE] } [sS] [fF] [eE] [lL] [dD] > ;
+[^[:L:][:M:]] [bB] [uU] { [eE] } [rR] [^[:L:][:M:]] > ;
+[^[:L:][:M:]] [kK] [uU] { [eE] } [sS] [^[:L:][:M:]] > ;
+[^[:L:][:M:]] [gG] { [uU] } [eE] [rR] [iI] [cC] [kK] [eE] > ;
+[^[:L:][:M:]] [bB] [aA] { [eE] } [yY] [eE] [rR] > ;
+
+::Null;
+
+[^[:L:][:M:]] [nN] { o } [eE] [mM] [iI] > o;
+[^[:L:][:M:]] [nN] { O } [eE] [mM] [iI] > O;
+[^[:L:][:M:]] [jJ] { o } [eE] [lL] [lL] [eE] > o;
+[^[:L:][:M:]] [jJ] { O } [eE] [lL] [lL] [eE] > O;
+
+o } [eE] [lL]? [^[:L:][:M:]] > o;
+O } [eE] [lL]? [^[:L:][:M:]] > O;
+C } [oO] [eE] > K;
+c } [oO] [eE] > k;
+OE > Ö;
+Oe > Ö;
+oe > ö;
+
+AEU > ÄU;
+Aeu > Äu;
+aeu > äu;
+a } [eE] [lL] [iI]? [sS]? [aA]? [^[:L:][:M:]] > a;
+A } [eE] [lL] [iI]? [sS]? [aA]? [^[:L:][:M:]] > A;
+a } [eE] [lL] [sS] [eEoO] [nN] [^[:L:][:M:]] > a;
+A } [eE] [lL] [sS] [eEoO] [nN] [^[:L:][:M:]] > A;
+AE > Ä;
+Ae > Ä;
+ae > ä;
+
+[aAeEäÄqQ] { u } [eE] > u;
+[aAeEäÄqQ] { U } [eE] > U;
+u } [eE] [lL] [sS]? [aA]? [^[:L:][:M:]] > u;
+U } [eE] [lL] [sS]? [aA]? [^[:L:][:M:]] > U;
+u } [eE] [lL] [sS] [sS]? [oO] [nN] [^[:L:][:M:]] > u;
+U } [eE] [lL] [sS] [sS]? [oO] [nN] [^[:L:][:M:]] > U;
+UE > Ü;
+Ue > Ü;
+ue > ü;
+
+::Null;
+
 C [hH] } [aA] [rR] [lL] [oO] [tT] [tT] [eE] > Š;
 c [hH] } [aA] [rR] [lL] [oO] [tT] [tT] [eE] > š;
 

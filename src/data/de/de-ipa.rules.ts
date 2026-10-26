@@ -2,6 +2,40 @@ export const deIpaRules = `
 ::Lower;
 ::NFC;
 
+[^[:L:][:M:]] so { e } st > o;
+[^[:L:][:M:]] co { e } sfeld > o;
+[^[:L:][:M:]] co { e } rde > o;
+[^[:L:][:M:]] vo { e } rde > o;
+[^[:L:][:M:]] o { e } r [^[:L:][:M:]] > o;
+[^[:L:][:M:]] kevela { e } r > a;
+[^[:L:][:M:]] la { e } r [^[:L:][:M:]] > a;
+[^[:L:][:M:]] stra { e } len > a;
+[^[:L:][:M:]] ba { e } sweiler > a;
+[^[:L:][:M:]] ra { e } sfeld > a;
+[^[:L:][:M:]] bu { e } r [^[:L:][:M:]] > u;
+[^[:L:][:M:]] ku { e } s [^[:L:][:M:]] > u;
+[^[:L:][:M:]] g { u } ericke > ;
+[^[:L:][:M:]] ba { e } yer > ;
+
+::Null;
+
+[^[:L:][:M:]] n { o } emi > o;
+[^[:L:][:M:]] j { o } elle > o;
+
+o } el? [^[:L:][:M:]] > o;
+c } oe > k;
+oe > ö;
+aeu > äu;
+a } eli?s?a? [^[:L:][:M:]] > a;
+a } els[eo]n [^[:L:][:M:]] > a;
+ae > ä;
+[aeäq] { u } e > u;
+u } els?a? [^[:L:][:M:]] > u;
+u } elss?on [^[:L:][:M:]] > u;
+ue > ü;
+
+::Null;
+
 ch } arlotte > ʃ;
 s } tadt > ʃ;
 ö } sterreich > øː;
@@ -230,6 +264,7 @@ i } [bcdfghjklmnpqrstvwxz] [bcdfghjklmnpqrstvwxz] > ɪ;
 i > iː;
 o } [bcdfghjklmnpqrstvwxz] [bcdfghjklmnpqrstvwxz] > ɔ;
 o > oː;
+ö } th > øː;
 ö } [bcdfghjklmnpqrstvwxz] [bcdfghjklmnpqrstvwxz] > œ;
 ö > øː;
 u } [bcdfghjklmnpqrstvwxz] [bcdfghjklmnpqrstvwxz] > ʊ;

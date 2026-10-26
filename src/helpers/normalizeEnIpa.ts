@@ -90,6 +90,8 @@ export const normalizeEnIpa = (
     { ipaCharToBeReplaced: ["w", "ə"], lettersToRestore: { u: "u" } },
     // Restore "i"
     { ipaCharToBeReplaced: "ə", lettersToRestore: { i: "i" } },
+    // Restore "e"
+    { ipaCharToBeReplaced: "ə", lettersToRestore: { e: "e" } },
     // Restore "ja"
     { ipaCharToBeReplaced: "dʒə", lettersToRestore: { ja: "dʒa" } },
     { ipaCharToBeReplaced: "jə", lettersToRestore: { ja: "ja" } },

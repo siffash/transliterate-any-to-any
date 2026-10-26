@@ -74,6 +74,15 @@ g } [EI] > dŽ;
 G } [EI] > DŽ;
 G } [ei] > Dž;
 
+[aeiouAEIOU] { s } [aeiouAEIOU] > z;
+[aeiouAEIOU] { S } [aeiouAEIOU] > Z;
+s } [bdgvlmnrBDGVLMNR] > z;
+S } [bdgvlmnr] > Z;
+S } [BDGVLMNR] > Z;
+
+p [hH] > f;
+P [hH] > F;
+
 c > k;
 C > K;
 
