@@ -49,4 +49,15 @@ x > ks;
 
 j } [bcdfghklmnpqrstvwxzšž] > i;
 j } [^[:L:][:M:]] > i;
+
+::Null;
+
+aa { a+ > ;
+ee { e+ > ;
+ii { i+ > ;
+oo { o+ > ;
+uu { u+ > ;
+yy { y+ > ;
+ää { ä+ > ;
+öö { ö+ > ;
 `;

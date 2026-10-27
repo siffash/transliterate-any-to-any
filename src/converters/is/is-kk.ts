@@ -1,15 +1,7 @@
 import { Text } from "types";
 
 export const isKk = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt");
-  const { isLatnRules } = await import("data/is/is-latn.rules");
-  const { latnKkRules } = await import("data/latn/latn-kk.rules");
+  const { isRu } = await import("converters/is/is-ru");
 
-  const transliterator = RBT.fromRules(isLatnRules + latnKkRules);
-
-  if (typeof text === "string") {
-    return transliterator.transliterate(text);
-  } else {
-    return text.map(text => transliterator.transliterate(text));
-  }
+  return isRu(text);
 };

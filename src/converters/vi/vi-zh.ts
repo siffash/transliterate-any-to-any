@@ -4,10 +4,11 @@ export const viZh = async (text: Text) => {
   const { compoundDictionary, singleDictionary } = await import("data/vi/vi-zh.map");
   const { RBT } = await import("helpers/rbt");
   const { viIpaRules } = await import("data/vi/vi-ipa.rules");
+  const { viIpaZhRules } = await import("data/vi/vi-ipa_zh.rules");
   const { ipaZhRules } = await import("data/ipa/ipa-zh.rules");
 
   const transliteratorToIpa = RBT.fromRules(viIpaRules);
-  const transliteratorToZh = RBT.fromRules(ipaZhRules);
+  const transliteratorToZh = RBT.fromRules(viIpaZhRules + ipaZhRules);
 
   const lookup = (dictionary: Record<string, string>, key: string) =>
     Object.prototype.hasOwnProperty.call(dictionary, key) ? dictionary[key] : undefined;

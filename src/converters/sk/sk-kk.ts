@@ -1,15 +1,7 @@
 import { Text } from "types";
 
 export const skKk = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt");
-  const { skLatnRules } = await import("data/sk/sk-latn.rules");
-  const { latnKkRules } = await import("data/latn/latn-kk.rules");
+  const { skRu } = await import("converters/sk/sk-ru");
 
-  const transliterator = RBT.fromRules(skLatnRules + latnKkRules);
-
-  if (typeof text === "string") {
-    return transliterator.transliterate(text);
-  } else {
-    return text.map(text => transliterator.transliterate(text));
-  }
+  return skRu(text);
 };

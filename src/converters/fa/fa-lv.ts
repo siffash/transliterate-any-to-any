@@ -3,9 +3,10 @@ import { Text } from "types";
 export const faLv = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { faIpa } = await import("converters/fa/fa-ipa");
+  const { faIpaARules } = await import("data/fa/fa-ipa_a.rules");
   const { ipaLvRules } = await import("data/ipa/ipa-lv.rules");
 
-  const transliterator = RBT.fromRules(ipaLvRules + "::Title;");
+  const transliterator = RBT.fromRules(faIpaARules + ipaLvRules + "::Title;");
 
   if (typeof text === "string") {
     const ipa = await faIpa<string>(text);

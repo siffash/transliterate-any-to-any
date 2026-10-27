@@ -1,18 +1,7 @@
 import { Text } from "types";
 
 export const enKk = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt");
-  const { enIpa } = await import("converters/en/en-ipa");
-  const { ipaKkRules } = await import("data/ipa/ipa-kk.rules");
-  const { copyCase } = await import("helpers/copyCase");
+  const { enRu } = await import("converters/en/en-ru");
 
-  const transliterator = RBT.fromRules(ipaKkRules);
-
-  if (typeof text === "string") {
-    const ipa = await enIpa<string>(text);
-    return copyCase(text, transliterator.transliterate(ipa), "kk");
-  } else {
-    const ipaArray = await enIpa<string[]>(text);
-    return ipaArray.map((ipa, i) => copyCase(text[i], transliterator.transliterate(ipa), "kk"));
-  }
+  return enRu(text);
 };

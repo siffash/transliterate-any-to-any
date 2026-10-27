@@ -78,4 +78,16 @@ i { j } [bcdfghjklmnprstvwxzžš] > i;
 š { š } [bcdfghjklmnprstvwxzžš] > ;
 ž { ž } [bcdfghjklmnprstvwxzžš] > ;
 f { f } [bcdfghjklmnprstvwxzžš] > ;
+
+::Null;
+
+aa { a+ > ;
+ee { e+ > ;
+ii { i+ > ;
+oo { o+ > ;
+uu { u+ > ;
+õõ { õ+ > ;
+ää { ä+ > ;
+öö { ö+ > ;
+üü { ü+ > ;
 `;

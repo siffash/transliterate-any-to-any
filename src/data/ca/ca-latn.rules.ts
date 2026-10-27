@@ -14,6 +14,9 @@ H > ;
 [aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] { I [gG] } [^[:L:][:M:]] > Č;
 
 [iI] { g } [^[:L:][:M:]] > č;
+
+[aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] { i [gG] } [bcdfjklmnpqrstvwxzBCDFJKLMNPQRSTVWXZ] > č;
+[aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] { I [gG] } [bcdfjklmnpqrstvwxzBCDFJKLMNPQRSTVWXZ] > Č;
 [iI] { G } [^[:L:][:M:]] > Č;
 
 [aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] { i [xX] > š;

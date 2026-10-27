@@ -68,12 +68,6 @@ l > ɫ;
 ó > o;
 [uúü] > u;
 
-[^[:L:][:M:]] [bcdfgçhjklmnpqrstvwxyz]* { e } [bcdfgçhjklmnpqrstvwxyz]* [àèéíòóú] > ə;
-e } [bcdfgçhjklmnpqrstvwxyz]* [àèéíòóú] > ə;
-[a e] } [bcdfgçhjklmnpqrstvwxyz]* [^[:L:][:M:]] > ə;
-o } [bcdfgçhjklmnpqrstvwxyz]* [àèéíòóú] > u;
-o } [bcdfgçhjklmnpqrstvwxyz]* [^[:L:][:M:]] > u;
-
 e > ɛ;
 o > ɔ;
 g > ɡ;

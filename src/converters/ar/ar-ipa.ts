@@ -38,7 +38,8 @@ export const arIpa = async <T = Text>(text: Text): Promise<T> => {
   };
 
   const charFallback = (s: string): string => {
-    return [...s].map(ch => charMap[ch] ?? ch).join("");
+    // A hamza carrier inside a word is a glottal stop (الأفق → alʔafaq); a word-initial one stays a plain vowel
+    return [...s].map((ch, i) => (i && /[أإ]/.test(ch) ? "ʔ" : "") + (charMap[ch] ?? ch)).join("");
   };
 
   const wordToIPA = (rawWord: string): string => {

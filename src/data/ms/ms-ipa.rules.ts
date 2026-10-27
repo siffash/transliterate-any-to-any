@@ -3,6 +3,7 @@ export const msIpaRules = `
 ::NFC;
 
 sy > ʃ;
+sh > ʃ;
 ny > ɲ;
 ng > ŋ;
 kh > x;
