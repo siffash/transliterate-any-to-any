@@ -131,6 +131,11 @@ export const heIpa = async <T = Text>(text: Text): Promise<T> => {
       processed = processed.replace(/וו/g, "v");
       processed = processed.replace(/יי/g, "j");
 
+      // Aleph spells a; before ו/י it only marks a hiatus after a vowel letter or at the word start (אוסקר, לואיס)
+      processed = processed.replace(/(?<=[וי])א(?=ל$)/, "ʔe"); // עמיאל, נואל
+      processed = processed.replace(/(?<=[^וי])א(?=a$)/, "eʔ"); // לאה (final ה is already a)
+      processed = processed.replace(/(?<=[^ויא])א(?!a$)|א(?![וי]|a$)/g, "a");
+
       let output = "";
       for (let i = 0; i < processed.length; i++) {
         const char = processed[i];

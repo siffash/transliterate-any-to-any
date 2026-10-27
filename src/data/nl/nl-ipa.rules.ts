@@ -3,6 +3,7 @@ export const nlIpaRules = `
 ::NFC;
 
 ['’‘\`´ʼ] s [-] > s;
+[^[:L:][:M:]] { ['’‘\`´ʼ] } t [^[:L:][:M:]] > ;
 
 ::Null;
 
