@@ -1,6 +1,8 @@
 export const srLatnRules = `
 ::NFC;
 
+[[:L:][:M:]] { \\' } [[:L:][:M:]] > ’;
+
 L [jJ] > Ľ;
 l [jJ] > ľ;
 

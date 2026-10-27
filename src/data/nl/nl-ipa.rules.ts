@@ -19,6 +19,9 @@ tie } [^[:L:][:M:]] > tsi;
 
 eeuw > eːu;
 ieuw > iu;
+ooij > oːj;
+aaij > aːj;
+oeij > uj;
 aai > aːi;
 ooi > oːi;
 oei > ui;

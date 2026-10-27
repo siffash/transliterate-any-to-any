@@ -1,6 +1,8 @@
 export const huLatnRules = `
 ::NFC;
 
+[[:L:][:M:]] { \\' } [[:L:][:M:]] > ’;
+
 L [yY] > Y;
 l [yY] > y;
 

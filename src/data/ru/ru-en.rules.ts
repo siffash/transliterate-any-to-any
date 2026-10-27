@@ -45,6 +45,8 @@ export const ruEnRules = `
 Е > E;
 е > e;
 
+[CcSsZz] [Hh] { Ё > O;
+[CcSsZz] [Hh] { ё > o;
 Ё } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > YO;
 Ё } [:Lu:] > YO;
 [:Lu:] { Ё > YO;

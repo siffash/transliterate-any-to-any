@@ -1,6 +1,8 @@
 export const plLatnRules = `
 ::NFC;
 
+[[:L:][:M:]] { \\' } [[:L:][:M:]] > ’;
+
 [^[:L:][:M:]] { c [hH] } [oO] [pP] [iI] [nN] [^[:L:][:M:]] > š;
 [^[:L:][:M:]] { C [hH] } [oO] [pP] [iI] [nN] [^[:L:][:M:]] > Š;
 [^[:L:][:M:]] [šŠ] [oO] [pP] { i } [nN] [^[:L:][:M:]] > e;

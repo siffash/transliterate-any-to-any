@@ -984,21 +984,37 @@ function matchGlobalTransform(identifier: string): GlobalTransformName | null {
   }
 }
 
+const CASED = /\p{Cased}/u;
+const CASE_IGNORABLE = /\p{Case_Ignorable}/u;
+
+// Upper-cases the first character and lower-cases the rest as one string, which keeps the final sigma (Σας)
 function titleCaseOneWord(word: string): string {
   const codepoints = Array.from(word);
   if (codepoints.length === 0) return word;
-  const [first, ...rest] = codepoints;
-  return first.toLocaleUpperCase() + rest.join("").toLocaleLowerCase();
+  const first = codepoints[0];
+  const lower = word.toLocaleLowerCase();
+  const lowerFirst = first.toLocaleLowerCase();
+  const rest = lower.startsWith(lowerFirst)
+    ? lower.slice(lowerFirst.length)
+    : codepoints.slice(1).join("").toLocaleLowerCase();
+  return first.toLocaleUpperCase() + rest;
 }
 
-const TITLE_CASE_SEGMENTER = new Intl.Segmenter(undefined, { granularity: "word" });
-
+// Like ICU's Any-Title: a word starts after any character that is neither cased nor case-ignorable
+// (a space, a hyphen, a digit: 5Вань); apostrophes and dots don't split one (O'brien, St.petersburg)
 function applyTitleCase(input: string): string {
   let result = "";
-  for (const { segment, isWordLike } of TITLE_CASE_SEGMENTER.segment(input)) {
-    result += isWordLike ? titleCaseOneWord(segment) : segment;
+  let word = "";
+  let doTitle = true;
+  for (const char of input) {
+    if (doTitle) {
+      result += titleCaseOneWord(word);
+      word = "";
+    }
+    word += char;
+    doTitle = !CASED.test(char) && !CASE_IGNORABLE.test(char);
   }
-  return result;
+  return result + titleCaseOneWord(word);
 }
 
 const GLOBAL_TRANSFORMS: Readonly<Record<GlobalTransformName, (input: string) => string>> = {

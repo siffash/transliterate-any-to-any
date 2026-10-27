@@ -1,6 +1,8 @@
 export const fiLatnRules = `
 ::NFC;
 
+[[:L:][:M:]] { \\' } [[:L:][:M:]] > ’;
+
 S [cC] [hH] > Š;
 s [cC] [hH] > š;
 S [hH] > Š;

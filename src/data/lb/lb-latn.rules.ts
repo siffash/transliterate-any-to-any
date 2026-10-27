@@ -1,6 +1,8 @@
 export const lbLatnRules = `
 ::NFC;
 
+[[:L:][:M:]] { \\' } [[:L:][:M:]] > ’;
+
 DSCH > DŽ;
 Dsch > Dž;
 d [sS] [cC] [hH] > dž;

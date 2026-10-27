@@ -1518,7 +1518,7 @@ describe("ICU semantic global transforms: `::Lower;`, `::Title;`, `::NFC;`, `::N
     });
   });
 
-  describe("`::Title;` — Unicode word-segmented title casing, locale-aware", () => {
+  describe("`::Title;` — ICU Any-Title casing, locale-aware", () => {
     it.each([
       {
         name: "capitalizes the first letter of each word and lowercases the rest",
@@ -1551,10 +1551,28 @@ describe("ICU semantic global transforms: `::Lower;`, `::Title;`, `::NFC;`, `::N
         expected: "O'briens",
       },
       {
-        name: "digits participate in word-like segments and are unaffected by case mapping",
+        name: "digits are unaffected by case mapping",
         rules: "::Title;",
         input: "item2 costs $5",
         expected: "Item2 Costs $5",
+      },
+      {
+        name: "a letter after a digit starts a new word, as in ICU (5Вань)",
+        rules: "::Title;",
+        input: "5вань x2y",
+        expected: "5Вань X2Y",
+      },
+      {
+        name: "case-ignorable characters (a dot, a combining mark) don't start a new word",
+        rules: "::Title;",
+        input: "st.petersburg émile",
+        expected: "St.petersburg Émile",
+      },
+      {
+        name: "lowercases each word as a whole, keeping the Greek final sigma",
+        rules: "::Title;",
+        input: "ΣΑΣ",
+        expected: "Σας",
       },
       {
         name: "non-word symbols such as emoji pass through untouched",

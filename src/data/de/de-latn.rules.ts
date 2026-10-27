@@ -1,6 +1,8 @@
 export const deLatnRules = `
 ::NFC;
 
+[[:L:][:M:]] { \\' } [[:L:][:M:]] > ’;
+
 [^[:L:][:M:]] [sS] [oO] { [eE] } [sS] [tT] > ;
 [^[:L:][:M:]] [cC] [oO] { [eE] } [sS] [fF] [eE] [lL] [dD] > ;
 [^[:L:][:M:]] [cC] [oO] { [eE] } [rR] [dD] [eE] > ;

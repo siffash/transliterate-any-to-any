@@ -1,6 +1,8 @@
 export const noLatnRules = `
 ::NFC;
 
+[[:L:][:M:]] { \\' } [[:L:][:M:]] > ’;
+
 [ÉÈÊ] > E;
 [éèê] > e;
 

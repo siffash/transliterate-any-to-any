@@ -12,6 +12,8 @@ export const kkEnRules = `
 
 [ЪЬъь] > ;
 
+[CcSsZz] [Hh] { Ё > O;
+[CcSsZz] [Hh] { ё > o;
 [:Lu:] { Ё > YO;
 Ё } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > YO;
 Ё } [:Lu:] > YO;

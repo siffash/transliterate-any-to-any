@@ -5,14 +5,15 @@ export const frEt = async (text: Text) => {
   const { frIpa } = await import("converters/fr/fr-ipa");
   const { ipaEtRules } = await import("data/ipa/ipa-et.rules");
   const { copyCase } = await import("helpers/copyCase");
+  const { keepElision } = await import("helpers/keepElision");
 
   const transliterator = RBT.fromRules(ipaEtRules);
 
   if (typeof text === "string") {
     const ipa = await frIpa<string>(text);
-    return copyCase(text, transliterator.transliterate(ipa), "et");
+    return copyCase(text, keepElision(ipa, transliterator), "et");
   } else {
     const ipaArray = await frIpa<string[]>(text);
-    return ipaArray.map((ipa, i) => copyCase(text[i], transliterator.transliterate(ipa), "et"));
+    return ipaArray.map((ipa, i) => copyCase(text[i], keepElision(ipa, transliterator), "et"));
   }
 };

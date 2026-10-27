@@ -1,6 +1,8 @@
 export const nlLatnRules = `
 ::NFC;
 
+[[:L:][:M:]] { \\' } [[:L:][:M:]] > ’;
+
 [ËÉ] > E;
 [ëé] > e;
 Í > I;
@@ -58,6 +60,30 @@ QU } [aeiouAEIOU] > KW;
 Qu } [aeiouAEIOU] > Kw;
 qU } [aeiouAEIOU] > kW;
 qu } [aeiouAEIOU] > kw;
+
+OOIJ > OOY;
+Ooij > Ooy;
+ooij > ooy;
+
+OOI > OOY;
+Ooi > Ooy;
+ooi > ooy;
+
+AAIJ > AAY;
+Aaij > Aay;
+aaij > aay;
+
+AAI > AAY;
+Aai > Aay;
+aai > aay;
+
+OEIJ > UY;
+Oeij > Uy;
+oeij > uy;
+
+OEI > UY;
+Oei > Uy;
+oei > uy;
 
 EAU > O;
 Eau > O;

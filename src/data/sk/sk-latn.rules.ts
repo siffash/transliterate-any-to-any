@@ -1,6 +1,8 @@
 export const skLatnRules = `
 ::NFC;
 
+[[:L:][:M:]] { \\' } [[:L:][:M:]] > ’;
+
 [rR] { n } [eE] [^[:L:][:M:]] > ń;
 [rR] { N } [eE] [^[:L:][:M:]] > Ń;
 

@@ -1,6 +1,8 @@
 export const csLatnRules = `
 ::NFC;
 
+[[:L:][:M:]] { \\' } [[:L:][:M:]] > ’;
+
 [:Lu:] { X > KS;
 X } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > KS;
 X } [:Lu:] > KS;

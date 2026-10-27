@@ -19,14 +19,17 @@ export const heIpa = async <T = Text>(text: Text): Promise<T> => {
         processedText = processedText.replace(regex, filterIpa(heIpaMap[key], key, "he"));
       }
 
-      const tokens = processedText.split(/([^\u0590-\u05FF]+)/);
+      // A geresh after ג, ז, צ… (ג'ורג', צ׳ק) belongs to the word, as ' in the map keys
+      const tokens = processedText
+        .replace(/(?<=[גזצץתדח])['’׳]/g, "׳")
+        .split(/([^\u0590-\u05FF]+)/);
 
       return tokens
         .map(token => {
           if (!/^[\u0590-\u05FF]+$/.test(token)) {
             return token;
           }
-          return processWord(token);
+          return processWord(token.replaceAll("׳", "'"));
         })
         .join("");
     };
@@ -120,6 +123,10 @@ export const heIpa = async <T = Text>(text: Text): Promise<T> => {
 
       processed = processed.replace(/יה$/, "ja");
       processed = processed.replace(/ה$/, "a");
+
+      processed = processed.replace(/ג'/g, "d͡ʒ");
+      processed = processed.replace(/ז'/g, "ʒ");
+      processed = processed.replace(/[צץ]'/g, "t͡ʃ");
 
       processed = processed.replace(/וו/g, "v");
       processed = processed.replace(/יי/g, "j");

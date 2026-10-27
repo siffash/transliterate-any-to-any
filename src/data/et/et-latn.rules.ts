@@ -1,6 +1,8 @@
 export const etLatnRules = `
 ::NFC;
 
+[[:L:][:M:]] { \\' } [[:L:][:M:]] > ’;
+
 S [hH] > Š;
 s [hH] > š;
 

@@ -14,7 +14,7 @@ export const jaZh = async (text: Text) => {
   const convert = (text: string) => {
     const simplified = jp2s(normalizeJa(text));
     // Transliterate remaining Kana
-    return simplified.replace(pattern, match => jaZhMap[match]);
+    return simplified.replace(/ー(?=[ンん])/g, "").replace(pattern, match => jaZhMap[match]);
   };
 
   if (typeof text === "string") {

@@ -1,6 +1,8 @@
 export const itLatnRules = `
 ::NFC;
 
+[[:L:][:M:]] { \\' } [[:L:][:M:]] > ’;
+
 [àá] > a;
 [ÀÁ] > A;
 [èé] > e;

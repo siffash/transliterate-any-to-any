@@ -1,6 +1,8 @@
 export const caLatnRules = `
 ::NFC;
 
+[[:L:][:M:]] { \\' } [[:L:][:M:]] > ’;
+
 l [lL] > ľ;
 L [lL] > Ľ;
 

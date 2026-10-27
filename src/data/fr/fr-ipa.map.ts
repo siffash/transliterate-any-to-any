@@ -72,6 +72,7 @@ export const frIpaMap: Record<string, string> = {
   philippeville: "filipvil",
   rochebaucourt: "ʁɔʃbokuʁ",
   sarreguemines: "saʁɡəmin",
+  sarreinsming: "saʁinsmiŋ",
   schiltigheim: "ʃiltiɡaim",
   septfontaines: "sɛfɔ̃tɛn",
   tambacounda: "tɑ̃bakunda",

@@ -1,6 +1,8 @@
 export const sqLatnRules = `
 ::NFC;
 
+[[:L:][:M:]] { \\' } [[:L:][:M:]] > ’;
+
 XH > DŽ;
 xH > dŽ;
 Xh > Dž;

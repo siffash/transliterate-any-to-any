@@ -1,6 +1,8 @@
 export const bsLatnRules = `
 ::NFC;
 
+[[:L:][:M:]] { \\' } [[:L:][:M:]] > ’;
+
 Ǆ > DŽ;
 ǅ > Dž;
 ǆ > dž;

@@ -1,6 +1,8 @@
 export const daLatnRules = `
 ::NFC;
 
+[[:L:][:M:]] { \\' } [[:L:][:M:]] > ’;
+
 A [aA] > O;
 a [aA] > o;
 

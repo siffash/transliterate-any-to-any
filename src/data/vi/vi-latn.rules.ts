@@ -1,6 +1,8 @@
 export const viLatnRules = `
 ::NFD;
 
+[[:L:][:M:]] { \\' } [[:L:][:M:]] > ’;
+
 [̣̀́̃̉] > ;
 
 ::NFC;

@@ -1,6 +1,8 @@
 export const esLatnRules = `
 ::NFC;
 
+[[:L:][:M:]] { \\' } [[:L:][:M:]] > ’;
+
 á > a;
 Á > A;
 

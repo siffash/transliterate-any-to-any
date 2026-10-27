@@ -29,18 +29,44 @@ interface Token {
  * Unicode script that has case distinctions.
  */
 export const copyCase = (from: string, to: string, lang: Language): string => {
-  const cases = tokenize(from)
+  const words = tokenize(from)
     .filter((t: Token) => t.isWord)
-    .map((t: Token) => getWordCase(t.text));
+    .map((t: Token) => t.text);
+  const cases = words.map(getWordCase);
 
   const fallback: CaseType =
     cases.length > 0 && cases.every(c => c === "upper") ? "upper" : "lower";
 
   let wi = 0;
   return tokenize(to)
-    .map((t: Token) =>
-      t.isWord ? applyCase(t.text, wi < cases.length ? cases[wi++] : fallback, lang) : t.text,
-    )
+    .map((t: Token) => {
+      if (!t.isWord) return t.text;
+      if (wi >= cases.length) return applyCase(t.text, fallback, lang);
+      const word = words[wi];
+      return applyApostropheCase(t.text, word, cases[wi++], lang);
+    })
+    .join("");
+};
+
+const APOSTROPHE = /(['’‘`´ʼ՚])/u;
+
+/**
+ * Applies a word's case; a mixed-case word with the same apostrophes in both
+ * is cased part by part (d'Artagnan → д’Артаньян).
+ */
+const applyApostropheCase = (
+  word: string,
+  from: string,
+  type: CaseType,
+  lang: Language,
+): string => {
+  const parts = word.split(APOSTROPHE);
+  const fromParts = from.split(APOSTROPHE).filter((_, i) => i % 2 === 0);
+  if (type !== "title" || parts.length === 1 || fromParts.length !== (parts.length + 1) / 2) {
+    return applyCase(word, type, lang);
+  }
+  return parts
+    .map((part, i) => (i % 2 ? part : applyCase(part, getWordCase(fromParts[i / 2]), lang)))
     .join("");
 };
 
@@ -58,7 +84,7 @@ const isLower = (ch: string): boolean => isLetter(ch) && ch === ch.toLowerCase()
  * as part of one word token, not split into "e" | "◌́".
  * The same applies for all kinds of apostrophes.
  */
-const isWordJoiner = (ch: string): boolean => /[\p{M}'’‘`´ʼ]/u.test(ch);
+const isWordJoiner = (ch: string): boolean => /[\p{M}'’‘`´ʼ՚]/u.test(ch);
 
 /**
  * Classifies the case pattern of a word token.

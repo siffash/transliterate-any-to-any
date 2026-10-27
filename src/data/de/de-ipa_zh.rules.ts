@@ -3,4 +3,5 @@ export const deIpaZhRules = `
 
 a ː? d ː? a { m } [^[:L:][:M:]] > m;
 da { m } [^[:L:][:M:]] > n;
+ɔ { ʏ > ɪ;
 `;

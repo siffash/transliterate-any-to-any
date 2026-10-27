@@ -22,6 +22,16 @@ describe("copyCase", () => {
     expect(copyCase("DON'T", "wo'nt", "en")).toBe("WO'NT");
   });
 
+  it("copies the case of each part of a word with apostrophes when both words have them", () => {
+    expect(copyCase("d'Artagnan", "д’артаньян", "ru")).toBe("д’Артаньян");
+    expect(copyCase("D'ARTAGNAN", "д’артаньян", "ru")).toBe("Д’АРТАНЬЯН");
+    expect(copyCase("d'Artagnan", "դ՚աղտանան", "hy")).toBe("դ՚Աղտանան");
+  });
+
+  it("copies a word's case as a whole when only the source has an apostrophe", () => {
+    expect(copyCase("O'Brien", "оубрин", "ru")).toBe("Оубрин");
+  });
+
   it("counts a precomposed accented letter as exactly one letter", () => {
     expect(copyCase("ABCD", "\u00e9cho", "en")).toBe("\u00c9CHO");
   });

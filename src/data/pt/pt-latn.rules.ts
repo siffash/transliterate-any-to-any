@@ -1,6 +1,8 @@
 export const ptLatnRules = `
 ::NFC;
 
+[[:L:][:M:]] { \\' } [[:L:][:M:]] > ’;
+
 [ÁÀÂÃ] > A;
 [áàâã] > a;
 

@@ -1,12 +1,9 @@
 export const ipaNlRules = `
 ::Null;
 
-b } [^[:L:][:M:]] > p;
 d͡ʒ > dj;
 d͡z > dz;
-d̪ > t;
-d } [^[:L:][:M:]] > t;
-v } [^[:L:][:M:]] > f;
+d̪ > d;
 z } [^[:L:][:M:]] > s;
 ẽ > en;
 ĩ > in;

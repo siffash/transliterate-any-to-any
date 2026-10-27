@@ -1,6 +1,8 @@
 export const lvLatnRules = `
 ::NFC;
 
+[[:L:][:M:]] { \\' } [[:L:][:M:]] > ’;
+
 Ā > A;
 ā > a;
 Ē > E;
