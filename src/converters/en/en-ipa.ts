@@ -18,6 +18,8 @@ export const enIpa = async <T = Text>(
   // toIPA looks each word's language up in a plain object, so "constructor" finds
   // Object.prototype.constructor and throws: such words go to the English G2P directly
   const predict = async (word: string) => {
+    // phonemize reads the Irish O' as /oʊ/ (O'Hara → Оухара, オウハラ), but O’Hara like Ohara (Охара, オハラ, 奥哈拉)
+    word = word.replaceAll("’", "'").replace(/^(o)'(?=\p{L})/iu, "$1’");
     if (!(word.toLowerCase() in Object.prototype)) {
       return toIPA(word);
     }

@@ -25,10 +25,27 @@ interface Token {
  *   uppercase, in which case they are uppercased too.
  * • Case classes: "lower" (word), "upper" (WORD), "title" (Word).
  *
+ * • Lists ("a, b; c") are matched segment by segment when both
+ *   texts have the same number of separators, so a word lost in
+ *   one item doesn't shift the case of every later item.
+ *
  * Works with Latin, Cyrillic, Greek, Armenian, and any other
  * Unicode script that has case distinctions.
  */
 export const copyCase = (from: string, to: string, lang: Language): string => {
+  const fromSegments = from.split(SEPARATOR);
+  const toSegments = to.split(SEPARATOR);
+  if (fromSegments.length === 1 || fromSegments.length !== toSegments.length) {
+    return copyWordCase(from, to, lang);
+  }
+  return toSegments
+    .map((segment, i) => (i % 2 ? segment : copyWordCase(fromSegments[i], segment, lang)))
+    .join("");
+};
+
+const SEPARATOR = /([,،;؛\n])/u;
+
+const copyWordCase = (from: string, to: string, lang: Language): string => {
   const words = tokenize(from)
     .filter((t: Token) => t.isWord)
     .map((t: Token) => t.text);

@@ -94,6 +94,8 @@ u > ου;
 
 Ľ } [^[:L:][:M:]] > Λ;
 ľ } [^[:L:][:M:]] > λ;
+Ľ } [bcdfghjklmnpqrstvwxzçčćđšžțșłBCDFGHJKLMNPQRSTVWXZÇČĆĐŠŽȚȘŁΒΓΔΖΘΚΛΜΝΞΠΡΣΤΦΧΨβγδζθκλμνξπρσςτφχψ] > Λ;
+ľ } [bcdfghjklmnpqrstvwxzçčćđšžțșłBCDFGHJKLMNPQRSTVWXZÇČĆĐŠŽȚȘŁΒΓΔΖΘΚΛΜΝΞΠΡΣΤΦΧΨβγδζθκλμνξπρσςτφχψ] > λ;
 Ľ } [IÏÜŸYΙiïüÿyι] > Λ;
 ľ } [IÏÜŸYΙiïüÿyι] > λ;
 [:Lu:] { Ľ > ΛΙ;
@@ -104,6 +106,8 @@ u > ου;
 
 Ń } [^[:L:][:M:]] > Ν;
 ń } [^[:L:][:M:]] > ν;
+Ń } [bcdfghjklmnpqrstvwxzçčćđšžțșłBCDFGHJKLMNPQRSTVWXZÇČĆĐŠŽȚȘŁΒΓΔΖΘΚΛΜΝΞΠΡΣΤΦΧΨβγδζθκλμνξπρσςτφχψ] > Ν;
+ń } [bcdfghjklmnpqrstvwxzçčćđšžțșłBCDFGHJKLMNPQRSTVWXZÇČĆĐŠŽȚȘŁΒΓΔΖΘΚΛΜΝΞΠΡΣΤΦΧΨβγδζθκλμνξπρσςτφχψ] > ν;
 Ń } [IÏÜŸYΙiïüÿyι] > Ν;
 ń } [IÏÜŸYΙiïüÿyι] > ν;
 [:Lu:] { Ń > ΝΙ;

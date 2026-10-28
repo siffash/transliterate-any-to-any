@@ -1,6 +1,8 @@
 export const mtLatnRules = `
 ::NFC;
 
+’ } [^[:L:][:M:]] > ;
+
 [ÀÁÂ] > A;
 [àáâ] > a;
 [ÈÉÊ] > E;

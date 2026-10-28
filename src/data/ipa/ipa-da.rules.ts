@@ -36,4 +36,8 @@ export const ipaDaRules = `
 ʎ > lj;
 [ʐʑ] > z;
 ɸ > f;
+
+::Null;
+
+[bcdfghklmnpqrstvwxzBCDFGHKLMNPQRSTVWXZ] [jJ] { [jJ]+ > ;
 `;

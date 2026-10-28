@@ -2659,6 +2659,8 @@ const converters: Partial<Record<`${Language}${Language}`, () => Promise<Convert
   vitr: () => import("converters/vi/vi-tr").then(m => m.viTr),
 };
 
+const normalizeApostrophes = (text: string) => text.replace(/['‘`´ʼʻ′＇]/g, "’");
+
 export const transliterate = async <T extends Text>(text: T, options: Options): Promise<T> => {
   const { from, to } = options || {};
 
@@ -2685,6 +2687,9 @@ export const transliterate = async <T extends Text>(text: T, options: Options): 
       `Source ("from") and target ("to") languages are the same: ${languages[from].name}.`,
     );
   }
+
+  text = (Array.isArray(text) ? text.map(normalizeApostrophes) : normalizeApostrophes(text)) as T;
+
   if (!validateLanguage(from, text)) {
     throw new Error(`Source text does not match ${languages[from].name}.`);
   }

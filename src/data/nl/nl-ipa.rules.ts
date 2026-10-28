@@ -4,6 +4,7 @@ export const nlIpaRules = `
 
 ['’‘\`´ʼ] s [-] > s;
 [^[:L:][:M:]] { ['’‘\`´ʼ] } t [^[:L:][:M:]] > ;
+ĳ > ij;
 
 ::Null;
 
@@ -33,6 +34,7 @@ ch > x;
 ng > ŋ;
 nk > ŋk;
 nj > ɲ;
+ñ > ɲ;
 sj > ʃ;
 tj > t͡ɕ;
 qu > kʋ;
@@ -61,6 +63,7 @@ uw > yʋ;
 
 c } [eiy] > s;
 c > k;
+ç > s;
 
 a } [bcdfghjklmnpqrstvwxz] [aeiouy] > aː;
 e } [bcdfghjklmnpqrstvwxz] [aeiouy] > eː;
@@ -69,6 +72,7 @@ u } [bcdfghjklmnpqrstvwxz] [aeiouy] > yː;
 
 bb > b;
 dd > d;
+dt > t;
 ff > f;
 gg > ɣ;
 kk > k;
@@ -96,6 +100,7 @@ a } [^[:L:][:M:]] > aː;
 o } [^[:L:][:M:]] > oː;
 u } [^[:L:][:M:]] > yː;
 b } [^[:L:][:M:]] > p;
+d } [\\'’] [abcdefghijklmnopqruvwxyzáäàâçéèêëíîïóôöúûüñ] > d;
 d } [^[:L:][:M:]] > t;
 v } [^[:L:][:M:]] > f;
 z } [^[:L:][:M:]] > s;
@@ -122,12 +127,12 @@ x > ks;
 z > z;
 
 a > ɑ;
-[áä] > a;
-[eëé] > ɛ;
+[áäàâ] > a;
+[eëéèê] > ɛ;
 i > ɪ;
 [oö] > ɔ;
-ó > o;
+[óô] > o;
 u > ʏ;
-[úü] > y;
-[yíï] > i;
+[úüû] > y;
+[yíïî] > i;
 `;

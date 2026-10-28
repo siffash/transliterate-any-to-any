@@ -2,7 +2,7 @@ export const caIpaRules = `
 ::Lower;
 ::NFC;
 
-['] > ;
+['’] > ;
 
 ::Null;
 

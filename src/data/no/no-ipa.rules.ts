@@ -5,6 +5,9 @@ export const noIpaRules = `
 [éèê] > e;
 [óòô] > o;
 [àâ] > a;
+ä > æ;
+ö > ø;
+ü > y;
 
 ::Null;
 

@@ -15,7 +15,9 @@ ij > ეი;
 
 [ćč] > ჩ;
 đ > ჯ;
+ľ } [bcdfghjklmnpqrstvwxzčćđšžჯძთღნხც] > ლ;
 ľ > ლი;
+ń } [bcdfghjklmnpqrstvwxzčćđšžჯძთღნხც] > ნ;
 ń > ნი;
 š > შ;
 ž > ჟ;

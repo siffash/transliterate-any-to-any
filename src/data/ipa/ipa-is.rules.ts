@@ -80,4 +80,8 @@ yy > ý;
 ::Null;
 
 ʔ > ;
+
+::Null;
+
+[bcdfghklmnpqrstvwxzBCDFGHKLMNPQRSTVWXZ] [jJ] { [jJ]+ > ;
 `;

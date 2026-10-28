@@ -36,4 +36,8 @@ export const ipaMsRules = `
 ɲ > ny;
 ʃ > sy;
 [χx] > kh;
+
+::Null;
+
+[sSnN] [yY] { [yY]+ > ;
 `;

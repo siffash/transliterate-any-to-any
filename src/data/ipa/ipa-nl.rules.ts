@@ -72,4 +72,8 @@ ee { e+ > ;
 ii { i+ > ;
 oo { o+ > ;
 uu { u+ > ;
+
+::Null;
+
+[bcdfghklmnpqrstvwxzBCDFGHKLMNPQRSTVWXZ] [jJ] { [jJ]+ > ;
 `;

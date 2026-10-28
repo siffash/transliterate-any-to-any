@@ -30,4 +30,8 @@ export const ipaSvRules = `
 [žʐʑʒ] > z;
 ɸ > f;
 [͈̚ʰʱʲʷ'’ʼˈ̇ˌ̧ːˠˤ˥˧˩̝̟̥̩̪̯̃̊͡ʔʕ] > ;
+
+::Null;
+
+[bcdfghklmnpqrstvwxzBCDFGHKLMNPQRSTVWXZ] [jJ] { [jJ]+ > ;
 `;

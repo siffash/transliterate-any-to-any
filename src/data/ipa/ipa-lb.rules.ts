@@ -55,4 +55,8 @@ sch { (sch)+ > ;
 ng { (ng)+ > ;
 
 [^[:L:][:M:]] { sch } [pt] > s;
+
+::Null;
+
+[bcdfghklmnpqrstvwxzBCDFGHKLMNPQRSTVWXZ] [jJ] { [jJ]+ > ;
 `;

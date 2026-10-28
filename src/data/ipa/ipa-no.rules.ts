@@ -45,4 +45,8 @@ export const ipaNoRules = `
 [ɔ] > å;
 [œ] > ø;
 ɸ > f;
+
+::Null;
+
+[bcdfghklmnpqrstvwxzBCDFGHKLMNPQRSTVWXZ] [jJ] { [jJ]+ > ;
 `;

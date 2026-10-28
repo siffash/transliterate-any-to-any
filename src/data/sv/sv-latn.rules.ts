@@ -7,6 +7,16 @@ export const svLatnRules = `
 à > a;
 É > E;
 é > e;
+[ÈÊË] > E;
+[èêë] > e;
+Ï > I;
+ï > i;
+Ô > O;
+ô > o;
+Ç > S;
+ç > s;
+Ņ > Ń;
+ņ > ń;
 
 ::Null;
 

@@ -33,11 +33,10 @@ ij > ei;
 Đ > Dj;
 đ > dj;
 
-[^[:L:][:M:]] { Ľ } [^[:L:][:M:]] > L;
-[^[:L:][:M:]] { ľ } [^[:L:][:M:]] > l;
-[:Lu:] { Ľ } [^[:L:][:M:]] > ILLE;
-Ľ } [^[:L:][:M:]] > Ille;
-ľ } [^[:L:][:M:]] > ille;
+Ľ } [^[:L:][:M:]] > L;
+ľ } [^[:L:][:M:]] > l;
+Ľ } [bcdfghjklmnpqrstvwxzçčćđšžțșłBCDFGHJKLMNPQRSTVWXZÇČĆĐŠŽȚȘŁ] > L;
+ľ } [bcdfghjklmnpqrstvwxzçčćđšžțșłBCDFGHJKLMNPQRSTVWXZÇČĆĐŠŽȚȘŁ] > l;
 
 Ľ } [IÏiï] > L;
 ľ } [IÏiï] > l;
@@ -48,6 +47,10 @@ ij > ei;
 Ľ > Li;
 ľ > li;
 
+Ń } [^[:L:][:M:]] > N;
+ń } [^[:L:][:M:]] > n;
+Ń } [bcdfghjklmnpqrstvwxzçčćđšžțșłBCDFGHJKLMNPQRSTVWXZÇČĆĐŠŽȚȘŁ] > N;
+ń } [bcdfghjklmnpqrstvwxzçčćđšžțșłBCDFGHJKLMNPQRSTVWXZÇČĆĐŠŽȚȘŁ] > n;
 [:Lu:] { Ń > GN;
 Ń } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > GN;
 Ń } [:Lu:] > GN;

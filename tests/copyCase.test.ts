@@ -44,6 +44,13 @@ describe("copyCase", () => {
     expect(copyCase("wxyz", "Ab Cd", "en")).toBe("ab cd");
   });
 
+  it("matches list items one by one when a word is lost in an earlier item", () => {
+    expect(copyCase("Gerard 't Hooft, Gratien, DUMAS", "жерар  оофт, грасьен, дюма", "ru")).toBe(
+      "Жерар  оофт, Грасьен, ДЮМА",
+    );
+    expect(copyCase("Paris، Lyon", "париж، лион", "ru")).toBe("Париж، Лион");
+  });
+
   it("passes digits through untouched without consuming a source letter", () => {
     expect(copyCase("ABCDEF", "abc123def", "en")).toBe("ABC123DEF");
   });

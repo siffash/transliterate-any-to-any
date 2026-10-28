@@ -55,12 +55,24 @@ ij > ei;
 
 Ľ } [Ll] > L;
 ľ } [Ll] > l;
+Ľ } [Yy] > L;
+ľ } [Yy] > l;
+Ľ } [^[:L:][:M:]] > L;
+ľ } [^[:L:][:M:]] > l;
+Ľ } [bcdfghjklmnpqrstvwxzçčćđšžțșłBCDFGHJKLMNPQRSTVWXZÇČĆĐŠŽȚȘŁ] > L;
+ľ } [bcdfghjklmnpqrstvwxzçčćđšžțșłBCDFGHJKLMNPQRSTVWXZÇČĆĐŠŽȚȘŁ] > l;
 [:Lu:] { Ľ > LL;
 Ľ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > LL;
 Ľ } [:Lu:] > LL;
 Ľ > Ll;
 ľ > ll;
 
+Ń } [Yy] > N;
+ń } [Yy] > n;
+Ń } [^[:L:][:M:]] > N;
+ń } [^[:L:][:M:]] > n;
+Ń } [bcdfghjklmnpqrstvwxzçčćđšžțșłBCDFGHJKLMNPQRSTVWXZÇČĆĐŠŽȚȘŁ] > N;
+ń } [bcdfghjklmnpqrstvwxzçčćđšžțșłBCDFGHJKLMNPQRSTVWXZÇČĆĐŠŽȚȘŁ] > n;
 Ń > Ñ;
 ń > ñ;
 

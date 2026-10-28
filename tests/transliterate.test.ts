@@ -163,6 +163,23 @@ describe("transliteration of texts in all supported languages", () => {
     });
   });
 
+  describe("apostrophe look-alikes", () => {
+    it.each([
+      ["D‘Angelo", "it", "ja", "ダンジェロ"],
+      ["D‘Angelo", "it", "ru", "Д’Анджело"],
+      ["D‘Hondt", "nl", "th", "ดโฮนต"],
+      ["D`Armi, Dell´Utri", "it", "ru", "Д’Арми, Делл’Утри"],
+      ["DʼHondt", "cs", "ru", "Д’Хондт"],
+      ["d`Artagnan, L‘Oréal", "fr", "uk", "д’Артаньян, Л’Ореал"],
+      ["ג‘ורג‘", "he", "en", "Jorj"],
+      ["Ma‘ruf, O＇Brien", "ms", "ru", "Ма’руф, О’Бриен"],
+    ] as const)("%s (%s → %s) are read as ’", async (text, from, to, expected) => {
+      const transliterated = await transliterate(text, { from, to });
+      expect(transliterated).toBe(expected);
+      expect(validateLanguage(to, transliterated)).toBe(true);
+    });
+  });
+
   describe("Chinese and Japanese words", () => {
     const cases = [
       ["大きい都市", "ja", "en", "Oki Toshi"],
@@ -416,6 +433,29 @@ describe("regressions of rule-based transliteration", () => {
     ["D'Hondt, 's-Hertogenbosch", "nl", "ru", "Д’Хондт, ’с-Хертогенбос"],
     ["'s-Hertogenbosch, Gerard 't Hooft", "nl", "uk", "’с-Гертогенбос, Герард ’т Гоофт"],
     ["Gerard 't Hooft", "nl", "th", "เกรัรต ต โฮฟต"],
+    ["Brandt, Smidt, D'Hondt", "nl", "th", "บรันต, สมิต, ดโฮนต"],
+    ["Brandt, Smidt, D'Hondt", "nl", "ja", "ブラント, スミト, ドホント"],
+    ["Eugène, Ĳsselmeer, Façade", "nl", "ja", "エーゲナ, エイセルメール, ファサーダ"],
+    ["Gisèle, Rĳn, Peña", "nl", "ru", "Гиселе, Рейн, Пеня"],
+    ["Kur'an, Kur’an, D'Angelo", "tr", "ru", "Кур’ан, Кур’ан, Д’Ангело"],
+    ["Ma'ruf, Jum'at", "id", "bg", "Ма’руф, Джум’ат"],
+    ["Mə'mun, Mə’mun", "az", "mt", "Ma’mun, Ma’mun"],
+    ["Ta' Xbiex, Ta’ Qali, Ħ'Attard", "mt", "ru", "Та Шбиш, Та Кали, Х’Аттард"],
+    ["O'Hara, O’Hara, O'Brien", "en", "ja", "オハラ, オハラ, オブリン"],
+    ["O'Hara, O'Toole, N'Golo", "en", "ru", "Охара, Отул, Нгоуло"],
+    ["N'Golo, N’Golo", "en", "ko", "응올로, 응올로"],
+    ["с'нце, с’нце, Д'Анџело", "mk", "ja", "サンツェ, サンツェ, ダンジェロ"],
+    ["Д'Артаньян, Д’Артаньян", "ru", "tg", "Д’Артанян, Д’Артанян"],
+    ["Ma'ruf, Ja’far, D'Angelo, McDonald's", "ms", "tg", "Маъруф, Ҷаъфар, Д’Ангело, МчДоналд’с"],
+    ["McDonald's, McDonald’s", "ca", "ja", "ムクドナルツ, ムクドナルツ"],
+    ["Ta' Xbiex", "ca", "th", "ตะ ชเบียช"],
+    ["McDonald's, D'Arcy", "nl", "ja", "ムクドーナルツ, ダルシ"],
+    ["Ульяна, Наталья, Д'Артаньян", "ru", "mt", "Uljana, Natalja, D’Artanjan"],
+    ["Ульяна, Наталья, Артаньян", "ru", "sv", "Uljana, Natalja, Artanjan"],
+    ["Ульяна, Артаньян", "ru", "es", "Ulyana, Artanyan"],
+    ["Krüger, Eugène, Façade", "sv", "zh", "克鲁耶尔, 埃乌盖内, 法萨德"],
+    ["Gisèle, Jérôme", "sv", "ru", "Гиселе, Ероме"],
+    ["König, Schröder", "no", "ja", "ケニ, シュレダル"],
     ["d'Stad", "lb", "mt", "d’Xtad"],
     ["d'Artagnan, Jeanne d'Arc, Côte d'Ivoire", "fr", "ru", "д’Артаньян, Жан д’Арк, Кот д’Ивуар"],
     ["Giscard d'Estaing, N'Djamena, T'Serclaes", "fr", "ru", "Жискар д’Эстен, Н’Джамена, Т’Серкла"],
@@ -1212,6 +1252,56 @@ describe("regressions of rule-based transliteration", () => {
     ["Hanoï, Louis", "fr", "bg", "Аной, Луи"],
     ["تبریز, علی", "fa", "bg", "Табриз, Али"],
     ["مشهد, محمد کریمی, مریم", "fa", "kk", "Мәшһәд, Моһәммәд Кәрими, Мәрйәм"],
+    ["Ольга, Кремль, Гоголь, Казань, Гданьск", "ru", "es", "Olga, Creml, Gogol, Cazan, Gdansc"],
+    ["Ольга, Кремль, Гоголь, Казань", "ru", "it", "Olga, Creml, Gogol, Casan"],
+    ["Ольга, Кремль, Гоголь, Казань, Гданьск", "ru", "fr", "Olga, Kreml, Gogol, Kazan, Gdansk"],
+    ["Ольга, Архангельск, Большой", "ru", "pt", "Olga, Arkhanguelsc, Bolchoi"],
+    [
+      "Ольга, Архангельск, Большой, Дьяков, Медведь",
+      "ru",
+      "de",
+      "Olga, Archangelsk, Bolschoj, Djakow, Medwed",
+    ],
+    ["Ольга, Ильич, Любовь", "ru", "hu", "Olga, Iljics, Ljubov"],
+    ["Ольга, Гданьск, Большой", "ru", "el", "Ολγκα, Γκντανσκ, Μπολσοι"],
+    ["Ольга, Гданьск", "ru", "ka", "ოლგა, გდანსკ"],
+    ["Львів, Тернопіль", "uk", "ro", "Lviv, Ternopil"],
+    ["Gdańsk, Poznań", "pl", "it", "Gdansc, Posnan"],
+    ["Plzeň", "cs", "fr", "Plzen"],
+    ["Sabadell, Castelldefels, Capmany", "ca", "es", "Sabadell, Castelldefels, Capmañ"],
+    ["Banc de Sabadell, Vall d'Aran", "ca", "fr", "Bank de Sabadel, Val d’Aran"],
+    ["Željko, Kranj, Gospodinjski", "hr", "de", "Scheljko, Kranj, Gospodinjski"],
+    ["Željko, Senj, Njegoš", "hr", "hu", "Zseljko, Szen, Nyegos"],
+    ["Дьяков, Медведь", "ru", "cs", "Ďjakov, Medveď"],
+    ["Пётр, Фёдор, Дёмин", "ru", "bg", "Пьотр, Фьодор, Дьомин"],
+    ["Съезд, Подъячев", "ru", "tg", "Съезд, Подъячев"],
+    ["В'ячеслав", "uk", "tg", "Въячеслав"],
+    ["Мар'яна, В'ячеслав", "uk", "mt", "Marjana, Vjaċeslav"],
+    ["Подъячев, Съезд", "ru", "ms", "Podyacev, Syezd"],
+    ["O'Brien, Ma'ruf", "ms", "uk", "О’Брієн, Маруф"],
+    ["Ольга, Татьяна, Медведев", "ru", "hi", "ओल्गा, तत्यना, मेद्वेदेफ़"],
+    ["Татьяна, Дьяков", "ru", "bn", "তাত্যানা, দ্যাকোফ্"],
+    ["Ольга, Татьяна", "ru", "ur", "اولگا، تاتیانا"],
+    ["Jacob", "vi", "ru", "Якоб"],
+    ["IJsselmeer, IJmuiden", "nl", "ru", "Эйсселмеэр, Эймёйден"],
+    ["Khan", "ro", "lb", "Chan"],
+    ["N'Djamena", "ms", "ru", "Н’Джамена"],
+    ["संजय, अंजलि, रांची", "hi", "ja", "サンジャイ, アンジャリ, ラーンチー"],
+    ["संजय, पंजाब", "hi", "de", "Sandschaj, Pandschab"],
+    ["John, Richard", "en", "es", "Yon, Richard"],
+    ["جمال, نجيب", "ar", "es", "Yamal, Nayib"],
+    ["श्याम, कंज्यूमर", "hi", "sv", "Sjam, Kandjumar"],
+    ["Мар'яна, Св'ятослав, Прип'ять", "uk", "de", "Marjana, Swjatoslaw, Pripjat"],
+    ["Мар'яна, Дем'янчук", "uk", "hy", "Մարյանա, Դեմյանչուկ"],
+    ["Подъячев, Изъяслав", "ru", "pl", "Podjaczew, Izjaslaw"],
+    ["Подъячев, Объедков", "ru", "el", "Ποντιατσεβ, Ομπιεντκοβ"],
+    [
+      "П'ятигорськ, Дем'ян, Мар'яна, В'ячеслав, МАР'ЯНА",
+      "uk",
+      "ru",
+      "Пятыгорськ, Демьян, Марьяна, Вячеслав, МАРЬЯНА",
+    ],
+    ["Св'ятослав, Григор'єв", "uk", "kk", "Святослав, Грыгорьев"],
   ] as const;
 
   for (const jsImplementation of [true, false]) {
