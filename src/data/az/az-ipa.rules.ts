@@ -28,13 +28,12 @@ zz > zː;
 
 v } [ [pfktsşxçh] [^[:L:][:M:]] ] > f;
 
-q } [pfktsşxçh] > x;
-q } [^[:L:][:M:]] > x;
+q } [pfktsşxçh] > k;
 q > ɡ;
 
 k } [eəiöü] > c;
-k } [pfktsşxçh] > ç;
-k } [^[:L:][:M:]] > ç;
+k } [pfktsşxçh] > c;
+k } [^[:L:][:M:]] > c;
 
 l } [aıou] > ɫ;
 
