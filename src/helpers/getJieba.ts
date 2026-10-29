@@ -3,6 +3,7 @@ import { isNode, isDeno, isBun } from "browser-or-node";
 export type Jieba = {
   cut_for_search(text: string, hmm?: boolean | null): string[];
   tag(text: string, hmm?: boolean | null): { word: string; tag: string }[];
+  add_word(word: string, freq?: number | null, tag?: string | null): number;
 };
 
 let jiebaPromise: Promise<Jieba> | undefined;

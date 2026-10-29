@@ -7,6 +7,8 @@ t [sS] > c;
 T [hH] > T;
 t [hH] > t;
 
+[nN] { G } [hH] > G;
+[nN] { g } [hH] > g;
 G [hH] > G;
 g [hH] > g;
 

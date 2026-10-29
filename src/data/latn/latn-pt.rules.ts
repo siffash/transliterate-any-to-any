@@ -14,6 +14,8 @@ kH > kH;
 Kh > Kh;
 kh > kh;
 
+[nN] { G } [hH] > G;
+[nN] { g } [hH] > g;
 GH } [EIYÏeiyï] > GU;
 gH } [EIYÏeiyï] > gU;
 Gh } [EIYÏeiyï] > Gu;
@@ -96,6 +98,10 @@ g } [eiyï] > gu;
 
 W > V;
 w > v;
+
+[iI] { [yY] > ;
+Y [iï] > I;
+[yY] } [iIïÏ] > ;
 
 [YÏ] > I;
 [yï] > i;

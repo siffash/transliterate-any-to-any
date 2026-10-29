@@ -5,6 +5,7 @@ export const ipaIdRules = `
 
 ::Null;
 
+ŋ } [ɡg] > n;
 ŋ > ng;
 ɲ > ny;
 ʃ > sy;

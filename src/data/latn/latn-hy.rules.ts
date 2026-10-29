@@ -7,6 +7,8 @@ d [žŽ] > ջ;
 D [zZ] > Ձ;
 d [zZ] > ձ;
 
+[nN] { G } [hH] > G;
+[nN] { g } [hH] > g;
 G [hH] > Ղ;
 g [hH] > ղ;
 

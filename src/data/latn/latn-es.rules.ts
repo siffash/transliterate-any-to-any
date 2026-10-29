@@ -4,17 +4,14 @@ export const latnEsRules = `
 ts } ts > ;
 TS } TS > ;
 
-DŽ > CH;
-dŽ > cH;
-Dž > Ch;
-dž > ch;
-
 D [zZ] > Z;
 d [zZ] > z;
 
 T [hH] > Z;
 t [hH] > z;
 
+[nN] { G } [hH] > G;
+[nN] { g } [hH] > g;
 G [hH] > G;
 g [hH] > g;
 
@@ -27,6 +24,11 @@ Ij > Ei;
 ij > ei;
 
 ::Null;
+
+DŽ > CH;
+dŽ > cH;
+Dž > Ch;
+dž > ch;
 
 [^[:L:][:M:]] { \\' > ;
 \\' } [^[:L:][:M:]] > ;

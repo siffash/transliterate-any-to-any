@@ -29,6 +29,7 @@ export const hiIpaRules = `
 ं}फ > m;
 ं}ब > m;
 ं}भ > m;
+ं}ह > ŋ;
 ं > ̃;
 
 ज्ञ > ɡjə;

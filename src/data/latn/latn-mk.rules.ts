@@ -18,6 +18,8 @@ ij > еј;
 T [Hh] > Т;
 t [Hh] > т;
 
+[nN] { G } [hH] > G;
+[nN] { g } [hH] > g;
 G [Hh] > Г;
 g [Hh] > г;
 

@@ -11,6 +11,8 @@ dZ > dS;
 Dz > Ds;
 dz > ds;
 
+[nN] { G } [hH] > G;
+[nN] { g } [hH] > g;
 G [hH] > G;
 g [hH] > g;
 

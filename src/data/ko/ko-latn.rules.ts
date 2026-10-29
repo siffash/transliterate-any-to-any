@@ -23,6 +23,8 @@ wae > wä;
 yae > yä;
 ae > ä;
 eo > o;
+'_' eui > ïi;
+[bcdghjklmnprst] { eui > i;
 eu > ï;
 oe > ö;
 ui > ïi;

@@ -4,11 +4,12 @@ export const koFr = async (text: Text) => {
   const Aromanize = (await import("aromanize")).default;
   const { RBT } = await import("helpers/rbt");
   const { koLatnRules } = await import("data/ko/ko-latn.rules");
+  const { latnOuHiatusRules } = await import("data/latn/latn_ou-hiatus.rules");
   const { latnFrRules } = await import("data/latn/latn-fr.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
   const { normalizeKo } = await import("helpers/normalizeKo");
 
-  const transliterator = RBT.fromRules(koLatnRules + latnFrRules);
+  const transliterator = RBT.fromRules(koLatnRules + latnOuHiatusRules + latnFrRules);
 
   const convert = async (text: string) => {
     const romanized = await wordSplitter(text, "ko", text =>

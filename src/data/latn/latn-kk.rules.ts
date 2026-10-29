@@ -17,6 +17,8 @@ t [sS] > ц;
 T [hH] > Т;
 t [hH] > т;
 
+[nN] { G } [hH] > G;
+[nN] { g } [hH] > g;
 G [hH] > Ғ;
 g [hH] > ғ;
 

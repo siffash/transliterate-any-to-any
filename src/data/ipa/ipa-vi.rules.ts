@@ -6,6 +6,7 @@ export const ipaViRules = `
 ::Null;
 
 ŋ } [ieêyɪɨĩęɛæœøʏɵʉjʝ] > ngh;
+ŋ } [ɡg] > n;
 ŋ > ng;
 [gɡɢɟɣɰ] } [ieêyɪɨĩęɛæœøʏɵʉjʝ] > gh;
 [gɡɢɟɣɰ] > g;

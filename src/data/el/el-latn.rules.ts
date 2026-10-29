@@ -118,6 +118,8 @@ export const elLatnRules = `
 Β > V;
 β > v;
 
+[nN] { Γ > G;
+[nN] { γ > g;
 [:Lu:] { Γ > GH;
 Γ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > GH;
 Γ } [:Lu:] > GH;

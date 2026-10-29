@@ -1,10 +1,10 @@
 export const latnMsRules = `
 ::NFC;
 
-IJ > AI;
-Ij > Ai;
-iJ > aI;
-ij > ai;
+IJ > EI;
+Ij > Ei;
+iJ > eI;
+ij > ei;
 
 D [žŽ] > J;
 d [žŽ] > j;

@@ -28,6 +28,8 @@ export const tgLatnRules = `
 Я > Ya;
 я > ya;
 
+[nN] { Ғ > G;
+[nN] { ғ > g;
 [:Lu:] { Ғ > GH;
 Ғ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > GH;
 Ғ } [:Lu:] > GH;

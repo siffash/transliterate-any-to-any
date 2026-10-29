@@ -40,6 +40,8 @@ export const ipaPtRules = `
 [ťʈ] > t;
 [ʋβ] > v;
 [wɥ] > u;
+i { [jʝ] > ;
+[jʝ] } [iɪɨĩ] > ;
 [yʏʝj] > i;
 [ʐʑʒž] > j;
 θ > s;

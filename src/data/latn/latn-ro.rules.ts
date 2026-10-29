@@ -12,6 +12,8 @@ d [zZ] > z;
 T [hH] > T;
 t [hH] > t;
 
+[nN] { G } [hH] > G;
+[nN] { g } [hH] > g;
 G [hH] > H;
 g [hH] > h;
 
@@ -31,6 +33,13 @@ w > v;
 
 X > H;
 x > h;
+
+[čćđžČĆĐŽ] [iI] { Y > I;
+[čćđžČĆĐŽ] [iI] { y > i;
+[iI] { [yY] > ;
+Y } I > ;
+Yi > I;
+y } [iI] > ;
 
 Y > I;
 y > i;

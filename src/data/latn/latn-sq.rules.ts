@@ -15,6 +15,8 @@ t [sS] > c;
 K [hH] > H;
 k [hH] > h;
 
+[nN] { G } [hH] > G;
+[nN] { g } [hH] > g;
 G [hH] > G;
 g [hH] > g;
 

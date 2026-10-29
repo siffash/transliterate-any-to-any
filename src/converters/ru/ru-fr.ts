@@ -4,9 +4,12 @@ export const ruFr = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { ruLatnRules } = await import("data/ru/ru-latn.rules");
   const { ruLatnSeparatorRules } = await import("data/ru/ru-latn_separator.rules");
+  const { latnOuHiatusRules } = await import("data/latn/latn_ou-hiatus.rules");
   const { latnFrRules } = await import("data/latn/latn-fr.rules");
 
-  const transliterator = RBT.fromRules(ruLatnRules + ruLatnSeparatorRules + latnFrRules);
+  const transliterator = RBT.fromRules(
+    ruLatnRules + ruLatnSeparatorRules + latnOuHiatusRules + latnFrRules,
+  );
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);

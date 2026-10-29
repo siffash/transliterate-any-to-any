@@ -102,6 +102,11 @@ g } [eiyöï] > gu;
 Ö > Eu;
 ö > eu;
 
+OU > OU;
+oU > oU;
+Ou > Ou;
+ou > ou;
+
 [:Lu:] { U > OU;
 U } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > OU;
 U } [:Lu:] > OU;

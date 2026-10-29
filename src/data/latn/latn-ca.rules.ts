@@ -14,6 +14,8 @@ Ij > Ei;
 iJ > eI;
 ij > ei;
 
+[nN] { G } [hH] > G;
+[nN] { g } [hH] > g;
 G [hH] > G;
 g [hH] > g;
 
@@ -94,6 +96,10 @@ X } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > KH;
 X } [:Lu:] > KH;
 X > Kh;
 x > kh;
+
+[iI] { [yY] > ;
+Y [iï] > I;
+[yY] } [iIïÏ] > ;
 
 [yï] > i;
 [YÏ] > I;

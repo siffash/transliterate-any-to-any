@@ -21,6 +21,7 @@ export const bnLatnRules = `
 খ > kh·;
 গ > g·;
 ঘ > gh·;
+ঙ } ্ [কখগঘ] > n·;
 ঙ > ng·;
 চ > č·;
 ছ > čh·;
@@ -48,6 +49,7 @@ export const bnLatnRules = `
 স > s·;
 হ > h·;
 ৎ > t;
+ং } [কখগঘ] > n;
 ং > ng;
 ঃ > h;
 ঁ > n;

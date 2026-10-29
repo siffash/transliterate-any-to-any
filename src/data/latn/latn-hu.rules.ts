@@ -1,10 +1,6 @@
 export const latnHuRules = `
 ::Null;
 
-DŽDŽ > DDZS;
-Dždž > Ddzs;
-dždž > ddzs;
-
 DZDZ > DDZ;
 Dzdz > Ddz;
 dzdz > ddz;
@@ -26,11 +22,6 @@ dZ > dZ;
 Dz > Dz;
 dz > dz;
 
-DŽ > DZS;
-dŽ > dZS;
-Dž > Dzs;
-dž > dzs;
-
 KH > CH;
 kH > cH;
 Kh > Ch;
@@ -42,6 +33,8 @@ t [sS] > c;
 T [hH] > T;
 t [hH] > t;
 
+[nN] { G } [hH] > G;
+[nN] { g } [hH] > g;
 G [hH] > G;
 g [hH] > g;
 
@@ -51,6 +44,15 @@ Ij > Ej;
 ij > ej;
 
 ::Null;
+
+DŽDŽ > DDZS;
+Dždž > Ddzs;
+dždž > ddzs;
+
+DŽ > DZS;
+dŽ > dZS;
+Dž > Dzs;
+dž > dzs;
 
 ČČ > CCS;
 čČ > cCS;

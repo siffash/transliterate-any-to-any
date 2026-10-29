@@ -16,6 +16,8 @@ iJ > eI;
 Ij > Ei;
 IJ > EI;
 
+[nN] { G } [hH] > G;
+[nN] { g } [hH] > g;
 g [hH] > g;
 G [hH] > G;
 

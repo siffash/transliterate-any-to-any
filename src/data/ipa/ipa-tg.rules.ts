@@ -31,6 +31,7 @@ export const ipaTgRules = `
 ː > ;
 [iĩɨɪ] > и;
 
+ŋ } [ɡgkq] > н;
 ŋ > нг;
 [nɲɳ] > н;
 [mɱ] > м;

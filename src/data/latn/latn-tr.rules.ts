@@ -10,6 +10,8 @@ d [žŽ] > c;
 T [hH] > T;
 t [hH] > t;
 
+[nN] { G } [hH] > G;
+[nN] { g } [hH] > g;
 G [hH] > Ğ;
 g [hH] > ğ;
 

@@ -32,6 +32,7 @@ export const ipaMsRules = `
 [ɰɥ] > w;
 [ʐʑ] > z;
 [ʝʎj] > y;
+ŋ } [ɡg] > n;
 ŋ > ng;
 ɲ > ny;
 ʃ > sy;

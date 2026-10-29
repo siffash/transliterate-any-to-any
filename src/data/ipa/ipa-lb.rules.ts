@@ -8,6 +8,7 @@ export const ipaLbRules = `
 [^[:L:][:M:]] { ŋ > n;
 ɲ } [^[:L:][:M:]] > n;
 ɲ > nj;
+ŋ } [ɡgkq] > n;
 ŋ > ng;
 [cq] > k;
 [vʋβ] > w;

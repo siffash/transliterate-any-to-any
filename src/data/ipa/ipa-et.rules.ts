@@ -29,6 +29,7 @@ export const ipaEtRules = `
 [ʐʑʒ] > ž;
 č > tš;
 [^[:L:][:M:]] { ŋ > n;
+ŋ } [ɡgkq] > n;
 ŋ > ng;
 ɸ > f;
 

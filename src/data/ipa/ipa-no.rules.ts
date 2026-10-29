@@ -26,6 +26,7 @@ export const ipaNoRules = `
 [ɫ] > l;
 [ʎ] > lj;
 [ɱ] > m;
+ŋ } [ɡgkq] > n;
 [ŋ] > ng;
 [ɲ] > nj;
 [ôõơɵɤ] > o;

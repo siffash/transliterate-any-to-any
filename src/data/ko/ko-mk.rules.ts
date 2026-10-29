@@ -30,6 +30,7 @@ pyeongyang > пјонгјанг;
 [^[:L:][:M:]] { ui > уи;
 ui > и;
 
+'_' eui > уи;
 [aeiouwyаеиоу] { eui > уи;
 [^[:L:][:M:]] { eui > уи;
 eui > и;

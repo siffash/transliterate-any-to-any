@@ -129,19 +129,26 @@ const VOWELS = "ㅏㅐㅑㅒㅓㅔㅕㅖㅗㅘㅙㅚㅛㅜㅝㅞㅟㅠㅡㅢㅣ"
 const DIGRAPHS = new Set(["ae", "eo", "eu", "oe", "ui"]);
 
 // Revised Romanization runs the vowels of two syllables together, which the rules would
-// read as another vowel (다은 daeun as 대운): the boundary is marked (da_eun), and the rules remove it
+// read as another vowel (다은 daeun as 대운): the boundary is marked (da_eun), and the rules remove it.
+// So is 의 after any syllable (신의주 sin_euiju), which keeps its glide, unlike ㅢ after a consonant (희 heui)
 const markVowelBoundaries = (text: string) => {
   let result = "";
   let previous = "";
+  let afterSyllable = false;
   for (const char of text) {
     const index = char.charCodeAt(0) - 0xac00;
     const syllable = index >= 0 && index <= 11171;
     const vowel = syllable ? LATN[VOWELS[Math.floor((index % 588) / 28)]] : "";
     // A syllable that begins with the silent ㅇ, after one that ends in a vowel
-    if (syllable && Math.floor(index / 588) === 11 && DIGRAPHS.has(previous.slice(-1) + vowel[0])) {
+    if (
+      syllable &&
+      Math.floor(index / 588) === 11 &&
+      (DIGRAPHS.has(previous.slice(-1) + vowel[0]) || (vowel === "ui" && afterSyllable))
+    ) {
       result += "_";
     }
     previous = syllable && index % 28 === 0 ? vowel : "";
+    afterSyllable = syllable;
     result += char;
   }
   return result;

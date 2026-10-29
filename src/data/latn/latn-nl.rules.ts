@@ -9,6 +9,8 @@ dŽ > dJ;
 Dž > Dj;
 dž > dj;
 
+[nN] { G } [hH] > G;
+[nN] { g } [hH] > g;
 G [hH] > G;
 g [hH] > g;
 
@@ -86,6 +88,12 @@ q > k;
 [:Lu:] { U > OE;
 U } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > OE;
 U } [:Lu:] > OE;
+O· } [uU] > O;
+o· } [uU] > o;
+OU > OU;
+Ou > Ou;
+ou > ou;
+
 U > Oe;
 u > oe;
 

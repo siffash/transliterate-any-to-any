@@ -27,6 +27,7 @@ export const ipaDeRules = `
 [ɱ] > m;
 [ɳ] > n;
 [ɲ] > nj;
+ŋ } [ɡgkq] > n;
 [ŋ] > ng;
 [ɾʀʁɹɽ] > r;
 z > s;

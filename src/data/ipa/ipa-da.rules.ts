@@ -28,6 +28,7 @@ export const ipaDaRules = `
 ɱ > m;
 ɳ > n;
 ɲ > nj;
+ŋ } [ɡgkq] > n;
 ŋ > ng;
 [ɹɽɾʀʁ] > r;
 [ɕʂç] > s;

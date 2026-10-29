@@ -24,6 +24,8 @@ ts > τσ;
 T [hH] > Θ;
 t [hH] > θ;
 
+[nN] { G } [hH] > G;
+[nN] { g } [hH] > g;
 G [hH] > Γ;
 g [hH] > γ;
 

@@ -30,6 +30,7 @@ export const kaLatnRules = `
 რ > r;
 ს > s;
 უ > u;
+n { ღ > g;
 ღ > gh;
 ყ > q;
 შ > š;

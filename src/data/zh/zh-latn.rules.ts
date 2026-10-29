@@ -26,8 +26,7 @@ export const zhLatnRules = `
 ::Null;
 
 [zcshr] { i > ï;
-[jqxy] { ue > üö;
-ü { e > ö;
+[jqxy] { ue > üe;
 [jqxy] { uan > üän;
 [jqxy] { u > ü;
 

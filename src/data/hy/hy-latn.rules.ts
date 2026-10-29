@@ -45,6 +45,8 @@ export const hyLatnRules = `
 Ձ > Dz;
 ձ > dz;
 
+[nN] { Ղ > G;
+[nN] { ղ > g;
 [:Lu:] { Ղ > GH;
 Ղ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > GH;
 Ղ } [:Lu:] > GH;

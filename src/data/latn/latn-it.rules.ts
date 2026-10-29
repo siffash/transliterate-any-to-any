@@ -1,14 +1,6 @@
 export const latnItRules = `
 ::Null;
 
-D [žŽ] } [EIÏYeiïy] > G;
-d [žŽ] } [EIÏYeiïy] > g;
-
-DŽ > GI;
-dŽ > gI;
-Dž > Gi;
-dž > gi;
-
 D [zZ] > Z;
 d [zZ] > z;
 
@@ -20,6 +12,8 @@ kh } [EIÏYeiïy] > ch;
 K [hH] > C;
 k [hH] > c;
 
+[nN] { G } [hH] > G;
+[nN] { g } [hH] > g;
 GH } [EIÏYeiïy] > GH;
 gH } [EIÏYeiïy] > gH;
 Gh } [EIÏYeiïy] > Gh;
@@ -33,7 +27,17 @@ iJ > eI;
 Ij > Ei;
 ij > ei;
 
+[čćšžđČĆŠŽĐ] { [hH] } [EIÏYeiïy] > ;
+
 ::Null;
+
+D [žŽ] } [EIÏYeiïy] > G;
+d [žŽ] } [EIÏYeiïy] > g;
+
+DŽ > GI;
+dŽ > gI;
+Dž > Gi;
+dž > gi;
 
 Đ } [EIÏYeiïy] > G;
 đ } [EIÏYeiïy] > g;
@@ -87,6 +91,10 @@ ij > ei;
 [KQX] > C;
 [kqx] > c;
 
+[nN] { G [hH] } [EIÏY] > GH;
+[nN] { G [hH] } [eiïy] > Gh;
+[nN] { g [hH] } [EIÏY] > gH;
+[nN] { g [hH] } [eiïy] > gh;
 G } [EIÏY] > GH;
 G } [eiïy] > Gh;
 g } [EIÏY] > gH;
@@ -121,6 +129,12 @@ h > ;
 H ([:L:]) >| &Any-Upper($1);
 H > ;
 
+[cCgG] [iIïÏ] { Y } [AEOUÄÖÜaeouäöü] > I;
+[cCgG] [iIïÏ] { y } [AEOUÄÖÜaeouäöü] > i;
+[iI] { [yY] > ;
+Y [iï] > I;
+[yY] } [iIïÏ] > ;
+
 [YÏ] > I;
 [yï] > i;
 Ä > A;
@@ -136,7 +150,7 @@ H > ;
 
 ::Null;
 
-[cCgG] { [iI] } [eEèéÈÉiIìíÌÍyYïÏ] > ;
+[cCgG] { [iI] } [eEèéÈÉ] > ;
 [gG] [nN] { [iI] } [aAàáÀÁeEèéÈÉiIìíÌÍoOòóÒÓuUùúÙÚyYïÏÿŸäÄöÖüÜ] > ;
 [gG] [lL] { [iI] } [iIìíÌÍyYïÏ] > ;
 
