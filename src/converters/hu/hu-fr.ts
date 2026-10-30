@@ -3,9 +3,11 @@ import { Text } from "types";
 export const huFr = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { huLatnRules } = await import("data/hu/hu-latn.rules");
+  const { huLatnYRules } = await import("data/hu/hu-latn_y.rules");
+  const { huLatnGyRules } = await import("data/hu/hu-latn_gy.rules");
   const { latnFrRules } = await import("data/latn/latn-fr.rules");
 
-  const transliterator = RBT.fromRules(huLatnRules + latnFrRules);
+  const transliterator = RBT.fromRules(huLatnRules + huLatnYRules + huLatnGyRules + latnFrRules);
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);

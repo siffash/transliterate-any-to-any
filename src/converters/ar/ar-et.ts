@@ -2,10 +2,11 @@ import { Text } from "types";
 
 export const arEt = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
+  const { arIpaGemTRules } = await import("data/ar/ar-ipa_gemt.rules");
   const { arIpa } = await import("converters/ar/ar-ipa");
   const { ipaEtRules } = await import("data/ipa/ipa-et.rules");
 
-  const transliterator = RBT.fromRules(ipaEtRules + "::Title;");
+  const transliterator = RBT.fromRules(arIpaGemTRules + ipaEtRules + "::Title;");
 
   if (typeof text === "string") {
     const ipa = await arIpa<string>(text);

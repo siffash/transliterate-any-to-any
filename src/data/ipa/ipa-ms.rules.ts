@@ -2,6 +2,14 @@ export const ipaMsRules = `
 ::Null;
 ::NFC;
 
+[ʃʂ] { [ʃʂ] > ;
+
+::Null;
+
+t͡ʃ > c;
+tʃ > c;
+d͡ʒ > j;
+dʒ > j;
 [uʊũ] { w > ;
 [uʊũ] { ɰ > ;
 [iɪĩ] { j > ;

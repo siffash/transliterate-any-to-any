@@ -121,6 +121,8 @@ export const bgEnRules = `
 
 [wW] { [wW]+ > ;
 [yY] { [yY]+ > ;
+[cC][hH] { h > h;
+[cC][hH] { H > H;
 [hH] { [hH]+ > ;
 [iI] { [iI]+ } [^[:L:][:M:]] > ;
 [^[:L:][:M:]] { [cC]+ } [kK] > ;

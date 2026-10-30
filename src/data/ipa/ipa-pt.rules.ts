@@ -1,6 +1,10 @@
 export const ipaPtRules = `
 ::Null;
 
+[ʃʂ] { [ʃʂ] > ;
+
+::Null;
+
 [͈̚ʔʕʰʱʲʷ'’ʼˈ̇ˌ̧ːˠˤ˥˧˩̝̟̥̩̪̯̃̊͡] > ;
 
 ::Null;

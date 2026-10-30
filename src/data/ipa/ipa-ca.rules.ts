@@ -1,6 +1,10 @@
 export const ipaCaRules = `
 ::Null;
 
+[ʃʂ] { [ʃʂ] > ;
+
+::Null;
+
 [͈̚ʰʱʲʷ'’ʼˈ̇ˌ̧ːˠˤ˥˧˩̝̟̥̩̪̯̃̊͡] > ;
 
 ::Null;

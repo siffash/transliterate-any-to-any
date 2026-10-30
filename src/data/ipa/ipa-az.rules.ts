@@ -9,6 +9,8 @@ export const ipaAzRules = `
 ʔ } [^[:L:][:M:]] > ;
 ʔ > \\';
 
+tʃ > ç;
+dʒ > c;
 c > k;
 ɟ > g;
 [gɡɢ] > q;

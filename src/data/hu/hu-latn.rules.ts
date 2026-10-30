@@ -6,6 +6,8 @@ export const huLatnRules = `
 L [yY] > Y;
 l [yY] > y;
 
+G } [gG] [yY] [AÁEÉIÍOÓÖŐUÚÜŰaáeéiíoóöőuúüű] > D;
+g } [gG] [yY] [AÁEÉIÍOÓÖŐUÚÜŰaáeéiíoóöőuúüű] > d;
 G } [yY] [AÁEÉIÍOÓÖŐUÚÜŰaáeéiíoóöőuúüű] > D;
 g } [yY] [AÁEÉIÍOÓÖŐUÚÜŰaáeéiíoóöőuúüű] > d;
 
@@ -23,6 +25,8 @@ g } [yY] [AÁEÉIÍOÓÖŐUÚÜŰaáeéiíoóöőuúüű] > d;
 ú > u;
 Ű > Ü;
 ű > ü;
+W > V;
+w > v;
 
 ::Null;
 
@@ -42,6 +46,8 @@ d } [dD] [zZ] > dz;
 L } [lL] [yY] > Ľ;
 l } [lL] [yY] > ľ;
 
+N } [nN] [yY] [aeiouAEIOU] > N;
+n } [nN] [yY] [aeiouAEIOU] > n;
 N } [nN] [yY] > Ń;
 n } [nN] [yY] > ń;
 
@@ -95,6 +101,13 @@ x > ks;
 J > Y;
 j > y;
 
+S [cC] [hH] > Š;
+s [cC] [hH] > š;
+
 S > Š;
 s > š;
+
+::Null;
+
+[Šš] { [Šš] } [^[:L:][:M:]] > ;
 `;

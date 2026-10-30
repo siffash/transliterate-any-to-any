@@ -1,6 +1,11 @@
 export const latnCsRules = `
 ::Null;
 
+dž } dž > d;
+DŽ } DŽ > D;
+
+::Null;
+
 T [sS] > C;
 t [sS] > c;
 

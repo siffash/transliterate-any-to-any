@@ -1,6 +1,10 @@
 export const latnDeRules = `
 ::Null;
 
+[Šš] { [Šš] > ;
+
+::Null;
+
 dž > dsch;
 dŽ > dSCH;
 Dž > Dsch;

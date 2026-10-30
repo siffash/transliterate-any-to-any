@@ -1,6 +1,12 @@
 export const latnCaRules = `
 ::Null;
 
+[Čč] { [Čč] > ;
+[Šš] { [Šš] > ;
+[Dd] [Žž] { [Dd] [Žž] > ;
+
+::Null;
+
 ts } ts > ;
 TS } TS > ;
 
@@ -49,6 +55,8 @@ dz > tz;
 [ČĆ] > Tx;
 [čć] > tx;
 
+[iI] { Š > X;
+[iI] { š > x;
 [AEIOUÄÖÜÏŸ] { Š > IX;
 [aAeEiIoOuUäÄöÖüÜïÏÿŸ] { Š > Ix;
 [aAeEiIoOuUäÄöÖüÜïÏÿŸ] { š > ix;

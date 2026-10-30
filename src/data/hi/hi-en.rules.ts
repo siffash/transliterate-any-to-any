@@ -3,6 +3,7 @@ export const hiEnRules = `
 
 [।॥॰] > \\.;
 ॲ > ऍ;
+ँ > ं;
 
 ::Null;
 
@@ -96,6 +97,7 @@ a् > ;
 
 ::Null;
 
+ंva } [^[:L:][:M:]] > on;
 ं}h > ng;
 ं}kh > n;
 ं}k > n;
@@ -114,7 +116,7 @@ a् > ;
 ं}bh > m;
 ं}b > m;
 ं}m > m;
-ं} [^[:L:][:M:]] > m;
+ं} [^[:L:][:M:]] > n;
 ं > n;
 ँ > m̐;
 ः > h;
@@ -125,12 +127,28 @@ a् > ;
 [^[:L:][:M:]] [bcdfghjklmnpqrstvwxyz] h { a } [^[:L:][:M:]] > a;
 [^[:L:][:M:]] [bcdfghjklmnpqrstvwxyz] { a } [^[:L:][:M:]] > a;
 [bcdfghjklmnpqrstvwxyz] y { a } [^[:L:][:M:]] > a;
+[bcdfghjklmnpqrstvwxyz] [mln] { a } [^[:L:][:M:]] > a;
 [bcdfghjklmnpqrstvwxyz] r { a } [^[:L:][:M:]] > a;
 [bcdfghjklmnpqrstvwxyz] v { a } [^[:L:][:M:]] > a;
 [bcdfghjklmnpqrstvwxyz] { a } [^[:L:][:M:]] > ;
 
 ::Null;
 
+[aāiīuūeoŏĕ] [bcdfghjklmnpqrstvwxyz] h? h? { a } pur [^[:L:][:M:]] > ;
+[aāiīuūeoŏĕ] [bcdfghjklmnpqrstvwxyz] h? h? { a } lāl [^[:L:][:M:]] > ;
+[aāiīuūeoŏĕ] [bcdfghjklmnpqrstvwxyz] h? h? { a } nāth [^[:L:][:M:]] > ;
+[aāiīuūeoŏĕ] [bcdfghjklmnpqrstvwxyz] h? h? { a } dās [^[:L:][:M:]] > ;
+[aāiīuūeoŏĕ] [bcdfghjklmnpqrstvwxyz] h? h? { a } pāl [^[:L:][:M:]] > ;
+[aāiīuūeoŏĕ] [bcdfghjklmnpqrstvwxyz] h? h? { a } nagar [^[:L:][:M:]] > ;
+[aāiīuūeoŏĕ] [bcdfghjklmnpqrstvwxyz] h? h? { a } garh [^[:L:][:M:]] > ;
+[aāiīuūeoŏĕ] [bcdfghjklmnpqrstvwxyz] h? h? { a } chand [^[:L:][:M:]] > ;
+[aāiīuūeoŏĕ] [bcdfghjklmnpqrstvwxyz] h? h? { a } prasād [^[:L:][:M:]] > ;
+[aāiīuūeoŏĕ] [bcdfghjklmnpqrstvwxyz] h? h? { a } prakāsh [^[:L:][:M:]] > ;
+
+::Null;
+
+v { a } tī [^[:L:][:M:]] > a;
+āv { a } rī [^[:L:][:M:]] > a;
 ey { a } r > a;
 [aāiīuūeoŏĕ] [bcdfghjklmnpqrstvwxyz] ha [bcdfghjklmnpqrstvwxyz] h { a } [bcdfghjklmnpqrstvwxyz] h [aāiīuūeoŏĕ] > ;
 [aāiīuūeoŏĕ] [bcdfghjklmnpqrstvwxyz] ha [bcdfghjklmnpqrstvwxyz] h { a } [bcdfghjklmnpqrstvwxyz] [aāiīuūeoŏĕ] > ;
@@ -149,6 +167,14 @@ ey { a } r > a;
 [aāiīuūeoŏĕ] [bcdfghjklmnpqrstvwxyz] h { a } [bcdfghjklmnpqrstvwxyz] [aāiīuūeoŏĕ] > ;
 [aāiīuūeoŏĕ] [bcdfghjklmnpqrstvwxyz] { a } [bcdfghjklmnpqrstvwxyz] h [aāiīuūeoŏĕ] > ;
 [aāiīuūeoŏĕ] [bcdfghjklmnpqrstvwxyz] { a } [bcdfghjklmnpqrstvwxyz] [aāiīuūeoŏĕ] > ;
+
+::Null;
+
+[bdgjklst] { v > w;
+[bcdgjkps] h { v > w;
+v } āl [^[:L:][:M:]] > w;
+v } ālā [^[:L:][:M:]] > w;
+v } āliyā [^[:L:][:M:]] > w;
 
 ::NFC;
 ::Null;
@@ -169,6 +195,7 @@ ey { a } r > a;
 
 w { w+ > ;
 y { y+ > ;
+ch { h > h;
 h { h+ > ;
 i { i+ } [^[:L:][:M:]] > ;
 [^[:L:][:M:]] { c+ } k > ;

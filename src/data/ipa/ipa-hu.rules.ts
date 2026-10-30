@@ -128,15 +128,15 @@ q > k;
 
 ::Null;
 
-(dzs)+ } dzs > d;
-(dz)+ } dz > d;
-(sz)+ } sz > s;
-(cs)+ } cs > c;
-(zs)+ } zs > z;
-(gy)+ } gy > g;
-(ny)+ } ny > n;
-(ty)+ } ty > t;
-(ly)+ } ly > l;
+dzs } dzs > d;
+dz } dz > d;
+sz } sz > s;
+cs } cs > c;
+zs } zs > z;
+gy } gy > g;
+ny } ny > n;
+ty } ty > t;
+ly } ly > l;
 
 ::Null;
 

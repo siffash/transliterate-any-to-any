@@ -1,6 +1,11 @@
 export const ipaDaRules = `
 ::Null;
 
+[ʃʂ] { [ʃʂ] > ;
+[ʒʐ] { [ʒʐ] > ;
+
+::Null;
+
 [͈̚ʰʱʲʷ'’ʼˈ̇ˌ̧ːˠˤ˥˧˩̝̟̥̩̪̯̃̊͡ʔ] > ;
 
 ::Null;
@@ -18,6 +23,8 @@ export const ipaDaRules = `
 ɔ > å;
 [cqxχ] > k;
 č > tj;
+t [ʃʂ] > tj;
+d [ʒʐ] > dj;
 [ťʈθ] > t;
 [ďɖɗð] > d;
 ɓ > b;

@@ -1,6 +1,7 @@
 export const ipaJaRules = `
 ::Null;
 
+ŋ [ɡg] ʱ } [^[:L:][:M:]] > n;
 ã > an;
 ɑ̃ > an;
 ẽ > en;

@@ -1,8 +1,20 @@
 export const latnElRules = `
 ::Null;
 
+[Čč] { [Čč] > ;
+[Dd] [Žž] { [Dd] [Žž] > ;
+
+::Null;
+
 ts } ts > ;
 TS } TS > ;
+
+b } b > ;
+B } B > ;
+d } d > ;
+D } D > ;
+g } g > ;
+G } G > ;
 
 DŽ > ΤΖ;
 dŽ > τΖ;

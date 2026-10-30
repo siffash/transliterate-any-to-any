@@ -1,6 +1,11 @@
 export const latnSkRules = `
 ::Null;
 
+dž } dž > d;
+DŽ } DŽ > D;
+
+::Null;
+
 IJ > EJ;
 Ij > Ej;
 iJ > eJ;

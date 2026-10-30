@@ -5,9 +5,10 @@ export const zhIt = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { zhLatnRules } = await import("data/zh/zh-latn.rules");
   const { latnItRules } = await import("data/latn/latn-it.rules");
+  const { latnItIiRules } = await import("data/latn/latn-it_ii.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
 
-  const transliterator = RBT.fromRules(zhLatnRules + latnItRules);
+  const transliterator = RBT.fromRules(zhLatnRules + latnItRules + latnItIiRules);
 
   const convert = async (text: string) => {
     const romanized = await wordSplitter(text, "zh", text =>

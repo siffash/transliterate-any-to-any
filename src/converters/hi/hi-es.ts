@@ -2,11 +2,11 @@ import { Text } from "types";
 
 export const hiEs = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
+  const { hiIpaGemRules } = await import("data/hi/hi-ipa_gem.rules");
   const { hiIpaRules } = await import("data/hi/hi-ipa.rules");
-  const { hiIpaHRules } = await import("data/hi/hi-ipa_h.rules");
   const { ipaEsRules } = await import("data/ipa/ipa-es.rules");
 
-  const transliterator = RBT.fromRules(hiIpaRules + hiIpaHRules + ipaEsRules + "::Title;");
+  const transliterator = RBT.fromRules(hiIpaRules + hiIpaGemRules + ipaEsRules + "::Title;");
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);

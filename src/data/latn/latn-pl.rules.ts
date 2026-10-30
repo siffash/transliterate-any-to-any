@@ -1,6 +1,10 @@
 export const latnPlRules = `
 ::Null;
 
+[Šš] { [Šš] > ;
+
+::Null;
+
 [^[:L:][:M:]] { \\' > ;
 \\' } [^[:L:][:M:]] > ;
 · > ;

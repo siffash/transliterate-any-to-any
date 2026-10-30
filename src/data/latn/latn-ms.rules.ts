@@ -1,4 +1,10 @@
 export const latnMsRules = `
+::Null;
+
+[Čč] { [Čč] > ;
+[Šš] { [Šš] > ;
+[Dd] [Žž] { [Dd] [Žž] > ;
+
 ::NFC;
 
 IJ > EI;

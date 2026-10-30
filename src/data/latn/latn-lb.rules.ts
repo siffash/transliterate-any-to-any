@@ -1,6 +1,11 @@
 export const latnLbRules = `
 ::Null;
 
+[Čč] { [Čč] > ;
+[Dd] [Žž] { [Dd] [Žž] > ;
+
+::Null;
+
 DŽ > DSCH;
 dŽ > dSCH;
 Dž > Dsch;
@@ -129,12 +134,6 @@ z > s;
 
 [uU] { o+ > e;
 [uU] { O+ > E;
-
-[kK]+ } k > c;
-[kK]+ } K > C;
-
-[zZ]+ } z > t;
-[zZ]+ } Z > T;
 
 [sS] { z+ > s;
 [sS] { Z+ > S;

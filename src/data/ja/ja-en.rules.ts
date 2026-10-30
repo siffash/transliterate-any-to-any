@@ -109,6 +109,7 @@ export const jaEnRules = `
 
 w { w+ > ;
 y { y+ > ;
+ch { h > h;
 h { h+ > ;
 i { i+ } [^[:L:][:M:]] > ;
 [^[:L:][:M:]] { c+ } k > ;

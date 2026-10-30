@@ -1,6 +1,11 @@
 export const latnUkRules = `
 ::Null;
 
+dž } dž > d;
+DŽ } DŽ > D;
+
+::Null;
+
 dž > дж;
 Dž > Дж;
 dŽ > дЖ;

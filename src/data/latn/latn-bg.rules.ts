@@ -1,6 +1,11 @@
 export const latnBgRules = `
 ::Null;
 
+[Čč] { [Čč] > ;
+[Dd] [Žž] { [Dd] [Žž] > ;
+
+::Null;
+
 dž > дж;
 Dž > Дж;
 dŽ > дЖ;

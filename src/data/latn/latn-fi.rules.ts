@@ -1,6 +1,13 @@
 export const latnFiRules = `
 ::Null;
 
+č } č > t;
+Č } Č > T;
+dž } dž > d;
+DŽ } DŽ > D;
+
+::Null;
+
 ts } ts > ;
 TS } TS > ;
 

@@ -1,0 +1,6 @@
+export const arIpaGemDRules = `
+::Null;
+
+d͡ʒ } d͡ʒ > d;
+dʒ } dʒ > d;
+`;

@@ -1,10 +1,36 @@
 export const latnViRules = `
 ::Null;
 
+[Ff] { [Ff] > ;
+[Dd] { [Dd] > ;
+[Čč] { [Čč] > ;
+[Žž] { [Žž] > ;
+[Xx] { [Xx] > ;
+[Bb] { [Bb] > ;
+[Nn] [Gg] { G > G;
+[Nn] [Gg] { g > g;
+[Gg] { [Gg] > ;
+[LlĽľ] { [LlĽľ] > ;
+[Rr] { [Rr] > ;
+[Ss] { [Ss] > ;
+[Šš] { [Šš] > ;
+[Vv] { [Vv] > ;
+[Ww] { [Ww] > ;
+[Zz] { [Zz] > ;
+[Dd] [Žž] { [Dd] [Žž] > ;
+
+::Null;
+
 [BbĆćČčDdĐđFfGgHhKkLlĽľMmNnŃńPpQqRrSsŠšTtVvWwXxZzŽž] { Y > I;
 [BbĆćČčDdĐđFfGgHhKkLlĽľMmNnŃńPpQqRrSsŠšTtVvWwXxZzŽž] { y > i;
 
 ::Null;
+
+DŽH > GI;
+D [Žž] [Hh] } [Ii] > G;
+d [Žž] [Hh] } [Ii] > g;
+D [Žž] [Hh] > Gi;
+d [Žž] [Hh] > gi;
 
 D [Žž] } [Ii] > G;
 d [Žž] } [Ii] > g;
@@ -162,4 +188,8 @@ w > v;
 [^[:L:][:M:]] { \\' > ;
 \\' } [^[:L:][:M:]] > ;
 · > ;
+
+::Null;
+
+[Xx] { [Xx] > ;
 `;

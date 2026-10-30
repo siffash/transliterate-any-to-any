@@ -1,6 +1,11 @@
 export const latnKkRules = `
 ::Null;
 
+dž } dž > d;
+DŽ } DŽ > D;
+
+::Null;
+
 DŽ > ДЖ;
 Dž > Дж;
 dŽ > дЖ;

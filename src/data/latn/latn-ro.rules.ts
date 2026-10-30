@@ -1,6 +1,11 @@
 export const latnRoRules = `
 ::Null;
 
+[Čč] { [Čč] > ;
+[Dd] [Žž] { [Dd] [Žž] > ;
+
+::Null;
+
 IJ > EI;
 iJ > eI;
 Ij > Ei;

@@ -1,6 +1,10 @@
 export const latnItRules = `
 ::Null;
 
+[Šš] { [Šš] > ;
+
+::Null;
+
 D [zZ] > Z;
 d [zZ] > z;
 

@@ -4,12 +4,13 @@ export const thMk = async (text: Text) => {
   const { thRtgs } = await import("converters/th/th-ipa");
   const { RBT } = await import("helpers/rbt");
   const { thLatnRules } = await import("data/th/th-latn.rules");
+  const { thLatnKxRules } = await import("data/th/th-latn_kx.rules");
   const { latnMkRules } = await import("data/latn/latn-mk.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
   const { normalizeTh } = await import("helpers/normalizeTh");
 
   const toRtgs = await thRtgs();
-  const transliterator = RBT.fromRules(thLatnRules + latnMkRules + "::Title;");
+  const transliterator = RBT.fromRules(thLatnRules + thLatnKxRules + latnMkRules + "::Title;");
 
   const convert = async (text: string) => {
     const romanized = await wordSplitter(normalizeTh(text), "th", text =>
