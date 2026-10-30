@@ -5,7 +5,7 @@ export const hiEl = async (text: Text) => {
   const { hiIpaRules } = await import("data/hi/hi-ipa.rules");
   const { hiIpaGemRules } = await import("data/hi/hi-ipa_gem.rules");
   const { hiIpaElRules } = await import("data/hi/hi-ipa_el.rules");
-  const { hiIpaHRules } = await import("data/hi/hi-ipa_h.rules");
+  const { ipaAspHRules } = await import("data/ipa/ipa_asph.rules");
   const { ipaLatnRules } = await import("data/ipa/ipa-latn.rules");
   const { latnElRules } = await import("data/latn/latn-el.rules");
 
@@ -13,7 +13,7 @@ export const hiEl = async (text: Text) => {
     hiIpaRules +
       hiIpaGemRules +
       hiIpaElRules +
-      hiIpaHRules +
+      ipaAspHRules +
       ipaLatnRules +
       "::Title;" +
       latnElRules,

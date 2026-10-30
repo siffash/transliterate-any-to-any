@@ -2,12 +2,12 @@ import { Text } from "types";
 
 export const urKk = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
-  const { urIpaGemDRules } = await import("data/ur/ur-ipa_gemd.rules");
+  const { ipaGemDRules } = await import("data/ipa/ipa_gemd.rules");
   const { urIpa } = await import("converters/ur/ur-ipa");
-  const { urIpaXRules } = await import("data/ur/ur-ipa_x.rules");
+  const { ipaAspXRules } = await import("data/ipa/ipa_aspx.rules");
   const { ipaKkRules } = await import("data/ipa/ipa-kk.rules");
 
-  const transliterator = RBT.fromRules(urIpaGemDRules + urIpaXRules + ipaKkRules + "::Title;");
+  const transliterator = RBT.fromRules(ipaGemDRules + ipaAspXRules + ipaKkRules + "::Title;");
 
   if (typeof text === "string") {
     const ipa = await urIpa<string>(text);

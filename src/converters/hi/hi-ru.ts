@@ -4,11 +4,11 @@ export const hiRu = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { hiIpaGemDRules } = await import("data/hi/hi-ipa_gemd.rules");
   const { hiIpaRules } = await import("data/hi/hi-ipa.rules");
-  const { hiIpaHRules } = await import("data/hi/hi-ipa_h.rules");
+  const { ipaAspHRules } = await import("data/ipa/ipa_asph.rules");
   const { ipaRuRules } = await import("data/ipa/ipa-ru.rules");
 
   const transliterator = RBT.fromRules(
-    hiIpaRules + hiIpaGemDRules + hiIpaHRules + ipaRuRules + "::Title;",
+    hiIpaRules + hiIpaGemDRules + ipaAspHRules + ipaRuRules + "::Title;",
   );
 
   if (typeof text === "string") {

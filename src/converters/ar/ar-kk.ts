@@ -2,11 +2,11 @@ import { Text } from "types";
 
 export const arKk = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
-  const { arIpaGemDRules } = await import("data/ar/ar-ipa_gemd.rules");
+  const { ipaGemDRules } = await import("data/ipa/ipa_gemd.rules");
   const { arIpa } = await import("converters/ar/ar-ipa");
   const { ipaKkRules } = await import("data/ipa/ipa-kk.rules");
 
-  const transliterator = RBT.fromRules(arIpaGemDRules + ipaKkRules + "::Title;");
+  const transliterator = RBT.fromRules(ipaGemDRules + ipaKkRules + "::Title;");
 
   if (typeof text === "string") {
     const ipa = await arIpa<string>(text);

@@ -2,10 +2,10 @@ import { Text } from "types";
 
 export const msVi = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
-  const { msLatnRules } = await import("data/ms/ms-latn.rules");
+  const { msIdLatnRules } = await import("data/latn/ms_id-latn.rules");
   const { latnViRules } = await import("data/latn/latn-vi.rules");
 
-  const transliterator = RBT.fromRules(msLatnRules + latnViRules);
+  const transliterator = RBT.fromRules(msIdLatnRules + latnViRules);
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);

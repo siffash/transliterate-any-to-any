@@ -3,10 +3,10 @@ import { Text } from "types";
 export const lbKo = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { lbIpa } = await import("converters/lb/lb-ipa");
-  const { lbIpaKoRules } = await import("data/lb/lb-ipa_ko.rules");
+  const { ipaKoEzhRules } = await import("data/ipa/ipa-ko_ezh.rules");
   const { ipaKoRules } = await import("data/ipa/ipa-ko.rules");
 
-  const transliterator = RBT.fromRules(lbIpaKoRules + ipaKoRules);
+  const transliterator = RBT.fromRules(ipaKoEzhRules + ipaKoRules);
 
   if (typeof text === "string") {
     const ipa = await lbIpa<string>(text);
