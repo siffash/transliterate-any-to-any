@@ -3,9 +3,10 @@ import { Text } from "types";
 export const arSq = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { arIpa } = await import("converters/ar/ar-ipa");
+  const { arLowerRules } = await import("data/ar/ar_lower.rules");
   const { ipaSqRules } = await import("data/ipa/ipa-sq.rules");
 
-  const transliterator = RBT.fromRules(ipaSqRules + "::Title;");
+  const transliterator = RBT.fromRules(ipaSqRules + "::Title;" + arLowerRules);
 
   if (typeof text === "string") {
     const ipa = await arIpa<string>(text);

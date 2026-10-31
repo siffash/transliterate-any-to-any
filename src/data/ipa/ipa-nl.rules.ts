@@ -4,7 +4,7 @@ export const ipaNlRules = `
 d͡ʒ > dj;
 d͡z > dz;
 d̪ > d;
-z } [^[:L:][:M:]] > s;
+z } [^[:L:][:M:]\\-] > s;
 ẽ > en;
 ĩ > in;
 õ > on;

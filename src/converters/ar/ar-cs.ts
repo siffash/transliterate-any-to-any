@@ -4,9 +4,10 @@ export const arCs = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { ipaGemDRules } = await import("data/ipa/ipa_gemd.rules");
   const { arIpa } = await import("converters/ar/ar-ipa");
+  const { arLowerRules } = await import("data/ar/ar_lower.rules");
   const { ipaCsRules } = await import("data/ipa/ipa-cs.rules");
 
-  const transliterator = RBT.fromRules(ipaGemDRules + ipaCsRules + "::Title;");
+  const transliterator = RBT.fromRules(ipaGemDRules + ipaCsRules + "::Title;" + arLowerRules);
 
   if (typeof text === "string") {
     const ipa = await arIpa<string>(text);
