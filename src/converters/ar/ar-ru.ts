@@ -5,8 +5,9 @@ export const arRu = async (text: Text) => {
   const { ipaGemDRules } = await import("data/ipa/ipa_gemd.rules");
   const { arIpa } = await import("converters/ar/ar-ipa");
   const { ipaRuRules } = await import("data/ipa/ipa-ru.rules");
+  const { ruLlRules } = await import("data/ru/ru_ll.rules");
 
-  const transliterator = RBT.fromRules(ipaGemDRules + ipaRuRules + "::Title;");
+  const transliterator = RBT.fromRules(ipaGemDRules + ipaRuRules + ruLlRules + "::Title;");
 
   if (typeof text === "string") {
     const ipa = await arIpa<string>(text);

@@ -1,6 +1,11 @@
 export interface RestoreIpaRule {
   ipaCharToBeReplaced: string | string[];
   lettersToRestore: Record<string, string>;
+  // Put a stress mark that falls inside the replaced IPA back into the replacement
+  keepStress?: boolean;
+  // How many letters the spelling may sit away from where the IPA projects onto the word
+  // (by default the needle length, at most MAX_SEARCH_WINDOW)
+  window?: number;
 }
 
 const STRESS_MARKS = new Set(["ˈ", "ˌ"]);
@@ -102,6 +107,8 @@ interface RestoreTask {
   anchoredNeedles: AnchoredNeedle[];
   originalLetters: string;
   replacement: string;
+  keepStress: boolean;
+  window: number;
 }
 
 function flattenRules(rules: RestoreIpaRule[]): RestoreTask[] {
@@ -123,7 +130,14 @@ function flattenRules(rules: RestoreIpaRule[]): RestoreTask[] {
     }
 
     for (const [originalLetters, replacement] of Object.entries(rule.lettersToRestore)) {
-      tasks.push({ needles, anchoredNeedles, originalLetters, replacement });
+      tasks.push({
+        needles,
+        anchoredNeedles,
+        originalLetters,
+        replacement,
+        keepStress: rule.keepStress ?? false,
+        window: rule.window ?? searchWindowFor(needles),
+      });
     }
   }
   return tasks;
@@ -158,6 +172,21 @@ function textAtBoundary(cleanIpa: string, text: string, boundary: Boundary): Spa
   }
   const start = cleanIpa.length - text.length;
   return start >= 0 && cleanIpa.endsWith(text) ? { start, end: cleanIpa.length } : null;
+}
+
+// A stress mark inside a replaced span goes back in front of the same onset
+// in the replacement (hɪˈɫ → hɛˈɫɫ), or is dropped if that onset is gone
+function keepInnerStress(original: string, replacement: string): string {
+  let result = replacement;
+  let searchFrom = 1;
+  for (let i = 1; i < original.length - 1; i++) {
+    if (!STRESS_MARKS.has(original[i])) continue;
+    const at = result.indexOf(original[i + 1], searchFrom);
+    if (at === -1) continue;
+    result = result.slice(0, at) + original[i] + result.slice(at);
+    searchFrom = at + 2;
+  }
+  return result;
 }
 
 export const restoreLettersInIpa = (
@@ -213,7 +242,7 @@ export const restoreLettersInIpa = (
     }
 
     const candidates = findCandidates(cleanIpa, task.needles);
-    const shifts = shiftsFor(searchWindowFor(task.needles));
+    const shifts = shiftsFor(task.window);
 
     for (const candidate of candidates) {
       if (isConsumed(candidate, consumedIpaIndices)) continue; // claimed by an earlier task
@@ -240,11 +269,12 @@ export const restoreLettersInIpa = (
 
       markConsumed(matchedWordSpan, consumedWordIndices);
       markConsumed(candidate, consumedIpaIndices);
-      planReplacement(
-        toOriginalIndex[candidate.start],
-        toOriginalIndex[candidate.end - 1] + 1,
-        task.replacement,
-      );
+      const start = toOriginalIndex[candidate.start];
+      const end = toOriginalIndex[candidate.end - 1] + 1;
+      const value = task.keepStress
+        ? keepInnerStress(ipa.slice(start, end), task.replacement)
+        : task.replacement;
+      planReplacement(start, end, value);
     }
   }
 

@@ -5,12 +5,23 @@ export const syllabicLeRestoreRules: RestoreIpaRule[] = [
   { ipaCharToBeReplaced: "əɫ$", lettersToRestore: { ichael: "ɫ", ile: "iɫ", le: "ɫ" } },
 ];
 
+// Restore "ett", whose "tt" restore would otherwise take the "t" first (Garrett). A diphthong keeps
+// its "ɪ" and gets what the "e" and "tt" restores give it (Hiett, Spoletto). Targets whose standards
+// follow the /ɪt/ pronunciation skip these (Chinese 巴特利特, Korean 바틀릿 for Bartlett)
+export const ettRestoreRules: RestoreIpaRule[] = [
+  { ipaCharToBeReplaced: "eɪt", lettersToRestore: { ett: "ɛtt" }, keepStress: true, window: 2 },
+  { ipaCharToBeReplaced: "aɪt", lettersToRestore: { ett: "aɪtt" }, keepStress: true, window: 2 },
+  { ipaCharToBeReplaced: "ɔɪt", lettersToRestore: { ett: "ɔɪtt" }, keepStress: true, window: 2 },
+  { ipaCharToBeReplaced: "ɪt", lettersToRestore: { ett: "ett" }, keepStress: true, window: 1 },
+];
+
 export const normalizeEnIpa = (
   originalWord: string,
   ipaWord: string,
   extraRules: RestoreIpaRule[] = [],
+  skippedRules: RestoreIpaRule[] = [],
 ): string => {
-  return restoreLettersInIpa(originalWord, ipaWord, [
+  const rules: RestoreIpaRule[] = [
     // Restore all double letters
     { ipaCharToBeReplaced: "ɑ", lettersToRestore: { aa: "aː" } },
     { ipaCharToBeReplaced: "i", lettersToRestore: { ee: "iː" } },
@@ -72,6 +83,14 @@ export const normalizeEnIpa = (
     },
     // Restore "e"
     { ipaCharToBeReplaced: ["eɪ", "ɛɪ"], lettersToRestore: { e: "ɛ" } },
+    // Restore "ell", whose "ll" restore would otherwise take the "ɫ" first (Hellerstein). A diphthong
+    // keeps its "ɪ" and gets what the "e" and "ll" restores give it (Averell, Tellez); the narrow window
+    // keeps the "ɪɫ" of Dilella off its "ell"
+    { ipaCharToBeReplaced: "eɪɫ", lettersToRestore: { ell: "ɛɫɫ" }, keepStress: true, window: 2 },
+    { ipaCharToBeReplaced: "aɪɫ", lettersToRestore: { ell: "aɪɫɫ" }, keepStress: true, window: 2 },
+    { ipaCharToBeReplaced: "ɔɪɫ", lettersToRestore: { ell: "ɔɪɫɫ" }, keepStress: true, window: 2 },
+    { ipaCharToBeReplaced: "ɪɫ", lettersToRestore: { ell: "ɛɫɫ" }, keepStress: true, window: 1 },
+    ...ettRestoreRules,
     // Restore "el"
     { ipaCharToBeReplaced: "ɪɫ", lettersToRestore: { el: "eɫ" } },
     // Restore "et"
@@ -139,5 +158,10 @@ export const normalizeEnIpa = (
     { ipaCharToBeReplaced: "bɝoʊ", lettersToRestore: { burgh: "bɝɣ" } },
     { ipaCharToBeReplaced: "bɚoʊ", lettersToRestore: { burgh: "bɚɣ" } },
     ...extraRules,
-  ]);
+  ];
+  return restoreLettersInIpa(
+    originalWord,
+    ipaWord,
+    rules.filter(rule => !skippedRules.includes(rule)),
+  );
 };

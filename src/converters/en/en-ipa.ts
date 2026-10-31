@@ -4,6 +4,7 @@ import type { RestoreIpaRule } from "helpers/restoreLettersInIpa";
 export const enIpa = async <T = Text>(
   text: Text,
   extraRestoreRules: RestoreIpaRule[] = [],
+  skippedRestoreRules: RestoreIpaRule[] = [],
 ): Promise<T> => {
   const { getPhonemize, getPhonemizeEnG2P } = await import("helpers/getPhonemize");
   const { toIPA } = await getPhonemize();
@@ -30,7 +31,9 @@ export const enIpa = async <T = Text>(
   const convert = async (text: string) =>
     await wordSplitter(text, "en", async (word: string) => {
       const ipa = filterIpa(await predict(word), word, "en");
-      return transliterator.transliterate(normalizeEnIpa(word, ipa, extraRestoreRules));
+      return transliterator.transliterate(
+        normalizeEnIpa(word, ipa, extraRestoreRules, skippedRestoreRules),
+      );
     });
 
   if (typeof text === "string") {
