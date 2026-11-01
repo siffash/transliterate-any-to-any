@@ -78,13 +78,13 @@ await transliterate(["मुंबई", "कोलकाता"], { from: "hi", 
 
 ## 🔍 Detect Language's Script
 
-By default, the library transforms the source text even if the source & target languages are of same script (see [Maltese to Latvian example](#examples)). If you want to prevent such cases, you can compare the languages' scripts before the transforming:
+By default, the library transforms the source text even if the source & target languages are of same script (see [Maltese to Latvian example](#examples)). If you want to prevent such cases, you can compare the languages' scripts in advance:
 
 ```typescript
 import { languages } from "transliterate-any-to-any";
 
-if (languages[languageFrom]?.script !== languages[languageTo]?.script) {
-  await transliterate(text, { from: languageFrom, to: languageTo });
+if (languages[sourceLanguage]?.script !== languages[targetLanguage]?.script) {
+  await transliterate(text, { from: sourceLanguage, to: targetLanguage });
 }
 ```
 

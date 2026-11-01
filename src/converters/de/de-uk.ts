@@ -7,9 +7,10 @@ export const deUk = async (text: Text) => {
   const { ukLlRules } = await import("data/uk/uk_ll.rules");
   const { ukLRules } = await import("data/uk/uk_l.rules");
   const { deLatnUkRules } = await import("data/de/de-latn_uk.rules");
+  const { deLatnUkHRules } = await import("data/de/de-latn_uk-h.rules");
 
   const transliterator = RBT.fromRules(
-    deLatnRules + latnUkRules + ukLlRules + ukLRules + deLatnUkRules,
+    deLatnUkHRules + deLatnRules + latnUkRules + ukLlRules + ukLRules + deLatnUkRules,
   );
 
   if (typeof text === "string") {

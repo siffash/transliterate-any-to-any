@@ -170,7 +170,7 @@ describe("apostrophe look-alikes", () => {
     ["D‘Angelo", "it", "ru", "Д’Анджело"],
     ["D‘Hondt", "nl", "th", "ดโฮนต"],
     ["D`Armi, Dell´Utri", "it", "ru", "Д’Арми, Делл’Утри"],
-    ["DʼHondt", "cs", "ru", "Д’Хондт"],
+    ["DʼHondt", "cs", "ru", "Д’Гондт"],
     ["d`Artagnan, L‘Oréal", "fr", "uk", "д’Артаньян, Л’Ореаль"],
     ["ג‘ורג‘", "he", "en", "Jorj"],
     ["Ma‘ruf, O＇Brien", "ms", "ru", "Ма’руф, О’Бриен"],

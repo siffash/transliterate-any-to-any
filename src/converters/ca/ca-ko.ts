@@ -5,9 +5,12 @@ export const caKo = async (text: Text) => {
   const { caIpaRules } = await import("data/ca/ca-ipa.rules");
   const { caIpaLRules } = await import("data/ca/ca-ipa_l.rules");
   const { caIpaKoRules } = await import("data/ca/ca-ipa_ko.rules");
+  const { ipaKoFinalKpRules } = await import("data/ipa/ipa-ko_final-kp.rules");
   const { ipaKoRules } = await import("data/ipa/ipa-ko.rules");
 
-  const transliterator = RBT.fromRules(caIpaRules + caIpaLRules + caIpaKoRules + ipaKoRules);
+  const transliterator = RBT.fromRules(
+    caIpaRules + caIpaLRules + caIpaKoRules + ipaKoFinalKpRules + ipaKoRules,
+  );
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);

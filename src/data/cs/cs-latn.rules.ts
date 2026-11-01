@@ -50,49 +50,8 @@ C } [:Lu:] > TS;
 C > Ts;
 c > ts;
 
-dě > đe;
-Dě > Đe;
-dĚ > đE;
-DĚ > ĐE;
-
-ně > ńe;
-Ně > Ńe;
-nĚ > ńE;
-NĚ > ŃE;
-
-mě > mńe;
-Mě > Mńe;
-mĚ > mńE;
-MĚ > MŃE;
-
-bě > bye;
-Bě > Bye;
-bĚ > byE;
-BĚ > BYE;
-
-pě > pye;
-Pě > Pye;
-pĚ > pyE;
-PĚ > PYE;
-
-vě > vye;
-Vě > Vye;
-vĚ > vyE;
-VĚ > VYE;
-
-fě > fye;
-Fě > Fye;
-fĚ > fyE;
-FĚ > FYE;
-
-d } [iíIÍ] > đ;
-D } [iíIÍ] > Đ;
-
-n } [iíIÍ] > ń;
-N } [iíIÍ] > Ń;
-
-ď > đ;
-Ď > Đ;
+ď > d;
+Ď > D;
 
 ť > t;
 Ť > T;

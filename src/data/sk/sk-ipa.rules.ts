@@ -26,7 +26,6 @@ gy > d͡ʑ;
 ch > x;
 
 b } [ptťcčkfsšʃx] > p;
-d } [ptťcčkfsšʃx] > t;
 ď } [ptťcčkfsšʃx] > t͡ɕ;
 dz } [ptťcčkfsšʃx] > t͡s;
 dž } [ptťcčkfsšʃx] > t͡ʃ;
@@ -37,7 +36,6 @@ h } [ptťcčkfsšʃx] > x;
 v } [ptťcčkfsšʃx] > f;
 
 b } [^[:L:][:M:]] > p;
-d } [^[:L:][:M:]] > t;
 ď } [^[:L:][:M:]] > t͡ɕ;
 dz } [^[:L:][:M:]] > t͡s;
 dž } [^[:L:][:M:]] > t͡ʃ;

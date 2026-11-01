@@ -3,9 +3,10 @@ import { Text } from "types";
 export const arKo = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { arIpa } = await import("converters/ar/ar-ipa");
+  const { ipaKoFinalKpRules } = await import("data/ipa/ipa-ko_final-kp.rules");
   const { ipaKoRules } = await import("data/ipa/ipa-ko.rules");
 
-  const transliterator = RBT.fromRules(ipaKoRules + "::Title;");
+  const transliterator = RBT.fromRules(ipaKoFinalKpRules + ipaKoRules + "::Title;");
 
   if (typeof text === "string") {
     const ipa = await arIpa<string>(text);
