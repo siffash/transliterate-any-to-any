@@ -2,10 +2,9 @@ import { Text } from "types";
 
 export const viTh = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
-  const { viIpaRules } = await import("data/vi/vi-ipa.rules");
-  const { ipaThRules } = await import("data/ipa/ipa-th.rules");
+  const { viThRules } = await import("data/vi/vi-th.rules");
 
-  const transliterator = RBT.fromRules(viIpaRules + ipaThRules);
+  const transliterator = RBT.fromRules(viThRules);
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);

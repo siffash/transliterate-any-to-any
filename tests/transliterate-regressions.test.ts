@@ -2080,6 +2080,22 @@ describe("regressions of rule-based transliteration", () => {
     ["Ruane, Situational", "en", "th", "รุเอยน, ซิชุเอยเชินัล"],
     ["北京, 毛泽东", "zh", "th", "เป่ยชิ้ง, เม้า เซ้อตุ้ง"],
     ["Manhattan, Brittany, Pattinson", "en", "ja", "マンハッタン, ブリタニー, パティンソン"],
+    ["Hồ Chí Minh, Võ Nguyên Giáp", "vi", "th", "โห่ จี๊ มิญ, หวอ เงวียน ซ้าป"],
+    [
+      "Bà Rịa-Vũng Tàu, Hội An, Cao Bá Quát",
+      "vi",
+      "th",
+      "บ่า เสียะ-หวุง เต่า, โห่ย อาน, กาว บ๊า กว๊าต",
+    ],
+    ["Đặng Thị Ngọc Thịnh, Nguyễn Phú Trọng", "vi", "th", "ดั่ง ถิ หง็อก ถิ่ญ, เหงียน ฟู้ จ่อง"],
+    [
+      "Quảng Ngãi, Khánh Hòa, Thanh Hóa, Thùy",
+      "vi",
+      "th",
+      "กว๋าง หงาย, คั้ญ ฮหว่า, ทัญ ฮว้า, ถวี่",
+    ],
+    ["Đắk Lắk, Thích, Tháp, Nghệ An", "vi", "th", "ดั๊ก ลัก, ทิก, ท้าป, เหงะ อาน"],
+    ["ngoãn, ngoẻn, khuấy, Giếng", "vi", "th", "งหวาน, งแหวน, เคว้ย, เซี้ยง"],
   ] as const;
 
   for (const jsImplementation of [true, false]) {
