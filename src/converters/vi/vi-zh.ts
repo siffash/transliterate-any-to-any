@@ -72,20 +72,14 @@ export const viZh = async (text: Text) => {
 
       // If no compound phrase was found, process as a single word
       if (!matchFound) {
-        const singleWord = token.toLowerCase();
-        const normalizedWord = singleWord.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-        const exact = lookup(singleDictionary, singleWord);
-        const toneless = lookup(singleDictionary, normalizedWord);
+        const exact = lookup(singleDictionary, token.toLowerCase());
 
-        // Priority 1: Exact Sino-Vietnamese match (preserves tonal meaning)
-        if (exact && exact !== "_") {
+        // Priority 1: Exact Sino-Vietnamese match (no tone-stripped fallback:
+        // it maps unrelated syllables, e.g. \u0111\u1ecbnh \u2192 \u0111inh \u4e01, t\u00e1m \u2192 tam \u4e09)
+        if (exact) {
           result += exact;
         }
-        // Priority 2: Tone-stripped fallback match
-        else if (toneless && toneless !== "_") {
-          result += toneless;
-        }
-        // Priority 3: IPA Fallback via ICU Rules
+        // Priority 2: IPA Fallback via ICU Rules
         else {
           try {
             const ipa = transliteratorToIpa.transliterate(token);
@@ -100,7 +94,7 @@ export const viZh = async (text: Text) => {
       }
     }
 
-    // 4. Smart Spacing Cleanup
+    // 3. Smart Spacing Cleanup
     // Vietnamese input has spaces between syllables (e.g., "Trung Quốc").
     // We want to remove spaces between Chinese characters, but KEEP spaces
     // between Chinese characters and English letters/numbers.
