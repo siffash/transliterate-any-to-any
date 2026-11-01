@@ -353,7 +353,11 @@ export const normalizeEnIpa = (
     ...ettRestoreRules,
     // Restore "el"
     { ipaCharToBeReplaced: "ɪɫ", lettersToRestore: { el: "eɫ" }, window: 1 },
-    // Restore "et"
+    // Restore "et"; a diphthong keeps its "ɪ" from it, and the "e" of "eɪt" becomes "ɛ" like in the "ett"
+    // restore (Goizueta, not ueeta)
+    { ipaCharToBeReplaced: "eɪt", lettersToRestore: { et: "ɛt" }, keepStress: true, window: 2 },
+    { ipaCharToBeReplaced: "aɪt", lettersToRestore: { et: "aɪt" }, keepStress: true, window: 2 },
+    { ipaCharToBeReplaced: "ɔɪt", lettersToRestore: { et: "ɔɪt" }, keepStress: true, window: 2 },
     { ipaCharToBeReplaced: "ɪt", lettersToRestore: { et: "et" } },
     // Restore "ie"
     { ipaCharToBeReplaced: "jə", lettersToRestore: { ie: "ɪɛ" } },
