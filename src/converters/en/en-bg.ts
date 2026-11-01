@@ -6,14 +6,15 @@ export const enBg = async (text: Text) => {
   const { enIpaBgRules } = await import("data/en/en-ipa_bg.rules");
   const { ipaBgRules } = await import("data/ipa/ipa-bg.rules");
   const { copyCase } = await import("helpers/copyCase");
+  const { bgRestoreRules } = await import("helpers/normalizeEnIpa");
 
   const transliterator = RBT.fromRules(enIpaBgRules + ipaBgRules);
 
   if (typeof text === "string") {
-    const ipa = await enIpa<string>(text);
+    const ipa = await enIpa<string>(text, bgRestoreRules);
     return copyCase(text, transliterator.transliterate(ipa), "bg");
   } else {
-    const ipaArray = await enIpa<string[]>(text);
+    const ipaArray = await enIpa<string[]>(text, bgRestoreRules);
     return ipaArray.map((ipa, i) => copyCase(text[i], transliterator.transliterate(ipa), "bg"));
   }
 };

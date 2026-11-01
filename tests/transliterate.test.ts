@@ -149,7 +149,7 @@ describe("native and full-width digits", () => {
     ["东京 １２３", "zh", "ja", "東京 １２３"],
     ["서울 １２３", "ko", "en", "Seoul 123"],
     ["서울 １２３", "ko", "hi", "सउल 123"],
-    ["Hello 123", "en", "ar", "هيللو 123"],
+    ["Hello 123", "en", "ar", "هيلو 123"],
   ] as const)("%s (%s → %s) keeps its digits", async (text, from, to, expected) => {
     const transliterated = await transliterate(text, { from, to });
     expect(transliterated).toBe(expected);
