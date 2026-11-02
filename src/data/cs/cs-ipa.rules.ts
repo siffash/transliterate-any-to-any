@@ -29,22 +29,13 @@ dz > d͡z;
 [bcčdďfgh{ch}jklmnňpqrřsštťvwxzž] { l } [bcčdďfgh{ch}jklmnňpqrřsštťvwxzž] > l̩;
 [bcčdďfgh{ch}jklmnňpqrřsštťvwxzž] { l } [^[:L:][:M:]] > l̩;
 
-b } [^[:L:][:M:]] > p;
+[tsc] { z } [^[:L:][:M:]] > s;
 ď } [^[:L:][:M:]] > t͡ɕ;
-g } [^[:L:][:M:]] > k;
-z } [^[:L:][:M:]] > s;
-ž } [^[:L:][:M:]] > ʃ;
 h } [^[:L:][:M:]] > x;
-v } [^[:L:][:M:]] > f;
 ř } [^[:L:][:M:]] > r̝̊;
 
-b } [ptťksšfcčx] > p;
 ď } [ptťksšfcčx] > t͡ɕ;
-g } [ptťksšfcčx] > k;
-z } [ptťksšfcčx] > s;
-ž } [ptťksšfcčx] > ʃ;
 h } [ptťksšfcčx] > x;
-v } [ptťksšfcčx] > f;
 ř } [ptťksšfcčx] > r̝̊;
 [ptťksšfcčx] { ř > r̝̊;
 

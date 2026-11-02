@@ -51,22 +51,6 @@ ou > u;
 ai > aj;
 i } [aeou] > j;
 
-b } [pfktsšcčćh{t͡s}{t͡ʃ}{t͡ɕ}] > p;
-d } [pfktsšcčćh{t͡s}{t͡ʃ}{t͡ɕ}] > t;
-g } [pfktsšcčćh{t͡s}{t͡ʃ}{t͡ɕ}] > k;
-v } [pfktsšcčćh{t͡s}{t͡ʃ}{t͡ɕ}] > f;
-z } [pfktsšcčćh{t͡s}{t͡ʃ}{t͡ɕ}] > s;
-ʒ } [pfktsšcčćh{t͡s}{t͡ʃ}{t͡ɕ}] > ʃ;
-d͡ʑ } [pfktsšcčćh{t͡s}{t͡ʃ}{t͡ɕ}] > t͡ɕ;
-d͡ʒ } [pfktsšcčćh{t͡s}{t͡ʃ}{t͡ɕ}] > t͡ʃ;
-
-t͡ɕ } [bgdzž{dž}đ{d͡ʒ}{d͡ʑ}] > d͡ʑ;
-t͡ʃ } [bgdzž{dž}đ{d͡ʒ}{d͡ʑ}] > d͡ʒ;
-
-ʒ } [^[:L:][:M:]] > ʃ;
-d͡ʑ } [^[:L:][:M:]] > t͡ɕ;
-d͡ʒ } [^[:L:][:M:]] > t͡ʃ;
-
 [^aeiouɛɔ] { r } [^aeiouɛɔ] > r̩;
 [^[:L:][:M:]] { r } [^aeiouɛɔ] > r̩;
 

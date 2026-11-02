@@ -25,6 +25,11 @@ ij > ey;
 
 ::Null;
 
+ӽ > h;
+Ӽ > H;
+
+::Null;
+
 Ľ } [AOUÏ] > LY;
 Ľ } [aouï] > Ly;
 ľ } [AOUÏ] > lY;

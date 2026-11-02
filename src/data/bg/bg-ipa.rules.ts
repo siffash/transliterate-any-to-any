@@ -2,11 +2,6 @@ export const bgIpaRules = `
 ::Lower;
 ::NFC;
 
-в } [пфктшсцчщ] > ф;
-в } [^[:L:][:M:]] > ф;
-
-::Null;
-
 щ > ʃt;
 ч > t͡ʃ;
 ц > t͡s;

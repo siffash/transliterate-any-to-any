@@ -1,6 +1,10 @@
 export const latnPtRules = `
 ::Null;
 
+[kK] { [ӽӼ] > ;
+
+::Null;
+
 [Čč] { [Čč] > ;
 [Šš] { [Šš] > ;
 [Dd] [Žž] { [Dd] [Žž] > ;
@@ -32,6 +36,11 @@ g [hH] > g;
 
 T [hH] > T;
 t [hH] > t;
+
+::Null;
+
+ӽ > h;
+Ӽ > H;
 
 ::Null;
 

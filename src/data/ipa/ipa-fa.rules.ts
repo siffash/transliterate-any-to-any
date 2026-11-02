@@ -10,6 +10,8 @@ export const ipaFaRules = `
 õ > o ̃;
 ũ > u ̃;
 
+[bcdfɡghklmnpqrstvxzʃʒθðχɲɫʎʁɹɾʀɣβʋɦ] { ʲ } [aɑæɐuʊoɔ] > j;
+
 [ʰʱʲʷ'’ʼˈˌ̧̇ːˠˤ˥˧˩̝̟̥̩̪̯͈̊̚͡] > ;
 
 ０ > 0;

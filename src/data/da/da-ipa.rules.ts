@@ -90,8 +90,8 @@ y > y;
 ø > œ;
 å > ɔ;
 
-b > p;
-d > t;
+b > b;
+d > d;
 f > f;
 h > h;
 j > j;
@@ -129,5 +129,5 @@ t } [aeiouyæøåːlrj] > tʰ;
 [^[:L:][:M:]] { k > kʰ;
 k } [aeiouyæøåːlrj] > kʰ;
 
-g > k;
+g > ɡ;
 `;

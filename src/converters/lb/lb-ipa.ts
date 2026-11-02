@@ -4,6 +4,7 @@ export const lbIpa = async <T = Text>(
   text: Text,
   velarA = false,
   mapIpa?: Record<string, string>,
+  rules = "",
 ): Promise<T> => {
   const { lbIpaMap } = await import("data/lb/lb-ipa.map");
   const { RBT } = await import("helpers/rbt");
@@ -11,7 +12,7 @@ export const lbIpa = async <T = Text>(
   const { convertWithExceptions } = await import("helpers/convertWithExceptions");
   const { filterIpa } = await import("helpers/filterIpa");
 
-  const transliterator = RBT.fromRules(lbIpaRules);
+  const transliterator = RBT.fromRules(lbIpaRules + rules);
 
   const exception = (word: string) => {
     const key = word.normalize("NFC").toLocaleLowerCase("lb");

@@ -6,12 +6,6 @@ dž > d͡ʐ;
 lj > ʎ;
 nj > ɲ;
 
-d } s > t;
-d } š > t;
-d } c > t;
-d } č > t;
-d } ć > t;
-
 a > a;
 b > b;
 c > t͡s;

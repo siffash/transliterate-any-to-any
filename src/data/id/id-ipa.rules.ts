@@ -5,6 +5,7 @@ export const idIpaRules = `
 ch > tʃ;
 dj > dʒ;
 kh > x;
+gh > ɣ;
 ng > ŋ;
 ny > ɲ;
 sj > ʃ;

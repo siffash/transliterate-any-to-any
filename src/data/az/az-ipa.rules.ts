@@ -26,8 +26,6 @@ tt > tː;
 vv > vː;
 zz > zː;
 
-v } [ [pfktsşxçh] [^[:L:][:M:]] ] > f;
-
 q } [pfktsşxçh] > k;
 q > ɡ;
 

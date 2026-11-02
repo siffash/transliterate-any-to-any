@@ -20,6 +20,8 @@ const getFrenchMapIpa = async () => {
 export const lbJa = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { lbIpa } = await import("converters/lb/lb-ipa");
+  const { lbIpaDevoiceRules } = await import("data/lb/lb-ipa_devoice.rules");
+  const { ipaDevoiceBgRules } = await import("data/ipa/ipa_devoice-bg.rules");
   const { ipaJaRules } = await import("data/ipa/ipa-ja.rules");
 
   const transliterator = RBT.fromRules(ipaJaRules);
@@ -31,10 +33,15 @@ export const lbJa = async (text: Text) => {
   const mapIpa = await frenchMapIpa;
 
   if (typeof text === "string") {
-    const ipa = await lbIpa<string>(text, false, mapIpa);
+    const ipa = await lbIpa<string>(text, false, mapIpa, lbIpaDevoiceRules + ipaDevoiceBgRules);
     return transliterator.transliterate(ipa);
   } else {
-    const ipaArray = await lbIpa<string[]>(text, false, mapIpa);
+    const ipaArray = await lbIpa<string[]>(
+      text,
+      false,
+      mapIpa,
+      lbIpaDevoiceRules + ipaDevoiceBgRules,
+    );
     return ipaArray.map(ipa => transliterator.transliterate(ipa));
   }
 };

@@ -1,6 +1,11 @@
 export const latnViRules = `
 ::Null;
 
+[kK] { ӽ > h;
+[kK] { Ӽ > H;
+
+::Null;
+
 [Ff] { [Ff] > ;
 [Dd] { [Dd] > ;
 [Čč] { [Čč] > ;
@@ -188,6 +193,11 @@ w > v;
 [^[:L:][:M:]] { \\' > ;
 \\' } [^[:L:][:M:]] > ;
 · > ;
+
+::Null;
+
+ӽ > h;
+Ӽ > H;
 
 ::Null;
 

@@ -1,6 +1,11 @@
 export const latnFrRules = `
 ::Null;
 
+ӽ > h;
+Ӽ > H;
+
+::Null;
+
 [Čč] { [Čč] > ;
 [Šš] { [Šš] > ;
 [Dd] [Žž] { [Dd] [Žž] > ;

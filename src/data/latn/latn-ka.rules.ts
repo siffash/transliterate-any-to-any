@@ -13,6 +13,11 @@ ij > ეი;
 
 ::Null;
 
+ӽ > h;
+Ӽ > H;
+
+::Null;
+
 [ćč] > ჩ;
 đ > ჯ;
 ľ } [bcdfghjklmnpqrstvwxzčćđšžჯძთღნხც] > ლ;

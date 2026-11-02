@@ -2,10 +2,6 @@ export const lvIpaRules = `
 ::Lower;
 ::NFC;
 
-z } [ptkķcčsšfh] > s;
-ž } [ptkķcčsšfh] > ʃ;
-v } [ptkķcčsšfh] > f;
-
 n } k > ŋ;
 n } g > ŋ;
 n } ķ > ɲ;

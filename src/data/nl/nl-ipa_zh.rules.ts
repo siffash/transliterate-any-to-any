@@ -5,4 +5,6 @@ export const nlIpaZhRules = `
 dɑ { m } [^[:L:][:M:]] > n;
 ʏ } [mnŋ] > ʊ;
 [ɛæeaɑ] ː? [iɪj] ː? } [^aæʌɑɛeiɪoɒɔuʊyʏøœɵəɜɨɤʉɐj] > aɪ;
+ɣ } [ptkcqfθsʃçxχɕʂ] > x;
+ɣ } [^[:L:][:M:]] > x;
 `;

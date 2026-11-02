@@ -29,6 +29,11 @@ ij > ej;
 
 ::Null;
 
+ӽ > h;
+Ӽ > H;
+
+::Null;
+
 [:Lu:] { X > CH;
 X } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > CH;
 X } [:Lu:] > CH;

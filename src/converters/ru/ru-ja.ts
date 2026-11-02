@@ -3,10 +3,14 @@ import { Text } from "types";
 export const ruJa = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { ruIpaRules } = await import("data/ru/ru-ipa.rules");
+  const { ipaDevoiceVRules } = await import("data/ipa/ipa_devoice-v.rules");
+  const { ipaDevoiceZRules } = await import("data/ipa/ipa_devoice-z.rules");
   const { ruIpaJaRules } = await import("data/ru/ru-ipa_ja.rules");
   const { ipaJaRules } = await import("data/ipa/ipa-ja.rules");
 
-  const transliterator = RBT.fromRules(ruIpaRules + ruIpaJaRules + ipaJaRules);
+  const transliterator = RBT.fromRules(
+    ruIpaRules + ipaDevoiceVRules + ipaDevoiceZRules + ruIpaJaRules + ipaJaRules,
+  );
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);

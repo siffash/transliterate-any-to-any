@@ -34,9 +34,10 @@ const sameReading = (a: string, b: string) =>
 // 東日本旅客鉄道, 鹿児島湾), which are romanized as separate words. They're
 // split the way kuromoji would without that entry, but only if the parts
 // read the same as the whole (unlike 瀬戸内海: Setonaikai, not Setouchi Umi).
+// Kana always reads the same, so names without kanji stay whole (アメリカ, not アメ リカ).
 const splitCompound = (tokenizer: Tokenizer, token: KuromojiToken): KuromojiToken[] => {
   const { surface_form: word, reading } = token;
-  if ([...word].length < 4 || !reading) return [token];
+  if ([...word].length < 4 || !reading || !/\p{scx=Han}/u.test(word)) return [token];
   const lattice = tokenizer.getLattice(word);
   lattice.nodes_end_at = lattice.nodes_end_at.map(nodes =>
     nodes?.filter(node => !(node.type === "KNOWN" && node.length >= word.length)),

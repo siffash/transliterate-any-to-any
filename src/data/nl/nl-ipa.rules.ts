@@ -90,21 +90,10 @@ zz > z;
 en } [^[:L:][:M:]] > ən;
 e } [^[:L:][:M:]] > ə;
 
-b } [cfhkpst] > p;
-d } [cfhkpst] > t;
-v } [st] > f;
-z } [st] > s;
-g } [st] > x;
-
 a } [^[:L:][:M:]] > aː;
 o } [^[:L:][:M:]] > oː;
 u } [^[:L:][:M:]] > yː;
-b } [^[:L:][:M:]] > p;
-d } [\\'’] [abcdefghijklmnopqruvwxyzáäàâçéèêëíîïóôöúûüñ] > d;
-d } [^[:L:][:M:]] > t;
-v } [^[:L:][:M:]] > f;
-z } [^[:L:][:M:]] > s;
-g } [^[:L:][:M:]] > x;
+[tsc] { z } [^[:L:][:M:]] > s;
 
 b > b;
 d > d;

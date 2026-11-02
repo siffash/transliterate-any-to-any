@@ -48,25 +48,36 @@ export const arIpa = async <T = Text>(text: Text): Promise<T> => {
   // the long vowels uː/iː (محمود, سعيد), elsewhere the glides w/j; -ية is -ijja
   const stemFallback = (s: string, afterArticle: boolean): string => {
     const chars = [...s];
-    return chars
-      .map((ch, i) => {
-        const prev = chars[i - 1];
-        const next = chars[i + 1];
-        const vowel = i > 0 && CONSONANT.test(prev) && (next === undefined || CONSONANT.test(next));
-        if (ch === "و") return vowel ? "uː" : "w";
-        if (ch === "ي") {
-          if (vowel) return "iː";
-          return i > 0 && CONSONANT.test(prev) && next === "ة" && i === chars.length - 2
-            ? "ijj"
-            : "j";
-        }
-        if (ch === "ا") return i ? "aː" : "a";
-        return (
-          ((i || afterArticle) && /[أإ]/.test(ch) ? "ʔ" : "") +
-          (stemCharMap[ch] ?? charMap[ch] ?? ch)
-        );
-      })
-      .join("");
+    const segments = chars.map((ch, i) => {
+      const prev = chars[i - 1];
+      const next = chars[i + 1];
+      const vowel = i > 0 && CONSONANT.test(prev) && (next === undefined || CONSONANT.test(next));
+      if (ch === "و") return vowel ? "uː" : "w";
+      if (ch === "ي") {
+        if (vowel) return "iː";
+        return i > 0 && CONSONANT.test(prev) && next === "ة" && i === chars.length - 2
+          ? "ijj"
+          : "j";
+      }
+      if (ch === "ا") return i ? "aː" : "a";
+      return (
+        ((i || afterArticle) && /[أإ]/.test(ch) ? "ʔ" : "") + (stemCharMap[ch] ?? charMap[ch] ?? ch)
+      );
+    });
+    // Arabic has no word-initial clusters and no runs of three consonants: the unwritten vowel is most often a
+    // (حجاز → ħadʒaːz, المتجددة → almatadʒadda)
+    const isConsonant = (segment: string) => /\p{L}/u.test(segment) && !/[aiuة]/.test(segment);
+    // تش is one sound in foreign names (تشاد → tʃaːd)
+    for (let i = segments.length - 1; i > 0; i--) {
+      if (segments[i - 1] === "t" && segments[i] === "ʃ") segments.splice(i - 1, 2, "tʃ");
+    }
+    if (segments.length > 2 && isConsonant(segments[0]) && isConsonant(segments[1])) {
+      segments.splice(1, 0, "a");
+    }
+    for (let i = 0; i + 2 < segments.length; i++) {
+      if (segments.slice(i, i + 3).every(isConsonant)) segments.splice(i + 2, 0, "a");
+    }
+    return segments.join("");
   };
 
   // The article, alone or after a one-letter prefix (للخدمات → lilxdmaːt)
@@ -100,11 +111,18 @@ export const arIpa = async <T = Text>(text: Text): Promise<T> => {
     return stemFallback(word, false);
   };
 
+  // A word missing from the map whose -ي adjective is there takes its reading (حجاز from حجازي ħiˈdʒaːziː)
+  const lookup = (s: string): string => {
+    if (arIpaMap[s] || s.length < 3 || s.endsWith("ي")) return arIpaMap[s];
+    const nisba = arIpaMap[s + "ي"];
+    return nisba?.endsWith("iː") ? nisba.slice(0, -2).replace(/[ˈˌ](?=[^aiueoɛɔː]*$)/, "") : "";
+  };
+
   const wordToIPA = (rawWord: string): string => {
     const word = normalize(rawWord);
 
     // 1. Full word - best accuracy (preserves sun-letter assimilation etc.)
-    const direct = filterIpa(arIpaMap[word], word, "ar");
+    const direct = filterIpa(lookup(word), word, "ar");
     if (direct) return direct;
 
     // 2. Prefix only
@@ -113,7 +131,7 @@ export const arIpa = async <T = Text>(text: Text): Promise<T> => {
       const stem = word.slice(pre.length);
       if (stem.length < MIN_STEM) continue;
 
-      const stemIPA = filterIpa(arIpaMap[stem], stem, "ar");
+      const stemIPA = filterIpa(lookup(stem), stem, "ar");
       if (stemIPA) return joinPrefix(pre, stem, stemIPA);
 
       // 3. Prefix + suffix
@@ -122,7 +140,7 @@ export const arIpa = async <T = Text>(text: Text): Promise<T> => {
         const core = stem.slice(0, stem.length - suf.length);
         if (core.length < MIN_STEM) continue;
 
-        const coreIPA = filterIpa(arIpaMap[core], core, "ar");
+        const coreIPA = filterIpa(lookup(core), core, "ar");
         if (coreIPA) return joinPrefix(pre, core, coreIPA) + charFallback(suf);
       }
     }
@@ -133,7 +151,7 @@ export const arIpa = async <T = Text>(text: Text): Promise<T> => {
       const stem = word.slice(0, word.length - suf.length);
       if (stem.length < MIN_STEM) continue;
 
-      const stemIPA = filterIpa(arIpaMap[stem], stem, "ar");
+      const stemIPA = filterIpa(lookup(stem), stem, "ar");
       if (stemIPA) return stemIPA + charFallback(suf);
     }
 

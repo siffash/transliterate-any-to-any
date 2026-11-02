@@ -1,6 +1,13 @@
 export const isLatnRules = `
 ::NFC;
 
+[fF] [gG] { h > h;
+[fF] [gG] { H > H;
+[:L:] [gGkK] { h } [aeiouyäöüåæøáéíóúýőűıâêîôûàèìòùëïõAEIOUYÄÖÜÅÆØÁÉÍÓÚÝŐŰIİÂÊÎÔÛÀÈÌÒÙËÏÕ] > ӽ;
+[:L:] [gGkK] { H } [aeiouyäöüåæøáéíóúýőűıâêîôûàèìòùëïõAEIOUYÄÖÜÅÆØÁÉÍÓÚÝŐŰIİÂÊÎÔÛÀÈÌÒÙËÏÕ] > Ӽ;
+
+::Null;
+
 [[:L:][:M:]] { \\' } [[:L:][:M:]] > ’;
 
 [:Lu:] { X > KS;
@@ -9,9 +16,9 @@ X } [:Lu:] > KS;
 X > Ks;
 x > ks;
 
-[AÁEÉIÍOÓUÚYÝÆÖRL] { G } [^gG] > GH;
-[aáeéiíoóuúyýæöAÁEÉIÍOÓUÚYÝÆÖrRlL] { G } [^gG] > Gh;
-[aáeéiíoóuúyýæöAÁEÉIÍOÓUÚYÝÆÖrRlL] { g } [^gG] > gh;
+[AÁEÉIÍOÓUÚYÝÆÖRL] { G } [^gGӽӼ] > GH;
+[aáeéiíoóuúyýæöAÁEÉIÍOÓUÚYÝÆÖrRlL] { G } [^gGӽӼ] > Gh;
+[aáeéiíoóuúyýæöAÁEÉIÍOÓUÚYÝÆÖrRlL] { g } [^gGӽӼ] > gh;
 [AÁEÉIÍOÓUÚYÝÆÖRL] { G } [^[:L:][:M:]] > GH;
 [aáeéiíoóuúyýæöAÁEÉIÍOÓUÚYÝÆÖrRlL] { G } [^[:L:][:M:]] > Gh;
 [aáeéiíoóuúyýæöAÁEÉIÍOÓUÚYÝÆÖrRlL] { g } [^[:L:][:M:]] > gh;

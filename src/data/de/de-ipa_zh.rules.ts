@@ -1,6 +1,7 @@
 export const deIpaZhRules = `
 ::Null;
 
+d } s > t;
 a ː? d ː? a { m } [^[:L:][:M:]] > m;
 da { m } [^[:L:][:M:]] > n;
 [aɐɚəɛɪɔʊœʏeiouyø] ː? { ɐ } [^[:L:][:M:]] > ʁ;

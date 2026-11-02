@@ -2,6 +2,11 @@ export const roIpaRules = `
 ::Lower;
 ::NFC;
 
+ş > ș;
+ţ > ț;
+
+::Null;
+
 [^[:L:][:M:]] { eu } [^[:L:][:M:]] > jeu;
 [^[:L:][:M:]] { el } [^[:L:][:M:]] > jel;
 [^[:L:][:M:]] { ei } [^[:L:][:M:]] > jej;

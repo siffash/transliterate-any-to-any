@@ -30,6 +30,11 @@ ij > ei;
 
 ::Null;
 
+ӽ > h;
+Ӽ > H;
+
+::Null;
+
 DŽ > CH;
 dŽ > cH;
 Dž > Ch;

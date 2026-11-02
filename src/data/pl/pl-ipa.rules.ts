@@ -59,25 +59,7 @@ krz > kʂ;
 t͡ʂ { w > f;
 ʂ { w > f;
 [ptkcfsśćx] { w > f;
-w } [ptkcfsśćx] > f;
-w } [^[:L:][:M:]] > f;
 w > v;
-
-dz } [ptkcfsśćx] > t͡s;
-dź } [ptkcfsśćx] > t͡ɕ;
-dż } [ptkcfsśćx] > t͡ʂ;
-rz } [ptkcfsśćx] > ʂ;
-b } [ptkcfsśćx] > p;
-d } [ptkcfsśćx] > t;
-g } [ptkcfsśćx] > k;
-z } [ptkcfsśćx] > s;
-ź } [ptkcfsśćx] > ɕ;
-ż } [ptkcfsśćx] > ʂ;
-
-dź } [^[:L:][:M:]] > t͡ɕ;
-dż } [^[:L:][:M:]] > t͡ʂ;
-dz } [^[:L:][:M:]] > t͡s;
-rz } [^[:L:][:M:]] > ʂ;
 
 cz > t͡ʂ;
 dź > d͡ʑ;
@@ -87,12 +69,7 @@ sz > ʂ;
 rz > ʐ;
 ch > x;
 
-b } [^[:L:][:M:]] > p;
-d } [^[:L:][:M:]] > t;
-g } [^[:L:][:M:]] > k;
-z } [^[:L:][:M:]] > s;
-ź } [^[:L:][:M:]] > ɕ;
-ż } [^[:L:][:M:]] > ʂ;
+[tsc] { z } [^[:L:][:M:]] > s;
 
 a > a;
 b > b;

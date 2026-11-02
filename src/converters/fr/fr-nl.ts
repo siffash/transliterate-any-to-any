@@ -3,11 +3,12 @@ import { Text } from "types";
 export const frNl = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { frIpa } = await import("converters/fr/fr-ipa");
+  const { frIpaNlRules } = await import("data/fr/fr-ipa_nl.rules");
   const { ipaNlRules } = await import("data/ipa/ipa-nl.rules");
   const { copyCase } = await import("helpers/copyCase");
   const { keepElision } = await import("helpers/keepElision");
 
-  const transliterator = RBT.fromRules(ipaNlRules);
+  const transliterator = RBT.fromRules(frIpaNlRules + ipaNlRules);
 
   if (typeof text === "string") {
     const ipa = await frIpa<string>(text);

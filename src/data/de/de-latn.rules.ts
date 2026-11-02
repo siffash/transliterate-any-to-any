@@ -1,6 +1,34 @@
 export const deLatnRules = `
 ::NFC;
 
+[fF] [gG] { h > h;
+[fF] [gG] { H > H;
+[:L:] [gGkK] { h } [aeiouyäöüåæøáéíóúýőűıâêîôûàèìòùëïõAEIOUYÄÖÜÅÆØÁÉÍÓÚÝŐŰIİÂÊÎÔÛÀÈÌÒÙËÏÕ] > ӽ;
+[:L:] [gGkK] { H } [aeiouyäöüåæøáéíóúýőűıâêîôûàèìòùëïõAEIOUYÄÖÜÅÆØÁÉÍÓÚÝŐŰIİÂÊÎÔÛÀÈÌÒÙËÏÕ] > Ӽ;
+
+[:L:] [tT] { h } [aA] [uU] [sS] > ӽ;
+[:L:] [tT] { H } [aA] [uU] [sS] > Ӽ;
+[:L:] [tT] { h } [oO] [fF] > ӽ;
+[:L:] [tT] { H } [oO] [fF] > Ӽ;
+[:L:] [tT] { h } [eE] [iI] [mM] > ӽ;
+[:L:] [tT] { H } [eE] [iI] [mM] > Ӽ;
+[:L:] [tT] { h } [oO] [vV] [eE] [nN] > ӽ;
+[:L:] [tT] { H } [oO] [vV] [eE] [nN] > Ӽ;
+[:L:] [tT] { h } [aA] [nN] [sS] [aA] > ӽ;
+[:L:] [tT] { H } [aA] [nN] [sS] [aA] > Ӽ;
+[:L:] [tT] { h } [aA] [gG] [eE] [nN] > ӽ;
+[:L:] [tT] { H } [aA] [gG] [eE] [nN] > Ӽ;
+[:L:] [tT] { h } [eE] [lL] [mM] > ӽ;
+[:L:] [tT] { H } [eE] [lL] [mM] > Ӽ;
+[:L:] [tT] { h } [aA] [rR] [dDtT] > ӽ;
+[:L:] [tT] { H } [aA] [rR] [dDtT] > Ӽ;
+[tT] [tT] { h } [oO] [lL] [dD] > ӽ;
+[tT] [tT] { H } [oO] [lL] [dD] > Ӽ;
+[tT] [tT] { h } [eEiI] [lL] [fF] > ӽ;
+[tT] [tT] { H } [eEiI] [lL] [fF] > Ӽ;
+
+::Null;
+
 [[:L:][:M:]] { \\' } [[:L:][:M:]] > ’;
 
 [^[:L:][:M:]] [sS] [oO] { [eE] } [sS] [tT] > ;

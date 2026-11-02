@@ -56,7 +56,9 @@ export const rtgsToIpa = (rtgs: string): string =>
         .replace(/ph/g, "pʰ")
         .replace(/th/g, "tʰ")
         .replace(/ch/g, "tɕʰ")
-        .replace(/ng/g, "ŋ");
+        .replace(/ng/g, "ŋ")
+        .replace(/(?<=[aeiouy])b$/, "p")
+        .replace(/(?<=[aeiouy])d$/, "t");
       for (const [vowel, replacement] of RTGS_VOWELS) {
         ipa = ipa.replace(vowel, replacement);
       }

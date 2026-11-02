@@ -3,6 +3,7 @@ import { Text } from "types";
 export const csUr = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { csIpaRules } = await import("data/cs/cs-ipa.rules");
+  const { ipaDevoiceVRules } = await import("data/ipa/ipa_devoice-v.rules");
   const { csSkIpaRzhRules } = await import("data/ipa/cs_sk-ipa_rzh.rules");
   const { csIpaLabialERules } = await import("data/cs/cs-ipa_labial-e.rules");
   const { csIpaHardERules } = await import("data/cs/cs-ipa_hard-e.rules");
@@ -14,6 +15,7 @@ export const csUr = async (text: Text) => {
       csIpaHardERules +
       csIpaHardIRules +
       csIpaRules +
+      ipaDevoiceVRules +
       csSkIpaRzhRules +
       ipaUrRules,
   );

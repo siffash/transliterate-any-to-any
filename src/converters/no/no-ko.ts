@@ -3,10 +3,11 @@ import { Text } from "types";
 export const noKo = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { noIpaRules } = await import("data/no/no-ipa.rules");
+  const { svNoIpaRRules } = await import("data/ipa/sv_no-ipa_r.rules");
   const { ipaKoFinalKpRules } = await import("data/ipa/ipa-ko_final-kp.rules");
   const { ipaKoRules } = await import("data/ipa/ipa-ko.rules");
 
-  const transliterator = RBT.fromRules(noIpaRules + ipaKoFinalKpRules + ipaKoRules);
+  const transliterator = RBT.fromRules(noIpaRules + svNoIpaRRules + ipaKoFinalKpRules + ipaKoRules);
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);

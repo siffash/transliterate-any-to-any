@@ -25,8 +25,8 @@ ij > ei;
 G [hH] > G;
 g [hH] > g;
 
-T [hH] > Z;
-t [hH] > z;
+T [hH] > T;
+t [hH] > t;
 
 DŽ > TJ;
 Dž > Tj;
@@ -37,6 +37,11 @@ DZ > TZ;
 Dz > Tz;
 dZ > tZ;
 dz > tz;
+
+::Null;
+
+ӽ > h;
+Ӽ > H;
 
 ::Null;
 
@@ -66,11 +71,6 @@ dz > tz;
 [aAeEiIoOuUäÄöÖüÜïÏÿŸ] { S } [AEIOUÄÖÜÏŸ] > SS;
 [aAeEiIoOuUäÄöÖüÜïÏÿŸ] { S } [aeiouäöüïÿ] > Ss;
 [aAeEiIoOuUäÄöÖüÜïÏÿŸ] { s } [aAeEiIoOuUäÄöÖüÜïÏÿŸ] > ss;
-
-[aAeEiIoOuUäÄöÖüÜïÏÿŸ] { Z } [aAeEiIoOuUäÄöÖüÜïÏÿŸ] > S;
-[aAeEiIoOuUäÄöÖüÜïÏÿŸ] { z } [aAeEiIoOuUäÄöÖüÜïÏÿŸ] > s;
-Z } [^[:L:][:M:]] > S;
-z } [^[:L:][:M:]] > s;
 
 K > C;
 k > c;

@@ -4,9 +4,10 @@ export const caHi = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { caIpaRules } = await import("data/ca/ca-ipa.rules");
   const { caIpaLRules } = await import("data/ca/ca-ipa_l.rules");
+  const { ipaHiLongARules } = await import("data/ipa/ipa-hi_long-a.rules");
   const { ipaHiRules } = await import("data/ipa/ipa-hi.rules");
 
-  const transliterator = RBT.fromRules(caIpaRules + caIpaLRules + ipaHiRules);
+  const transliterator = RBT.fromRules(caIpaRules + caIpaLRules + ipaHiLongARules + ipaHiRules);
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);

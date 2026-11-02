@@ -121,4 +121,9 @@ Z [hH] > Z;
 [sS] [yY] { [sS]+ [yY]+ > ;
 [kK] [hH] { [kK]+ [hH]+ > ;
 [nN] [yY] { [nN]+ [yY]+ > ;
+
+::Null;
+
+ӽ > h;
+Ӽ > H;
 `;

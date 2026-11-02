@@ -27,6 +27,11 @@ ij > ej;
 
 ::Null;
 
+ӽ > h;
+Ӽ > H;
+
+::Null;
+
 [^[:L:][:M:]] { I } [AaÄäEeOoÖöUuÜüŸÿ] > J;
 [^[:L:][:M:]] { i } [AaÄäEeOoÖöUuÜüŸÿ] > j;
 

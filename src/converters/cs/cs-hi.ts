@@ -7,6 +7,7 @@ export const csHi = async (text: Text) => {
   const { csIpaLabialERules } = await import("data/cs/cs-ipa_labial-e.rules");
   const { csIpaHardERules } = await import("data/cs/cs-ipa_hard-e.rules");
   const { csIpaHardIRules } = await import("data/cs/cs-ipa_hard-i.rules");
+  const { ipaHiLongARules } = await import("data/ipa/ipa-hi_long-a.rules");
   const { ipaHiRules } = await import("data/ipa/ipa-hi.rules");
 
   const transliterator = RBT.fromRules(
@@ -15,6 +16,7 @@ export const csHi = async (text: Text) => {
       csIpaHardIRules +
       csIpaRules +
       csSkIpaRzhRules +
+      ipaHiLongARules +
       ipaHiRules,
   );
 

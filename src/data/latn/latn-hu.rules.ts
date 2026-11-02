@@ -45,6 +45,11 @@ ij > ej;
 
 ::Null;
 
+ӽ > h;
+Ӽ > H;
+
+::Null;
+
 DŽDŽ > DDZS;
 Dždž > Ddzs;
 dždž > ddzs;
