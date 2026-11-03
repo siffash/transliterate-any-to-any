@@ -2,19 +2,14 @@ export const latnKaRules = `
 ::Null;
 ::Lower;
 
-dž > ჯ;
-dz > ძ;
-th > თ;
-gh > ღ;
-ng > ნგ;
-kh > ხ;
-ts > ც;
+ǯ > ჯ;
+ẑ > ძ;
+þ > თ;
+ɣ > ღ;
+ŋ > ნგ;
+ḫ > ხ;
+c > ც;
 ij > ეი;
-
-::Null;
-
-ӽ > h;
-Ӽ > H;
 
 ::Null;
 

@@ -22,7 +22,7 @@ export const bnLatnRules = `
 গ > g·;
 ঘ > gh·;
 ঙ } ্ [কখগঘ] > n·;
-ঙ > ng·;
+ঙ > ŋ·;
 চ > č·;
 ছ > čh·;
 য় > y·;
@@ -30,8 +30,8 @@ export const bnLatnRules = `
 ঢ় > rh·;
 ্যা > ্ä;
 ্য > ্y·;
-[জয] > dž·;
-ঝ > džh·;
+[জয] > ǯ·;
+ঝ > ǯh·;
 ঞ > ń·;
 [টত] > t·;
 [ঠথ] > th·;
@@ -50,7 +50,7 @@ export const bnLatnRules = `
 হ > h·;
 ৎ > t;
 ং } [কখগঘ] > n;
-ং > ng;
+ং > ŋ;
 ঃ > h;
 ঁ > n;
 ঽ > \\';

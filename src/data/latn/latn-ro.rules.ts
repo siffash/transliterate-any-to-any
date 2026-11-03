@@ -1,37 +1,34 @@
 export const latnRoRules = `
 ::Null;
 
-[Čč] { [Čč] > ;
-[Dd] [Žž] { [Dd] [Žž] > ;
+[:Lu:] { Ŋ > NG;
+Ŋ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > NG;
+Ŋ } [:Lu:] > NG;
+Ŋ > Ng;
+ŋ > ng;
 
-::Null;
+[Čč] { [Čč] > ;
+[Ǯǯ] { [Ǯǯ] > ;
 
 IJ > EI;
 iJ > eI;
 Ij > Ei;
 ij > ei;
 
-D [zZ] > Z;
-d [zZ] > z;
+Ẑ > Z;
+ẑ > z;
 
-T [hH] > T;
-t [hH] > t;
+Þ > T;
+þ > t;
 
-[nN] { G } [hH] > G;
-[nN] { g } [hH] > g;
-G [hH] > H;
-g [hH] > h;
+Ɣ > G;
+ɣ > g;
 
-K [hH] > H;
-k [hH] > h;
+Ḫ > H;
+ḫ > h;
 
-T [sS] > Ț;
-t [sS] > ț;
-
-::Null;
-
-ӽ > h;
-Ӽ > H;
+C > Ț;
+c > ț;
 
 ::Null;
 
@@ -44,8 +41,8 @@ w > v;
 X > H;
 x > h;
 
-[čćđžČĆĐŽ] [iI] { Y > I;
-[čćđžČĆĐŽ] [iI] { y > i;
+[čćđžČĆĐŽǯǮ] [iI] { Y > I;
+[čćđžČĆĐŽǯǮ] [iI] { y > i;
 [iI] { [yY] > ;
 Y } I > ;
 Yi > I;
@@ -81,12 +78,13 @@ G } [ei] > Gh;
 g } [EI] > gH;
 g } [ei] > gh;
 
-D [žŽ] } [EeIi] > G;
-d [žŽ] } [EeIi] > g;
-DŽ > GI;
-Dž > Gi;
-dŽ > gI;
-dž > gi;
+Ǯ } [EeIi] > G;
+ǯ } [EeIi] > g;
+[:Lu:] { Ǯ > GI;
+Ǯ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > GI;
+Ǯ } [:Lu:] > GI;
+Ǯ > Gi;
+ǯ > gi;
 
 Đ } [EeIi] > G;
 đ } [EeIi] > g;
@@ -112,8 +110,8 @@ dž > gi;
 
 Ľ } [^[:L:][:M:]] > L;
 ľ } [^[:L:][:M:]] > l;
-Ľ } [bcdfghjklmnpqrstvwxzçčćđšžțșłBCDFGHJKLMNPQRSTVWXZÇČĆĐŠŽȚȘŁ] > L;
-ľ } [bcdfghjklmnpqrstvwxzçčćđšžțșłBCDFGHJKLMNPQRSTVWXZÇČĆĐŠŽȚȘŁ] > l;
+Ľ } [bcdfghjklmnpqrstvwxzçčćđšžțșłBCDFGHJKLMNPQRSTVWXZÇČĆĐŠŽȚȘŁǯǮ] > L;
+ľ } [bcdfghjklmnpqrstvwxzçčćđšžțșłBCDFGHJKLMNPQRSTVWXZÇČĆĐŠŽȚȘŁǯǮ] > l;
 Ľ } [Ii] > L;
 ľ } [Ii] > l;
 [:Lu:] { Ľ > LI;
@@ -124,8 +122,8 @@ dž > gi;
 
 Ń } [^[:L:][:M:]] > N;
 ń } [^[:L:][:M:]] > n;
-Ń } [bcdfghjklmnpqrstvwxzçčćđšžțșłBCDFGHJKLMNPQRSTVWXZÇČĆĐŠŽȚȘŁ] > N;
-ń } [bcdfghjklmnpqrstvwxzçčćđšžțșłBCDFGHJKLMNPQRSTVWXZÇČĆĐŠŽȚȘŁ] > n;
+Ń } [bcdfghjklmnpqrstvwxzçčćđšžțșłBCDFGHJKLMNPQRSTVWXZÇČĆĐŠŽȚȘŁǯǮ] > N;
+ń } [bcdfghjklmnpqrstvwxzçčćđšžțșłBCDFGHJKLMNPQRSTVWXZÇČĆĐŠŽȚȘŁǯǮ] > n;
 Ń } [Ii] > N;
 ń } [Ii] > n;
 [:Lu:] { Ń > NI;
@@ -133,6 +131,8 @@ dž > gi;
 Ń } [:Lu:] > NI;
 Ń > Ni;
 ń > ni;
+
+
 
 ::Null;
 
@@ -143,16 +143,12 @@ dž > gi;
 Ï > Â;
 ï > â;
 
-::Null;
-
 [^[:L:][:M:]] { â > î;
 [^[:L:][:M:]] { Â > Î;
 â } [^[:L:][:M:]] > î;
 Â } [^[:L:][:M:]] > Î;
 [:L:] { î } [:L:] > â;
 [:L:] { Î } [:L:] > Â;
-
-::Null;
 
 [iI] [iI] { [iI]+ > ;
 [uU] [uU] { [uU]+ > ;

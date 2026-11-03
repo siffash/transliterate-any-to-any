@@ -1,37 +1,49 @@
 export const latnAzRules = `
 ::Null;
 
-ts } ts > ;
-TS } TS > ;
+[:Lu:] { Ŋ > NG;
+Ŋ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > NG;
+Ŋ } [:Lu:] > NG;
+Ŋ > Ng;
+ŋ > ng;
 
-D [Žž] > C;
-d [Žž] > c;
+[:Lu:] { C > TS;
+C } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > TS;
+C } [:Lu:] > TS;
+C > Ts;
+c > ts;
+
+[:Lu:] { Ẑ > DZ;
+Ẑ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > DZ;
+Ẑ } [:Lu:] > DZ;
+Ẑ > Dz;
+ẑ > dz;
+
+::Null;
+
+[Tt] [Ss] { [Tt] [Ss] > ;
+
+Ǯ > C;
+ǯ > c;
 
 IJ > EY;
 iJ > eY;
 Ij > Ey;
 ij > ey;
 
-T [Hh] > T;
-t [Hh] > t;
+Þ > T;
+þ > t;
 
-[nN] { G } [hH] > G;
-[nN] { g } [hH] > g;
-G [Hh] > Ğ;
-g [Hh] > ğ;
+Ɣ > Ğ;
+ɣ > ğ;
 
-K [Hh] > X;
-k [Hh] > x;
+Ḫ > X;
+ḫ > x;
 
 [aeouäöüëïyAEOUÄÖÜËÏYjJđĐćĆśŚźŹ] [iI] { a } [^[:L:][:M:]] > a;
 [aeouäöüëïyAEOUÄÖÜËÏYjJđĐćĆśŚźŹ] [iI] { A } [^[:L:][:M:]] > A;
 [:L:] [iI] { a } [^[:L:][:M:]] > ya;
 [:L:] [iI] { A } [^[:L:][:M:]] > YA;
-
-::Null;
-
-ӽ > h;
-Ӽ > H;
 
 ::Null;
 

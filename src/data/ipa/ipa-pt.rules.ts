@@ -58,6 +58,8 @@ i { [jʝ] > ;
 [ơøœɵɔɤ] > o;
 [ưʉʊɯ] > u;
 
+
+
 ::Null;
 
 ç } [eéêiíy] > c;
@@ -75,8 +77,6 @@ rr } [bcdfghjklmnpqstvwxz] > r;
 ss } [^[:L:][:M:]] > s;
 [bcdfghjklmnpqrtvwxz] { ss > s;
 ss } [bcdfghjklmnpqrtvwxz] > s;
-
-::Null;
 
 ii { i+ > ;
 uu { u+ > ;

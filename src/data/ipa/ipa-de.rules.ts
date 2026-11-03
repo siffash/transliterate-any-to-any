@@ -42,29 +42,21 @@ z > s;
 ts > z;
 ɸ > f;
 
+
+
 ::Null;
 
 [^[:L:][:M:]] { ß > ss;
 [^[:L:][:M:]] { ck > k;
 
-::Null;
-
 [aeiouäöüy] [aeiouäöüy] { tz > z;
 [aeiouäöüy] [aeiouäöüy] { ck > k;
-
-::Null;
 
 [bcdfghjklmnpqrstvwxzß] { tz > z;
 [bcdfghjklmnpqrstvwxzß] { ck > k;
 
-::Null;
-
 q } [^u] > k;
 q } [^[:L:][:M:]] > k;
-
-
-
-::Null;
 
 w { w+ > ;
 y { y+ > ;

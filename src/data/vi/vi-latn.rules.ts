@@ -7,51 +7,40 @@ export const viLatnRules = `
 
 ::NFC;
 
-Ngh > Ng;
-NGH > NG;
-NGh > NG;
-ngh > ng;
+N [gG] [hH]? > Ŋ;
+n [gG] [hH]? > ŋ;
 
-Ng > Ng;
-NG > NG;
-ng > ng;
+N [hH] > Ń;
+n [hH] > ń;
 
-Nh > Ń;
-NH > Ń;
-nh > ń;
+K [hH] > X;
+k [hH] > x;
 
-Kh > X;
-KH > X;
-kh > x;
+T [hH] > Þ;
+t [hH] > þ;
 
-Ph > F;
-PH > F;
-ph > f;
+P [hH] > F;
+p [hH] > f;
 
-Ch > Ć;
-CH > Ć;
-ch > ć;
+C [hH] > Ć;
+c [hH] > ć;
 
-Tr > Č;
-TR > Č;
-tr > č;
+T [rR] > Č;
+t [rR] > č;
 
-Gh > Gh;
-GH > GH;
-gh > gh;
+G [hH] > Ɣ;
+g [hH] > ɣ;
 
-Gi } [AĂÂEOÔƠUƯaăâeoôơuư] > Z;
-GI } [AĂÂEOÔƠUƯaăâeoôơuư] > Z;
-gi } [AĂÂEOÔƠUƯaăâeoôơuư] > z;
-gI } [AĂÂEOÔƠUƯaăâeoôơuư] > z;
+G [iI] } [AĂÂEOÔƠUƯaăâeoôơuư] > Z;
+g [iI] } [AĂÂEOÔƠUƯaăâeoôơuư] > z;
 
 Gi > Zi;
 GI > ZI;
 gi > zi;
 gI > zI;
 
-G > Gh;
-g > gh;
+G > Ɣ;
+g > ɣ;
 
 D > Z;
 d > z;
@@ -72,12 +61,19 @@ x > s;
 
 [ĂÂ] > A;
 [ăâ] > a;
+
 Ê > E;
 ê > e;
+
 [ÔƠ] > O;
 [ôơ] > o;
+
 Ư > Ï;
 ư > ï;
+
+[^aeioïAEIOÏ] { Y } [^AĂÂEÊIOÔƠUƯaăâeêioôơuư] > I;
+[^aeioïAEIOÏ] { y } [^AĂÂEÊIOÔƠUƯaăâeêioôơuư] > i;
+
 J > Y;
 j > y;
 `;

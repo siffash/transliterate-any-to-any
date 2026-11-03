@@ -1,8 +1,47 @@
 export const latnFrRules = `
 ::Null;
 
-ӽ > h;
-Ӽ > H;
+[:Lu:] { Ḫ > KH;
+Ḫ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > KH;
+Ḫ } [:Lu:] > KH;
+Ḫ > Kh;
+ḫ > kh;
+
+[:Lu:] { Ŋ > NG;
+Ŋ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > NG;
+Ŋ } [:Lu:] > NG;
+Ŋ > Ng;
+ŋ > ng;
+
+[:Lu:] { Ɣ > GH;
+Ɣ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > GH;
+Ɣ } [:Lu:] > GH;
+Ɣ > Gh;
+ɣ > gh;
+
+[:Lu:] { Þ > TH;
+Þ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > TH;
+Þ } [:Lu:] > TH;
+Þ > Th;
+þ > th;
+
+[:Lu:] { C > TS;
+C } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > TS;
+C } [:Lu:] > TS;
+C > Ts;
+c > ts;
+
+[:Lu:] { Ẑ > DZ;
+Ẑ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > DZ;
+Ẑ } [:Lu:] > DZ;
+Ẑ > Dz;
+ẑ > dz;
+
+[:Lu:] { Ǯ > DŽ;
+Ǯ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > DŽ;
+Ǯ } [:Lu:] > DŽ;
+Ǯ > Dž;
+ǯ > dž;
 
 ::Null;
 
@@ -10,10 +49,7 @@ export const latnFrRules = `
 [Šš] { [Šš] > ;
 [Dd] [Žž] { [Dd] [Žž] > ;
 
-::Null;
-
-ts } ts > ;
-TS } TS > ;
+[Tt] [Ss] { [Tt] [Ss] > ;
 
 IJ > EI;
 iJ > eI;

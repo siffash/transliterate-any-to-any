@@ -3,10 +3,10 @@ export const latnEsCaRules = `
 
 [:Lu:] { Ľ } [^[:L:][:M:]] > LL;
 ľ } [^[:L:][:M:]] > ll;
-[:Lu:] { Ľ } [bcdfghjklmnpqrstvwxzçčćđšžBCDFGHJKLMNPQRSTVWXZÇČĆĐŠŽ] > LL;
-ľ } [bcdfghjklmnpqrstvwxzçčćđšžBCDFGHJKLMNPQRSTVWXZÇČĆĐŠŽ] > ll;
+[:Lu:] { Ľ } [bcdfghjklmnpqrstvwxzçčćđšžBCDFGHJKLMNPQRSTVWXZÇČĆĐŠŽǯǮẑẐþÞɣƔŋŊḫḪ] > LL;
+ľ } [bcdfghjklmnpqrstvwxzçčćđšžBCDFGHJKLMNPQRSTVWXZÇČĆĐŠŽǯǮẑẐþÞɣƔŋŊḫḪ] > ll;
 [:Lu:] { Ń } [^[:L:][:M:]] > Ñ;
 ń } [^[:L:][:M:]] > ñ;
-[:Lu:] { Ń } [bcdfghjklmnpqrstvwxzçčćđšžBCDFGHJKLMNPQRSTVWXZÇČĆĐŠŽ] > Ñ;
-ń } [bcdfghjklmnpqrstvwxzçčćđšžBCDFGHJKLMNPQRSTVWXZÇČĆĐŠŽ] > ñ;
+[:Lu:] { Ń } [bcdfghjklmnpqrstvwxzçčćđšžBCDFGHJKLMNPQRSTVWXZÇČĆĐŠŽǯǮẑẐþÞɣƔŋŊḫḪ] > Ñ;
+ń } [bcdfghjklmnpqrstvwxzçčćđšžBCDFGHJKLMNPQRSTVWXZÇČĆĐŠŽǯǮẑẐþÞɣƔŋŊḫḪ] > ñ;
 `;

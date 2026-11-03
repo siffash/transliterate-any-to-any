@@ -42,6 +42,8 @@ export const ipaTrRules = `
 [βʋw] > v;
 ɸ > f;
 
+
+
 ::Null;
 
 [^[:L:][:M:]] { ğ > g;

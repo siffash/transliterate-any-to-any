@@ -1,24 +1,34 @@
 export const latnSqRules = `
 ::Null;
 
-DŽ > XH;
-Dž > Xh;
-dŽ > xH;
-dž > xh;
+[tT] { [hH] > ;
 
-D [zZ] > X;
-d [zZ] > x;
+[:Lu:] { Ŋ > NG;
+Ŋ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > NG;
+Ŋ } [:Lu:] > NG;
+Ŋ > Ng;
+ŋ > ng;
 
-T [sS] > C;
-t [sS] > c;
+[:Lu:] { Þ > TH;
+Þ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > TH;
+Þ } [:Lu:] > TH;
+Þ > Th;
+þ > th;
 
-K [hH] > H;
-k [hH] > h;
+[:Lu:] { Ǯ > XH;
+Ǯ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > XH;
+Ǯ } [:Lu:] > XH;
+Ǯ > Xh;
+ǯ > xh;
 
-[nN] { G } [hH] > G;
-[nN] { g } [hH] > g;
-G [hH] > G;
-g [hH] > g;
+Ẑ > X;
+ẑ > x;
+
+Ḫ > H;
+ḫ > h;
+
+Ɣ > G;
+ɣ > g;
 
 IJ > EJ;
 Ij > Ej;
@@ -136,10 +146,4 @@ y > j;
 [vV] { [vV]+ > ;
 [xX] { [xX]+ > ;
 [zZ] { [zZ]+ > ;
-
-::Null;
-
-[tT] { [ӽӼ] > ;
-ӽ > h;
-Ӽ > H;
 `;

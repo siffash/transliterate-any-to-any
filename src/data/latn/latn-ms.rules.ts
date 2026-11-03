@@ -1,9 +1,27 @@
 export const latnMsRules = `
 ::Null;
 
+[:Lu:] { Ḫ > KH;
+Ḫ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > KH;
+Ḫ } [:Lu:] > KH;
+Ḫ > Kh;
+ḫ > kh;
+
+[:Lu:] { Ŋ > NG;
+Ŋ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > NG;
+Ŋ } [:Lu:] > NG;
+Ŋ > Ng;
+ŋ > ng;
+
+[:Lu:] { Ɣ > GH;
+Ɣ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > GH;
+Ɣ } [:Lu:] > GH;
+Ɣ > Gh;
+ɣ > gh;
+
 [Čč] { [Čč] > ;
 [Šš] { [Šš] > ;
-[Dd] [Žž] { [Dd] [Žž] > ;
+[Ǯǯ] { [Ǯǯ] > ;
 
 ::NFC;
 
@@ -12,22 +30,14 @@ Ij > Ei;
 iJ > eI;
 ij > ei;
 
-D [žŽ] > J;
-d [žŽ] > j;
+Ǯ > J;
+ǯ > j;
 
-D [zZ] > Z;
-d [zZ] > z;
+Ẑ > Z;
+ẑ > z;
 
-T [sS] > S;
-t [sS] > s;
-
-T [hH] > S;
-t [hH] > s;
-
-::Null;
-
-ӽ > h;
-Ӽ > H;
+[CÞ] > S;
+[cþ] > s;
 
 ::Null;
 
@@ -95,8 +105,6 @@ x > kh;
 ::Null;
 
 \\' > ;
-
-::Null;
 
 [sSnN] [yY] { [yY]+ > ;
 `;

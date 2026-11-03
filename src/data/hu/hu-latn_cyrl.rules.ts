@@ -6,8 +6,8 @@ Gy } [^[:L:][:M:]] > Дь;
 gY } [^[:L:][:M:]] > дЬ;
 gy } [^[:L:][:M:]] > дь;
 
-[:L:] { GY } [bcdfghklmnprstvzšžčľńBCDFGHKLMNPRSTVZŠŽČĽŃ] > ДЬ;
-[:L:] { Gy } [bcdfghklmnprstvzšžčľńBCDFGHKLMNPRSTVZŠŽČĽŃ] > Дь;
-[:L:] { gY } [bcdfghklmnprstvzšžčľńBCDFGHKLMNPRSTVZŠŽČĽŃ] > дЬ;
-[:L:] { gy } [bcdfghklmnprstvzšžčľńBCDFGHKLMNPRSTVZŠŽČĽŃ] > дь;
+[:L:] { GY } [bcdfghklmnprstvzšžčľńBCDFGHKLMNPRSTVZŠŽČĽŃǯǮẑẐþÞɣƔŋŊḫḪ] > ДЬ;
+[:L:] { Gy } [bcdfghklmnprstvzšžčľńBCDFGHKLMNPRSTVZŠŽČĽŃǯǮẑẐþÞɣƔŋŊḫḪ] > Дь;
+[:L:] { gY } [bcdfghklmnprstvzšžčľńBCDFGHKLMNPRSTVZŠŽČĽŃǯǮẑẐþÞɣƔŋŊḫḪ] > дЬ;
+[:L:] { gy } [bcdfghklmnprstvzšžčľńBCDFGHKLMNPRSTVZŠŽČĽŃǯǮẑẐþÞɣƔŋŊḫḪ] > дь;
 `;

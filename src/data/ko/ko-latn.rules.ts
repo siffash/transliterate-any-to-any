@@ -18,13 +18,14 @@ export const koLatnRules = `
 ::Null;
 
 [^[:L:][:M:]] { ng > ;
+ng > ŋ;
 
 wae > wä;
 yae > yä;
 ae > ä;
 eo > o;
 '_' eui > ïi;
-[bcdghjklmnprst] { eui > i;
+[bcdghjklmnprstŋ] { eui > i;
 eu > ï;
 oe > ö;
 ui > ïi;
@@ -48,7 +49,7 @@ l } [iyü] > ľ;
 ch > č;
 sh > š;
 c > k;
-j > dž;
+j > ǯ;
 
 ::Title;
 `;

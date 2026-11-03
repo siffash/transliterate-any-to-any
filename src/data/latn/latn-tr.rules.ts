@@ -1,32 +1,44 @@
 export const latnTrRules = `
 ::Null;
 
-ts } ts > ;
-TS } TS > ;
+[:Lu:] { Ŋ > NG;
+Ŋ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > NG;
+Ŋ } [:Lu:] > NG;
+Ŋ > Ng;
+ŋ > ng;
 
-D [žŽ] > C;
-d [žŽ] > c;
+[:Lu:] { C > TS;
+C } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > TS;
+C } [:Lu:] > TS;
+C > Ts;
+c > ts;
 
-T [hH] > T;
-t [hH] > t;
+[:Lu:] { Ẑ > DZ;
+Ẑ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > DZ;
+Ẑ } [:Lu:] > DZ;
+Ẑ > Dz;
+ẑ > dz;
 
-[nN] { G } [hH] > G;
-[nN] { g } [hH] > g;
-G [hH] > Ğ;
-g [hH] > ğ;
+::Null;
 
-K [hH] > H;
-k [hH] > h;
+[Tt] [Ss] { [Tt] [Ss] > ;
+
+Ǯ > C;
+ǯ > c;
+
+Þ > T;
+þ > t;
+
+Ɣ > Ğ;
+ɣ > ğ;
+
+Ḫ > H;
+ḫ > h;
 
 IJ > EY;
 iJ > eY;
 Ij > Ey;
 ij > ey;
-
-::Null;
-
-ӽ > h;
-Ӽ > H;
 
 ::Null;
 
@@ -79,6 +91,8 @@ q > k;
 [^[:L:][:M:]] { \\' > ;
 \\' } [^[:L:][:M:]] > ;
 · > ;
+
+
 
 ::Null;
 

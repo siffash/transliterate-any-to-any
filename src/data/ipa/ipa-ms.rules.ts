@@ -49,5 +49,5 @@ q > k;
 
 ::Null;
 
-[sSnN] [yY] { [yY]+ > ;
+[sn] y { y+ > ;
 `;

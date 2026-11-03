@@ -37,6 +37,11 @@ X } [iI] [mM] [eE] [nN] [aA] > X;
 x } [oO] [cC] [hH] [iI] [mM] [iI] [lL] [cC] [oO] > s;
 X } [oO] [cC] [hH] [iI] [mM] [iI] [lL] [cC] [oO] > S;
 
+T [xX] > Č;
+t [xX] > č;
+T [zZ] > C;
+t [zZ] > c;
+
 [^[:L:][:M:]] { x > s;
 [^[:L:][:M:]] { X > S;
 
@@ -97,4 +102,9 @@ Z > S;
 h > ;
 H ([:L:]) >| &Any-Upper($1);
 H > ;
+
+::Null;
+
+[^[:L:][:M:]] { T [Ss] > C;
+[^[:L:][:M:]] { t [Ss] > c;
 `;

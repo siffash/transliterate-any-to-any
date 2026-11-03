@@ -58,6 +58,8 @@ u > ú;
 y > ý;
 [œøɵ] > ö;
 
+
+
 ::Null;
 
 [kgh] { j } [eéiíyýæ] > ;
@@ -79,11 +81,7 @@ yy > ý;
 ö { ö+ > ;
 æ { æ+ > ;
 
-::Null;
+[bcdfghklmnpqrstvwxz] j { j+ > ;
 
 [ʔʕ] > ;
-
-::Null;
-
-[bcdfghklmnpqrstvwxzBCDFGHKLMNPQRSTVWXZ] [jJ] { [jJ]+ > ;
 `;

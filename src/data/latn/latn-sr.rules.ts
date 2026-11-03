@@ -1,36 +1,37 @@
 export const latnSrRules = `
 ::Null;
 
-T [hH] > T;
-t [hH] > t;
+[:Lu:] { Ŋ > NG;
+Ŋ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > NG;
+Ŋ } [:Lu:] > NG;
+Ŋ > Ng;
+ŋ > ng;
 
-NGH > NGH;
-NGh > NGh;
-NgH > NgH;
-Ngh > Ngh;
-nGH > nGH;
-nGh > nGh;
-ngH > ngH;
-ngh > ngh;
+[:Lu:] { Ẑ > DZ;
+Ẑ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > DZ;
+Ẑ } [:Lu:] > DZ;
+Ẑ > Dz;
+ẑ > dz;
 
-G [hH] > G;
-g [hH] > g;
+[:Lu:] { Ǯ > DŽ;
+Ǯ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > DŽ;
+Ǯ } [:Lu:] > DŽ;
+Ǯ > Dž;
+ǯ > dž;
 
-K [hH] > H;
-k [hH] > h;
+Þ > T;
+þ > t;
 
-T [sS] > C;
-t [sS] > c;
+Ɣ > G;
+ɣ > g;
+
+Ḫ > H;
+ḫ > h;
 
 IJ > EJ;
 Ij > Ej;
 iJ > eJ;
 ij > ej;
-
-::Null;
-
-ӽ > h;
-Ӽ > H;
 
 ::Null;
 
@@ -71,6 +72,8 @@ q > k;
 \\' } [^[:L:][:M:]] > ;
 · > ;
 
+
+
 ::Null;
 
 [iI] { a > ja;
@@ -79,8 +82,6 @@ q > k;
 [iI] { E > JE;
 [iI] { u > ju;
 [iI] { U > JU;
-
-::Null;
 
 [dD] [zZ] { ([dD] [zZ])+ > ;
 [dD] [žŽ] { ([dD] [žŽ])+ > ;

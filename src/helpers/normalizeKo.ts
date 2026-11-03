@@ -130,11 +130,13 @@ const DIGRAPHS = new Set(["ae", "eo", "eu", "oe", "ui"]);
 
 // Revised Romanization runs the vowels of two syllables together, which the rules would
 // read as another vowel (다은 daeun as 대운): the boundary is marked (da_eun), and the rules remove it.
-// So is 의 after any syllable (신의주 sin_euiju), which keeps its glide, unlike ㅢ after a consonant (희 heui)
-const markVowelBoundaries = (text: string) => {
+// So is 의 after any syllable (신의주 sin_euiju), which keeps its glide, unlike ㅢ after a consonant (희 heui),
+// and ㄱ after ㄴ (한강 han_gang), which the rules would read as ㅇ (항앙)
+const markSyllableBoundaries = (text: string) => {
   let result = "";
   let previous = "";
   let afterSyllable = false;
+  let afterN = false;
   for (const char of text) {
     const index = char.charCodeAt(0) - 0xac00;
     const syllable = index >= 0 && index <= 11171;
@@ -147,8 +149,13 @@ const markVowelBoundaries = (text: string) => {
     ) {
       result += "_";
     }
+    // A syllable that begins with ㄱ, after one that ends in ㄴ
+    if (syllable && Math.floor(index / 588) === 0 && afterN) {
+      result += "_";
+    }
     previous = syllable && index % 28 === 0 ? vowel : "";
     afterSyllable = syllable;
+    afterN = syllable && index % 28 === 4;
     result += char;
   }
   return result;
@@ -171,7 +178,7 @@ export const normalizeKo = async (
 ): Promise<string> => {
   const map = letters === "latn" ? LATN : IPA;
   const prepare = (text: string) =>
-    letters === "latn" ? markVowelBoundaries(splitNames(text)) : splitNames(text);
+    letters === "latn" ? markSyllableBoundaries(splitNames(text)) : splitNames(text);
   const parts: string[] = [];
   let cursor = 0;
 

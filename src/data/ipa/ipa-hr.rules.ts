@@ -53,14 +53,14 @@ q > k;
 [ʐʑʒ] > ž;
 ɸ > f;
 
+
+
 ::Null;
 
 [aeo] { i > j;
 i { a > ja;
 i { e > je;
 i { u > ju;
-
-::Null;
 
 b { b+ > ;
 c { c+ > ;
@@ -85,9 +85,6 @@ v { v+ > ;
 z { z+ > ;
 ž { ž+ > ;
 dž { (dž)+ > ;
-
-::Null;
-
 i { j } o > ;
 
 ::Null;

@@ -26,7 +26,7 @@ export const jaLatnRules = `
 傾 > kei;
 冗 > jo;
 凡 > bon;
-刹 > satsu;
+刹 > sacu;
 剥 > haku;
 励 > rei;
 劾 > gai;
@@ -51,7 +51,7 @@ export const jaLatnRules = `
 
 ::Null;
 
-[aeiou] { g } [aeiouy] > ng;
+[aeiou] { g } [aeiouy] > ŋ;
 
 tch } e > čč;
 cch } e > čč;
@@ -63,7 +63,7 @@ ch } e > č;
 ch > ć;
 n } i > ń;
 ny > ń;
-j } e > dž;
+j } e > ǯ;
 j > đ;
 e { i > j;
 
@@ -71,6 +71,8 @@ e { i > j;
 
 n } ń > ń;
 e } j > i;
+
+ts > c;
 
 ･ > ' ';
 

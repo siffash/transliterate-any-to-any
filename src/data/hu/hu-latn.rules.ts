@@ -1,13 +1,6 @@
 export const huLatnRules = `
 ::NFC;
 
-[fF] [gG] { h > h;
-[fF] [gG] { H > H;
-[:L:] [gGkK] { h } [aeiouyäöüåæøáéíóúýőűıâêîôûàèìòùëïõAEIOUYÄÖÜÅÆØÁÉÍÓÚÝŐŰIİÂÊÎÔÛÀÈÌÒÙËÏÕ] > ӽ;
-[:L:] [gGkK] { H } [aeiouyäöüåæøáéíóúýőűıâêîôûàèìòùëïõAEIOUYÄÖÜÅÆØÁÉÍÓÚÝŐŰIİÂÊÎÔÛÀÈÌÒÙËÏÕ] > Ӽ;
-
-::Null;
-
 [[:L:][:M:]] { \\' } [[:L:][:M:]] > ’;
 
 L [yY] > Y;
@@ -40,15 +33,15 @@ w > v;
 C } [cC] [sS] > Č;
 c } [cC] [sS] > č;
 
-D } DZS > DŽ;
-d } DZS > dŽ;
-D } [dD] [zZ] [sS] > Dž;
-d } [dD] [zZ] [sS] > dž;
+D } DZS > Ǯ;
+d } DZS > ǯ;
+D } [dD] [zZ] [sS] > Ǯ;
+d } [dD] [zZ] [sS] > ǯ;
 
-D } DZ > DZ;
-d } DZ > dZ;
-D } [dD] [zZ] > Dz;
-d } [dD] [zZ] > dz;
+D } DZ > Ẑ;
+d } DZ > ẑ;
+D } [dD] [zZ] > Ẑ;
+d } [dD] [zZ] > ẑ;
 
 L } [lL] [yY] > Ľ;
 l } [lL] [yY] > ľ;
@@ -64,9 +57,11 @@ s } [sS] [zZ] > s;
 Z } [zZ] [sS] > Ž;
 z } [zZ] [sS] > ž;
 
-DZS > DŽ;
-D [zZ] [sS] > Dž;
-d [zZ] [sS] > dž;
+DZS > Ǯ;
+D [zZ] [sS] > Ǯ;
+d [zZ] [sS] > ǯ;
+D [zZ] > Ẑ;
+d [zZ] > ẑ;
 
 C [sS] > Č;
 c [sS] > č;
@@ -83,21 +78,13 @@ s [zZ] > s;
 Z [sS] > Ž;
 z [sS] > ž;
 
-C } CZ > TS;
-c } CZ > tS;
-C } [cC] [zZ] > Ts;
-c } [cC] [zZ] > ts;
+C } CZ > C;
+c } CZ > c;
+C } [cC] [zZ] > C;
+c } [cC] [zZ] > c;
 
-CZ > TS;
-cZ > tS;
-Cz > Ts;
-cz > ts;
-
-C } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > TS;
-C } [:Lu:] > TS;
-[:Lu:] { C > TS;
-C > Ts;
-c > ts;
+C [zZ] > C;
+c [zZ] > c;
 
 [:Lu:] { X > KS;
 X } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > KS;
@@ -117,4 +104,29 @@ s > š;
 ::Null;
 
 [Šš] { [Šš] } [^[:L:][:M:]] > ;
+
+::Null;
+
+[:L:] { T } [hH] [eE] [gG]? [yY] > T;
+[:L:] { t } [hH] [eE] [gG]? [yY] > t;
+[:L:] { T } [hH] [aA] [zZlL] > T;
+[:L:] { t } [hH] [aA] [zZlL] > t;
+[:L:] { T } [hH] [aA] [rR] [oOdD] > T;
+[:L:] { t } [hH] [aA] [rR] [oOdD] > t;
+[:L:] { T } [hH] [iI] [dD] > T;
+[:L:] { t } [hH] [iI] [dD] > t;
+T [Hh] > Þ;
+t [Hh] > þ;
+[:L:] { K } [hH] [aeiouyäöüåæøáéíóúýőűıâêîôûàèìòùëïõAEIOUYÄÖÜÅÆØÁÉÍÓÚÝŐŰIİÂÊÎÔÛÀÈÌÒÙËÏÕ] > K;
+[:L:] { k } [hH] [aeiouyäöüåæøáéíóúýőűıâêîôûàèìòùëïõAEIOUYÄÖÜÅÆØÁÉÍÓÚÝŐŰIİÂÊÎÔÛÀÈÌÒÙËÏÕ] > k;
+K [Hh] > Ḫ;
+k [Hh] > ḫ;
+[nN] { G } [hH] > G;
+[nN] { g } [hH] > g;
+[fF] { G [Hh] > Ɣ;
+[fF] { g [Hh] > ɣ;
+[:L:] { G } [hH] [aeiouyäöüåæøáéíóúýőűıâêîôûàèìòùëïõAEIOUYÄÖÜÅÆØÁÉÍÓÚÝŐŰIİÂÊÎÔÛÀÈÌÒÙËÏÕ] > G;
+[:L:] { g } [hH] [aeiouyäöüåæøáéíóúýőűıâêîôûàèìòùëïõAEIOUYÄÖÜÅÆØÁÉÍÓÚÝŐŰIİÂÊÎÔÛÀÈÌÒÙËÏÕ] > g;
+G [Hh] > Ɣ;
+g [Hh] > ɣ;
 `;

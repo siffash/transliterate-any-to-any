@@ -1,6 +1,12 @@
 export const ukLatnRules = `
 ::NFC;
 
+Д [жЖ] > Ǯ;
+д [жЖ] > ǯ;
+
+Д [зЗ] > Ẑ;
+д [зЗ] > ẑ;
+
 ['’‘\`´ʼ] > \\';
 
 ЕЙ > IJ;
@@ -73,11 +79,8 @@ export const ukLatnRules = `
 Щ > Šč;
 щ > šč;
 
-Ц } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > TS;
-Ц } [:Lu:] > TS;
-[:Lu:] { Ц > TS;
-Ц > Ts;
-ц > ts;
+Ц > C;
+ц > c;
 
 А > A;
 а > a;

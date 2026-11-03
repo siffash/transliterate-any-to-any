@@ -226,8 +226,6 @@ export const elEnRules = `
 [iI] { [iI]+ } [^[:L:][:M:]] > ;
 [^[:L:][:M:]] { [cC]+ } [kK] > ;
 
-::Null;
-
 [kK] { [kK]+ } [hH] > ;
 [gG] { [gG]+ } [hH] > ;
 `;

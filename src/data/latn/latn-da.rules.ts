@@ -1,44 +1,56 @@
 export const latnDaRules = `
 ::Null;
 
+[:Lu:] { Ḫ > KH;
+Ḫ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > KH;
+Ḫ } [:Lu:] > KH;
+Ḫ > Kh;
+ḫ > kh;
+
+[:Lu:] { Ŋ > NG;
+Ŋ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > NG;
+Ŋ } [:Lu:] > NG;
+Ŋ > Ng;
+ŋ > ng;
+
+[:Lu:] { C > TS;
+C } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > TS;
+C } [:Lu:] > TS;
+C > Ts;
+c > ts;
+
 č } č > t;
-[Šš] { [Šš] > ;
 Č } Č > T;
-dž } dž > d;
-DŽ } DŽ > D;
+ǯ } ǯ > d;
+Ǯ } Ǯ > D;
+[Šš] { [Šš] > ;
 
 ::Null;
 
-ts } ts > ;
-TS } TS > ;
+[Tt] [Ss] { [Tt] [Ss] > ;
 
-DŽ > DJ;
-Dž > Dj;
-dŽ > dJ;
-dž > dj;
+[:Lu:] { Ǯ > DJ;
+Ǯ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > DJ;
+Ǯ } [:Lu:] > DJ;
+Ǯ > Dj;
+ǯ > dj;
 
-DZ > DS;
-Dz > Ds;
-dZ > dS;
-dz > ds;
+[:Lu:] { Ẑ > DS;
+Ẑ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > DS;
+Ẑ } [:Lu:] > DS;
+Ẑ > Ds;
+ẑ > ds;
 
 IJ > EJ;
 Ij > Ej;
 iJ > eJ;
 ij > ej;
 
-T [hH] > T;
-t [hH] > t;
+Þ > T;
+þ > t;
 
-[nN] { G } [hH] > G;
-[nN] { g } [hH] > g;
-G [hH] > G;
-g [hH] > g;
-
-::Null;
-
-ӽ > h;
-Ӽ > H;
+Ɣ > G;
+ɣ > g;
 
 ::Null;
 

@@ -5,12 +5,15 @@ export const thCs = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { thLatnRules } = await import("data/th/th-latn.rules");
   const { thLatnKRules } = await import("data/th/th-latn_k.rules");
+  const { thLatnTRules } = await import("data/th/th-latn_t.rules");
   const { latnCsRules } = await import("data/latn/latn-cs.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
   const { normalizeTh } = await import("helpers/normalizeTh");
 
   const toRtgs = await thRtgs();
-  const transliterator = RBT.fromRules(thLatnRules + thLatnKRules + latnCsRules + "::Title;");
+  const transliterator = RBT.fromRules(
+    thLatnRules + thLatnKRules + thLatnTRules + latnCsRules + "::Title;",
+  );
 
   const convert = async (text: string) => {
     const romanized = await wordSplitter(normalizeTh(text), "th", text =>

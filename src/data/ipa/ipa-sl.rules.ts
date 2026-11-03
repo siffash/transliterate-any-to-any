@@ -47,23 +47,19 @@ dʐ > dž;
 ̃ > n;
 [͈̚ʰʱʷ'’ʼˈ̇ˌ̧ːˠˤ˥˧˩̝̟̥̩̪̯̊͡ʔʕ] > ;
 
+
+
 ::Null;
 
 [^[:L:][:M:]] { i } [aeou] > j;
 [aeou] { i > j;
-
-::Null;
 
 ia > ija;
 ie > ije;
 io > ijo;
 iu > iju;
 
-::Null;
-
 [čšžc] { j+ > ;
-
-::Null;
 
 b { b+ > ;
 c { c+ > ;

@@ -1,6 +1,18 @@
 export const latnPlRules = `
 ::Null;
 
+[:Lu:] { Ŋ > NG;
+Ŋ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > NG;
+Ŋ } [:Lu:] > NG;
+Ŋ > Ng;
+ŋ > ng;
+
+[:Lu:] { Ẑ > DZ;
+Ẑ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > DZ;
+Ẑ } [:Lu:] > DZ;
+Ẑ > Dz;
+ẑ > dz;
+
 [Šš] { [Šš] > ;
 
 ::Null;
@@ -14,31 +26,23 @@ iJ > eJ;
 Ij > Ej;
 ij > ej;
 
-T [sS] > C;
-t [sS] > c;
+[:Lu:] { Ǯ > DŻ;
+Ǯ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > DŻ;
+Ǯ } [:Lu:] > DŻ;
+Ǯ > Dż;
+ǯ > dż;
 
-DŽ > DŻ;
-dŽ > dŻ;
-Dž > Dż;
-dž > dż;
+Þ > T;
+þ > t;
 
-T [hH] > T;
-t [hH] > t;
+Ɣ > G;
+ɣ > g;
 
-[nN] { G } [hH] > G;
-[nN] { g } [hH] > g;
-G [hH] > G;
-g [hH] > g;
-
-KH > CH;
-kH > cH;
-Kh > Ch;
-kh > ch;
-
-::Null;
-
-ӽ > h;
-Ӽ > H;
+[:Lu:] { Ḫ > CH;
+Ḫ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > CH;
+Ḫ } [:Lu:] > CH;
+Ḫ > Ch;
+ḫ > ch;
 
 ::Null;
 

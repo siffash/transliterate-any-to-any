@@ -1,34 +1,42 @@
 export const latnBsRules = `
 ::Null;
 
-[Čč] { [Čč] > ;
-[Dd] [Žž] { [Dd] [Žž] > ;
+[:Lu:] { Ŋ > NG;
+Ŋ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > NG;
+Ŋ } [:Lu:] > NG;
+Ŋ > Ng;
+ŋ > ng;
+
+[:Lu:] { Ẑ > DZ;
+Ẑ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > DZ;
+Ẑ } [:Lu:] > DZ;
+Ẑ > Dz;
+ẑ > dz;
+
+[:Lu:] { Ǯ > DŽ;
+Ǯ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > DŽ;
+Ǯ } [:Lu:] > DŽ;
+Ǯ > Dž;
+ǯ > dž;
 
 ::Null;
 
-T [sS] > C;
-t [sS] > c;
+[Čč] { [Čč] > ;
+[Dd] [Žž] { [Dd] [Žž] > ;
 
-T [hH] > T;
-t [hH] > t;
+Þ > T;
+þ > t;
 
-[nN] { G } [hH] > G;
-[nN] { g } [hH] > g;
-G [hH] > G;
-g [hH] > g;
+Ɣ > G;
+ɣ > g;
 
-K [hH] > H;
-k [hH] > h;
+Ḫ > H;
+ḫ > h;
 
 IJ > EJ;
 Ij > Ej;
 iJ > eJ;
 ij > ej;
-
-::Null;
-
-ӽ > h;
-Ӽ > H;
 
 ::Null;
 
@@ -75,23 +83,19 @@ y > j;
 \\' } [^[:L:][:M:]] > ;
 · > ;
 
+
+
 ::Null;
 
 [^[:L:][:M:]] { I } [AaEeOoUu] > J;
 [^[:L:][:M:]] { i } [AaEeOoUu] > j;
-
-::Null;
 
 I } [aeu] > Ij;
 i } [AEU] > iJ;
 I } [AEU] > IJ;
 i } [aeu] > ij;
 
-::Null;
-
 [ČčĆćĐđŠšŽž] { [jJ] > ;
-
-::Null;
 
 [Bb] { [Bb]+ > ;
 [Cc] { [Cc]+ > ;

@@ -1,50 +1,53 @@
 export const latnIsRules = `
 ::Null;
 
+[:Lu:] { Ŋ > NG;
+Ŋ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > NG;
+Ŋ } [:Lu:] > NG;
+Ŋ > Ng;
+ŋ > ng;
+
+[:Lu:] { C > TS;
+C } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > TS;
+C } [:Lu:] > TS;
+C > Ts;
+c > ts;
+
 č } č > t;
 [Šš] { [Šš] > ;
 Č } Č > T;
-dž } dž > d;
-DŽ } DŽ > D;
+ǯ } ǯ > d;
+Ǯ } Ǯ > D;
 
 ::Null;
 
-ts } ts > ;
-TS } TS > ;
+[Tt] [Ss] { [Tt] [Ss] > ;
 
 IJ > EI;
 iJ > eI;
 Ij > Ei;
 ij > ei;
 
-DŽ > DSJ;
-dŽ > dSJ;
-Dž > Dsj;
-dž > dsj;
+[:Lu:] { Ǯ > DSJ;
+Ǯ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > DSJ;
+Ǯ } [:Lu:] > DSJ;
+Ǯ > Dsj;
+ǯ > dsj;
 
-DZ > DS;
-dZ > dS;
-Dz > Ds;
-dz > ds;
+[:Lu:] { Ẑ > DS;
+Ẑ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > DS;
+Ẑ } [:Lu:] > DS;
+Ẑ > Ds;
+ẑ > ds;
 
-T [hH] > Þ;
-t [hH] > þ;
+Þ > Þ;
+þ > þ;
 
-NGH > NGH;
-NGh > NGh;
-Ngh > Ngh;
-ngh > ngh;
+Ɣ > G;
+ɣ > g;
 
-G [hH] > G;
-g [hH] > g;
-
-K [hH] > K;
-k [hH] > k;
-
-::Null;
-
-ӽ > h;
-Ӽ > H;
+Ḫ > K;
+ḫ > k;
 
 ::Null;
 
@@ -130,6 +133,8 @@ z > s;
 \\' } [^[:L:][:M:]] > ;
 · > ;
 
+
+
 ::Null;
 
 [kKgGhH] { [jJ] } [eEéÉiIíÍyYýÝæÆ] > ;
@@ -168,8 +173,6 @@ Y [yY] > Ý;
 
 [öÖ] { [öÖ]+ > ;
 [æÆ] { [æÆ]+ > ;
-
-::Null;
 
 [bcdfghklmnpqrstvwxzBCDFGHKLMNPQRSTVWXZ] [jJ] { [jJ]+ > ;
 `;

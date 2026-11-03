@@ -1,13 +1,6 @@
 export const svLatnRules = `
 ::NFC;
 
-[fF] [gG] { h > h;
-[fF] [gG] { H > H;
-[:L:] [gGkK] { h } [aeiouyäöüåæøáéíóúýőűıâêîôûàèìòùëïõAEIOUYÄÖÜÅÆØÁÉÍÓÚÝŐŰIİÂÊÎÔÛÀÈÌÒÙËÏÕ] > ӽ;
-[:L:] [gGkK] { H } [aeiouyäöüåæøáéíóúýőűıâêîôûàèìòùëïõAEIOUYÄÖÜÅÆØÁÉÍÓÚÝŐŰIİÂÊÎÔÛÀÈÌÒÙËÏÕ] > Ӽ;
-
-::Null;
-
 [[:L:][:M:]] { \\' } [[:L:][:M:]] > ’;
 
 À > A;
@@ -65,6 +58,18 @@ TION > ŠON;
 Tion > Šon;
 t [iI] [oO] [nN] > šon;
 
+[:L:] { T } [hH] [aA] [mM] [mM] > T;
+[:L:] { t } [hH] [aA] [mM] [mM] > t;
+[:L:] { T } [hH] [aA] [mM] [nN] > T;
+[:L:] { t } [hH] [aA] [mM] [nN] > t;
+[:L:] { T } [hH] [uU] [sS] > T;
+[:L:] { t } [hH] [uU] [sS] > t;
+[:L:] { T } [hH] [oO] [lL] [mM] > T;
+[:L:] { t } [hH] [oO] [lL] [mM] > t;
+[:L:] { T } [hH] [uU] [lL] [tT] > T;
+[:L:] { t } [hH] [uU] [lL] [tT] > t;
+[:L:] { T } [hH] [aA] [gG] [eE] > T;
+[:L:] { t } [hH] [aA] [gG] [eE] > t;
 T [hH] > T;
 t [hH] > t;
 
@@ -138,4 +143,35 @@ E [JI] > IJ;
 e [JI] > iJ;
 E [ji] > Ij;
 e [ji] > ij;
+
+::Null;
+
+[^[:L:][:M:]] { T [Ss] > C;
+[^[:L:][:M:]] { t [Ss] > c;
+N [Gg] > Ŋ;
+n [Gg] > ŋ;
+[:L:] { T } [hH] [aA] [mM] [mM] > T;
+[:L:] { t } [hH] [aA] [mM] [mM] > t;
+[:L:] { T } [hH] [aA] [mM] [nN] > T;
+[:L:] { t } [hH] [aA] [mM] [nN] > t;
+[:L:] { T } [hH] [uU] [sS] > T;
+[:L:] { t } [hH] [uU] [sS] > t;
+[:L:] { T } [hH] [oO] [lL] [mM] > T;
+[:L:] { t } [hH] [oO] [lL] [mM] > t;
+[:L:] { T } [hH] [uU] [lL] [tT] > T;
+[:L:] { t } [hH] [uU] [lL] [tT] > t;
+[:L:] { T } [hH] [aA] [gG] [eE] > T;
+[:L:] { t } [hH] [aA] [gG] [eE] > t;
+T [Hh] > Þ;
+t [Hh] > þ;
+[:L:] { K } [hH] [aeiouyäöüåæøáéíóúýőűıâêîôûàèìòùëïõAEIOUYÄÖÜÅÆØÁÉÍÓÚÝŐŰIİÂÊÎÔÛÀÈÌÒÙËÏÕ] > K;
+[:L:] { k } [hH] [aeiouyäöüåæøáéíóúýőűıâêîôûàèìòùëïõAEIOUYÄÖÜÅÆØÁÉÍÓÚÝŐŰIİÂÊÎÔÛÀÈÌÒÙËÏÕ] > k;
+K [Hh] > Ḫ;
+k [Hh] > ḫ;
+[fF] { G [Hh] > Ɣ;
+[fF] { g [Hh] > ɣ;
+[:L:] { G } [hH] [aeiouyäöüåæøáéíóúýőűıâêîôûàèìòùëïõAEIOUYÄÖÜÅÆØÁÉÍÓÚÝŐŰIİÂÊÎÔÛÀÈÌÒÙËÏÕ] > G;
+[:L:] { g } [hH] [aeiouyäöüåæøáéíóúýőűıâêîôûàèìòùëïõAEIOUYÄÖÜÅÆØÁÉÍÓÚÝŐŰIİÂÊÎÔÛÀÈÌÒÙËÏÕ] > g;
+G [Hh] > Ɣ;
+g [Hh] > ɣ;
 `;

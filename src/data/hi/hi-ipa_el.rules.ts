@@ -4,4 +4,6 @@ export const hiIpaElRules = `
 ʱ > ;
 t͡ʃ { ʰ > ;
 pʰ > f;
+[ʈt] [̪]? ʰ > θ;
+kʰ > x;
 `;

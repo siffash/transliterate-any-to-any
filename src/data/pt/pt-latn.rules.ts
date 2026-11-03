@@ -29,6 +29,11 @@ l [hH] > ľ;
 N [hH] > Ń;
 n [hH] > ń;
 
+S [hH] > Š;
+s [hH] > š;
+Z [hH] > Ž;
+z [hH] > ž;
+
 Q [Uu] } [EIei] > K;
 q [Uu] } [EIei] > k;
 
@@ -73,4 +78,19 @@ j > ž;
 
 X > Š;
 x > š;
+
+::Null;
+
+[^[:L:][:M:]] { T [Ss] > C;
+[^[:L:][:M:]] { t [Ss] > c;
+T [Hh] > T;
+t [Hh] > t;
+K [Hh] > Ḫ;
+k [Hh] > ḫ;
+D [Žž] > Ǯ;
+d [Žž] > ǯ;
+[nN] { G } [hH] > G;
+[nN] { g } [hH] > g;
+G [Hh] > Ɣ;
+g [Hh] > ɣ;
 `;

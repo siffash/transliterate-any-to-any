@@ -1,7 +1,29 @@
 export const latnPtRules = `
 ::Null;
 
-[kK] { [ӽӼ] > ;
+[:Lu:] { Ŋ > NG;
+Ŋ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > NG;
+Ŋ } [:Lu:] > NG;
+Ŋ > Ng;
+ŋ > ng;
+
+[:Lu:] { C > TS;
+C } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > TS;
+C } [:Lu:] > TS;
+C > Ts;
+c > ts;
+
+[:Lu:] { Ẑ > DZ;
+Ẑ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > DZ;
+Ẑ } [:Lu:] > DZ;
+Ẑ > Dz;
+ẑ > dz;
+
+[:Lu:] { Ǯ > DŽ;
+Ǯ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > DŽ;
+Ǯ } [:Lu:] > DŽ;
+Ǯ > Dž;
+ǯ > dž;
 
 ::Null;
 
@@ -9,38 +31,33 @@ export const latnPtRules = `
 [Šš] { [Šš] > ;
 [Dd] [Žž] { [Dd] [Žž] > ;
 
-::Null;
-
-ts } ts > ;
-TS } TS > ;
+[Tt] [Ss] { [Tt] [Ss] > ;
 
 IJ > EI;
 iJ > eI;
 Ij > Ei;
 ij > ei;
 
+[:Lu:] { Ḫ > KH;
+Ḫ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > KH;
+Ḫ } [:Lu:] > KH;
+Ḫ > Kh;
+ḫ > kh;
 KH > KH;
 kH > kH;
 Kh > Kh;
 kh > kh;
 
-[nN] { G } [hH] > G;
-[nN] { g } [hH] > g;
-GH } [EIYÏeiyï] > GU;
-gH } [EIYÏeiyï] > gU;
-Gh } [EIYÏeiyï] > Gu;
-gh } [EIYÏeiyï] > gu;
+[:Lu:] { Ɣ } [EIYÏeiyï] > GU;
+Ɣ } [EIYÏ] > GU;
+Ɣ } [EIYÏeiyï] > Gu;
+ɣ } [EIYÏeiyï] > gu;
 
-G [hH] > G;
-g [hH] > g;
+Ɣ > G;
+ɣ > g;
 
-T [hH] > T;
-t [hH] > t;
-
-::Null;
-
-ӽ > h;
-Ӽ > H;
+Þ > T;
+þ > t;
 
 ::Null;
 
@@ -100,6 +117,8 @@ x > kh;
 [kq] } [EIYÏ] > qU;
 [kq] } [eiyï] > qu;
 
+K } [hH] > K;
+k } [hH] > k;
 [KQ] > C;
 [kq] > c;
 
@@ -134,6 +153,8 @@ Y [iï] > I;
 ['·] } [^[:L:][:M:]] > ;
 · > \\-;
 
+
+
 ::Null;
 
 ç } [eEéÉêÊiIíÍyY] > c;
@@ -164,8 +185,6 @@ S [sS] } [^[:L:][:M:]] > S;
 [bBcCdDfFgGhHjJkKlLmMnNpPqQrRtTvVwWxXzZ] { S [sS] > S;
 s [sS] } [bBcCdDfFgGhHjJkKlLmMnNpPqQrRtTvVwWxXzZ] > s;
 S [sS] } [bBcCdDfFgGhHjJkKlLmMnNpPqQrRtTvVwWxXzZ] > S;
-
-::Null;
 
 [iI] [iI] { [iI]+ > ;
 [uU] [uU] { [uU]+ > ;

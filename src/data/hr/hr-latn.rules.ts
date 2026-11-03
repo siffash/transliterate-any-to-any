@@ -16,11 +16,6 @@ j } [aeiouAEIOU] > y;
 
 [:L:] { C } SS > K;
 [:L:] { c } ss > k;
-[:Lu:] { C > TS;
-C } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > TS;
-C } [:Lu:] > TS;
-C > Ts;
-c > ts;
 
 [:Lu:] { X > KS;
 X } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > KS;
@@ -33,4 +28,11 @@ h > x;
 
 J > Y;
 j > y;
+
+::Null;
+
+[^[:L:][:M:]] { T [Ss] > C;
+[^[:L:][:M:]] { t [Ss] > c;
+D [Žž] > Ǯ;
+d [Žž] > ǯ;
 `;

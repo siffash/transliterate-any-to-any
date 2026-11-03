@@ -25,24 +25,24 @@ export const zhLatnRules = `
 
 ::Null;
 
-[zcshr] { i > ï;
+[zcshrẑ] { i > ï;
 [jqxy] { ue > üe;
 [jqxy] { uan > üän;
 [jqxy] { u > ü;
 
 ::Null;
 
-zh > dž;
+zh > ǯ;
 ch > č;
 sh > š;
-c > ts;
-z > dz;
+z > ẑ;
 q > ć;
 j > đ;
 x > s;
 h > x;
 
 ei > ij;
+ng > ŋ;
 
 ['’‘\`´ʼ] > ;
 

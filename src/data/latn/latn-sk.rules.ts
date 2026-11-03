@@ -1,36 +1,45 @@
 export const latnSkRules = `
 ::Null;
 
-dž } dž > d;
-DŽ } DŽ > D;
+[:Lu:] { Ŋ > NG;
+Ŋ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > NG;
+Ŋ } [:Lu:] > NG;
+Ŋ > Ng;
+ŋ > ng;
+
+[:Lu:] { Ẑ > DZ;
+Ẑ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > DZ;
+Ẑ } [:Lu:] > DZ;
+Ẑ > Dz;
+ẑ > dz;
+
+[:Lu:] { Ǯ > DŽ;
+Ǯ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > DŽ;
+Ǯ } [:Lu:] > DŽ;
+Ǯ > Dž;
+ǯ > dž;
 
 ::Null;
+
+d [Žž] } dž > d;
+D [Žž] } DŽ > D;
 
 IJ > EJ;
 Ij > Ej;
 iJ > eJ;
 ij > ej;
 
-T [sS] > C;
-t [sS] > c;
+Þ > T;
+þ > t;
 
-T [hH] > T;
-t [hH] > t;
+Ɣ > G;
+ɣ > g;
 
-[nN] { G } [hH] > G;
-[nN] { g } [hH] > g;
-G [hH] > G;
-g [hH] > g;
-
-KH > CH;
-Kh > Ch;
-kH > cH;
-kh > ch;
-
-::Null;
-
-ӽ > h;
-Ӽ > H;
+[:Lu:] { Ḫ > CH;
+Ḫ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > CH;
+Ḫ } [:Lu:] > CH;
+Ḫ > Ch;
+ḫ > ch;
 
 ::Null;
 

@@ -1,34 +1,42 @@
 export const latnLvRules = `
 ::Null;
 
+[:Lu:] { Ŋ > NG;
+Ŋ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > NG;
+Ŋ } [:Lu:] > NG;
+Ŋ > Ng;
+ŋ > ng;
+
+[:Lu:] { Ẑ > DZ;
+Ẑ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > DZ;
+Ẑ } [:Lu:] > DZ;
+Ẑ > Dz;
+ẑ > dz;
+
+[:Lu:] { Ǯ > DŽ;
+Ǯ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > DŽ;
+Ǯ } [:Lu:] > DŽ;
+Ǯ > Dž;
+ǯ > dž;
+
 IJ > EI;
 iJ > eI;
 Ij > Ei;
 ij > ei;
 
-T [sS] > C;
-t [sS] > c;
+Þ > T;
+þ > t;
 
-T [hH] > T;
-t [hH] > t;
+Ɣ > G;
+ɣ > g;
 
-[nN] { G } [hH] > G;
-[nN] { g } [hH] > g;
-G [hH] > G;
-g [hH] > g;
-
-K [hH] > H;
-k [hH] > h;
+Ḫ > H;
+ḫ > h;
 
 [aeouäöüëïyAEOUÄÖÜËÏYjJđĐćĆśŚźŹ] [iI] { a } [^[:L:][:M:]] > a;
 [aeouäöüëïyAEOUÄÖÜËÏYjJđĐćĆśŚźŹ] [iI] { A } [^[:L:][:M:]] > A;
 [:L:] [iI] { a } [^[:L:][:M:]] > ja;
 [:L:] [iI] { A } [^[:L:][:M:]] > JA;
-
-::Null;
-
-ӽ > h;
-Ӽ > H;
 
 ::Null;
 

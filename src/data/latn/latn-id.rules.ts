@@ -1,29 +1,44 @@
 export const latnIdRules = `
 ::Null;
 
-ts } ts > ;
-TS } TS > ;
+[:Lu:] { Ḫ > KH;
+Ḫ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > KH;
+Ḫ } [:Lu:] > KH;
+Ḫ > Kh;
+ḫ > kh;
+
+[:Lu:] { Ŋ > NG;
+Ŋ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > NG;
+Ŋ } [:Lu:] > NG;
+Ŋ > Ng;
+ŋ > ng;
+
+[:Lu:] { C > TS;
+C } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > TS;
+C } [:Lu:] > TS;
+C > Ts;
+c > ts;
+
+::Null;
+
+[Tt] [Ss] { [Tt] [Ss] > ;
 
 IJ > EI;
 iJ > eI;
 Ij > Ei;
 ij > ei;
 
-D [žŽ] > J;
-d [žŽ] > j;
+Ǯ > J;
+ǯ > j;
 
-D [zZ] > Z;
-d [zZ] > z;
+Ẑ > Z;
+ẑ > z;
 
-T [hH] > T;
-t [hH] > t;
+Þ > T;
+þ > t;
 
-[nN] { GH > GH;
-[nN] { gH > gH;
-[nN] { Gh > Gh;
-[nN] { gh > gh;
-G [hH] > G;
-g [hH] > g;
+Ɣ > G;
+ɣ > g;
 
 ::Null;
 
@@ -88,9 +103,6 @@ C [hH] > C;
 p [hH] > f;
 P [hH] > F;
 
-t [hH] > t;
-T [hH] > T;
-
 z [hH] > z;
 Z [hH] > Z;
 
@@ -121,9 +133,4 @@ Z [hH] > Z;
 [sS] [yY] { [sS]+ [yY]+ > ;
 [kK] [hH] { [kK]+ [hH]+ > ;
 [nN] [yY] { [nN]+ [yY]+ > ;
-
-::Null;
-
-ӽ > h;
-Ӽ > H;
 `;

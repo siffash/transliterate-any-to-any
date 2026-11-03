@@ -1,30 +1,43 @@
 export const latnLbRules = `
 ::Null;
 
+[:Lu:] { Ŋ > NG;
+Ŋ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > NG;
+Ŋ } [:Lu:] > NG;
+Ŋ > Ng;
+ŋ > ng;
+
+[:Lu:] { C > TS;
+C } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > TS;
+C } [:Lu:] > TS;
+C > Ts;
+c > ts;
+
 [Čč] { [Čč] > ;
-[Dd] [Žž] { [Dd] [Žž] > ;
+[Ǯǯ] { [Ǯǯ] > ;
 
 ::Null;
 
-DŽ > DSCH;
-dŽ > dSCH;
-Dž > Dsch;
-dž > dsch;
+[:Lu:] { Ǯ > DSCH;
+Ǯ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > DSCH;
+Ǯ } [:Lu:] > DSCH;
+Ǯ > Dsch;
+ǯ > dsch;
 
-DZ > DS;
-dZ > dS;
-Dz > Ds;
-dz > ds;
+[:Lu:] { Ẑ > DS;
+Ẑ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > DS;
+Ẑ } [:Lu:] > DS;
+Ẑ > Ds;
+ẑ > ds;
 
-[nN] { G } [hH] > G;
-[nN] { g } [hH] > g;
-G [hH] > G;
-g [hH] > g;
+Ɣ > G;
+ɣ > g;
 
-KH > CH;
-kH > cH;
-Kh > Ch;
-kh > ch;
+[:Lu:] { Ḫ > CH;
+Ḫ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > CH;
+Ḫ } [:Lu:] > CH;
+Ḫ > Ch;
+ḫ > ch;
 
 IJ > EI;
 iJ > eI;
@@ -33,8 +46,8 @@ ij > ei;
 
 ::Null;
 
-[^[:L:][:M:]] { Š } [Tt] > S;
-[^[:L:][:M:]] { š } [Tt] > s;
+[^[:L:][:M:]] { Š } [TtþÞ] > S;
+[^[:L:][:M:]] { š } [TtþÞ] > s;
 [^[:L:][:M:]] { Š } [Pp] > S;
 [^[:L:][:M:]] { š } [Pp] > s;
 
@@ -67,8 +80,8 @@ x > ch;
 
 Ń } [^[:L:][:M:]] > N;
 ń } [^[:L:][:M:]] > n;
-Ń } [bcdfghjklmnpqrstvwxzçčćđšžțșłBCDFGHJKLMNPQRSTVWXZÇČĆĐŠŽȚȘŁ] > N;
-ń } [bcdfghjklmnpqrstvwxzçčćđšžțșłBCDFGHJKLMNPQRSTVWXZÇČĆĐŠŽȚȘŁ] > n;
+Ń } [bcdfghjklmnpqrstvwxzçčćđšžțșłBCDFGHJKLMNPQRSTVWXZÇČĆĐŠŽȚȘŁþÞ] > N;
+ń } [bcdfghjklmnpqrstvwxzçčćđšžțșłBCDFGHJKLMNPQRSTVWXZÇČĆĐŠŽȚȘŁþÞ] > n;
 Ń } [Jj] > N;
 ń } [Jj] > n;
 Ń } [Yy] > N;
@@ -81,8 +94,8 @@ x > ch;
 
 Ľ } [^[:L:][:M:]] > L;
 ľ } [^[:L:][:M:]] > l;
-Ľ } [bcdfghjklmnpqrstvwxzçčćđšžțșłBCDFGHJKLMNPQRSTVWXZÇČĆĐŠŽȚȘŁ] > L;
-ľ } [bcdfghjklmnpqrstvwxzçčćđšžțșłBCDFGHJKLMNPQRSTVWXZÇČĆĐŠŽȚȘŁ] > l;
+Ľ } [bcdfghjklmnpqrstvwxzçčćđšžțșłBCDFGHJKLMNPQRSTVWXZÇČĆĐŠŽȚȘŁþÞ] > L;
+ľ } [bcdfghjklmnpqrstvwxzçčćđšžțșłBCDFGHJKLMNPQRSTVWXZÇČĆĐŠŽȚȘŁþÞ] > l;
 Ľ } [Jj] > L;
 ľ } [Jj] > l;
 Ľ } [Yy] > L;
@@ -102,8 +115,8 @@ q > k;
 V > W;
 v > w;
 
-T [hH] > T;
-t [hH] > t;
+Þ > T;
+þ > t;
 
 T [sS] > Z;
 t [sS] > z;
@@ -148,9 +161,4 @@ z > s;
 
 [^[:L:][:M:]] { s [cC] [hH] } [pPtT] > s;
 [^[:L:][:M:]] { S [cC] [hH] } [pPtT] > S;
-
-::Null;
-
-ӽ > h;
-Ӽ > H;
 `;
