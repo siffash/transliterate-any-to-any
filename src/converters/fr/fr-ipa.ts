@@ -1,6 +1,11 @@
 import { Text } from "types";
 
-export const frIpa = async <T = Text>(text: Text, velarA = false, japanese = false): Promise<T> => {
+export const frIpa = async <T = Text>(
+  text: Text,
+  velarA = false,
+  japanese = false,
+  doubleR = false,
+): Promise<T> => {
   const { frIpaMap } = await import("data/fr/fr-ipa.map");
   const { RBT } = await import("helpers/rbt");
   const { frIpaRules } = await import("data/fr/fr-ipa.rules");
@@ -20,7 +25,7 @@ export const frIpa = async <T = Text>(text: Text, velarA = false, japanese = fal
           (Object.prototype.hasOwnProperty.call(frIpaMap, word) &&
             filterIpa(frIpaMap[word], word, "fr")) ||
           transliterator.transliterate(word);
-        return normalizeFrIpa(word, velarA ? ipa.replaceAll("ɑ̃", "ɑŋ") : ipa, japanese);
+        return normalizeFrIpa(word, velarA ? ipa.replaceAll("ɑ̃", "ɑŋ") : ipa, japanese, doubleR);
       },
       true,
     );

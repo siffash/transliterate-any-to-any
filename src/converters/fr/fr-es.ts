@@ -11,10 +11,10 @@ export const frEs = async (text: Text) => {
   const transliterator = RBT.fromRules(frIpaNgRules + ipaEsRules);
 
   if (typeof text === "string") {
-    const ipa = await frIpa<string>(text);
+    const ipa = await frIpa<string>(text, false, false, true);
     return copyCase(text, keepElision(ipa, transliterator), "es");
   } else {
-    const ipaArray = await frIpa<string[]>(text);
+    const ipaArray = await frIpa<string[]>(text, false, false, true);
     return ipaArray.map((ipa, i) => copyCase(text[i], keepElision(ipa, transliterator), "es"));
   }
 };

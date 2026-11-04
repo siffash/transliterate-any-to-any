@@ -7,8 +7,6 @@ export const ipaEsRules = `
 
 d [ʒʑʐžʝ] > j;
 
-[aâăæɐɑɒeêęɛɘəɜẽiĩɪɨyoôõøœơɔɤɵuũʊʉɯưʌyʏ] { [rʀɹʁ] } [aâăæɐɑɒeêęɛɘəɜẽiĩɪɨyoôõøœơɔɤɵuũʊʉɯưʌyʏ] > rr;
-
 ::Null;
 
 [^[:L:][:M:]] { w } [eêęɛɘəɜẽiĩɪɨyʏœ] > hu;
@@ -73,6 +71,11 @@ v { v+ > ;
 w { w+ > ;
 x { x+ > ;
 z { z+ > ;
+
+[^[:L:][:M:]] { rr > r;
+rr } [^[:L:][:M:]] > r;
+[bcdfghjklmnñpqstvwxz] { rr > r;
+rr } [bcdfghjklmnñpqstvwxz] > r;
 
 n } [bp] > m;
 m } v > n;

@@ -29,9 +29,16 @@ const japaneseRules: RestoreIpaRule[] = [
   { ipaCharToBeReplaced: "n$", lettersToRestore: { ne: "nə", nes: "nə", nne: "nnə", nnes: "nnə" } },
 ];
 
-export const normalizeFrIpa = (originalWord: string, ipaWord: string, japanese = false): string => {
+export const normalizeFrIpa = (
+  originalWord: string,
+  ipaWord: string,
+  japanese = false,
+  doubleR = false,
+): string => {
   if (japanese) return restoreLettersInIpa(originalWord, ipaWord, japaneseRules);
   return restoreLettersInIpa(originalWord, ipaWord, [
+    // Restore "rr" for targets where a single r between vowels is a tap (Carrefour, Thierry)
+    ...(doubleR ? [{ ipaCharToBeReplaced: "ʁ", lettersToRestore: { rr: "ʁʁ" } }] : []),
     // Restore "g" in "bourg"
     { ipaCharToBeReplaced: ["buʁɡ", "buʁg", "buʁɠ", "buʁɢ"], lettersToRestore: { bourg: "buʁɡ" } },
     { ipaCharToBeReplaced: "buʁ", lettersToRestore: { bourg: "buʁɡ" } },
