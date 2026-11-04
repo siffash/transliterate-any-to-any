@@ -2,10 +2,11 @@ import { Text } from "types";
 
 export const sqDe = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
+  const { sqLatnFinalERules } = await import("data/sq/sq-latn_final-e.rules");
   const { sqLatnRules } = await import("data/sq/sq-latn.rules");
   const { latnDeRules } = await import("data/latn/latn-de.rules");
 
-  const transliterator = RBT.fromRules(sqLatnRules + latnDeRules);
+  const transliterator = RBT.fromRules(sqLatnFinalERules + sqLatnRules + latnDeRules);
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);

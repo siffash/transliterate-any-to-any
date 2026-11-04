@@ -6,15 +6,19 @@ export const ipaRoRules = `
 ::Null;
 
 tʃ } [eiɛɪĩẽêęæœyʏjɥ] > c;
+tʃ } [aɐɑɒʌ] > ce;
 tʃ > ci;
 dʒ } [eiɛɪĩẽêęæœyʏjɥ] > g;
+dʒ } [aɐɑɒʌ] > ge;
 dʒ > gi;
 ts > ț;
 dz > z;
 
 [cč] } [eiɛɪĩẽêęæœyʏjɥ] > c;
+[cč] } [aɐɑɒʌ] > ce;
 [cč] > ci;
 ɟ } [eiɛɪĩẽêęæœyʏjɥ] > g;
+ɟ } [aɐɑɒʌ] > ge;
 ɟ > gi;
 
 [kq] } [eiɛɪĩẽêęæœyʏjɥ] > ch;
