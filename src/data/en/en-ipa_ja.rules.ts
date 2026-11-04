@@ -9,6 +9,7 @@ export const enIpaJaRules = `
 ɹ ɫ { s } [^[:L:][:M:]] > z;
 ˈ s? { k } æ > c;
 ˈ { ɡ } æ > ɟ;
+ʊ { ː } [^ɫ] > ;
 
 ::Null;
 
@@ -29,6 +30,10 @@ t } t [ɝɚ] > t;
 t } t [aeiouæɑɒɔəɛɜɪʊʌɝɚɐɫ] > ;
 d } d [aeiouæɑɒɔəɛɜɪʊʌɝɚɐɫ] > ;
 ɡ } ɡ [aeiouæɑɒɔəɛɜɪʊʌɝɚɐɫ] > ;
+[ˈˌ] [bcdfɡɟhjklɫmnpɹstvwzʃʒθðŋ]* ʊ { d [sz] } [^[:L:][:M:]] > zz;
+[ˈˌ] [bcdfɡɟhjklɫmnpɹstvwzʃʒθðŋ]* ʊ { [ˈˌ]? d } > dd;
+wʊ { d } > dd;
+[ˈˌ] [bcdfɡɟhjklɫmnpɹstvwzʃʒθðŋ]* ʊ { k } > kk;
 ˈ [bcdfɡɟhjklɫmnpɹstvwzʃʒθðŋ]* [aeiouæɑɒɔəɛɜɪʊʌɐ] { s } s [aeouæɑɒɔəɛɜʊʌɐ] > s;
 s } s > ;
 ˈ [bcdfɡɟhjklɫmnpɹstvwzʃʒθðŋ]* [æɛɪʌɔɑʊ] { tʃ } s? [^[:L:][:M:]] > ttʃ;
@@ -64,6 +69,7 @@ i [ˈˌ]? ɛ { ɹ } [^[:L:][:M:]] > ːɹ;
 
 ::Null;
 
+k } ks [^[:L:][:M:]] > k;
 k } k [ˈˌ]? [st] > ;
 k } k [eɛ] > ;
 [bcdfɡɟhjklɫmnpɹstvwzʃʒθðŋ] [ˈˌ]? { k } k > ;
