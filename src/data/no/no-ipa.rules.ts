@@ -31,6 +31,10 @@ rr { h } > ;
 
 ::Null;
 
+[^[:L:][:M:]] [bcdfghjklmnpqrstvwxzçŋɖɭɳɾʂʃʈʋ]* i { e } [bcdfgjkmpqstvwxz] > ;
+[^[:L:][:M:]] [bcdfghjklmnpqrstvwxzçŋɖɭɳɾʂʃʈʋ]* i { e } l [^l] > ;
+[^[:L:][:M:]] [bcdfghjklmnpqrstvwxzçŋɖɭɳɾʂʃʈʋ]* i { e } n [[:L:][:M:]] > ;
+
 ige } [^[:L:][:M:]] > iə;
 ig } [^[:L:][:M:]] > i;
 et } [^[:L:][:M:]] > ɛ;

@@ -2811,6 +2811,24 @@ describe("regressions of rule-based transliteration", () => {
     ["Kopphagen, Stephan", "da", "ru", "Коппхаген, Стефан"],
     ["Kopphagen, Philip", "da", "ja", "コプハーイェン, フィーリプ"],
     ["Topphus, Philipp", "de", "ru", "Топпхус, Филипп"],
+    [
+      "Nielsen, Niels, Ries, Tietgen, Kier, Gabriel, Cecilie",
+      "da",
+      "ru",
+      "Нильсен, Нильс, Рис, Титген, Киер, Габриэль, Сесилие",
+    ],
+    ["Nielsen, Thiele, Trier, Wiehe", "da", "uk", "Нільсен, Тіле, Трієр, Вієге"],
+    ["Nielsen, Ries, Gyldenstierne", "da", "sr", "Nilsen, Ris, Guldenstijerne"],
+    ["Nielsen, Ries, Trier", "da", "ja", "ニールセン, リース, トリアー"],
+    ["Nielsen, Niels", "da", "ko", "닐센, 닐스"],
+    [
+      "Grieg, Diesen, Niels, Kielland, Lien, Skien, Lie",
+      "no",
+      "ru",
+      "Григ, Дисен, Нильс, Киэлланд, Лиен, Шиен, Лие",
+    ],
+    ["Grieg, Nielsen", "no", "uk", "Ґріґ, Нільсен"],
+    ["Grieg, Diesen, Lien", "no", "zh", "格里格, 迪圣, 利恩"],
   ] as const;
 
   for (const jsImplementation of [true, false]) {

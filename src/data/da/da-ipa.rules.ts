@@ -17,6 +17,9 @@ rr { h } > ;
 
 ::Null;
 
+[^[:L:][:M:]] [bcdfghjklmnpqrstvwxzðŋɕʁ]* { ie } [bcdfgjklmpqstvwxz] > iː;
+[^[:L:][:M:]] [bcdfghjklmnpqrstvwxzðŋɕʁ]* { ie } n [[:L:][:M:]] > iː;
+
 aa > ɔː;
 ee > eː;
 ii > iː;

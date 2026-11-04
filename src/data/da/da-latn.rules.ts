@@ -23,6 +23,9 @@ Eg } [bcdfghjklmnpqrstvwxzBCDFGHJKLMNPQRSTVWXZǯǮẑẐ] > Ij;
 eG } [bcdfghjklmnpqrstvwxzBCDFGHJKLMNPQRSTVWXZǯǮẑẐ] > iJ;
 eg } [bcdfghjklmnpqrstvwxzBCDFGHJKLMNPQRSTVWXZǯǮẑẐ] > ij;
 
+[^[:L:][:M:]] [bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZšŠ]* [iI] { [eE] } [bcdfgjklmpqstvwxzBCDFGJKLMPQSTVWXZ] > ;
+[^[:L:][:M:]] [bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZšŠ]* [iI] { [eE] } [nN] [[:L:][:M:]] > ;
+
 EJ > IJ;
 Ej > Ij;
 eJ > iJ;

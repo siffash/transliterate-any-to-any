@@ -14,6 +14,10 @@ export const noLatnRules = `
 
 ::Null;
 
+[^[:L:][:M:]] [bcdfghjklmnpqrstvwxzBCDFGHJKLMNPQRSTVWXZšŠčČćĆ]* [iI] { [eE] } [bcdfgjkmpqstvwxzBCDFGJKMPQSTVWXZ] > ;
+[^[:L:][:M:]] [bcdfghjklmnpqrstvwxzBCDFGHJKLMNPQRSTVWXZšŠčČćĆ]* [iI] { [eE] } [lL] [^lL] > ;
+[^[:L:][:M:]] [bcdfghjklmnpqrstvwxzBCDFGHJKLMNPQRSTVWXZšŠčČćĆ]* [iI] { [eE] } [nN] [[:L:][:M:]] > ;
+
 [:Lu:] { X > KS;
 X } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > KS;
 X } [:Lu:] > KS;
