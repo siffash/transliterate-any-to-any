@@ -4,17 +4,22 @@ export const faIpaUvular = async <T = Text>(text: Text): Promise<T> => {
   const { faIpaMap } = await import("data/fa/fa-ipa.map");
   const { RBT } = await import("helpers/rbt");
   const { faIpaRules } = await import("data/fa/fa-ipa.rules");
+  const { faNormRules } = await import("data/fa/fa_norm.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
   const { filterIpa } = await import("helpers/filterIpa");
 
   const transliterator = RBT.fromRules(faIpaRules);
+  const normalizer = RBT.fromRules(faNormRules);
+
+  // Arabic spells an initial i- with a hamza below (إبراهيم), the map with a plain alef (ابراهیم)
+  const lookup = (word: string) => faIpaMap[word] ?? faIpaMap[word.replace(/^إ/, "ا")];
 
   const toIpa = (word: string) =>
-    filterIpa(faIpaMap[word], word, "fa") || transliterator.transliterate(word);
+    filterIpa(lookup(word), word, "fa") || transliterator.transliterate(word);
 
   const convert = async (text: string) =>
-    await wordSplitter(text, "fa", (word: string) =>
-      word.includes("\u200c") && !faIpaMap[word]
+    await wordSplitter(normalizer.transliterate(text), "fa", (word: string) =>
+      word.includes("\u200c") && !lookup(word)
         ? word
             .split("\u200c")
             .map((part, i) => (i ? toIpa(part).replace(/^ʔ/, "") : toIpa(part)))

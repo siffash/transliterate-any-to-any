@@ -94,6 +94,15 @@ describe("validateLanguage", () => {
     });
 
     it.each([
+      ["fa", "حسين كمال علي موسى"],
+      ["fa", "فاطمة"],
+      ["ur", "حسين كمال حمزه موسى"],
+      ["ur", "فاطمة إسحاق ۀ"],
+    ] as const)("accepts %s text typed on an Arabic keyboard", (language, text) => {
+      expect(validateLanguage(language, text)).toBe(true);
+    });
+
+    it.each([
       ["ar", "مرحبا ١٢٣"],
       ["fa", "سلام ۱۲۳"],
       ["ur", "سلام ۱۲۳"],
