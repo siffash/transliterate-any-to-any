@@ -83,13 +83,17 @@ w > v;
 Ç > S;
 ç > s;
 
-[ÄEÉ] I > IJ;
-[äeé] I > iJ;
-[ÄEÉ] i > Ij;
-[äeé] i > ij;
+[ÄEÉ] [IY] > IJ;
+[äeé] [IY] > iJ;
+[ÄEÉ] [iy] > Ij;
+[äeé] [iy] > ij;
 
-Y > Ü;
-y > ü;
+[AÄEËÉÈÊIÏOÖUÜaäeëéèêiïoöuü] { Y > Y;
+[AÄEËÉÈÊIÏOÖUÜaäeëéèêiïoöuü] { y > y;
+Y } [AÄEËÉÈÊIÏOÖUÜaäeëéèêiïoöuü] > Y;
+y } [AÄEËÉÈÊIÏOÖUÜaäeëéèêiïoöuü] > y;
+Y > I;
+y > i;
 
 J > Y;
 j > y;

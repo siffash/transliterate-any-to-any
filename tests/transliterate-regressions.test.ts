@@ -864,6 +864,13 @@ describe("regressions of rule-based transliteration", () => {
     ["Борис", "ru", "fr", "Borisse"],
     ["Joseph, Elise", "lb", "ru", "Йозеф, Элизе"],
     ["Gesellschaft", "lb", "de", "Gesellschaft"],
+    [
+      "Kayl, Feyder, Benoy, Huberty, Yann, Yvon",
+      "lb",
+      "ru",
+      "Кайль, Фейдер, Беной, Хуберти, Янн, Ивон",
+    ],
+    ["Mayrisch, Witry", "lb", "pl", "Majrisz, Witri"],
     ["Josée", "fr", "ja", "ジョゼ"],
     ["Josée", "fr", "ru", "Жозе"],
     ["Julie, Jules", "fr", "ko", "쥘리, 쥘"],
