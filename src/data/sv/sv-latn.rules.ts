@@ -73,6 +73,8 @@ t [iI] [oO] [nN] > šon;
 T [hH] > T;
 t [hH] > t;
 
+[Pp] { P } [hH] > P;
+[Pp] { p } [hH] > p;
 P [hH] > F;
 p [hH] > f;
 

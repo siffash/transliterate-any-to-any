@@ -29,6 +29,8 @@ au > æʉ;
 øy > œʏ;
 oy > ɔʏ;
 
+[^[:L:][:M:]] mi { ch } a > k;
+[^[:L:][:M:]] mi { ch } els > k;
 sch > ʃ;
 skj > ʃ;
 sj > ʃ;
@@ -37,6 +39,9 @@ nkj > nç;
 kj > ç;
 tion > ʃun;
 th > t;
+[^[:L:][:M:]] { ph > f;
+[st] [ɔɛoe] { ph > f;
+l { ph > f;
 tj > ç;
 a { k } er > k;
 aker > ɑkəɾ;

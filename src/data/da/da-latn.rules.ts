@@ -36,20 +36,19 @@ CHr > Kr;
 Chr > Kr;
 chr > kr;
 
-SCH > Š;
-Sch > Š;
-sch > š;
+S [Cc] [Hh] > Š;
+s [Cc] [Hh] > š;
 
 S [jJ] > Š;
 s [jJ] > š;
 
-[Mm] i { ch } [aA] > k;
-[Mm] i { Ch } [aA] > K;
-MI { CH } A > K;
+[Mm] [Ii] { c [hH] } [aA] > k;
+[Mm] [Ii] { C [hH] } [aA] > K;
+[Mm] [Ii] { c [hH] } [eE] [lL] [sS] > k;
+[Mm] [Ii] { C [hH] } [eE] [lL] [sS] > K;
 
-[Jj] oa { ch } i > k;
-[Jj] oa { Ch } i > K;
-JOA { CH } I > K;
+[Jj] [oO] [aA] { c [hH] } [iI] > k;
+[Jj] [oO] [aA] { C [hH] } [iI] > K;
 
 C [hH] > Š;
 c [hH] > š;
@@ -62,6 +61,8 @@ c } [EIYÆØÄÖÜeiyæøäöü] > s;
 C > K;
 c > k;
 
+[Pp] { P } [hH] > P;
+[Pp] { p } [hH] > p;
 P [hH] > F;
 p [hH] > f;
 

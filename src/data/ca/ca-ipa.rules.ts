@@ -6,6 +6,12 @@ export const caIpaRules = `
 
 ::Null;
 
+n { t } [bcçdfgjkmnpqsv] [[:L:][:M:]] > ;
+n { t } ' ' [bcçdfgjkmnpqsv] > ;
+n { t } ' ' [aeiouàèéíòóúïüh] > t;
+[^[:L:][:M:]] [bv] i [cs] [eɛ] n { t } [^[:L:][:M:]] > t;
+n { t } [^[:L:][:M:]] > ;
+
 ll > ʎ;
 ny > ɲ;
 tx > t͡ʃ;
@@ -43,7 +49,7 @@ r } [^[:L:][:M:]] > r;
 [aàeèéiíïoòóuúü] { r } [aàeèéiíïoòóuúü] > ɾ;
 r > r;
 
-[aàeèéiíïoòóuúü] { s } [aàeèéiíïoòóuúü] > z;
+[aàeèéiíïoòóuúüɛɔ] { s } [aàeèéiíïoòóuúü] > z;
 
 x } [^[:L:][:M:]] > ʃ;
 [aàeèéiíïoòóuúü] { x } [aàeèéiíïoòóuúü] > ks;

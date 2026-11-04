@@ -16,6 +16,8 @@ export const deIpaRules = `
 [^[:L:][:M:]] ku { e } s [^[:L:][:M:]] > u;
 [^[:L:][:M:]] g { u } ericke > ;
 [^[:L:][:M:]] ba { e } yer > ;
+[^[:L:][:M:]] l { u } dwig > uh;
+[^[:L:][:M:]] h { e } dwig > eh;
 
 ::Null;
 
@@ -52,7 +54,7 @@ ster } reich > stɐ;
 [bdfgklmnprtz] { s } pitz > ʃ;
 
 ng } [^[:L:][:M:]] > ŋ;
-ig } [^[:L:][:M:]] > ɪç;
+i } g [^[:L:][:M:]] > ɪ;
 er } [^[:L:][:M:]] > ɐ;
 en } [^[:L:][:M:]] > ən;
 el } [^[:L:][:M:]] > əl;

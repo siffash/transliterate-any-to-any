@@ -3,6 +3,7 @@ import { Text } from "types";
 export const deKo = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { deIpaRules } = await import("data/de/de-ipa.rules");
+  const { deIpaIgRules } = await import("data/de/de-ipa_ig.rules");
   const { ipaDevoiceBgRules } = await import("data/ipa/ipa_devoice-bg.rules");
   const { ipaDevoiceDRules } = await import("data/ipa/ipa_devoice-d.rules");
   const { deIpaKoRules } = await import("data/de/de-ipa_ko.rules");
@@ -11,6 +12,7 @@ export const deKo = async (text: Text) => {
 
   const transliterator = RBT.fromRules(
     deIpaRules +
+      deIpaIgRules +
       ipaDevoiceBgRules +
       ipaDevoiceDRules +
       deIpaKoRules +

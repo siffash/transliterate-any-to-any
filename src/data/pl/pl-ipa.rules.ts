@@ -56,9 +56,6 @@ krz > kʂ;
 
 [ptkcfsśćx] { rz > ʂ;
 
-t͡ʂ { w > f;
-ʂ { w > f;
-[ptkcfsśćx] { w > f;
 w > v;
 
 cz > t͡ʂ;

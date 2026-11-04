@@ -3,6 +3,7 @@ export const deIpaJaRules = `
 
 ə > e;
 [ɐɚ] > aː;
+d } vɪ [çk] > t;
 a { x } [^[:L:][:M:]] > ッハ;
 ɔ { x } [^[:L:][:M:]] > ッホ;
 a { x } [bdfɡgklmnŋprʁstvzʃʒç] > ハ;

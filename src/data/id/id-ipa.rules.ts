@@ -35,7 +35,6 @@ s { c > k;
 c > tʃ;
 j > dʒ;
 q > k;
-v > f;
 x > ks;
 y > j;
 

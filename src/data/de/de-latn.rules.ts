@@ -120,6 +120,8 @@ z > c;
 [lLnNrR] { S } [AEIOUÄÖÜYaeiouäöüy] > Z;
 [lLnNrR] { s } [AEIOUÄÖÜYaeiouäöüy] > z;
 
+[Pp] { P } [hH] > P;
+[Pp] { p } [hH] > p;
 P [hH] > F;
 p [hH] > f;
 

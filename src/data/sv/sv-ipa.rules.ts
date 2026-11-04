@@ -16,6 +16,9 @@ lj > j;
 tj > ɕ;
 kj > ɕ;
 th > t;
+ph > f;
+ch } [rl] > k;
+[^[:L:][:M:]] m [iɪ] ː? { ch } a > k;
 ch > ɕ;
 
 rt > ʈ;

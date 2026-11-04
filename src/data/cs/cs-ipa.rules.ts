@@ -30,11 +30,9 @@ dz > d͡z;
 [bcčdďfgh{ch}jklmnňpqrřsštťvwxzž] { l } [^[:L:][:M:]] > l̩;
 
 [tsc] { z } [^[:L:][:M:]] > s;
-ď } [^[:L:][:M:]] > t͡ɕ;
 h } [^[:L:][:M:]] > x;
 ř } [^[:L:][:M:]] > r̝̊;
 
-ď } [ptťksšfcčx] > t͡ɕ;
 h } [ptťksšfcčx] > x;
 ř } [ptťksšfcčx] > r̝̊;
 [ptťksšfcčx] { ř > r̝̊;

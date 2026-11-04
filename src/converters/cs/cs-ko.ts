@@ -2,6 +2,7 @@ import { Text } from "types";
 
 export const csKo = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
+  const { csSkIpaKoDjRules } = await import("data/ipa/cs_sk-ipa_ko-dj.rules");
   const { csIpaRules } = await import("data/cs/cs-ipa.rules");
   const { ipaDevoiceBgRules } = await import("data/ipa/ipa_devoice-bg.rules");
   const { ipaDevoiceVRules } = await import("data/ipa/ipa_devoice-v.rules");
@@ -11,11 +12,13 @@ export const csKo = async (text: Text) => {
   const { csIpaHardERules } = await import("data/cs/cs-ipa_hard-e.rules");
   const { csIpaHardIRules } = await import("data/cs/cs-ipa_hard-i.rules");
   const { ipaKoFinalKpRules } = await import("data/ipa/ipa-ko_final-kp.rules");
+  const { csSkIpaKoPalatalRules } = await import("data/ipa/cs_sk-ipa_ko-palatal.rules");
   const { csSkIpaKoRules } = await import("data/ipa/cs_sk-ipa_ko.rules");
   const { ipaKoRules } = await import("data/ipa/ipa-ko.rules");
 
   const transliterator = RBT.fromRules(
-    csIpaLabialERules +
+    csSkIpaKoDjRules +
+      csIpaLabialERules +
       csIpaHardERules +
       csIpaHardIRules +
       csIpaRules +
@@ -23,6 +26,7 @@ export const csKo = async (text: Text) => {
       ipaDevoiceVRules +
       ipaDevoiceZRules +
       csSkIpaRzhKoRules +
+      csSkIpaKoPalatalRules +
       csSkIpaKoRules +
       ipaKoFinalKpRules +
       ipaKoRules,
