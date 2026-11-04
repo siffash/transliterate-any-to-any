@@ -9,9 +9,8 @@ L [lL] > Ľ;
 [lL] { · } [lL] > ;
 
 [nN] { [tT] } [bcçdfgjkmnpqsvBCÇDFGJKMNPQSV] [[:L:][:M:]] > ;
-[nN] { [tT] } ' ' [bcçdfgjkmnpqsvBCÇDFGJKMNPQSV] > ;
-[nN] { t } ' ' [aeiouàèéíòóúïüAEIOUÀÈÉÍÒÓÚÏÜhH] > t;
-[nN] { T } ' ' [aeiouàèéíòóúïüAEIOUÀÈÉÍÒÓÚÏÜhH] > T;
+[nN] { t } [^[:L:][:M:]] [aeiouàèéíòóúïüAEIOUÀÈÉÍÒÓÚÏÜhH] > t;
+[nN] { T } [^[:L:][:M:]] [aeiouàèéíòóúïüAEIOUÀÈÉÍÒÓÚÏÜhH] > T;
 [^[:L:][:M:]] [vV] [iI] [csCS] [eE] [nN] { t } [^[:L:][:M:]] > t;
 [^[:L:][:M:]] [vV] [iI] [csCS] [eE] [nN] { T } [^[:L:][:M:]] > T;
 [nN] { [tT] } [^[:L:][:M:]] > ;

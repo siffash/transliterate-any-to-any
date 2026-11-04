@@ -17,15 +17,15 @@ F } [aA] [hH] [aA] [mM] > P;
 f } [iI] [kK] [iI] [rR] > p;
 F } [iI] [kK] [iI] [rR] > P;
 
-bilik } ' ' [mM]andi > kamar;
-Bilik } ' ' [mM]andi > Kamar;
-BILIK } ' ' MANDI > KAMAR;
-bilik } ' ' [tT]idur > kamar;
-Bilik } ' ' [tT]idur > Kamar;
-BILIK } ' ' TIDUR > KAMAR;
-pejabat } ' ' [pP]os > kantor;
-Pejabat } ' ' [pP]os > Kantor;
-PEJABAT } ' ' POS > KANTOR;
+[^[:L:][:M:]] { bilik } [^[:L:][:M:]] [mM]andi > kamar;
+[^[:L:][:M:]] { Bilik } [^[:L:][:M:]] [mM]andi > Kamar;
+[^[:L:][:M:]] { BILIK } [^[:L:][:M:]] MANDI > KAMAR;
+[^[:L:][:M:]] { bilik } [^[:L:][:M:]] [tT]idur > kamar;
+[^[:L:][:M:]] { Bilik } [^[:L:][:M:]] [tT]idur > Kamar;
+[^[:L:][:M:]] { BILIK } [^[:L:][:M:]] TIDUR > KAMAR;
+[^[:L:][:M:]] { pejabat } [^[:L:][:M:]] [pP]os > kantor;
+[^[:L:][:M:]] { Pejabat } [^[:L:][:M:]] [pP]os > Kantor;
+[^[:L:][:M:]] { PEJABAT } [^[:L:][:M:]] POS > KANTOR;
 
 [uU]nivers { iti > itas;
 [uU]NIVERS { ITI > ITAS;

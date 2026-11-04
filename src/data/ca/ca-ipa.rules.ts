@@ -7,8 +7,7 @@ export const caIpaRules = `
 ::Null;
 
 n { t } [bcçdfgjkmnpqsv] [[:L:][:M:]] > ;
-n { t } ' ' [bcçdfgjkmnpqsv] > ;
-n { t } ' ' [aeiouàèéíòóúïüh] > t;
+n { t } [^[:L:][:M:]] [aeiouàèéíòóúïüh] > t;
 [^[:L:][:M:]] [bv] i [cs] [eɛ] n { t } [^[:L:][:M:]] > t;
 n { t } [^[:L:][:M:]] > ;
 
