@@ -2,6 +2,16 @@ export const svIpaRules = `
 ::Lower;
 ::NFC;
 
+[^[:L:][:M:]] jo { h } n > ;
+[^[:L:][:M:]] r { h } > ;
+rr { h } > ;
+[aeiouyåäöéèêëüïôà] [aeiouyåäöéèêëüïôà] { h } [bcdfgklmnpqrstxz] > ;
+[aeiouyåäöéèêëüïôà] { h } [bcdfgklmnpqrstxz] > ː;
+[aeiouyåäöéèêëüïôà] { h } [^[:L:][:M:]] > ;
+[dg] { h } [^[:L:][:M:]] > ;
+
+::Null;
+
 kristian > krɪɧan;
 tion > ɧuːn;
 sch > ɧ;
@@ -94,6 +104,7 @@ y > yː;
 ô > o;
 ç > s;
 ņ > ɲ;
+ː > ;
 
 bb > b;
 dd > d;

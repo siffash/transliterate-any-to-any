@@ -9,6 +9,26 @@ export const noIpaRules = `
 ö > ø;
 ü > y;
 
+bb { y } [^[:L:][:M:]] > i;
+dd { y } [^[:L:][:M:]] > i;
+ff { y } [^[:L:][:M:]] > i;
+gg { y } [^[:L:][:M:]] > i;
+kk { y } [^[:L:][:M:]] > i;
+ll { y } [^[:L:][:M:]] > i;
+mm { y } [^[:L:][:M:]] > i;
+nn { y } [^[:L:][:M:]] > i;
+pp { y } [^[:L:][:M:]] > i;
+rr { y } [^[:L:][:M:]] > i;
+ss { y } [^[:L:][:M:]] > i;
+tt { y } [^[:L:][:M:]] > i;
+[^[:L:][:M:]] jo { h } n > ;
+[^[:L:][:M:]] r { h } > ;
+rr { h } > ;
+[aeiouyæøåäöüéèêóòôàâ] [aeiouyæøåäöüéèêóòôàâ] { h } [bcdfgklmnpqrstxz] > ;
+[aeiouyæøåäöüéèêóòôàâ] { h } [bcdfgklmnpqrstxz] > ː;
+[aeiouyæøåäöüéèêóòôàâ] { h } [^[:L:][:M:]] > ;
+[dg] { h } [^[:L:][:M:]] > ;
+
 ::Null;
 
 ige } [^[:L:][:M:]] > iə;
@@ -32,6 +52,9 @@ oy > ɔʏ;
 [^[:L:][:M:]] mi { ch } a > k;
 [^[:L:][:M:]] mi { ch } els > k;
 sch > ʃ;
+mi { ch } ell > ʃ;
+[^[:L:][:M:]] { ch } [aeiouyæøåäöü] > ʃ;
+ch > k;
 skj > ʃ;
 sj > ʃ;
 sk } [eiy] > ʃ;

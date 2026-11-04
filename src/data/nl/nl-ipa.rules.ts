@@ -5,6 +5,10 @@ export const nlIpaRules = `
 ['’‘\`´ʼ] s [-] > s;
 [^[:L:][:M:]] { ['’‘\`´ʼ] } t [^[:L:][:M:]] > ;
 ĳ > ij;
+[aeiouyäëïöüáéíóúàèâêîôû] [aeiouyäëïöüáéíóúàèâêîôû] { h } [bcdfgklmnpqrstxz] > ;
+[aeiouyäëïöüáéíóúàèâêîôû] { h } [bcdfgklmnpqrstxz] > ː;
+[aeiouyäëïöüáéíóúàèâêîôû] { h } [^[:L:][:M:]] > ;
+d { h } [^[:L:][:M:]] > ;
 
 ::Null;
 
@@ -40,7 +44,7 @@ tj > t͡ɕ;
 qu > kʋ;
 ph > f;
 th > t;
-rh > ʁ;
+[^[:L:][:M:]] { rh > ʁ;
 
 ij > ɛi;
 ui > œy;
@@ -61,9 +65,16 @@ ai > ɑi;
 oi > ɔi;
 uw > yʋ;
 
+ck > kː;
 c } [eiy] > s;
 c > k;
 ç > s;
+
+a } ː > a;
+e } ː > e;
+o } ː > o;
+u } ː > y;
+i } ː > i;
 
 a } [bcdfghjklmnpqrstvwxz] [aeiouy] > aː;
 e } [bcdfghjklmnpqrstvwxz] [aeiouy] > eː;

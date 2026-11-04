@@ -2,6 +2,15 @@ export const lbIpaRules = `
 ::Lower;
 ::NFC;
 
+[aeiouyäëéöüàâîïôùû] [aeiouyäëéöüàâîïôùû] { h } [bcdfgklmnpqrstxz] > ;
+[aeiouyäëéöüàâîïôùû] { h } [bcdfgklmnpqrstxz] > ː;
+[aeiouyäëéöüàâîïôùû] { h } [^[:L:][:M:]] > ;
+d { h } [^[:L:][:M:]] > ;
+[^[:L:][:M:]] r { h } > ;
+rr { h } > ;
+
+::Null;
+
 éi > eɪ̯;
 ie > iə;
 ue > uə;
