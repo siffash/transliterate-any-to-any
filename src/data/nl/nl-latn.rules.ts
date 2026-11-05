@@ -83,6 +83,8 @@ n [jJ] > ń;
 [:L:] { t } [hH] [öÖ] [yY] [sS] > t;
 [:L:] { T } [hH] [uU] [kK] > T;
 [:L:] { t } [hH] [uU] [kK] > t;
+[:L:] { T } [hH] [oO] [lL] [tT] > T;
+[:L:] { t } [hH] [oO] [lL] [tT] > t;
 T [hH] > T;
 t [hH] > t;
 
@@ -219,6 +221,8 @@ n [Gg] > ŋ;
 [:L:] { t } [hH] [öÖ] [yY] [sS] > t;
 [:L:] { T } [hH] [uU] [kK] > T;
 [:L:] { t } [hH] [uU] [kK] > t;
+[:L:] { T } [hH] [oO] [lL] [tT] > T;
+[:L:] { t } [hH] [oO] [lL] [tT] > t;
 T [Hh] > Þ;
 t [Hh] > þ;
 [:L:] { K } [hH] [aeiouyäöüåæøáéíóúýőűıâêîôûàèìòùëïõAEIOUYÄÖÜÅÆØÁÉÍÓÚÝŐŰIİÂÊÎÔÛÀÈÌÒÙËÏÕ] > K;

@@ -43,6 +43,17 @@ sj > ʃ;
 tj > t͡ɕ;
 qu > kʋ;
 ph > f;
+tth > t;
+[:L:] { t } huis > t;
+[:L:] { t } huiz > t;
+[:L:] { t } hoorn > t;
+[:L:] { t } hoek > t;
+[:L:] { t } hof > t;
+[:L:] { t } haven > t;
+[:L:] { t } horst > t;
+[:L:] { t } hout > t;
+[:L:] { t } hove > t;
+[:L:] { t } holt > t;
 th > t;
 [^[:L:][:M:]] { rh > ʁ;
 

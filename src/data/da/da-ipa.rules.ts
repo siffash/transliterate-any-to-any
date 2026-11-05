@@ -51,6 +51,12 @@ e } g [^[:L:][:M:]] > eː;
 [{iː}{eː}] { g } [^[:L:][:M:]] > ;
 
 tion > sjon;
+[:L:] { t } himm > t;
+[:L:] { t } havn > t;
+[:L:] { t } hus > t;
+[:L:] { t } holm > t;
+[:L:] { t } høj > t;
+[:L:] { t } hage > t;
 th > t;
 p { p } h > p;
 ph > f;
