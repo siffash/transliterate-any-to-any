@@ -34,8 +34,11 @@ export const normalizeFrIpa = (
   ipaWord: string,
   japanese = false,
   doubleR = false,
+  keepSchwa = false,
 ): string => {
   if (japanese) return restoreLettersInIpa(originalWord, ipaWord, japaneseRules);
+  // Targets that write the schwa of de/le/que apart from e (дьо, 勒, เดอ) keep it when it is the only vowel
+  const loneSchwa = keepSchwa && /^[bdfɡklmnpʁstvzʃʒ]ə$/.test(ipaWord);
   return restoreLettersInIpa(originalWord, ipaWord, [
     // Restore "rr" for targets where a single r between vowels is a tap (Carrefour, Thierry)
     ...(doubleR ? [{ ipaCharToBeReplaced: "ʁ", lettersToRestore: { rr: "ʁʁ" } }] : []),
@@ -50,7 +53,7 @@ export const normalizeFrIpa = (
     { ipaCharToBeReplaced: "w", lettersToRestore: { o: "o" } },
     // Restore "e"
     { ipaCharToBeReplaced: "ø", lettersToRestore: { eu: "e" } },
-    { ipaCharToBeReplaced: "ə", lettersToRestore: { e: "e" } },
+    ...(loneSchwa ? [] : [{ ipaCharToBeReplaced: "ə", lettersToRestore: { e: "e" } }]),
     // Restore "ɛl"
     { ipaCharToBeReplaced: "ɛj", lettersToRestore: { eil: "ɛl", eille: "ɛl" } },
     // Restore "il"
