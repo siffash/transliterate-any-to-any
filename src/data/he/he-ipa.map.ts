@@ -1391,7 +1391,7 @@ export const heIpaMap: Record<string, string> = {
   רחלי: "ʁaχeli",
   רמון: "ʁaˈmon",
   רמות: "ʁaˈmot",
-  רמלה: "ˈʁamle",
+  רמלה: "ˈʁamla",
   רננה: "ʁenana",
   רעיה: "ʁaʕaja",
   רעים: "ʁeˈʔim",

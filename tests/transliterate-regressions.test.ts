@@ -951,6 +951,7 @@ describe("regressions of rule-based transliteration", () => {
     ["Bartolomei, Pompeii", "en", "ru", "Бартоломей, Помпейи"],
     ["Bartolomei", "en", "es", "Bartolomei"],
     ["ירושלים", "he", "ru", "Ерушалаим"],
+    ["רמלה, הרמלה", "he", "ru", "Рамла, Харамла"],
     ["ירושלים", "he", "mk", "Јерушалаим"],
     ["دستجرد", "fa", "el", "Νταστζερντ"],
     ["موبائل", "ur", "cs", "Móbájl"],
