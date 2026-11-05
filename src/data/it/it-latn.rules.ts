@@ -16,17 +16,17 @@ export const itLatnRules = `
 
 ::Null;
 
-sci } [aouAOU] > š;
-Sci } [aouAOU] > Š;
-SCI } [AOU] > Š;
+sci } [aeouAEOU] > š;
+Sci } [aeouAEOU] > Š;
+SCI } [AEOU] > Š;
 
-cci } [aouAOU] > čč;
-Cci } [aouAOU] > Čč;
-CCI } [AOU] > ČČ;
+cci } [aeouAEOU] > čč;
+Cci } [aeouAEOU] > Čč;
+CCI } [AEOU] > ČČ;
 
-ggi } [aouAOU] > ǯǯ;
-Ggi } [aouAOU] > Ǯǯ;
-GGI } [AOU] > ǮǮ;
+ggi } [aeouAEOU] > ǯǯ;
+Ggi } [aeouAEOU] > Ǯǯ;
+GGI } [AEOU] > ǮǮ;
 
 gli } [aeouAEOU] > ľ;
 Gli } [aeouAEOU] > Ľ;
@@ -48,12 +48,12 @@ gg } [eiEI] > ǯǯ;
 Gg } [eiEI] > Ǯǯ;
 GG } [EI] > ǮǮ;
 
-ci } [aouAOU] > č;
-Ci } [aouAOU] > Č;
-CI } [AOU] > Č;
+ci } [aeouAEOU] > č;
+Ci } [aeouAEOU] > Č;
+CI } [AEOU] > Č;
 
-g [iI] } [aouAOU] > ǯ;
-G [iI] } [aouAOU] > Ǯ;
+g [iI] } [aeouAEOU] > ǯ;
+G [iI] } [aeouAEOU] > Ǯ;
 
 gn } [aeiouAEIOU] > ny;
 Gn } [aeiouAEIOU] > Ny;
