@@ -207,6 +207,10 @@ j > y;
 [ẞß] } [:Lu:] > SS;
 [ẞß] > ss;
 
+[aeiouäöüAEIOUÄÖÜ] [nrkxNRKX] { I } [eE] [lL] [aeAE]? [^[:L:][:M:]] > I;
+[aeiouäöüAEIOUÄÖÜ] [nrkxNRKX] { i } [eE] [lL] [aeAE]? [^[:L:][:M:]] > i;
+[aeiouäöüAEIOUÄÖÜ] [bB] [rR] { I } [eE] [lL] [aeAE]? [^[:L:][:M:]] > I;
+[aeiouäöüAEIOUÄÖÜ] [bB] [rR] { i } [eE] [lL] [aeAE]? [^[:L:][:M:]] > i;
 I [eE] > I;
 i [eE] > i;
 

@@ -4,6 +4,8 @@ export const nlLatnRules = `
 [[:L:][:M:]] { \\' } [[:L:][:M:]] > ’;
 [^[:L:][:M:]] { \\' } [sStT] [^[:L:][:M:]] > ’;
 
+[aeiouyAEIOUY] { Ë > Ë;
+[aeiouyAEIOUY] { ë > ë;
 [ËÉÈÊ] > E;
 [ëéèê] > e;
 [ÍÎ] > I;
@@ -183,6 +185,8 @@ x > ks;
 
 Ï > I;
 ï > i;
+Ë > E;
+ë > e;
 
 ::Null;
 

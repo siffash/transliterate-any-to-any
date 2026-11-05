@@ -2863,6 +2863,31 @@ describe("regressions of rule-based transliteration", () => {
     ],
     ["Grieg, Nielsen", "no", "uk", "Ґріґ, Нільсен"],
     ["Grieg, Diesen, Lien", "no", "zh", "格里格, 迪圣, 利恩"],
+    [
+      "Daniel, Gabriel, Muriel, Nathaniel, Danielle, Ciel",
+      "fr",
+      "ru",
+      "Даниэль, Габриэль, Мюриэль, Натаниэль, Даниэль, Сьель",
+    ],
+    ["Daniel, Gabriel, Muriel", "fr", "uk", "Данієль, Ґабрієль, Мюрієль"],
+    ["Daniel, Gabriel", "fr", "bg", "Даниел, Габриел"],
+    [
+      "Daniel, Gabriel, Daniela, Gabriele, Kiel, Thiel, Hooksiel",
+      "de",
+      "ru",
+      "Даниэль, Габриэль, Даниэла, Габриэле, Киль, Тиль, Хоксиль",
+    ],
+    ["Daniel, Kiel, Thiel, Spiel", "de", "ja", "ダーニーエル, キール, ティール, シュピール"],
+    ["Daniel, Kiel, Ezechiel", "de", "zh", "达尼埃尔, 基尔, 埃采希埃尔"],
+    ["Χίος, Ευτυχία, Αχιλλέας", "el", "zh", "希奥斯, 埃夫蒂希亚, 阿希莱阿斯"],
+    ["Kirkenes, Thorkildsen", "no", "zh", "希尔希埃内斯, 托尔希尔圣"],
+    [
+      "Daniël, Gabriël, Noël, Joël, Citroën, Michiel",
+      "nl",
+      "ru",
+      "Даниэл, Габриэл, Ноэл, Йоэл, Ситроэн, Михил",
+    ],
+    ["Daniël, Noël, Zoë", "nl", "en", "Daniel, Noel, Zoe"],
   ] as const;
 
   for (const jsImplementation of [true, false]) {

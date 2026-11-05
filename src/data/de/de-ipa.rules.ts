@@ -33,6 +33,9 @@ a } els[eo]n [^[:L:][:M:]] > a;
 ae > ä;
 [aeäq] { u } e > u;
 u } els?a? [^[:L:][:M:]] > u;
+[aeiouäöü] [nrk] { ie } l [ae]? [^[:L:][:M:]] > iɛ;
+[aeiouäöü] [bc] [rh] { ie } l [ae]? [^[:L:][:M:]] > iɛ;
+i { e } l [^[:L:][:M:]] > ;
 u } elss?on [^[:L:][:M:]] > u;
 ue > ü;
 
