@@ -15,6 +15,7 @@ export const ipaLtRules = `
 [ɡɢɟɣɰ] > g;
 [ħɦ] > h;
 [ĩɨɪyʏ] > i;
+ɥ } [iɪĩ] > ;
 [ʝɥ] > j;
 q > k;
 [ɫɭʎ] > l;

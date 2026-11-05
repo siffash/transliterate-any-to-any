@@ -4,8 +4,10 @@ export const msIdLatnRules = `
 S [yhjYHJ] > Š;
 s [yhjYHJ] > š;
 
-N [yjYJ] > Ń;
-n [yjYJ] > ń;
+N [yY] > Ń;
+n [yY] > ń;
+[^[:L:][:M:]] { N [jJ] > Ń;
+[^[:L:][:M:]] { n [jJ] > ń;
 
 [:Lu:] { X > KS;
 X } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > KS;

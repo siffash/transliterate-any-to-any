@@ -46,7 +46,8 @@ export const ipaNoRules = `
 [ťθ] > t;
 [č] > tsj;
 [ũưʉʊɯ] > u;
-[wɥʋβ] > v;
+[wʋβ] > v;
+ɥ > y;
 [ʏ] > y;
 [ɔ] > å;
 [œ] > ø;

@@ -3,6 +3,9 @@ export const huLatnRules = `
 
 [[:L:][:M:]] { \\' } [[:L:][:M:]] > ’;
 
+[aeiouáéíóöőúüűAEIOUÁÉÍÓÖŐÚÜŰ] { y } [^[:L:][:M:]] > i;
+[aeiouáéíóöőúüűAEIOUÁÉÍÓÖŐÚÜŰ] { Y } [^[:L:][:M:]] > I;
+
 L [yY] > Y;
 l [yY] > y;
 

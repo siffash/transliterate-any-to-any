@@ -18,7 +18,7 @@ export const ipaDeRules = `
 [ôõơɔɤɵ] > o;
 [øœ] > ö;
 [ũưʉʊɯ] > u;
-[yʏ] > ü;
+[yʏɥ] > ü;
 ɓ > b;
 [cq] > k;
 [çxχ] > ch;
@@ -26,7 +26,7 @@ export const ipaDeRules = `
 [ďðɖɗ] > d;
 [ɟɡɢɣɰ] > g;
 [ħɦ] > h;
-[ɥʝʲ] > j;
+[ʝʲ] > j;
 [ɫɭ] > l;
 [ʎ] > lj;
 [ɱ] > m;
