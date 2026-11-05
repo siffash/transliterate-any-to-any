@@ -1,5 +1,6 @@
 export const frIpaKoRules = `
 ::Null;
 
-[^[:L:][:M:]] [bdfɡklmnpʁstvzʃʒ] { ə } [^[:L:][:M:]] > ɯ;
+[ʃʒ] { ə > u;
+ə > ɯ;
 `;
