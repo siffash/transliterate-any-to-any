@@ -49,13 +49,12 @@ iħ > iːħ;
 oħ > ɔːħ;
 uħ > uːħ;
 
-aq > ɐːʔ;
-eq > ɛːʔ;
-iq > iːʔ;
-oq > ɔːʔ;
-uq > uːʔ;
-
 ie > ɪː;
+
+a } [jw] [aeiou] > ɐ;
+e } [jw] [aeiou] > ɛ;
+i } w [aeiou] > ɪ;
+o } [jw] [aeiou] > ɔ;
 
 aj > ɐɪ̯;
 aw > ɐʊ̯;
@@ -80,7 +79,7 @@ ll > lː;
 mm > mː;
 nn > nː;
 pp > pː;
-qq > ʔː;
+qq > qː;
 rr > rː;
 ss > sː;
 tt > tː;
@@ -91,7 +90,12 @@ jj > jː;
 zz > t͡sː;
 żż > zː;
 
-g } [e i y ɛ ɪ] > d͡ʒ;
+sci } [aou] > ʃ;
+sc } [eiy] > ʃ;
+ci } [aou] > t͡ʃ;
+gi } [aou] > d͡ʒ;
+d͡ʒɪː { g } [^[:L:][:M:]] > d͡ʒ;
+g } [eiyɛɪ] > d͡ʒ;
 z } [^[:L:][:M:]] > t͡s;
 
 a > ɐ;
@@ -100,13 +104,13 @@ i > ɪ;
 o > ɔ;
 u > ʊ;
 
-c } [eiyɛɪ] > s;
+c } [eiyɛɪ] > t͡ʃ;
 c > k;
 y > ɪ;
 ċ > t͡ʃ;
 ġ > d͡ʒ;
 ħ > ħ;
-q > ʔ;
+q > q;
 x > ʃ;
 ż > z;
 z > t͡s;

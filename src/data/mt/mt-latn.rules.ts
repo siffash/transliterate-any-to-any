@@ -25,6 +25,9 @@ t [hH] > t;
 P [hH] > F;
 p [hH] > f;
 
+S [hH] > Š;
+s [hH] > š;
+
 QU } [aeiouAEIOU] > KW;
 Qu } [aeiouAEIOU] > Kw;
 qU } [aeiouAEIOU] > kW;
@@ -63,8 +66,24 @@ j > y;
 Ż > Z;
 ż > z;
 
+S [Cc] [iI] } [aAoOuU] > Š;
+s [Cc] [iI] } [aAoOuU] > š;
+S [Cc] } [eEiIyY] > Š;
+s [Cc] } [eEiIyY] > š;
+C [iI] } [aAoOuU] > Č;
+c [iI] } [aAoOuU] > č;
 C } [eEiIyY] > Č;
 c } [eEiIyY] > č;
+G [iI] } [aAoOuU] > Ǯ;
+g [iI] } [aAoOuU] > ǯ;
+[Ǯǯ] [iI] { G } [^[:L:][:M:]] > Ǯ;
+[Ǯǯ] [iI] { g } [^[:L:][:M:]] > ǯ;
+GG } [eEiIyY] > ǮǮ;
+gG } [eEiIyY] > ǯǮ;
+Gg } [eEiIyY] > Ǯǯ;
+gg } [eEiIyY] > ǯǯ;
+G } [eEiIyY] > Ǯ;
+g } [eEiIyY] > ǯ;
 C > K;
 c > k;
 

@@ -4,9 +4,10 @@ export const urMt = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { urIpa } = await import("converters/ur/ur-ipa");
   const { ipaAspHRules } = await import("data/ipa/ipa_asph.rules");
+  const { ipaMtGlottalRules } = await import("data/ipa/ipa-mt_glottal.rules");
   const { ipaMtRules } = await import("data/ipa/ipa-mt.rules");
 
-  const transliterator = RBT.fromRules(ipaAspHRules + ipaMtRules + "::Title;");
+  const transliterator = RBT.fromRules(ipaAspHRules + ipaMtGlottalRules + ipaMtRules + "::Title;");
 
   if (typeof text === "string") {
     const ipa = await urIpa<string>(text);

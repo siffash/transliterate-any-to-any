@@ -14,6 +14,8 @@ export const latnPlRules = `
 ẑ > dz;
 
 [Šš] { [Šš] > ;
+[Čč] { [Čč] > ;
+[Ǯǯ] { [Ǯǯ] > ;
 
 ::Null;
 
