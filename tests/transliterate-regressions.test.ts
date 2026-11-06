@@ -2145,7 +2145,7 @@ describe("regressions of rule-based transliteration", () => {
     ["נועה, תנועה", "he", "ka", "ნოა, ტნუა"],
     ["الطيب, الموصل, علي", "ar", "mt", "At-Tajjib, Al-Mawsil, Għali"],
     ["عمر, عبد الله, سعيد", "ar", "fr", "Oumar, Abd Allah, Said"],
-    ["عمر, العربية", "ar", "ca", "Umar, Al-Arrabia"],
+    ["عمر, العربية", "ar", "ca", "Umar, Al-Arabia"],
     ["العربية, عطية, هنية", "ar", "it", "Al-Arabia, Atia, Hania"],
     ["العربية, سمية, العياري", "ar", "ro", "Al-Arabia, Sumaia, Al-Aiari"],
     ["प्रिया, लुधियाना", "hi", "ca", "Pria, Ludhiana"],
