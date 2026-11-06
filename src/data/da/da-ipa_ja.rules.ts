@@ -6,5 +6,4 @@ export const daIpaJaRules = `
 [oɔuʊ] ː { ɐ̯ } [:L:] > ;
 [oɔuʊ] { ɐ̯ } [:L:] > ː;
 ə > e;
-ð > d;
 `;
