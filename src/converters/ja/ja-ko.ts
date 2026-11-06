@@ -20,16 +20,14 @@ export const jaKo = async (text: Text) => {
       async text => await kuroshiro.convert(text, { to: "hiragana" }),
     );
     // Map Hiragana to Korean Jamo (Individual pieces)
-    // Korean leaves long vowels unwritten (東京 → 도쿄, 大阪 → 오사카)
+    // Korean leaves long vowels unwritten (東京 → 도쿄, 大阪 → 오사카, 大分 → 오이타, 大内 → 오우치),
+    // but の+うえ is 上 (井上 → 이노우에)
     const short = hiragana
       .replace(
-        /([おこごそぞとどのほぼぽもよろをょオコゴソゾトドノホボポモヨロヲョ])[うおウオ](?![ぁぃぅぇぉあいうえおァィゥェォアイウエオ])/g,
+        /([おこごそぞとどのほぼぽもよろをょオコゴソゾトドノホボポモヨロヲョ])[うおウオ](?!(?<=[のノ][うウ])[えエ])/g,
         "$1",
       )
-      .replace(
-        /([うくぐすずつづぬふぶぷむゆるゅウクグスズツヅヌフブプムユルュ])[うウ](?![ぁぃぅぇぉあいうえおァィゥェォアイウエオ])/g,
-        "$1",
-      );
+      .replace(/([うくぐすずつづぬふぶぷむゆるゅウクグスズツヅヌフブプムユルュ])[うウ]/g, "$1");
     let jamo = short.replace(jaKoPattern, match => jaKoMap[match]);
     // Word-initial k/t/ch are written plain (加藤 → 가토), and ㅈ/ㅊ take no y-vowel (じゅ → 주)
     jamo = jamo
