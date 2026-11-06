@@ -69,4 +69,8 @@ w > u;
 
 ii { i+ > ;
 uu { u+ > ;
+
+::Null;
+
+[^cg] i { i } [aeou] > ;
 `;

@@ -65,6 +65,9 @@ gl { i } [iìíyïÿ] > ;
 ::Null;
 
 ii { i+ > ;
+
+::Null;
+
 [^cg] i { i } [aeou] > ;
 uu { u+ > ;
 `;
