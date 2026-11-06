@@ -3,9 +3,15 @@ export const daLatnRules = `
 
 [[:L:][:M:]] { \\' } [[:L:][:M:]] > ’;
 
+AARD } [^AEIOUYÆØÅaeiouyæøå] > OR;
+A [aA] [rR] [dD] } [^AEIOUYÆØÅaeiouyæøå] > Or;
+a [aA] [rR] [dD] } [^AEIOUYÆØÅaeiouyæøå] > or;
 A [aA] > O;
 a [aA] > o;
 
+ÅRD } [^AEIOUYÆØÅaeiouyæøå] > OR;
+Å [rR] [dD] } [^AEIOUYÆØÅaeiouyæøå] > Or;
+å [rR] [dD] } [^AEIOUYÆØÅaeiouyæøå] > or;
 Å > O;
 å > o;
 

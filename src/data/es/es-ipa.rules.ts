@@ -9,6 +9,12 @@ m [ée] xic > mexik;
 [^[:L:][:M:]] { mn > n;
 [^[:L:][:M:]] { pt > t;
 
+oa { x } aca > x;
+x } alapa > x;
+x } avier > x;
+x } imena > x;
+[^[:L:][:M:]] { x > s;
+tx > t͡ʃ;
 ch > t͡ʃ;
 ll > ʎ;
 rr > r;
@@ -19,7 +25,7 @@ gü > ɡw;
 
 b > b;
 v > β;
-c } [eéií] > θ;
+c } [eéií] > s;
 c > k;
 d > d;
 f > f;
@@ -33,7 +39,8 @@ n > n;
 ñ > ɲ;
 p > p;
 t > t;
-z > θ;
+ż > z;
+z > s;
 
 [^[:L:][:M:]] { r > r;
 [lns] { r > r;
@@ -63,10 +70,5 @@ u } [aáeéiíoó] > w;
 
 ::Null;
 
-n } [bβpm] > m;
-n } [f] > ɱ;
-n } [{t͡ʃ}ʎʝ] > ɲ;
-n } [td] > n̪;
-n } [θ] > n̟;
 n } [ɡkx] > ŋ;
 `;
