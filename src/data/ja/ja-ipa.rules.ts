@@ -5,6 +5,8 @@ x > ɕ;
 y } y > d;
 y > dʑ;
 q > w;
+ç } i > h;
+ç > hj;
 
 ::Null;
 
