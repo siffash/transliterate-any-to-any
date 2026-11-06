@@ -5,8 +5,8 @@ const japaneseRules: RestoreIpaRule[] = [
   // Restore "g" in "bourg"
   { ipaCharToBeReplaced: ["buʁɡ", "buʁg", "buʁɠ", "buʁɢ"], lettersToRestore: { bourg: "buʁɡ" } },
   { ipaCharToBeReplaced: "buʁ", lettersToRestore: { bourg: "buʁɡ" } },
-  // Restore "u", and "ow" for "oi" (ロワ, ノワ)
-  { ipaCharToBeReplaced: "w", lettersToRestore: { u: "u", oi: "ow", oî: "ow" } },
+  // Restore "u", and "ow" for "oi"/"oy" (ロワ, ノワ)
+  { ipaCharToBeReplaced: "w", lettersToRestore: { u: "u", oi: "ow", oî: "ow", oy: "ow" } },
   // Restore "o"
   { ipaCharToBeReplaced: "w", lettersToRestore: { o: "o" } },
   // Long "au"/"eau" (ルノー, クロード)
@@ -46,15 +46,13 @@ export const normalizeFrIpa = (
     // Restore "n"/"m" instead of tilde
     { ipaCharToBeReplaced: "̃", lettersToRestore: { n: "n", m: "m" } },
     // Restore "u"
-    { ipaCharToBeReplaced: "w", lettersToRestore: { u: "u", oi: "u", oî: "u" } },
+    { ipaCharToBeReplaced: "w", lettersToRestore: { u: "u", oi: "u", oî: "u", oy: "u" } },
     // Restore "o"
     { ipaCharToBeReplaced: "w", lettersToRestore: { o: "o" } },
     // Restore "e"
     { ipaCharToBeReplaced: "ø", lettersToRestore: { eu: "e" } },
     // Targets that write the e-muet apart from e (勒布朗, 르블랑, เลอ) keep ə
     ...(keepSchwa ? [] : [{ ipaCharToBeReplaced: "ə", lettersToRestore: { e: "e" } }]),
-    // Restore "ɛl"
-    { ipaCharToBeReplaced: "ɛj", lettersToRestore: { eil: "ɛl", eille: "ɛl" } },
     // Restore "il"
     { ipaCharToBeReplaced: "ij", lettersToRestore: { ille: "il" } },
     // Tilde with no n/m letter close enough (patients, temps) is still a nasal

@@ -3,4 +3,5 @@ export const frIpaKoRules = `
 
 [ʃʒ] { ə > u;
 ə > ɯ;
+j } [^[:L:][:M:]] > ju;
 `;

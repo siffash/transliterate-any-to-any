@@ -19,4 +19,7 @@ export const frIpaJaRules = `
 ɲ } [^[:L:][:M:]] > ɲu;
 i { j } [^[:L:][:M:]] > ːju;
 [aɛeoɔuœø] { j } [^[:L:][:M:]] > iju;
+[aɑɛeoɔuyœø] { j } [ɛe] > i;
+[aɑɛeoɔuyœø] { j } i > i;
+[aɑɛeoɔuyœø] { j } [aɑoɔuy] > ij;
 `;
