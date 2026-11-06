@@ -4,11 +4,12 @@ export const frHy = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { frIpa } = await import("converters/fr/fr-ipa");
   const { frIpaNgRules } = await import("data/fr/fr-ipa_ng.rules");
+  const { frHeIpaRRules } = await import("data/ipa/fr_he-ipa_r.rules");
   const { ipaHyRules } = await import("data/ipa/ipa-hy.rules");
   const { copyCase } = await import("helpers/copyCase");
   const { keepElision } = await import("helpers/keepElision");
 
-  const transliterator = RBT.fromRules(frIpaNgRules + ipaHyRules);
+  const transliterator = RBT.fromRules(frIpaNgRules + frHeIpaRRules + ipaHyRules);
 
   if (typeof text === "string") {
     const ipa = await frIpa<string>(text);
