@@ -6,6 +6,7 @@ export const frIpa = async <T = Text>(
   japanese = false,
   doubleR = false,
   keepSchwa = false,
+  velarNasals = false,
 ): Promise<T> => {
   const { frIpaMap } = await import("data/fr/fr-ipa.map");
   const { RBT } = await import("helpers/rbt");
@@ -28,7 +29,11 @@ export const frIpa = async <T = Text>(
           transliterator.transliterate(word);
         return normalizeFrIpa(
           word,
-          velarA ? ipa.replaceAll("ɑ̃", "ɑŋ") : ipa,
+          velarNasals
+            ? ipa.replace(/([ɑɔɛœ])\u0303/g, "$1ŋ")
+            : velarA
+              ? ipa.replaceAll("ɑ̃", "ɑŋ")
+              : ipa,
           japanese,
           doubleR,
           keepSchwa,

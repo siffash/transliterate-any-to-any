@@ -4,9 +4,12 @@ export const idTh = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { idIpaRules } = await import("data/id/id-ipa.rules");
   const { ipaThGlottalRules } = await import("data/ipa/ipa-th_glottal.rules");
+  const { ipaThOpenRules } = await import("data/ipa/ipa-th_open.rules");
   const { ipaThRules } = await import("data/ipa/ipa-th.rules");
 
-  const transliterator = RBT.fromRules(idIpaRules + ipaThGlottalRules + ipaThRules);
+  const transliterator = RBT.fromRules(
+    idIpaRules + ipaThGlottalRules + ipaThOpenRules + ipaThRules,
+  );
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);

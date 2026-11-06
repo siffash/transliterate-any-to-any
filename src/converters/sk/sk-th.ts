@@ -4,9 +4,12 @@ export const skTh = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { skIpaRules } = await import("data/sk/sk-ipa.rules");
   const { csSkIpaRzhThRules } = await import("data/ipa/cs_sk-ipa_rzh-th.rules");
+  const { ipaThOpenRules } = await import("data/ipa/ipa-th_open.rules");
   const { ipaThRules } = await import("data/ipa/ipa-th.rules");
 
-  const transliterator = RBT.fromRules(skIpaRules + csSkIpaRzhThRules + ipaThRules);
+  const transliterator = RBT.fromRules(
+    skIpaRules + csSkIpaRzhThRules + ipaThOpenRules + ipaThRules,
+  );
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);

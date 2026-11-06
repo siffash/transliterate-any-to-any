@@ -6,9 +6,10 @@ export const enTh = async (text: Text) => {
   const { syllabicLSchwaRestoreRules, ngConsonantRestoreRules } =
     await import("helpers/normalizeEnIpa");
   const { enIpaThRules } = await import("data/en/en-ipa_th.rules");
+  const { ipaThOpenRules } = await import("data/ipa/ipa-th_open.rules");
   const { ipaThRules } = await import("data/ipa/ipa-th.rules");
 
-  const transliterator = RBT.fromRules(enIpaThRules + ipaThRules);
+  const transliterator = RBT.fromRules(enIpaThRules + ipaThOpenRules + ipaThRules);
 
   if (typeof text === "string") {
     const ipa = await enIpa<string>(text, [
