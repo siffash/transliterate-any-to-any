@@ -1,7 +1,7 @@
 export const frIpaKoRules = `
 ::Null;
 
-[ʃʒ] { ə > u;
+[ʃʒj] { ə > u;
 ə > ɯ;
 j } [^[:L:][:M:]] > ju;
 `;

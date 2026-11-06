@@ -54,7 +54,7 @@ export const normalizeFrIpa = (
     // Targets that write the e-muet apart from e (勒布朗, 르블랑, เลอ) keep ə
     ...(keepSchwa ? [] : [{ ipaCharToBeReplaced: "ə", lettersToRestore: { e: "e" } }]),
     // Restore "il"
-    { ipaCharToBeReplaced: "ij", lettersToRestore: { ille: "il" } },
+    { ipaCharToBeReplaced: "ij$", lettersToRestore: { ille: "il", illes: "il" } },
     // Tilde with no n/m letter close enough (patients, temps) is still a nasal
   ]).replaceAll("\u0303", "n");
 };
