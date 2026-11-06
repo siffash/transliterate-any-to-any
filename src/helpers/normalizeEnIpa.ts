@@ -234,6 +234,30 @@ export const ngRestoreRules: RestoreIpaRule[] = [
   { ipaCharToBeReplaced: "ŋ", lettersToRestore: { ng: "nɡ" } },
 ];
 
+// Extra restore for targets that write the "ŋ" of "ngt" without a "g", which the "ng" restore would add
+// (Washington ワシントン, Wellington ウェリントン, not Kingston キングストン)
+export const ngtRestoreRules: RestoreIpaRule[] = [
+  { ipaCharToBeReplaced: "ŋt", lettersToRestore: { ngt: "ŋt" } },
+];
+
+// Extra restore for targets that write the "ŋ" of "ng" before any consonant without a "g"
+// (Kingston 金斯通, Springfield 斯普林菲尔德, Hemingway แฮมิงเวย)
+export const ngConsonantRestoreRules: RestoreIpaRule[] = [
+  ...ngtRestoreRules,
+  {
+    ipaCharToBeReplaced: ["ŋs", "ŋd", "ŋf", "ŋw", "ŋɫ", "ŋm", "ŋb"],
+    lettersToRestore: {
+      ngs: "ŋs",
+      ngd: "ŋd",
+      ngf: "ŋf",
+      ngw: "ŋw",
+      ngl: "ŋɫ",
+      ngm: "ŋm",
+      ngb: "ŋb",
+    },
+  },
+];
+
 // Extra restore for Korean, which follows the sound of an unstressed final syllable (Gordon 고던, Norman 노먼,
 // Thomas 토머스, Edmund 에드먼드, Arnold 아널드, Lawrence 로런스, Daniel 대니얼, Samuel 새뮤얼, Lincoln 링컨),
 // writes "-son" (also inside a word), a final "-sen", "-xon", "-den", "-ten", "-ven" and "-phen" with "으" (Johnson 존슨,
@@ -418,6 +442,8 @@ export const normalizeEnIpa = (
     { ipaCharToBeReplaced: ["ɫk", "lk"], lettersToRestore: { lk: "ɫk" } },
     { ipaCharToBeReplaced: "k", lettersToRestore: { lk: "ɫk" } },
     ...tchRestoreRules,
+    // phonemize guesses the "i" of an unknown "micro-" word as "ɪ" (Microsoft, Microchip), but it is "aɪ" (Micron)
+    { ipaCharToBeReplaced: "^mɪkɹ", lettersToRestore: { micr: "maɪkɹ" } },
     // Restore "soft"
     { ipaCharToBeReplaced: "sɔft", lettersToRestore: { soft: "sɔft" } },
     { ipaCharToBeReplaced: "sɔf", lettersToRestore: { soft: "sɔft" } },

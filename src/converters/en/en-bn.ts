@@ -3,8 +3,12 @@ import { Text } from "types";
 export const enBn = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { enIpa } = await import("converters/en/en-ipa");
-  const { syllabicLeSchwaRestoreRules, geminateRestoreRules, geminateSingleRestoreRules } =
-    await import("helpers/normalizeEnIpa");
+  const {
+    syllabicLeSchwaRestoreRules,
+    geminateRestoreRules,
+    geminateSingleRestoreRules,
+    ngConsonantRestoreRules,
+  } = await import("helpers/normalizeEnIpa");
   const { enIpaOuRules } = await import("data/en/en-ipa_ou.rules");
   const { enIpaBnRules } = await import("data/en/en-ipa_bn.rules");
   const { enIpaRetroflexRules } = await import("data/en/en-ipa_retroflex.rules");
@@ -17,14 +21,14 @@ export const enBn = async (text: Text) => {
   if (typeof text === "string") {
     const ipa = await enIpa<string>(
       text,
-      [...syllabicLeSchwaRestoreRules, ...geminateSingleRestoreRules],
+      [...syllabicLeSchwaRestoreRules, ...geminateSingleRestoreRules, ...ngConsonantRestoreRules],
       geminateRestoreRules,
     );
     return transliterator.transliterate(ipa);
   } else {
     const ipaArray = await enIpa<string[]>(
       text,
-      [...syllabicLeSchwaRestoreRules, ...geminateSingleRestoreRules],
+      [...syllabicLeSchwaRestoreRules, ...geminateSingleRestoreRules, ...ngConsonantRestoreRules],
       geminateRestoreRules,
     );
     return ipaArray.map(ipa => transliterator.transliterate(ipa));
