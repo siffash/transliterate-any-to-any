@@ -9,6 +9,8 @@ rr > ʁ;
 ale { x } andr > ʃ;
 [lns] { r > ʁ;
 h > ;
+y > i;
+ll > l;
 
 ::Null;
 

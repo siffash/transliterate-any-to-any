@@ -4,9 +4,10 @@ export const lbFa = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { lbIpa } = await import("converters/lb/lb-ipa");
   const { ipaDevoiceVRules } = await import("data/ipa/ipa_devoice-v.rules");
+  const { ipaErRules } = await import("data/ipa/ipa_er.rules");
   const { ipaFaRules } = await import("data/ipa/ipa-fa.rules");
 
-  const transliterator = RBT.fromRules(ipaFaRules);
+  const transliterator = RBT.fromRules(ipaErRules + ipaFaRules);
 
   if (typeof text === "string") {
     const ipa = await lbIpa<string>(text, false, undefined, ipaDevoiceVRules);

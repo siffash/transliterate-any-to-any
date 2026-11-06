@@ -1,4 +1,4 @@
-export const ipaUrErRules = `
+export const ipaErRules = `
 ::Null;
 
 ɐ̯ } [^[:L:][:M:]] > ɚ;
