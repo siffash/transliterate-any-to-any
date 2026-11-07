@@ -59,9 +59,12 @@ ster } reich > stɐ;
 ng } [^[:L:][:M:]] > ŋ;
 i } g [^[:L:][:M:]] > ɪ;
 er } [^[:L:][:M:]] > ɐ;
+[^[:L:][:M:]] [bcdfghjklmnpqrstvwxzß]+ i { en } [^[:L:][:M:]] > en;
 en } [^[:L:][:M:]] > ən;
 [aou] { el } [^[:L:][:M:]] > ɛl;
 el } [^[:L:][:M:]] > əl;
+e { e } [^[:L:][:M:]] > e;
+[^aeäu] i { e } [^[:L:][:M:]] > e;
 e } [^[:L:][:M:]] > ə;
 
 a } bb > '_a_';
@@ -268,6 +271,12 @@ el } [bcdfghjklmnpqrstvwxz] > əl;
 
 d } t > t;
 
+o } [^[:L:][:M:]] > o;
+u } [^[:L:][:M:]] > u;
+e } [aäeéiíoöuúüyɛ] > e;
+i } [aäeéíoöuúüyɛ] > i;
+o } [aäeéiíoöuúüyɛ] > o;
+u } [aäeéiíoöuúüyɛ] > u;
 a } [bcdfghjklmnpqrstvwxz] [bcdfghjklmnpqrstvwxz] > a;
 a } [bcdfghjklmnpqrstvwxz] [^[:L:][:M:]] > a;
 a } [bcdfghjklmnpqrstvwxz] [aäeéiíoöuúüyə] > aː;
@@ -323,6 +332,7 @@ z > ts;
 
 ::Null;
 
+[aeiouyøɛ] { ː } [bdfɡhjklmnpʁstvzʃçxŋ]+ [aeiouyøɛ] ː [bdfɡhjklmnpʁstvzʃçxŋ]+ ə [^[:L:][:M:]] > ;
 bb > b;
 cc > c;
 dd > d;

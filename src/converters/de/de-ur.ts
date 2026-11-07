@@ -4,9 +4,10 @@ export const deUr = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { deIpaRules } = await import("data/de/de-ipa.rules");
   const { ipaErRules } = await import("data/ipa/ipa_er.rules");
+  const { ipaFinalSchwaERules } = await import("data/ipa/ipa_final-schwa-e.rules");
   const { ipaUrRules } = await import("data/ipa/ipa-ur.rules");
 
-  const transliterator = RBT.fromRules(deIpaRules + ipaErRules + ipaUrRules);
+  const transliterator = RBT.fromRules(deIpaRules + ipaErRules + ipaFinalSchwaERules + ipaUrRules);
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);
