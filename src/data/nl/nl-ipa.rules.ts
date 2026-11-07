@@ -71,6 +71,7 @@ aa > aː;
 ee > eː;
 oo > oː;
 uu > yː;
+[aeiouyːɑɔɛɪ] b? [nʁ] { ie } l l? [ae]? [^[:L:][:M:]] > iɛ;
 ie > i;
 ai > ɑi;
 oi > ɔi;
