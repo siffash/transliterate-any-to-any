@@ -11,8 +11,8 @@ describe("wordSplitter", () => {
       expect(await wordSplitter("你好世界", "zh")).toBe("你好 世界");
     });
 
-    it("splits Thai into space-separated words", async () => {
-      expect(await wordSplitter("ภาษาไทยง่าย", "th")).toBe("ภาษา ไทย ง่าย");
+    it("keeps a Thai name written without spaces as one word", async () => {
+      expect(await wordSplitter("ธีระกุล ปรียาภรณ์", "th")).toBe("ธีระกุล ปรียาภรณ์");
     });
 
     it("writes a Chinese surname together with the given name when joinNames is set", async () => {

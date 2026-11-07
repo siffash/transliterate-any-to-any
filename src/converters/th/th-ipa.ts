@@ -21,10 +21,11 @@ export const thaiReader = async () => {
     ipaConsonantCount,
     insertImplicitVowels,
   } = await import("helpers/thaiIpa");
+  const { segmentThai } = await import("helpers/segmentThai");
 
   const transliterator = RBT.fromRules(thIpaRules);
 
-  return (word: string): { ipa: string; rtgs: string } => {
+  const readPiece = (word: string): { ipa: string; rtgs: string } => {
     const ipa = transliterator.transliterate(word);
     const { text, confidence } = romanizeDetailed(word, { separator: "-" });
     const rtgs = text.replace(/-/g, "");
@@ -49,6 +50,15 @@ export const thaiReader = async () => {
       return { ipa: rtgsToIpa(text), rtgs };
     }
     return { ipa, rtgs: ipaToRtgs(ipa) };
+  };
+
+  // A compound name is read piece by piece (see segmentThai)
+  return (word: string): { ipa: string; rtgs: string } => {
+    const readings = segmentThai(word).map(readPiece);
+    return {
+      ipa: readings.map(reading => reading.ipa).join(""),
+      rtgs: readings.map(reading => reading.rtgs).join(""),
+    };
   };
 };
 
