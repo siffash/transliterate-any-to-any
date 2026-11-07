@@ -7,6 +7,7 @@ export const faIpaUvular = async <T = Text>(text: Text): Promise<T> => {
   const { faNormRules } = await import("data/fa/fa_norm.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
   const { filterIpa } = await import("helpers/filterIpa");
+  const { breakClusters } = await import("helpers/breakClusters");
 
   const transliterator = RBT.fromRules(faIpaRules);
   const normalizer = RBT.fromRules(faNormRules);
@@ -14,8 +15,12 @@ export const faIpaUvular = async <T = Text>(text: Text): Promise<T> => {
   // Arabic spells an initial i- with a hamza below (إبراهيم), the map with a plain alef (ابراهیم)
   const lookup = (word: string) => faIpaMap[word] ?? faIpaMap[word.replace(/^إ/, "ا")];
 
-  const toIpa = (word: string) =>
-    filterIpa(lookup(word), word, "fa") || transliterator.transliterate(word);
+  // A word missing from the map gets its unwritten vowels back, most often æ (اسلامی → ʔæslɒmi, هشتپر → hæʃtæpɾ)
+  const isConsonant = (segment: string) => /\p{L}/u.test(segment) && !/[ɒæeoiu]/.test(segment);
+  const fallback = (word: string) =>
+    breakClusters(transliterator.transliterate(word).match(/d͡ʒ|t͡ʃ|./gu) ?? [], isConsonant, "æ");
+
+  const toIpa = (word: string) => filterIpa(lookup(word), word, "fa") || fallback(word);
 
   const convert = async (text: string) =>
     await wordSplitter(normalizer.transliterate(text), "fa", (word: string) =>

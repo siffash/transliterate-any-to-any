@@ -113,7 +113,7 @@ describe("punctuation that belongs to the source script", () => {
     ["「東京」へ", "ja", "en", '"Tokyo" E'],
     ["你好，世界。", "zh", "en", "Nihao，Shijie."],
     ["مرحبا، كيف حالك؟", "ar", "en", "Marhaba, Kif Halk?"],
-    ["سلام، دنیا۔", "ur", "en", "Slam, Duniya."],
+    ["سلام، دنیا۔", "ur", "en", "Salam, Duniya."],
     ["سلام، دنیا؟", "fa", "en", "Salam, Donya?"],
     ["سلام؛ دنیا", "fa", "ru", "Салам; Донья"],
   ] as const)("%s (%s → %s) keeps its punctuation", async (text, from, to, expected) => {
@@ -129,7 +129,7 @@ describe("native and full-width digits", () => {
     ["سلام ۱۴۰۲", "fa", "ar", "سلام ١٤٠٢"],
     ["سلام ۱۴۰۲", "fa", "ur", "سلام ۱۴۰۲"],
     ["مرحبا ١٢٣", "ar", "ru", "Мархаба 123"],
-    ["سلام ۱۲۳", "ur", "en", "Slam 123"],
+    ["سلام ۱۲۳", "ur", "en", "Salam 123"],
     ["नमस्ते १२३", "hi", "bn", "নমস্তে ১২৩"],
     ["নমস্কার ১২৩", "bn", "en", "Namaskar 123"],
     ["สวัสดี ๑๒๓", "th", "en", "Sawatdi 123"],

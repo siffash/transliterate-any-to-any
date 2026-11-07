@@ -6,6 +6,7 @@ export const arIpa = async <T = Text>(text: Text): Promise<T> => {
   const { arIpaRules } = await import("data/ar/ar-ipa.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
   const { filterIpa } = await import("helpers/filterIpa");
+  const { breakClusters } = await import("helpers/breakClusters");
 
   const transliterator = RBT.fromRules(arIpaRules);
 
@@ -71,13 +72,7 @@ export const arIpa = async <T = Text>(text: Text): Promise<T> => {
     for (let i = segments.length - 1; i > 0; i--) {
       if (segments[i - 1] === "t" && segments[i] === "ʃ") segments.splice(i - 1, 2, "tʃ");
     }
-    if (segments.length > 2 && isConsonant(segments[0]) && isConsonant(segments[1])) {
-      segments.splice(1, 0, "a");
-    }
-    for (let i = 0; i + 2 < segments.length; i++) {
-      if (segments.slice(i, i + 3).every(isConsonant)) segments.splice(i + 2, 0, "a");
-    }
-    return segments.join("");
+    return breakClusters(segments, isConsonant, "a");
   };
 
   // The article, alone or after a one-letter prefix (للخدمات → lilxdmaːt)

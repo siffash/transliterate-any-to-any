@@ -9,6 +9,7 @@ export const urEn = async <T = Text>(text: Text): Promise<T> => {
   const { urNormRules } = await import("data/ur/ur_norm.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
   const { filterIpa } = await import("helpers/filterIpa");
+  const { breakClusters } = await import("helpers/breakClusters");
 
   const transliteratorIpa = RBT.fromRules(ipaAspHRules + ipaEnRules + "::Title;");
   const transliteratorEn = RBT.fromRules(urEnRules);
@@ -25,7 +26,13 @@ export const urEn = async <T = Text>(text: Text): Promise<T> => {
       if (ipa) {
         return transliteratorIpa.transliterate(ipa);
       } else {
-        return transliteratorEn.transliterate(word);
+        // A word missing from the map gets its unwritten vowels back as zabars (ہشتپر → ہَشتَپر → Hashtapr). An
+        // aspirate (بھ) is one sound; a final ہ is a vowel, so it stands as an empty segment (مکہ → مَکہ)
+        const [, core, end] = word.match(/^(.*?)(ہ?)$/u)!;
+        const segments: string[] = core.match(/.ھ?\p{M}*/gu) ?? [];
+        if (end) segments.push("");
+        const isConsonant = (segment: string) => /^(?![اآویےۓۂ])\p{L}/u.test(segment);
+        return transliteratorEn.transliterate(breakClusters(segments, isConsonant, "َ") + end);
       }
     });
 

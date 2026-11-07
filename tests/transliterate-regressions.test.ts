@@ -2848,7 +2848,7 @@ describe("regressions of rule-based transliteration", () => {
     ["خالد, خطاب, أحمد, إبراهيم", "ar", "mt", "Ħalid, Ħattab, Aħmad, Ibrahiem"],
     ["الأمير, أسماء, كربلاء, لطفية", "ar", "mt", "Al-Amier, Asma, Karbala, Lutfija"],
     ["عمران خان, اختر", "ur", "mt", "Imran Ħan, Aħtar"],
-    ["محمد لاتعصب ستی", "ur", "mt", "Muhammad Latqsb Satti"],
+    ["محمد لاتعصب ستی", "ur", "mt", "Muhammad Latasb Satti"],
     ["خمینی, اصفهان, زارعی", "fa", "mt", "Ħomejni, Esfahan, Żarei"],
     ["ישראל, אביב, יעקב, חיפה", "he", "mt", "Jisrael, Aviv, Jaakov, Ħejfa"],
     ["Régnier", "fr", "mt", "Renje"],
