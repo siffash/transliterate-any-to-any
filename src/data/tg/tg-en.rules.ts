@@ -10,6 +10,8 @@ export const tgEnRules = `
 [aeiouy\\'] { Е > Ye;
 [AEIOUYaeiouy\\'] { е > ye;
 
+[Ss] [Hh] [Cc] [Hh] { Ё > O;
+[Ss] [Hh] [Cc] [Hh] { ё > o;
 [:Lu:] { Ё > YO;
 Ё } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > YO;
 Ё } [:Lu:] > YO;
@@ -139,7 +141,14 @@ export const tgEnRules = `
 Ҷ > J;
 ҷ > j;
 
-[ЪЬъь] > \\';
+Ь Е > YE;
+Ь е > Ye;
+ь Е > yE;
+ь е > ye;
+Ь } [АИОУЫЭаиоуыэ] > Y;
+ь } [АИОУЫЭаиоуыэ] > y;
+[Ьь] > ;
+[Ъъ] > \\';
 
 ::Null;
 

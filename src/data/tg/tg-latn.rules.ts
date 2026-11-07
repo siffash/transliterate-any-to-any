@@ -10,6 +10,8 @@ export const tgLatnRules = `
 [aäeïiöouüÿy\\'] { Е > Ye;
 [AÄEÏIÖOUÜŸYaeiouöïäüÿy\\'] { е > ye;
 
+[Šš] [Čč] { Ё > O;
+[Šš] [Čč] { ё > o;
 [:Lu:] { Ё > YO;
 Ё } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > YO;
 Ё } [:Lu:] > YO;
