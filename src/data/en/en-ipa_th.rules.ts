@@ -3,4 +3,8 @@ export const enIpaThRules = `
 
 [d͡] { ʒ > ʒ;
 ʒ > ʃ;
+
+::Null;
+
+ɔ } [^ɪiʊu] > \\@OO;
 `;

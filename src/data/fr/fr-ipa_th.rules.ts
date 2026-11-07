@@ -1,6 +1,7 @@
 export const frIpaThRules = `
 ::Null;
 
+\\- } [aæʌɑɛeiɪoɒɔuʊyʏøœɵəɜɐ] > ʔ;
 ɥ [iɪ] > uj;
 [aɑɐeɛəoɔiɪ] { [yʏɥ] } [aɑɐoɔɒ] > ʔuʔ;
 [yʏɥ] } [aɑɐoɔɒ] > uʔ;
@@ -10,11 +11,15 @@ export const frIpaThRules = `
 ::Null;
 
 jj > j;
-[bcdfɡklmnpʁstvzʃʒ] { j } [aæʌɑɛeiɪoɒɔuʊyøœɵəɜɐ] > ij;
+[bcdfɡgklmnpʁstvzʃʒ] { i? j [ɛe] } ŋ [^aæʌɑɛeiɪoɒɔuʊyʏøœɵəɜɐ] > \\@IA;
+[bcdfɡgklmnpʁstvzʃʒ] { j } [aæʌɑɛeiɪoɒɔuʊyøœɵəɜɐ] > ij;
 [^[:L:][:M:]] { i } [aæʌɑɛeiɪoɒɔuʊyøœɵəɜɐ] > ij;
 
 ::Null;
 
+[ɑa] } ŋ [^aæʌɑɛeiɪoɒɔuʊyʏøœɵəɜɐ] > \\@AN\\_;
+[ɛe] } ŋ [^aæʌɑɛeiɪoɒɔuʊyʏøœɵəɜɐ] > \\@EN\\_;
+[ɔo] } ŋ [^aæʌɑɛeiɪoɒɔuʊyʏøœɵəɜɐ] > \\@ON\\_;
 ([aɑiu]) } [ˈˌ]? [bcdfghjklmnpqrstvwxzßçðħŋɓɕɖɗɟɡɢɣɦɧɫɭɱɲɳɹɽɾʀʁʂʃʈʋʎʐʑʒʔʕɸθχβʝɰ] > $1ː;
 ([aɑ]) } [ˈˌ]? [eɛoɔəæ] > $1ː;
 ([aɑiu]) } [^[:L:][:M:]] > $1ː;
