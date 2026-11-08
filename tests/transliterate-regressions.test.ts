@@ -3144,6 +3144,7 @@ describe("regressions of rule-based transliteration", () => {
     ["Synnøve", "no", "de", "Sünnöwe"],
     ["Yara", "no", "ru", "Яра"],
     ["Heyerdahl, Bygdøy", "no", "sr", "Hejerdal, Bugdej"],
+    ["Thor Heyerdahl, Eyvind", "no", "ru", "Тор Хейердаль, Эйвинд"],
     ["Høyer", "no", "uk", "Геєр"],
     ["Beck, Waldeck", "nl", "ar", "بيك، فالديك"],
     ["Beck", "nl", "ja", "ベック"],

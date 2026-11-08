@@ -94,10 +94,10 @@ aU > äU;
 Au > Äu;
 au > äu;
 
-EI > IJ;
-eI > iJ;
-Ei > Ij;
-ei > ij;
+E [IY] > IJ;
+e [IY] > iJ;
+E [iy] > Ij;
+e [iy] > ij;
 
 Æ > Ä;
 æ > ä;
