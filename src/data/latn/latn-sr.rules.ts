@@ -76,20 +76,6 @@ q > k;
 
 ::Null;
 
-[iI] { a > ja;
-[iI] { A > JA;
-[iI] { e > je;
-[iI] { E > JE;
-[iI] { u > ju;
-[iI] { U > JU;
-
-[dD] [zZ] { ([dD] [zZ])+ > ;
-[dD] [žŽ] { ([dD] [žŽ])+ > ;
-[lL] [jJ] { ([lL] [jJ])+ > ;
-[nN] [jJ] { ([nN] [jJ])+ > ;
-
-::Null;
-
 [aA] { [aA]+ > ;
 [eE] { [eE]+ > ;
 [iI] { [iI]+ > ;
@@ -117,4 +103,20 @@ q > k;
 [vV] { [vV]+ > ;
 [zZ] { [zZ]+ > ;
 [žŽ] { [žŽ]+ > ;
+
+::Null;
+
+[dD] [zZ] { ([dD] [zZ])+ > ;
+[dD] [žŽ] { ([dD] [žŽ])+ > ;
+[lL] [jJ] { ([lL] [jJ])+ > ;
+[nN] [jJ] { ([nN] [jJ])+ > ;
+
+::Null;
+
+[iI] { a > ja;
+[iI] { A > JA;
+[iI] { e > je;
+[iI] { E > JE;
+[iI] { u > ju;
+[iI] { U > JU;
 `;

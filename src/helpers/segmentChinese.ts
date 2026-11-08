@@ -1,10 +1,14 @@
 import {
+  AREAS,
   COMPOUND_SURNAMES,
   DYNASTIES,
   EMPEROR_TITLES,
+  LANDFORM_ENDINGS,
   NAMES,
   NOT_NAMES,
   PLACE_ENDINGS,
+  PLACE_GENERICS,
+  PROVINCES,
   RARER_SURNAMES,
   SURNAMES,
 } from "data/zh/zh-names";
@@ -16,6 +20,8 @@ const FOREIGN_NAME_TAG = "nrt";
 const NAME_TAGS = new Set(["nr", "nrfg"]);
 // An emperor's dynasty and title, each a word of its own (唐|太宗)
 const EMPEROR_TAG = "emperor";
+// Three characters that jieba read as words, taken as one name (see segmentChinese)
+const JOINED_TAG = "joined";
 
 // Longer titles first, so that 光武帝 isn't taken as 武帝
 const EMPEROR = new RegExp(
@@ -81,6 +87,49 @@ const splitCompound = (jieba: Jieba, word: string) => {
   return fewest[0] ?? [word];
 };
 
+// A place's own name stays whole, apart from the generic terms after it (Erlianhaote,
+// Lianyungangshi, Pudong Xinqu, Linxia Huizu Zizhizhou) and a province before it (Shanxi Datong)
+const splitPlace = (word: string) => {
+  const chars = [...word];
+  const generics: string[] = [];
+  let end = chars.length;
+  // Longest first, so that 土家族 isn't taken as 家族, nor 东乡族自治县 as 东乡 and 族
+  for (let length = 5; length >= 2; length--) {
+    const generic = chars.slice(end - length, end).join("");
+    if (end - length >= 2 && PLACE_GENERICS.has(generic)) {
+      generics.unshift(generic);
+      end -= length;
+      length = 6;
+    }
+  }
+  const province = [3, 2].find(
+    length => end - length >= 2 && PROVINCES.has(chars.slice(0, length).join("")),
+  );
+  return [
+    ...(province
+      ? [chars.slice(0, province).join(""), chars.slice(province, end).join("")]
+      : [chars.slice(0, end).join("")]),
+    ...generics,
+  ];
+};
+
+// Nor is a place that jieba doesn't tag as one cut before its last character
+// (冷水|滩区 is 冷水滩区, but 峰峰|矿区 and 自然|保护区 stay)
+const splitOther = (jieba: Jieba, word: string) => {
+  const parts = splitCompound(jieba, word);
+  const last = [...(parts[parts.length - 1] ?? "")];
+  if (
+    parts.length > 1 &&
+    last.length === 2 &&
+    PLACE_ENDINGS.has(last[1]) &&
+    !PLACE_GENERICS.has(last.join("")) &&
+    !AREAS.has(last.join(""))
+  ) {
+    return [...parts.slice(0, -2), parts[parts.length - 2] + parts[parts.length - 1]];
+  }
+  return parts;
+};
+
 const splitWord = (
   jieba: Jieba,
   { word, tag }: { word: string; tag: string },
@@ -88,6 +137,9 @@ const splitWord = (
 ): Part[] => {
   if (tag === FOREIGN_NAME_TAG || tag === EMPEROR_TAG) return [{ word }];
   const length = [...word].length;
+  if (tag === JOINED_TAG) {
+    return LANDFORM_ENDINGS.has([...word][length - 1]) ? [{ word }] : splitName(word);
+  }
   // A name jieba knows, or a new word it guessed ("x") of a name's length:
   // three characters, or two when it's the whole word (王伟, 张伟)
   if (
@@ -97,7 +149,9 @@ const splitWord = (
   ) {
     return splitName(word);
   }
-  return splitCompound(jieba, word).map(word => ({ word }));
+  return (tag === "ns" && length >= 4 ? splitPlace(word) : splitOther(jieba, word)).map(word => ({
+    word,
+  }));
 };
 
 let namesAdded = false;
@@ -143,10 +197,21 @@ export const loadChineseSegmenter = async () => {
 
 const segmentChinese = (jieba: Jieba, toSimplified: (text: string) => string, text: string) => {
   const original = [...text];
-  const simplified = toSimplified(text);
-  const source = [...simplified].length === original.length ? simplified : text;
+  // OpenCC takes 乾 for 干 "dry" (乾安县 as 干安县), but in a name it's qián, which
+  // simplified Chinese writes 乾 too (乾隆, 乾县)
+  const simplified = [...toSimplified(text)].map((char, i) => (original[i] === "乾" ? "乾" : char));
+  const source = simplified.length === original.length ? simplified.join("") : text;
   let index = 0;
-  const tagged = tagWords(jieba, source);
+  let tagged = tagWords(jieba, source);
+  // Three characters on their own are a name, even when jieba reads words in them (许家|印,
+  // 寮|步镇, 王家|营): its ending tells a place (Liaobuzhen, Wangjiaying) from a person (Xu Jiayin)
+  if (
+    tagged.length > 1 &&
+    /^\p{Script=Han}{3}$/u.test(source) &&
+    tagged.every(({ tag }) => tag !== FOREIGN_NAME_TAG && tag !== EMPEROR_TAG)
+  ) {
+    tagged = [{ word: source, tag: JOINED_TAG }];
+  }
   return tagged
     .flatMap(word => splitWord(jieba, word, tagged.length === 1))
     .map(({ word, surname }) => {

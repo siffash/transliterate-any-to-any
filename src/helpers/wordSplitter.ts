@@ -30,6 +30,7 @@ const PUNCTUATION: Record<string, [replacement: string, kind: Kind]> = {
   "〕": ["]", "close"],
   "〜": ["~", "inline"],
   "・": ["", "separator"],
+  "·": ["", "separator"],
   "​": ["", "separator"],
 };
 

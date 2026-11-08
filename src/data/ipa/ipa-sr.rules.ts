@@ -55,17 +55,6 @@ q > k;
 
 ::Null;
 
-i { a > ja;
-i { e > je;
-i { u > ju;
-
-dz { (dz)+ > ;
-dž { (dž)+ > ;
-lj { (lj)+ > ;
-nj { (nj)+ > ;
-
-::Null;
-
 a { a+ > ;
 e { e+ > ;
 i { i+ > ;
@@ -93,4 +82,17 @@ t { t+ > ;
 v { v+ > ;
 z { z+ > ;
 ž { ž+ > ;
+
+::Null;
+
+dz { (dz)+ > ;
+dž { (dž)+ > ;
+lj { (lj)+ > ;
+nj { (nj)+ > ;
+
+::Null;
+
+i { a > ja;
+i { e > je;
+i { u > ju;
 `;
