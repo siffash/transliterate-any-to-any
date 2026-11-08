@@ -18,6 +18,7 @@ export const koKa = async (text: Text) => {
         text,
         text => filterIpa(normalizeKoIpa(toIPA(text, { anyAscii: true })), text, "ko"),
         "ipa",
+        { name: "~", syllable: "~" },
       ),
     );
     return transliterator.transliterate(ipa);

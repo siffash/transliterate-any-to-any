@@ -275,6 +275,13 @@ describe("inside a [set], the six escapable symbols are literal even when writte
   it("an unterminated set containing a bare symbol still raises a clear parse error", () => {
     expect(() => RBT_JS.fromRules("[*")).toThrow(RBTParseError);
   });
+
+  it("set difference and intersection between nested sets, which ICU supports, are rejected instead of read as a union", () => {
+    expect(() => RBT_JS.fromRules("[[:L:]-[aeiou]] > X;")).toThrow(/difference/);
+    expect(() => RBT_JS.fromRules("[[a-z] & [aeiou]] > X;")).toThrow(/intersection/);
+    expect(RBT_JS.fromRules("[[ab]-] > X;").transliterate("a-c")).toBe("XXc");
+    expect(RBT_JS.fromRules("[[ab]c-d] > X;").transliterate("acde")).toBe("XXXe");
+  });
 });
 
 describe("the seven additional structural characters `| > ; ( ) ? +` are also literal when written bare inside a [set]", () => {

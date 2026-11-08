@@ -435,6 +435,45 @@ export const DIRECT_MAP: Record<string, string> = {
   지: "智",
 };
 
+// The usual characters of surnames that are split off a given name (이·명박 → 李), where a
+// syllable alone is read by sound (이란 伊兰)
+export const SURNAME_MAP: Record<string, string> = {
+  이: "李",
+  리: "李",
+  오: "吴",
+  유: "柳",
+  양: "梁",
+  배: "裴",
+  노: "卢",
+  하: "河",
+  차: "车",
+  우: "禹",
+  구: "具",
+  민: "闵",
+  나: "罗",
+  진: "陈",
+  지: "池",
+  채: "蔡",
+  천: "千",
+  현: "玄",
+  여: "吕",
+  도: "都",
+  설: "薛",
+  추: "秋",
+  석: "石",
+  소: "苏",
+  위: "魏",
+  기: "奇",
+  마: "马",
+  선: "宣",
+  표: "表",
+  국: "鞠",
+  계: "桂",
+  은: "殷",
+  금: "琴",
+  예: "芮",
+};
+
 // Syllables with a final consonant, read as one Sino-Korean character (연 延, 민 敏, 흥 兴)
 export const SYLLABLE_MAP: Record<string, string> = {
   각: "角",

@@ -782,6 +782,21 @@ class Parser {
           matchesStartOfString = matchesStartOfString || child.matchesStartOfString;
           matchesEndOfString = matchesEndOfString || child.matchesEndOfString;
           sawAnyMember = true;
+          // ICU reads '[[:L:]-[aeiou]]' as a difference and '&' as an intersection; this engine
+          // only has unions, so it rejects them instead of silently matching the vowels too
+          const operatorPos = this.i;
+          this.skipRawWhitespace();
+          if (!this.atEnd() && (this.src[this.i] === "-" || this.src[this.i] === "&")) {
+            const operator = this.src[this.i];
+            this.i++;
+            this.skipRawWhitespace();
+            if (!this.atEnd() && this.src[this.i] === "[") {
+              this.fail(
+                `set ${operator === "-" ? "difference" : "intersection"} '${operator}[' is not supported`,
+              );
+            }
+          }
+          this.i = operatorPos;
           continue;
         }
         if (!this.atEnd() && this.src[this.i] === "{") {

@@ -13,6 +13,7 @@ export const koEnRules = `
 ９ > 9;
 
 [:Hangul:] > ;
+eui > ui;
 '_' > ;
 
 ::Null;

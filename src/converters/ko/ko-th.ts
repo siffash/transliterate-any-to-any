@@ -20,6 +20,7 @@ export const koTh = async (text: Text) => {
         text,
         text => filterIpa(normalizeKoIpa(toIPA(text, { anyAscii: true })), text, "ko"),
         "ipa",
+        { name: "~" },
       ),
     );
     return transliterator.transliterate(ipa);

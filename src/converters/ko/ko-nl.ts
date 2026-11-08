@@ -3,6 +3,7 @@ import { Text } from "types";
 export const koNl = async (text: Text) => {
   const Aromanize = (await import("aromanize")).default;
   const { RBT } = await import("helpers/rbt");
+  const { latnKoHyphenRules } = await import("data/latn/latn_ko-hyphen.rules");
   const { koLatnAssimRules } = await import("data/ko/ko-latn_assim.rules");
   const { koLatnRules } = await import("data/ko/ko-latn.rules");
   const { latnOuHiatusRules } = await import("data/latn/latn_ou-hiatus.rules");
@@ -11,12 +12,12 @@ export const koNl = async (text: Text) => {
   const { normalizeKo } = await import("helpers/normalizeKo");
 
   const transliterator = RBT.fromRules(
-    koLatnAssimRules + koLatnRules + latnOuHiatusRules + latnNlRules,
+    koLatnAssimRules + koLatnRules + latnOuHiatusRules + latnNlRules + latnKoHyphenRules,
   );
 
   const convert = async (text: string) => {
     const romanized = await wordSplitter(text, "ko", text =>
-      normalizeKo(text, text => Aromanize.romanize(text), "latn"),
+      normalizeKo(text, text => Aromanize.romanize(text), "latn", { syllable: "‧", unit: "‧" }),
     );
     return transliterator.transliterate(romanized);
   };

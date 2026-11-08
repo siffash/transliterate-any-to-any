@@ -1,17 +1,41 @@
 import { GIVEN_NAMES, NOT_NAMES, SURNAMES } from "data/ko/ko-names";
+import { NOT_UNITS, PROVINCES, UNITS } from "data/ko/ko-units";
 
 // Standalone Hangul letters (ㅋ, ㅠ), which are not part of a syllable
 const JAMO = /[ㄱ-ㅣ]+/g;
 // A word of three syllables, which may be a surname and a given name (김민준)
 const NAME = /(?<![가-힣])[가-힣]{3}(?![가-힣])/g;
 
-// Names are romanized as surname + given name (Kim Minjun), like Chinese ones
-const splitNames = (text: string, separator: string) =>
+// Names are romanized as surname + given name (Kim Min-jun), like Chinese ones
+const splitNames = (text: string, separator: string, syllableSeparator: string) =>
   text.replace(NAME, word =>
     SURNAMES.has(word[0]) && GIVEN_NAMES.has(word.slice(1)) && !NOT_NAMES.has(word)
-      ? `${word[0]}${separator}${word.slice(1)}`
+      ? `${word[0]}${separator}${Array.from(word.slice(1)).join(syllableSeparator)}`
       : word,
   );
+
+// A word of at least three syllables that ends in an administrative unit (음성군)
+const UNIT = new RegExp(`(?<![가-힣·‧])([가-힣]+?)(${UNITS.join("|")})(?![가-힣·‧])`, "g");
+// A northern or southern province (경상북도)
+const PROVINCE = new RegExp(
+  `(?<![가-힣·‧])(${Array.from(PROVINCES).join("|")})([북남]도)(?![가-힣·‧])`,
+  "g",
+);
+
+// The unit is split off (음성‧군), so that it isn't run together with the name (Eumseong-gun, Samjuk-myeon).
+// Some targets split off only the "northern/southern province" of a province (Кёнсан-Намдо)
+const splitUnits = (text: string, separator: string, provinceSeparator: string) => {
+  const result = provinceSeparator ? text.replace(PROVINCE, `$1${provinceSeparator}$2`) : text;
+  return separator
+    ? result.replace(UNIT, (word, name: string, unit: string) =>
+        Array.from(name).length < 2 ||
+        (unit === "도" && !PROVINCES.has(name.replace(/[북남]$/, ""))) ||
+        NOT_UNITS.some(notUnit => word.endsWith(notUnit))
+          ? word
+          : `${name}${separator}${unit}`,
+      )
+    : result;
+};
 
 // Revised Romanization of each letter, as ICU's Hangul-Latin does it
 const LATN: Record<string, string> = {
@@ -161,29 +185,38 @@ const markSyllableBoundaries = (text: string) => {
   return result;
 };
 
+type KoSeparator = { name?: string; syllable?: string; unit?: string; province?: string };
+
 /*
  * Converts Korean text, spelling standalone letters (ㅋㅋㅋ, ㅠㅠ) letter by letter,
  * and passing everything in between to the given converter.
  * @param text - The Korean text.
  * @param convert - The converter for the rest of the text.
  * @param letters - "latn" to spell the letters in Revised Romanization, "ipa" in IPA.
+ * @param separator - What goes between the parts of names:
+ * - name: between a surname and a given name (" " by default); a marker other than a space
+ *   lets the rules treat the given name's first consonant as inside the word (Kim Džong Un). With "ipa",
+ *   it is replaced with a space in the result.
+ * - syllable: between the syllables of a given name: "-" (Ki-moon), the name separator (Ги Мун),
+ *   or nothing (Kimun), the default.
+ * - unit: before an administrative unit (Eumseong-gun), or nothing to keep it in the word (Ымсонгун),
+ *   the default.
+ * - province: before the "northern/southern province" of a province (Кёнсан-Намдо), or nothing, the default.
  * @param convertLetters - An optional converter for the spelled letters.
- * @param nameSeparator - What goes between a surname and a given name; a marker other than a space
- * lets the rules treat the given name's first consonant as inside the word (Kim Džong Un).
  * @returns the converted text.
  */
 export const normalizeKo = async (
   text: string,
   convert: (text: string) => string | Promise<string>,
   letters: "latn" | "ipa",
+  { name = " ", syllable = "", unit = "", province = "" }: KoSeparator = {},
   convertLetters: (text: string) => string = text => text,
-  nameSeparator = " ",
 ): Promise<string> => {
   const map = letters === "latn" ? LATN : IPA;
-  const prepare = (text: string) =>
-    letters === "latn"
-      ? markSyllableBoundaries(splitNames(text, nameSeparator))
-      : splitNames(text, nameSeparator);
+  const prepare = (text: string) => {
+    const result = splitUnits(splitNames(text, name, syllable), unit, province);
+    return letters === "latn" ? markSyllableBoundaries(result) : result;
+  };
   const parts: string[] = [];
   let cursor = 0;
 
@@ -199,5 +232,7 @@ export const normalizeKo = async (
     parts.push(await convert(prepare(text.slice(cursor))));
   }
 
-  return parts.join("");
+  // The converters that go through IPA keep the separator until here, so that it isn't filtered out
+  const result = parts.join("");
+  return letters === "ipa" ? result.replaceAll(name, " ") : result;
 };

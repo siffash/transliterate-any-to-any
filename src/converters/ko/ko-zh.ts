@@ -1,7 +1,7 @@
 import { Text } from "types";
 
 export const koZh = async (text: Text) => {
-  const { B_MAP, BATCHIMS, DIRECT_MAP, INITIALS, IV_MAP, SYLLABLE_MAP, VOWELS } =
+  const { B_MAP, BATCHIMS, DIRECT_MAP, INITIALS, IV_MAP, SURNAME_MAP, SYLLABLE_MAP, VOWELS } =
     await import("data/ko/ko-zh.map");
   const { RBT } = await import("helpers/rbt");
   const { normalizeKo } = await import("helpers/normalizeKo");
@@ -19,19 +19,25 @@ export const koZh = async (text: Text) => {
       const char = text[i];
       const code = char.charCodeAt(0);
 
+      // The marker of a split name (김·정은), which Chinese writes without a space (金正恩)
+      if (char === "·") {
+        continue;
+      }
+
       if (code < 0xac00 || code > 0xd7a3) {
         result += char;
         continue;
       }
 
       // Surname characters (김 金, 정 郑) apply at the start of a word, but not to a given name
-      // split off after a one-syllable surname (김 정은 → 正)
+      // split off after a one-syllable surname (김·정은 → 正)
       const startsWord = !HANGUL.test(text[i - 1] ?? "");
       const givenName =
-        text[i - 1] === " " && HANGUL.test(text[i - 2] ?? "") && !HANGUL.test(text[i - 3] ?? "");
+        text[i - 1] === "·" && HANGUL.test(text[i - 2] ?? "") && !HANGUL.test(text[i - 3] ?? "");
+      const surname = startsWord && text[i + 1] === "·" && HANGUL.test(text[i + 2] ?? "");
       const direct =
         startsWord && !givenName
-          ? DIRECT_MAP[char] || SYLLABLE_MAP[char]
+          ? (surname && SURNAME_MAP[char]) || DIRECT_MAP[char] || SYLLABLE_MAP[char]
           : SYLLABLE_MAP[char] || DIRECT_MAP[char];
 
       if (direct) {
@@ -60,7 +66,7 @@ export const koZh = async (text: Text) => {
   };
 
   const convert = (text: string) =>
-    normalizeKo(text, convertSyllables, "ipa", text =>
+    normalizeKo(text, convertSyllables, "ipa", { name: "·" }, text =>
       (letters ??= RBT.fromRules(ipaZhRules)).transliterate(text),
     );
 

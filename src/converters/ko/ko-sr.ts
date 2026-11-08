@@ -12,13 +12,7 @@ export const koSr = async (text: Text) => {
 
   const convert = async (text: string) => {
     const romanized = await wordSplitter(text, "ko", text =>
-      normalizeKo(
-        text,
-        text => Aromanize.romanize(text),
-        "latn",
-        text => text,
-        "·",
-      ),
+      normalizeKo(text, text => Aromanize.romanize(text), "latn", { name: "·" }),
     );
     return transliterator.transliterate(romanized);
   };

@@ -78,6 +78,11 @@ export const koJa = async (text: Text) => {
     for (let i = 0; i < syllables.length; i++) {
       const s = syllables[i];
       if (!s.isHangul) {
+        // The surname and given name stay one word for voicing (김·정은 キム・ジョンウン)
+        if (s.raw === "·") {
+          result += "・";
+          continue;
+        }
         result += s.raw;
         if (/\s/.test(s.raw)) isStartOfWord = true;
         continue;
@@ -95,7 +100,8 @@ export const koJa = async (text: Text) => {
                 ? "ㅅ"
                 : s.initial;
 
-      const prevS = syllables[i - 1];
+      const before = syllables[i - 1];
+      const prevS = before && !before.isHangul && before.raw === "·" ? syllables[i - 2] : before;
       const isSoftPrev =
         !prevS ||
         !prevS.isHangul ||
@@ -140,7 +146,7 @@ export const koJa = async (text: Text) => {
   };
 
   const convert = (text: string) =>
-    normalizeKo(text, convertSyllables, "ipa", text =>
+    normalizeKo(text, convertSyllables, "ipa", { name: "·" }, text =>
       (letters ??= RBT.fromRules(ipaJaRules)).transliterate(text),
     );
 

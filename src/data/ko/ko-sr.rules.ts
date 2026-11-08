@@ -72,23 +72,36 @@ p > p;
 s > s;
 h > h;
 
-· { g > g;
+[kpt] · { g > g;
+· { g > k;
 [kptshč] { g > k;
+[kptshč] '‧' { g > k;
+'‧' { g > g;
+'․' { g > g;
 [^[:L:][:M:]] { g > k;
 g > g;
 
 · { d > d;
 [kptshč] { d > t;
+[kptshč] '‧' { d > t;
+'‧' { d > d;
+'․' { d > d;
 [^[:L:][:M:]] { d > t;
 d > d;
 
 · { b > b;
 [kptshč] { b > p;
+[kptshč] '‧' { b > p;
+'‧' { b > b;
+'․' { b > b;
 [^[:L:][:M:]] { b > p;
 b > b;
 
 · { j > dž;
 [kptshč] { j > č;
+[kptshč] '‧' { j > č;
+'‧' { j > dž;
+'․' { j > dž;
 [^[:L:][:M:]] { j > č;
 j > dž;
 
@@ -99,7 +112,6 @@ r > r;
 m > m;
 n > n;
 
-\\- > ;
 '_' > ;
 
 ::Null;

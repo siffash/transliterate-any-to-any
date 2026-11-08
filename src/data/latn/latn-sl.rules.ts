@@ -113,7 +113,7 @@ IE > IJE;
 IO > IJO;
 IU > IJU;
 
-[čšžcČŠŽC] { [jJ]+ > ;
+::Null;
 
 [bB] { [bB]+ > ;
 [cC] { [cC]+ > ;
