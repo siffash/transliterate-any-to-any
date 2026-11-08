@@ -22,12 +22,12 @@ export const zhLatnRules = `
 [ōóǒò] > o;
 [ūúǔù] > u;
 [ǖǘǚǜ] > ü;
+[ńňǹ] > n;
+ḿ > m;
 
 ::Null;
 
-[zcshrẑ] { i > ï;
-[jqxy] { ue > üe;
-[jqxy] { uan > üän;
+[zcshr] { i > ï;
 [jqxy] { u > ü;
 
 ::Null;
