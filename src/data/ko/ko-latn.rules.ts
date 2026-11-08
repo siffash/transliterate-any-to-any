@@ -17,6 +17,8 @@ export const koLatnRules = `
 
 ::Null;
 
+seoul > seul;
+
 [^[:L:][:M:]] { ng > ;
 ng > ŋ;
 
@@ -42,9 +44,11 @@ j { j+ > ;
 l { l+ > ;
 c { c+ > ;
 
+::Null;
+
 s } [iyü] > š;
+ŋ { n > n;
 n } [iyü] > ń;
-l } [iyü] > ľ;
 
 ch > č;
 sh > š;

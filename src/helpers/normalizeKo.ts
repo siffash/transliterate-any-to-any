@@ -6,10 +6,10 @@ const JAMO = /[ㄱ-ㅣ]+/g;
 const NAME = /(?<![가-힣])[가-힣]{3}(?![가-힣])/g;
 
 // Names are romanized as surname + given name (Kim Minjun), like Chinese ones
-const splitNames = (text: string) =>
+const splitNames = (text: string, separator: string) =>
   text.replace(NAME, word =>
     SURNAMES.has(word[0]) && GIVEN_NAMES.has(word.slice(1)) && !NOT_NAMES.has(word)
-      ? `${word[0]} ${word.slice(1)}`
+      ? `${word[0]}${separator}${word.slice(1)}`
       : word,
   );
 
@@ -168,6 +168,8 @@ const markSyllableBoundaries = (text: string) => {
  * @param convert - The converter for the rest of the text.
  * @param letters - "latn" to spell the letters in Revised Romanization, "ipa" in IPA.
  * @param convertLetters - An optional converter for the spelled letters.
+ * @param nameSeparator - What goes between a surname and a given name; a marker other than a space
+ * lets the rules treat the given name's first consonant as inside the word (Kim Džong Un).
  * @returns the converted text.
  */
 export const normalizeKo = async (
@@ -175,10 +177,13 @@ export const normalizeKo = async (
   convert: (text: string) => string | Promise<string>,
   letters: "latn" | "ipa",
   convertLetters: (text: string) => string = text => text,
+  nameSeparator = " ",
 ): Promise<string> => {
   const map = letters === "latn" ? LATN : IPA;
   const prepare = (text: string) =>
-    letters === "latn" ? markSyllableBoundaries(splitNames(text)) : splitNames(text);
+    letters === "latn"
+      ? markSyllableBoundaries(splitNames(text, nameSeparator))
+      : splitNames(text, nameSeparator);
   const parts: string[] = [];
   let cursor = 0;
 

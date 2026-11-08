@@ -3,16 +3,22 @@ import { Text } from "types";
 export const koSr = async (text: Text) => {
   const Aromanize = (await import("aromanize")).default;
   const { RBT } = await import("helpers/rbt");
-  const { koLatnRules } = await import("data/ko/ko-latn.rules");
-  const { latnSrRules } = await import("data/latn/latn-sr.rules");
+  const { koLatnAssimRules } = await import("data/ko/ko-latn_assim.rules");
+  const { koSrRules } = await import("data/ko/ko-sr.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
   const { normalizeKo } = await import("helpers/normalizeKo");
 
-  const transliterator = RBT.fromRules(koLatnRules + latnSrRules);
+  const transliterator = RBT.fromRules(koLatnAssimRules + koSrRules);
 
   const convert = async (text: string) => {
     const romanized = await wordSplitter(text, "ko", text =>
-      normalizeKo(text, text => Aromanize.romanize(text), "latn"),
+      normalizeKo(
+        text,
+        text => Aromanize.romanize(text),
+        "latn",
+        text => text,
+        "·",
+      ),
     );
     return transliterator.transliterate(romanized);
   };

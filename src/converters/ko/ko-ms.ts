@@ -3,12 +3,13 @@ import { Text } from "types";
 export const koMs = async (text: Text) => {
   const Aromanize = (await import("aromanize")).default;
   const { RBT } = await import("helpers/rbt");
+  const { koLatnAssimRules } = await import("data/ko/ko-latn_assim.rules");
   const { koLatnRules } = await import("data/ko/ko-latn.rules");
   const { latnMsRules } = await import("data/latn/latn-ms.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
   const { normalizeKo } = await import("helpers/normalizeKo");
 
-  const transliterator = RBT.fromRules(koLatnRules + latnMsRules);
+  const transliterator = RBT.fromRules(koLatnAssimRules + koLatnRules + latnMsRules);
 
   const convert = async (text: string) => {
     const romanized = await wordSplitter(text, "ko", text =>
