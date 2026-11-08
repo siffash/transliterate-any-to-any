@@ -80,6 +80,12 @@ describe("wordSplitter", () => {
       expect(await wordSplitter("سلام، دنیا؟ خوب؛ بله", "fa")).toBe("سلام, دنیا? خوب; بله");
     });
 
+    it("converts fullwidth punctuation between words to ASCII, spaced like Latin text", async () => {
+      expect(await wordSplitter("北京，上海（武昌）、南京", "zh")).toBe("北京, 上海 (武昌), 南京");
+      expect(await wordSplitter("北京，1，上海！", "zh")).toBe("北京, 1, 上海!");
+      expect(await wordSplitter("北京（武昌），上海", "zh")).toBe("北京 (武昌), 上海");
+    });
+
     it("doesn't pass punctuation to fn", async () => {
       const calls: string[] = [];
       await wordSplitter("はい、そうです。", "ja", word => {

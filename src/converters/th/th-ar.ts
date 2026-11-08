@@ -11,7 +11,7 @@ export const thAr = async (text: Text) => {
   const transliterator = RBT.fromRules(ipaArRules);
 
   const convert = async (text: string) => {
-    return wordSplitter(normalizeTh(text), "th", text => transliterator.transliterate(toIpa(text)));
+    return transliterator.transliterate(await wordSplitter(normalizeTh(text), "th", toIpa));
   };
 
   if (typeof text === "string") {

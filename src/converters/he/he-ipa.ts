@@ -5,6 +5,8 @@ export const heIpa = async <T = Text>(text: Text): Promise<T> => {
   const { filterIpa } = await import("helpers/filterIpa");
 
   const convert = (text: string) => {
+    // Niqqud and cantillation marks: the map and the fallback read unpointed spelling
+    text = text.replace(/[\u0591-\u05BD\u05BF\u05C1\u05C2\u05C4\u05C5\u05C7]/g, "");
     const SINGLE_PREFIXES = ["ו", "ב", "כ", "ל", "מ", "ה"];
     const DOUBLE_PREFIXES = ["וב", "וכ", "ול", "ומ", "וה", "שה", "מה"];
 

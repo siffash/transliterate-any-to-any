@@ -111,7 +111,7 @@ describe("punctuation that belongs to the source script", () => {
     ["東京に行きます。", "ja", "en", "Tokyo Ni Ikimasu."],
     ["はい、そうです。", "ja", "ru", "Хай, Со Дэсу."],
     ["「東京」へ", "ja", "en", '"Tokyo" E'],
-    ["你好，世界。", "zh", "en", "Nihao，Shijie."],
+    ["你好，世界。", "zh", "en", "Nihao, Shijie."],
     ["مرحبا، كيف حالك؟", "ar", "en", "Marhaba, Kif Halk?"],
     ["سلام، دنیا۔", "ur", "en", "Salam, Duniya."],
     ["سلام، دنیا؟", "fa", "en", "Salam, Donya?"],

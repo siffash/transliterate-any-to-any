@@ -33,6 +33,8 @@ export const ipaHiRules = `
 
 ::Null;
 
+[tʈ] ͡? ʂ ʰ > छ्;
+ʈ ͡? ʂ > च्;
 t͡sʰ > छ्;
 t͡ʃʰ > छ्;
 tʃʰ > छ्;

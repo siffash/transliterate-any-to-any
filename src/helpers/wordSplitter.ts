@@ -33,6 +33,23 @@ const PUNCTUATION: Record<string, [replacement: string, kind: Kind]> = {
   "​": ["", "separator"],
 };
 
+// Fullwidth punctuation between words (，（）！) becomes ASCII, which every target script uses,
+// with the space its width implied: 北京，上海 → Beijing, Shanghai
+const toHalfwidth = (text: string, wordBefore: boolean, wordAfter: boolean) =>
+  text.replace(/[\uFF01-\uFF5E]/g, (char, offset: number) => {
+    const mark = String.fromCharCode(char.charCodeAt(0) - 0xfee0);
+    const prev = text[offset - 1];
+    const next = text[offset + 1];
+    if (
+      /[,;:!?)]/.test(mark) &&
+      (next ? !/[\s.,;:!?)\uFF0E\uFF0C\uFF1B\uFF1A\uFF01\uFF1F\uFF09]/.test(next) : wordAfter)
+    ) {
+      return mark + " ";
+    }
+    if (mark === "(" && (prev ? !/[\s(\uFF08]/.test(prev) : wordBefore)) return " " + mark;
+    return mark;
+  });
+
 // surname: a Chinese surname split off its given name (see segmentChinese)
 type Segment = { segment: string; isWordLike?: boolean; surname?: boolean };
 
@@ -125,7 +142,9 @@ export const wordSplitter = async (
 
   while ((m = re.exec(input)) !== null) {
     if (m.index > cursor) {
-      parts.push(input.slice(cursor, m.index));
+      // no space before the source script's own closing mark: 上海（武昌）、南京 → (Wuchang), Nanjing
+      const wordAfter = PUNCTUATION[input[m.index]]?.[1] !== "close";
+      parts.push(toHalfwidth(input.slice(cursor, m.index), cursor > 0, wordAfter));
     }
 
     let segments = segment ? await segment(m[0]) : [{ segment: m[0], isWordLike: true }];
@@ -157,7 +176,7 @@ export const wordSplitter = async (
   }
 
   if (cursor < input.length) {
-    parts.push(input.slice(cursor));
+    parts.push(toHalfwidth(input.slice(cursor), cursor > 0, false));
   }
 
   return parts.join("").replace(/ {2,}/g, " ");
