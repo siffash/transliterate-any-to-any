@@ -8,8 +8,11 @@ export const enTh = async (text: Text) => {
   const { enIpaThRules } = await import("data/en/en-ipa_th.rules");
   const { ipaThOpenRules } = await import("data/ipa/ipa-th_open.rules");
   const { ipaThRules } = await import("data/ipa/ipa-th.rules");
+  const { ipaThKaranRules } = await import("data/ipa/ipa-th_karan.rules");
 
-  const transliterator = RBT.fromRules(enIpaThRules + ipaThOpenRules + ipaThRules);
+  const transliterator = RBT.fromRules(
+    enIpaThRules + ipaThOpenRules + ipaThRules + ipaThKaranRules,
+  );
 
   if (typeof text === "string") {
     const ipa = await enIpa<string>(text, [

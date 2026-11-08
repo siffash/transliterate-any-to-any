@@ -8,6 +8,7 @@ export const csTh = async (text: Text) => {
   const { csIpaHardIRules } = await import("data/cs/cs-ipa_hard-i.rules");
   const { ipaThOpenRules } = await import("data/ipa/ipa-th_open.rules");
   const { ipaThRules } = await import("data/ipa/ipa-th.rules");
+  const { ipaThKaranRules } = await import("data/ipa/ipa-th_karan.rules");
 
   const transliterator = RBT.fromRules(
     csIpaHardERules +
@@ -15,7 +16,8 @@ export const csTh = async (text: Text) => {
       csIpaRules +
       csSkIpaRzhThRules +
       ipaThOpenRules +
-      ipaThRules,
+      ipaThRules +
+      ipaThKaranRules,
   );
 
   if (typeof text === "string") {

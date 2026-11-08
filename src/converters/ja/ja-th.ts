@@ -10,13 +10,14 @@ export const jaTh = async (text: Text) => {
   const { jaIpaPrepassRules } = await import("data/ja/ja-ipa_prepass.rules");
   const { jaIpaThRules } = await import("data/ja/ja-ipa_th.rules");
   const { ipaThRules } = await import("data/ipa/ipa-th.rules");
+  const { ipaThKaranRules } = await import("data/ipa/ipa-th_karan.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
   const { getKuroshiro } = await import("helpers/getKuroshiro");
 
   const kuroshiro = await getKuroshiro();
 
   const prepassTransliterator = RBT.fromRules(jaIpaPrepassRules);
-  const transliterator = RBT.fromRules(jaIpaRules + jaIpaThRules + ipaThRules);
+  const transliterator = RBT.fromRules(jaIpaRules + jaIpaThRules + ipaThRules + ipaThKaranRules);
   const exceptions = jaIpaRules.replace(/( ?> ?[^;]+;)|\[|]|\n/g, "");
 
   const convert = async (text: string) => {

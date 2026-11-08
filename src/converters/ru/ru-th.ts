@@ -6,8 +6,11 @@ export const ruTh = async (text: Text) => {
   const { ruIpaThRules } = await import("data/ru/ru-ipa_th.rules");
   const { ipaThOpenRules } = await import("data/ipa/ipa-th_open.rules");
   const { ipaThRules } = await import("data/ipa/ipa-th.rules");
+  const { ipaThKaranRules } = await import("data/ipa/ipa-th_karan.rules");
 
-  const transliterator = RBT.fromRules(ruIpaRules + ruIpaThRules + ipaThOpenRules + ipaThRules);
+  const transliterator = RBT.fromRules(
+    ruIpaRules + ruIpaThRules + ipaThOpenRules + ipaThRules + ipaThKaranRules,
+  );
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);

@@ -168,7 +168,7 @@ describe("apostrophe look-alikes", () => {
   it.each([
     ["D‘Angelo", "it", "ja", "ダンジェロ"],
     ["D‘Angelo", "it", "ru", "Д’Анджело"],
-    ["D‘Hondt", "nl", "th", "ดโฮนต"],
+    ["D‘Hondt", "nl", "th", "ดโฮนต์"],
     ["D`Armi, Dell´Utri", "it", "ru", "Д’Арми, Делл’Утри"],
     ["DʼHondt", "cs", "ru", "Д’Гондт"],
     ["d`Artagnan, L‘Oréal", "fr", "uk", "д’Артаньян, Л’Ореаль"],

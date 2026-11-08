@@ -4,8 +4,9 @@ export const arTh = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { arIpa } = await import("converters/ar/ar-ipa");
   const { ipaThRules } = await import("data/ipa/ipa-th.rules");
+  const { ipaThKaranRules } = await import("data/ipa/ipa-th_karan.rules");
 
-  const transliterator = RBT.fromRules(ipaThRules);
+  const transliterator = RBT.fromRules(ipaThRules + ipaThKaranRules);
 
   if (typeof text === "string") {
     const ipa = await arIpa<string>(text);

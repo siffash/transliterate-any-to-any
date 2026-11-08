@@ -3,7 +3,8 @@ import { Text } from "types";
 export const lbIpa = async <T = Text>(
   text: Text,
   velarA = false,
-  mapIpa?: Record<string, string>,
+  // A target that reads French words its own way (ja, th) passes their IPA
+  frenchIpa?: (words: string[]) => Promise<string[]>,
   rules = "",
 ): Promise<T> => {
   const { lbIpaMap } = await import("data/lb/lb-ipa.map");
@@ -11,13 +12,20 @@ export const lbIpa = async <T = Text>(
   const { lbIpaRules } = await import("data/lb/lb-ipa.rules");
   const { convertWithExceptions } = await import("helpers/convertWithExceptions");
   const { filterIpa } = await import("helpers/filterIpa");
+  const { lbFrenchIpa } = await import("converters/lb/lb-french");
 
   const transliterator = RBT.fromRules(lbIpaRules + rules);
+  const french = await lbFrenchIpa(
+    typeof text === "string" ? [text] : text,
+    lbIpaMap,
+    frenchIpa ??
+      (async words => (await import("converters/fr/fr-ipa")).frIpa<string[]>(words, velarA)),
+    !!frenchIpa,
+  );
 
   const exception = (word: string) => {
     const key = word.normalize("NFC").toLocaleLowerCase("lb");
-    // A target that reads French words its own way (ja) passes their IPA in mapIpa
-    if (mapIpa && Object.prototype.hasOwnProperty.call(mapIpa, key)) return mapIpa[key];
+    if (Object.prototype.hasOwnProperty.call(french, key)) return french[key];
     const ipa =
       (Object.prototype.hasOwnProperty.call(lbIpaMap, key) &&
         filterIpa(lbIpaMap[key], word, "lb")) ||

@@ -8,14 +8,21 @@ export const lbLatn = async <T = Text>(text: Text): Promise<T> => {
   const { convertWithExceptions } = await import("helpers/convertWithExceptions");
   const { filterIpa } = await import("helpers/filterIpa");
   const { copyCase } = await import("helpers/copyCase");
+  const { lbFrenchIpa } = await import("converters/lb/lb-french");
 
   const transliterator = RBT.fromRules(lbLatnRules);
   const ipaTransliterator = RBT.fromRules(ipaLatnRules);
+  const french = await lbFrenchIpa(
+    typeof text === "string" ? [text] : text,
+    lbIpaMap,
+    async words => (await import("converters/fr/fr-ipa")).frIpa<string[]>(words),
+  );
 
   const exception = (word: string) => {
     const key = word.normalize("NFC").toLocaleLowerCase("lb");
-    const ipa =
-      Object.prototype.hasOwnProperty.call(lbIpaMap, key) && filterIpa(lbIpaMap[key], word, "lb");
+    const ipa = Object.prototype.hasOwnProperty.call(french, key)
+      ? french[key]
+      : Object.prototype.hasOwnProperty.call(lbIpaMap, key) && filterIpa(lbIpaMap[key], word, "lb");
     return ipa ? copyCase(word, ipaTransliterator.transliterate(ipa), "lb") : undefined;
   };
 

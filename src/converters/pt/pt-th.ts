@@ -7,9 +7,10 @@ export const ptTh = async (text: Text) => {
   const { ipaThOpenRules } = await import("data/ipa/ipa-th_open.rules");
   const { ipaThOpenIRules } = await import("data/ipa/ipa-th_open-i.rules");
   const { ipaThRules } = await import("data/ipa/ipa-th.rules");
+  const { ipaThKaranRules } = await import("data/ipa/ipa-th_karan.rules");
 
   const transliterator = RBT.fromRules(
-    ptIpaRules + ptIpaNasalRules + ipaThOpenRules + ipaThOpenIRules + ipaThRules,
+    ptIpaRules + ptIpaNasalRules + ipaThOpenRules + ipaThOpenIRules + ipaThRules + ipaThKaranRules,
   );
 
   if (typeof text === "string") {

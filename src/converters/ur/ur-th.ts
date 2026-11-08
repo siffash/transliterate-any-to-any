@@ -6,6 +6,8 @@ export const urTh = async (text: Text) => {
   const { ipaThOpenRules } = await import("data/ipa/ipa-th_open.rules");
   const { ipaThRules } = await import("data/ipa/ipa-th.rules");
 
+  // No ipaThKaranRules: a final cluster here is most often an unwritten vowel (رجب → รัจบ, Rajab),
+  // which ์ would silence
   const transliterator = RBT.fromRules(ipaThOpenRules + ipaThRules);
 
   if (typeof text === "string") {

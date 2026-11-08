@@ -3,6 +3,7 @@ export const ipaThRules = `
 ::NFC;
 
 ŋ [ɡg] ʱ } [^[:L:][:M:]] > ŋ;
+[nŋ] [ɡg] } [^[:L:][:M:]\\@] > ŋ;
 ([ˈˌ]) ([rɹɾ]) } [rɹɾ] > $2 $1;
 [rɹɾ] { [rɹɾ] } [^[:L:][:M:]] > ;
 [bcdfghklmnpqrstvwxzðɡɣɫɲʃʒθχ] { ʲ } [aɑɐæ] > i;

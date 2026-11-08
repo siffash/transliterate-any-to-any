@@ -49,10 +49,18 @@ export const arIpa = async <T = Text>(text: Text): Promise<T> => {
   // the long vowels uː/iː (محمود, سعيد), elsewhere the glides w/j; -ية is -ijja
   const stemFallback = (s: string, afterArticle: boolean): string => {
     const chars = [...s];
+    // A short name in the fayʕal/fawʕal pattern has a diphthong and an a after it: حيدر, بيبرس → bajbars, كوثر.
+    // بو- is the Maghrebi Bū- (بومدين)
+    const diphthong =
+      chars.length <= 5 &&
+      /[يو]/.test(chars[1]) &&
+      [chars[0], chars[2], chars[3]].every(ch => CONSONANT.test(ch ?? "")) &&
+      !s.startsWith("بو");
     const segments = chars.map((ch, i) => {
       const prev = chars[i - 1];
       const next = chars[i + 1];
       const vowel = i > 0 && CONSONANT.test(prev) && (next === undefined || CONSONANT.test(next));
+      if (diphthong && i === 1) return ch === "و" ? "aw" : "aj";
       if (ch === "و") return vowel ? "uː" : "w";
       if (ch === "ي") {
         if (vowel) return "iː";
@@ -62,7 +70,9 @@ export const arIpa = async <T = Text>(text: Text): Promise<T> => {
       }
       if (ch === "ا") return i ? "aː" : "a";
       return (
-        ((i || afterArticle) && /[أإ]/.test(ch) ? "ʔ" : "") + (stemCharMap[ch] ?? charMap[ch] ?? ch)
+        ((i || afterArticle) && /[أإ]/.test(ch) ? "ʔ" : "") +
+        (stemCharMap[ch] ?? charMap[ch] ?? ch) +
+        (diphthong && i === 2 ? "a" : "")
       );
     });
     // Arabic has no word-initial clusters and no runs of three consonants: the unwritten vowel is most often a

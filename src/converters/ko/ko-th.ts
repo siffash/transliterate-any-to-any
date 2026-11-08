@@ -8,10 +8,11 @@ export const koTh = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { ipaThOpenRules } = await import("data/ipa/ipa-th_open.rules");
   const { ipaThRules } = await import("data/ipa/ipa-th.rules");
+  const { ipaThKaranRules } = await import("data/ipa/ipa-th_karan.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
   const { normalizeKo } = await import("helpers/normalizeKo");
 
-  const transliterator = RBT.fromRules(ipaThOpenRules + ipaThRules);
+  const transliterator = RBT.fromRules(ipaThOpenRules + ipaThRules + ipaThKaranRules);
 
   const convert = async (text: string) => {
     const ipa = await wordSplitter(text, "ko", text =>
