@@ -1,0 +1,72 @@
+export const tgIpaPersoArabicRules = `
+::Null;
+
+ʔ > ʕ;
+e } ʔ > ;
+[bvwɡɣdʒzjkqlmnŋpɾstfχhʃʕ] { e } j > ;
+e } [bɡɣdʒzjkqlmnŋpɾstχhʃʕ] [^[:L:][:M:]] > i;
+[^[:L:][:M:]] { abd } ullɔ > ʕabd;
+[^[:L:][:M:]] { abdul } [:L:] > ʕabdال;
+[^[:L:][:M:]] { abdu } [bvwɡɣdʒzjkqmnŋpɾstfχhʃ] > ʕabdال;
+[^[:L:][:M:]] { a } li ː? [^[:L:][:M:]] > ʕa;
+[^[:L:][:M:]] { a } li [jzʃd] > ʕa;
+[:L:] [bɡɣdʒzjkqlmnŋpɾstfχhʃ] { a } li ː? [^[:L:][:M:]] > ʕa;
+[:L:] [bɡɣdʒzjkqlmnŋpɾstfχhʃ] { a } li [jzd] > ʕa;
+[^[:L:][:M:]] t͡ʃ { ɔ } ɾ [bɡɣdʒzjkqlmnŋpɾstfχhʃ] > ahɒ;
+[^[:L:][:M:]] χ { ɔ } d͡ʒa > wɒ;
+[^[:L:][:M:]] m { u } llɔ > u;
+ɒm { u } llɔ > u;
+ullɔh > اللh;
+ullɔ } [^[:L:][:M:]] > اللh;
+ullɔ } [jzd] > اللh;
+[iu] dd } in > الd;
+a } ɔ > aʕ;
+a } i [:L:] > aʕ;
+[bvwɡɣdʒzjkqlmnŋpɾstfχhʃ] ʃ { ɔ } [^[:L:][:M:]] > ɒh;
+ʕal { i } j > i;
+i } j [aɔu] > ;
+ɔ } f [^[:L:][:M:]] > ɔ;
+ɔ } va [^[:L:][:M:]] > ɔ;
+ɔ } vna [^[:L:][:M:]] > ɔ;
+ɔ } vit͡ʃ [^[:L:][:M:]] > ɔ;
+ɔ > ɒ;
+j { e } f [^[:L:][:M:]] > ;
+[ɔe] { v } a [^[:L:][:M:]] > v;
+[ɔe] { v } na [^[:L:][:M:]] > v;
+[ɔe] { v } it͡ʃ [^[:L:][:M:]] > v;
+v > w;
+
+::Null;
+
+[^[:L:][:M:]] { aj } [bvwɡɣdʒzjkqlmnŋpɾstfχhʃʕ] > اi;
+[^[:L:][:M:]] { [aeiu] } [bvwɡɣdʒzjkqlmnŋpɾstfχhʃʕ] > ا;
+[ɔe] v n? { a } [^[:L:][:M:]] > a;
+[bvwɡɣdʒzjkqlmnŋpɾstfχhʃʕ] { [ae] } [^[:L:][:M:]] > h;
+[bvwɡɣdʒzjkqlmnŋpɾstfχhʃʕ] { a } [bvwɡɣdʒzjkqlmnŋpɾstfχhʃʕ] > ;
+d } d ͡ > d;
+b } b > ;
+v } v > ;
+w } w > ;
+ɡ } ɡ > ;
+ɣ } ɣ > ;
+d } d > ;
+z } z > ;
+j } j > ;
+k } k > ;
+q } q > ;
+l } l > ;
+m } m > ;
+n } n > ;
+p } p > ;
+ɾ } ɾ > ;
+s } s > ;
+t } t > ;
+f } f > ;
+χ } χ > ;
+h } h > ;
+ʃ } ʃ > ;
+
+::Null;
+
+t } ʃ > ت;
+`;
