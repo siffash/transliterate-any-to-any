@@ -5,13 +5,6 @@ export class RBTParseError extends Error {
   }
 }
 
-export class RBTRuntimeError extends Error {
-  constructor(message: string) {
-    super(message);
-    this.name = "RBTRuntimeError";
-  }
-}
-
 export interface CharAtom {
   kind: "char";
   value: string;
@@ -46,6 +39,9 @@ export interface CompiledRule {
   post: PatternNode[];
   replacement: ReplacementSegment[];
   cursorOffset: number | null;
+  // '^' / '$' anchors: the match must start / end at the edge of the text
+  anchorStart: boolean;
+  anchorEnd: boolean;
   source: string;
 }
 
@@ -242,6 +238,7 @@ const STRUCTURAL_CHARS = new Set([
   "+",
   "&",
   "$",
+  "^",
 ]);
 
 // Characters that '\X' turns into a literal X anywhere in the grammar
@@ -266,35 +263,63 @@ const BACKSLASH_ESCAPABLE_CHARS = new Set([
   "+",
   "&",
   "$",
+  "^",
 ]);
 
 // The subset of BACKSLASH_ESCAPABLE_CHARS that is *also* literal when
 // written bare - without a backslash - directly inside a '[...]' set (not
-// inside a nested '{...}' string). This excludes '&' and '$': both remain
-// reserved when bare at this level - '&' still raises a parse error (see
-// readBracketSetLiteral) and '$' parses but matches nothing (see
-// AETHER_ATOM) - even though both are literal via '\&' / '\$', and both are
-// literal when bare inside '{...}'.
+// inside a nested '{...}' string). This excludes '&', '$' and '^', which stay
+// reserved when bare at this level, like in ICU: '&' and a misplaced '^'
+// raise a parse error (see readBracketSetLiteral), and '$' right before ']'
+// is ICU's "ether" member, which matches zero-width at the edges of the text
+// (see parseBracketSetBody). All three are literal via '\&' / '\$' / '\^',
+// and when bare inside '{...}'.
 const BRACKET_BARE_LITERAL_CHARS = new Set(
-  [...BACKSLASH_ESCAPABLE_CHARS].filter(ch => ch !== "&" && ch !== "$"),
+  [...BACKSLASH_ESCAPABLE_CHARS].filter(ch => ch !== "&" && ch !== "$" && ch !== "^"),
 );
 
-// A bare, unescaped '$' - whether alone in a pattern or alone inside
-// '[...]' - is reserved for what ICU calls "aether": a zero-width match at
-// the true start/end of the string (see e.g. `[0-9$]` in ICU's own
-// documentation). This engine does not implement that concept. Rather than
-// raise a parse error, '$' compiles to an atom that matches nothing at all -
-// not a literal '$', not zero-width anywhere - so rules using it compile
-// today and would simply gain real matching behavior if aether support is
-// added later, without a breaking change. A literal, matchable '$' is still
-// available via '\$' (anywhere), or as a '{$}' member inside a set.
-const AETHER_ATOM: SetAtom = {
-  kind: "set",
-  alternatives: [],
-  charTests: [],
-  matchesStartOfString: false,
-  matchesEndOfString: false,
-};
+type SetMembers = Omit<SetAtom, "kind">;
+
+function setHasChar(set: SetMembers, ch: string): boolean {
+  return (
+    set.alternatives.some(alt => alt.length === 1 && alt[0] === ch) ||
+    set.charTests.some(t => t(ch))
+  );
+}
+
+function setHasString(set: SetMembers, alt: string[]): boolean {
+  if (alt.length === 1) return setHasChar(set, alt[0]);
+  return set.alternatives.some(
+    other => other.length === alt.length && other.every((ch, k) => ch === alt[k]),
+  );
+}
+
+function combineSets(left: SetMembers, right: SetMembers, operator: "-" | "&"): SetMembers {
+  const leftTests = [...left.charTests];
+  const rightTests = [...right.charTests];
+  const leftHasByTest = (ch: string): boolean => leftTests.some(t => t(ch));
+  const rightHasByTest = (ch: string): boolean => rightTests.some(t => t(ch));
+
+  if (operator === "-") {
+    return {
+      alternatives: left.alternatives.filter(alt => !setHasString(right, alt)),
+      charTests: [(ch: string) => leftHasByTest(ch) && !setHasChar(right, ch)],
+      matchesStartOfString: left.matchesStartOfString && !right.matchesStartOfString,
+      matchesEndOfString: left.matchesEndOfString && !right.matchesEndOfString,
+    };
+  }
+
+  // A character can be in both sets via a listed member on either side or via a test on both
+  return {
+    alternatives: [
+      ...left.alternatives.filter(alt => setHasString(right, alt)),
+      ...right.alternatives.filter(alt => alt.length === 1 && leftHasByTest(alt[0])),
+    ],
+    charTests: [(ch: string) => leftHasByTest(ch) && rightHasByTest(ch)],
+    matchesStartOfString: left.matchesStartOfString && right.matchesStartOfString,
+    matchesEndOfString: left.matchesEndOfString && right.matchesEndOfString,
+  };
+}
 
 type Unit = { type: "literal"; char: string } | { type: "marker"; char: string };
 
@@ -303,6 +328,9 @@ class Parser {
   private i = 0;
   private inQuote = false;
   private groupCount = 0;
+  private sawPatternAtom = false;
+  private anchorStart = false;
+  private anchorEnd = false;
 
   constructor(src: string) {
     this.src = src;
@@ -314,6 +342,7 @@ class Parser {
 
     const flushRules = (): void => {
       if (currentRules.length > 0) {
+        checkRuleMasking(currentRules);
         passes.push({ kind: "rules", rules: currentRules });
         currentRules = [];
       }
@@ -438,6 +467,9 @@ class Parser {
   private parseRule(): CompiledRule {
     const ruleStart = this.i;
     this.groupCount = 0;
+    this.sawPatternAtom = false;
+    this.anchorStart = false;
+    this.anchorEnd = false;
     const { nodes, openIdx, closeIdx } = this.parsePattern();
 
     if (openIdx !== null && closeIdx !== null && closeIdx < openIdx) {
@@ -466,8 +498,6 @@ class Parser {
       post = [];
     }
 
-    if (key.length === 0) this.fail("rule has an empty key (nothing to match)");
-
     const gt = this.next();
     if (gt === null || gt.type !== "marker" || gt.char !== ">") {
       this.fail("expected '>' after rule pattern");
@@ -486,8 +516,21 @@ class Parser {
       post,
       replacement: segments,
       cursorOffset,
+      anchorStart: this.anchorStart,
+      anchorEnd: this.anchorEnd,
       source: this.src.slice(ruleStart, this.i).trim(),
     };
+  }
+
+  // Like ICU, '^' anchors the match to the start of the text, and only before any pattern atom
+  // ('^ { a', '(^a)'); 'a ^', '{ a } ^b' and '^^' are errors
+  private parseAnchorStart(): void {
+    if (this.sawPatternAtom || this.anchorStart) {
+      this.fail(
+        "'^' is only allowed at the start of a rule's left side, as a start-of-text anchor",
+      );
+    }
+    this.anchorStart = true;
   }
 
   private parsePattern(): {
@@ -507,6 +550,7 @@ class Parser {
       this.next();
 
       if (u.type === "literal") {
+        this.sawPatternAtom = true;
         nodes.push(
           this.attachQuantifier({
             kind: "atom",
@@ -527,6 +571,7 @@ class Parser {
           closeIdx = nodes.length;
           break;
         case "[":
+          this.sawPatternAtom = true;
           nodes.push(
             this.attachQuantifier({
               kind: "atom",
@@ -535,9 +580,20 @@ class Parser {
             }),
           );
           break;
-        case "$":
-          nodes.push(this.attachQuantifier({ kind: "atom", atom: AETHER_ATOM, quantifier: "one" }));
+        case "^":
+          this.parseAnchorStart();
           break;
+        case "$": {
+          // Like ICU, a bare '$' is only an end-of-text anchor at the very end of the left side
+          const after = this.peek();
+          if (after === null || after.type !== "marker" || after.char !== ">") {
+            this.fail(
+              "'$' is only allowed at the end of a rule's left side, as an end-of-text anchor",
+            );
+          }
+          this.anchorEnd = true;
+          break;
+        }
         case "(": {
           this.groupCount++;
           const captureIndex = this.groupCount;
@@ -579,6 +635,7 @@ class Parser {
       this.next();
 
       if (u.type === "literal") {
+        this.sawPatternAtom = true;
         nodes.push(
           this.attachQuantifier({
             kind: "atom",
@@ -591,6 +648,7 @@ class Parser {
 
       switch (u.char) {
         case "[":
+          this.sawPatternAtom = true;
           nodes.push(
             this.attachQuantifier({
               kind: "atom",
@@ -598,6 +656,9 @@ class Parser {
               quantifier: "one",
             }),
           );
+          break;
+        case "^":
+          this.parseAnchorStart();
           break;
         case "(": {
           this.groupCount++;
@@ -613,7 +674,9 @@ class Parser {
           break;
         }
         case "$":
-          nodes.push(this.attachQuantifier({ kind: "atom", atom: AETHER_ATOM, quantifier: "one" }));
+          this.fail(
+            "'$' is only allowed at the end of a rule's left side, as an end-of-text anchor",
+          );
           break;
         case "?":
         case "*":
@@ -782,21 +845,30 @@ class Parser {
           matchesStartOfString = matchesStartOfString || child.matchesStartOfString;
           matchesEndOfString = matchesEndOfString || child.matchesEndOfString;
           sawAnyMember = true;
-          // ICU reads '[[:L:]-[aeiou]]' as a difference and '&' as an intersection; this engine
-          // only has unions, so it rejects them instead of silently matching the vowels too
-          const operatorPos = this.i;
-          this.skipRawWhitespace();
-          if (!this.atEnd() && (this.src[this.i] === "-" || this.src[this.i] === "&")) {
-            const operator = this.src[this.i];
+          // Like ICU, '[[:L:]-[aeiou]]' is a difference and '&' an intersection, applied to
+          // everything accumulated so far in this set ('[a[b]-[a]]' leaves only 'b')
+          for (;;) {
+            const operatorPos = this.i;
+            this.skipRawWhitespace();
+            const operator = this.atEnd() ? "" : this.src[this.i];
+            if (operator !== "-" && operator !== "&") {
+              this.i = operatorPos;
+              break;
+            }
             this.i++;
             this.skipRawWhitespace();
-            if (!this.atEnd() && this.src[this.i] === "[") {
-              this.fail(
-                `set ${operator === "-" ? "difference" : "intersection"} '${operator}[' is not supported`,
-              );
+            if (this.atEnd() || this.src[this.i] !== "[") {
+              this.i = operatorPos;
+              break;
             }
+            this.i++;
+            const left = { alternatives, charTests, matchesStartOfString, matchesEndOfString };
+            const combined = combineSets(left, this.parseBracketExpression(), operator);
+            alternatives.splice(0, alternatives.length, ...combined.alternatives);
+            charTests.splice(0, charTests.length, ...combined.charTests);
+            matchesStartOfString = combined.matchesStartOfString;
+            matchesEndOfString = combined.matchesEndOfString;
           }
-          this.i = operatorPos;
           continue;
         }
         if (!this.atEnd() && this.src[this.i] === "{") {
@@ -806,10 +878,18 @@ class Parser {
           continue;
         }
         if (!this.atEnd() && this.src[this.i] === "$") {
-          // See AETHER_ATOM: a bare '$' inside a set counts as a member (so
-          // e.g. '[$]' alone isn't rejected as an empty set) but contributes
-          // no alternative and no charTest, so it never actually matches.
+          // ICU's "ether" member (U+FFFF), only right before ']': it matches no character, only
+          // zero-width at the edges of the text ('a } [a$]'), and it's the member that makes a
+          // negated set like '[^a]' match there too
           this.i++;
+          this.skipRawWhitespace();
+          if (this.atEnd() || this.src[this.i] !== "]") {
+            this.fail(
+              "'$' inside '[...]' is only allowed right before ']', as the end-of-text member",
+            );
+          }
+          matchesStartOfString = true;
+          matchesEndOfString = true;
           sawAnyMember = true;
           continue;
         }
@@ -868,8 +948,8 @@ class Parser {
       kind: "set",
       alternatives: [],
       charTests: [negatedTest],
-      matchesStartOfString: true,
-      matchesEndOfString: true,
+      matchesStartOfString: !matchesStartOfString,
+      matchesEndOfString: !matchesEndOfString,
     };
   }
 
@@ -924,6 +1004,77 @@ class Parser {
       matchesStartOfString: spec.matchesStartOfString,
       matchesEndOfString: spec.matchesEndOfString,
     };
+  }
+}
+
+// One entry per UTF-16 unit of a plain one-character atom; every other node (set, quantifier, group)
+// stands for itself, so like ICU's stand-ins it only ever equals itself
+function patternUnits(nodes: PatternNode[]): Array<string | PatternNode> {
+  return nodes.flatMap<string | PatternNode>(node =>
+    node.kind === "atom" && node.atom.kind === "char" && node.quantifier === "one"
+      ? node.atom.value.split("")
+      : [node],
+  );
+}
+
+interface RulePattern {
+  rule: CompiledRule;
+  units: Array<string | PatternNode>;
+  anteLength: number;
+  keyLength: number;
+}
+
+// ICU's TransliterationRule::masks: aligned at the key, r1 covers no more context than r2 on either
+// side and equals r2 there, so r1 always wins and r2 can never fire ('a > b; ab > c;'). Anchors only
+// count when both patterns are the same length: then '^a' doesn't mask 'a', but 'a' masks '^a'
+function masks(r1: RulePattern, r2: RulePattern): boolean {
+  const left = r1.anteLength;
+  const left2 = r2.anteLength;
+  const right = r1.units.length - left;
+  const right2 = r2.units.length - left2;
+  const equal = left <= left2 && r1.units.every((unit, k) => unit === r2.units[left2 - left + k]);
+  if (!equal) return false;
+  const { anchorStart: start, anchorEnd: end } = r1.rule;
+  const { anchorStart: start2, anchorEnd: end2 } = r2.rule;
+  if (left === left2 && right === right2 && r1.keyLength <= r2.keyLength) {
+    return (start === start2 && end === end2) || (!start && !end) || (start2 && end2);
+  }
+  return right < right2 || (right === right2 && r1.keyLength <= r2.keyLength);
+}
+
+// Like ICU's TransliterationRuleSet::freeze, a masked rule is an error. Only a rule made of plain
+// characters can mask another one, and it equals that rule from its own first key (or, with an
+// empty key, post-context) unit on, so earlier rules are binned by that unit. A rule with no key
+// or post-context at all ('a{} > x;') goes in every bin
+function checkRuleMasking(rules: CompiledRule[]): void {
+  const plainByIndexUnit = new Map<string, RulePattern[]>();
+  const plainWithoutIndexUnit: RulePattern[] = [];
+  for (const rule of rules) {
+    const pattern: RulePattern = {
+      rule,
+      units: patternUnits([...rule.ante, ...rule.key, ...rule.post]),
+      anteLength: patternUnits(rule.ante).length,
+      keyLength: patternUnits(rule.key).length,
+    };
+    const indexUnit = pattern.units[pattern.anteLength];
+    const candidates = [
+      ...(typeof indexUnit === "string" ? (plainByIndexUnit.get(indexUnit) ?? []) : []),
+      ...plainWithoutIndexUnit,
+    ];
+    const masking = candidates.find(earlier => masks(earlier, pattern));
+    if (masking !== undefined) {
+      throw new RBTParseError(
+        `RBT parse error: rule "${masking.rule.source}" masks the later rule "${rule.source}", which can never match`,
+      );
+    }
+    if (!pattern.units.every(unit => typeof unit === "string")) continue;
+    if (indexUnit === undefined) {
+      plainWithoutIndexUnit.push(pattern);
+    } else {
+      const bin = plainByIndexUnit.get(indexUnit as string);
+      if (bin === undefined) plainByIndexUnit.set(indexUnit as string, [pattern]);
+      else bin.push(pattern);
+    }
   }
 }
 
@@ -1102,24 +1253,19 @@ function atomMatchLengthBackward(atom: MatchAtom, text: string[], posEnd: number
   return best;
 }
 
-function atomMatchesZeroWidthAt(atom: MatchAtom, pos: number, textLength: number): boolean {
-  if (atom.kind === "char") return false;
-  return (
-    (atom.matchesStartOfString && pos === 0) || (atom.matchesEndOfString && pos === textLength)
-  );
-}
-
+// Like ICU, a set matches zero-width only at the edge it runs into: forward (key, post-context) at
+// the end of the string, backward (ante-context) at the start ('[:^L:] > X;' leaves 'A' alone)
 function tryMatchForward(atom: MatchAtom, text: string[], pos: number): number | null {
   const consumed = atomMatchLengthForward(atom, text, pos);
   if (consumed !== null) return consumed;
-  if (atomMatchesZeroWidthAt(atom, pos, text.length)) return 0;
+  if (atom.kind === "set" && atom.matchesEndOfString && pos === text.length) return 0;
   return null;
 }
 
 function tryMatchBackward(atom: MatchAtom, text: string[], posEnd: number): number | null {
   const consumed = atomMatchLengthBackward(atom, text, posEnd);
   if (consumed !== null) return consumed;
-  if (atomMatchesZeroWidthAt(atom, posEnd, text.length)) return 0;
+  if (atom.kind === "set" && atom.matchesStartOfString && posEnd === 0) return 0;
   return null;
 }
 
@@ -1279,12 +1425,14 @@ function findFirstMatch(text: string[], cursor: number, rules: CompiledRule[]): 
         ? { length: 0, captures: NO_CAPTURES }
         : matchSequenceBackward(text, cursor, rule.ante);
     if (anteOutcome === null) continue;
+    if (rule.anchorStart && cursor - anteOutcome.length !== 0) continue;
 
     const postOutcome =
       rule.post.length === 0
         ? { length: 0, captures: NO_CAPTURES }
         : matchSequenceForward(text, cursor + keyOutcome.length, rule.post);
     if (postOutcome === null) continue;
+    if (rule.anchorEnd && cursor + keyOutcome.length + postOutcome.length !== text.length) continue;
 
     let captures: ReadonlyMap<number, string[]> = NO_CAPTURES;
     if (
@@ -1310,29 +1458,19 @@ function runPass(input: string, rules: CompiledRule[]): string {
   const text: string[] = Array.from(input);
   let cursor = 0;
 
-  const maxSteps = Math.max(100_000, text.length * 200);
-  let steps = 0;
+  // Like ICU's RuleBasedTransliterator, a pass gives up after 16 steps per UTF-16 unit of its input
+  // and leaves the rest untouched, so a rule that never moves the cursor ('a >| a;', '[ab]* > ;')
+  // stops instead of hanging
+  const loopLimit = Math.min(input.length * 16, 0x10000000);
 
-  while (cursor < text.length) {
-    if (++steps > maxSteps) {
-      throw new RBTRuntimeError(
-        "RBT: a pass did not terminate within the step budget. This usually means a rule's " +
-          "'|' cursor placement never makes forward progress (e.g. a rule that rewrites text " +
-          "to something it, or another rule, immediately rewrites back at the same position).",
-      );
-    }
-
+  for (let loopCount = 0; cursor < text.length && loopCount <= loopLimit; loopCount++) {
     const found = findFirstMatch(text, cursor, rules);
     if (found) {
       const { rule, keyConsumed, captures } = found;
       const { chars: replacementChars, cursorOffset: resolvedCursorOffset } =
         resolveReplacementWithCursor(rule.replacement, rule.cursorOffset, captures);
       text.splice(cursor, keyConsumed, ...replacementChars);
-      if (resolvedCursorOffset !== null) {
-        cursor += resolvedCursorOffset;
-      } else {
-        cursor += keyConsumed === 0 ? replacementChars.length + 1 : replacementChars.length;
-      }
+      cursor += resolvedCursorOffset ?? replacementChars.length;
     } else {
       cursor += 1;
     }

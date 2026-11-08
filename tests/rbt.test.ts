@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { RBT_JS, RBTParseError, RBTRuntimeError } from "../src/helpers/rbt";
+import { RBT_JS, RBTParseError } from "../src/helpers/rbt";
 
 describe("RBT.fromRules — the exact usage example from the prompt", () => {
   it('transliterates "Example" to "Exemple" with the rule `a > e;`', () => {
@@ -276,9 +276,16 @@ describe("inside a [set], the six escapable symbols are literal even when writte
     expect(() => RBT_JS.fromRules("[*")).toThrow(RBTParseError);
   });
 
-  it("set difference and intersection between nested sets, which ICU supports, are rejected instead of read as a union", () => {
-    expect(() => RBT_JS.fromRules("[[:L:]-[aeiou]] > X;")).toThrow(/difference/);
-    expect(() => RBT_JS.fromRules("[[a-z] & [aeiou]] > X;")).toThrow(/intersection/);
+  it("set difference and intersection between nested sets work like ICU, applied to everything accumulated so far", () => {
+    expect(RBT_JS.fromRules("[[:L:]-[aeiou]] > X;").transliterate("bake Éa1")).toBe("XaXe Xa1");
+    expect(RBT_JS.fromRules("[[a-z] & [aeiou]] > X;").transliterate("bake XYZ")).toBe("bXkX XYZ");
+    expect(RBT_JS.fromRules("[a[b]-[a]] > X;").transliterate("abc")).toBe("aXc");
+    expect(RBT_JS.fromRules("[[a-z]-[aeiou]-[xyz]] > X;").transliterate("abexyz")).toBe("aXexyz");
+    expect(RBT_JS.fromRules("[^[a-z]-[aeiou]] > X;").transliterate("abe1")).toBe("XbXX");
+    expect(RBT_JS.fromRules("[[:L:]&[:Lu:]] > X;").transliterate("aBcD")).toBe("aXcX");
+    expect(RBT_JS.fromRules("[[a-z{ch}]-[{ch}]] > X;").transliterate("chab")).toBe("XXXX");
+    expect(RBT_JS.fromRules("[[{ch}c]&[a-z]] > X;").transliterate("chab")).toBe("Xhab");
+    expect(RBT_JS.fromRules("[[:^L:]&[:^Lu:]] { a > X;").transliterate("a ba")).toBe("X ba");
     expect(RBT_JS.fromRules("[[ab]-] > X;").transliterate("a-c")).toBe("XXc");
     expect(RBT_JS.fromRules("[[ab]c-d] > X;").transliterate("acde")).toBe("XXXe");
   });
@@ -361,32 +368,83 @@ describe("'&' is deliberately excluded from that relaxation: it remains reserved
   });
 });
 
-describe("a bare, unescaped '$' is reserved (ICU's 'aether' concept) rather than being made literal by this fix", () => {
-  it.each([
-    { name: "alone in a pattern, with no [...] involved at all", rules: "$ > c;", input: "$" },
-    { name: "alone inside a [set]", rules: "[$] > c;", input: "$" },
-  ])(
-    "$name: '$' parses without error but matches nothing at all — not a literal '$', not zero-width anywhere — so the input passes through completely untouched (and the set is not rejected as the empty '[]' set)",
-    ({ rules, input }) => {
-      expect(RBT_JS.fromRules(rules).transliterate(input)).toBe(input);
-    },
-  );
-
-  it("a literal, matchable '$' is still available via a backslash escape or as a {$} string", () => {
-    expect(RBT_JS.fromRules("\\$ > c;").transliterate("$")).toBe("c");
-    expect(RBT_JS.fromRules("[{$}] > c;").transliterate("$")).toBe("c");
+describe("a bare '$' is ICU's end-of-text anchor, or its 'ether' member inside a [set]", () => {
+  it("at the end of the left side it anchors the match to the end of the text, through any context", () => {
+    expect(RBT_JS.fromRules("a$ > c;").transliterate("aa")).toBe("ac");
+    expect(RBT_JS.fromRules("a $ > c;").transliterate("a")).toBe("c");
+    expect(RBT_JS.fromRules("a } b$ > c;").transliterate("abab")).toBe("abcb");
+    expect(RBT_JS.fromRules("a { b $ > c;").transliterate("abab")).toBe("abac");
+    expect(RBT_JS.fromRules("(a)$ > c;").transliterate("a")).toBe("c");
+    expect(RBT_JS.fromRules("$ > c;").transliterate("$")).toBe("$");
   });
 
-  it("mixed into a set alongside a real member, it contributes nothing — the set behaves exactly as if '$' were not there at all", () => {
+  it("anywhere else in a pattern it's an error, like ICU's variable references", () => {
+    for (const rules of [
+      "$? > c;",
+      "$+ > c;",
+      "$a > c;",
+      "$1 > c;",
+      "$ { a > c;",
+      "$$ > c;",
+      "($) > c;",
+      "a$b > c;",
+    ]) {
+      expect(() => RBT_JS.fromRules(rules), rules).toThrow(RBTParseError);
+    }
+  });
+
+  it("inside a [set], right before ']', it matches zero-width at the edges of the text", () => {
     expect(RBT_JS.fromRules("[a$] > X;").transliterate("a$")).toBe("X$");
+    expect(RBT_JS.fromRules("a } [$] > c;").transliterate("aba")).toBe("abc");
+    expect(RBT_JS.fromRules("a } [b$] > c;").transliterate("abac")).toBe("cbac");
+    expect(RBT_JS.fromRules("[a$] { b > c;").transliterate("bab")).toBe("cac");
+    expect(RBT_JS.fromRules("[a $] > X;").transliterate("a")).toBe("X");
+    expect(() => RBT_JS.fromRules("[$a] > c;")).toThrow(RBTParseError);
+    expect(() => RBT_JS.fromRules("[a$-z] > c;")).toThrow(RBTParseError);
   });
 
-  it("negating a set containing only '$' matches every real character, including a literal '$' in the input, since '$' itself contributed no positive members to negate", () => {
+  it("it's the member that makes negated sets match at the edges, so negating it takes that away", () => {
+    expect(RBT_JS.fromRules("[^a] { b > c;").transliterate("b")).toBe("c");
+    expect(RBT_JS.fromRules("[^a$] { b > c;").transliterate("b")).toBe("b");
+    expect(RBT_JS.fromRules("[^[:^L:]] { b > c;").transliterate("b")).toBe("b");
+    expect(RBT_JS.fromRules("[[:^L:]-[$]] { b > c;").transliterate("b")).toBe("b");
     expect(RBT_JS.fromRules("[^$] > X;").transliterate("q$")).toBe("XX");
   });
 
-  it("bare inside a (...) group too, for consistency with every other atom position", () => {
-    expect(RBT_JS.fromRules("($) > c;").transliterate("$")).toBe("$");
+  it("a literal '$' is available via a backslash escape, quotes or a {$} string", () => {
+    expect(RBT_JS.fromRules("\\$ > c;").transliterate("$")).toBe("c");
+    expect(RBT_JS.fromRules("'$' > c;").transliterate("$")).toBe("c");
+    expect(RBT_JS.fromRules("[{$}] > c;").transliterate("$")).toBe("c");
+  });
+});
+
+describe("a bare '^' is ICU's start-of-text anchor", () => {
+  it("before any pattern atom it anchors the match (after any ante-context) to the start of the text", () => {
+    expect(RBT_JS.fromRules("^a > c;").transliterate("aa")).toBe("ca");
+    expect(RBT_JS.fromRules("^a { b > c;").transliterate("abab")).toBe("acab");
+    expect(RBT_JS.fromRules("^ { a > c;").transliterate("aa")).toBe("ca");
+    expect(RBT_JS.fromRules("(^a) > c;").transliterate("aa")).toBe("ca");
+    expect(RBT_JS.fromRules("^a$ > c;").transliterate("a")).toBe("c");
+    expect(RBT_JS.fromRules("^a$ > c;").transliterate("aa")).toBe("aa");
+  });
+
+  it("after a pattern atom, twice, or in a replacement it's an error", () => {
+    for (const rules of [
+      "a ^ > c;",
+      "b ^a > c;",
+      "a { ^b > c;",
+      "^^a > c;",
+      "a > ^;",
+      "[a^] > c;",
+    ]) {
+      expect(() => RBT_JS.fromRules(rules), rules).toThrow(RBTParseError);
+    }
+  });
+
+  it("a literal '^' is available via a backslash escape, quotes or a {^} string", () => {
+    expect(RBT_JS.fromRules("\\^ > c;").transliterate("^")).toBe("c");
+    expect(RBT_JS.fromRules("'^' > c;").transliterate("^")).toBe("c");
+    expect(RBT_JS.fromRules("[{^}\\^] > c;").transliterate("^")).toBe("c");
   });
 });
 
@@ -406,8 +464,8 @@ describe("UnicodeSet character classes: `[abc] > d;`", () => {
       expected: "ZZb",
     },
     {
-      name: "'^' not in leading position is a literal set member, not negation",
-      rules: "[a^-] > Z;",
+      name: "an escaped '^' not in leading position is a literal set member, not negation",
+      rules: "[a\\^-] > Z;",
       input: "a^-b",
       expected: "ZZZb",
     },
@@ -695,12 +753,10 @@ describe("POSIX-style property classes: `[:Name:]`", () => {
         expect(RBT_JS.fromRules("[:^L:] > X;").transliterate("5")).toBe("X");
       });
 
-      it("falls back to a zero-width match at the true start when the character there is a letter", () => {
-        expect(RBT_JS.fromRules("[:^L:] > X;").transliterate("A")).toBe("XA");
-      });
-
-      it("a zero-width match pinned in place by `|` is caught by the step-budget guard rather than looping forever", () => {
-        expect(() => RBT_JS.fromRules("[:^L:] >| ;").transliterate("A")).toThrow(RBTRuntimeError);
+      it("matches zero-width only at the end of the string, like ICU: forward matching never sees the start", () => {
+        expect(RBT_JS.fromRules("[:^L:] > X;").transliterate("A")).toBe("A");
+        expect(RBT_JS.fromRules("[:^L:] > X;").transliterate("a-b c")).toBe("aXbXc");
+        expect(RBT_JS.fromRules("a [:^L:] > X;").transliterate("ba")).toBe("bX");
       });
     });
   });
@@ -994,15 +1050,16 @@ describe("quantifiers: `?`, `*`, `+`, and `(...)` grouping", () => {
         name: "is greedy: consumes the longest contiguous run",
         rules: "[ab]* > X;",
         input: "aabbc",
-        expected: "XXc",
+        // then it keeps matching empty before 'c' without moving the cursor, until the loop limit
+        expected: "X".repeat(81) + "c",
       },
     ])("$name", ({ rules, input, expected }) => {
       expect(RBT_JS.fromRules(rules).transliterate(input)).toBe(expected);
     });
 
-    it("as a standalone key, `*` vacuously matches every remaining gap once its greedy run ends, exactly like a real regex engine's global replace with a nullable pattern", () => {
-      expect(RBT_JS.fromRules("[ab]* > X;").transliterate("cde")).toBe("XcXdXe");
-      expect(RBT_JS.fromRules("[ab]* > X;").transliterate("c")).toBe("Xc");
+    it("as a standalone key, an empty `*` match never moves the cursor, so like ICU it repeats until the pass's loop limit (16 steps per UTF-16 unit, plus one) and leaves the rest untouched", () => {
+      expect(RBT_JS.fromRules("[ab]* > X;").transliterate("cde")).toBe("X".repeat(49) + "cde");
+      expect(RBT_JS.fromRules("[ab]* > X;").transliterate("c")).toBe("X".repeat(17) + "c");
     });
   });
 
@@ -1102,22 +1159,20 @@ describe("quantifiers: `?`, `*`, `+`, and `(...)` grouping", () => {
     });
   });
 
-  describe("a key that can match with zero width via a quantifier does not degenerate into an infinite insertion loop", () => {
-    it("the default (no explicit `|`) cursor advance is forced past at least one real character after a zero-width match, exactly as it already was for the pre-existing zero-width anchor feature", () => {
-      expect(RBT_JS.fromRules("[ab]* > X;").transliterate("cde")).toBe("XcXdXe");
+  describe("a rule that never moves the cursor stops at ICU's loop limit instead of hanging", () => {
+    it("deleting an empty match leaves the text as it was", () => {
+      expect(RBT_JS.fromRules("[ab]* >| ;").transliterate("c")).toBe("c");
     });
 
-    it("an explicit `|` that pins the cursor in place is still caught by the step-budget guard, since that safety net is unrelated to the automatic-advance fix above", () => {
-      expect(() => RBT_JS.fromRules("[ab]* >| ;").transliterate("c")).toThrow(RBTRuntimeError);
+    it("a '|' before a replacement that the same rule matches again stops with the text so far", () => {
+      expect(RBT_JS.fromRules("a >| a;").transliterate("a")).toBe("a");
+      expect(RBT_JS.fromRules("[:L:] > |X;").transliterate("ab")).toBe("Xb");
     });
 
-    it("the same thing happens with a quantified '$' (see AETHER_ATOM), and for the same reason: '?' and '*' both fall back to a zero-width success when the atom underneath can't match for real, and '$' can never match for real at any position", () => {
-      expect(RBT_JS.fromRules("$? > c;").transliterate("ab")).toBe("cacb");
-      expect(RBT_JS.fromRules("$* > c;").transliterate("ab")).toBe("cacb");
-    });
-
-    it("by contrast, '+' requires at least one real occurrence, which '$' can never provide, so a quantified '$+' never matches at all — unlike '?' and '*' above", () => {
-      expect(RBT_JS.fromRules("$+ > c;").transliterate("ab")).toBe("ab");
+    it("an empty key is allowed, like in ICU, and inserts at every position its contexts match", () => {
+      expect(RBT_JS.fromRules("a{} > b;").transliterate("aab")).toBe("ababb");
+      expect(RBT_JS.fromRules("^{} > c;").transliterate("ab")).toBe("cab");
+      expect(RBT_JS.fromRules("{} > b;").transliterate("ab")).toBe("b".repeat(33) + "ab");
     });
   });
 
@@ -1421,8 +1476,10 @@ describe("combinations across features", () => {
     it("declaration order is absolute: even a vacuous, zero-width match from an earlier rule pre-empts a real match a later rule would have made at the same position", () => {
       // "(ab)*" can match zero repetitions - a valid, empty match - and per ICU that still
       // counts as "the first matching rule" if it is declared first. It fires (inserting
-      // "LONG" and leaving "x" untouched), so "x > SHORT;" never gets a chance to run here.
-      expect(RBT_JS.fromRules("(ab)* > LONG; x > SHORT;").transliterate("x")).toBe("LONGx");
+      // "LONG" without moving past "x") until the loop limit, so "x > SHORT;" never runs here.
+      expect(RBT_JS.fromRules("(ab)* > LONG; x > SHORT;").transliterate("x")).toBe(
+        "LONG".repeat(17) + "x",
+      );
       // With the order swapped, "x > SHORT;" is checked first, matches for real, and wins.
       expect(RBT_JS.fromRules("x > SHORT; (ab)* > LONG;").transliterate("x")).toBe("SHORT");
     });
@@ -1731,7 +1788,7 @@ describe("rule precedence when several rules could match at the same position", 
   it.each([
     {
       name: "the first declared rule wins even when a later rule's key would match more text",
-      rules: "c > C; ch > CH;",
+      rules: "[c] > C; ch > CH;",
       input: "ch",
       expected: "Ch",
     },
@@ -1743,7 +1800,7 @@ describe("rule precedence when several rules could match at the same position", 
     },
     {
       name: "a context-free rule wins immediately when declared first, even though a later rule is more specific about its surroundings",
-      rules: "a > X; a } b > Y;",
+      rules: "[a] > X; a } b > Y;",
       input: "ab",
       expected: "Xb",
     },
@@ -1755,25 +1812,64 @@ describe("rule precedence when several rules could match at the same position", 
     },
     {
       name: "with two otherwise-identical rules, the earlier declaration wins",
-      rules: "a > X; a > Y;",
+      rules: "[a] > X; a > Y;",
       input: "a",
       expected: "X",
     },
     {
-      name: "a rule whose key starts with a zero-width anchor atom still only wins because it is declared first, not because it has more atoms",
-      rules: "[:^L:]a > B; a > A;",
+      name: "a rule whose key ends with a zero-width anchor atom still only wins because it is declared first, not because it has more atoms",
+      rules: "a[:^L:] > B; a > A;",
       input: "a",
       expected: "B",
     },
     {
       name: "the same zero-width-anchor rule loses to an earlier, shorter rule once reordered, just like any other rule would",
-      rules: "a > A; [:^L:]a > B;",
+      rules: "[a] > A; a[:^L:] > B;",
       input: "a",
       expected: "A",
     },
   ])("$name", ({ rules, input, expected }) => {
     expect(RBT_JS.fromRules(rules).transliterate(input)).toBe(expected);
   });
+});
+
+describe("like ICU, an earlier plain-character rule that masks a later rule is a parse error", () => {
+  it.each([
+    "a > X; a > Y;",
+    "c > C; ch > CH;",
+    "a > Y; a } b > X;",
+    "b > Y; a { b > X;",
+    "a > b;\na > c;",
+    "😀 > a; 😀b > c;",
+    "a > x; ^a > y;",
+    "a$ > x; ab > y;",
+    "a$ > x; a$ > y;",
+    "a$ > x; ^a$ > y;",
+    "^a > x; ^ c { a > y;",
+    "a{} > x; a{[bc]} > y;",
+    "> x; a > y;",
+  ])("%s", rules => {
+    expect(() => RBT_JS.fromRules(rules)).toThrow(/masks the later rule/);
+  });
+
+  it.each([
+    ["ab > c; a > b;", "ab", "c"],
+    ["a { b > X; b > Y;", "ab", "aX"],
+    ["a } b > X; a > Y;", "ab", "Xb"],
+    ["b > y; {} b > x;", "b", "y"],
+    ["^a > x; a > y;", "aa", "xy"],
+    ["a$ > x; a > y;", "aa", "yx"],
+    ["^a$ > x; a$ > y;", "a", "x"],
+    ["(a) > b; a > c;", "a", "b"],
+    ["a > b; (a) > c;", "a", "b"],
+    ["[a] > X; a > Y;", "a", "X"],
+    ["a > b; ::Null; ab > c;", "ab", "bb"],
+  ])(
+    "%s does not mask (sets and groups never do, nor rules in a later pass)",
+    (rules, input, expected) => {
+      expect(RBT_JS.fromRules(rules).transliterate(input)).toBe(expected);
+    },
+  );
 });
 
 describe("parse and runtime errors are raised clearly for malformed input", () => {
@@ -1797,16 +1893,10 @@ describe("parse and runtime errors are raised clearly for malformed input", () =
       mustInclude: "missing ';'",
     },
     {
-      name: "a rule with an empty key",
-      fn: () => RBT_JS.fromRules("a{}>b;"),
+      name: "an earlier plain rule that masks a later one, which could never match",
+      fn: () => RBT_JS.fromRules("a > X; a } b > Y;"),
       errorClass: RBTParseError,
-      mustInclude: "empty key",
-    },
-    {
-      name: "a `|` placement that never makes forward progress, instead of hanging forever",
-      fn: () => RBT_JS.fromRules("a >| a;").transliterate("a"),
-      errorClass: RBTRuntimeError,
-      mustInclude: "step budget",
+      mustInclude: 'rule "a > X;" masks the later rule "a } b > Y;"',
     },
   ])("$name", ({ fn, errorClass, mustInclude }) => {
     expect(fn).toThrow(errorClass);
