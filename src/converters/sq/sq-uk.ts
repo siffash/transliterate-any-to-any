@@ -5,10 +5,11 @@ export const sqUk = async (text: Text) => {
   const { sqLatnFinalERules } = await import("data/sq/sq-latn_final-e.rules");
   const { sqLatnLRules } = await import("data/sq/sq-latn_l.rules");
   const { sqLatnRules } = await import("data/sq/sq-latn.rules");
+  const { latnUkHiatusRules } = await import("data/latn/latn-uk_hiatus.rules");
   const { latnUkRules } = await import("data/latn/latn-uk.rules");
 
   const transliterator = RBT.fromRules(
-    sqLatnFinalERules + sqLatnLRules + sqLatnRules + latnUkRules,
+    sqLatnFinalERules + sqLatnLRules + sqLatnRules + latnUkHiatusRules + latnUkRules,
   );
 
   if (typeof text === "string") {

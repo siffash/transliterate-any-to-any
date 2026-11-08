@@ -1,6 +1,8 @@
 export const latnHyRules = `
 ::Null;
 
+[iI] { [yY] } [^[:L:][:M:]] > ;
+
 Ǯ > Ջ;
 ǯ > ջ;
 

@@ -6,22 +6,22 @@ export const roLatnRules = `
 [^[:L:][:M:]] { i } [aoueiAOUEI] > y;
 [^[:L:][:M:]] { I } [aoueiAOUEI] > Y;
 
-c [hH] } [iI] [aouăâîAOUĂÂÎ] > k;
-C [hH] } [iI] [aouăâîAOUĂÂÎ] > K;
+c [hH] } [iI] [aouăâîəAOUĂÂÎƏ] > k;
+C [hH] } [iI] [aouăâîəAOUĂÂÎƏ] > K;
 
-[gG] { [hH] } [iI] [aouăâîAOUĂÂÎ] > ;
+[gG] { [hH] } [iI] [aouăâîəAOUĂÂÎƏ] > ;
 
-c [iI] } [oueăâîOUEĂÂÎ] > č;
-C [iI] } [oueăâîOUEĂÂÎ] > Č;
+c [iI] } [oueăâîəOUEĂÂÎƏ] > č;
+C [iI] } [oueăâîəOUEĂÂÎƏ] > Č;
 
-g [iI] } [oueăâîOUEĂÂÎ] > ǯ;
-G [iI] } [oueăâîOUEĂÂÎ] > Ǯ;
+g [iI] } [oueăâîəOUEĂÂÎƏ] > ǯ;
+G [iI] } [oueăâîəOUEĂÂÎƏ] > Ǯ;
 
-g [eE] } [aouăâîAOUĂÂÎ] > ǯ;
-G [eE] } [aouăâîAOUĂÂÎ] > Ǯ;
+g [eE] } [aouăâîəAOUĂÂÎƏ] > ǯ;
+G [eE] } [aouăâîəAOUĂÂÎƏ] > Ǯ;
 
-c [eE] } [aouăâîAOUĂÂÎ] > č;
-C [eE] } [aouăâîAOUĂÂÎ] > Č;
+c [eE] } [aouăâîəAOUĂÂÎƏ] > č;
+C [eE] } [aouăâîəAOUĂÂÎƏ] > Č;
 
 c [hH] } [eiyEIY] > k;
 C [hH] } [eiyEIY] > K;

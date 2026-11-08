@@ -1,6 +1,8 @@
 export const latnAzRules = `
 ::Null;
 
+[iI] { [yY] } [^[:L:][:M:]] > ;
+
 [:Lu:] { Ŋ > NG;
 Ŋ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > NG;
 Ŋ } [:Lu:] > NG;
@@ -98,6 +100,4 @@ w > v;
 [^[:L:][:M:]] { Ğ > Q;
 [aıouAIOU] { q } [aıouAIOU] > ğ;
 [aıouAIOU] { Q } [aıouAIOU] > Ğ;
-[eəiöüEƏİÖÜ] { k } [eəiöüEƏİÖÜ] > y;
-[eəiöüEƏİÖÜ] { K } [eəiöüEƏİÖÜ] > Y;
 `;

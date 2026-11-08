@@ -22,6 +22,7 @@ export const latnLtRules = `
 ::Null;
 
 [Čč] { [Čč] > ;
+[Đđ] { [Đđ] > ;
 [Dd] [Žž] { [Dd] [Žž] > ;
 
 Þ > T;

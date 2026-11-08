@@ -10,29 +10,6 @@ export const jaLatnRules = `
 ８ > 8;
 ９ > 9;
 
-以 > i;
-予 > yo;
-[亡剖] > bo;
-[交勾] > ko;
-企 > ki;
-伺 > shi;
-侶 > ryo;
-促 > soku;
-[俸倣] > ho;
-倹 > ken;
-偶 > gu;
-備 > bi;
-傲 > go;
-傾 > kei;
-冗 > jo;
-凡 > bon;
-刹 > sacu;
-剥 > haku;
-励 > rei;
-劾 > gai;
-匿 > toku;
-受 > ju;
-
 ::Null;
 
 [[:Hiragana:][:Katakana:][:Han:]ー] > ;
@@ -51,8 +28,6 @@ export const jaLatnRules = `
 
 ::Null;
 
-[aeiou] { g } [aeiouy] > ŋ;
-
 tch } e > čč;
 cch } e > čč;
 tch > ćć;
@@ -61,8 +36,8 @@ ssh > šš;
 sh > š;
 ch } e > č;
 ch > ć;
-n } i > ń;
 ny > ń;
+jj } e > ǯǯ;
 j } e > ǯ;
 j > đ;
 e { i > j;
