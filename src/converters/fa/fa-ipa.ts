@@ -12,8 +12,10 @@ export const faIpaUvular = async <T = Text>(text: Text): Promise<T> => {
   const transliterator = RBT.fromRules(faIpaRules);
   const normalizer = RBT.fromRules(faNormRules);
 
-  // Arabic spells an initial i- with a hamza below (إبراهيم), the map with a plain alef (ابراهیم)
-  const lookup = (word: string) => faIpaMap[word] ?? faIpaMap[word.replace(/^إ/, "ا")];
+  // Arabic spells an initial i- with a hamza below (إبراهيم), the map with a plain alef (ابراهیم);
+  // most map keys come from Wikidata labels, which drop the ZWNJ of compounds (خرم‌آباد → خرمآباد)
+  const lookup = (word: string) =>
+    faIpaMap[word] ?? faIpaMap[word.replace(/^إ/, "ا")] ?? faIpaMap[word.replaceAll("\u200c", "")];
 
   // A word missing from the map gets its unwritten vowels back, most often æ (اسلامی → ʔæslɒmi, هشتپر → hæʃtæpɾ)
   const isConsonant = (segment: string) => /\p{L}/u.test(segment) && !/[ɒæeoiu]/.test(segment);
@@ -27,7 +29,14 @@ export const faIpaUvular = async <T = Text>(text: Text): Promise<T> => {
       word.includes("\u200c") && !lookup(word)
         ? word
             .split("\u200c")
-            .map((part, i) => (i ? toIpa(part).replace(/^ʔ/, "") : toIpa(part)))
+            // a compound's second part الله is -ollah (حجت‌الله → hod͡ʒd͡ʒætollɒh)
+            .map((part, i) =>
+              i
+                ? toIpa(part)
+                    .replace(/^ʔ/, "")
+                    .replace(/^æll[ɒæ]ː?h/, "ollɒh")
+                : toIpa(part),
+            )
             .join("")
         : toIpa(word),
     );

@@ -5,9 +5,12 @@ export const faFi = async (text: Text) => {
   const { ipaGemTRules } = await import("data/ipa/ipa_gemt.rules");
   const { faIpa } = await import("converters/fa/fa-ipa");
   const { faIpaARules } = await import("data/fa/fa-ipa_a.rules");
+  const { faIpaEhRules } = await import("data/fa/fa-ipa_eh.rules");
   const { ipaFiRules } = await import("data/ipa/ipa-fi.rules");
 
-  const transliterator = RBT.fromRules(ipaGemTRules + faIpaARules + ipaFiRules + "::Title;");
+  const transliterator = RBT.fromRules(
+    ipaGemTRules + faIpaARules + faIpaEhRules + ipaFiRules + "::Title;",
+  );
 
   if (typeof text === "string") {
     const ipa = await faIpa<string>(text);
