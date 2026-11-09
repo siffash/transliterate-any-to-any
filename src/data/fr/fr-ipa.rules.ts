@@ -53,8 +53,8 @@ o [nm] } [^aàâäæeéèêëiîïoôœuûüùynm] > ɔ̃;
 ian } [^aàâäæeéèêëiîïoôœuûüùynm] > jɑ̃;
 ean } [^aàâäæeéèêëiîïoôœuûüùynm] > ɑ̃;
 [ae] [nm] } [^aàâäæeéèêëiîïoôœuûüùynm] > ɑ̃;
-[iy] [nm] } [^aàâäæeéèêëiîïoôœuûüùynm] > ɛ̃;
 [iy] m } [cdfgjklqrstvwxz] > im;
+[iy] [nm] } [^aàâäæeéèêëiîïoôœuûüùynm] > ɛ̃;
 
 ault } [^[:L:][:M:]] > o;
 eot } [^[:L:][:M:]] > o;
