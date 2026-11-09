@@ -3,8 +3,7 @@ export const deIpaKoRules = `
 
 ŋ } [aeiouyøɛɪɔʊœʏəɐɚ] > ŋɡ;
 d } vɪ [çk] > t;
-ç } [aeiouyøɛɪɔʊœʏəɐɚ] > h;
-ç > hi;
 ə > e;
-[ɐɚ] > ʌ;
+[^[:L:][:M:]] { j } [øœyʏ] > ;
+[nm] { ː > ;
 `;

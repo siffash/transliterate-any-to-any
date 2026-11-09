@@ -16,12 +16,9 @@ export const enKo = async (text: Text) => {
   } = await import("helpers/normalizeEnIpa");
   const { enIpaOuRules } = await import("data/en/en-ipa_ou.rules");
   const { enIpaKoRules } = await import("data/en/en-ipa_ko.rules");
-  const { enIpaKoBatchimRules } = await import("data/en/en-ipa_ko-batchim.rules");
   const { ipaKoRules } = await import("data/ipa/ipa-ko.rules");
 
-  const transliterator = RBT.fromRules(
-    enIpaOuRules + enIpaKoRules + enIpaKoBatchimRules + ipaKoRules,
-  );
+  const transliterator = RBT.fromRules(enIpaOuRules + enIpaKoRules + ipaKoRules);
 
   if (typeof text === "string") {
     const ipa = await enIpa<string>(

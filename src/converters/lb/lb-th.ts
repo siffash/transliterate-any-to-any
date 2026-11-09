@@ -14,7 +14,7 @@ export const lbTh = async (text: Text) => {
   const frenchTransliterator = RBT.fromRules(frIpaThRules);
   // French words get the same Thai reading as fr → th
   const frenchIpa = async (words: string[]) =>
-    (await frIpa<string[]>(words, false, false, false, true, true)).map(ipa =>
+    (await frIpa<string[]>(words, { keepSchwa: true, velarNasals: true })).map(ipa =>
       frenchTransliterator.transliterate(ipa),
     );
 

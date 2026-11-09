@@ -213,6 +213,16 @@ export const bgRestoreRules: RestoreIpaRule[] = [
   { ipaCharToBeReplaced: "əm$", lettersToRestore: { om: "əm" } },
 ];
 
+// Extra restore for Cyrillic targets and Serbian: a spelled "z" is "ц" (Шварц, Кац, Фицджеральд), which marks it off
+// from a spelled "ts" (Уотсон, Робертс), and a final "-ia" is "-ия" (Джулия, Вирджиния)
+export const cyrlRestoreRules: RestoreIpaRule[] = [
+  ...syllabicLRestoreRules,
+  { ipaCharToBeReplaced: "jə$", lettersToRestore: { ia: "ia" } },
+  { ipaCharToBeReplaced: "ts", lettersToRestore: { tz: "t͡s", zz: "t͡s", z: "t͡s" } },
+  // Washington keeps its traditional "в" (Вашингтон, Vašington), which the "w" rules would give as "у"/"во"
+  { ipaCharToBeReplaced: "^wɑʃ", lettersToRestore: { wash: "vɑʃ" } },
+];
+
 // Restore "o" from a strut vowel (London Лондон), skipped by Korean, which writes it "어" (런던, 더글러스)
 export const oStrutRestoreRules: RestoreIpaRule[] = [
   { ipaCharToBeReplaced: "ʌ", lettersToRestore: { o: "ɔ" } },
@@ -281,6 +291,8 @@ export const koVowelRestoreRules: RestoreIpaRule[] = [
   { ipaCharToBeReplaced: "əɫd$", lettersToRestore: { ald: "əɫd", old: "əɫd" } },
   { ipaCharToBeReplaced: "əns$", lettersToRestore: { ance: "əns", ence: "əns" } },
   { ipaCharToBeReplaced: "ənt$", lettersToRestore: { ant: "ənt" } },
+  { ipaCharToBeReplaced: "ʃət$", lettersToRestore: { shot: "ʃɔt" } },
+  { ipaCharToBeReplaced: "ət$", lettersToRestore: { otte: "ət", ott: "ət", ot: "ət" } },
   { ipaCharToBeReplaced: "jəɫ", lettersToRestore: { iel: "jəɫ" } },
   { ipaCharToBeReplaced: ["uəɫ", "uɫ"], lettersToRestore: { uel: "uəɫ" } },
   { ipaCharToBeReplaced: "kw", lettersToRestore: { qu: "kʷ" } },
@@ -314,6 +326,8 @@ export const normalizeEnIpa = (
   skippedRules: RestoreIpaRule[] = [],
 ): string => {
   const rules: RestoreIpaRule[] = [
+    // phonemize splits the "ee" of some names into two vowels (Tees ˈtiɪz, Lees ɫəɪz)
+    { ipaCharToBeReplaced: ["iɪ", "əɪ"], lettersToRestore: { ee: "iː" } },
     // Restore all double letters
     { ipaCharToBeReplaced: "ɑ", lettersToRestore: { aa: "aː" } },
     { ipaCharToBeReplaced: "i", lettersToRestore: { ee: "iː" } },
@@ -340,6 +354,8 @@ export const normalizeEnIpa = (
     // (Samuel, Emanuel, Gabriel); phonemize drops the schwa of Samuel and Lemuel altogether
     ...uelRestoreRules,
     { ipaCharToBeReplaced: "iəɫ", lettersToRestore: { iel: "ieɫ" } },
+    // phonemize reduces an initial "ald" it does not know (Aldershot, Alderney), which reads "ɔɫd" like Alder and Aldridge
+    { ipaCharToBeReplaced: "^əɫd", lettersToRestore: { ald: "ɔɫd" } },
     // Restore "o"
     { ipaCharToBeReplaced: ["ɑ", "ə"], lettersToRestore: { o: "ɔ" } },
     ...oStrutRestoreRules,
@@ -398,6 +414,8 @@ export const normalizeEnIpa = (
     { ipaCharToBeReplaced: "ɛ", lettersToRestore: { ea: "ɛ" } },
     // Restore "ai"
     { ipaCharToBeReplaced: "ɛ", lettersToRestore: { ai: "ai" } },
+    // A final "-up" keeps its strut vowel, which the "u" restore would take (Gallup Гэллап, ギャラップ, 갤럽)
+    { ipaCharToBeReplaced: "əp$", lettersToRestore: { up: "ʌp" } },
     // Restore "u"
     { ipaCharToBeReplaced: ["w", "ə"], lettersToRestore: { u: "u" } },
     // Restore "i"

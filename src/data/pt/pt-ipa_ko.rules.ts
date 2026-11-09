@@ -3,4 +3,5 @@ export const ptIpaKoRules = `
 
 ɐ̃ { u̯ > ;
 ẽ { i̯ > ;
+w } [aeiouɐɛɔəɨɑɪʊ] > u;
 `;

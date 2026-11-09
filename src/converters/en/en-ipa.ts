@@ -15,12 +15,18 @@ export const enIpa = async <T = Text>(
   const { enIpaRules } = await import("data/en/en-ipa.rules");
 
   const transliterator = RBT.fromRules(enIpaRules);
+  const IRISH_O = /^o’(\p{Lu}.*)$/iu;
 
   // toIPA looks each word's language up in a plain object, so "constructor" finds
   // Object.prototype.constructor and throws: such words go to the English G2P directly
-  const predict = async (word: string) => {
+  const predict = async (word: string): Promise<string> => {
     // phonemize reads the Irish O' as /oʊ/ (O'Hara → Оухара, オウハラ), but O’Hara like Ohara (Охара, オハラ, 奥哈拉)
     word = word.replaceAll("’", "'").replace(/^(o)'(?=\p{L})/iu, "$1’");
+    // and joined with a capitalized name it misreads the name (O'Brien /ˈɑbɹin/, O'Reilly /ˈɑɹeɪɫi/), so the name is read alone
+    const irish = word.match(IRISH_O);
+    if (irish) {
+      return "ɔ" + (await predict(irish[1]));
+    }
     if (!(word.toLowerCase() in Object.prototype)) {
       return toIPA(word);
     }
@@ -31,9 +37,12 @@ export const enIpa = async <T = Text>(
   const convert = async (text: string) =>
     await wordSplitter(text, "en", async (word: string) => {
       const ipa = filterIpa(await predict(word), word, "en");
-      return transliterator.transliterate(
+      const converted = transliterator.transliterate(
         normalizeEnIpa(word, ipa, extraRestoreRules, skippedRestoreRules),
       );
+      // The apostrophe goes back after the spelling restores, which it would shift (O'Keeffe):
+      // Cyrillic targets keep it (О’Хара, О’Нил), the other IPA rules delete it
+      return IRISH_O.test(word.replaceAll("'", "’")) ? converted.replace(/^ɔ/u, "ɔ’") : converted;
     });
 
   if (typeof text === "string") {

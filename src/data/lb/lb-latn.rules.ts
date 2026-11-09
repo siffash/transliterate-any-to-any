@@ -3,6 +3,9 @@ export const lbLatnRules = `
 
 [[:L:][:M:]] { \\' } [[:L:][:M:]] > ’;
 
+I [eE] > I;
+i [eE] > i;
+
 D [sS] [cC] [hH] > Ǯ;
 d [sS] [cC] [hH] > ǯ;
 

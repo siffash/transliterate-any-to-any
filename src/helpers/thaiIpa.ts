@@ -71,14 +71,15 @@ const CONSONANT = /tɕʰ|tɕ|[pkt]ʰ|[bdfhklmnprstwjŋʔ]/g;
 const isOnset = (consonants: string[]) =>
   consonants.length <= 1 ||
   (consonants.length === 2 &&
-    /^(k|kʰ|p|pʰ|t|tʰ)$/.test(consonants[0]) &&
-    /^[rlw]$/.test(consonants[1]));
+    (/^kʰ?[rlw]$/.test(consonants.join("")) ||
+      /^pʰ?[rl]$/.test(consonants.join("")) ||
+      /^tʰ?r$/.test(consonants.join(""))));
 // th-ipa leaves some final stops aspirated (เทพ → tʰeːpʰ), which is still a possible syllable
 const isCoda = (consonant: string) => /^([ptk]ʰ?|[mnŋjwʔ])$/.test(consonant);
 
-// Whether an IPA reading is made of possible Thai syllables: onsets are one consonant or
-// k/kʰ/p/pʰ/t + r/l/w, codas one of p t k m n ŋ j w ʔ. th-ipa breaks this when it misses an
-// unwritten vowel (สวัสดี → swatdi, อุบล → upl)
+// Whether an IPA reading is made of possible Thai syllables: onsets are one consonant,
+// k/kʰ + r/l/w, p/pʰ + r/l or t/tʰ + r, codas one of p t k m n ŋ j w ʔ. th-ipa breaks this
+// when it misses an unwritten vowel (สวัสดี → swatdi, อุบล → upl, ถลาง → tʰlaːŋ)
 export const isThaiSyllabic = (ipa: string): boolean => {
   const parts = ipa
     .normalize("NFD")

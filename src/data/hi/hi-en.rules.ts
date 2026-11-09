@@ -147,6 +147,7 @@ a् > ;
 
 ::Null;
 
+{ a } [bcdfghjklmnpqrstvwxyz] h? ābād > a;
 v { a } tī [^[:L:][:M:]] > a;
 āv { a } rī [^[:L:][:M:]] > a;
 ey { a } r > a;

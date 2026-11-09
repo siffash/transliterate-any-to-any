@@ -6,17 +6,22 @@ export const frKo = async (text: Text) => {
   const { frIpaKoRules } = await import("data/fr/fr-ipa_ko.rules");
   const { ipaKoEzhRules } = await import("data/ipa/ipa-ko_ezh.rules");
   const { ipaKoFinalKpRules } = await import("data/ipa/ipa-ko_final-kp.rules");
+  const { frIpaKoHyphenRules } = await import("data/fr/fr-ipa_ko-hyphen.rules");
   const { ipaKoRules } = await import("data/ipa/ipa-ko.rules");
 
   const transliterator = RBT.fromRules(
-    frIpaKoRules + ipaKoEzhRules + ipaKoFinalKpRules + ipaKoRules,
+    frIpaKoRules + ipaKoEzhRules + ipaKoFinalKpRules + frIpaKoHyphenRules + ipaKoRules,
   );
 
   if (typeof text === "string") {
-    const ipa = await frIpa<string>(text, false, false, false, true);
+    const ipa = await frIpa<string>(text, { keepSchwa: true, velarNasals: true, finalIeu: true });
     return transliterator.transliterate(ipa);
   } else {
-    const ipaArray = await frIpa<string[]>(text, false, false, false, true);
+    const ipaArray = await frIpa<string[]>(text, {
+      keepSchwa: true,
+      velarNasals: true,
+      finalIeu: true,
+    });
     return ipaArray.map(ipa => transliterator.transliterate(ipa));
   }
 };

@@ -205,6 +205,7 @@ export const hiIpaRules = `
 
 ::Null;
 
+{ ə } [kɡŋɲʈɖɳnpbmjɾlʋʃʂsɦqxɣzʒɽfɭtd] [̪ʰʱ͡]* aːbaːd > ə;
 ʋ { ə } t̪ iː [^[:L:][:M:]] > ə;
 aː ʋ { ə } ɾ iː [^[:L:][:M:]] > ə;
 

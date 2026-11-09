@@ -4,6 +4,7 @@ export const frIpaJaRules = `
 [bdfgklmnpstvzʃʒʁ] { j } [ɛœ]̃ > i;
 [ɛœ]̃ > ã;
 [uø] } [^[:L:][:M:]] > uː;
+[dt] { ə > o;
 ə } [bdfgɡklmnpstvzʃʒʁɲŋ] [bdfgɡkmnpstvzʃʒɲŋ] > e;
 ə > u;
 [œø] > u;
@@ -13,6 +14,7 @@ export const frIpaJaRules = `
 ([aeiouyɛɔ]) } [ʁvzʒɲ] [^[:L:][:M:]] > $1ː;
 ([aeiouyɛɔ]) } vʁ [^[:L:][:M:]] > $1ː;
 ([aeiouyɛɔ]) } nu [^[:L:][:M:]] > $1ː;
+o } [bdfgɡklmnpstʃ] [^[:L:][:M:]] > oː;
 
 ::Null;
 

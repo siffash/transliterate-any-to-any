@@ -6,9 +6,10 @@ export const enHi = async (text: Text) => {
   const { syllabicLSchwaRestoreRules, geminateRestoreRules, geminateSingleRestoreRules } =
     await import("helpers/normalizeEnIpa");
   const { enIpaRetroflexRules } = await import("data/en/en-ipa_retroflex.rules");
+  const { enIpaHiRules } = await import("data/en/en-ipa_hi.rules");
   const { ipaHiRules } = await import("data/ipa/ipa-hi.rules");
 
-  const transliterator = RBT.fromRules(enIpaRetroflexRules + ipaHiRules);
+  const transliterator = RBT.fromRules(enIpaRetroflexRules + enIpaHiRules + ipaHiRules);
 
   if (typeof text === "string") {
     const ipa = await enIpa<string>(

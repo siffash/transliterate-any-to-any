@@ -18,7 +18,6 @@ sch > ɧ;
 stj > ɧ;
 skj > ɧ;
 sj > ɧ;
-sh > ɧ;
 dj > j;
 gj > j;
 hj > j;
@@ -45,8 +44,9 @@ rl > ɭ;
 rs > ʂ;
 
 ng > ŋ;
-enkø > ɛnɕø;
+nk } [øö] > nɕ;
 nk > ŋk;
+[^[:L:][:M:]] { gn > ɡn;
 gn > ŋn;
 
 sk } [eiyäö] > ɧ;
@@ -143,4 +143,10 @@ r > r;
 s > s;
 t > t;
 v > v;
+
+::Null;
+
+[aɑɛeiɪyʏøœʉɵuʊoɔæə] ː [bdfɡhjklmnprstvɕʂŋɧ]+ [aɑɛeiɪyʏøœʉɵuʊoɔæə] { ː } > ;
+[aɑɛeiɪyʏøœʉɵuʊoɔæə] ː? [bdfɡhjklmnprstvɕʂŋɧ]* [aɑɛeiɪyʏøœʉɵuʊoɔæə] { ː } [^[:L:][:M:]] > ;
+i { ː } [ɵʊu] s [^[:L:][:M:]] > ;
 `;

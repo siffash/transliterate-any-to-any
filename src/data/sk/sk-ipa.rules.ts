@@ -33,33 +33,33 @@ h } [^[:L:][:M:]] > x;
 dz > d͡z;
 dž > d͡ʒ;
 
-dia > d͡ʑɪa;
-die > d͡ʑɪɛ;
-diu > d͡ʑɪu;
-di > d͡ʑi;
-dí > d͡ʑiː;
-de > d͡ʑɛ;
+dia > dɪa;
+die > dɪɛ;
+diu > dɪu;
+di > di;
+dí > diː;
+de > dɛ;
 
-tia > t͡ɕɪa;
-tie > t͡ɕɪɛ;
-tiu > t͡ɕɪu;
-ti > t͡ɕi;
-tí > t͡ɕiː;
-te > t͡ɕɛ;
+tia > tɪa;
+tie > tɪɛ;
+tiu > tɪu;
+ti > ti;
+tí > tiː;
+te > tɛ;
 
-nia > ɲɪa;
-nie > ɲɪɛ;
-niu > ɲɪu;
-ni > ɲi;
-ní > ɲiː;
-ne > ɲɛ;
+nia > nɪa;
+nie > nɪɛ;
+niu > nɪu;
+ni > ni;
+ní > niː;
+ne > nɛ;
 
-lia > ʎɪa;
-lie > ʎɪɛ;
-liu > ʎɪu;
-li > ʎi;
-lí > ʎiː;
-le > ʎɛ;
+lia > lɪa;
+lie > lɪɛ;
+liu > lɪu;
+li > li;
+lí > liː;
+le > lɛ;
 
 ia > ɪa;
 ie > ɪɛ;

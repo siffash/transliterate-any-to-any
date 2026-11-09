@@ -19,7 +19,7 @@ export const lbIpa = async <T = Text>(
     typeof text === "string" ? [text] : text,
     lbIpaMap,
     frenchIpa ??
-      (async words => (await import("converters/fr/fr-ipa")).frIpa<string[]>(words, velarA)),
+      (async words => (await import("converters/fr/fr-ipa")).frIpa<string[]>(words, { velarA })),
     !!frenchIpa,
   );
 

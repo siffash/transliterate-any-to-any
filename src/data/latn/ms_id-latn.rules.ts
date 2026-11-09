@@ -1,6 +1,11 @@
 export const msIdLatnRules = `
 ::NFC;
 
+E [eE] > I;
+e [eE] > i;
+O [eE] > U;
+o [eE] > u;
+
 S [yhjYHJ] > Š;
 s [yhjYHJ] > š;
 

@@ -29,8 +29,8 @@ s [ktKT] [jJ] > š;
 S [cC] [hH] > Š;
 s [cC] [hH] > š;
 
-S [hjHJ] > Š;
-s [hjHJ] > š;
+S [jJ] > Š;
+s [jJ] > š;
 
 [TK] [jJ] > Ć;
 [tk] [jJ] > ć;
@@ -97,6 +97,14 @@ p [hH] > f;
 [Ll] { G } [AOUÅRaouår] > G;
 [Ll] { g } [AOUÅRaouår] > g;
 
+[^[:L:][:M:]] { K } [Ii] [Rr] [Uu] [Nn] [Aa] > K;
+[^[:L:][:M:]] { k } [Ii] [Rr] [Uu] [Nn] [Aa] > k;
+[^[:L:][:M:]] { K } [Ee] [Bb] [Nn] [Ee] > K;
+[^[:L:][:M:]] { k } [Ee] [Bb] [Nn] [Ee] > k;
+[^[:L:][:M:]] { K } [EIYÄÖÆØeiyäöæø] > Ć;
+[^[:L:][:M:]] { k } [EIYÄÖÆØeiyäöæø] > ć;
+[:L:] { K } [Öö] [Pp] [Ii] [Nn] [Gg] > Ć;
+[:L:] { k } [Öö] [Pp] [Ii] [Nn] [Gg] > ć;
 S [kK] } [EIYÄÖÆØeiyäöæø] > Š;
 s [kK] } [EIYÄÖÆØeiyäöæø] > š;
 C } [EIYÄÖÆØeiyäöæø] > S;

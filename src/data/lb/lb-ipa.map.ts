@@ -20,7 +20,7 @@ export const lbIpaMap: Record<string, string> = {
   christine: "kʁistin",
   corentin: "kɔʁɑntɛn",
   croissant: "kʁuasɑn",
-  geneviève: "ʒenviɛv",
+  geneviève: "ʒənəvjɛv",
   jacqueline: "ʒaklin",
   joséphine: "ʒɔzefin",
   librairie: "libʁɛʁi",

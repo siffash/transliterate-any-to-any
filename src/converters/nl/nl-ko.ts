@@ -7,10 +7,12 @@ export const nlKo = async (text: Text) => {
   const { ipaDevoiceDRules } = await import("data/ipa/ipa_devoice-d.rules");
   const { ipaDevoiceVRules } = await import("data/ipa/ipa_devoice-v.rules");
   const { ipaDevoiceZRules } = await import("data/ipa/ipa_devoice-z.rules");
+  const { nlIpaKoRules } = await import("data/nl/nl-ipa_ko.rules");
   const { ipaKoRules } = await import("data/ipa/ipa-ko.rules");
 
   const transliterator = RBT.fromRules(
     nlIpaRules +
+      nlIpaKoRules +
       ipaDevoiceBgRules +
       ipaDevoiceDRules +
       ipaDevoiceVRules +

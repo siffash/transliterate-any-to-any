@@ -95,6 +95,8 @@ z > c;
 
 j > y;
 J > Y;
+[aeouAEOU] { i } [aeouAEOU] > y;
+[aeouAEOU] { I } [aeouAEOU] > Y;
 
 h > ;
 H ([:L:]) >| &Any-Upper($1);

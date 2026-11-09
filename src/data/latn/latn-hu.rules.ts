@@ -26,9 +26,9 @@ NGNG > NNG;
 Ngng > Nng;
 ngng > nng;
 
-ḪḪ > CHCH;
-Ḫḫ > Chch;
-ḫḫ > chch;
+ḪḪ > HH;
+Ḫḫ > Hh;
+ḫḫ > hh;
 
 [:Lu:] { Ẑ > DZ;
 Ẑ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > DZ;
@@ -41,11 +41,8 @@ dZ > dZ;
 Dz > Dz;
 dz > dz;
 
-[:Lu:] { Ḫ > CH;
-Ḫ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > CH;
-Ḫ } [:Lu:] > CH;
-Ḫ > Ch;
-ḫ > ch;
+Ḫ > H;
+ḫ > h;
 
 Þ > T;
 þ > t;
@@ -95,10 +92,10 @@ ss > ssz;
 Đđ > Ggy;
 đđ > ggy;
 
-XX > CHCH;
-xX > chCH;
-Xx > Chch;
-xx > chch;
+XX > HH;
+xX > hH;
+Xx > Hh;
+xx > hh;
 
 ŃŃ > NNY;
 ńŃ > nNY;
@@ -128,14 +125,9 @@ xx > chch;
 Đ > Gy;
 đ > gy;
 
-[:Lu:] { X > CH;
-X } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > CH;
-X } [:Lu:] > CH;
-X > Ch;
-x > ch;
+X > H;
+x > h;
 
-Ń } [^[:L:][:M:]] > N;
-ń } [^[:L:][:M:]] > n;
 Ń } [Yy] > N;
 ń } [Yy] > n;
 [:Lu:] { Ń > NY;

@@ -58,9 +58,9 @@ G [uU] } [eiéèíEIÉÈÍïÏ] > G;
 s [sS] > s;
 S [sS] > S;
 
-[AEIOUÀÈÉÍÒÓÚÏÜ] { X } [AEIOUÀÈÉÍÒÓÚÏÜ] > KS;
-[aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] { X } [aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] > Ks;
-[aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] { x } [aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] > ks;
+[AEOUÀÈÉÒÓÚÜ] { X } [AEIOUÀÈÉÍÒÓÚÏÜ] > KS;
+[aeouAEOUàèéòóúÀÈÉÒÓÚüÜ] { X } [aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] > Ks;
+[aeouAEOUàèéòóúÀÈÉÒÓÚüÜ] { x } [aeiouAEIOUàèéíòóúÀÈÉÍÒÓÚïÏüÜ] > ks;
 
 x > š;
 X > Š;

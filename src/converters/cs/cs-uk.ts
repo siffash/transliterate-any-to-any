@@ -3,21 +3,21 @@ import { Text } from "types";
 export const csUk = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { csLatnRules } = await import("data/cs/cs-latn.rules");
-  const { csLatnNjRules } = await import("data/cs/cs-latn_nj.rules");
-  const { csLatnJeRules } = await import("data/cs/cs-latn_je.rules");
+  const { csSkLatnYRules } = await import("data/latn/cs_sk-latn_y.rules");
+  const { csSkLatnUkAdjRules } = await import("data/latn/cs_sk-latn_uk-adj.rules");
   const { csSkLatnPalatalRules } = await import("data/latn/cs_sk-latn_palatal.rules");
   const { latnUkRules } = await import("data/latn/latn-uk.rules");
   const { latnUkPalatalRules } = await import("data/latn/latn-uk_palatal.rules");
-  const { csUkRules } = await import("data/cs/cs-uk.rules");
+  const { latnUkHushingRules } = await import("data/latn/latn-uk_hushing.rules");
 
   const transliterator = RBT.fromRules(
-    csSkLatnPalatalRules +
-      csLatnNjRules +
-      csLatnJeRules +
+    csSkLatnUkAdjRules +
+      csSkLatnPalatalRules +
+      csSkLatnYRules +
       csLatnRules +
       latnUkPalatalRules +
       latnUkRules +
-      csUkRules,
+      latnUkHushingRules,
   );
 
   if (typeof text === "string") {

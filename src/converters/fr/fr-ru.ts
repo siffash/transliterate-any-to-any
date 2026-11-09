@@ -1,6 +1,6 @@
 import { Text } from "types";
 
-export const frRu = async (text: Text) => {
+export const frRu = async (text: Text, spelledEy = false) => {
   const { RBT } = await import("helpers/rbt");
   const { frIpa } = await import("converters/fr/fr-ipa");
   const { frIpaCyrlRules } = await import("data/fr/fr-ipa_cyrl.rules");
@@ -16,10 +16,18 @@ export const frRu = async (text: Text) => {
   );
 
   if (typeof text === "string") {
-    const ipa = await frIpa<string>(text);
+    const ipa = await frIpa<string>(text, {
+      finalIeu: true,
+      spelledEy,
+      doubleConsonants: "medial",
+    });
     return copyCase(text, keepElision(ipa, transliterator), "ru");
   } else {
-    const ipaArray = await frIpa<string[]>(text);
+    const ipaArray = await frIpa<string[]>(text, {
+      finalIeu: true,
+      spelledEy,
+      doubleConsonants: "medial",
+    });
     return ipaArray.map((ipa, i) => copyCase(text[i], keepElision(ipa, transliterator), "ru"));
   }
 };

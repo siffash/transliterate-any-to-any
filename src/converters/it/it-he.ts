@@ -2,10 +2,11 @@ import { Text } from "types";
 
 export const itHe = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
+  const { ipaWURules } = await import("data/ipa/ipa_w-u.rules");
   const { itIpaRules } = await import("data/it/it-ipa.rules");
   const { ipaHeRules } = await import("data/ipa/ipa-he.rules");
 
-  const transliterator = RBT.fromRules(itIpaRules + ipaHeRules);
+  const transliterator = RBT.fromRules(itIpaRules + ipaWURules + ipaHeRules);
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);

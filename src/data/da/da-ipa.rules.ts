@@ -28,6 +28,7 @@ oo > oː;
 uu > uː;
 
 a } [bcdfghjklmnpqrstvwxz] [aeiouyæøåː] > ɑː;
+[aeiouyæøåɑɔɛː] [bcdfghjklmnpqrstvwxzʁŋɕʰ]+ { e } [bcdfghjklmnpqrstvwxz] [aiouyæøå] > ə;
 e } [bcdfghjklmnpqrstvwxz] [aeiouyæøåː] > eː;
 i } [bcdfghjklmnpqrstvwxz] [aeiouyæøåː] > iː;
 o } [bcdfghjklmnpqrstvwxz] [aeiouyæøåː] > oː;

@@ -9,10 +9,10 @@ export const frJa = async (text: Text) => {
   const transliterator = RBT.fromRules(frIpaJaRules + ipaJaRules);
 
   if (typeof text === "string") {
-    const ipa = await frIpa<string>(text, false, true);
+    const ipa = await frIpa<string>(text, { japanese: true });
     return transliterator.transliterate(ipa);
   } else {
-    const ipaArray = await frIpa<string[]>(text, false, true);
+    const ipaArray = await frIpa<string[]>(text, { japanese: true });
     return ipaArray.map(ipa => transliterator.transliterate(ipa));
   }
 };

@@ -33,6 +33,7 @@ kk > ʰk;
 [aáeéiíoóuúyýæö{au}{ei}{ey}ɔʏœː] { kn > ʰkn;
 [aáeéiíoóuúyýæö{au}{ei}{ey}ɔʏœː] { km > ʰkm;
 
+ll } [dts] > l;
 ll > dl;
 rl > rdl;
 rn > rdn;

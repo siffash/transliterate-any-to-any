@@ -4,9 +4,13 @@ export const plUk = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { plLatnRules } = await import("data/pl/pl-latn.rules");
   const { plLatnCyrlRules } = await import("data/pl/pl-latn_cyrl.rules");
+  const { plLatnSoftRules } = await import("data/pl/pl-latn_soft.rules");
+  const { plLatnUkRules } = await import("data/pl/pl-latn_uk.rules");
   const { latnUkRules } = await import("data/latn/latn-uk.rules");
 
-  const transliterator = RBT.fromRules(plLatnCyrlRules + plLatnRules + latnUkRules);
+  const transliterator = RBT.fromRules(
+    plLatnCyrlRules + plLatnSoftRules + plLatnRules + plLatnUkRules + latnUkRules,
+  );
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);

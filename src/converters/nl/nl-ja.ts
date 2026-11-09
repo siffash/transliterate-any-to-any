@@ -3,6 +3,7 @@ import { Text } from "types";
 export const nlJa = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { nlIpaRules } = await import("data/nl/nl-ipa.rules");
+  const { nlIpaJaRules } = await import("data/nl/nl-ipa_ja.rules");
   const { ipaDevoiceBgRules } = await import("data/ipa/ipa_devoice-bg.rules");
   const { ipaDevoiceDRules } = await import("data/ipa/ipa_devoice-d.rules");
   const { ipaDevoiceVRules } = await import("data/ipa/ipa_devoice-v.rules");
@@ -11,6 +12,7 @@ export const nlJa = async (text: Text) => {
 
   const transliterator = RBT.fromRules(
     nlIpaRules +
+      nlIpaJaRules +
       ipaDevoiceBgRules +
       ipaDevoiceDRules +
       ipaDevoiceVRules +

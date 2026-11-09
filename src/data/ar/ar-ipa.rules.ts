@@ -81,8 +81,6 @@ export const arIpaRules = `
 ::Null;
 
 aa > a;
-aʔu > aː;
-aʔa > aː;
 ħħ > ħ;
 d͡ʒ [ˈ] d͡ʒ > ˈd͡ʒd͡ʒ;
 d͡ʒ [ˌ] d͡ʒ > ˌd͡ʒd͡ʒ;

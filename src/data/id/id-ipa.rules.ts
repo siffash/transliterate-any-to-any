@@ -2,6 +2,7 @@ export const idIpaRules = `
 ::Lower;
 ::NFC;
 
+oe > u;
 ch > tʃ;
 dj > dʒ;
 kh > x;
@@ -21,9 +22,6 @@ n } k > ŋ;
 n } g > ŋ;
 n } q > ŋ;
 n } x > ŋ;
-
-[aiueo] { k } [^[:L:][:M:]] > ʔ;
-[aiueo] { k } [bcdfghjklmnpqrstvwxyz] > ʔ;
 
 ai > aɪ;
 au > aʊ;

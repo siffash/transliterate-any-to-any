@@ -3,8 +3,9 @@ export const deIpaZhRules = `
 
 [^[:L:][:M:]] { luːdvɪç > 路德维希;
 bɛ { ʁ } [ɡk] > ;
-
 d } s > t;
+ʃ } [bdfɡgklmnpʁrtvwz] > 施;
+z } ən > s;
 a ː? d ː? a { m } [^[:L:][:M:]] > m;
 da { m } [^[:L:][:M:]] > n;
 [aɐɚəɛɪɔʊœʏeiouyø] ː? { ɐ } [^[:L:][:M:]] > ʁ;

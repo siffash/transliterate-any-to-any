@@ -35,23 +35,41 @@ const sameReading = (a: string, b: string) =>
 // split the way kuromoji would without that entry, but only if the parts
 // read the same as the whole (unlike 瀬戸内海: Setonaikai, not Setouchi Umi).
 // Kana always reads the same, so names without kanji stay whole (アメリカ, not アメ リカ).
+// An organization's short name inside a longer one is skipped when the rest still reads the
+// same (京都大学: 京都 大学, not the 京都大 of 京都大+学)
+const isOrganization = (features: string) => /^[^,]*,名詞,固有名詞,組織,/.test(features);
+
 const splitCompound = (tokenizer: Tokenizer, token: KuromojiToken): KuromojiToken[] => {
   const { surface_form: word, reading } = token;
   if ([...word].length < 4 || !reading || !/\p{scx=Han}/u.test(word)) return [token];
-  const lattice = tokenizer.getLattice(word);
-  lattice.nodes_end_at = lattice.nodes_end_at.map(nodes =>
-    nodes?.filter(node => !(node.type === "KNOWN" && node.length >= word.length)),
-  );
-  const parts = tokenizer.viterbi_searcher.search(lattice).map(node => {
-    const features =
-      node.type === "KNOWN" && tokenizer.token_info_dictionary.getFeatures(node.name);
-    return features
-      ? tokenizer.formatter.formatEntry(node.name, 0, node.type, features.split(","))
+  const split = (skipOrganizations: boolean) => {
+    const lattice = tokenizer.getLattice(word);
+    lattice.nodes_end_at = lattice.nodes_end_at.map(nodes =>
+      nodes?.filter(
+        node =>
+          !(
+            node.type === "KNOWN" &&
+            (node.length >= word.length ||
+              (skipOrganizations &&
+                isOrganization(tokenizer.token_info_dictionary.getFeatures(node.name) ?? "")))
+          ),
+      ),
+    );
+    const parts = tokenizer.viterbi_searcher.search(lattice).map(node => {
+      const features =
+        node.type === "KNOWN" && tokenizer.token_info_dictionary.getFeatures(node.name);
+      return features
+        ? tokenizer.formatter.formatEntry(node.name, 0, node.type, features.split(","))
+        : null;
+    });
+    return parts.length >= 2 &&
+      sameReading(parts.map(part => part?.reading ?? "").join(""), reading)
+      ? (parts as KuromojiToken[])
       : null;
-  });
-  if (parts.length < 2 || !sameReading(parts.map(part => part?.reading ?? "").join(""), reading))
-    return [token];
-  return (parts as KuromojiToken[]).flatMap(part => splitCompound(tokenizer, part));
+  };
+  const parts = split(true) ?? split(false);
+  if (!parts) return [token];
+  return parts.flatMap(part => splitCompound(tokenizer, part));
 };
 
 /**

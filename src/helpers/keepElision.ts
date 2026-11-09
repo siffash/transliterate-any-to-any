@@ -1,7 +1,7 @@
 // A French elision apostrophe (d'Artagnan, Jeanne d'Arc) stays in the IPA, but every IPA rule set deletes
 // ' and ’ (an ASCII stress mark), so it goes through them as a private-use character and comes back after.
-// ipa-tr doesn't devoice a d before it (d’Artanan).
-const ELIDED = /(?<=[\p{L}\p{M}])['’](?=\p{L})/gu;
+// ipa-tr doesn't devoice a d before it (d’Artanan). The Irish O' of English IPA comes before a stress mark (ɔ’ˈniɫ).
+const ELIDED = /(?<=[\p{L}\p{M}])['’](?=[ˈˌ]?\p{L})/gu;
 const MARK = "\uE000";
 
 /**
