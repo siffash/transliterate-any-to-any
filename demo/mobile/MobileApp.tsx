@@ -1,13 +1,16 @@
 import { useEffect, useMemo } from "react";
+import { Capacitor } from "@capacitor/core";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import PrivacyTipIcon from "@mui/icons-material/PrivacyTip";
 import { getTheme } from "../src/theme";
 import { useColorMode } from "../src/hooks/useColorMode";
+import { useSpeechSynthesis } from "../src/hooks/useSpeechSynthesis";
 import { LINKS } from "../src/constants";
 import { FOOTER_LINKS, OneScreenLayout, type FooterLink } from "../src/components/OneScreenLayout";
 import { OneScreenTransliterator } from "../src/components/OneScreenTransliterator";
 import { useKeyboardVisible } from "./hooks/useKeyboardVisible";
 import { useNativeSpeechRecognition } from "./hooks/useNativeSpeechRecognition";
+import { useNativeSpeechSynthesis } from "./hooks/useNativeSpeechSynthesis";
 import { copyText, hideSplashScreen, openExternal, setSystemBarsStyle } from "./native";
 
 const PRIVACY_LINK: FooterLink = {
@@ -18,6 +21,11 @@ const PRIVACY_LINK: FooterLink = {
 
 const links = [...FOOTER_LINKS.filter(link => link.href !== LINKS.support), PRIVACY_LINK];
 
+// The OS's text-to-speech, or the browser's one outside the app (e.g. in vite preview)
+const useTextToSpeech = Capacitor.isNativePlatform()
+  ? useNativeSpeechSynthesis
+  : useSpeechSynthesis;
+
 const openLink = (href: string) => {
   openExternal(href).catch(() => {});
 };
@@ -27,6 +35,7 @@ export function MobileApp() {
   const theme = useMemo(() => getTheme(mode), [mode]);
   const keyboardVisible = useKeyboardVisible();
   const speech = useNativeSpeechRecognition();
+  const tts = useTextToSpeech();
 
   useEffect(() => {
     setSystemBarsStyle(mode).catch(() => {});
@@ -46,7 +55,7 @@ export function MobileApp() {
         onOpenLink={openLink}
         keyboardOpen={keyboardVisible}
       >
-        <OneScreenTransliterator speech={speech} copyText={copyText} syncUrl={false} />
+        <OneScreenTransliterator speech={speech} tts={tts} copyText={copyText} syncUrl={false} />
       </OneScreenLayout>
     </ThemeProvider>
   );

@@ -22,7 +22,7 @@ npm run dev # or npm run build && npm run preview
 
 ## Mobile app (Android & iOS)
 
-The demo also ships as a native app built with [Capacitor](https://capacitorjs.com): the same React + MUI code runs in the system WebView (`mobile/`), with native plugins for voice input, the clipboard, links and the status bar. It's laid out for phones like the Google Translate app, on one screen (`src/components/OneScreenLayout.tsx`, `OneScreenTransliterator.tsx`), which the PWA also uses on phones, tablets and windows narrower than 1024px. Both share the transliterator's logic through `src/hooks/useTransliterator.ts`.
+The demo also ships as a native app built with [Capacitor](https://capacitorjs.com): the same React + MUI code runs in the system WebView (`mobile/`), with native plugins for voice input, text-to-speech, the clipboard, links and the status bar. It's laid out for phones like the Google Translate app, on one screen (`src/components/OneScreenLayout.tsx`, `OneScreenTransliterator.tsx`), which the PWA also uses on phones, tablets and windows narrower than 1024px. Both share the transliterator's logic through `src/hooks/useTransliterator.ts`.
 
 The app works offline right after install. Unlike the PWA, which downloads the library's chunks and the kuromoji dictionary as needed, the app contains all of them: `vite.mobile.config.ts` builds it into `dist-mobile/`, with the fonts bundled and kuromoji pointed at the app's own copy of the dictionary instead of jsDelivr.
 
@@ -58,4 +58,5 @@ Also:
 - `npm run dev:mobile` serves it with hot reload (it gets the dictionary from jsDelivr)
 - `npm run icons:mobile` regenerates the app's icons and splash screens from `public/favicon.svg`
 - voice input uses the OS speech recognizer, which may need a connection for some languages
+- the Listen buttons read the texts aloud with the OS's text-to-speech (Android's TextToSpeech, iOS's AVSpeechSynthesizer; the PWA uses the browser's Web Speech API); they're hidden without any voice, and disabled for a language without a voice on the device (e.g. Georgian or Kazakh on a stock Android)
 - phones stay in portrait, as the one-screen layout doesn't fit a phone held sideways (`android/…/MainActivity.java`, `ios/App/App/Info.plist`); tablets can rotate

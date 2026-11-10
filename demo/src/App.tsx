@@ -25,6 +25,7 @@ import { FOOTER_LINKS, OneScreenLayout } from "./components/OneScreenLayout";
 import { OneScreenTransliterator } from "./components/OneScreenTransliterator";
 import { useColorMode } from "./hooks/useColorMode";
 import { useSpeechRecognition } from "./hooks/useSpeechRecognition";
+import { useSpeechSynthesis } from "./hooks/useSpeechSynthesis";
 import { LINKS, SCATTER } from "./constants";
 
 // Phones and tablets (touch only, whatever their size) and narrow windows get
@@ -33,12 +34,14 @@ const ONE_SCREEN_QUERY = "(max-width: 1023.95px), (hover: none) and (pointer: co
 
 const copyText = (text: string) => navigator.clipboard.writeText(text);
 
-// With the browser's voice input and clipboard, and the text kept in the URL
+// With the browser's voice input, text-to-speech and clipboard, and the text kept in the URL
 const WebOneScreenTransliterator = ({ suppressErrors }: { suppressErrors: boolean }) => {
   const speech = useSpeechRecognition();
+  const tts = useSpeechSynthesis();
   return (
     <OneScreenTransliterator
       speech={speech}
+      tts={tts}
       copyText={copyText}
       syncUrl
       suppressErrors={suppressErrors}

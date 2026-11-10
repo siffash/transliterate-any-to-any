@@ -19,8 +19,10 @@ import SwapHorizIcon from "@mui/icons-material/SwapHoriz";
 import { multilingualTextStack } from "../theme";
 import { useTransliterator } from "../hooks/useTransliterator";
 import type { SpeechInput } from "../hooks/useSpeechRecognition";
+import type { SpeechOutput } from "../hooks/useSpeechSynthesis";
 import { MAX_CHARS } from "../constants";
 import { LanguageSelect } from "./LanguageSelect";
+import { ListenButton } from "./ListenButton";
 import { useReportResultShown } from "./OneScreenLayout";
 
 const panelSx = {
@@ -71,11 +73,13 @@ const spinnerSx = {
  */
 export const OneScreenTransliterator = ({
   speech,
+  tts,
   copyText,
   syncUrl,
   suppressErrors,
 }: {
   speech: SpeechInput;
+  tts: SpeechOutput;
   copyText: (text: string) => Promise<void>;
   syncUrl: boolean;
   suppressErrors?: boolean;
@@ -93,15 +97,20 @@ export const OneScreenTransliterator = ({
     charCount,
     micSupported,
     isListening,
+    ttsSupported,
+    sourceListen,
+    targetListen,
     sourceTextInputRef,
     handleSourceChange,
     handleSwap,
     handleClear,
     handleCopy,
     handleMicToggle,
+    handleSourceListen,
+    handleTargetListen,
     handleFromLang,
     handleToLang,
-  } = useTransliterator({ speech, copyText, syncUrl, suppressErrors });
+  } = useTransliterator({ speech, tts, copyText, syncUrl, suppressErrors });
 
   // The target panel appears as soon as a transliteration starts loading, and
   // stays while the next one loads (e.g. after a language change), so that the
@@ -183,26 +192,36 @@ export const OneScreenTransliterator = ({
             direction="row"
             sx={{ alignItems: "center", justifyContent: "space-between", px: 1.5, py: 0.5 }}
           >
-            <Tooltip
-              title={
-                micSupported
-                  ? isListening
-                    ? "Stop listening"
-                    : "Voice input"
-                  : "Voice input not supported on this device"
-              }
-            >
-              <span>
-                <IconButton
-                  onClick={handleMicToggle}
-                  disabled={!micSupported}
-                  color={isListening ? "error" : "default"}
-                  aria-label="Voice input"
-                >
-                  {micSupported ? <MicIcon /> : <MicOffIcon />}
-                </IconButton>
-              </span>
-            </Tooltip>
+            <Stack component="div" direction="row" sx={{ alignItems: "center" }}>
+              <Tooltip
+                title={
+                  micSupported
+                    ? isListening
+                      ? "Stop listening"
+                      : "Voice input"
+                    : "Voice input not supported on this device"
+                }
+              >
+                <span>
+                  <IconButton
+                    onClick={handleMicToggle}
+                    disabled={!micSupported}
+                    color={isListening ? "error" : "default"}
+                    aria-label="Voice input"
+                  >
+                    {micSupported ? <MicIcon /> : <MicOffIcon />}
+                  </IconButton>
+                </span>
+              </Tooltip>
+              {ttsSupported && (
+                <ListenButton
+                  lang={langFrom}
+                  {...sourceListen}
+                  onClick={handleSourceListen}
+                  ariaLabel="Listen to source text"
+                />
+              )}
+            </Stack>
             <Stack component="div" direction="row" spacing={1.5} sx={{ alignItems: "center" }}>
               <Typography variant="caption" color="text.secondary">
                 {charCount} / {MAX_CHARS}
@@ -243,8 +262,18 @@ export const OneScreenTransliterator = ({
             <Stack
               component="div"
               direction="row"
-              sx={{ alignItems: "center", justifyContent: "flex-end", px: 1.5, py: 0.5 }}
+              sx={{ alignItems: "center", justifyContent: "space-between", px: 1.5, py: 0.5 }}
             >
+              {ttsSupported ? (
+                <ListenButton
+                  lang={langTo}
+                  {...targetListen}
+                  onClick={handleTargetListen}
+                  ariaLabel="Listen to transliteration"
+                />
+              ) : (
+                <span />
+              )}
               <Tooltip title={copied ? "Copied!" : "Copy"}>
                 <span>
                   <IconButton

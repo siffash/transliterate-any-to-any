@@ -15,6 +15,7 @@
     "icons:mobile": "node mobile/resources/render.mjs && capacitor-assets generate --ios --android --assetPath mobile/resources --iconBackgroundColor \"#D9AE4F\" --iconBackgroundColorDark \"#D9AE4F\" --splashBackgroundColor \"#FFFFFF\" --splashBackgroundColorDark \"#1A1822\""
   },
   "dependencies": {
+    "@capacitor-community/text-to-speech": "^8.0.2",
     "@capacitor/android": "^8.5.3",
     "@capacitor/browser": "^8.0.5",
     "@capacitor/clipboard": "^8.0.1",

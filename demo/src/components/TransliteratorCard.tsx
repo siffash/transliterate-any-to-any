@@ -19,15 +19,18 @@ import MicOffIcon from "@mui/icons-material/MicOff";
 import SwapHorizIcon from "@mui/icons-material/SwapHoriz";
 import { multilingualTextStack } from "../theme";
 import { useSpeechRecognition } from "../hooks/useSpeechRecognition";
+import { useSpeechSynthesis } from "../hooks/useSpeechSynthesis";
 import { useTransliterator } from "../hooks/useTransliterator";
 import { MAX_CHARS } from "../constants";
 import { LanguageSelect } from "./LanguageSelect";
+import { ListenButton } from "./ListenButton";
 import { CodeBadge } from "./CodeBadge";
 
 const copyText = (text: string) => navigator.clipboard.writeText(text);
 
 export const TransliteratorCard = ({ suppressErrors = false }: { suppressErrors?: boolean }) => {
   const speech = useSpeechRecognition();
+  const tts = useSpeechSynthesis();
   const {
     langFrom,
     langTo,
@@ -41,15 +44,26 @@ export const TransliteratorCard = ({ suppressErrors = false }: { suppressErrors?
     charCount,
     micSupported,
     isListening,
+    ttsSupported,
+    sourceListen,
+    targetListen,
     sourceTextInputRef,
     handleSourceChange,
     handleSwap,
     handleClear,
     handleCopy,
     handleMicToggle,
+    handleSourceListen,
+    handleTargetListen,
     handleFromLang,
     handleToLang,
-  } = useTransliterator({ speech, copyText, syncUrl: true, suppressErrors });
+  } = useTransliterator({
+    speech,
+    tts,
+    copyText,
+    syncUrl: true,
+    suppressErrors,
+  });
 
   const textAreaSx = {
     px: 2,
@@ -135,26 +149,36 @@ export const TransliteratorCard = ({ suppressErrors = false }: { suppressErrors?
               direction="row"
               sx={{ alignItems: "center", justifyContent: "space-between", px: 1.5, py: 1 }}
             >
-              <Tooltip
-                title={
-                  micSupported
-                    ? isListening
-                      ? "Stop listening"
-                      : "Voice input"
-                    : "Voice input not supported in this browser"
-                }
-              >
-                <span>
-                  <IconButton
-                    onClick={handleMicToggle}
-                    disabled={!micSupported}
-                    color={isListening ? "error" : "default"}
-                    aria-label="Voice input"
-                  >
-                    {micSupported ? <MicIcon /> : <MicOffIcon />}
-                  </IconButton>
-                </span>
-              </Tooltip>
+              <Stack component="div" direction="row" sx={{ alignItems: "center" }}>
+                <Tooltip
+                  title={
+                    micSupported
+                      ? isListening
+                        ? "Stop listening"
+                        : "Voice input"
+                      : "Voice input not supported in this browser"
+                  }
+                >
+                  <span>
+                    <IconButton
+                      onClick={handleMicToggle}
+                      disabled={!micSupported}
+                      color={isListening ? "error" : "default"}
+                      aria-label="Voice input"
+                    >
+                      {micSupported ? <MicIcon /> : <MicOffIcon />}
+                    </IconButton>
+                  </span>
+                </Tooltip>
+                {ttsSupported && (
+                  <ListenButton
+                    lang={langFrom}
+                    {...sourceListen}
+                    onClick={handleSourceListen}
+                    ariaLabel="Listen to source text"
+                  />
+                )}
+              </Stack>
               <Stack component="div" direction="row" spacing={1.5} sx={{ alignItems: "center" }}>
                 <Typography variant="caption" color="text.secondary">
                   {charCount} / {MAX_CHARS}
@@ -209,8 +233,18 @@ export const TransliteratorCard = ({ suppressErrors = false }: { suppressErrors?
             <Stack
               component="div"
               direction="row"
-              sx={{ alignItems: "center", justifyContent: "flex-end", px: 1.5, py: 1 }}
+              sx={{ alignItems: "center", justifyContent: "space-between", px: 1.5, py: 1 }}
             >
+              {ttsSupported ? (
+                <ListenButton
+                  lang={langTo}
+                  {...targetListen}
+                  onClick={handleTargetListen}
+                  ariaLabel="Listen to transliteration"
+                />
+              ) : (
+                <span />
+              )}
               <Tooltip title={copied ? "Copied!" : "Copy"}>
                 <span>
                   <IconButton

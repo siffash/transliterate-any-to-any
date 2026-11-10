@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Language, languages } from "transliterate-any-to-any";
 import { isLoadError, useTransliterateWorker } from "./useTransliterateWorker";
 import type { SpeechInput } from "./useSpeechRecognition";
+import type { SpeechOutput } from "./useSpeechSynthesis";
 import { useQueryParams } from "./useQueryParams.ts";
 import { DEBOUNCE_MS, DEFAULT_LANGS, LOCAL_STORAGE_KEYS, MAX_CHARS } from "../constants";
 
@@ -42,6 +43,7 @@ function getInitialLangTo(): Language {
  * The state and behaviour of the transliterator, shared by the PWA's card and
  * the mobile app's screen, which only differ in layout and in these options:
  * - `speech`: voice input (the Web Speech API, or the native one in the app)
+ * - `tts`: reading the texts aloud (likewise)
  * - `copyText`: writes the transliteration to the clipboard
  * - `syncUrl`: keeps the languages and the text in the URL, with a history
  *   entry for each change, so that they can be shared and survive a reload
@@ -49,11 +51,13 @@ function getInitialLangTo(): Language {
  */
 export function useTransliterator({
   speech,
+  tts,
   copyText,
   syncUrl,
   suppressErrors = false,
 }: {
   speech: SpeechInput;
+  tts: SpeechOutput;
   copyText: (text: string) => Promise<void>;
   syncUrl: boolean;
   suppressErrors?: boolean;
@@ -67,6 +71,7 @@ export function useTransliterator({
   const [copied, setCopied] = useState(false);
   const [swapRotation, setSwapRotation] = useState(0);
   const [retryKey, setRetryKey] = useState(0);
+  const [rejected, setRejected] = useState<{ text: string; lang: Language } | null>(null);
 
   const { run } = useTransliterateWorker();
   const sourceTextInputRef = useRef<HTMLInputElement>(null);
@@ -89,6 +94,9 @@ export function useTransliterator({
   } = speech;
 
   const fromLocale = useMemo(() => languages[langFrom]?.locale ?? "en-US", [langFrom]);
+  const toLocale = useMemo(() => languages[langTo]?.locale ?? "en-US", [langTo]);
+
+  const { speakingId, speak, stop: stopSpeaking } = tts;
 
   // Debounced transliteration: fires MAX_CHARS/DEBOUNCE_MS after the last keystroke or language change,
   // and ignores a response that arrives after a newer request has already been fired
@@ -134,6 +142,8 @@ export function useTransliterator({
         .catch((err: Error) => {
           if (thisId === requestIdRef.current) {
             loadFailedRef.current = isLoadError(err.message);
+            if (!loadFailedRef.current) setRejected({ text: sourceText, lang: langFrom });
+            setTargetText("");
             setErrorMsg(getErrorMessage(err));
           }
         })
@@ -214,11 +224,12 @@ export function useTransliterator({
     }
   }, [paramFrom, paramTo, paramText, paramsChanged, syncUrl]);
 
-  useEffect(() => {
-    if (errorMsg) {
-      setTargetText("");
-    }
-  }, [errorMsg]);
+  const sourceRejected = rejected?.text === sourceText && rejected.lang === langFrom;
+
+  // A text stops being read aloud as soon as it or its language changes, or
+  // its Listen button gets disabled (which would leave no way to stop it)
+  useEffect(() => stopSpeaking("source"), [sourceText, langFrom, sourceRejected, stopSpeaking]);
+  useEffect(() => stopSpeaking("target"), [targetText, langTo, loading, stopSpeaking]);
 
   useEffect(() => {
     if (suppressErrors && errorMsg) {
@@ -262,6 +273,7 @@ export function useTransliterator({
       stopListening();
       return;
     }
+    stopSpeaking();
     baseTextRef.current = sourceText;
     startListening(
       fromLocale,
@@ -274,6 +286,17 @@ export function useTransliterator({
       message => setErrorMsg(message),
     );
   };
+
+  const toggleSpeaking = (id: "source" | "target", text: string, locale: string) => {
+    if (speakingId === id) {
+      stopSpeaking();
+      return;
+    }
+    speak(id, text, locale, message => setErrorMsg(message));
+  };
+
+  const handleSourceListen = () => toggleSpeaking("source", sourceText, fromLocale);
+  const handleTargetListen = () => toggleSpeaking("target", targetText, toLocale);
 
   const handleFromLang = (lang: string) => {
     if (lang === langTo) {
@@ -308,12 +331,25 @@ export function useTransliterator({
     charCount: sourceText.length,
     micSupported,
     isListening,
+    ttsSupported: tts.isSupported,
+    sourceListen: {
+      langSupported: tts.canSpeak(fromLocale),
+      disabled: !tts.canSpeak(fromLocale) || !sourceText.trim() || sourceRejected || isListening,
+      speaking: speakingId === "source",
+    },
+    targetListen: {
+      langSupported: tts.canSpeak(toLocale),
+      disabled: !tts.canSpeak(toLocale) || !targetText.trim() || loading || isListening,
+      speaking: speakingId === "target",
+    },
     sourceTextInputRef,
     handleSourceChange,
     handleSwap,
     handleClear,
     handleCopy,
     handleMicToggle,
+    handleSourceListen,
+    handleTargetListen,
     handleFromLang,
     handleToLang,
   };
