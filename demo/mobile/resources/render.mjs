@@ -1,6 +1,7 @@
 // Renders the app's icon and splash screen sources from the PWA's favicon,
 // which `npm run icons:mobile` then turns into every native size with
 // @capacitor/assets (see ../../package.json)
+import { Buffer } from "node:buffer";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";

@@ -1,6 +1,7 @@
 import { Capacitor, SystemBars, SystemBarsStyle } from "@capacitor/core";
 import { Browser } from "@capacitor/browser";
 import { Clipboard } from "@capacitor/clipboard";
+import { Device } from "@capacitor/device";
 import { SplashScreen } from "@capacitor/splash-screen";
 import type { ColorMode } from "../src/hooks/useColorMode";
 
@@ -20,6 +21,17 @@ export const setSystemBarsStyle = async (mode: ColorMode) => {
   await SystemBars.setStyle({
     style: mode === "dark" ? SystemBarsStyle.Dark : SystemBarsStyle.Light,
   });
+};
+
+// The OS's preferred language, e.g. "de-AT" (none in a browser, where
+// navigator.languages is used instead)
+export const getSystemLocale = async () => {
+  if (!isNative) return undefined;
+  try {
+    return (await Device.getLanguageTag()).value;
+  } catch {
+    return undefined;
+  }
 };
 
 // The splash screen stays until the app has rendered (see capacitor.config.ts)

@@ -13,6 +13,35 @@ function getErrorMessage(err: Error): string {
   return err.message || "Transliteration failed.";
 }
 
+// The system's languages, most preferred first: the browser's, or the OS's in
+// the mobile app (where they're set with setSystemLocales before rendering)
+let systemLocales: readonly string[] =
+  typeof navigator === "undefined" ? [] : (navigator.languages ?? [navigator.language]);
+
+export function setSystemLocales(locales: readonly string[]) {
+  systemLocales = locales;
+}
+
+// Codes that differ from ours: Norwegian Bokmål/Nynorsk, Serbo-Croatian, and
+// Java's legacy ones for Hebrew and Indonesian
+const LOCALE_ALIASES: Record<string, Language> = {
+  nb: "no",
+  nn: "no",
+  sh: "sr",
+  iw: "he",
+  in: "id",
+};
+
+// The first of the system's languages that we support
+function getSystemLang(): Language | undefined {
+  for (const locale of systemLocales) {
+    const code = locale.toLowerCase().split(/[-_]/)[0];
+    const lang = LOCALE_ALIASES[code] ?? code;
+    if (Object.hasOwn(languages, lang)) return lang as Language;
+  }
+  return undefined;
+}
+
 function getInitialLangFrom(): Language {
   // try to get from URL
   const params = new URLSearchParams(window.location.search);
@@ -22,8 +51,8 @@ function getInitialLangFrom(): Language {
   if (typeof window === "undefined") return DEFAULT_LANGS.langFrom;
   const stored = window.localStorage.getItem(LOCAL_STORAGE_KEYS.langFrom);
   if (stored) return stored as Language;
-  // fallback to default
-  return DEFAULT_LANGS.langFrom;
+  // fallback to the system's language
+  return getSystemLang() ?? DEFAULT_LANGS.langFrom;
 }
 
 function getInitialLangTo(): Language {
@@ -35,8 +64,8 @@ function getInitialLangTo(): Language {
   if (typeof window === "undefined") return DEFAULT_LANGS.langTo;
   const stored = window.localStorage.getItem(LOCAL_STORAGE_KEYS.langTo);
   if (stored) return stored as Language;
-  // fallback to default
-  return DEFAULT_LANGS.langTo;
+  // fallback to default, unless the source (see above) already is it
+  return getInitialLangFrom() === DEFAULT_LANGS.langTo ? "en" : DEFAULT_LANGS.langTo;
 }
 
 /**

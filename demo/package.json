@@ -20,6 +20,7 @@
     "@capacitor/browser": "^8.0.5",
     "@capacitor/clipboard": "^8.0.1",
     "@capacitor/core": "^8.5.3",
+    "@capacitor/device": "^8.0.3",
     "@capacitor/ios": "^8.5.3",
     "@capacitor/keyboard": "^8.0.6",
     "@capacitor/splash-screen": "^8.0.2",

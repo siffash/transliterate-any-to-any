@@ -15,7 +15,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "types": ["node", "dom-speech-recognition", "vite-plugin-pwa/react"],
+    "types": ["node", "vite/client", "dom-speech-recognition", "vite-plugin-pwa/react"],
     "baseUrl": "."
   },
   "include": ["src", "mobile", "vite.config.ts", "vite.mobile.config.ts", "capacitor.config.ts"]
