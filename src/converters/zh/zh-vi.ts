@@ -4,7 +4,7 @@ export const zhVi = async (text: Text) => {
   const OpenCC = await import("opencc-js");
   const { pinyin } = await import("pinyin-pro");
   const { getHanviet } = await import("hanviet-pinyin-words");
-  const { ZH_VI_MAP } = await import("data/zh/zh-vi.map");
+  const { ZH_VI_MAP, ZH_VI_WORDS } = await import("data/zh/zh-vi.map");
 
   const converter = OpenCC.Converter({ from: "cn", to: "t" });
 
@@ -43,6 +43,13 @@ export const zhVi = async (text: Text) => {
 
       // 5. Look up Hán Việt pronunciation for each individual character
       for (let i = 0; i < chunk.length; i++) {
+        const word = Object.keys(ZH_VI_WORDS).find(word => chunk.startsWith(word, i));
+        if (word) {
+          chunkHanViet.push(...ZH_VI_WORDS[word]);
+          i += word.length - 1;
+          continue;
+        }
+
         const char = chunk[i];
         let py = pyArray[i];
 

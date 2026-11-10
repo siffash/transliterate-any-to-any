@@ -2,14 +2,14 @@ export const srIpaRules = `
 ::Lower;
 ::NFC;
 
-dž > d͡ʐ;
+dž > d͡ʒ;
 lj > ʎ;
 nj > ɲ;
 
 a > a;
 b > b;
 c > t͡s;
-č > t͡ʂ;
+č > t͡ʃ;
 ć > t͡ɕ;
 d > d;
 đ > d͡ʑ;
@@ -27,10 +27,10 @@ o > o;
 p > p;
 r > r;
 s > s;
-š > ʂ;
+š > ʃ;
 t > t;
 u > u;
 v > ʋ;
 z > z;
-ž > ʐ;
+ž > ʒ;
 `;

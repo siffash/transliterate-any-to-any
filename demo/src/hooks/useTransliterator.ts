@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Language, languages } from "transliterate-any-to-any";
+import { detectLanguage, Language, languages, validateLanguage } from "transliterate-any-to-any";
 import { isLoadError, useTransliterateWorker } from "./useTransliterateWorker";
 import type { SpeechInput } from "./useSpeechRecognition";
 import type { SpeechOutput } from "./useSpeechSynthesis";
@@ -101,6 +101,9 @@ export function useTransliterator({
   const [swapRotation, setSwapRotation] = useState(0);
   const [retryKey, setRetryKey] = useState(0);
   const [rejected, setRejected] = useState<{ text: string; lang: Language } | null>(null);
+  const [detected, setDetected] = useState<{ text: string; from: Language; lang: Language } | null>(
+    null,
+  );
 
   const { run } = useTransliterateWorker();
   const sourceTextInputRef = useRef<HTMLInputElement>(null);
@@ -157,6 +160,29 @@ export function useTransliterator({
             text: sourceText,
           });
           history.pushState({}, "", `/?${params.toString()}`);
+        }
+      }
+
+      // A text that doesn't match the source language isn't sent to the worker
+      // when its language can be detected: a switch to it is suggested instead
+      if (!validateLanguage(langFrom, sourceText)) {
+        let lang: Language | undefined;
+        try {
+          lang = detectLanguage(sourceText);
+        } catch (err) {
+          setRejected({ text: sourceText, lang: langFrom });
+          setTargetText("");
+          setErrorMsg((err as Error).message);
+          setLoading(false);
+          return;
+        }
+        if (lang) {
+          setRejected({ text: sourceText, lang: langFrom });
+          setDetected({ text: sourceText, from: langFrom, lang });
+          setTargetText("");
+          setErrorMsg(null);
+          setLoading(false);
+          return;
         }
       }
 
@@ -255,6 +281,12 @@ export function useTransliterator({
 
   const sourceRejected = rejected?.text === sourceText && rejected.lang === langFrom;
 
+  // The language the source text looks like, while the text and the source language stay the same
+  const detectedLang =
+    !suppressErrors && detected?.text === sourceText && detected.from === langFrom
+      ? detected.lang
+      : null;
+
   // A text stops being read aloud as soon as it or its language changes, or
   // its Listen button gets disabled (which would leave no way to stop it)
   useEffect(() => stopSpeaking("source"), [sourceText, langFrom, sourceRejected, stopSpeaking]);
@@ -337,6 +369,12 @@ export function useTransliterator({
     setErrorMsg(null);
   };
 
+  const handleSwitchToDetected = () => {
+    if (detectedLang) handleFromLang(detectedLang);
+  };
+
+  const handleDismissDetected = () => setDetected(null);
+
   const handleToLang = (lang: string) => {
     if (lang === langFrom) {
       handleSwap();
@@ -355,6 +393,7 @@ export function useTransliterator({
     loading,
     errorMsg,
     setErrorMsg,
+    detectedLang,
     copied,
     swapRotation,
     charCount: sourceText.length,
@@ -381,5 +420,7 @@ export function useTransliterator({
     handleTargetListen,
     handleFromLang,
     handleToLang,
+    handleSwitchToDetected,
+    handleDismissDetected,
   };
 }

@@ -76,9 +76,33 @@ await transliterate(["मुंबई", "कोलकाता"], { from: "hi", 
 | `from`          | `string` | Yes      | Source language in [BCP 47](https://en.wikipedia.org/wiki/IETF_language_tag) |
 | `to`            | `string` | Yes      | Target language in [BCP 47](https://en.wikipedia.org/wiki/IETF_language_tag) |
 
-## 🔍 Detect Language's Script
+## 🔍 Detect Language
 
-By default, the library transforms the source text even if the source & target languages are of same script (see [Maltese to Latvian example](#examples)). If you want to prevent such cases, you can compare the languages' scripts in advance:
+If you don't know the source language in advance, you can guess it from the letters/characters of the source text with the function `detectLanguage`:
+
+```typescript
+import { detectLanguage } from "transliterate-any-to-any";
+
+detectLanguage("თბილისი"); // -> "ka"
+detectLanguage("Київ"); // -> "uk"
+detectLanguage("Müller"); // -> "de"
+detectLanguage(["東京", "みやざき"]); // -> "ja"
+detectLanguage("123"); // -> undefined (no letters)
+detectLanguage("Иван Ivan"); // -> throws an error (mixed scripts)
+```
+
+When the text could belong to several languages, it falls back to the most common one:
+
+- Chinese (`zh`) over Japanese (`ja`) - e.g. `青森` without any kana
+- Arabic (`ar`) over Persian (`fa`) & Urdu (`ur`)
+- Russian (`ru`) over Ukrainian (`uk`), Bulgarian (`bg`), Macedonian (`mk`), Kazakh (`kk`) & Tajik (`tg`)
+- English (`en`) over other Latin-script languages, then German (`de`), French (`fr`), Spanish (`es`) & Turkish (`tr`) over the rest - e.g. `Müller` is German, not Azerbaijani; Serbian (`sr`) over Croatian (`hr`) & Bosnian (`bs`)
+
+It returns `undefined` if the text has no letters or contains letters that no supported language uses, and throws an error if the text mixes letters of different languages (e.g. Cyrillic & Latin).
+
+## ⏭️ Skip Same-Script Pairs
+
+By default, the library transliterates text even when the source & target languages use the same script (see the [Maltese to Latvian example](#examples)). To keep the text unchanged for such pairs, compare the languages' scripts before calling `transliterate`:
 
 ```typescript
 import { languages } from "transliterate-any-to-any";
@@ -87,6 +111,8 @@ if (languages[sourceLanguage]?.script !== languages[targetLanguage]?.script) {
   await transliterate(text, { from: sourceLanguage, to: targetLanguage });
 }
 ```
+
+See also: [Transliterating to Latin-Script Languages](https://github.com/siffash/transliterate-any-to-any/tree/main/docs/transliterating-to-latin.md).
 
 ## ✅ Validate Language
 
@@ -118,9 +144,9 @@ if (!validateLanguage("en", "ლევან")) {
 | Thai          | th                                                        | Thai                                                        | Thailand, Cambodia, Myanmar                                           |
 | Hindi         | hi                                                        | Deva                                                        | India                                                                 |
 | Bengali       | bn                                                        | Beng                                                        | Bangladesh, India                                                     |
-| Urdu          | ur                                                        | Arab                                                        | Pakistan, India                                                       |
-| Persian       | fa                                                        | Arab                                                        | Iran, Afghanistan                                                     |
 | Arabic        | ar                                                        | Arab                                                        | Saudi Arabia, UAE, Egypt, many Middle Eastern/North African countries |
+| Persian       | fa                                                        | Arab                                                        | Iran, Afghanistan                                                     |
+| Urdu          | ur                                                        | Arab                                                        | Pakistan, India                                                       |
 | Hebrew        | he                                                        | Hebr                                                        | Israel                                                                |
 | Georgian      | ka                                                        | Geor                                                        | Georgia                                                               |
 | Armenian      | hy                                                        | Armn                                                        | Armenia, Russia, Georgia, France                                      |
@@ -131,18 +157,20 @@ if (!validateLanguage("en", "ლევან")) {
 | Macedonian    | mk                                                        | Cyrl                                                        | North Macedonia                                                       |
 | Kazakh        | kk                                                        | Cyrl                                                        | Kazakhstan, Russia                                                    |
 | Tajik         | tg                                                        | Cyrl                                                        | Tajikistan, Uzbekistan                                                |
+| English       | en                                                        | Latn                                                        | United Kingdom, Ireland, Malta                                        |
+| German        | de                                                        | Latn                                                        | Germany, Austria, Switzerland, Belgium, Luxembourg, Liechtenstein     |
+| French        | fr                                                        | Latn                                                        | France, Belgium, Switzerland, Luxembourg                              |
+| Spanish       | es                                                        | Latn                                                        | Spain, Andorra                                                        |
+| Turkish       | tr                                                        | Latn                                                        | Turkey, Cyprus (Turkish community)                                    |
 | Azerbaijani   | az                                                        | Latn                                                        | Azerbaijan, Russia, Georgia                                           |
+| Serbian       | sr                                                        | Latn                                                        | Serbia, Bosnia and Herzegovina, Montenegro, Kosovo                    |
+| Croatian      | hr                                                        | Latn                                                        | Croatia, Bosnia and Herzegovina                                       |
 | Bosnian       | bs                                                        | Latn                                                        | Bosnia and Herzegovina                                                |
 | Catalan       | ca                                                        | Latn                                                        | Spain (Catalonia, Valencia, Balearic Islands), Andorra                |
 | Czech         | cs                                                        | Latn                                                        | Czech Republic                                                        |
 | Danish        | da                                                        | Latn                                                        | Denmark                                                               |
-| German        | de                                                        | Latn                                                        | Germany, Austria, Switzerland, Belgium, Luxembourg, Liechtenstein     |
-| English       | en                                                        | Latn                                                        | United Kingdom, Ireland, Malta                                        |
-| Spanish       | es                                                        | Latn                                                        | Spain, Andorra                                                        |
 | Estonian      | et                                                        | Latn                                                        | Estonia                                                               |
 | Finnish       | fi                                                        | Latn                                                        | Finland                                                               |
-| French        | fr                                                        | Latn                                                        | France, Belgium, Switzerland, Luxembourg                              |
-| Croatian      | hr                                                        | Latn                                                        | Croatia, Bosnia and Herzegovina                                       |
 | Hungarian     | hu                                                        | Latn                                                        | Hungary                                                               |
 | Indonesian    | id                                                        | Latn                                                        | Indonesia                                                             |
 | Icelandic     | is                                                        | Latn                                                        | Iceland                                                               |
@@ -160,9 +188,7 @@ if (!validateLanguage("en", "ლევან")) {
 | Slovak        | sk                                                        | Latn                                                        | Slovakia                                                              |
 | Slovene       | sl                                                        | Latn                                                        | Slovenia                                                              |
 | Albanian      | sq                                                        | Latn                                                        | Albania, Kosovo, North Macedonia                                      |
-| Serbian       | sr                                                        | Latn                                                        | Serbia, Bosnia and Herzegovina, Montenegro, Kosovo                    |
 | Swedish       | sv                                                        | Latn                                                        | Sweden, Finland                                                       |
-| Turkish       | tr                                                        | Latn                                                        | Turkey, Cyprus (Turkish community)                                    |
 | Vietnamese    | vi                                                        | Latn                                                        | Vietnam                                                               |
 
 ## 📦 Third-Party Libraries Used

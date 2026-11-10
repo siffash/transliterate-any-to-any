@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import {
-  Alert,
   Box,
   CircularProgress,
   IconButton,
@@ -23,6 +22,7 @@ import type { SpeechOutput } from "../hooks/useSpeechSynthesis";
 import { MAX_CHARS } from "../constants";
 import { LanguageSelect } from "./LanguageSelect";
 import { ListenButton } from "./ListenButton";
+import { SourceAlert } from "./SourceAlert";
 import { useReportResultShown } from "./OneScreenLayout";
 
 const panelSx = {
@@ -92,6 +92,7 @@ export const OneScreenTransliterator = ({
     loading,
     errorMsg,
     setErrorMsg,
+    detectedLang,
     copied,
     swapRotation,
     charCount,
@@ -110,6 +111,8 @@ export const OneScreenTransliterator = ({
     handleTargetListen,
     handleFromLang,
     handleToLang,
+    handleSwitchToDetected,
+    handleDismissDetected,
   } = useTransliterator({ speech, tts, copyText, syncUrl, suppressErrors });
 
   // The target panel appears as soon as a transliteration starts loading, and
@@ -118,8 +121,8 @@ export const OneScreenTransliterator = ({
   const [showTarget, setShowTarget] = useState(false);
   useEffect(() => {
     if (loading || targetText) setShowTarget(true);
-    else if (!sourceText.trim() || errorMsg) setShowTarget(false);
-  }, [loading, targetText, sourceText, errorMsg]);
+    else if (!sourceText.trim() || errorMsg || detectedLang) setShowTarget(false);
+  }, [loading, targetText, sourceText, errorMsg, detectedLang]);
 
   const reportResultShown = useReportResultShown();
   useEffect(() => reportResultShown(showTarget), [showTarget, reportResultShown]);
@@ -295,13 +298,17 @@ export const OneScreenTransliterator = ({
 
         {/* At the bottom of the layout's column (see OneScreenLayout) rather than
             of the screen, over the footer, so that it stays above the keyboard too */}
-        {!!errorMsg && (
+        {(!!errorMsg || !!detectedLang) && (
           <Snackbar
             open
             message={
-              <Alert severity="error" onClose={() => setErrorMsg(null)}>
-                {errorMsg}
-              </Alert>
+              <SourceAlert
+                errorMsg={errorMsg}
+                detectedLang={detectedLang}
+                onCloseError={() => setErrorMsg(null)}
+                onSwitch={handleSwitchToDetected}
+                onCloseDetected={handleDismissDetected}
+              />
             }
             anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
             sx={{

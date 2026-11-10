@@ -14,12 +14,6 @@ export const mkEnRules = `
 Ѓ > Gj;
 ѓ > gj;
 
-Ж } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > ZH;
-Ж } [:Lu:] > ZH;
-[:Lu:] { Ж > ZH;
-Ж > Zh;
-ж > zh;
-
 Ѕ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > DZ;
 Ѕ } [:Lu:] > DZ;
 [:Lu:] { Ѕ > DZ;
@@ -44,23 +38,11 @@ export const mkEnRules = `
 Ќ > Kj;
 ќ > kj;
 
-Ч } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > CH;
-Ч } [:Lu:] > CH;
-[:Lu:] { Ч > CH;
-Ч > Ch;
-ч > ch;
-
-Џ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > DJ;
-Џ } [:Lu:] > DJ;
-[:Lu:] { Џ > DJ;
-Џ > Dj;
-џ > dj;
-
-Ш } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > SH;
-Ш } [:Lu:] > SH;
-[:Lu:] { Ш > SH;
-Ш > Sh;
-ш > sh;
+Џ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > DŽ;
+Џ } [:Lu:] > DŽ;
+[:Lu:] { Џ > DŽ;
+Џ > Dž;
+џ > dž;
 
 А > A;
 а > a;
@@ -74,6 +56,8 @@ export const mkEnRules = `
 д > d;
 Е > E;
 е > e;
+Ж > Ž;
+ж > ž;
 З > Z;
 з > z;
 И > I;
@@ -106,6 +90,10 @@ export const mkEnRules = `
 х > h;
 Ц > C;
 ц > c;
+Ч > Č;
+ч > č;
+Ш > Š;
+ш > š;
 
 ::Null;
 

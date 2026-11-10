@@ -1,6 +1,9 @@
 export const kkEnRules = `
 ::NFC;
 
+[ыи] [йЙ] } [^[:L:][:M:]] > y;
+[ЫИ] [йЙ] } [^[:L:][:M:]] > Y;
+
 [AÄEIÏOÖUÜ] { Е > YE;
 [AÄEIÏOÖUÜaäeiïoöuü] { Е > Ye;
 [AÄEIÏOÖUÜaäeiïoöuü] { е > ye;
@@ -31,12 +34,6 @@ export const kkEnRules = `
 Я } [:Lu:] > YA;
 Я > Ya;
 я > ya;
-
-[:Lu:] { Ғ > GH;
-Ғ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > GH;
-Ғ } [:Lu:] > GH;
-Ғ > Gh;
-ғ > gh;
 
 [:Lu:] { Х > KH;
 Х } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > KH;
@@ -83,8 +80,8 @@ export const kkEnRules = `
 В > V;
 в > v;
 
-Г > G;
-г > g;
+[ГҒ] > G;
+[гғ] > g;
 
 Д > D;
 д > d;
@@ -101,11 +98,8 @@ export const kkEnRules = `
 [ЙЫ] > Y;
 [йы] > y;
 
-К > K;
-к > k;
-
-Қ > Q;
-қ > q;
+[КҚ] > K;
+[кқ] > k;
 
 Л > L;
 л > l;

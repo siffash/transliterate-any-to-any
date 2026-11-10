@@ -16,6 +16,9 @@ export const scripts: Record<Script, { cases: boolean; direction: Direction }> =
   Latn: { cases: true, direction: "LTR" },
 } as const;
 
+// The order matters for detectLanguage: when the text matches several languages, the first one wins
+// (zh over ja, ar over fa over ur, ru over the other Cyrillic ones, en over the other Latin ones,
+// then the more common Latin ones: de, fr, es, tr over az, sr over hr/bs)
 export const languages: Record<
   Language,
   { name: string; script: Script; locale: string; regex: string }
@@ -41,12 +44,11 @@ export const languages: Record<
     locale: "bn-BD",
     regex: "\\p{scx=Bengali}\\p{M}\\p{Cf}",
   },
-  ur: {
-    name: "Urdu",
+  ar: {
+    name: "Arabic",
     script: "Arab",
-    locale: "ur-PK",
-    regex:
-      "\u0621-\u063A\u0641-\u0649\u064A\u0679\u067E\u0686\u0688\u0691\u0698\u06A9\u06AF\u06BA\u06BE\u06C0-\u06C3\u06CC\u06D2\u06D3\u064B-\u0658\u0670\u06F0-\u06F9\u060C\u061B\u061F\u06D4\u200C\u200D\u0674\u0678\\p{M}\\p{Cf}",
+    locale: "ar-SA",
+    regex: "\u0621-\u063A\u0640-\u0655\u0670\u0660-\u0669\u060C\u061B\u061F\u200C\\p{M}\\p{Cf}",
   },
   fa: {
     name: "Persian",
@@ -55,11 +57,12 @@ export const languages: Record<
     regex:
       "\u0621-\u063A\u0641-\u064A\u064B-\u0655\u0670\u067E\u0686\u0698\u06A9\u06AF\u06C0\u06CC\u06F0-\u06F9\u060C\u061B\u061F\u200C\\p{M}\\p{Cf}",
   },
-  ar: {
-    name: "Arabic",
+  ur: {
+    name: "Urdu",
     script: "Arab",
-    locale: "ar-SA",
-    regex: "\u0621-\u063A\u0640-\u0655\u0670\u0660-\u0669\u060C\u061B\u061F\u200C\\p{M}\\p{Cf}",
+    locale: "ur-PK",
+    regex:
+      "\u0621-\u063A\u0641-\u0649\u064A\u0679\u067E\u0686\u0688\u0691\u0698\u06A9\u06AF\u06BA\u06BE\u06C0-\u06C3\u06CC\u06D2\u06D3\u064B-\u0658\u0670\u06F0-\u06F9\u060C\u061B\u061F\u06D4\u200C\u200D\u0674\u0678\\p{M}\\p{Cf}",
   },
   he: {
     name: "Hebrew",
@@ -96,23 +99,25 @@ export const languages: Record<
   },
   kk: { name: "Kazakh", script: "Cyrl", locale: "kk-KZ", regex: "а-яёәғқңөұүһі̆̀̆̈'’‘`´ʼ\\p{Cf}" },
   tg: { name: "Tajik", script: "Cyrl", locale: "tg-TJ", regex: "а-яёғӣқӯҳҷ̆̈̄\\p{Cf}" },
-  az: { name: "Azerbaijani", script: "Latn", locale: "az-AZ", regex: "a-zçəğıİöşü̧̆̇̈'’‘`´ʼ\\p{Cf}" },
-  bs: { name: "Bosnian", script: "Latn", locale: "bs-BA", regex: "a-zčćđšž̌́'’‘`´ʼ\\p{Cf}" },
-  ca: { name: "Catalan", script: "Latn", locale: "ca-ES", regex: "a-zàèéíïòóúüç·̧̀́̈'’‘`´ʼ\\p{Cf}" },
-  cs: { name: "Czech", script: "Latn", locale: "cs-CZ", regex: "a-záčďéěíňóřšťúůýž́̌̊\\p{Cf}" },
-  da: { name: "Danish", script: "Latn", locale: "da-DK", regex: "a-zæøå̊'’‘`´ʼ\\p{Cf}" },
-  de: { name: "German", script: "Latn", locale: "de-DE", regex: "a-zäöüß̈'’‘`´ʼ\\p{Cf}" },
   en: { name: "English", script: "Latn", locale: "en-US", regex: "a-z'’‘`´ʼ\\p{Cf}" },
-  es: { name: "Spanish", script: "Latn", locale: "es-ES", regex: "a-záéíóúüñ́̈̃'’‘`´ʼ\\p{Cf}" },
-  et: { name: "Estonian", script: "Latn", locale: "et-EE", regex: "a-zšžõäöǚ̃̈'’‘`´ʼ\\p{Cf}" },
-  fi: { name: "Finnish", script: "Latn", locale: "fi-FI", regex: "a-zåäöšž̊̈̌'’‘`´ʼ\\p{Cf}" },
+  de: { name: "German", script: "Latn", locale: "de-DE", regex: "a-zäöüß̈'’‘`´ʼ\\p{Cf}" },
   fr: {
     name: "French",
     script: "Latn",
     locale: "fr-FR",
     regex: "a-zàâæçéèêëîïôœùûüÿ̧̀̂́̈'’‘`´ʼ\\p{Cf}",
   },
+  es: { name: "Spanish", script: "Latn", locale: "es-ES", regex: "a-záéíóúüñ́̈̃'’‘`´ʼ\\p{Cf}" },
+  tr: { name: "Turkish", script: "Latn", locale: "tr-TR", regex: "a-zçğıİöşüâîû̧̆̇̈̂'’‘`´ʼ\\p{Cf}" },
+  az: { name: "Azerbaijani", script: "Latn", locale: "az-AZ", regex: "a-zçəğıİöşü̧̆̇̈'’‘`´ʼ\\p{Cf}" },
+  sr: { name: "Serbian", script: "Latn", locale: "sr-RS", regex: "a-zčćđšž̌́'’‘`´ʼ\\p{Cf}" },
   hr: { name: "Croatian", script: "Latn", locale: "hr-HR", regex: "a-zčćđšž̌́'’‘`´ʼ\\p{Cf}" },
+  bs: { name: "Bosnian", script: "Latn", locale: "bs-BA", regex: "a-zčćđšž̌́'’‘`´ʼ\\p{Cf}" },
+  ca: { name: "Catalan", script: "Latn", locale: "ca-ES", regex: "a-zàèéíïòóúüç·̧̀́̈'’‘`´ʼ\\p{Cf}" },
+  cs: { name: "Czech", script: "Latn", locale: "cs-CZ", regex: "a-záčďéěíňóřšťúůýž́̌̊\\p{Cf}" },
+  da: { name: "Danish", script: "Latn", locale: "da-DK", regex: "a-zæøå̊'’‘`´ʼ\\p{Cf}" },
+  et: { name: "Estonian", script: "Latn", locale: "et-EE", regex: "a-zšžõäöǚ̃̈'’‘`´ʼ\\p{Cf}" },
+  fi: { name: "Finnish", script: "Latn", locale: "fi-FI", regex: "a-zåäöšž̊̈̌'’‘`´ʼ\\p{Cf}" },
   hu: { name: "Hungarian", script: "Latn", locale: "hu-HU", regex: "a-záéíóöőúüű́̈̋\\p{Cf}" },
   id: { name: "Indonesian", script: "Latn", locale: "id-ID", regex: "a-z'’‘`´ʼ\\p{Cf}" },
   is: { name: "Icelandic", script: "Latn", locale: "is-IS", regex: "a-záéíóúýðþæö́̈\\p{Cf}" },
@@ -150,9 +155,7 @@ export const languages: Record<
   sk: { name: "Slovak", script: "Latn", locale: "sk-SK", regex: "a-záäčďéíĺľňóôŕřšťúýž́̈̌̂\\p{Cf}" },
   sl: { name: "Slovene", script: "Latn", locale: "sl-SI", regex: "a-zčšžqwxy̌\\p{Cf}" },
   sq: { name: "Albanian", script: "Latn", locale: "sq-AL", regex: "a-zçȩ̈̈'’‘`´ʼ\\p{Cf}" },
-  sr: { name: "Serbian", script: "Latn", locale: "sr-RS", regex: "a-zčćđšž̌́'’‘`´ʼ\\p{Cf}" },
   sv: { name: "Swedish", script: "Latn", locale: "sv-SE", regex: "a-zåäöéèêàüçïëôņ̃̊̈́̀̂̃\\p{Cf}" },
-  tr: { name: "Turkish", script: "Latn", locale: "tr-TR", regex: "a-zçğıİöşüâîû̧̆̇̈̂'’‘`´ʼ\\p{Cf}" },
   vi: {
     name: "Vietnamese",
     script: "Latn",

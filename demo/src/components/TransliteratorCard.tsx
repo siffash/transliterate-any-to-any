@@ -1,5 +1,4 @@
 import {
-  Alert,
   Box,
   Card,
   CardContent,
@@ -24,6 +23,7 @@ import { useTransliterator } from "../hooks/useTransliterator";
 import { MAX_CHARS } from "../constants";
 import { LanguageSelect } from "./LanguageSelect";
 import { ListenButton } from "./ListenButton";
+import { SourceAlert } from "./SourceAlert";
 import { CodeBadge } from "./CodeBadge";
 
 const copyText = (text: string) => navigator.clipboard.writeText(text);
@@ -39,6 +39,7 @@ export const TransliteratorCard = ({ suppressErrors = false }: { suppressErrors?
     loading,
     errorMsg,
     setErrorMsg,
+    detectedLang,
     copied,
     swapRotation,
     charCount,
@@ -57,6 +58,8 @@ export const TransliteratorCard = ({ suppressErrors = false }: { suppressErrors?
     handleTargetListen,
     handleFromLang,
     handleToLang,
+    handleSwitchToDetected,
+    handleDismissDetected,
   } = useTransliterator({
     speech,
     tts,
@@ -264,13 +267,17 @@ export const TransliteratorCard = ({ suppressErrors = false }: { suppressErrors?
           </Box>
         </Stack>
 
-        {!!errorMsg && (
+        {(!!errorMsg || !!detectedLang) && (
           <Snackbar
             open
             message={
-              <Alert severity="error" onClose={() => setErrorMsg(null)}>
-                {errorMsg}
-              </Alert>
+              <SourceAlert
+                errorMsg={errorMsg}
+                detectedLang={detectedLang}
+                onCloseError={() => setErrorMsg(null)}
+                onSwitch={handleSwitchToDetected}
+                onCloseDetected={handleDismissDetected}
+              />
             }
             anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
             sx={{
