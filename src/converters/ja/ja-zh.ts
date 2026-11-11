@@ -14,8 +14,10 @@ export const jaZh = async (text: Text) => {
   const convert = (text: string) => {
     // Chinese writes the kanji iteration mark out (佐々木 → 佐佐木)
     const simplified = jp2s(normalizeJa(text)).replace(/(\p{scx=Han})々/gu, "$1$1");
+    // and drops the counter ヶ/ケ between kanji (茅ヶ崎 → 茅崎, 鎌ケ谷 → 镰谷)
+    const joined = simplified.replace(/(?<=\p{sc=Han})[ヶヵケ](?=\p{sc=Han})/gu, "");
     // Transliterate remaining Kana
-    return simplified.replace(/ー(?=[ンん])/g, "").replace(pattern, match => jaZhMap[match]);
+    return joined.replace(/ー(?=[ンん])/g, "").replace(pattern, match => jaZhMap[match]);
   };
 
   if (typeof text === "string") {

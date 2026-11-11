@@ -30,6 +30,13 @@ const joinsPrevious = (token: KuromojiToken) =>
 const sameReading = (a: string, b: string) =>
   a.replaceAll("ニッポン", "ニホン") === b.replaceAll("ニッポン", "ニホン");
 
+// Kana that kuromoji tags as a symbol or leaves without a reading inside a word: the
+// long-vowel mark ends the word before it (しゃちょー), the genitive ノ and ヶ also join
+// the word after them (沖ノ鳥島 Okinotorishima); ヶ reads ga (吉野ヶ里 Yoshinogasato)
+const INFIXES: Record<string, string> = { ー: "ー", ノ: "ノ", ヶ: "が" };
+const isInfix = (token: KuromojiToken) =>
+  Object.hasOwn(INFIXES, token.surface_form) && (token.pos === "記号" || !token.reading);
+
 // kuromoji's dictionary has whole names of companies and places (三菱商事,
 // 東日本旅客鉄道, 鹿児島湾), which are romanized as separate words. They're
 // split the way kuromoji would without that entry, but only if the parts
@@ -87,18 +94,26 @@ export const segmentJapanese = async (text: string) => {
       : [token],
   );
   const words: { segment: string; isWordLike: boolean }[] = [];
+  let joinsNext = false;
   for (const token of tokens) {
+    const last = words.at(-1);
+    if (last?.isWordLike && isInfix(token)) {
+      last.segment += INFIXES[token.surface_form];
+      joinsNext = token.surface_form !== "ー";
+      continue;
+    }
     // A morpheme may include punctuation (e.g. ヴィクトリア・), which is split off
     const parts = token.surface_form.split(/([^\p{L}\p{M}]+)/u).filter(Boolean);
     parts.forEach((part, i) => {
       const isWordLike = token.pos !== "記号" && /\p{L}/u.test(part);
       const last = words.at(-1);
-      if (i === 0 && last?.isWordLike && isWordLike && joinsPrevious(token)) {
+      if (i === 0 && last?.isWordLike && isWordLike && (joinsNext || joinsPrevious(token))) {
         last.segment += part;
       } else {
         words.push({ segment: part, isWordLike });
       }
     });
+    joinsNext = false;
   }
   return words;
 };

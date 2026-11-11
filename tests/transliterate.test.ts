@@ -5,37 +5,41 @@ import { validateLanguage } from "../src/helpers/validateLanguage";
 import { settings } from "../src/helpers/rbt";
 import { Language } from "../src/types";
 
-const WIKI_LETTER_PAIRS = new Set([
-  "mk-en",
-  "mk-ca",
-  "mk-cs",
-  "mk-da",
-  "mk-de",
-  "mk-es",
-  "mk-et",
-  "mk-fi",
-  "mk-it",
-  "mk-lb",
-  "mk-nl",
-  "mk-no",
-  "mk-pt",
-  "mk-ro",
-  "mk-sl",
-  "mk-sv",
-  "ru-it",
-  "uk-it",
-  "bg-cs",
-  "bg-et",
-  "bg-fi",
-  "bg-it",
-  "bg-sk",
-  "bg-sv",
-  "kk-ca",
-  "kk-fi",
-  "kk-it",
-  "kk-nl",
-  "zh-cs",
-]);
+// Letters the target's Wikipedia uses for these names, but the target's own alphabet lacks
+// (official Macedonian Latin ć, č, š, ž, scholarly transliteration ă, ǎ, ë, ė, ï, ǵ, ḱ, Kazakh Latin ğ, ñ, ş, ū, Czech/Slovak ö, ü)
+const WIKI_LETTERS: Record<string, string> = {
+  "mk-en": "ćčšž",
+  "mk-ca": "ćčšž",
+  "mk-cs": "ć",
+  "mk-da": "ćčšž",
+  "mk-de": "ćčšž",
+  "mk-es": "ćčšž",
+  "mk-et": "ćč",
+  "mk-fi": "ćč",
+  "mk-it": "čšžǵḱ",
+  "mk-lb": "ćčšž",
+  "mk-nl": "ćčšž",
+  "mk-no": "ćčšž",
+  "mk-pt": "ćčšž",
+  "mk-ro": "ćčšž",
+  "mk-sl": "ć",
+  "mk-sv": "ćčšž",
+  "ru-it": "čëėšž",
+  "uk-it": "čïšž",
+  "bg-cs": "ă",
+  "bg-et": "ǎč",
+  "bg-fi": "ă",
+  "bg-it": "ăčšž",
+  "bg-sk": "ă",
+  "bg-sv": "ă",
+  "kk-ca": "äñöğşū",
+  "kk-fi": "ñüğşū",
+  "kk-it": "äñöüğşū",
+  "kk-nl": "ğşū",
+  "zh-cs": "ü",
+  "zh-sk": "ü",
+  "ko-cs": "öü",
+};
 
 describe("transliteration of texts in all supported languages", () => {
   const examples: Record<Language, string> = {
@@ -104,12 +108,12 @@ describe("transliteration of texts in all supported languages", () => {
         expect(transliterated).toBeTypeOf("string");
 
         // Check if output is in the correct script, and uses correct letters/characters from the specified language
-        // (except the pairs that use the letters the target's Wikipedia uses for these names, but the target's own alphabet lacks:
-        // official Macedonian Latin č, š, ž, scholarly transliteration ă, ë, ė, ï, Kazakh Latin ğ, ñ, ş)
-        if (!WIKI_LETTER_PAIRS.has(`${from}-${to}`)) {
-          const outputScriptConfirmed = validateLanguage(to, transliterated);
-          expect(outputScriptConfirmed).toBe(true);
-        }
+        // (WIKI_LETTERS of the pair are stripped first)
+        const wikiLetters = WIKI_LETTERS[`${from}-${to}`];
+        const outputToValidate = wikiLetters
+          ? transliterated.replace(new RegExp(`[${wikiLetters}]`, "giu"), "")
+          : transliterated;
+        expect(validateLanguage(to, outputToValidate)).toBe(true);
 
         // Check if output has correct cases (skip Georgian because usually it doesn't have cases, yet Unicode contains Georgian uppercase letters)
         const { cases } = scripts[languages[to].script];

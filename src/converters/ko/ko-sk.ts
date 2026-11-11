@@ -5,19 +5,22 @@ export const koSk = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { latnKoHyphenRules } = await import("data/latn/latn_ko-hyphen.rules");
   const { koLatnAssimRules } = await import("data/ko/ko-latn_assim.rules");
-  const { koLatnRules } = await import("data/ko/ko-latn.rules");
-  const { koLatnSoulRules } = await import("data/ko/ko-latn_soul.rules");
-  const { latnSkRules } = await import("data/latn/latn-sk.rules");
+  const { koCsRules } = await import("data/ko/ko-cs.rules");
+  const { koCsSkRules } = await import("data/ko/ko-cs_sk.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
   const { normalizeKo } = await import("helpers/normalizeKo");
 
   const transliterator = RBT.fromRules(
-    koLatnSoulRules + koLatnAssimRules + koLatnRules + latnSkRules + latnKoHyphenRules,
+    koLatnAssimRules + koCsSkRules + koCsRules + latnKoHyphenRules,
   );
 
   const convert = async (text: string) => {
     const romanized = await wordSplitter(text, "ko", text =>
-      normalizeKo(text, text => Aromanize.romanize(text), "latn", { syllable: "‧", unit: "‧" }),
+      normalizeKo(text, text => Aromanize.romanize(text), "latn", {
+        name: "·",
+        syllable: "‧",
+        unit: "․",
+      }),
     );
     return transliterator.transliterate(romanized);
   };

@@ -7,11 +7,20 @@ const ARCHAIC_KANA: Record<string, string> = {
   ヺ: "ヴォ",
 };
 
-// Variant kanji kuromoji doesn't know, common in names (髙橋, 宮﨑, 𠮷田)
+// Variant kanji kuromoji doesn't know, common in names (髙橋, 宮﨑, 𠮷田, 川邉, 剱岳, 來未)
 const KANJI_VARIANTS: Record<string, string> = {
   髙: "高",
   﨑: "崎",
   𠮷: "吉",
+  濵: "浜",
+  邉: "辺",
+  亞: "亜",
+  郞: "郎",
+  經: "経",
+  將: "将",
+  剱: "剣",
+  凜: "凛",
+  來: "来",
 };
 
 /*
@@ -24,7 +33,7 @@ const KANJI_VARIANTS: Record<string, string> = {
  */
 export const normalizeJa = (text: string): string =>
   text
-    .replace(/[髙﨑𠮷]/gu, kanji => KANJI_VARIANTS[kanji])
+    .replace(/[髙﨑𠮷濵邉亞郞經將剱凜來]/gu, kanji => KANJI_VARIANTS[kanji])
     .replace(/[｡-ﾟ]+/g, s => s.normalize("NFKC"))
     .replace(/[ゎヮヷヸヹヺ]/g, kana => ARCHAIC_KANA[kana])
     .replace(

@@ -129,9 +129,8 @@ const needsSpace = (prev: Kind | undefined, next: Kind) =>
 export const wordSplitter = async (
   input: string,
   language: Language,
-  fn?: (word: string) => string | Promise<string>,
+  fn?: (word: string, givenName: boolean) => string | Promise<string>,
   skipSegmenter?: boolean,
-  // Write a surname together with the given name, as Korean does (마오쩌둥)
   joinNames?: boolean,
 ): Promise<string> => {
   const { regex } = languages[language];
@@ -154,17 +153,17 @@ export const wordSplitter = async (
     let prev: Kind | undefined;
     let afterSurname = false;
     const push = async (kind: Kind, text: string) => {
-      if (needsSpace(prev, kind) && !(afterSurname && kind === "word")) {
+      if (needsSpace(prev, kind) && !(joinNames && afterSurname && kind === "word")) {
         parts.push(" ");
       }
-      parts.push(kind === "word" && fn ? await fn(text) : text);
+      parts.push(kind === "word" && fn ? await fn(text, afterSurname) : text);
       prev = kind;
     };
 
     for (const { segment, isWordLike, surname } of segments) {
       if (isWordLike) {
         await push("word", segment);
-        afterSurname = Boolean(joinNames && surname);
+        afterSurname = Boolean(surname);
       } else {
         for (const char of segment) {
           const [replacement, kind] = PUNCTUATION[char] ?? [char, "inline"];

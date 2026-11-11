@@ -3,15 +3,14 @@ import { Text } from "types";
 export const jaSk = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { normalizeJa } = await import("helpers/normalizeJa");
-  const { jaLatnRules } = await import("data/ja/ja-latn.rules");
-  const { jaLatnHardRules } = await import("data/ja/ja-latn_hard.rules");
-  const { latnSkRules } = await import("data/latn/latn-sk.rules");
+  const { jaCsRules } = await import("data/ja/ja-cs.rules");
+  const { jaCsSkRules } = await import("data/ja/ja-cs_sk.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
   const { getKuroshiro } = await import("helpers/getKuroshiro");
 
   const kuroshiro = await getKuroshiro();
 
-  const transliterator = RBT.fromRules(jaLatnRules + jaLatnHardRules + latnSkRules);
+  const transliterator = RBT.fromRules(jaCsRules + jaCsSkRules);
 
   const convert = async (text: string) => {
     const romanized = await wordSplitter(

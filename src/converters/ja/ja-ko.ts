@@ -22,7 +22,9 @@ export const jaKo = async (text: Text) => {
     // Map Hiragana to Korean Jamo (Individual pieces)
     // Korean leaves long vowels unwritten (東京 → 도쿄, 大阪 → 오사카, 大分 → 오이타, 大内 → 오우치),
     // but の+うえ is 上 (井上 → 이노우에)
+    // Kanji kuromoji left unread (寿々野) are dropped, as in the other targets
     const short = hiragana
+      .replace(/\p{sc=Han}/gu, "")
       .replace(
         /([おこごそぞとどのほぼぽもよろをょオコゴソゾトドノホボポモヨロヲョ])[うおウオ](?!(?<=[のノ][うウ])[えエ])/g,
         "$1",

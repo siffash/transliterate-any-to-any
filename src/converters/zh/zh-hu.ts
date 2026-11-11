@@ -3,15 +3,15 @@ import { Text } from "types";
 export const zhHu = async (text: Text) => {
   const { pinyin } = await import("pinyin-pro");
   const { RBT } = await import("helpers/rbt");
-  const { zhLatnRules } = await import("data/zh/zh-latn.rules");
-  const { latnHuRules } = await import("data/latn/latn-hu.rules");
+  const { zhHuRules } = await import("data/zh/zh-hu.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
 
-  const transliterator = RBT.fromRules(zhLatnRules + latnHuRules);
+  const transliterator = RBT.fromRules(zhHuRules);
 
+  // Hungarian writes a place as one word (Tiencsin) and hyphenates a given name (Hszi Csin-ping)
   const convert = async (text: string) => {
-    const romanized = await wordSplitter(text, "zh", text =>
-      pinyin(text, { separator: "'", nonZh: "consecutive" }),
+    const romanized = await wordSplitter(text, "zh", (text, givenName) =>
+      pinyin(text, { separator: givenName ? "‧" : "'", nonZh: "consecutive" }),
     );
     return transliterator.transliterate(romanized);
   };

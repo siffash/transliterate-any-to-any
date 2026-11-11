@@ -5,18 +5,15 @@ export const koHu = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { latnKoHyphenRules } = await import("data/latn/latn_ko-hyphen.rules");
   const { koLatnAssimRules } = await import("data/ko/ko-latn_assim.rules");
-  const { koLatnRules } = await import("data/ko/ko-latn.rules");
-  const { latnHuRules } = await import("data/latn/latn-hu.rules");
+  const { koHuRules } = await import("data/ko/ko-hu.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
   const { normalizeKo } = await import("helpers/normalizeKo");
 
-  const transliterator = RBT.fromRules(
-    koLatnAssimRules + koLatnRules + latnHuRules + latnKoHyphenRules,
-  );
+  const transliterator = RBT.fromRules(koLatnAssimRules + koHuRules + latnKoHyphenRules);
 
   const convert = async (text: string) => {
     const romanized = await wordSplitter(text, "ko", text =>
-      normalizeKo(text, text => Aromanize.romanize(text), "latn", { syllable: "‧", unit: "‧" }),
+      normalizeKo(text, text => Aromanize.romanize(text), "latn", { name: "·", unit: "‧" }),
     );
     return transliterator.transliterate(romanized);
   };
