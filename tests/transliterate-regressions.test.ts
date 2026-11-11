@@ -369,7 +369,7 @@ describe("regressions of rule-based transliteration", () => {
     ["d'Artagnan, Jeanne d'Arc", "fr", "nl", "d’Artanjan, Zjan d’Ark"],
     ["d'Artagnan, David", "fr", "tr", "d’Artanan, David"],
     ["David, Genève, Antibes", "fr", "nl", "David, Zjenev, Antib"],
-    ["محمد, بغداد", "ar", "nl", "Moehammad, Bagdaad"],
+    ["بيروت, تدمر, شط العرب", "ar", "nl", "Beiroet, Tadmoer, Sjatt al-Arab"],
     ["תל אביב, פטרוב", "he", "nl", "Tel Aviv, Petrov"],
     ["پنجاب, اورنگزیب, نواز", "ur", "nl", "Pandzjaab, Aurangzeeb, Nawaaz"],
     ["दिल्ली, अहमदाबाद, इंदौर", "hi", "nl", "Dillie, Ahmadaabaad, Indaur"],
