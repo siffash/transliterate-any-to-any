@@ -2,6 +2,7 @@ import { Text } from "types";
 
 export const kkPl = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
+  const { kkLjRules } = await import("data/kk/kk_lj.rules");
   const { kkLatnRules } = await import("data/kk/kk-latn.rules");
   const { kkLatnORules } = await import("data/kk/kk-latn_o.rules");
   const { latnPlRules } = await import("data/latn/latn-pl.rules");
@@ -10,7 +11,13 @@ export const kkPl = async (text: Text) => {
   const { latnPlLRules } = await import("data/latn/latn-pl_l.rules");
 
   const transliterator = RBT.fromRules(
-    kkLatnRules + kkLatnORules + latnPlLyRules + latnPlCyrlRules + latnPlLRules + latnPlRules,
+    kkLjRules +
+      kkLatnRules +
+      kkLatnORules +
+      latnPlLyRules +
+      latnPlCyrlRules +
+      latnPlLRules +
+      latnPlRules,
   );
 
   if (typeof text === "string") {
