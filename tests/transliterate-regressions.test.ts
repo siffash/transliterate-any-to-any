@@ -2817,6 +2817,7 @@ describe("regressions of rule-based transliteration", () => {
     ["富士, 仙台", "ja", "sq", "Fuxhi, Sendai"],
     ["이태원, 정동진", "ko", "en", "Itaewon, Jeongdongjin"],
     ["김대중, 문재인, 노무현, 전두환", "ko", "sr", "Kim Dedžung, Mun Džein, No Muhjon, Čon Duhvan"],
+    ["경기도, 용산구", "ko", "sr", "Kjongi-do, Jongsan-gu"],
     ["김여정, 김정남", "ko", "sl", "Kim Jo-džong, Kim Džong-nam"],
     [
       "반기문, 이명박, 박근혜, 손흥민",
