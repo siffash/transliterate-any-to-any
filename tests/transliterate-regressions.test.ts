@@ -481,6 +481,12 @@ describe("regressions of rule-based transliteration", () => {
     ["Bănică, Nechita", "ro", "az", "Benike, Nekita"],
     ["Tekin, Ekinci", "tr", "az", "Tekin, Ekinci"],
     ["Θεσσαλονίκη", "el", "az", "Tessaloniki"],
+    ["Hamburg, Nürnberg, Göttingen", "de", "az", "Hamburq, Nürnberq, Göttingen"],
+    ["Волгоград, Геленджик", "ru", "az", "Volqoqrad, Gelencik"],
+    ["გორი, ზუგდიდი", "ka", "az", "Qori, Zuqdidi"],
+    ["Gaziantep, Giresun", "tr", "az", "Qaziantep, Giresun"],
+    ["Göteborg, Helsingborg", "sv", "az", "Göteborq, Helsinqborq"],
+    ["گیلان, گرگان", "fa", "az", "Gilan, Qorqan"],
     [
       "Banjarmasin, Tanjung, Simanjuntak, Njoo",
       "id",

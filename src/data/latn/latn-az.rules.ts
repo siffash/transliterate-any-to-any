@@ -100,4 +100,8 @@ w > v;
 [^[:L:][:M:]] { Ğ > Q;
 [aıouAIOU] { q } [aıouAIOU] > ğ;
 [aıouAIOU] { Q } [aıouAIOU] > Ğ;
+g } [eiöüəEİÖÜƏ] > g;
+G } [eiöüəEİÖÜƏ] > G;
+g > q;
+G > Q;
 `;
