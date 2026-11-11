@@ -69,9 +69,12 @@ export type Language =
   | "sv"
   | "vi";
 
+export type Spelling = "orthographic" | "established";
+
 export type Options = {
   from: Language;
   to: Language;
+  spelling?: Spelling;
 };
 
 export type Text = string | string[];

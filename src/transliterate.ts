@@ -1,5 +1,6 @@
 import { languages, supportedLanguages } from "helpers/constants";
 import { Language, Options, Text } from "types";
+import { keepsLatinText, usesEnglishRomanization } from "helpers/establishedSpelling";
 import { validateLanguage } from "helpers/validateLanguage";
 
 type Converter = (text: Text) => Promise<Text>;
@@ -2662,7 +2663,10 @@ const converters: Partial<Record<`${Language}${Language}`, () => Promise<Convert
 const normalizeApostrophes = (text: string) => text.replace(/['‘`´ʼʻ′＇]/g, "’");
 
 export const transliterate = async <T extends Text>(text: T, options: Options): Promise<T> => {
-  const { from, to } = options || {};
+  const { from, to, spelling = "orthographic" } = options || {};
+
+  const sourceText = text;
+  let targetLanguage = to;
 
   if (Array.isArray(text) ? text.length === 0 || text.some(s => !s) : !text) {
     throw new Error("Source text is empty.");
@@ -2682,6 +2686,9 @@ export const transliterate = async <T extends Text>(text: T, options: Options): 
   if (!supportedLanguages.includes(to)) {
     throw new Error(`Unsupported target language ("to"): ${to}.`);
   }
+  if (spelling !== "orthographic" && spelling !== "established") {
+    throw new Error(`Unsupported spelling: ${spelling}.`);
+  }
   if (from === to) {
     throw new Error(
       `Source ("from") and target ("to") languages are the same: ${languages[from].name}.`,
@@ -2694,7 +2701,16 @@ export const transliterate = async <T extends Text>(text: T, options: Options): 
     throw new Error(`Source text does not match ${languages[from].name}.`);
   }
 
-  const load = converters[`${from}${to}`];
+  if (spelling === "established" && languages[to].script === "Latn") {
+    if (languages[from].script === "Latn" && keepsLatinText(to)) {
+      return sourceText;
+    }
+    if (usesEnglishRomanization(from, to)) {
+      targetLanguage = "en";
+    }
+  }
+
+  const load = converters[`${from}${targetLanguage}`];
   if (!load) {
     throw new Error(`The language pair is not supported: ${from} -> ${to}`);
   }

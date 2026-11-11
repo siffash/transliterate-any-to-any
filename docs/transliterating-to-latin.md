@@ -1,10 +1,10 @@
 # Transliterating to Latin-Script Languages
 
-The library re-spells a name by the target language's own spelling rules ([orthographic transcription](https://en.wikipedia.org/wiki/Orthographic_transcription)). Real usage differs: many Latin-script languages simply keep the English romanization for names from some scripts. This page shows which form each language actually uses, based on Wikipedia article titles.
+The library re-spells names by the target language's own spelling rules ([orthographic transcription](https://en.wikipedia.org/wiki/Orthographic_transcription)). Real usage differs: many Latin-script languages simply keep Latin-script names unchanged and keep the English romanization for names from some scripts. This page shows which form each language actually uses, based on Wikipedia article titles. To follow it automatically, pass `spelling: "established"` to `transliterate` (see [Spelling](../README.md#spelling) in the README).
 
 ## Latin → Latin
 
-Most Latin-script languages keep a Latin-script name unchanged (Bordeaux, Łódź, Stuttgart). Only these languages re-spell it:
+Most Latin-script languages keep Latin-script names unchanged (Bordeaux, Łódź, Stuttgart). Only these languages re-spell it:
 
 | Target | Example                                  |
 | ------ | ---------------------------------------- |

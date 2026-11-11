@@ -1,13 +1,13 @@
 import { describe, expect, it } from "vitest";
 import { transliterate } from "../src/transliterate";
-import { Language, Text } from "../src/types";
+import { Language, Spelling, Text } from "../src/types";
 
-type Example = { from: Language; to: Language; text: Text; expected: Text };
+type Example = { from: Language; to: Language; text: Text; expected: Text; spelling?: Spelling };
 
 const testExamples = (examples: Example[]) => {
-  for (const { from, to, text, expected } of examples) {
+  for (const { from, to, text, expected, spelling } of examples) {
     it(`transliterate ${text.toString()} from ${from} to ${to}`, async () => {
-      expect(await transliterate(text, { from, to })).toEqual(expected);
+      expect(await transliterate(text, { from, to, spelling })).toEqual(expected);
     });
   }
 };
@@ -23,6 +23,14 @@ describe("README examples", () => {
     { from: "ko", to: "en", text: ["서울", "부산"], expected: ["Seoul", "Busan"] },
     { from: "zh", to: "bg", text: ["上海", "广州"], expected: ["Шанхай", "Гуанджоу"] },
     { from: "hi", to: "he", text: ["मुंबई", "कोलकाता"], expected: ["מומבאי", "קולקטה"] },
+    { from: "zh", to: "de", text: "成都", expected: "Tschengdu", spelling: "orthographic" },
+    { from: "zh", to: "de", text: "成都", expected: "Chengdu", spelling: "established" },
+    { from: "uk", to: "de", text: "Харків", expected: "Charkiw", spelling: "orthographic" },
+    { from: "uk", to: "de", text: "Харків", expected: "Charkiw", spelling: "established" },
+    { from: "fr", to: "de", text: "Bordeaux", expected: "Bordo", spelling: "orthographic" },
+    { from: "fr", to: "de", text: "Bordeaux", expected: "Bordeaux", spelling: "established" },
+    { from: "fr", to: "lt", text: "Bordeaux", expected: "Bordo", spelling: "orthographic" },
+    { from: "fr", to: "lt", text: "Bordeaux", expected: "Bordo", spelling: "established" },
   ]);
 });
 

@@ -71,10 +71,11 @@ await transliterate(["मुंबई", "कोलकाता"], { from: "hi", 
 
 #### Options
 
-| Object property | Type     | Required | Description                                                                  |
-| --------------- | -------- | -------- | ---------------------------------------------------------------------------- |
-| `from`          | `string` | Yes      | Source language in [BCP 47](https://en.wikipedia.org/wiki/IETF_language_tag) |
-| `to`            | `string` | Yes      | Target language in [BCP 47](https://en.wikipedia.org/wiki/IETF_language_tag) |
+| Object property | Type                              | Required | Description                                                                  |
+| --------------- | --------------------------------- | -------- | ---------------------------------------------------------------------------- |
+| `from`          | `string`                          | Yes      | Source language in [BCP 47](https://en.wikipedia.org/wiki/IETF_language_tag) |
+| `to`            | `string`                          | Yes      | Target language in [BCP 47](https://en.wikipedia.org/wiki/IETF_language_tag) |
+| `spelling`      | `"orthographic" \| "established"` | No       | Spelling style (default: `"orthographic"`) - see [Spelling](#spelling)       |
 
 ## 🔍 Detect Language
 
@@ -112,7 +113,33 @@ if (languages[sourceLanguage]?.script !== languages[targetLanguage]?.script) {
 }
 ```
 
-See also: [Transliterating to Latin-Script Languages](https://github.com/siffash/transliterate-any-to-any/tree/main/docs/transliterating-to-latin.md).
+For Latin-script target languages, `spelling: "established"` does this for you (see below).
+
+<a id="spelling"></a>
+
+## 🔤 Spelling
+
+By default (`spelling: "orthographic"`), the library re-spells names by the target language's own spelling rules ([orthographic transcription](https://en.wikipedia.org/wiki/Orthographic_transcription)). Real usage differs: many Latin-script languages simply keep Latin-script names unchanged and keep the English romanization for names from some scripts. With `spelling: "established"`, transliteration to Latin-script languages follows [Transliterating to Latin-Script Languages](https://github.com/siffash/transliterate-any-to-any/tree/main/docs/transliterating-to-latin.md):
+
+```typescript
+// Chinese → German: the English romanization is used
+await transliterate("成都", { from: "zh", to: "de", spelling: "orthographic" }); // → Tschengdu
+await transliterate("成都", { from: "zh", to: "de", spelling: "established" }); // → Chengdu
+
+// Ukrainian → German: the German spelling is used
+await transliterate("Харків", { from: "uk", to: "de", spelling: "orthographic" }); // → Charkiw
+await transliterate("Харків", { from: "uk", to: "de", spelling: "established" }); // → Charkiw
+
+// French → German: the name is kept unchanged
+await transliterate("Bordeaux", { from: "fr", to: "de", spelling: "orthographic" }); // → Bordo
+await transliterate("Bordeaux", { from: "fr", to: "de", spelling: "established" }); // → Bordeaux
+
+// French → Lithuanian: the name is re-spelled
+await transliterate("Bordeaux", { from: "fr", to: "lt", spelling: "orthographic" }); // → Bordo
+await transliterate("Bordeaux", { from: "fr", to: "lt", spelling: "established" }); // → Bordo
+```
+
+The option has no effect on non-Latin-script target languages.
 
 ## ✅ Validate Language
 
