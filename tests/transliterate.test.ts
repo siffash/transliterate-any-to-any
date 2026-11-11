@@ -34,6 +34,7 @@ const WIKI_LETTER_PAIRS = new Set([
   "kk-fi",
   "kk-it",
   "kk-nl",
+  "zh-cs",
 ]);
 
 describe("transliteration of texts in all supported languages", () => {
