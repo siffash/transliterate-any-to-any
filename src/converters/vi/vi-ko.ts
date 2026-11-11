@@ -2,10 +2,9 @@ import { Text } from "types";
 
 export const viKo = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
-  const { viIpaRules } = await import("data/vi/vi-ipa.rules");
-  const { ipaKoRules } = await import("data/ipa/ipa-ko.rules");
+  const { viKoRules } = await import("data/vi/vi-ko.rules");
 
-  const transliterator = RBT.fromRules(viIpaRules + ipaKoRules);
+  const transliterator = RBT.fromRules(viKoRules);
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);
