@@ -32,32 +32,32 @@ A TypeScript library for [orthographic transcription](https://en.wikipedia.org/w
 ```typescript
 import { transliterate } from "transliterate-any-to-any";
 
-// Maltese -> Latvian
-await transliterate("Marsaxlokk", { from: "mt", to: "lv" }); // -> Marsašlok
+// Maltese → Latvian
+await transliterate("Marsaxlokk", { from: "mt", to: "lv" }); // → Marsašlok
 
-// French -> Russian
-await transliterate("Pierre Richard", { from: "fr", to: "ru" }); // -> Пьер Ришар
+// French → Russian
+await transliterate("Pierre Richard", { from: "fr", to: "ru" }); // → Пьер Ришар
 
-// English -> Korean
-await transliterate("Sean Connery", { from: "en", to: "ko" }); // -> 숀 코너리
+// English → Korean
+await transliterate("Sean Connery", { from: "en", to: "ko" }); // → 숀 코너리
 
-// Greek -> Armenian
-await transliterate("Λάρισα", { from: "el", to: "hy" }); // -> Լարիսա
+// Greek → Armenian
+await transliterate("Λάρισα", { from: "el", to: "hy" }); // → Լարիսա
 
-// Bulgarian -> Czech
-await transliterate("Копривщица", { from: "bg", to: "cs" }); // -> Koprivštica
+// Bulgarian → Czech
+await transliterate("Копривщица", { from: "bg", to: "cs" }); // → Koprivštica
 
-// Japanese -> Arabic
-await transliterate("青森", { from: "ja", to: "ar" }); // -> اوموري
+// Japanese → Arabic
+await transliterate("青森", { from: "ja", to: "ar" }); // → اوموري
 
-// Korean -> English
-await transliterate(["서울", "부산"], { from: "ko", to: "en" }); // -> ["Seoul", "Busan"]
+// Korean → English
+await transliterate(["서울", "부산"], { from: "ko", to: "en" }); // → ["Seoul", "Busan"]
 
-// Chinese -> Bulgarian
-await transliterate(["上海", "广州"], { from: "zh", to: "bg" }); // -> ["Шанхай", "Гуанджоу"]
+// Chinese → Bulgarian
+await transliterate(["上海", "广州"], { from: "zh", to: "bg" }); // → ["Шанхай", "Гуанджоу"]
 
-// Hindi -> Hebrew
-await transliterate(["मुंबई", "कोलकाता"], { from: "hi", to: "he" }); // -> ["קולקטה" ,"מומבאי"]
+// Hindi → Hebrew
+await transliterate(["मुंबई", "कोलकाता"], { from: "hi", to: "he" }); // → ["קולקטה" ,"מומבאי"]
 ```
 
 ## 🛠️ API Reference
@@ -83,22 +83,22 @@ If you don't know the source language in advance, you can guess it from the lett
 ```typescript
 import { detectLanguage } from "transliterate-any-to-any";
 
-detectLanguage("თბილისი"); // -> "ka"
-detectLanguage("Київ"); // -> "uk"
-detectLanguage("Müller"); // -> "de"
-detectLanguage(["東京", "みやざき"]); // -> "ja"
-detectLanguage("123"); // -> undefined (no letters)
-detectLanguage("Иван Ivan"); // -> throws an error (mixed scripts)
+detectLanguage("თბილისი"); // → "ka"
+detectLanguage("Київ"); // → "uk"
+detectLanguage("Müller"); // → "de"
+detectLanguage(["東京", "みやざき"]); // → "ja"
+detectLanguage("123"); // → undefined (no letters)
+detectLanguage("Иван Ivan"); // → throws an error (mixed scripts)
 ```
 
 When the text could belong to several languages, it falls back to the most common one:
 
-- Chinese (`zh`) over Japanese (`ja`) - e.g. `青森` without any kana
-- Arabic (`ar`) over Persian (`fa`) & Urdu (`ur`)
-- Russian (`ru`) over Ukrainian (`uk`), Bulgarian (`bg`), Macedonian (`mk`), Kazakh (`kk`) & Tajik (`tg`)
-- English (`en`) over other Latin-script languages, then German (`de`), French (`fr`), Spanish (`es`) & Turkish (`tr`) over the rest - e.g. `Müller` is German, not Azerbaijani; Serbian (`sr`) over Croatian (`hr`) & Bosnian (`bs`)
+- Chinese `zh` over Japanese `ja`;
+- Arabic `ar` over Persian `fa` & Urdu `ur`;
+- Russian `ru` over Ukrainian `uk`, Bulgarian `bg`, Macedonian `mk`, Kazakh `kk` & Tajik `tg`;
+- English `en` over other Latin-script languages; then German `de`, French `fr`, Spanish `es` & Turkish `tr` over the rest.
 
-It returns `undefined` if the text has no letters or contains letters that no supported language uses, and throws an error if the text mixes letters of different languages (e.g. Cyrillic & Latin).
+It returns `undefined` if the text has no letters or contains letters that no supported language uses, and throws an error if the text mixes letters of different languages.
 
 ## ⏭️ Skip Same-Script Pairs
 
@@ -119,7 +119,7 @@ See also: [Transliterating to Latin-Script Languages](https://github.com/siffash
 By default, the library validates the source text against the source language. This is done by checking if the source text contains only the letters/characters from the language's alphabet/script:
 
 ```typescript
-await transliterate("ლევან", { from: "en", to: "zh" }); // -> throws an error
+await transliterate("ლევან", { from: "en", to: "zh" }); // → throws an error
 ```
 
 If you need to do it yourself, you can use the function `validateLanguage`:

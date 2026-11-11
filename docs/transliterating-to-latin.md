@@ -4,7 +4,7 @@ The library always re-spells a name by the target language's own spelling rules 
 
 ## Latin → Latin
 
-Most languages keep a Latin-script name unchanged (Bordeaux, Łódź, Würzburg). Only these re-spell it:
+Most Latin-script languages keep a Latin-script name unchanged (Bordeaux, Łódź, Würzburg). Only these languages re-spell it:
 
 | Target | Example                                  |
 | ------ | ---------------------------------------- |
@@ -20,59 +20,43 @@ For any other Latin target, keep the text as it is (see _Skip Same-Script Pairs_
 
 Each cell says which output to use for a source language **S** and a target language **T**:
 
-- **EN**: the English romanization, i.e. the library's `S → en` output (Pinyin, Hepburn, Revised Romanization, …). Example: Chengdu stays _Chengdu_ in German.
+- **EN**: the English romanization, i.e. the library's `S → en` output (Pinyin, Hepburn, Revised Romanization, etc.). Example: Chengdu stays _Chengdu_ in German.
 - **own**: the target's own spelling, i.e. the library's `S → T` output. Example: Chelyabinsk becomes _Tscheljabinsk_ in German.
 
-Source languages are grouped into columns by how targets treat them:
-
-| Column | Source languages |
-| ------ | ---------------- |
-| CYR    | ru uk bg mk kk   |
-| TG     | tg               |
-| ARA    | ar fa            |
-| SAS    | hi bn ur         |
-| ZH     | zh               |
-| JA     | ja               |
-| KO     | ko               |
-| TH     | th               |
-| EL     | el               |
-| HE     | he               |
-| CAU    | ka hy            |
-
-| Target | CYR | TG  | ARA  | SAS | ZH  | JA  | KO  | TH   | EL   | HE   | CAU |
-| ------ | --- | --- | ---- | --- | --- | --- | --- | ---- | ---- | ---- | --- |
-| `az`   | own | own | own  | own | own | own | own | own* | own  | own  | own |
-| `bs`   | own | own | own  | EN  | EN  | EN  | EN  | EN   | own* | EN   | own |
-| `ca`   | own | EN  | EN   | EN  | EN  | EN  | EN  | EN   | own  | own  | own |
-| `cs`   | own | own | own  | own | own | own | own | own  | own  | own  | own |
-| `da`   | own | EN  | EN   | EN  | EN  | EN  | EN  | EN   | EN   | EN   | own |
-| `de`   | own | own | own  | EN  | EN  | EN  | EN  | EN   | EN   | own  | own |
-| `es`   | own | EN  | own  | EN  | EN  | EN  | EN  | EN   | own  | EN   | own |
-| `et`   | own | own | own  | EN  | EN  | EN  | EN  | EN   | own  | own  | own |
-| `fi`   | own | own | EN   | EN  | EN  | EN  | EN  | EN   | own  | EN   | own |
-| `fr`   | own | own | own  | EN  | EN  | EN  | EN  | EN   | own  | EN   | own |
-| `hr`   | own | own | own  | EN  | EN  | EN  | EN  | EN   | own  | own  | own |
-| `hu`   | own | own | own  | own | own | own | own | own  | own  | own  | own |
-| `id`   | EN  | EN  | EN   | EN  | EN  | EN  | EN  | EN   | EN   | EN   | EN  |
-| `is`   | own | own | EN   | EN  | EN  | EN  | EN  | EN   | own  | EN   | own |
-| `it`   | own | own | EN   | EN  | EN  | EN  | EN  | EN   | EN   | EN   | EN  |
-| `lb`   | own | own | own  | EN  | EN  | EN  | EN  | EN   | EN   | own* | own |
-| `lt`   | own | own | own  | own | own | own | own | own  | own  | own  | own |
-| `lv`   | own | own | own  | own | own | own | own | own  | own  | own  | own |
-| `ms`   | EN  | EN  | EN   | EN  | EN  | EN  | EN  | EN   | EN   | EN   | EN  |
-| `mt`   | EN  | EN  | own* | EN* | EN  | EN  | EN  | EN   | own* | EN   | EN  |
-| `nl`   | own | own | EN   | EN  | EN  | EN  | EN  | EN   | EN   | own  | own |
-| `no`   | own | own | EN   | EN  | EN  | EN  | EN  | EN   | own  | EN   | own |
-| `pl`   | own | own | own  | EN  | EN  | EN  | EN  | EN   | own  | own  | own |
-| `pt`   | own | own | own  | EN  | EN  | EN  | EN  | EN   | own  | EN   | own |
-| `ro`   | own | own | EN   | EN  | EN  | EN  | EN  | EN   | EN   | own  | own |
-| `sk`   | own | own | own  | own | own | own | own | own  | own  | own  | own |
-| `sl`   | own | own | own  | own | own | own | own | EN   | own  | own  | own |
-| `sq`   | own | own | own  | own | own | EN  | EN  | EN*  | own  | own  | own |
-| `sr`   | own | own | own  | own | own | own | own | own  | own  | own  | own |
-| `sv`   | own | own | EN   | EN  | EN  | EN  | EN  | EN   | EN   | EN   | own |
-| `tr`   | own | own | own  | EN  | EN  | EN  | EN  | EN   | own  | own  | own |
-| `vi`   | EN  | EN  | EN   | EN  | own | EN  | EN  | EN   | EN   | EN   | EN  |
+| Target | ru uk bg mk kk | tg  | ar fa | hi bn ur | zh  | ja ko | th   | el   | he   | ka hy |
+| ------ | -------------- | --- | ----- | -------- | --- | ----- | ---- | ---- | ---- | ----- |
+| `az`   | own            | own | own   | own      | own | own   | own* | own  | own  | own   |
+| `bs`   | own            | own | own   | EN       | EN  | EN    | EN   | own* | EN   | own   |
+| `ca`   | own            | EN  | EN    | EN       | EN  | EN    | EN   | own  | own  | own   |
+| `cs`   | own            | own | own   | own      | own | own   | own  | own  | own  | own   |
+| `da`   | own            | EN  | EN    | EN       | EN  | EN    | EN   | EN   | EN   | own   |
+| `de`   | own            | own | own   | EN       | EN  | EN    | EN   | EN   | own  | own   |
+| `es`   | own            | EN  | own   | EN       | EN  | EN    | EN   | own  | EN   | own   |
+| `et`   | own            | own | own   | EN       | EN  | EN    | EN   | own  | own  | own   |
+| `fi`   | own            | own | EN    | EN       | EN  | EN    | EN   | own  | EN   | own   |
+| `fr`   | own            | own | own   | EN       | EN  | EN    | EN   | own  | EN   | own   |
+| `hr`   | own            | own | own   | EN       | EN  | EN    | EN   | own  | own  | own   |
+| `hu`   | own            | own | own   | own      | own | own   | own  | own  | own  | own   |
+| `id`   | EN             | EN  | EN    | EN       | EN  | EN    | EN   | EN   | EN   | EN    |
+| `is`   | own            | own | EN    | EN       | EN  | EN    | EN   | own  | EN   | own   |
+| `it`   | own            | own | EN    | EN       | EN  | EN    | EN   | EN   | EN   | EN    |
+| `lb`   | own            | own | own   | EN       | EN  | EN    | EN   | EN   | own* | own   |
+| `lt`   | own            | own | own   | own      | own | own   | own  | own  | own  | own   |
+| `lv`   | own            | own | own   | own      | own | own   | own  | own  | own  | own   |
+| `ms`   | EN             | EN  | EN    | EN       | EN  | EN    | EN   | EN   | EN   | EN    |
+| `mt`   | EN             | EN  | own*  | EN*      | EN  | EN    | EN   | own* | EN   | EN    |
+| `nl`   | own            | own | EN    | EN       | EN  | EN    | EN   | EN   | own  | own   |
+| `no`   | own            | own | EN    | EN       | EN  | EN    | EN   | own  | EN   | own   |
+| `pl`   | own            | own | own   | EN       | EN  | EN    | EN   | own  | own  | own   |
+| `pt`   | own            | own | own   | EN       | EN  | EN    | EN   | own  | EN   | own   |
+| `ro`   | own            | own | EN    | EN       | EN  | EN    | EN   | EN   | own  | own   |
+| `sk`   | own            | own | own   | own      | own | own   | own  | own  | own  | own   |
+| `sl`   | own            | own | own   | own      | own | own   | EN   | own  | own  | own   |
+| `sq`   | own            | own | own   | own      | own | EN    | EN*  | own  | own  | own   |
+| `sr`   | own            | own | own   | own      | own | own   | own  | own  | own  | own   |
+| `sv`   | own            | own | EN    | EN       | EN  | EN    | EN   | EN   | EN   | own   |
+| `tr`   | own            | own | own   | EN       | EN  | EN    | EN   | own  | own  | own   |
+| `vi`   | EN             | EN  | EN    | EN       | own | EN    | EN   | EN   | EN   | EN    |
 
 \* Little or no Wikipedia data: the value follows the same target's other columns or a closely related language (`bs` → `hr`, `lb` → `de`).
 
