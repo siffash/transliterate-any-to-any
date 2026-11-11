@@ -2,14 +2,9 @@ import { Text } from "types";
 
 export const ukIt = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
-  const { ukLatnRules } = await import("data/uk/uk-latn.rules");
-  const { latnSeparatorRules } = await import("data/latn/latn_separator.rules");
-  const { latnItRules } = await import("data/latn/latn-it.rules");
-  const { latnItIiRules } = await import("data/latn/latn-it_ii.rules");
+  const { ukItRules } = await import("data/uk/uk-it.rules");
 
-  const transliterator = RBT.fromRules(
-    ukLatnRules + latnSeparatorRules + latnItRules + latnItIiRules,
-  );
+  const transliterator = RBT.fromRules(ukItRules);
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);

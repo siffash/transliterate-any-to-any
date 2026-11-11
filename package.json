@@ -94,13 +94,12 @@
     "pinyin-pro": "^3.29.4"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3.3.6",
     "@eslint/js": "^10.0.1",
     "@rolldown/plugin-node-polyfills": "^1.0.3",
     "@types/node": "^25.9.5",
     "@types/opencc-js": "^1.0.3",
-    "@typescript-eslint/eslint-plugin": "^8.65.0",
-    "@typescript-eslint/parser": "^8.65.0",
+    "@typescript-eslint/eslint-plugin": "^8.72.2",
+    "@typescript-eslint/parser": "^8.72.2",
     "@typescript/native": "npm:typescript@7.0.2",
     "@typescript/typescript6": "^6.0.2",
     "eslint": "^10.8.0",
@@ -119,8 +118,9 @@
     "vitest": "^4.1.10"
   },
   "overrides": {
-    "tar": "7.5.13",
-    "lodash": "^4.18.1"
+    "tar": "^7.5.22",
+    "lodash": "^4.18.1",
+    "minimatch": "^11.0.8"
   },
   "allowScripts": {
     "esbuild@0.28.1": true,

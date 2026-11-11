@@ -4,8 +4,9 @@ export const lbSv = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { lbLatn } = await import("converters/lb/lb-latn");
   const { latnSvRules } = await import("data/latn/latn-sv.rules");
+  const { latnIRules } = await import("data/latn/latn_i.rules");
 
-  const transliterator = RBT.fromRules(latnSvRules);
+  const transliterator = RBT.fromRules(latnIRules + latnSvRules);
 
   if (typeof text === "string") {
     const latn = await lbLatn<string>(text);

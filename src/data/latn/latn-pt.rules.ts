@@ -114,15 +114,13 @@ x > kh;
 Ž > J;
 ž > j;
 
-[KQ] } [EIYÏ] > QU;
-[KQ] } [eiyï] > Qu;
-[kq] } [EIYÏ] > qU;
-[kq] } [eiyï] > qu;
+Q } [EIYÏ] > QU;
+Q } [eiyï] > Qu;
+q } [EIYÏ] > qU;
+q } [eiyï] > qu;
 
-K } [hH] > K;
-k } [hH] > k;
-[KQ] > C;
-[kq] > c;
+Q > C;
+q > c;
 
 G } [EIYÏ] > GU;
 G } [eiyï] > Gu;
@@ -139,8 +137,11 @@ w > v;
 Y [iï] > I;
 [yY] } [iIïÏ] > ;
 
-[YÏ] > I;
-[yï] > i;
+Y > I;
+y > i;
+
+Ï > Y;
+ï > y;
 
 Ä > A;
 ä > a;

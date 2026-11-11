@@ -6,13 +6,19 @@ export const koFr = async (text: Text) => {
   const { latnKoHyphenRules } = await import("data/latn/latn_ko-hyphen.rules");
   const { koLatnAssimRules } = await import("data/ko/ko-latn_assim.rules");
   const { koLatnRules } = await import("data/ko/ko-latn.rules");
+  const { latnIRules } = await import("data/latn/latn_i.rules");
   const { latnOuHiatusRules } = await import("data/latn/latn_ou-hiatus.rules");
   const { latnFrRules } = await import("data/latn/latn-fr.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
   const { normalizeKo } = await import("helpers/normalizeKo");
 
   const transliterator = RBT.fromRules(
-    koLatnAssimRules + koLatnRules + latnOuHiatusRules + latnFrRules + latnKoHyphenRules,
+    koLatnAssimRules +
+      koLatnRules +
+      latnIRules +
+      latnOuHiatusRules +
+      latnFrRules +
+      latnKoHyphenRules,
   );
 
   const convert = async (text: string) => {

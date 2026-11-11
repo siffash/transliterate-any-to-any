@@ -1,6 +1,6 @@
 # Transliterating to Latin-Script Languages
 
-The library always re-spells a name by the target language's own spelling rules ([orthographic transcription](https://en.wikipedia.org/wiki/Orthographic_transcription)). Real usage differs: many Latin-script languages simply keep the English romanization for names from some scripts. This page shows which form each language actually uses, based on Wikipedia article titles.
+The library re-spells a name by the target language's own spelling rules ([orthographic transcription](https://en.wikipedia.org/wiki/Orthographic_transcription)). Real usage differs: many Latin-script languages simply keep the English romanization for names from some scripts. This page shows which form each language actually uses, based on Wikipedia article titles.
 
 ## Latin → Latin
 

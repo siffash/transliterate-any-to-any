@@ -4,8 +4,10 @@ export const itEs = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { itLatnRules } = await import("data/it/it-latn.rules");
   const { latnEsRules } = await import("data/latn/latn-es.rules");
+  const { latnEsXRules } = await import("data/latn/latn-es_x.rules");
+  const { latnKQuRules } = await import("data/latn/latn_k-qu.rules");
 
-  const transliterator = RBT.fromRules(itLatnRules + latnEsRules);
+  const transliterator = RBT.fromRules(itLatnRules + latnEsRules + latnEsXRules + latnKQuRules);
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);

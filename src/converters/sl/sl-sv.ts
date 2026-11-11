@@ -6,9 +6,10 @@ export const slSv = async (text: Text) => {
   const { latnSlavicLjRules } = await import("data/latn/latn_slavic-lj.rules");
   const { latnSlavicNjRules } = await import("data/latn/latn_slavic-nj.rules");
   const { latnSvRules } = await import("data/latn/latn-sv.rules");
+  const { latnXHRules } = await import("data/latn/latn_x-h.rules");
 
   const transliterator = RBT.fromRules(
-    slLatnRules + latnSlavicLjRules + latnSlavicNjRules + latnSvRules,
+    slLatnRules + latnSlavicLjRules + latnSlavicNjRules + latnXHRules + latnSvRules,
   );
 
   if (typeof text === "string") {

@@ -5,6 +5,37 @@ import { validateLanguage } from "../src/helpers/validateLanguage";
 import { settings } from "../src/helpers/rbt";
 import { Language } from "../src/types";
 
+const WIKI_LETTER_PAIRS = new Set([
+  "mk-en",
+  "mk-ca",
+  "mk-cs",
+  "mk-da",
+  "mk-de",
+  "mk-es",
+  "mk-et",
+  "mk-fi",
+  "mk-it",
+  "mk-lb",
+  "mk-nl",
+  "mk-no",
+  "mk-pt",
+  "mk-ro",
+  "mk-sl",
+  "mk-sv",
+  "ru-it",
+  "uk-it",
+  "bg-cs",
+  "bg-et",
+  "bg-fi",
+  "bg-it",
+  "bg-sk",
+  "bg-sv",
+  "kk-ca",
+  "kk-fi",
+  "kk-it",
+  "kk-nl",
+]);
+
 describe("transliteration of texts in all supported languages", () => {
   const examples: Record<Language, string> = {
     zh: "北京, 上海, 广州, 深圳, 成都, 杭州, 西安, 武汉, 南京, 重庆, 苏州, 天津, 长沙, 青岛, 昆明, 沈阳, 济南, 郑州, 福州, 厦门, 张伟杰, 李美玲, 王建国, 刘小龙, 陈志强, 杨淑珍, 赵子涵, 黄俊豪, 周嘉怡, 吴明辉, 徐婉莹, 孙博文, 马晓燕, 朱宇轩, 胡瑞麟, 郭梦琪, 何正平, 林依诺, 高振宇, 罗永康, 腾讯科技股份有限公司, 阿里巴巴集团控股有限公司, 华为技术有限公司, 百度在线网络技术有限公司, 京东集团股份有限公司, 美团点评技术有限公司, 字节跳动科技有限公司, 中国移动通信集团有限公司, 中国建设银行股份有限公司, 中国石油天然气集团有限公司, 中国平安保险集团股份有限公司, 小米科技有限责任公司, 联想集团有限公司, 比亚迪股份有限公司, 格力电器股份有限公司, 海尔智家股份有限公司, 万科企业股份有限公司, 贵州茅台酒股份有限公司, 宁德时代新能源科技股份有限公司, 携程计算机技术上海有限公司",
@@ -72,8 +103,9 @@ describe("transliteration of texts in all supported languages", () => {
         expect(transliterated).toBeTypeOf("string");
 
         // Check if output is in the correct script, and uses correct letters/characters from the specified language
-        // (except mk → en, which uses the official Macedonian Latin letters č, š, ž like English Wikipedia)
-        if (!(from === "mk" && to === "en")) {
+        // (except the pairs that use the letters the target's Wikipedia uses for these names, but the target's own alphabet lacks:
+        // official Macedonian Latin č, š, ž, scholarly transliteration ă, ë, ė, ï, Kazakh Latin ğ, ñ, ş)
+        if (!WIKI_LETTER_PAIRS.has(`${from}-${to}`)) {
           const outputScriptConfirmed = validateLanguage(to, transliterated);
           expect(outputScriptConfirmed).toBe(true);
         }

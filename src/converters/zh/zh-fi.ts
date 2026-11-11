@@ -4,10 +4,11 @@ export const zhFi = async (text: Text) => {
   const { pinyin } = await import("pinyin-pro");
   const { RBT } = await import("helpers/rbt");
   const { zhLatnRules } = await import("data/zh/zh-latn.rules");
+  const { latnIRules } = await import("data/latn/latn_i.rules");
   const { latnFiRules } = await import("data/latn/latn-fi.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
 
-  const transliterator = RBT.fromRules(zhLatnRules + latnFiRules);
+  const transliterator = RBT.fromRules(zhLatnRules + latnIRules + latnFiRules);
 
   const convert = async (text: string) => {
     const romanized = await wordSplitter(text, "zh", text =>

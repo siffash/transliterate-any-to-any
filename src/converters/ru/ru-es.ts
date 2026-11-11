@@ -4,9 +4,21 @@ export const ruEs = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { ruLatnRules } = await import("data/ru/ru-latn.rules");
   const { latnSeparatorRules } = await import("data/latn/latn_separator.rules");
+  const { ruLatnIjRules } = await import("data/ru/ru-latn_ij.rules");
+  const { latnIyIRules } = await import("data/latn/latn_iy-i.rules");
+  const { latnAiRules } = await import("data/latn/latn_ai.rules");
   const { latnEsRules } = await import("data/latn/latn-es.rules");
+  const { latnIaRules } = await import("data/latn/latn_ia.rules");
 
-  const transliterator = RBT.fromRules(ruLatnRules + latnSeparatorRules + latnEsRules);
+  const transliterator = RBT.fromRules(
+    ruLatnRules +
+      latnIaRules +
+      latnSeparatorRules +
+      ruLatnIjRules +
+      latnIyIRules +
+      latnAiRules +
+      latnEsRules,
+  );
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);

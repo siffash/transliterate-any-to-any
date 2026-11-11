@@ -120,8 +120,8 @@ x > h;
 
 [wW] { [wW]+ > ;
 [yY] { [yY]+ > ;
-[cC][hH] { h > h;
-[cC][hH] { H > H;
+[cszkCSZK] [hH] { h > h;
+[cszkCSZK] [hH] { H > H;
 [hH] { [hH]+ > ;
 [iI] { [iI]+ } [^[:L:][:M:]] > ;
 [^[:L:][:M:]] { [cC]+ } [kK] > ;

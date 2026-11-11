@@ -5,8 +5,12 @@ export const caEs = async (text: Text) => {
   const { caLatnRules } = await import("data/ca/ca-latn.rules");
   const { latnEsCaRules } = await import("data/latn/latn-es_ca.rules");
   const { latnEsRules } = await import("data/latn/latn-es.rules");
+  const { latnEsXRules } = await import("data/latn/latn-es_x.rules");
+  const { latnKQuRules } = await import("data/latn/latn_k-qu.rules");
 
-  const transliterator = RBT.fromRules(caLatnRules + latnEsCaRules + latnEsRules);
+  const transliterator = RBT.fromRules(
+    caLatnRules + latnEsCaRules + latnEsRules + latnEsXRules + latnKQuRules,
+  );
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);

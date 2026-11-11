@@ -5,8 +5,12 @@ export const viEs = async (text: Text) => {
   const { viLatnRules } = await import("data/vi/vi-latn.rules");
   const { latnThTRules } = await import("data/latn/latn_th-t.rules");
   const { latnEsRules } = await import("data/latn/latn-es.rules");
+  const { latnIRules } = await import("data/latn/latn_i.rules");
+  const { latnKQuRules } = await import("data/latn/latn_k-qu.rules");
 
-  const transliterator = RBT.fromRules(viLatnRules + latnThTRules + latnEsRules);
+  const transliterator = RBT.fromRules(
+    viLatnRules + latnThTRules + latnIRules + latnEsRules + latnKQuRules,
+  );
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);

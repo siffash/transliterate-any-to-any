@@ -7,11 +7,8 @@ export const latnDeRules = `
 Ŋ > Ng;
 ŋ > ng;
 
-[:Lu:] { C > TS;
-C } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > TS;
-C } [:Lu:] > TS;
-C > Ts;
-c > ts;
+C > Ç;
+c > ç;
 
 [Šš] { [Šš] > ;
 
@@ -114,14 +111,14 @@ Y > J;
 þ > t;
 Þ > T;
 
-t [sS] > z;
-T [sS] > Z;
+ç > z;
+Ç > Z;
 
 z > s;
 Z > S;
 
-ï > i;
-Ï > I;
+ï > y;
+Ï > Y;
 
 ÿ > ü;
 Ÿ > Ü;
