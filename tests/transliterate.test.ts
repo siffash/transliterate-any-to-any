@@ -20,6 +20,7 @@ const WIKI_LETTERS: Record<string, string> = {
   "mk-lb": "ćčšž",
   "mk-nl": "ćčšž",
   "mk-no": "ćčšž",
+  "mk-pl": "ǵḱ",
   "mk-pt": "ćčšž",
   "mk-ro": "ćčšž",
   "mk-sl": "ć",

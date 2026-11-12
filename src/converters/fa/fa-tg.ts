@@ -2,6 +2,7 @@ import { Text } from "types";
 
 export const faTg = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
+  const { faLowerRules } = await import("data/fa/fa_lower.rules");
   const { faIpaUvular } = await import("converters/fa/fa-ipa");
   const { faIpaUvularQRules } = await import("data/fa/fa-ipa_uvular-q.rules");
   const { faIpaTgRules } = await import("data/fa/fa-ipa_tg.rules");
@@ -9,7 +10,7 @@ export const faTg = async (text: Text) => {
   const { ipaTgRules } = await import("data/ipa/ipa-tg.rules");
 
   const transliterator = RBT.fromRules(
-    faIpaUvularQRules + faIpaTgRules + arFaUrIpaTgRules + ipaTgRules + "::Title;",
+    faIpaUvularQRules + faIpaTgRules + arFaUrIpaTgRules + ipaTgRules + "::Title;" + faLowerRules,
   );
 
   if (typeof text === "string") {

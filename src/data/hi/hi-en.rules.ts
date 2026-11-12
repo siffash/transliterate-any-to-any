@@ -144,6 +144,9 @@ a् > ;
 [aāiīuūeoŏĕ] [bcdfghjklmnpqrstvwxyz] h? h? { a } chand [^[:L:][:M:]] > ;
 [aāiīuūeoŏĕ] [bcdfghjklmnpqrstvwxyz] h? h? { a } prasād [^[:L:][:M:]] > ;
 [aāiīuūeoŏĕ] [bcdfghjklmnpqrstvwxyz] h? h? { a } prakāsh [^[:L:][:M:]] > ;
+[aāiīuūeoŏĕ] [bcdfghjklmnpqrstvwxyz] h? h? { a } sabhā [^[:L:][:M:]] > ;
+[aāiīuūeoŏĕ] [bcdfghjklmnpqrstvwxyz] h? h? { a } barelī [^[:L:][:M:]] > ;
+[aāiīuūeoŏĕ] [bcdfghjklmnpqrstvwxyz] h? h? { a } [nṇ] avīs [^[:L:][:M:]] > ;
 
 ::Null;
 
@@ -151,6 +154,17 @@ a् > ;
 v { a } tī [^[:L:][:M:]] > a;
 āv { a } rī [^[:L:][:M:]] > a;
 ey { a } r > a;
+n { a } gar [^[:L:][:M:]] > a;
+n { a } dī [^[:L:][:M:]] > a;
+s { a } bhā [^[:L:][:M:]] > a;
+p { a } t [iī] [^[:L:][:M:]] > a;
+ārā [nṇ] { a } sī > a;
+[^[:L:][:M:]] [bcdfghjklmnpqrstvwxyz] h? h? a [bcdfgjklmnpqrstvwxyz] h? h? { a } [bcdfghjklmnpqrstvwxyz] h? h? a [bcdfghjklmnpqrstvwxyz] h? h? [āīūeo] [^[:L:][:M:]] > ;
+[aāiīuūeoŏĕ] [bcdfghjklmnpqrstvwxyz] h? h? { a } [bcdfghjklmnpqrstvwxyz] a [bcdfghjklmnpqrstvwxyz] h? ābād > ;
+[aāiīuūeoŏĕ] [bcdfghjklmnpqrstvwxyz] h? h? { a } v a tī [^[:L:][:M:]] > ;
+[aāiīuūeoŏĕ] [bcdfghjklmnpqrstvwxyz] h? h? { a } [bcdfghjklmnpqrstvwxyz] a [bcdfgjkmnpqrstvwxz] h? h? [āiīuūeoŏĕ] > a;
+[aāiīuūeoŏĕ] h { a } [bcdfghjklmnpqrstvwxyz] a [bcdfghjklmnpqrstvwxyz] h? ābād > ;
+[aāiīuūeoŏĕ] h { a } [bcdfghjklmnpqrstvwxyz] a [bcdfgjkmnpqrstvwxz] h? h? [āiīuūeoŏĕ] > a;
 [aāiīuūeoŏĕ] [bcdfghjklmnpqrstvwxyz] ha [bcdfghjklmnpqrstvwxyz] h { a } [bcdfghjklmnpqrstvwxyz] h [aāiīuūeoŏĕ] > ;
 [aāiīuūeoŏĕ] [bcdfghjklmnpqrstvwxyz] ha [bcdfghjklmnpqrstvwxyz] h { a } [bcdfghjklmnpqrstvwxyz] [aāiīuūeoŏĕ] > ;
 [aāiīuūeoŏĕ] [bcdfghjklmnpqrstvwxyz] ha [bcdfghjklmnpqrstvwxyz] { a } [bcdfghjklmnpqrstvwxyz] h [aāiīuūeoŏĕ] > ;

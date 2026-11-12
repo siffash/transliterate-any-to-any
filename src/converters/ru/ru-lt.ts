@@ -3,13 +3,14 @@ import { Text } from "types";
 export const ruLt = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { ruLatnRules } = await import("data/ru/ru-latn.rules");
-  const { latnSeparatorRules } = await import("data/latn/latn_separator.rules");
-  const { latnLtRules } = await import("data/latn/latn-lt.rules");
   const { latnLtIaRules } = await import("data/latn/latn-lt_ia.rules");
   const { latnIaRules } = await import("data/latn/latn_ia.rules");
+  const { latnSeparatorRules } = await import("data/latn/latn_separator.rules");
+  const { ruLatnLtRules } = await import("data/ru/ru-latn_lt.rules");
+  const { latnLtRules } = await import("data/latn/latn-lt.rules");
 
   const transliterator = RBT.fromRules(
-    ruLatnRules + latnLtIaRules + latnIaRules + latnSeparatorRules + latnLtRules,
+    ruLatnRules + latnLtIaRules + latnIaRules + latnSeparatorRules + ruLatnLtRules + latnLtRules,
   );
 
   if (typeof text === "string") {

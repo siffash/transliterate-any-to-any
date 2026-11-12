@@ -22,6 +22,7 @@ export const ukLatnRules = `
 ь [оО] > ö;
 Ь [оО] > Ö;
 
+[:Lu:] \\' { Є > YE;
 [^[:L:][:M:]] { Є } [:Lu:] > YE;
 [^[:L:][:M:]] { Є > Ye;
 [^[:L:][:M:]] { є > ye;
@@ -31,6 +32,7 @@ export const ukLatnRules = `
 [AEIOUÏaeiouï] { Є > Ye;
 [AEIOUÏaeiouï] { є > ye;
 
+[:Lu:] \\' { Ю > YU;
 [^[:L:][:M:]] { Ю } [:Lu:] > YU;
 [^[:L:][:M:]] { Ю > Yu;
 [^[:L:][:M:]] { ю > yu;
@@ -40,6 +42,7 @@ export const ukLatnRules = `
 [AEIOUÏaeiouï] { Ю > Yu;
 [AEIOUÏaeiouï] { ю > yu;
 
+[:Lu:] \\' { Я > YA;
 [^[:L:][:M:]] { Я } [:Lu:] > YA;
 [^[:L:][:M:]] { Я > Ya;
 [^[:L:][:M:]] { я > ya;
@@ -52,6 +55,7 @@ export const ukLatnRules = `
 Ї } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > YI;
 Ї } [:Lu:] > YI;
 [:Lu:] { Ї > YI;
+[:Lu:] \\' { Ї > YI;
 Ї > Yi;
 ї > yi;
 

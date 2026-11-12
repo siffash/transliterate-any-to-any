@@ -6,6 +6,8 @@ export const ipaLtRules = `
 
 ::Null;
 
+[tʈ] t [ɕʂʃ] > č;
+t [ɕʂʃ] > č;
 [âăɐɑɒʌ] > a;
 ɓ > b;
 ç > c;

@@ -2,10 +2,11 @@ import { Text } from "types";
 
 export const elHu = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
+  const { elLatnIoRules } = await import("data/el/el-latn_io.rules");
   const { elLatnRules } = await import("data/el/el-latn.rules");
   const { latnHuRules } = await import("data/latn/latn-hu.rules");
 
-  const transliterator = RBT.fromRules(elLatnRules + latnHuRules);
+  const transliterator = RBT.fromRules(elLatnIoRules + elLatnRules + latnHuRules);
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);

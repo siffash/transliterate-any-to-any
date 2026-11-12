@@ -19,12 +19,14 @@ export const ruLatnRules = `
 Ю } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > YU;
 Ю } [:Lu:] > YU;
 [:Lu:] { Ю > YU;
+[:Lu:] \\' { Ю > YU;
 Ю > Yu;
 ю > yu;
 
 Я } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > YA;
 Я } [:Lu:] > YA;
 [:Lu:] { Я > YA;
+[:Lu:] \\' { Я > YA;
 Я > Ya;
 я > ya;
 
@@ -33,6 +35,7 @@ export const ruLatnRules = `
 Ё } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > YO;
 Ё } [:Lu:] > YO;
 [:Lu:] { Ё > YO;
+[:Lu:] \\' { Ё > YO;
 Ё > Yo;
 ё > yo;
 

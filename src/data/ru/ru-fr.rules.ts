@@ -32,6 +32,8 @@ export const ruFrRules = `
 [Ii] { Е > E;
 [Ii] { е > e;
 
+[ЫыYy] { Е > E;
+[ЫыYy] { е > e;
 [АЕЁИОУЫЭЮЯAEIOUYĽŃ] { Е > IE;
 [АЕЁИОУЫЭЮЯаеёиоуыэюяAaEeIiOoUuYyĽľŃń] { Е } [:Lu:] > IE;
 [АЕЁИОУЫЭЮЯаеёиоуыэюяAaEeIiOoUuYyĽľŃń] { Е > Ie;
@@ -239,6 +241,13 @@ export const ruFrRules = `
 
 [iIyY] { I [iI] > Ï;
 [iIyY] { i [iI] > ï;
+
+[Kk] [Oo] [Nn] [Ss] [Tt] [Aa] [Nn] [Tt] [Ii] { N } [^[:L:][:M:]] > N;
+[Kk] [Oo] [Nn] [Ss] [Tt] [Aa] [Nn] [Tt] [Ii] { n } [^[:L:][:M:]] > n;
+[Vv] [Aa] [Ll] [Ee] [Nn] [Tt] [Ii] { N } [^[:L:][:M:]] > N;
+[Vv] [Aa] [Ll] [Ee] [Nn] [Tt] [Ii] { n } [^[:L:][:M:]] > n;
+[:L:] [IiYy] { N } [^[:L:][:M:]] > NE;
+[:L:] [IiYy] { n } [^[:L:][:M:]] > ne;
 
 [:Cyrillic:] > ;
 `;

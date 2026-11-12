@@ -202,10 +202,22 @@ export const hiIpaRules = `
 [əaɪiʊueoɛæɔː̃] [kɡŋɲʈɖɳnpbmjɾlʋʃʂsɦqxɣzʒɽfɭtd] [̪͡]? [ʃʒ]? [ʰʱ]? { ə } t͡ʃənd̪ [^[:L:][:M:]] > ;
 [əaɪiʊueoɛæɔː̃] [kɡŋɲʈɖɳnpbmjɾlʋʃʂsɦqxɣzʒɽfɭtd] [̪͡]? [ʃʒ]? [ʰʱ]? { ə } pɾəsaːd̪ [^[:L:][:M:]] > ;
 [əaɪiʊueoɛæɔː̃] [kɡŋɲʈɖɳnpbmjɾlʋʃʂsɦqxɣzʒɽfɭtd] [̪͡]? [ʃʒ]? [ʰʱ]? { ə } pɾəkaːʃ [^[:L:][:M:]] > ;
+[əaɪiʊueoɛæɔː̃] [kɡŋɲʈɖɳnpbmjɾlʋʃʂsɦqxɣzʒɽfɭtd] [̪͡]? [ʃʒ]? [ʰʱ]? { ə } səbʱaː [^[:L:][:M:]] > ;
+[əaɪiʊueoɛæɔː̃] [kɡŋɲʈɖɳnpbmjɾlʋʃʂsɦqxɣzʒɽfɭtd] [̪͡]? [ʃʒ]? [ʰʱ]? { ə } bəɾeːliː [^[:L:][:M:]] > ;
+[əaɪiʊueoɛæɔː̃] [kɡŋɲʈɖɳnpbmjɾlʋʃʂsɦqxɣzʒɽfɭtd] [̪͡]? [ʃʒ]? [ʰʱ]? { ə } [nɳ] əʋiːs [^[:L:][:M:]] > ;
 
 ::Null;
 
 { ə } [kɡŋɲʈɖɳnpbmjɾlʋʃʂsɦqxɣzʒɽfɭtd] [̪ʰʱ͡]* aːbaːd > ə;
+n { ə } ɡəɾ [^[:L:][:M:]] > ə;
+n { ə } d̪ iː [^[:L:][:M:]] > ə;
+s { ə } bʱ aː [^[:L:][:M:]] > ə;
+p { ə } t̪ [ɪi] ː? [^[:L:][:M:]] > ə;
+aː ɾ aː ɳ { ə } s iː > ə;
+[^[:L:][:M:]] [kɡŋɲʈɖɳnpbmjɾlʋʃʂsɦqxɣzʒɽfɭtd] [̪͡]? [ʃʒ]? [ʰʱ]? ə [kɡŋɲʈɖɳnpbmjɾlʋʃʂsqxɣzʒɽfɭtd] [̪ʰʱ]* { ə } [kɡŋɲʈɖɳnpbmjɾlʋʃʂsɦqxɣzʒɽfɭtd] [̪ʰʱ]* ə [kɡŋɲʈɖɳnpbmjɾlʋʃʂsɦqxɣzʒɽfɭtd] [̪ʰʱ]* [aiueo] ː [^[:L:][:M:]] > ;
+[əaɪiʊueoɛæɔː̃] [kɡŋɲʈɖɳnpbmjɾlʋʃʂsɦqxɣzʒɽfɭtd] [̪ʰʱ]* { ə } [kɡŋɲʈɖɳnpbmjɾlʋʃʂsɦqxɣzʒɽfɭtd] ̪? ə [kɡŋɲʈɖɳnpbmjɾlʋʃʂsɦqxɣzʒɽfɭtd] [̪ʰʱ]* aːbaːd > ;
+[əaɪiʊueoɛæɔː̃] [kɡŋɲʈɖɳnpbmjɾlʋʃʂsɦqxɣzʒɽfɭtd] [̪ʰʱ]* { ə } ʋ ə t̪ iː [^[:L:][:M:]] > ;
+[əaɪiʊueoɛæɔː̃] [kɡŋɲʈɖɳnpbmjɾlʋʃʂsɦqxɣzʒɽfɭtd] [̪͡]? [ʃʒ]? [ʰʱ]? { ə } [kɡŋɲʈɖɳnpbmjɾlʋʃʂsɦqxɣzʒɽfɭtd] ̪? ə [kɡŋɲʈɖɳnpbmɾʋʃʂsqxɣzʒɽftd] [̪ʰʱ]* [aɪiʊueoɛæɔ] > ə;
 ʋ { ə } t̪ iː [^[:L:][:M:]] > ə;
 aː ʋ { ə } ɾ iː [^[:L:][:M:]] > ə;
 

@@ -30,6 +30,8 @@ export const hyLatnRules = `
 
 [^[:L:][:M:]] { և > yev;
 և > ev;
+[ԵեEe] { Ւ > V;
+[ԵեEe] { ւ > v;
 
 ::Null;
 

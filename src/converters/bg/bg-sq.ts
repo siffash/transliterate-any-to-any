@@ -2,10 +2,11 @@ import { Text } from "types";
 
 export const bgSq = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
+  const { bgSchwaERules } = await import("data/bg/bg_schwa-e.rules");
   const { bgLatnRules } = await import("data/bg/bg-latn.rules");
   const { latnSqRules } = await import("data/latn/latn-sq.rules");
 
-  const transliterator = RBT.fromRules(bgLatnRules + latnSqRules);
+  const transliterator = RBT.fromRules(bgSchwaERules + bgLatnRules + latnSqRules);
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);

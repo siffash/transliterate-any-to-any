@@ -18,7 +18,7 @@ export const ipaCaRules = `
 
 ::Null;
 
-t [ʃʂɕ] > tx;
+t+ [ʃʂɕ] > tx;
 č > tx;
 
 d [ʒžʐʑ] > j;
@@ -36,7 +36,8 @@ d [ʒžʐʑ] > j;
 [ɡɟɢɣɰ] > g;
 g } [ei] > gu;
 
-[ɲɳ] > ny;
+ɲ > ny;
+ɳ > n;
 ʎ > ll;
 [ɫɭ] > l;
 ŋ } [ɡgkq] > n;

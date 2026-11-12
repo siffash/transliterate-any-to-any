@@ -4,13 +4,14 @@ export const jaLt = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { normalizeJa } = await import("helpers/normalizeJa");
   const { jaLatnRules } = await import("data/ja/ja-latn.rules");
+  const { latnZDzRules } = await import("data/latn/latn_z-dz.rules");
   const { latnLtRules } = await import("data/latn/latn-lt.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
   const { getKuroshiro } = await import("helpers/getKuroshiro");
 
   const kuroshiro = await getKuroshiro();
 
-  const transliterator = RBT.fromRules(jaLatnRules + latnLtRules);
+  const transliterator = RBT.fromRules(jaLatnRules + latnZDzRules + latnLtRules);
 
   const convert = async (text: string) => {
     const romanized = await wordSplitter(

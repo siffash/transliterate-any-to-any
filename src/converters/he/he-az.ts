@@ -4,8 +4,9 @@ export const heAz = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { heIpa } = await import("converters/he/he-ipa");
   const { ipaAzRules } = await import("data/ipa/ipa-az.rules");
+  const { ipaDottedIRules } = await import("data/ipa/ipa_dotted-i.rules");
 
-  const transliterator = RBT.fromRules(ipaAzRules + "::Title;");
+  const transliterator = RBT.fromRules(ipaAzRules + ipaDottedIRules + "::Title;");
 
   if (typeof text === "string") {
     const ipa = await heIpa<string>(text);

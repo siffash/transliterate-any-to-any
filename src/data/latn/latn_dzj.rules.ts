@@ -1,4 +1,4 @@
-export const latnSvDzjRules = `
+export const latnDzjRules = `
 ::Null;
 
 [:Lu:] { Ǯ > DŽ;
