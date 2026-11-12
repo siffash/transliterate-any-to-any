@@ -38,6 +38,18 @@ export const areRestoreRules: RestoreIpaRule[] = [
   { ipaCharToBeReplaced: "ɛɹ$", lettersToRestore: { are: "ɛɹ" } },
 ];
 
+// An "er" read as "ɛɹ" or "əɹ" keeps its "e" (Gerald, Gerard, Jerome, Geraint), which the "a" and "o" restores would take
+// (Джарелд, Джарард, Джороум)
+export const erRestoreRules: RestoreIpaRule[] = [
+  { ipaCharToBeReplaced: ["ɛɹ", "əɹ"], lettersToRestore: { er: "ɛɹ" }, keepStress: true },
+];
+
+// Russian and Bulgarian skip erRestoreRules and get this close "e" in its place, which en-ipa_ru and en-ipa_bg keep apart
+// from the "ɛɹ" of "air" (Carrickfergus Каррикфергас, Карикфъргъс, Clermont Клермонт, not Каррикфэргас, Карикфеъргъс)
+export const erCloseRestoreRules: RestoreIpaRule[] = [
+  { ipaCharToBeReplaced: ["ɛɹ", "əɹ"], lettersToRestore: { er: "eɹ" }, keepStress: true },
+];
+
 // Extra restore for Japanese, which writes a final "-y", "-ey" or "-ie" as a long "ー" (Harry ハリー, Shirley シャーリー,
 // Charlie チャーリー), keeps the "ɛɹ" of a final "-are" (Clare クレア, Ware ウェア) and a final unstressed "-ir" as "ール"
 // (Vladimir ヴラディミール, Kashmir カシミール), but skips the "ir" restore elsewhere and writes that vowel as "ー" (Bird バード).
@@ -200,10 +212,19 @@ export const koGeminateRestoreRules: RestoreIpaRule[] = geminateRestoreRules.fil
   rule => !("tt" in rule.lettersToRestore) && !ellRestoreRules.includes(rule),
 );
 
+// Extra restore for non-Latin targets and Serbian, which follow the sound: the "ɛɹ" of "air" and of a final "-are", which
+// the "ai" and "a" restores would take (Fairhaven Феърхейвън, Cairns Кернс, Mayfair 梅费尔, Clare Клер, not Фаирхейвън,
+// Каирнс, 梅法伊尔, Клар); the other Latin targets keep those restores, as their Wikipedias keep the spelling (Nairn, Alistair)
+export const airRestoreRules: RestoreIpaRule[] = [
+  ...areRestoreRules,
+  { ipaCharToBeReplaced: "ɛɹ", lettersToRestore: { air: "ɛɹ" } },
+];
+
 // Extra restore for Bulgarian, which writes a final unstressed "-on" as "-ън" (Джонсън, Клинтън, Симънс, Линкълн),
 // except after "j" (Mccallion stays Мъкальон, not Мъкалян), a final "-ia" as "-ия" (Вирджиния, Джулия),
 // and a spelled "z" or "c" as "ц" (Кац, Фриц, Сирацки), which marks it off from a spelled "ts" (Уотсън, Робъртс)
 export const bgRestoreRules: RestoreIpaRule[] = [
+  ...airRestoreRules,
   { ipaCharToBeReplaced: "jən$", lettersToRestore: { ion: "jɔn" } },
   { ipaCharToBeReplaced: "jə$", lettersToRestore: { ia: "ia" } },
   { ipaCharToBeReplaced: "ts", lettersToRestore: { tz: "ʦ", zz: "ʦ", c: "ʦ", z: "ʦ" } },
@@ -217,6 +238,7 @@ export const bgRestoreRules: RestoreIpaRule[] = [
 // from a spelled "ts" (Уотсон, Робертс), and a final "-ia" is "-ия" (Джулия, Вирджиния)
 export const cyrlRestoreRules: RestoreIpaRule[] = [
   ...syllabicLRestoreRules,
+  ...airRestoreRules,
   { ipaCharToBeReplaced: "jə$", lettersToRestore: { ia: "ia" } },
   { ipaCharToBeReplaced: "ts", lettersToRestore: { tz: "t͡s", zz: "t͡s", z: "t͡s" } },
   // Washington keeps its traditional "в" (Вашингтон, Vašington), which the "w" rules would give as "у"/"во"
@@ -356,6 +378,8 @@ export const normalizeEnIpa = (
     { ipaCharToBeReplaced: "iəɫ", lettersToRestore: { iel: "ieɫ" } },
     // phonemize reduces an initial "ald" it does not know (Aldershot, Alderney), which reads "ɔɫd" like Alder and Aldridge
     { ipaCharToBeReplaced: "^əɫd", lettersToRestore: { ald: "ɔɫd" } },
+    ...erRestoreRules,
+    ...erCloseRestoreRules,
     // Restore "o"
     { ipaCharToBeReplaced: ["ɑ", "ə"], lettersToRestore: { o: "ɔ" } },
     ...oStrutRestoreRules,

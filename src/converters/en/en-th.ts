@@ -3,7 +3,7 @@ import { Text } from "types";
 export const enTh = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { enIpa } = await import("converters/en/en-ipa");
-  const { syllabicLSchwaRestoreRules, ngConsonantRestoreRules } =
+  const { syllabicLSchwaRestoreRules, ngConsonantRestoreRules, airRestoreRules } =
     await import("helpers/normalizeEnIpa");
   const { enIpaThRules } = await import("data/en/en-ipa_th.rules");
   const { ipaThOpenRules } = await import("data/ipa/ipa-th_open.rules");
@@ -18,12 +18,14 @@ export const enTh = async (text: Text) => {
     const ipa = await enIpa<string>(text, [
       ...syllabicLSchwaRestoreRules,
       ...ngConsonantRestoreRules,
+      ...airRestoreRules,
     ]);
     return transliterator.transliterate(ipa);
   } else {
     const ipaArray = await enIpa<string[]>(text, [
       ...syllabicLSchwaRestoreRules,
       ...ngConsonantRestoreRules,
+      ...airRestoreRules,
     ]);
     return ipaArray.map(ipa => transliterator.transliterate(ipa));
   }

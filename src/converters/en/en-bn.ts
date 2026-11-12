@@ -8,6 +8,7 @@ export const enBn = async (text: Text) => {
     geminateRestoreRules,
     geminateSingleRestoreRules,
     ngConsonantRestoreRules,
+    airRestoreRules,
   } = await import("helpers/normalizeEnIpa");
   const { enIpaOuRules } = await import("data/en/en-ipa_ou.rules");
   const { enIpaBnRules } = await import("data/en/en-ipa_bn.rules");
@@ -21,14 +22,24 @@ export const enBn = async (text: Text) => {
   if (typeof text === "string") {
     const ipa = await enIpa<string>(
       text,
-      [...syllabicLeSchwaRestoreRules, ...geminateSingleRestoreRules, ...ngConsonantRestoreRules],
+      [
+        ...syllabicLeSchwaRestoreRules,
+        ...geminateSingleRestoreRules,
+        ...ngConsonantRestoreRules,
+        ...airRestoreRules,
+      ],
       geminateRestoreRules,
     );
     return transliterator.transliterate(ipa);
   } else {
     const ipaArray = await enIpa<string[]>(
       text,
-      [...syllabicLeSchwaRestoreRules, ...geminateSingleRestoreRules, ...ngConsonantRestoreRules],
+      [
+        ...syllabicLeSchwaRestoreRules,
+        ...geminateSingleRestoreRules,
+        ...ngConsonantRestoreRules,
+        ...airRestoreRules,
+      ],
       geminateRestoreRules,
     );
     return ipaArray.map(ipa => transliterator.transliterate(ipa));
