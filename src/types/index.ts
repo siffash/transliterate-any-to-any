@@ -72,7 +72,7 @@ export type Language =
 export type Spelling = "orthographic" | "established";
 
 export type Options = {
-  from: Language;
+  from?: Language;
   to: Language;
   spelling?: Spelling;
 };

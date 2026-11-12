@@ -3,6 +3,7 @@ import { Language, Options, Text } from "types";
 import { keepsLatinText, usesEnglishRomanization } from "helpers/establishedSpelling";
 import { validateLanguage } from "helpers/validateLanguage";
 import { normalizeInput } from "helpers/normalizeInput";
+import { detectLanguage } from "helpers/detectLanguage";
 
 type Converter = (text: Text) => Promise<Text>;
 
@@ -2662,7 +2663,7 @@ const converters: Partial<Record<`${Language}${Language}`, () => Promise<Convert
 };
 
 export const transliterate = async <T extends Text>(text: T, options: Options): Promise<T> => {
-  const { from, to, spelling = "orthographic" } = options || {};
+  const { to, spelling = "orthographic" } = options || {};
 
   const sourceText = text;
   let targetLanguage = to;
@@ -2673,8 +2674,9 @@ export const transliterate = async <T extends Text>(text: T, options: Options): 
   if (Array.isArray(text) ? text.some(s => typeof s !== "string") : typeof text !== "string") {
     throw new Error("Source text must be a string or an array of strings.");
   }
+  const from = options?.from || detectLanguage(text);
   if (!from) {
-    throw new Error('Source language ("from") is not specified.');
+    throw new Error('Source language ("from") is not specified and could not be detected.');
   }
   if (!to) {
     throw new Error('Target language ("to") is not specified.');

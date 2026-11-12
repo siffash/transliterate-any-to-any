@@ -71,11 +71,13 @@ await transliterate(["मुंबई", "कोलकाता"], { from: "hi", 
 
 #### Options
 
-| Object property | Type                              | Required | Description                                                                  |
-| --------------- | --------------------------------- | -------- | ---------------------------------------------------------------------------- |
-| `from`          | `string`                          | Yes      | Source language in [BCP 47](https://en.wikipedia.org/wiki/IETF_language_tag) |
-| `to`            | `string`                          | Yes      | Target language in [BCP 47](https://en.wikipedia.org/wiki/IETF_language_tag) |
-| `spelling`      | `"orthographic" \| "established"` | No       | Spelling style (default: `"orthographic"`) - see [Spelling](#spelling)       |
+| Object property | Type                              | Required | Default                                            | Description                                                                  |
+| --------------- | --------------------------------- | -------- | -------------------------------------------------- | ---------------------------------------------------------------------------- |
+| `from`          | `string`                          | No       | detected with [`detectLanguage`](#detect-language) | Source language in [BCP 47](https://en.wikipedia.org/wiki/IETF_language_tag) |
+| `to`            | `string`                          | Yes      | –                                                  | Target language in [BCP 47](https://en.wikipedia.org/wiki/IETF_language_tag) |
+| `spelling`      | `"orthographic" \| "established"` | No       | `"orthographic"`                                   | Spelling style - see [Spelling](#spelling)                                   |
+
+<a id="detect-language"></a>
 
 ## 🔍 Detect Language
 
@@ -100,6 +102,12 @@ When the text could belong to several languages, it falls back to the most commo
 - English `en` over other Latin-script languages; then German `de`, French `fr`, Spanish `es` & Turkish `tr` over the rest.
 
 It returns `undefined` if the text has no letters or contains letters that no supported language uses, and throws an error if the text mixes letters of different languages.
+
+By default, `transliterate` calls `detectLanguage` when `from` is omitted:
+
+```typescript
+await transliterate("Київ", { to: "en" }); // → Kyiv
+```
 
 ## ⏭️ Skip Same-Script Pairs
 
