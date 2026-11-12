@@ -3,6 +3,26 @@ export const SURNAMES = new Set(
   "김이박최정강조윤장임한오서신권황안송전홍유고문양손배백허남심노하곽성차주우구민류나진리지변방엄채천원현함공여도염설추석소연길위기마선맹표명왕국반계육은금옥탁예봉",
 );
 
+// Surnames whose English spelling is established, rather than the Revised Romanization one
+// (김 Kim, not Gim; en.wiki has them in most names)
+export const EN_SURNAMES: Record<string, string> = {
+  김: "Kim",
+  이: "Lee",
+  박: "Park",
+  최: "Choi",
+  강: "Kang",
+  조: "Cho",
+  윤: "Yoon",
+  신: "Shin",
+  안: "Ahn",
+  문: "Moon",
+  오: "Oh",
+  노: "Roh",
+  고: "Ko",
+  주: "Joo",
+  곽: "Kwak",
+};
+
 // Common two-syllable given names, from the most popular names of 1940–2020, well-known people
 // and the given names of at least three Korean people on Wikidata
 export const GIVEN_NAMES = new Set([
@@ -3461,6 +3481,13 @@ export const GIVEN_NAMES = new Set([
   "희현",
 ]);
 
+// Places and loanwords end in these (계룡산, 고척동, 신의주, 고구려, 조치원, 이마트), and so do adjectives
+// (배타적): a word of three syllables that starts with a surname is a person's name when its given name is a
+// known one, or else when it doesn't end in one of them (이순신, 강나루; see normalizeKo)
+export const NOT_NAME_ENDINGS = new Set(
+  "시군구동산면읍강도봉리천섬역포령호곶진대교촌골성사궁문암해만주려단원관트스크드프브즈츠적",
+);
+
 // Words that look like a surname and a given name (조+지아: Georgia, 우+정은: friendship is, 이+태원: Itaewon)
 export const NOT_NAMES = new Set([
   "조지아",
@@ -3475,4 +3502,7 @@ export const NOT_NAMES = new Set([
   "정동진",
   "한강진",
   "남영동",
+  "신세계",
+  "오뚜기",
+  "원도심",
 ]);

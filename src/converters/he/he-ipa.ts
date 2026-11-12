@@ -1,6 +1,11 @@
 import { Text } from "types";
 
-export const heIpa = async <T = Text>(text: Text): Promise<T> => {
+/**
+ * @param text - The Hebrew text.
+ * @param addVowels - Whether a word spelled without vowel letters gets e between its consonants; scripts that
+ * don't write short vowels (Arabic) keep its consonants only.
+ */
+export const heIpa = async <T = Text>(text: Text, addVowels = true): Promise<T> => {
   const { heIpaMap, charMap } = await import("data/he/he-ipa.map");
   const { filterIpa } = await import("helpers/filterIpa");
 
@@ -63,6 +68,8 @@ export const heIpa = async <T = Text>(text: Text): Promise<T> => {
     );
 
   const convert = (text: string) => {
+    // The gershayim of an acronym (חב״ד, also typed as ") isn't read
+    text = text.replace(/(?<=[א-ת])[״"](?=[א-ת])/g, "");
     // Pointed words the map does not know are read from their niqqud
     text = text.replace(
       /[\u05D0-\u05EA](?:[\u05D0-\u05EA]|[\u0591-\u05BD\u05BF-\u05C7])*/g,
@@ -214,6 +221,51 @@ export const heIpa = async <T = Text>(text: Text): Promise<T> => {
       if (startsWithB) output = output.replace(/^v/, "b");
       if (startsWithK) output = output.replace(/^χ/, "k");
       if (startsWithP) output = output.replace(/^f/, "p");
+
+      // A word spelled without vowel letters gets e between its consonants, the most common reading of such
+      // Hebrew words (גשר gesher, שמן shemen, פלס peles), and a next to an ע or א (עמל ʕamal, נעם naʕm);
+      // one with י is read by the targets' own rules
+      const sounds = output.match(/t͡s|t͡ʃ|d͡ʒ|./gu) ?? [];
+      if (addVowels && sounds.length > 1 && !sounds.some(sound => /^[aeiouɛɔəɪʊj]/.test(sound))) {
+        let result = "";
+        sounds.forEach((sound, i) => {
+          const glottal = /^[ʔʕ]$/.test(sound);
+          const previous = sounds[i - 1];
+          if (glottal) result += previous ? "a" + sound : sound + "a";
+          else result += (previous && !/^[ʔʕ]$/.test(previous) ? "e" : "") + sound;
+        });
+        return result;
+      }
+      // Two consonants before an ע or א and a vowel take i between them (צבעון tsivʕon, גבעות givʕot)
+      const [first, second, third, fourth] = sounds;
+      if (
+        addVowels &&
+        [first, second].every(sound => sound && !/^[aeiouɛɔəɪʊʔʕ]/.test(sound)) &&
+        /^[ʔʕ]$/.test(third ?? "") &&
+        /^[aeiouɛɔ]/.test(fourth ?? "")
+      ) {
+        return first + "i" + sounds.slice(1).join("");
+      }
+      // so do they after the article (השבעה haʃivʕa), and one consonant before them takes a (מעון maʕon)
+      const isConsonant = (sound?: string) => !!sound && !/^[aeiouɛɔəɪʊʔʕ]/.test(sound);
+      if (
+        addVowels &&
+        first === "h" &&
+        isConsonant(second) &&
+        isConsonant(third) &&
+        /^[ʔʕ]$/.test(fourth ?? "") &&
+        /^[aeiouɛɔ]/.test(sounds[4] ?? "")
+      ) {
+        return "ha" + second + "i" + sounds.slice(2).join("");
+      }
+      if (
+        addVowels &&
+        isConsonant(first) &&
+        /^[ʔʕ]$/.test(second ?? "") &&
+        /^[aeiouɛɔ]/.test(third ?? "")
+      ) {
+        return first + "a" + sounds.slice(1).join("");
+      }
 
       return output;
     };

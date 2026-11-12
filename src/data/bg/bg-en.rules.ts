@@ -124,7 +124,6 @@ export const bgEnRules = `
 [cszkCSZK] [hH] { h > h;
 [cszkCSZK] [hH] { H > H;
 [hH] { [hH]+ > ;
-[iI] { [iI]+ } [^[:L:][:M:]] > ;
 [^[:L:][:M:]] { [cC]+ } [kK] > ;
 
 [kK] { [kK]+ } [hH] > ;

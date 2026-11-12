@@ -1,7 +1,7 @@
 import { Text } from "types";
 
 export const zhKo = async (text: Text) => {
-  const { pinyin } = await import("pinyin-pro");
+  const { zhPinyinArray } = await import("helpers/zhPinyin");
   const { CHO, FINALS, INITIALS, JONG, JUNG, PLAIN_VOWELS, SYLLABIC, ZERO_INITIAL } =
     await import("data/zh/zh-ko.map");
   const { wordSplitter } = await import("helpers/wordSplitter");
@@ -29,7 +29,7 @@ export const zhKo = async (text: Text) => {
   // pinyin-pro gives one item per character; letters other than Han ones stay as they are (A股)
   const wordToHangul = (word: string) => {
     const chars = [...word];
-    return pinyin(word, { toneType: "none", type: "array" })
+    return zhPinyinArray(word, "none")
       .map((syllable, i) =>
         /\p{Script=Han}/u.test(chars[i] ?? "")
           ? (syllableToHangul(syllable.replace(/v/g, "ü")) ?? chars[i])

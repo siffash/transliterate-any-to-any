@@ -8,7 +8,7 @@ import { Language } from "../src/types";
 // Letters the target's Wikipedia uses for these names, but the target's own alphabet lacks
 // (official Macedonian Latin ć, č, š, ž, scholarly transliteration ă, ǎ, ë, ė, ï, ǵ, ḱ, Kazakh Latin ğ, ñ, ş, ū, Czech/Slovak ö, ü)
 const WIKI_LETTERS: Record<string, string> = {
-  "mk-en": "ćčšž",
+  "mk-en": "čšžǵḱ",
   "mk-ca": "ćčšž",
   "mk-cs": "ć",
   "mk-da": "ćčšž",
@@ -154,7 +154,7 @@ describe("punctuation that belongs to the source script", () => {
     ["「東京」へ", "ja", "en", '"Tokyo" E'],
     ["你好，世界。", "zh", "en", "Nihao, Shijie."],
     ["مرحبا، كيف حالك؟", "ar", "en", "Marhaba, Kif Halk?"],
-    ["سلام، دنیا۔", "ur", "en", "Salam, Duniya."],
+    ["سیالکوٹ، کراچی۔", "ur", "en", "Sialkot, Karachi."],
     ["سلام، دنیا؟", "fa", "en", "Salam, Donya?"],
     ["سلام؛ دنیا", "fa", "ru", "Салам; Донья"],
   ] as const)("%s (%s → %s) keeps its punctuation", async (text, from, to, expected) => {

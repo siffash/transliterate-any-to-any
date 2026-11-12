@@ -27,6 +27,54 @@ const joinSokuon = (tokens: KuromojiToken[]) => {
   return joined;
 };
 
+// Kana kuromoji reads as written (ユウ, ゾウ) or not at all (シュウヘイ) keep their う, which kuroshiro
+// spells out (yuuki, kenzou), where a word it knows gets a long vowel (コウ → コー, kōzō). A う after a
+// palatal (ゆう, しゅう) or ending the word after o or u (たろう) is one too; elsewhere it may begin another
+// part of the name (いのうえ, やまのうち)
+const KANA = /^[\p{scx=Hiragana}\p{scx=Katakana}]+$/u;
+const LONG_AFTER_PALATAL = /(?<=[ャュョユヨ])ウ/gu;
+const LONG_AT_END = /(?<=[オコソトノホモヨロゴゾドボポヲウクスツヌフムユルグズヅブプ])ウ$/u;
+const ENDS_IN_O_OR_U = /[オコソトノホモヨロゴゾドボポヲウクスツヌフムユルグズヅブプョュ]$/u;
+
+const toKatakana = (kana: string) =>
+  kana.replace(/[ぁ-ゖ]/gu, char => String.fromCharCode(char.charCodeAt(0) + 0x60));
+
+const lengthenKana = (tokens: KuromojiToken[]) => {
+  const result: KuromojiToken[] = [];
+  for (const [i, token] of tokens.entries()) {
+    if (!KANA.test(token.surface_form)) {
+      result.push(token);
+      continue;
+    }
+    const reading = token.reading ?? toKatakana(token.surface_form);
+    let pronunciation = (token.pronunciation ?? reading).replace(LONG_AFTER_PALATAL, "ー");
+    const last = result.at(-1);
+    if (i === tokens.length - 1) {
+      // a う of its own (たろ|う) lengthens the token before it
+      if (
+        pronunciation === "ウ" &&
+        last?.pronunciation &&
+        ENDS_IN_O_OR_U.test(last.pronunciation)
+      ) {
+        result[result.length - 1] = {
+          ...last,
+          surface_form: last.surface_form + token.surface_form,
+          reading: (last.reading ?? last.pronunciation) + reading,
+          pronunciation: last.pronunciation + "ー",
+        };
+        continue;
+      }
+      pronunciation = pronunciation.replace(LONG_AT_END, "ー");
+    }
+    result.push(
+      pronunciation === (token.pronunciation ?? reading)
+        ? token
+        : { ...token, reading, pronunciation },
+    );
+  }
+  return result;
+};
+
 // Kanji that end given names: at the end of a name they join the kanji before them (純+也 Jun'ya)
 const NAME_ENDINGS = new Set("也哉輔嗣汰");
 
@@ -109,7 +157,7 @@ const load = () => {
     });
     const parse = analyzer.parse.bind(analyzer);
     analyzer.parse = async (text: string) =>
-      joinSokuon((await addReadings(await parse(text), parse)).map(restoreLongI));
+      joinSokuon(lengthenKana((await addReadings(await parse(text), parse)).map(restoreLongI)));
     await kuroshiro.init(analyzer);
     return { kuroshiro, analyzer };
   })().catch(e => {

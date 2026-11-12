@@ -9,10 +9,10 @@ export const urHi = async (text: Text) => {
   const transliterator = RBT.fromRules(urIpaHiRules + ipaHiRules);
 
   if (typeof text === "string") {
-    const ipa = await urIpa<string>(text);
+    const ipa = await urIpa<string>(text, true);
     return transliterator.transliterate(ipa);
   } else {
-    const ipaArray = await urIpa<string[]>(text);
+    const ipaArray = await urIpa<string[]>(text, true);
     return ipaArray.map(ipa => transliterator.transliterate(ipa));
   }
 };

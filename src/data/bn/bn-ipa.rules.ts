@@ -14,6 +14,8 @@ export const bnIpaRules = `
 অ্যা > æ;
 অ > ɔ;
 আ > a;
+[^[:L:][:M:]] { ই } য় > ;
+[^[:L:][:M:]] { ই } উ > j;
 ই > i;
 ঈ > i;
 উ > u;
@@ -69,6 +71,7 @@ export const bnIpaRules = `
 ৎ > t̪;
 ং > ŋ;
 ঃ > h;
+ঁ } [নণ] > ;
 ঁ > ̃;
 ় > ;
 া > \\_a;
@@ -104,6 +107,9 @@ export const bnIpaRules = `
 ::Null;
 
 ɔ } [eæ] > ;
+ɔ } u d̪ d̪ > ;
+ɔ } u l l > ;
+ɔ } u dʒ dʒ > ;
 n dʒ { ɔ } [^[:L:][:M:]] > ;
 [aeiouɔæ] [̃]? [kɡŋ{tʃ}{dʒ}ʈɖɽtdnpbmfjrlʃh] [ʰʱ̪]* { ɔ } [^[:L:][:M:]] > ;
 

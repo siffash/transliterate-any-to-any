@@ -2,7 +2,7 @@ import { Text } from "types";
 
 export const zhVi = async (text: Text) => {
   const OpenCC = await import("opencc-js");
-  const { pinyin } = await import("pinyin-pro");
+  const { zhPinyinArray } = await import("helpers/zhPinyin");
   const { getHanviet } = await import("hanviet-pinyin-words");
   const { ZH_VI_MAP, ZH_VI_WORDS } = await import("data/zh/zh-vi.map");
 
@@ -37,7 +37,7 @@ export const zhVi = async (text: Text) => {
 
       // 4. Get the context-aware Pinyin array for the entire chunk
       // `toneType: 'num'` gives us formats like ['zhong1', 'guo2']
-      const pyArray = pinyin(chunk, { toneType: "num", type: "array" }) as string[];
+      const pyArray = zhPinyinArray(chunk, "num");
 
       const chunkHanViet: string[] = [];
 

@@ -1,20 +1,38 @@
-import { GIVEN_NAMES, NOT_NAMES, SURNAMES } from "data/ko/ko-names";
-import { NOT_UNITS, PROVINCES, UNITS } from "data/ko/ko-units";
+import { GIVEN_NAMES, NOT_NAMES, NOT_NAME_ENDINGS, SURNAMES } from "data/ko/ko-names";
+import { NOT_DONGS, NOT_UNITS, PROVINCES, UNITS } from "data/ko/ko-units";
 
 // Standalone Hangul letters (ㅋ, ㅠ), which are not part of a syllable
 const JAMO = /[ㄱ-ㅣ]+/g;
 // A word of three syllables, which may be a surname and a given name (김민준)
 const NAME = /(?<![가-힣])[가-힣]{3}(?![가-힣])/g;
 
+// A surname written apart from a known given name of two syllables (김 정은)
+const SPACED_NAME = /(?<![가-힣])([가-힣]) ([가-힣]{2})(?![가-힣])/g;
+
+/**
+ * Joins a surname written apart from a known given name (김 정은 → 김정은), so that the name is split and spelled
+ * like one written together (Kim Jeong-eun).
+ * @param text - The Korean text.
+ * @returns the text with such names joined.
+ */
+export const joinSpacedNames = (text: string) =>
+  text.replace(SPACED_NAME, (match, surname: string, given: string) =>
+    SURNAMES.has(surname) && GIVEN_NAMES.has(given) && !NOT_NAMES.has(surname + given)
+      ? surname + given
+      : match,
+  );
+
 // Names are romanized as surname + given name (Kim Min-jun), like Chinese ones
 const splitNames = (text: string, separator: string, syllableSeparator: string) =>
   text.replace(NAME, word =>
-    SURNAMES.has(word[0]) && GIVEN_NAMES.has(word.slice(1)) && !NOT_NAMES.has(word)
+    SURNAMES.has(word[0]) &&
+    (GIVEN_NAMES.has(word.slice(1)) || !NOT_NAME_ENDINGS.has(word[2]!)) &&
+    !NOT_NAMES.has(word)
       ? `${word[0]}${separator}${Array.from(word.slice(1)).join(syllableSeparator)}`
       : word,
   );
 
-// A word of at least three syllables that ends in an administrative unit (음성군)
+// A word that ends in an administrative unit (음성군, 명동)
 const UNIT = new RegExp(`(?<![가-힣·‧])([가-힣]+?)(${UNITS.join("|")})(?![가-힣·‧])`, "g");
 // A northern or southern province (경상북도)
 const PROVINCE = new RegExp(
@@ -28,7 +46,7 @@ const splitUnits = (text: string, separator: string, provinceSeparator: string) 
   const result = provinceSeparator ? text.replace(PROVINCE, `$1${provinceSeparator}$2`) : text;
   return separator
     ? result.replace(UNIT, (word, name: string, unit: string) =>
-        Array.from(name).length < 2 ||
+        (Array.from(name).length < 2 && (unit !== "동" || NOT_DONGS.has(word))) ||
         (unit === "도" && !PROVINCES.has(name.replace(/[북남]$/, ""))) ||
         NOT_UNITS.some(notUnit => word.endsWith(notUnit))
           ? word
@@ -214,7 +232,7 @@ export const normalizeKo = async (
 ): Promise<string> => {
   const map = letters === "latn" ? LATN : IPA;
   const prepare = (text: string) => {
-    const result = splitUnits(splitNames(text, name, syllable), unit, province);
+    const result = splitUnits(splitNames(joinSpacedNames(text), name, syllable), unit, province);
     return letters === "latn" ? markSyllableBoundaries(result) : result;
   };
   const parts: string[] = [];

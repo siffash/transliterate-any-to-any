@@ -13,10 +13,10 @@ export const ruEnRules = `
 [^[:L:][:M:]] { Е > Ye;
 [^[:L:][:M:]] { е > ye;
 
-[АЕЁИОУЫЭЮЯ] { Е > YE;
-[АЕЁИОУЫЭЮЯ] { е > Ye;
-[аеёиоуыэюя] { Е > yE;
-[аеёиоуыэюя] { е > ye;
+[AEIOUY] { Е > YE;
+[AEIOUY] { е > Ye;
+[aeiouy] { Е > yE;
+[aeiouy] { е > ye;
 
 [ЪЬ] Е > YE;
 [ЪЬ] е > Ye;
@@ -45,8 +45,6 @@ export const ruEnRules = `
 Е > E;
 е > e;
 
-[CcSsZz] [Hh] { Ё > O;
-[CcSsZz] [Hh] { ё > o;
 Ё } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > YO;
 Ё } [:Lu:] > YO;
 [:Lu:] { Ё > YO;
@@ -162,7 +160,6 @@ export const ruEnRules = `
 [cszkCSZK] [hH] { h > h;
 [cszkCSZK] [hH] { H > H;
 [hH] { [hH]+ > ;
-[iI] { [iI]+ } [^[:L:][:M:]] > ;
 [^[:L:][:M:]] { [cC]+ } [kK] > ;
 
 [kK] { [kK]+ } [hH] > ;

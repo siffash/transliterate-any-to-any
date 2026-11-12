@@ -210,9 +210,13 @@ v } āliyā [^[:L:][:M:]] > w;
 
 w { w+ > ;
 y { y+ > ;
+[^[:L:][:M:]] [b-df-hj-np-tv-z] h? r i { y } a > y;
+[^[:L:][:M:]] [b-df-hj-np-tv-z] h? i { y } a > y;
+i { y } a > ;
+ija { y > y;
+a { y } [bcdfghjklpqrstvwxz] > i;
 ch { h > h;
 h { h+ > ;
-i { i+ } [^[:L:][:M:]] > ;
 [^[:L:][:M:]] { c+ } k > ;
 
 k { k+ } h > ;

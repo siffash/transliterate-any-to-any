@@ -13,6 +13,8 @@ export const bnLatnRules = `
 
 ওয় > w·;
 [অআ] > a;
+[^[:L:][:M:]] { ই } য় > ;
+[^[:L:][:M:]] { ই } উ > y;
 [ইঈ] > i;
 [উঊ] > u;
 ঋ > ri;
@@ -58,6 +60,8 @@ export const bnLatnRules = `
 ং } [কখগঘ] > n;
 ং > ŋ;
 ঃ > h;
+ঁ ও } [^[:L:][:M:]] > on;
+ঁ } [নণ] > ;
 ঁ > n;
 ঽ > \\';
 
@@ -95,6 +99,9 @@ export const bnLatnRules = `
 
 [aeiouä·] [b-df-hj-np-tv-zčǯŋńš] { · } [b-df-hj-np-tv-zčǯŋńš] h? [aeiouä·] > ;
 [aeiouä·] [b-df-hj-np-tv-zčǯŋńš] h { · } [b-df-hj-np-tv-zčǯŋńš] h? [aeiouä·] > ;
+· } u d \\* d > ;
+· } u l \\* l > ;
+· } u ǯ \\* ǯ > ;
 · > a;
 
 ::Null;

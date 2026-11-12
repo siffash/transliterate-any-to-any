@@ -35,6 +35,11 @@ export const PLACE_ENDINGS = new Set(
   "州庄村镇县市区乡家集店屯坊塘坪坝口沟滩埠场港关坑甸峪圩堰潭墩洼宅巷铺堤渡湖湾堡",
 );
 
+// Administrative units a place's name ends in (大岭山镇, 乌兰察布市), and those of them that
+// name a place of its own inside another one (北京市朝阳区, 徐汇区虹桥镇)
+export const UNITS = new Set("镇乡村县市区旗");
+export const HIGHER_UNITS = new Set("省市县区");
+
 // Places end in these too, but so do given names (张家山 a village, 刘江 a man): they mark a place only
 // in three characters that jieba reads as words rather than as a person's name (王家|营, 江苏|路)
 export const LANDFORM_ENDINGS = new Set(

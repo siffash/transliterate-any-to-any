@@ -2,6 +2,7 @@ import { languages, supportedLanguages } from "helpers/constants";
 import { Language, Options, Text } from "types";
 import { keepsLatinText, usesEnglishRomanization } from "helpers/establishedSpelling";
 import { validateLanguage } from "helpers/validateLanguage";
+import { normalizeInput } from "helpers/normalizeInput";
 
 type Converter = (text: Text) => Promise<Text>;
 
@@ -2660,8 +2661,6 @@ const converters: Partial<Record<`${Language}${Language}`, () => Promise<Convert
   vitr: () => import("converters/vi/vi-tr").then(m => m.viTr),
 };
 
-const normalizeApostrophes = (text: string) => text.replace(/['‘`´ʼʻ′＇]/g, "’");
-
 export const transliterate = async <T extends Text>(text: T, options: Options): Promise<T> => {
   const { from, to, spelling = "orthographic" } = options || {};
 
@@ -2695,7 +2694,7 @@ export const transliterate = async <T extends Text>(text: T, options: Options): 
     );
   }
 
-  text = (Array.isArray(text) ? text.map(normalizeApostrophes) : normalizeApostrophes(text)) as T;
+  text = normalizeInput(text, from);
 
   if (!validateLanguage(from, text)) {
     throw new Error(`Source text does not match ${languages[from].name}.`);
@@ -2714,8 +2713,6 @@ export const transliterate = async <T extends Text>(text: T, options: Options): 
   if (!load) {
     throw new Error(`The language pair is not supported: ${from} -> ${to}`);
   }
-
-  text = (Array.isArray(text) ? text.map(s => s.normalize("NFC")) : text.normalize("NFC")) as T;
 
   try {
     const convert = await load();

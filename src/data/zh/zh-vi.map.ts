@@ -22,6 +22,7 @@ export const ZH_VI_MAP: Record<string, string> = {
   黄: "hoàng",
   周: "chu",
   吴: "ngô",
+  覃: "đàm",
   张: "trương",
   亚: "á",
   亞: "á",
@@ -44,4 +45,5 @@ export const ZH_VI_MAP: Record<string, string> = {
 // (重慶 zhong4 instead of chong2), keyed in Traditional Chinese
 export const ZH_VI_WORDS: Record<string, string[]> = {
   重慶: ["trùng", "khánh"],
+  銀行: ["ngân", "hàng"],
 };

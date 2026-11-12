@@ -14,7 +14,7 @@ export const breakClusters = (
   isConsonant: (segment: string) => boolean,
   vowel: string,
 ) => {
-  if (segments.length > 2 && isConsonant(segments[0]) && isConsonant(segments[1])) {
+  if (segments.length > 1 && isConsonant(segments[0]) && isConsonant(segments[1])) {
     segments.splice(1, 0, vowel);
   }
   for (let i = 0; i + 2 < segments.length; i++) {

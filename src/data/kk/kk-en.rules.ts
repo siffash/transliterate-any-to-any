@@ -15,8 +15,6 @@ export const kkEnRules = `
 
 [ЪЬъь] > ;
 
-[CcSsZz] [Hh] { Ё > O;
-[CcSsZz] [Hh] { ё > o;
 [:Lu:] { Ё > YO;
 Ё } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > YO;
 Ё } [:Lu:] > YO;
@@ -147,7 +145,6 @@ export const kkEnRules = `
 [cszkCSZK] [hH] { h > h;
 [cszkCSZK] [hH] { H > H;
 [hH] { [hH]+ > ;
-[iI] { [iI]+ } [^[:L:][:M:]] > ;
 [^[:L:][:M:]] { [cC]+ } [kK] > ;
 
 [kK] { [kK]+ } [hH] > ;

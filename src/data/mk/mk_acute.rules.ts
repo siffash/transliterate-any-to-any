@@ -1,4 +1,4 @@
-export const mkItRules = `
+export const mkAcuteRules = `
 ::Null;
 
 Ѓ > Ǵ;

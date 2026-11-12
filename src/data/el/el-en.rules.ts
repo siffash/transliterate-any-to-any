@@ -107,23 +107,27 @@ export const elEnRules = `
 υί > yí;
 υι > yi;
 
-ΓΚ > GK;
-γΚ > gK;
-Γκ > Gk;
-γκ > gk;
+[^[:L:][:M:]] { Γ [Κκ] > G;
+[^[:L:][:M:]] { γ [Κκ] > g;
+[bcdfghklmnprstvxzBCDFGHKLMNPRSTVXZ] { Γ [Κκ] > G;
+[bcdfghklmnprstvxzBCDFGHKLMNPRSTVXZ] { γ [Κκ] > g;
+ΓΚ > NG;
+γΚ > nG;
+Γκ > Ng;
+γκ > ng;
 
-[^[:L:][:M:]] { ΜΠ > B;
-[^[:L:][:M:]] { Μπ > B;
-ΜΠ } [^[:L:][:M:]] > B;
-Μπ } [^[:L:][:M:]] > b;
-μπ } [^[:L:][:M:]] > b;
-[^[:L:][:M:]] { μπ > b;
+[^[:L:][:M:]] { Μ [Ππ] > B;
+[^[:L:][:M:]] { μ [Ππ] > b;
+Μ [Ππ] } [^[:L:][:M:]] > B;
+μ [Ππ] } [^[:L:][:M:]] > b;
 
 ΜΠ > MP;
 μΠ > mP;
 Μπ > Mp;
 μπ > mp;
 
+[^[:L:][:M:]] { Ν [Ττ] > D;
+[^[:L:][:M:]] { ν [Ττ] > d;
 ΝΤ > NT;
 νΤ > nT;
 Ντ > Nt;
@@ -209,6 +213,7 @@ export const elEnRules = `
 ::Null;
 
 ́ > ;
+̈ > ;
 
 ::NFC;
 
@@ -223,7 +228,6 @@ export const elEnRules = `
 [cszkCSZK] [hH] { h > h;
 [cszkCSZK] [hH] { H > H;
 [hH] { [hH]+ > ;
-[iI] { [iI]+ } [^[:L:][:M:]] > ;
 [^[:L:][:M:]] { [cC]+ } [kK] > ;
 
 [kK] { [kK]+ } [hH] > ;

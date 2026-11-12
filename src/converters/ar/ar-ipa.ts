@@ -77,7 +77,7 @@ export const arIpa = async <T = Text>(text: Text): Promise<T> => {
     });
     // Arabic has no word-initial clusters and no runs of three consonants: the unwritten vowel is most often a
     // (حجاز → ħadʒaːz, المتجددة → almatadʒadda)
-    const isConsonant = (segment: string) => /\p{L}/u.test(segment) && !/[aiuة]/.test(segment);
+    const isConsonant = (segment: string) => /\p{L}/u.test(segment) && !/[aiuةآ]/.test(segment);
     // تش is one sound in foreign names (تشاد → tʃaːd)
     for (let i = segments.length - 1; i > 0; i--) {
       if (segments[i - 1] === "t" && segments[i] === "ʃ") segments.splice(i - 1, 2, "tʃ");

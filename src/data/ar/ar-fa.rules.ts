@@ -14,6 +14,7 @@ export const arFaRules = `
 ك > ک;
 [يى] > ی;
 [أإٱ] > ا;
+[ًٌٍَُِّْٰ] > ;
 
 ::Null;
 

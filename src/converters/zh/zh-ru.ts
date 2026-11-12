@@ -1,7 +1,7 @@
 import { Text } from "types";
 
 export const zhRu = async (text: Text) => {
-  const { pinyin } = await import("pinyin-pro");
+  const { zhPinyin } = await import("helpers/zhPinyin");
   const { RBT } = await import("helpers/rbt");
   const { zhRuRules } = await import("data/zh/zh-ru.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
@@ -9,9 +9,7 @@ export const zhRu = async (text: Text) => {
   const transliterator = RBT.fromRules(zhRuRules);
 
   const convert = async (text: string) => {
-    const romanized = await wordSplitter(text, "zh", text =>
-      pinyin(text, { separator: "'", nonZh: "consecutive" }),
-    );
+    const romanized = await wordSplitter(text, "zh", text => zhPinyin(text));
     return transliterator.transliterate(romanized);
   };
 

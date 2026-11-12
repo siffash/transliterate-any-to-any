@@ -52,9 +52,24 @@ export const thaiReader = async () => {
     return { ipa, rtgs: ipaToRtgs(ipa) };
   };
 
-  // A compound name is read piece by piece (see segmentThai)
+  // A compound name is read piece by piece (see segmentThai). A piece that ends in ร after i or u, or
+  // in ทธ, links to the next one with "a", as inside a piece: จิร|วัฒน์ Chirawat (like สุรศักดิ์ Surasak),
+  // พุทธ|มณฑล Phutthamonthon, but ยงยุทธ Yongyut
+  const link = (piece: string, { ipa, rtgs }: { ipa: string; rtgs: string }) => {
+    if (/[ิีุู]ร$/u.test(piece) && /n$/.test(rtgs)) {
+      return { ipa: ipa.replace(/n$/, "ra"), rtgs: rtgs.replace(/n$/, "ra") };
+    }
+    if (/ทธ$/u.test(piece) && /t$/.test(rtgs)) {
+      return { ipa: ipa.replace(/t̚$/, "t̚tʰa"), rtgs: rtgs.replace(/t$/, "ttha") };
+    }
+    return { ipa, rtgs };
+  };
+
   return (word: string): { ipa: string; rtgs: string } => {
-    const readings = segmentThai(word).map(readPiece);
+    const pieces = segmentThai(word);
+    const readings = pieces.map((piece, i) =>
+      i < pieces.length - 1 ? link(piece, readPiece(piece)) : readPiece(piece),
+    );
     return {
       ipa: readings.map(reading => reading.ipa).join(""),
       rtgs: readings.map(reading => reading.rtgs).join(""),

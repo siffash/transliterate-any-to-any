@@ -37,19 +37,21 @@ const PUNCTUATION: Record<string, [replacement: string, kind: Kind]> = {
 // Fullwidth punctuation between words (，（）！) becomes ASCII, which every target script uses,
 // with the space its width implied: 北京，上海 → Beijing, Shanghai
 const toHalfwidth = (text: string, wordBefore: boolean, wordAfter: boolean) =>
-  text.replace(/[\uFF01-\uFF5E]/g, (char, offset: number) => {
-    const mark = String.fromCharCode(char.charCodeAt(0) - 0xfee0);
-    const prev = text[offset - 1];
-    const next = text[offset + 1];
-    if (
-      /[,;:!?)]/.test(mark) &&
-      (next ? !/[\s.,;:!?)\uFF0E\uFF0C\uFF1B\uFF1A\uFF01\uFF1F\uFF09]/.test(next) : wordAfter)
-    ) {
-      return mark + " ";
-    }
-    if (mark === "(" && (prev ? !/[\s(\uFF08]/.test(prev) : wordBefore)) return " " + mark;
-    return mark;
-  });
+  text
+    .replace(/\s+(?=[\uFF0C\uFF0E\uFF1A\uFF1B\uFF01\uFF1F\uFF09])/g, "")
+    .replace(/[\uFF01-\uFF5E]/g, (char, offset: number, rest: string) => {
+      const mark = String.fromCharCode(char.charCodeAt(0) - 0xfee0);
+      const prev = rest[offset - 1];
+      const next = rest[offset + 1];
+      if (
+        /[,;:!?)]/.test(mark) &&
+        (next ? !/[\s.,;:!?)\uFF0E\uFF0C\uFF1B\uFF1A\uFF01\uFF1F\uFF09]/.test(next) : wordAfter)
+      ) {
+        return mark + " ";
+      }
+      if (mark === "(" && (prev ? !/[\s(\uFF08]/.test(prev) : wordBefore)) return " " + mark;
+      return mark;
+    });
 
 // surname: a Chinese surname split off its given name (see segmentChinese)
 type Segment = { segment: string; isWordLike?: boolean; surname?: boolean };
@@ -133,6 +135,8 @@ export const wordSplitter = async (
   skipSegmenter?: boolean,
   joinNames?: boolean,
 ): Promise<string> => {
+  // A Korean surname written apart from its given name is read as one name (김 정은)
+  if (language === "ko") input = (await import("helpers/normalizeKo")).joinSpacedNames(input);
   const { regex } = languages[language];
   const re = new RegExp(`[${regex}\\p{L}]+`, "gu");
   const segment = skipSegmenter ? undefined : await getWordSegmenter(language);
@@ -153,6 +157,10 @@ export const wordSplitter = async (
     let prev: Kind | undefined;
     let afterSurname = false;
     const push = async (kind: Kind, text: string) => {
+      // a comma or full stop of the source script typed after a space (بيروت ، دمشق) has none before it
+      if (kind === "close" && /^[,.;?]$/.test(text) && parts.length) {
+        parts[parts.length - 1] = parts[parts.length - 1]!.replace(/\s+$/, "");
+      }
       if (needsSpace(prev, kind) && !(joinNames && afterSurname && kind === "word")) {
         parts.push(" ");
       }

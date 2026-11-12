@@ -3,6 +3,7 @@ import {
   COMPOUND_SURNAMES,
   DYNASTIES,
   EMPEROR_TITLES,
+  HIGHER_UNITS,
   LANDFORM_ENDINGS,
   NAMES,
   NOT_NAMES,
@@ -11,6 +12,7 @@ import {
   PROVINCES,
   RARER_SURNAMES,
   SURNAMES,
+  UNITS,
 } from "data/zh/zh-names";
 import { getJieba, type Jieba } from "helpers/getJieba";
 
@@ -102,15 +104,54 @@ const splitPlace = (word: string) => {
       length = 6;
     }
   }
-  const province = [3, 2].find(
+  let province = [3, 2].find(
     length => end - length >= 2 && PROVINCES.has(chars.slice(0, length).join("")),
   );
+  // with its own unit (上海市|浦东新区, not 上海|市浦东)
+  if (province && end - province >= 3 && "省市".includes(chars[province]!)) province++;
   return [
     ...(province
       ? [chars.slice(0, province).join(""), chars.slice(province, end).join("")]
       : [chars.slice(0, end).join("")]),
     ...generics,
   ];
+};
+
+// A place written alone that ends in its unit is one name, however jieba cuts it (大岭|山镇,
+// 乌兰察布|市 are Dalingshanzhen, Wulanchabushi), unless it's a place inside another one
+// (北京市朝阳区, but 贾市庄镇 is a town), has a generic term of its own (巴里坤哈萨克自治县,
+// 工业园区) or is an area that jieba knows (管理区, 旅游区) or is described by words (经济发展区).
+// Words before another generic stay apart (喇叭沟门满族乡 is Labagoumen Manzuxiang), as do provinces
+const splitTown = (text: string, tagged: { word: string; tag: string }[]) => {
+  const chars = [...text];
+  const unit = chars[chars.length - 1];
+  const last = tagged[tagged.length - 1]!;
+  const inner = chars.slice(2, -2).findIndex(char => HIGHER_UNITS.has(char)) + 3;
+  // A town in its county or city: 当阳市|庙前镇
+  if (inner > 2 && !chars.slice(inner, -1).some(char => HIGHER_UNITS.has(char))) {
+    return UNITS.has(unit) && tagged.length > 1
+      ? [chars.slice(0, inner).join(""), chars.slice(inner).join("")]
+      : undefined;
+  }
+  if (
+    chars.length < 4 ||
+    tagged.length < 2 ||
+    !UNITS.has(unit) ||
+    inner > 2 ||
+    AREAS.has(chars.slice(-2).join("")) ||
+    PLACE_GENERICS.has(splitPlace(text).pop()!)
+  ) {
+    return undefined;
+  }
+  const parts = splitPlace(chars.slice(0, -1).join(""));
+  if (
+    unit === "区" &&
+    ((last.tag === "n" && [...last.word].length > 1) || parts.some(part => [...part].length > 5))
+  ) {
+    return undefined;
+  }
+  parts[parts.length - 1] += unit;
+  return parts;
 };
 
 // Nor is a place that jieba doesn't tag as one cut before its last character
@@ -147,6 +188,9 @@ const splitWord = (
     NAME_TAGS.has(tag) ||
     (tag === "x" && (length === 3 || (length === 2 && alone)))
   ) {
+    return splitName(word);
+  }
+  if (alone && length === 3 && tag !== "ns" && !LANDFORM_ENDINGS.has([...word][2])) {
     return splitName(word);
   }
   return (tag === "ns" && length >= 4 ? splitPlace(word) : splitOther(jieba, word)).map(word => ({
@@ -212,13 +256,21 @@ const segmentChinese = (jieba: Jieba, toSimplified: (text: string) => string, te
   ) {
     tagged = [{ word: source, tag: JOINED_TAG }];
   }
-  return tagged
-    .flatMap(word => splitWord(jieba, word, tagged.length === 1))
-    .map(({ word, surname }) => {
-      const length = [...word].length;
-      const segment = original.slice(index, (index += length)).join("");
-      const isWordLike = /\p{L}/u.test(word);
-      // Punctuation stays as it was, as wordSplitter replaces it itself
-      return { segment: isWordLike ? word : segment, isWordLike, surname };
-    });
+  const town = /^\p{Script=Han}+$/u.test(source) ? splitTown(source, tagged) : undefined;
+  return (
+    town?.map(word => ({ word })) ??
+    tagged.flatMap(word => splitWord(jieba, word, tagged.length === 1))
+  ).map(({ word, surname }: Part) => {
+    const length = [...word].length;
+    const segment = original.slice(index, (index += length)).join("");
+    const isWordLike = /\p{L}/u.test(word);
+    // Punctuation stays as it was, as wordSplitter replaces it itself.
+    // 什 is shí in names (喀什 Kashi, 什邡 Shifang), but pinyin-pro reads it shén, as in 什么:
+    // 十 reads shí in every language (십, thập)
+    return {
+      segment: isWordLike ? word.replace(/什(?![么麼])/gu, "十") : segment,
+      isWordLike,
+      surname,
+    };
+  });
 };

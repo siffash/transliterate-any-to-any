@@ -31,3 +31,6 @@ export const PROVINCES = new Set([
 
 // Words that end in a unit but are not one: 도시 (city), 장군 (general), 볶음면 (fried noodles)
 export const NOT_UNITS = ["도시", "장군", "볶음면"];
+
+// A neighborhood of one syllable is a unit too (명동: Myeong-dong), but not the regions named after the east (관동, 영동)
+export const NOT_DONGS = new Set(["관동", "영동", "해동", "요동", "산동", "광동", "강동"]);
