@@ -15,7 +15,7 @@ export const ListenButton = ({
   onClick,
   ariaLabel,
 }: {
-  lang: Language;
+  lang: Language | undefined;
   langSupported: boolean;
   disabled: boolean;
   speaking: boolean;
@@ -24,7 +24,7 @@ export const ListenButton = ({
 }) => (
   <Tooltip
     title={
-      langSupported
+      langSupported || !lang
         ? speaking
           ? "Stop"
           : "Listen"

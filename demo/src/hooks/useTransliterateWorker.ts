@@ -78,7 +78,7 @@ export function useTransliterateWorker() {
   }, [start]);
 
   const run = useCallback(
-    (text: string, from: Language, to: Language) => {
+    (text: string, from: Language | undefined, to: Language) => {
       return new Promise<string>((resolve, reject) => {
         const worker = workerRef.current ?? start();
         const id = ++idRef.current;

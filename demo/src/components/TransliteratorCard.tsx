@@ -17,7 +17,7 @@ import MicIcon from "@mui/icons-material/Mic";
 import MicOffIcon from "@mui/icons-material/MicOff";
 import ShareIcon from "@mui/icons-material/Share";
 import SwapHorizIcon from "@mui/icons-material/SwapHoriz";
-import { multilingualTextStack } from "../theme";
+import { multilingualTextStack, swapButtonSx } from "../theme";
 import { useSpeechRecognition } from "../hooks/useSpeechRecognition";
 import { useSpeechSynthesis } from "../hooks/useSpeechSynthesis";
 import { useTransliterator } from "../hooks/useTransliterator";
@@ -35,6 +35,8 @@ export const TransliteratorCard = ({ suppressErrors = false }: { suppressErrors?
   const {
     langFrom,
     langTo,
+    sourceLang,
+    autoDetectedLang,
     sourceText,
     targetText,
     loading,
@@ -45,6 +47,7 @@ export const TransliteratorCard = ({ suppressErrors = false }: { suppressErrors?
     linkCopied,
     setLinkCopied,
     swapRotation,
+    canSwap,
     charCount,
     micSupported,
     isListening,
@@ -101,20 +104,24 @@ export const TransliteratorCard = ({ suppressErrors = false }: { suppressErrors?
             mb: 3,
           }}
         >
-          <LanguageSelect id="from-lang" label="From" value={langFrom} onChange={handleFromLang} />
+          <LanguageSelect
+            id="from-lang"
+            label="From"
+            value={langFrom}
+            onChange={handleFromLang}
+            detect={{ detectedLang: autoDetectedLang }}
+          />
           <Tooltip title="Swap languages">
-            <IconButton
-              onClick={handleSwap}
-              sx={{
-                bgcolor: "primary.main",
-                color: "primary.contrastText",
-                transform: `rotate(${swapRotation}deg)`,
-                transition: "transform 0.4s ease",
-                "&:hover": { bgcolor: "primary.dark" },
-              }}
-            >
-              <SwapHorizIcon />
-            </IconButton>
+            <span>
+              <IconButton
+                onClick={handleSwap}
+                disabled={!canSwap}
+                aria-label="Swap languages"
+                sx={{ ...swapButtonSx, transform: `rotate(${swapRotation}deg)` }}
+              >
+                <SwapHorizIcon />
+              </IconButton>
+            </span>
           </Tooltip>
           <LanguageSelect id="to-lang" label="To" value={langTo} onChange={handleToLang} />
         </Box>
@@ -134,7 +141,7 @@ export const TransliteratorCard = ({ suppressErrors = false }: { suppressErrors?
             }}
           >
             <Box sx={{ px: 2, pt: 2 }}>
-              <CodeBadge code={langFrom} />
+              <CodeBadge code={sourceLang ?? langFrom} />
             </Box>
             <TextField
               multiline
@@ -179,7 +186,7 @@ export const TransliteratorCard = ({ suppressErrors = false }: { suppressErrors?
                 </Tooltip>
                 {ttsSupported && (
                   <ListenButton
-                    lang={langFrom}
+                    lang={sourceLang}
                     {...sourceListen}
                     onClick={handleSourceListen}
                     ariaLabel="Listen to source text"

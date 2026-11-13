@@ -16,7 +16,7 @@ import MicIcon from "@mui/icons-material/Mic";
 import MicOffIcon from "@mui/icons-material/MicOff";
 import ShareIcon from "@mui/icons-material/Share";
 import SwapHorizIcon from "@mui/icons-material/SwapHoriz";
-import { multilingualTextStack } from "../theme";
+import { multilingualTextStack, swapButtonSx } from "../theme";
 import { useTransliterator } from "../hooks/useTransliterator";
 import type { SpeechInput } from "../hooks/useSpeechRecognition";
 import type { SpeechOutput } from "../hooks/useSpeechSynthesis";
@@ -88,6 +88,8 @@ export const OneScreenTransliterator = ({
   const {
     langFrom,
     langTo,
+    sourceLang,
+    autoDetectedLang,
     sourceText,
     targetText,
     loading,
@@ -98,6 +100,7 @@ export const OneScreenTransliterator = ({
     linkCopied,
     setLinkCopied,
     swapRotation,
+    canSwap,
     charCount,
     micSupported,
     isListening,
@@ -139,24 +142,21 @@ export const OneScreenTransliterator = ({
           label="From"
           value={langFrom}
           onChange={handleFromLang}
+          detect={{ detectedLang: autoDetectedLang }}
           blurOnSelect="touch"
           sx={{ flex: 1, minWidth: 0 }}
         />
         <Tooltip title="Swap languages">
-          <IconButton
-            onClick={handleSwap}
-            aria-label="Swap languages"
-            sx={{
-              flexShrink: 0,
-              bgcolor: "primary.main",
-              color: "primary.contrastText",
-              transform: `rotate(${swapRotation}deg)`,
-              transition: "transform 0.4s ease",
-              "&:hover": { bgcolor: "primary.dark" },
-            }}
-          >
-            <SwapHorizIcon />
-          </IconButton>
+          <Box component="span" sx={{ flexShrink: 0 }}>
+            <IconButton
+              onClick={handleSwap}
+              disabled={!canSwap}
+              aria-label="Swap languages"
+              sx={{ ...swapButtonSx, transform: `rotate(${swapRotation}deg)` }}
+            >
+              <SwapHorizIcon />
+            </IconButton>
+          </Box>
         </Tooltip>
         <LanguageSelect
           id="to-lang"
@@ -222,7 +222,7 @@ export const OneScreenTransliterator = ({
               </Tooltip>
               {ttsSupported && (
                 <ListenButton
-                  lang={langFrom}
+                  lang={sourceLang}
                   {...sourceListen}
                   onClick={handleSourceListen}
                   ariaLabel="Listen to source text"

@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { Language } from "transliterate-any-to-any";
+import type { SourceLanguage } from "../constants";
 
 const getParams = () => {
   const params = new URLSearchParams(window.location.search);
-  const paramFrom = params.get("from") as Language;
+  const paramFrom = params.get("from") as SourceLanguage;
   const paramTo = params.get("to") as Language;
   const paramText = params.get("text") || "";
   return { paramFrom, paramTo, paramText };

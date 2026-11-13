@@ -5,7 +5,7 @@ import { Language, transliterate } from "transliterate-any-to-any";
 export interface WorkerRequest {
   id: number;
   text: string;
-  from: Language;
+  from?: Language;
   to: Language;
 }
 

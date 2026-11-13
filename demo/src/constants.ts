@@ -10,6 +10,9 @@ export const LINKS = {
   privacy: `${SITE_URL}privacy.html`,
 };
 
+export const AUTO_DETECT = "auto";
+export type SourceLanguage = Language | typeof AUTO_DETECT;
+
 export const DEFAULT_LANGS: { langFrom: Language; langTo: Language } = {
   langFrom: "en",
   langTo: "bg",

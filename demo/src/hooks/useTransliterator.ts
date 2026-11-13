@@ -4,7 +4,15 @@ import { isLoadError, useTransliterateWorker } from "./useTransliterateWorker";
 import type { SpeechInput } from "./useSpeechRecognition";
 import type { SpeechOutput } from "./useSpeechSynthesis";
 import { useQueryParams } from "./useQueryParams.ts";
-import { DEBOUNCE_MS, DEFAULT_LANGS, LOCAL_STORAGE_KEYS, MAX_CHARS, SITE_URL } from "../constants";
+import {
+  AUTO_DETECT,
+  DEBOUNCE_MS,
+  DEFAULT_LANGS,
+  LOCAL_STORAGE_KEYS,
+  MAX_CHARS,
+  SITE_URL,
+  type SourceLanguage,
+} from "../constants";
 
 function getErrorMessage(err: Error): string {
   if (!navigator.onLine && isLoadError(err.message)) {
@@ -42,15 +50,15 @@ function getSystemLang(): Language | undefined {
   return undefined;
 }
 
-function getInitialLangFrom(): Language {
+function getInitialLangFrom(): SourceLanguage {
   // try to get from URL
   const params = new URLSearchParams(window.location.search);
   const paramFrom = params.get("from");
-  if (paramFrom) return paramFrom as Language;
+  if (paramFrom) return paramFrom as SourceLanguage;
   // try to get from localStorage
   if (typeof window === "undefined") return DEFAULT_LANGS.langFrom;
   const stored = window.localStorage.getItem(LOCAL_STORAGE_KEYS.langFrom);
-  if (stored) return stored as Language;
+  if (stored) return stored as SourceLanguage;
   // fallback to the system's language
   return getSystemLang() ?? DEFAULT_LANGS.langFrom;
 }
@@ -76,6 +84,15 @@ function hasChosenLangs(): boolean {
     window.localStorage.getItem(LOCAL_STORAGE_KEYS.langFrom) ||
     window.localStorage.getItem(LOCAL_STORAGE_KEYS.langTo),
   );
+}
+
+// The language of the text, or undefined when it has none or mixes several
+function tryDetectLanguage(text: string): Language | undefined {
+  try {
+    return detectLanguage(text);
+  } catch {
+    return undefined;
+  }
 }
 
 // The generic title from index.html, kept until a language is chosen
@@ -104,7 +121,7 @@ export function useTransliterator({
   syncUrl: boolean;
   suppressErrors?: boolean;
 }) {
-  const [langFrom, setLangFrom] = useState<Language>(getInitialLangFrom);
+  const [langFrom, setLangFrom] = useState<SourceLanguage>(getInitialLangFrom);
   const [langTo, setLangTo] = useState<Language>(getInitialLangTo);
   const [defaultLangs] = useState(() => (hasChosenLangs() ? null : { langFrom, langTo }));
   const langsChosenRef = useRef(false);
@@ -116,10 +133,12 @@ export function useTransliterator({
   const [linkCopied, setLinkCopied] = useState(false);
   const [swapRotation, setSwapRotation] = useState(0);
   const [retryKey, setRetryKey] = useState(0);
-  const [rejected, setRejected] = useState<{ text: string; lang: Language } | null>(null);
-  const [detected, setDetected] = useState<{ text: string; from: Language; lang: Language } | null>(
-    null,
-  );
+  const [rejected, setRejected] = useState<{ text: string; lang: SourceLanguage } | null>(null);
+  const [detected, setDetected] = useState<{
+    text: string;
+    from: SourceLanguage;
+    lang: Language;
+  } | null>(null);
 
   const { run } = useTransliterateWorker();
   const sourceTextInputRef = useRef<HTMLInputElement>(null);
@@ -141,7 +160,19 @@ export function useTransliterator({
     stop: stopListening,
   } = speech;
 
-  const fromLocale = useMemo(() => languages[langFrom]?.locale ?? "en-US", [langFrom]);
+  // With "Detect language", the language detected in the text, if any (which
+  // is what transliterate() detects too, as it's given no source language)
+  const autoDetectedLang = useMemo(
+    () => (langFrom === AUTO_DETECT ? tryDetectLanguage(sourceText) : undefined),
+    [langFrom, sourceText],
+  );
+  const sourceLang = langFrom === AUTO_DETECT ? autoDetectedLang : langFrom;
+
+  // Voice input without a source language listens for the system's one
+  const fromLocale = useMemo(
+    () => languages[sourceLang ?? getSystemLang() ?? "en"]?.locale ?? "en-US",
+    [sourceLang],
+  );
   const toLocale = useMemo(() => languages[langTo]?.locale ?? "en-US", [langTo]);
 
   const { speakingId, speak, stop: stopSpeaking } = tts;
@@ -155,13 +186,6 @@ export function useTransliterator({
       setLoading(false);
       return;
     }
-    if (langFrom === langTo) {
-      setTargetText(sourceText);
-      setErrorMsg(null);
-      setLoading(false);
-      return;
-    }
-
     const thisId = ++requestIdRef.current;
     setLoading(true);
 
@@ -179,9 +203,19 @@ export function useTransliterator({
         }
       }
 
+      // Kept as is (after the URL is updated, so that it has the text too): a
+      // text in the target language, or one without letters (which has no
+      // language to detect, but would stay the same in any language)
+      if (sourceLang === langTo || (langFrom === AUTO_DETECT && !/\p{L}/u.test(sourceText))) {
+        setTargetText(sourceText);
+        setErrorMsg(null);
+        setLoading(false);
+        return;
+      }
+
       // A text that doesn't match the source language isn't sent to the worker
       // when its language can be detected: a switch to it is suggested instead
-      if (!validateLanguage(langFrom, sourceText)) {
+      if (langFrom !== AUTO_DETECT && !validateLanguage(langFrom, sourceText)) {
         let lang: Language | undefined;
         try {
           lang = detectLanguage(sourceText);
@@ -202,7 +236,23 @@ export function useTransliterator({
         }
       }
 
-      run(sourceText, langFrom, langTo)
+      // With "Detect language", a text whose language can't be detected isn't
+      // sent to the worker, which would only fail to detect it the same way
+      if (langFrom === AUTO_DETECT && !sourceLang) {
+        let message = "Couldn't detect the language of the text.";
+        try {
+          detectLanguage(sourceText);
+        } catch (err) {
+          message = (err as Error).message;
+        }
+        setRejected({ text: sourceText, lang: langFrom });
+        setTargetText("");
+        setErrorMsg(message);
+        setLoading(false);
+        return;
+      }
+
+      run(sourceText, langFrom === AUTO_DETECT ? undefined : langFrom, langTo)
         .then(result => {
           if (thisId === requestIdRef.current) {
             loadFailedRef.current = false;
@@ -226,7 +276,7 @@ export function useTransliterator({
     }, DEBOUNCE_MS);
 
     return () => clearTimeout(timer);
-  }, [sourceText, langFrom, langTo, run, retryKey, syncUrl]);
+  }, [sourceText, langFrom, sourceLang, langTo, run, retryKey, syncUrl]);
 
   // A language pair that failed to load (e.g. offline) is loaded again as soon
   // as the connection is back, without waiting for the next keystroke
@@ -254,11 +304,11 @@ export function useTransliterator({
     if (!syncUrl) return;
     langsChosenRef.current ||=
       !defaultLangs || langFrom !== defaultLangs.langFrom || langTo !== defaultLangs.langTo;
-    const fromName = languages[langFrom]?.name;
+    const fromName = langFrom === AUTO_DETECT ? "" : languages[langFrom]?.name;
     const toName = languages[langTo]?.name;
     document.title =
-      langsChosenRef.current && fromName && toName
-        ? `Transliterate ${fromName} to ${toName}`
+      langsChosenRef.current && fromName !== undefined && toName
+        ? `Transliterate ${fromName ? `${fromName} ` : ""}to ${toName}`
         : DEFAULT_TITLE;
   }, [langFrom, langTo, defaultLangs, syncUrl]);
 
@@ -333,10 +383,15 @@ export function useTransliterator({
     setErrorMsg(null);
   };
 
+  // With "Detect language", only once a language other than the target is
+  // detected, which then becomes the target
+  const canSwap = sourceLang !== undefined && sourceLang !== langTo;
+
   const handleSwap = () => {
+    if (!sourceLang || !canSwap) return;
     setSwapRotation(r => r + 180);
     setLangFrom(langTo);
-    setLangTo(langFrom);
+    setLangTo(sourceLang);
     if (targetText) setSourceText(targetText);
   };
 
@@ -402,10 +457,13 @@ export function useTransliterator({
   const handleTargetListen = () => toggleSpeaking("target", targetText, toLocale);
 
   const handleFromLang = (lang: string) => {
-    if (lang === langTo) {
+    if (lang === langTo && canSwap) {
       handleSwap();
+    } else if (lang === langTo) {
+      setLangFrom(langTo);
+      setLangTo(langTo === DEFAULT_LANGS.langTo ? "en" : DEFAULT_LANGS.langTo);
     } else {
-      setLangFrom(lang as Language);
+      setLangFrom(lang as SourceLanguage);
     }
     setTargetText("");
     setErrorMsg(null);
@@ -430,6 +488,8 @@ export function useTransliterator({
   return {
     langFrom,
     langTo,
+    sourceLang,
+    autoDetectedLang,
     sourceText,
     targetText,
     loading,
@@ -440,13 +500,19 @@ export function useTransliterator({
     linkCopied,
     setLinkCopied,
     swapRotation,
+    canSwap,
     charCount: sourceText.length,
     micSupported,
     isListening,
     ttsSupported: tts.isSupported,
     sourceListen: {
-      langSupported: tts.canSpeak(fromLocale),
-      disabled: !tts.canSpeak(fromLocale) || !sourceText.trim() || sourceRejected || isListening,
+      langSupported: !sourceLang || tts.canSpeak(fromLocale),
+      disabled:
+        !sourceLang ||
+        !tts.canSpeak(fromLocale) ||
+        !sourceText.trim() ||
+        sourceRejected ||
+        isListening,
       speaking: speakingId === "source",
     },
     targetListen: {

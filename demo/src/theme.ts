@@ -78,3 +78,11 @@ export function getTheme(mode: "light" | "dark"): Theme {
 
 export const multilingualTextStack =
   'ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif';
+
+export const swapButtonSx = {
+  bgcolor: "primary.main",
+  color: "primary.contrastText",
+  transition: "transform 0.4s ease",
+  "&:hover": { bgcolor: "primary.dark" },
+  "&.Mui-disabled": { bgcolor: "action.disabledBackground", color: "action.disabled" },
+} as const;
