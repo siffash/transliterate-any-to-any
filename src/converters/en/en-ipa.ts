@@ -27,6 +27,10 @@ export const enIpa = async <T = Text>(
     if (irish) {
       return "ɔ" + (await predict(irish[1]));
     }
+    // phonemize spells out a word in capitals letter by letter (JOHNSON ДЖЕЙОЭЙЧЕНЕСОУЭН), so it reads it in lowercase
+    if (word.length > 1 && word === word.toUpperCase() && word !== word.toLowerCase()) {
+      word = word.toLowerCase();
+    }
     if (!(word.toLowerCase() in Object.prototype)) {
       return toIPA(word);
     }
@@ -34,8 +38,11 @@ export const enIpa = async <T = Text>(
     return new EnglishG2P().predict(word, "en") ?? word;
   };
 
+  // phonemize reads the abbreviation St as "street", but before a name it is Saint /sənt/ (St Helens, St Andrews)
+  const SAINT = /(?<![\p{L}\p{M}])S[tT]\.?(?=\s+\p{Lu})/gu;
+
   const convert = async (text: string) =>
-    await wordSplitter(text, "en", async (word: string) => {
+    await wordSplitter(text.replace(SAINT, "Sent"), "en", async (word: string) => {
       const ipa = filterIpa(await predict(word), word, "en");
       const converted = transliterator.transliterate(
         normalizeEnIpa(word, ipa, extraRestoreRules, skippedRestoreRules),

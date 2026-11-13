@@ -9,11 +9,8 @@ export const enHr = async (text: Text) => {
 
   const transliterator = RBT.fromRules(ipaHrRules);
 
-  if (typeof text === "string") {
-    const ipa = await enIpa<string>(text, syllabicLRestoreRules);
-    return copyCase(text, transliterator.transliterate(ipa), "hr");
-  } else {
-    const ipaArray = await enIpa<string[]>(text, syllabicLRestoreRules);
-    return ipaArray.map((ipa, i) => copyCase(text[i], transliterator.transliterate(ipa), "hr"));
-  }
+  const words = typeof text === "string" ? [text] : text;
+  const ipa = await enIpa<string[]>(words, syllabicLRestoreRules);
+  const result = ipa.map((ipa, i) => copyCase(words[i], transliterator.transliterate(ipa), "hr"));
+  return typeof text === "string" ? result[0] : result;
 };

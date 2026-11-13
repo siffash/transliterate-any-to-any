@@ -3,10 +3,14 @@ import { Text } from "types";
 export const nlAz = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { nlLatnRules } = await import("data/nl/nl-latn.rules");
+  const { latnUeRules } = await import("data/latn/latn_ue.rules");
+  const { nlLatnAzRules } = await import("data/nl/nl-latn_az.rules");
   const { latnSilentHRules } = await import("data/latn/latn_silent-h.rules");
   const { latnAzRules } = await import("data/latn/latn-az.rules");
 
-  const transliterator = RBT.fromRules(nlLatnRules + latnSilentHRules + latnAzRules);
+  const transliterator = RBT.fromRules(
+    nlLatnRules + latnSilentHRules + latnUeRules + nlLatnAzRules + latnAzRules,
+  );
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);

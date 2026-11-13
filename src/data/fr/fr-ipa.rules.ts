@@ -127,6 +127,8 @@ g > g;
 [aiyʁp] { t } ienn > s;
 [aeiy] { t } ie [^[:L:][:M:]] > s;
 [aeiy] { t } ies [^[:L:][:M:]] > s;
+[aeiouéèêyɛɔəøœɑ] { s } [nl] e s? [^[:L:][:M:]] > ;
+[:L:] [aeiouéèêyɛɔəøœɑ] { s } n [aeiouéèêy] > ;
 [aàâäæeéèêëiîïoôœuûüùyɑɐɔəɛøɪʊ] { s } [aàâäæeéèêëiîïoôœuûüùy] > z;
 ès } [^[:L:][:M:]] > ɛs;
 s } [\\'’] > s;

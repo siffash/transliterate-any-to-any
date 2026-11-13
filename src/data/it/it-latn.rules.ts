@@ -93,6 +93,8 @@ x > ks;
 Z > C;
 z > c;
 
+[^aeiouAEIOU] { y } [^aeiouAEIOU] > i;
+[^aeiouAEIOU] { Y } [^aeiouAEIOU] > I;
 j > y;
 J > Y;
 [aeouAEOU] { i } [aeouAEOU] > y;

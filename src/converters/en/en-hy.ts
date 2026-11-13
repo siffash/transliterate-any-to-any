@@ -8,25 +8,24 @@ export const enHy = async (text: Text) => {
     geminateRestoreRules,
     geminateSingleRestoreRules,
     airRestoreRules,
+    shireRestoreRules,
   } = await import("helpers/normalizeEnIpa");
   const { ipaHyRules } = await import("data/ipa/ipa-hy.rules");
   const { copyCase } = await import("helpers/copyCase");
 
   const transliterator = RBT.fromRules(ipaHyRules);
 
-  if (typeof text === "string") {
-    const ipa = await enIpa<string>(
-      text,
-      [...syllabicLRestoreRules, ...geminateSingleRestoreRules, ...airRestoreRules],
-      geminateRestoreRules,
-    );
-    return copyCase(text, transliterator.transliterate(ipa), "hy");
-  } else {
-    const ipaArray = await enIpa<string[]>(
-      text,
-      [...syllabicLRestoreRules, ...geminateSingleRestoreRules, ...airRestoreRules],
-      geminateRestoreRules,
-    );
-    return ipaArray.map((ipa, i) => copyCase(text[i], transliterator.transliterate(ipa), "hy"));
-  }
+  const words = typeof text === "string" ? [text] : text;
+  const ipa = await enIpa<string[]>(
+    words,
+    [
+      ...syllabicLRestoreRules,
+      ...geminateSingleRestoreRules,
+      ...airRestoreRules,
+      ...shireRestoreRules,
+    ],
+    geminateRestoreRules,
+  );
+  const result = ipa.map((ipa, i) => copyCase(words[i], transliterator.transliterate(ipa), "hy"));
+  return typeof text === "string" ? result[0] : result;
 };

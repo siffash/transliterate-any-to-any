@@ -5,8 +5,9 @@ export const csLv = async (text: Text) => {
   const { csLatnRules } = await import("data/cs/cs-latn.rules");
   const { csLatnNjRules } = await import("data/cs/cs-latn_nj.rules");
   const { latnLvRules } = await import("data/latn/latn-lv.rules");
+  const { csSkLatnLvRules } = await import("data/latn/cs_sk-latn_lv.rules");
 
-  const transliterator = RBT.fromRules(csLatnNjRules + csLatnRules + latnLvRules);
+  const transliterator = RBT.fromRules(csLatnNjRules + csSkLatnLvRules + csLatnRules + latnLvRules);
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);

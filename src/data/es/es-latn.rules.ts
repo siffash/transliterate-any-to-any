@@ -57,21 +57,21 @@ C [hH] > Č;
 l [lL] > ľ;
 L [lL] > Ľ;
 
-q [uU] } [eiEI] > k;
-Q [uU] } [eiEI] > K;
+q [uU] } [eiɨEIƗ] > k;
+Q [uU] } [eiɨEIƗ] > K;
 
 QU } [aoAO] > KW;
 qU } [aoAO] > kW;
 Qu } [aoAO] > Kw;
 qu } [aoAO] > kw;
 
-g [uU] } [eiEI] > g;
-G [uU] } [eiEI] > G;
+g [uU] } [eiɨEIƗ] > g;
+G [uU] } [eiɨEIƗ] > G;
 
-gü } [eiEI] > gu;
-Gü } [eiEI] > Gu;
-gÜ } [eiEI] > gU;
-GÜ } [eiEI] > GU;
+gü } [eiɨEIƗ] > gu;
+Gü } [eiɨEIƗ] > Gu;
+gÜ } [eiɨEIƗ] > gU;
+GÜ } [eiɨEIƗ] > GU;
 
 GU } [aoAO] > GW;
 gU } [aoAO] > gW;
@@ -81,11 +81,11 @@ gu } [aoAO] > gw;
 y } [^[:L:][:M:]] > i;
 Y } [^[:L:][:M:]] > I;
 
-c } [eiEI] > s;
-C } [eiEI] > S;
+c } [eiɨEIƗ] > s;
+C } [eiɨEIƗ] > S;
 
-g } [eiEI] > x;
-G } [eiEI] > X;
+g } [eiɨEIƗ] > x;
+G } [eiɨEIƗ] > X;
 
 j > x;
 J > X;

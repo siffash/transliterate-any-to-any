@@ -7,15 +7,17 @@ export const enBg = async (text: Text) => {
   const { ipaBgRules } = await import("data/ipa/ipa-bg.rules");
   const { copyCase } = await import("helpers/copyCase");
   const { keepElision } = await import("helpers/keepElision");
-  const { bgRestoreRules, erRestoreRules } = await import("helpers/normalizeEnIpa");
+  const { bgRestoreRules, erRestoreRules, mouthRestoreRules, boroughRestoreRules } =
+    await import("helpers/normalizeEnIpa");
 
   const transliterator = RBT.fromRules(enIpaBgRules + ipaBgRules);
 
-  if (typeof text === "string") {
-    const ipa = await enIpa<string>(text, bgRestoreRules, erRestoreRules);
-    return copyCase(text, keepElision(ipa, transliterator), "bg");
-  } else {
-    const ipaArray = await enIpa<string[]>(text, bgRestoreRules, erRestoreRules);
-    return ipaArray.map((ipa, i) => copyCase(text[i], keepElision(ipa, transliterator), "bg"));
-  }
+  const words = typeof text === "string" ? [text] : text;
+  const ipa = await enIpa<string[]>(words, bgRestoreRules, [
+    ...erRestoreRules,
+    ...mouthRestoreRules,
+    ...boroughRestoreRules,
+  ]);
+  const result = ipa.map((ipa, i) => copyCase(words[i], keepElision(ipa, transliterator), "bg"));
+  return typeof text === "string" ? result[0] : result;
 };

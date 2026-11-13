@@ -16,11 +16,8 @@ export const enUk = async (text: Text) => {
     enIpaCyrlRules + enIpaTsRules + enIpaUkRules + enIpaAeRules + ipaUkRules,
   );
 
-  if (typeof text === "string") {
-    const ipa = await enIpa<string>(text, cyrlRestoreRules);
-    return copyCase(text, keepElision(ipa, transliterator), "uk");
-  } else {
-    const ipaArray = await enIpa<string[]>(text, cyrlRestoreRules);
-    return ipaArray.map((ipa, i) => copyCase(text[i], keepElision(ipa, transliterator), "uk"));
-  }
+  const words = typeof text === "string" ? [text] : text;
+  const ipa = await enIpa<string[]>(words, cyrlRestoreRules);
+  const result = ipa.map((ipa, i) => copyCase(words[i], keepElision(ipa, transliterator), "uk"));
+  return typeof text === "string" ? result[0] : result;
 };

@@ -5,10 +5,14 @@ export const frLt = async (text: Text) => {
   const { frIpa } = await import("converters/fr/fr-ipa");
   const { frIpaNgRules } = await import("data/fr/fr-ipa_ng.rules");
   const { ipaLtRules } = await import("data/ipa/ipa-lt.rules");
+  const { frIpaLtRules } = await import("data/fr/fr-ipa_lt.rules");
+  const { latnHyphenSpaceRules } = await import("data/latn/latn_hyphen-space.rules");
   const { copyCase } = await import("helpers/copyCase");
   const { keepElision } = await import("helpers/keepElision");
 
-  const transliterator = RBT.fromRules(frIpaNgRules + ipaLtRules);
+  const transliterator = RBT.fromRules(
+    frIpaNgRules + frIpaLtRules + ipaLtRules + latnHyphenSpaceRules,
+  );
 
   if (typeof text === "string") {
     const ipa = await frIpa<string>(text);

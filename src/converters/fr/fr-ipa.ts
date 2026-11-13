@@ -18,6 +18,7 @@ export const frIpa = async <T = Text>(
     finalIeu = false,
     spelledEy = false,
     doubleConsonants = false,
+    oiO = false,
   }: FrIpaOptions = {},
 ): Promise<T> => {
   const { frIpaMap } = await import("data/fr/fr-ipa.map");
@@ -48,7 +49,7 @@ export const frIpa = async <T = Text>(
             : velarA
               ? ipa.replaceAll("ɑ̃", "ɑŋ")
               : ipa,
-          { japanese, doubleR, keepSchwa, finalIeu, bareBourg: !velarA, doubleConsonants },
+          { japanese, doubleR, keepSchwa, finalIeu, bareBourg: !velarA, doubleConsonants, oiO },
         );
       },
       true,

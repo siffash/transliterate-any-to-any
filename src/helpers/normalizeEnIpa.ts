@@ -90,6 +90,58 @@ export const jaRestoreRules: RestoreIpaRule[] = [
   },
 ];
 
+// Extra restore for targets that write a final "-shire" as "-шир" (Yorkshire Йоркшир, Jorkšir, Jorkšyras, Jorkšīra),
+// which phonemize reads as a stressed "ʃaɪɚ" or a reduced "ʃɚ"; Bulgarian, Japanese, Korean, Thai, Arabic and Hebrew
+// follow the sound (Йоркшър, ヨークシャー, 요크셔, هامبشاير)
+const shireIpa = ["ʃaɪɹ$", "ʃaɪɚ$", "ʃaɪɝ$", "ʃaɝ$", "ʃaɚ$", "ʃɝ$", "ʃɚ$", "ʃɪɹ$", "ʃəɹ$"];
+export const shireRestoreRules: RestoreIpaRule[] = [
+  { ipaCharToBeReplaced: shireIpa, lettersToRestore: { shire: "ʃɪɹ" } },
+];
+// Latvian writes its "i" long (Jorkšīra)
+export const shireLongRestoreRules: RestoreIpaRule[] = [
+  { ipaCharToBeReplaced: shireIpa, lettersToRestore: { shire: "ʃiːɹ" } },
+];
+
+// A final "-mouth" is "mʊθ" (Plymouth Плимут, Plimut, پلیموث), which phonemize reads as "maʊθ" or "məθ"
+const mouthIpa = ["məθ$", "maʊθ$", "mʊθ$", "muθ$"];
+export const mouthRestoreRules: RestoreIpaRule[] = [
+  { ipaCharToBeReplaced: mouthIpa, lettersToRestore: { mouth: "mʊθ" } },
+];
+// Japanese, Korean and Thai reduce it (プリマス, 플리머스, พลีมัท)
+export const mouthReducedRestoreRules: RestoreIpaRule[] = [
+  { ipaCharToBeReplaced: mouthIpa, lettersToRestore: { mouth: "mʌθ" } },
+];
+// Chinese keeps the diphthong (普利茅斯, 伯恩茅斯)
+export const mouthDiphthongRestoreRules: RestoreIpaRule[] = [
+  { ipaCharToBeReplaced: mouthIpa, lettersToRestore: { mouth: "maʊθ" } },
+];
+
+// A final "-borough" is "boro" (Scarborough Скарборо, Skarboro), which phonemize reads as "bɝoʊ" and the "ro"
+// restore would double (Skarbroo). The "b" stays free for the "ngb" restore (Wellingborough)
+const boroughIpa = ["ɝoʊ$", "ɚoʊ$", "ɝə$", "ɚə$", "ʌɹə$", "əɹə$", "ɹə$", "ʌɹoʊ$", "əɹoʊ$"];
+const broughIpa = ["ɹəf$", "ɹʌf$", "ɹoʊ$", "ɹə$"];
+export const boroughRestoreRules: RestoreIpaRule[] = [
+  { ipaCharToBeReplaced: boroughIpa, lettersToRestore: { orough: "ɔɹɔ" } },
+  { ipaCharToBeReplaced: broughIpa, lettersToRestore: { rough: "ɹɔ" } },
+];
+// Japanese, Korean, Chinese and Thai reduce it (ピーターバラ, 피터버러, 法恩伯勒, ลัฟบะระ; ミドルズブラ, 미들즈브러)
+export const boroughReducedRestoreRules: RestoreIpaRule[] = [
+  { ipaCharToBeReplaced: boroughIpa, lettersToRestore: { orough: "əɹə" } },
+  { ipaCharToBeReplaced: broughIpa, lettersToRestore: { rough: "ɹə" } },
+];
+
+// A final "-wood" keeps its short "ʊ", which the "oo" restore would lengthen (Brentwood Брентвуд, Brentvuda); Thai
+// writes it long (เวสต์วูด). The "w" stays free for the "ngw" restore (Collingwood)
+export const woodRestoreRules: RestoreIpaRule[] = [
+  { ipaCharToBeReplaced: "ʊd$", lettersToRestore: { ood: "ʊd" } },
+];
+
+// A final "-sex" keeps its "e" (Essex Эссекс, Eseks), which phonemize reduces (ˈɛsɪks); Korean follows the sound
+// (에식스, 서식스)
+export const sexRestoreRules: RestoreIpaRule[] = [
+  { ipaCharToBeReplaced: ["sɪks$", "səks$"], lettersToRestore: { sex: "sɛks" } },
+];
+
 // Extra restore for targets that also write "Michael" with a bare l (Гугл, Майкл, Gugl, Majkl, 구글, 마이클, غوغل, مايكل)
 export const syllabicLRestoreRules: RestoreIpaRule[] = [
   ...syllabicLeRestoreRules,
@@ -225,6 +277,10 @@ export const airRestoreRules: RestoreIpaRule[] = [
 // and a spelled "z" or "c" as "ц" (Кац, Фриц, Сирацки), which marks it off from a spelled "ts" (Уотсън, Робъртс)
 export const bgRestoreRules: RestoreIpaRule[] = [
   ...airRestoreRules,
+  // Bulgarian writes a reduced "-mouth" and "-borough" (Плимът, Портсмът, Питърбъро, Маркет Харбъро)
+  { ipaCharToBeReplaced: mouthIpa, lettersToRestore: { mouth: "məθ" } },
+  { ipaCharToBeReplaced: boroughIpa, lettersToRestore: { orough: "əɹɔ" } },
+  { ipaCharToBeReplaced: broughIpa, lettersToRestore: { rough: "ɹɔ" } },
   { ipaCharToBeReplaced: "jən$", lettersToRestore: { ion: "jɔn" } },
   { ipaCharToBeReplaced: "jə$", lettersToRestore: { ia: "ia" } },
   { ipaCharToBeReplaced: "ts", lettersToRestore: { tz: "ʦ", zz: "ʦ", c: "ʦ", z: "ʦ" } },
@@ -239,6 +295,9 @@ export const bgRestoreRules: RestoreIpaRule[] = [
 export const cyrlRestoreRules: RestoreIpaRule[] = [
   ...syllabicLRestoreRules,
   ...airRestoreRules,
+  ...shireRestoreRules,
+  // A final "-ssex" keeps its double "s" (Эссекс, Сассекс)
+  { ipaCharToBeReplaced: ["sɪks$", "səks$"], lettersToRestore: { ssex: "ssɛks" } },
   { ipaCharToBeReplaced: "jə$", lettersToRestore: { ia: "ia" } },
   { ipaCharToBeReplaced: "ts", lettersToRestore: { tz: "t͡s", zz: "t͡s", z: "t͡s" } },
   // Washington keeps its traditional "в" (Вашингтон, Vašington), which the "w" rules would give as "у"/"во"
@@ -348,6 +407,7 @@ export const normalizeEnIpa = (
   skippedRules: RestoreIpaRule[] = [],
 ): string => {
   const rules: RestoreIpaRule[] = [
+    ...mouthRestoreRules,
     // phonemize splits the "ee" of some names into two vowels (Tees ˈtiɪz, Lees ɫəɪz)
     { ipaCharToBeReplaced: ["iɪ", "əɪ"], lettersToRestore: { ee: "iː" } },
     // Restore all double letters
@@ -409,6 +469,7 @@ export const normalizeEnIpa = (
         ate: "eɪ",
         ave: "eɪ",
         aze: "eɪ",
+        ay: "eɪ",
       },
     },
     // Restore "e"
@@ -489,14 +550,21 @@ export const normalizeEnIpa = (
     // Restore "soft"
     { ipaCharToBeReplaced: "sɔft", lettersToRestore: { soft: "sɔft" } },
     { ipaCharToBeReplaced: "sɔf", lettersToRestore: { soft: "sɔft" } },
+    ...boroughRestoreRules,
+    ...woodRestoreRules,
+    ...sexRestoreRules,
+    // A final "-eya" is "ɛja" (Freya Фрея, Freja), which the "ey" and "ia" restores would split (Freyia)
+    { ipaCharToBeReplaced: ["eiə$", "eɪə$", "ɛɪə$"], lettersToRestore: { eya: "ɛja" } },
     // Restore "burgh"
     { ipaCharToBeReplaced: "bɝoʊ", lettersToRestore: { burgh: "bɝɣ" } },
     { ipaCharToBeReplaced: "bɚoʊ", lettersToRestore: { burgh: "bɚɣ" } },
     ...extraRules,
   ];
+  // A double restore next to the same consonant phonemize already split across a stress mark would triple it
+  // (Rolleston ɹoʊɫɫˌɫɛ, Willetton wɪɫɫettˌtɔn)
   return restoreLettersInIpa(
     originalWord,
     ipaWord,
     rules.filter(rule => !skippedRules.includes(rule)),
-  );
+  ).replace(/(\p{L})\1([ˈˌ]?)\1/gu, "$1$2$1");
 };

@@ -13,6 +13,11 @@ export const enKo = async (text: Text) => {
     arOrRestoreRules,
     koVowelRestoreRules,
     koSkippedVowelRestoreRules,
+    mouthRestoreRules,
+    mouthReducedRestoreRules,
+    boroughRestoreRules,
+    boroughReducedRestoreRules,
+    sexRestoreRules,
   } = await import("helpers/normalizeEnIpa");
   const { enIpaOuRules } = await import("data/en/en-ipa_ou.rules");
   const { enIpaKoRules } = await import("data/en/en-ipa_ko.rules");
@@ -20,41 +25,28 @@ export const enKo = async (text: Text) => {
 
   const transliterator = RBT.fromRules(enIpaOuRules + enIpaKoRules + ipaKoRules);
 
-  if (typeof text === "string") {
-    const ipa = await enIpa<string>(
-      text,
-      [
-        ...syllabicLRestoreRules,
-        ...areRestoreRules,
-        ...koRVowelRestoreRules,
-        ...koVowelRestoreRules,
-      ],
-      [
-        ...ettRestoreRules,
-        ...koGeminateRestoreRules,
-        ...irRestoreRules,
-        ...arOrRestoreRules,
-        ...koSkippedVowelRestoreRules,
-      ],
-    );
-    return transliterator.transliterate(ipa);
-  } else {
-    const ipaArray = await enIpa<string[]>(
-      text,
-      [
-        ...syllabicLRestoreRules,
-        ...areRestoreRules,
-        ...koRVowelRestoreRules,
-        ...koVowelRestoreRules,
-      ],
-      [
-        ...ettRestoreRules,
-        ...koGeminateRestoreRules,
-        ...irRestoreRules,
-        ...arOrRestoreRules,
-        ...koSkippedVowelRestoreRules,
-      ],
-    );
-    return ipaArray.map(ipa => transliterator.transliterate(ipa));
-  }
+  const words = typeof text === "string" ? [text] : text;
+  const ipa = await enIpa<string[]>(
+    words,
+    [
+      ...syllabicLRestoreRules,
+      ...areRestoreRules,
+      ...koRVowelRestoreRules,
+      ...koVowelRestoreRules,
+      ...mouthReducedRestoreRules,
+      ...boroughReducedRestoreRules,
+    ],
+    [
+      ...ettRestoreRules,
+      ...koGeminateRestoreRules,
+      ...irRestoreRules,
+      ...arOrRestoreRules,
+      ...koSkippedVowelRestoreRules,
+      ...mouthRestoreRules,
+      ...boroughRestoreRules,
+      ...sexRestoreRules,
+    ],
+  );
+  const result = ipa.map(ipa => transliterator.transliterate(ipa));
+  return typeof text === "string" ? result[0] : result;
 };

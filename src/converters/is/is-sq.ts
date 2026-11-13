@@ -3,9 +3,10 @@ import { Text } from "types";
 export const isSq = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { isLatnRules } = await import("data/is/is-latn.rules");
+  const { isLatnBRules } = await import("data/is/is-latn_b.rules");
   const { latnSqRules } = await import("data/latn/latn-sq.rules");
 
-  const transliterator = RBT.fromRules(isLatnRules + latnSqRules);
+  const transliterator = RBT.fromRules(isLatnBRules + isLatnRules + latnSqRules);
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);

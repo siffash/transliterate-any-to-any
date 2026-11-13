@@ -16,11 +16,8 @@ export const enRu = async (text: Text) => {
     enIpaCyrlRules + enIpaWURules + enIpaAeRules + enIpaRuRules + ipaRuRules,
   );
 
-  if (typeof text === "string") {
-    const ipa = await enIpa<string>(text, cyrlRestoreRules, erRestoreRules);
-    return copyCase(text, keepElision(ipa, transliterator), "ru");
-  } else {
-    const ipaArray = await enIpa<string[]>(text, cyrlRestoreRules, erRestoreRules);
-    return ipaArray.map((ipa, i) => copyCase(text[i], keepElision(ipa, transliterator), "ru"));
-  }
+  const words = typeof text === "string" ? [text] : text;
+  const ipa = await enIpa<string[]>(words, cyrlRestoreRules, erRestoreRules);
+  const result = ipa.map((ipa, i) => copyCase(words[i], keepElision(ipa, transliterator), "ru"));
+  return typeof text === "string" ? result[0] : result;
 };

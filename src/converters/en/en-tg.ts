@@ -13,11 +13,8 @@ export const enTg = async (text: Text) => {
 
   const transliterator = RBT.fromRules(enIpaCyrlRules + enIpaWURules + enIpaTgRules + ipaTgRules);
 
-  if (typeof text === "string") {
-    const ipa = await enIpa<string>(text, cyrlRestoreRules);
-    return copyCase(text, keepElision(ipa, transliterator), "tg");
-  } else {
-    const ipaArray = await enIpa<string[]>(text, cyrlRestoreRules);
-    return ipaArray.map((ipa, i) => copyCase(text[i], keepElision(ipa, transliterator), "tg"));
-  }
+  const words = typeof text === "string" ? [text] : text;
+  const ipa = await enIpa<string[]>(words, cyrlRestoreRules);
+  const result = ipa.map((ipa, i) => copyCase(words[i], keepElision(ipa, transliterator), "tg"));
+  return typeof text === "string" ? result[0] : result;
 };

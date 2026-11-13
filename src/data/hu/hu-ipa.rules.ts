@@ -4,6 +4,8 @@ export const huIpaRules = `
 
 szombathely > sombɑthɛj;
 
+e } [öő] > ;
+
 ddzs > d͡ʒː;
 ccs > t͡ʃː;
 ddz > d͡zː;
@@ -33,6 +35,10 @@ nj > ɲː;
 tj > t͡ɕː;
 lj > jː;
 
+ách } [^[:L:][:M:]] > aːt͡ʃ;
+ich } [^[:L:][:M:]] > it͡ʃ;
+ch } y > t͡ʃ;
+ch } [eé] ny > t͡ʃ;
 ch > x;
 cz > t͡s;
 gh > ɡ;

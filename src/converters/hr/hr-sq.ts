@@ -6,9 +6,16 @@ export const hrSq = async (text: Text) => {
   const { latnSlavicLjRules } = await import("data/latn/latn_slavic-lj.rules");
   const { latnSlavicNjRules } = await import("data/latn/latn_slavic-nj.rules");
   const { latnSqRules } = await import("data/latn/latn-sq.rules");
+  const { latnSqLjRules } = await import("data/latn/latn-sq_lj.rules");
+  const { latnSqErRules } = await import("data/latn/latn-sq_er.rules");
 
   const transliterator = RBT.fromRules(
-    hrLatnRules + latnSlavicLjRules + latnSlavicNjRules + latnSqRules,
+    hrLatnRules +
+      latnSlavicLjRules +
+      latnSlavicNjRules +
+      latnSqLjRules +
+      latnSqErRules +
+      latnSqRules,
   );
 
   if (typeof text === "string") {

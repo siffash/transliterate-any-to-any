@@ -8,11 +8,8 @@ export const enDe = async (text: Text) => {
 
   const transliterator = RBT.fromRules(ipaDeRules);
 
-  if (typeof text === "string") {
-    const ipa = await enIpa<string>(text);
-    return copyCase(text, transliterator.transliterate(ipa), "de");
-  } else {
-    const ipaArray = await enIpa<string[]>(text);
-    return ipaArray.map((ipa, i) => copyCase(text[i], transliterator.transliterate(ipa), "de"));
-  }
+  const words = typeof text === "string" ? [text] : text;
+  const ipa = await enIpa<string[]>(words);
+  const result = ipa.map((ipa, i) => copyCase(words[i], transliterator.transliterate(ipa), "de"));
+  return typeof text === "string" ? result[0] : result;
 };

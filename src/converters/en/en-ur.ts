@@ -15,19 +15,12 @@ export const enUr = async (text: Text) => {
 
   const transliterator = RBT.fromRules(enIpaRetroflexRules + enIpaUrRules + ipaUrRules);
 
-  if (typeof text === "string") {
-    const ipa = await enIpa<string>(
-      text,
-      [...syllabicLRestoreRules, ...geminateSingleRestoreRules, ...airRestoreRules],
-      geminateRestoreRules,
-    );
-    return transliterator.transliterate(ipa);
-  } else {
-    const ipaArray = await enIpa<string[]>(
-      text,
-      [...syllabicLRestoreRules, ...geminateSingleRestoreRules, ...airRestoreRules],
-      geminateRestoreRules,
-    );
-    return ipaArray.map(ipa => transliterator.transliterate(ipa));
-  }
+  const words = typeof text === "string" ? [text] : text;
+  const ipa = await enIpa<string[]>(
+    words,
+    [...syllabicLRestoreRules, ...geminateSingleRestoreRules, ...airRestoreRules],
+    geminateRestoreRules,
+  );
+  const result = ipa.map(ipa => transliterator.transliterate(ipa));
+  return typeof text === "string" ? result[0] : result;
 };

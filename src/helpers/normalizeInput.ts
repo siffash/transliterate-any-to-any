@@ -9,6 +9,7 @@ import { Language, Text } from "types";
  *   script and any ZWJ/ZWNJ of other scripts (서 + ZWNJ + 울). Urdu writes a compound with a ZWNJ as with a space
  *   (اسلام‌آباد, اسلام آباد);
  * - drops the stress marks of Cyrillic (Ко́рсаков, Ско́пје), once the letters with an accent (ѓ, ќ, ѝ) are composed;
+ * - drops the dot above that lowercasing a Turkish İ leaves on "i" (YİĞİT → yi̇ği̇t);
  * - reads the Hebrew maqaf (בן־דב) and the Japanese double hyphen (メドゥー゠中村, also typed as =) as hyphens.
  * @param text - The source text (string or array of strings).
  * @param from - The source language.
@@ -21,6 +22,7 @@ export const normalizeInput = <T extends Text>(text: T, from: Language): T => {
       .replace(/['‘`´ʼʻ′＇]/g, "’")
       .normalize("NFC")
       .replace(/(?<=\p{Script=Cyrillic})[\u0300\u0301]/gu, mark => (script === "Cyrl" ? "" : mark))
+      .replace(/(?<=[ij])\u0307/g, "")
       .replace(/\u0640|\p{Variation_Selector}|[\u200B\u2060\uFEFF\u00AD]/gu, "")
       .replace(/(?<![\p{L}\p{M}])[\u200C\u200D]+|[\u200C\u200D]+(?![\p{L}\p{M}])/gu, "")
       .replace(/(?<=\p{Script=Arabic}\p{M}*)\u200D(?=\p{Script=Arabic})/gu, "")
