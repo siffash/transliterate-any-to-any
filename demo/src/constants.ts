@@ -1,11 +1,13 @@
 import { Language } from "transliterate-any-to-any";
 
+export const SITE_URL = "https://transliterate-any-to-any.js.org/";
+
 export const LINKS = {
   sourceCode: "https://github.com/siffash/transliterate-any-to-any",
   package: "https://www.npmjs.com/package/transliterate-any-to-any",
   article: "https://realpandablog.wordpress.com/2026/09/03/transliterate-any-to-any/",
   support: "https://github.com/sponsors/siffash",
-  privacy: "https://transliterate-any-to-any.js.org/privacy.html",
+  privacy: `${SITE_URL}privacy.html`,
 };
 
 export const DEFAULT_LANGS: { langFrom: Language; langTo: Language } = {

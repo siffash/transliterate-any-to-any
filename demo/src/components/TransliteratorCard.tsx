@@ -15,6 +15,7 @@ import ClearIcon from "@mui/icons-material/Clear";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import MicIcon from "@mui/icons-material/Mic";
 import MicOffIcon from "@mui/icons-material/MicOff";
+import ShareIcon from "@mui/icons-material/Share";
 import SwapHorizIcon from "@mui/icons-material/SwapHoriz";
 import { multilingualTextStack } from "../theme";
 import { useSpeechRecognition } from "../hooks/useSpeechRecognition";
@@ -41,6 +42,8 @@ export const TransliteratorCard = ({ suppressErrors = false }: { suppressErrors?
     setErrorMsg,
     detectedLang,
     copied,
+    linkCopied,
+    setLinkCopied,
     swapRotation,
     charCount,
     micSupported,
@@ -53,6 +56,7 @@ export const TransliteratorCard = ({ suppressErrors = false }: { suppressErrors?
     handleSwap,
     handleClear,
     handleCopy,
+    handleShare,
     handleMicToggle,
     handleSourceListen,
     handleTargetListen,
@@ -248,24 +252,41 @@ export const TransliteratorCard = ({ suppressErrors = false }: { suppressErrors?
               ) : (
                 <span />
               )}
-              <Tooltip title={copied ? "Copied!" : "Copy"}>
-                <span>
-                  <IconButton
-                    onClick={handleCopy}
-                    disabled={!targetText}
-                    aria-label="Copy transliteration"
-                  >
-                    {copied ? (
-                      <CheckIcon fontSize="small" color="success" />
-                    ) : (
-                      <ContentCopyIcon fontSize="small" />
-                    )}
-                  </IconButton>
-                </span>
-              </Tooltip>
+              <Stack component="div" direction="row" sx={{ alignItems: "center" }}>
+                <Tooltip title={copied ? "Copied!" : "Copy"}>
+                  <span>
+                    <IconButton
+                      onClick={handleCopy}
+                      disabled={!targetText}
+                      aria-label="Copy transliteration"
+                    >
+                      {copied ? (
+                        <CheckIcon fontSize="small" color="success" />
+                      ) : (
+                        <ContentCopyIcon fontSize="small" />
+                      )}
+                    </IconButton>
+                  </span>
+                </Tooltip>
+                <Tooltip title="Share">
+                  <span>
+                    <IconButton onClick={handleShare} disabled={!targetText} aria-label="Share">
+                      <ShareIcon fontSize="small" />
+                    </IconButton>
+                  </span>
+                </Tooltip>
+              </Stack>
             </Stack>
           </Box>
         </Stack>
+
+        <Snackbar
+          open={linkCopied && !errorMsg && !detectedLang}
+          autoHideDuration={3000}
+          onClose={(_, reason) => reason !== "clickaway" && setLinkCopied(false)}
+          message="Link copied to clipboard"
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        />
 
         {(!!errorMsg || !!detectedLang) && (
           <Snackbar

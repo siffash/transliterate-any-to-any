@@ -4,7 +4,7 @@ import { isLoadError, useTransliterateWorker } from "./useTransliterateWorker";
 import type { SpeechInput } from "./useSpeechRecognition";
 import type { SpeechOutput } from "./useSpeechSynthesis";
 import { useQueryParams } from "./useQueryParams.ts";
-import { DEBOUNCE_MS, DEFAULT_LANGS, LOCAL_STORAGE_KEYS, MAX_CHARS } from "../constants";
+import { DEBOUNCE_MS, DEFAULT_LANGS, LOCAL_STORAGE_KEYS, MAX_CHARS, SITE_URL } from "../constants";
 
 function getErrorMessage(err: Error): string {
   if (!navigator.onLine && isLoadError(err.message)) {
@@ -86,7 +86,7 @@ const DEFAULT_TITLE = typeof document === "undefined" ? "" : document.title;
  * the mobile app's screen, which only differ in layout and in these options:
  * - `speech`: voice input (the Web Speech API, or the native one in the app)
  * - `tts`: reading the texts aloud (likewise)
- * - `copyText`: writes the transliteration to the clipboard
+ * - `copyText`: writes the transliteration, or a link to it, to the clipboard
  * - `syncUrl`: keeps the languages and the text in the URL, with a history
  *   entry for each change, so that they can be shared and survive a reload
  * - `suppressErrors`: hides errors while something else is shown in their place
@@ -113,6 +113,7 @@ export function useTransliterator({
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
+  const [linkCopied, setLinkCopied] = useState(false);
   const [swapRotation, setSwapRotation] = useState(0);
   const [retryKey, setRetryKey] = useState(0);
   const [rejected, setRejected] = useState<{ text: string; lang: Language } | null>(null);
@@ -358,6 +359,18 @@ export function useTransliterator({
     }
   };
 
+  // A link that opens the PWA with the same languages and source text
+  const handleShare = async () => {
+    if (!targetText) return;
+    const params = new URLSearchParams({ from: langFrom, to: langTo, text: sourceText });
+    try {
+      await copyText(`${SITE_URL}?${params.toString()}`);
+      setLinkCopied(true);
+    } catch {
+      setErrorMsg("Could not copy to clipboard.");
+    }
+  };
+
   const handleMicToggle = () => {
     if (isListening) {
       stopListening();
@@ -424,6 +437,8 @@ export function useTransliterator({
     setErrorMsg,
     detectedLang,
     copied,
+    linkCopied,
+    setLinkCopied,
     swapRotation,
     charCount: sourceText.length,
     micSupported,
@@ -444,6 +459,7 @@ export function useTransliterator({
     handleSwap,
     handleClear,
     handleCopy,
+    handleShare,
     handleMicToggle,
     handleSourceListen,
     handleTargetListen,

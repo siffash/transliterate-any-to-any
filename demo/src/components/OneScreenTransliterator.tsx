@@ -14,6 +14,7 @@ import ClearIcon from "@mui/icons-material/Clear";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import MicIcon from "@mui/icons-material/Mic";
 import MicOffIcon from "@mui/icons-material/MicOff";
+import ShareIcon from "@mui/icons-material/Share";
 import SwapHorizIcon from "@mui/icons-material/SwapHoriz";
 import { multilingualTextStack } from "../theme";
 import { useTransliterator } from "../hooks/useTransliterator";
@@ -94,6 +95,8 @@ export const OneScreenTransliterator = ({
     setErrorMsg,
     detectedLang,
     copied,
+    linkCopied,
+    setLinkCopied,
     swapRotation,
     charCount,
     micSupported,
@@ -106,6 +109,7 @@ export const OneScreenTransliterator = ({
     handleSwap,
     handleClear,
     handleCopy,
+    handleShare,
     handleMicToggle,
     handleSourceListen,
     handleTargetListen,
@@ -277,27 +281,45 @@ export const OneScreenTransliterator = ({
               ) : (
                 <span />
               )}
-              <Tooltip title={copied ? "Copied!" : "Copy"}>
-                <span>
-                  <IconButton
-                    onClick={handleCopy}
-                    disabled={!targetText}
-                    aria-label="Copy transliteration"
-                  >
-                    {copied ? (
-                      <CheckIcon fontSize="small" color="success" />
-                    ) : (
-                      <ContentCopyIcon fontSize="small" />
-                    )}
-                  </IconButton>
-                </span>
-              </Tooltip>
+              <Stack component="div" direction="row" sx={{ alignItems: "center" }}>
+                <Tooltip title={copied ? "Copied!" : "Copy"}>
+                  <span>
+                    <IconButton
+                      onClick={handleCopy}
+                      disabled={!targetText}
+                      aria-label="Copy transliteration"
+                    >
+                      {copied ? (
+                        <CheckIcon fontSize="small" color="success" />
+                      ) : (
+                        <ContentCopyIcon fontSize="small" />
+                      )}
+                    </IconButton>
+                  </span>
+                </Tooltip>
+                <Tooltip title="Share">
+                  <span>
+                    <IconButton onClick={handleShare} disabled={!targetText} aria-label="Share">
+                      <ShareIcon fontSize="small" />
+                    </IconButton>
+                  </span>
+                </Tooltip>
+              </Stack>
             </Stack>
           </Box>
         )}
 
         {/* At the bottom of the layout's column (see OneScreenLayout) rather than
             of the screen, over the footer, so that it stays above the keyboard too */}
+        <Snackbar
+          open={linkCopied && !errorMsg && !detectedLang}
+          autoHideDuration={3000}
+          onClose={(_, reason) => reason !== "clickaway" && setLinkCopied(false)}
+          message="Link copied to clipboard"
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+          sx={{ position: "absolute" }}
+        />
+
         {(!!errorMsg || !!detectedLang) && (
           <Snackbar
             open
