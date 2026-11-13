@@ -68,6 +68,19 @@ function getInitialLangTo(): Language {
   return getInitialLangFrom() === DEFAULT_LANGS.langTo ? "en" : DEFAULT_LANGS.langTo;
 }
 
+// Whether a language was already chosen: in the URL or in a previous visit
+function hasChosenLangs(): boolean {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get("from") || params.get("to")) return true;
+  return Boolean(
+    window.localStorage.getItem(LOCAL_STORAGE_KEYS.langFrom) ||
+    window.localStorage.getItem(LOCAL_STORAGE_KEYS.langTo),
+  );
+}
+
+// The generic title from index.html, kept until a language is chosen
+const DEFAULT_TITLE = typeof document === "undefined" ? "" : document.title;
+
 /**
  * The state and behaviour of the transliterator, shared by the PWA's card and
  * the mobile app's screen, which only differ in layout and in these options:
@@ -93,6 +106,8 @@ export function useTransliterator({
 }) {
   const [langFrom, setLangFrom] = useState<Language>(getInitialLangFrom);
   const [langTo, setLangTo] = useState<Language>(getInitialLangTo);
+  const [defaultLangs] = useState(() => (hasChosenLangs() ? null : { langFrom, langTo }));
+  const langsChosenRef = useRef(false);
   const [sourceText, setSourceText] = useState("");
   const [targetText, setTargetText] = useState("");
   const [loading, setLoading] = useState(false);
@@ -231,6 +246,20 @@ export function useTransliterator({
   useEffect(() => {
     window.localStorage.setItem(LOCAL_STORAGE_KEYS.langTo, langTo);
   }, [langTo]);
+
+  // The page's title names the language pair (for search engines too), once
+  // one is chosen: in the URL, in a previous visit, or by changing a language
+  useEffect(() => {
+    if (!syncUrl) return;
+    langsChosenRef.current ||=
+      !defaultLangs || langFrom !== defaultLangs.langFrom || langTo !== defaultLangs.langTo;
+    const fromName = languages[langFrom]?.name;
+    const toName = languages[langTo]?.name;
+    document.title =
+      langsChosenRef.current && fromName && toName
+        ? `Transliterate ${fromName} to ${toName}`
+        : DEFAULT_TITLE;
+  }, [langFrom, langTo, defaultLangs, syncUrl]);
 
   useEffect(() => {
     if (!syncUrl) return;
