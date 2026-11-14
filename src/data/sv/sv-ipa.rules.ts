@@ -2,6 +2,7 @@ export const svIpaRules = `
 ::Lower;
 ::NFC;
 
+[[:L:][:M:]] { que } [^[:L:][:M:]] > k;
 [^[:L:][:M:]] jo { h } n > ;
 [^[:L:][:M:]] r { h } > ;
 rr { h } > ;

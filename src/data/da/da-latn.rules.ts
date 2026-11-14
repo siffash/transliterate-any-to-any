@@ -3,6 +3,14 @@ export const daLatnRules = `
 
 [[:L:][:M:]] { \\' } [[:L:][:M:]] > ’;
 
+[[:L:][:M:]] { Q [uU] [eE] } [^[:L:][:M:]] > K;
+[[:L:][:M:]] { q [uU] [eE] } [^[:L:][:M:]] > k;
+
+QU } [AEIOUYÆØÅaeiouyæøå] > KV;
+Qu } [AEIOUYÆØÅaeiouyæøå] > Kv;
+qU } [AEIOUYÆØÅaeiouyæøå] > kV;
+qu } [AEIOUYÆØÅaeiouyæøå] > kv;
+
 AARD } [^AEIOUYÆØÅaeiouyæøå] > OR;
 A [aA] [rR] [dD] } [^AEIOUYÆØÅaeiouyæøå] > Or;
 a [aA] [rR] [dD] } [^AEIOUYÆØÅaeiouyæøå] > or;

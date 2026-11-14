@@ -49,10 +49,13 @@ c [hH] > š;
 C [kK] > K;
 c [kK] > k;
 
-QU } [aouåäöAOUÅÄÖ] > KV;
-qU } [aouåäöAOUÅÄÖ] > kV;
-Qu } [aouåäöAOUÅÄÖ] > Kv;
-qu } [aouåäöAOUÅÄÖ] > kv;
+[[:L:][:M:]] { Q [uU] [eE] } [^[:L:][:M:]] > K;
+[[:L:][:M:]] { q [uU] [eE] } [^[:L:][:M:]] > k;
+
+QU } [aeiouyåäöAEIOUYÅÄÖ] > KV;
+qU } [aeiouyåäöAEIOUYÅÄÖ] > kV;
+Qu } [aeiouyåäöAEIOUYÅÄÖ] > Kv;
+qu } [aeiouyåäöAEIOUYÅÄÖ] > kv;
 
 TION > ŠON;
 Tion > Šon;

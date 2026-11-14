@@ -2,6 +2,7 @@ export const daIpaRules = `
 ::Lower;
 ::NFC;
 
+[[:L:][:M:]] { que } [^[:L:][:M:]] > k;
 aa { r } d > r;
 aa { r } [^aeiouyæøåː] > ;
 [:L:] [ouå] { g } [^[:L:][:M:]] > w;

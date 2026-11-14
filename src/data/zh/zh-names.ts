@@ -7,7 +7,7 @@ export const SURNAMES = new Set(
 // or a listed one (鲁迅): jieba also tags words and places like 丘陵, 常德 and
 // 颜色混合 as names
 export const RARER_SURNAMES = new Set(
-  "习章温成萧易傅颜柳齐牛鲁葛邢岳聂庄关常殷倪俞季祝左尤毕焦梅翟樊庞赖伍申丛耿舒詹苗凌纪靳盛童甄项裴席屈鲍翁隋阮闵柴冉辜饶刁瞿戚丘池滕苑邬臧畅宫苟褚廉简娄奚穆党燕郎邸冀姬屠郜晏栾郁喻窦迟敖鄢卓仇蓝巩仲虞卞竺冼匡鞠荆谌岑胥蔺谷乔霍洪荣闻涂骆游祁蒲佟邝谈储栗禹漆晁尚管解牟冷桂康包施辛",
+  "习章温成萧易傅颜柳齐牛鲁葛邢岳聂庄关常殷倪俞季祝左尤毕焦梅翟樊庞赖伍申丛耿舒詹苗凌纪靳盛童甄项裴席屈鲍翁隋阮闵柴冉辜饶刁瞿戚丘池滕苑邬臧畅宫苟褚廉简娄奚穆党燕郎邸冀姬屠郜晏栾郁喻窦迟敖鄢卓仇蓝巩仲虞卞竺冼匡鞠荆谌岑胥蔺谷乔霍洪荣闻涂骆游祁蒲佟邝谈储栗禹漆晁尚管解牟冷桂康包施辛费阎文",
 );
 
 export const COMPOUND_SURNAMES = new Set([
@@ -32,7 +32,7 @@ export const COMPOUND_SURNAMES = new Set([
 
 // Place names end in these, but given names hardly ever do (石家庄, 周村, 徐汇区, 李家沟)
 export const PLACE_ENDINGS = new Set(
-  "州庄村镇县市区乡家集店屯坊塘坪坝口沟滩埠场港关坑甸峪圩堰潭墩洼宅巷铺堤渡湖湾堡",
+  "州庄村镇县市区乡家集店屯坊塘坪坝口沟滩埠场港关坑甸峪圩堰潭墩洼宅巷铺堤渡湖湾堡岛",
 );
 
 // Administrative units a place's name ends in (大岭山镇, 乌兰察布市), and those of them that
@@ -43,7 +43,7 @@ export const HIGHER_UNITS = new Set("省市县区");
 // Places end in these too, but so do given names (张家山 a village, 刘江 a man): they mark a place only
 // in three characters that jieba reads as words rather than as a person's name (王家|营, 江苏|路)
 export const LANDFORM_ENDINGS = new Set(
-  "山河江岭桥营寨路街岗楼窑井驿川岩台洞寺庙峡坡嘴咀塬砭峁垭畔泉园城冲垴头岔沱疃坨畈垣涧渠池溪岙坳冈矶洲墟凹哨卫所站道门殿宫阁馆堂府厂矿房套泊塔隔庵棚垴垱堆峪岘坞沽崖硷院窝塞孜塄窠堎埂塅圙圈坬淖涯荡陇腰子里户地司顶尖包图什",
+  "山河江岭桥营寨路街岗楼窑井驿川岩台洞寺庙峡坡嘴咀塬砭峁垭畔泉园城冲垴头岔沱疃坨畈垣涧渠池溪岙坳冈矶洲墟凹哨卫所站道门殿宫阁馆堂府厂矿房套泊塔隔庵棚垴垱堆峪岘坞沽崖硷院窝塞孜塄窠堎埂塅圙圈坬淖涯荡陇腰子里户地司顶尖包图什砂",
 );
 
 // Areas whose names end in 区 like a district's (工业园区 an industrial park, 冷水滩区 a district)
@@ -2064,6 +2064,12 @@ export const NAMES = new Set([
   "廉颇",
   "张佑才",
   "成龙",
+  "施耐庵",
+  "成岳冲",
+  "谷书堂",
+  "丘玉池",
+  "伍宪子",
+  "伍纯道",
   "晏婴",
   "朱幼棣",
   "朱梦魁",
@@ -2076,6 +2082,7 @@ export const NAMES = new Set([
   "柴荣",
   "池际尚",
   "申不害",
+  "祝枝山",
   "程咬金",
   "程大位",
   "管仲",

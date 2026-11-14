@@ -25,6 +25,10 @@ const EMPEROR_TAG = "emperor";
 // Three characters that jieba read as words, taken as one name (see segmentChinese)
 const JOINED_TAG = "joined";
 
+// Han punctuation between words (王伟、张伟, 《红楼梦》): the text on each side is segmented on
+// its own, as when a comma separates it (王伟, 张伟 → Wang Wei, Zhang Wei)
+const BREAKS = /([、。｡､「」『』《》〈〉【】〔〕〜]+)/u;
+
 // Longer titles first, so that 光武帝 isn't taken as 武帝
 const EMPEROR = new RegExp(
   `([${[...DYNASTIES].join("")}])(${[...EMPEROR_TITLES].sort((a, b) => b.length - a.length).join("|")})`,
@@ -60,7 +64,8 @@ const splitName = (name: string): Part[] => {
   const surname = COMPOUND_SURNAMES.has(chars.slice(0, 2).join(""))
     ? 2
     : SURNAMES.has(chars[0]) ||
-        (RARER_SURNAMES.has(chars[0]) && (chars.length === 3 || NAMES.has(name)))
+        (RARER_SURNAMES.has(chars[0]) &&
+          ((chars.length === 3 && !LANDFORM_ENDINGS.has(chars[2])) || NAMES.has(name)))
       ? 1
       : 0;
   return surname && chars.length > surname
@@ -236,7 +241,15 @@ const tagWords = (jieba: Jieba, text: string) => {
 export const loadChineseSegmenter = async () => {
   const [jieba, toSimplified] = await Promise.all([getJieba(), getToSimplified()]);
   addNames(jieba);
-  return (text: string) => segmentChinese(jieba, toSimplified, text);
+  return (text: string) =>
+    text
+      .split(BREAKS)
+      .filter(Boolean)
+      .flatMap(part =>
+        BREAKS.test(part)
+          ? [{ segment: part, isWordLike: false }]
+          : segmentChinese(jieba, toSimplified, part),
+      );
 };
 
 const segmentChinese = (jieba: Jieba, toSimplified: (text: string) => string, text: string) => {
@@ -257,8 +270,14 @@ const segmentChinese = (jieba: Jieba, toSimplified: (text: string) => string, te
     tagged = [{ word: source, tag: JOINED_TAG }];
   }
   const town = /^\p{Script=Han}+$/u.test(source) ? splitTown(source, tagged) : undefined;
+  // A subdistrict with a short name is that name and 街道, however jieba cuts it (长安街|道,
+  // 赛|虹桥|街道), unless it's in a district (北城区街道)
+  const subdistrict =
+    /^\p{Script=Han}{2,3}街道$/u.test(source) && ![...source].some(char => HIGHER_UNITS.has(char))
+      ? [source.slice(0, -2), "街道"]
+      : undefined;
   return (
-    town?.map(word => ({ word })) ??
+    (town ?? subdistrict)?.map(word => ({ word })) ??
     tagged.flatMap(word => splitWord(jieba, word, tagged.length === 1))
   ).map(({ word, surname }: Part) => {
     const length = [...word].length;
