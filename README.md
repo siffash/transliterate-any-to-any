@@ -149,6 +149,18 @@ await transliterate("Bordeaux", { from: "fr", to: "lt", spelling: "established" 
 
 The option has no effect on non-Latin-script target languages.
 
+To check whether the option can change the transliteration of a language pair (e.g. to offer the choice only where it matters), use the function `spellingAffects`:
+
+```typescript
+import { spellingAffects } from "transliterate-any-to-any";
+
+spellingAffects({ from: "zh", to: "de" }); // → true (the English romanization)
+spellingAffects({ from: "fr", to: "de" }); // → true (kept unchanged)
+spellingAffects({ from: "uk", to: "de" }); // → false (the German spelling either way)
+spellingAffects({ from: "fr", to: "lt" }); // → false (re-spelled either way)
+spellingAffects({ from: "fr", to: "ru" }); // → false (non-Latin-script target)
+```
+
 ## ✅ Validate Language
 
 By default, the library validates the source text against the source language. This is done by checking if the source text contains only the letters/characters from the language's alphabet/script:

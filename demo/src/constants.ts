@@ -8,6 +8,8 @@ export const LINKS = {
   article: "https://realpandablog.wordpress.com/2026/09/03/transliterate-any-to-any/",
   support: "https://github.com/sponsors/siffash",
   privacy: `${SITE_URL}privacy.html`,
+  spelling:
+    "https://github.com/siffash/transliterate-any-to-any/blob/main/docs/transliterating-to-latin.md#transliterating-to-latin-script-languages",
 };
 
 export const AUTO_DETECT = "auto";
@@ -22,6 +24,7 @@ export const LOCAL_STORAGE_KEYS = {
   colorMode: "color-mode",
   langFrom: "lang-from",
   langTo: "lang-to",
+  spelling: "spelling",
 };
 
 export const MAX_CHARS = 5000;

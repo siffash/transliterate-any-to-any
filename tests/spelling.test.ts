@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { transliterate } from "../src/transliterate";
-import { Spelling } from "../src/types";
+import { spellingAffects } from "../src/helpers/establishedSpelling";
+import { Language, Spelling } from "../src/types";
 
 describe("established spelling", () => {
   it.each([
@@ -63,5 +64,49 @@ describe("established spelling", () => {
     await expect(
       transliterate("Москва", { from: "de", to: "fr", spelling: "established" }),
     ).rejects.toThrow("Source text does not match German.");
+  });
+});
+
+describe("spellingAffects", () => {
+  it.each([
+    ["zh", "de"],
+    ["ru", "pt"],
+    ["fr", "de"],
+    ["pl", "en"],
+    ["he", "sq"],
+  ] as const)("%s → %s can change", (from, to) => {
+    expect(spellingAffects({ from, to })).toBe(true);
+  });
+
+  it.each([
+    ["uk", "de"],
+    ["ja", "lv"],
+    ["fr", "lt"],
+    ["de", "sq"],
+    ["ru", "en"],
+    ["fr", "ru"],
+    ["de", "de"],
+  ] as const)("%s → %s can't change", (from, to) => {
+    expect(spellingAffects({ from, to })).toBe(false);
+  });
+
+  it.each([
+    ["xx", "de"],
+    ["zh", "xx"],
+  ])("%s → %s (unsupported) can't change", (from, to) => {
+    expect(spellingAffects({ from: from as Language, to: to as Language })).toBe(false);
+  });
+
+  // Every pair it rules out gives the same result either way
+  it.each([
+    ["Харків", "uk", "de"],
+    ["東京", "ja", "lv"],
+    ["Bordeaux", "fr", "lt"],
+    ["Смит", "ru", "en"],
+  ] as const)("%s (%s → %s) is the same either way", async (text, from, to) => {
+    expect(spellingAffects({ from, to })).toBe(false);
+    expect(await transliterate(text, { from, to, spelling: "established" })).toBe(
+      await transliterate(text, { from, to }),
+    );
   });
 });

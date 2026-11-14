@@ -1,12 +1,13 @@
 /// <reference lib="webworker" />
 
-import { Language, transliterate } from "transliterate-any-to-any";
+import { Language, Spelling, transliterate } from "transliterate-any-to-any";
 
 export interface WorkerRequest {
   id: number;
   text: string;
   from?: Language;
   to: Language;
+  spelling: Spelling;
 }
 
 export type WorkerResponse = { id: number; result: string } | { id: number; error: string };
@@ -19,9 +20,9 @@ export type WorkerResponse = { id: number; result: string } | { id: number; erro
 const ctx = self as unknown as DedicatedWorkerGlobalScope;
 
 ctx.onmessage = async (event: MessageEvent<WorkerRequest>) => {
-  const { id, text, from, to } = event.data;
+  const { id, text, from, to, spelling } = event.data;
   try {
-    const result = await transliterate(text, { from, to });
+    const result = await transliterate(text, { from, to, spelling });
     ctx.postMessage({ id, result } satisfies WorkerResponse);
   } catch (err) {
     console.error(err);

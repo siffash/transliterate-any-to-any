@@ -24,6 +24,7 @@ import { MAX_CHARS } from "../constants";
 import { LanguageSelect } from "./LanguageSelect";
 import { ListenButton } from "./ListenButton";
 import { SourceAlert } from "./SourceAlert";
+import { SpellingMenu } from "./SpellingMenu";
 import { useReportResultShown } from "./OneScreenLayout";
 
 const panelSx = {
@@ -70,7 +71,7 @@ const spinnerSx = {
  * The transliterator card laid out like the Google Translate app, for
  * OneScreenLayout: the source panel takes all the space until there is a
  * transliteration, and then shares it equally with the target panel. The
- * options are useTransliterator's.
+ * options are useTransliterator's, and the way to open links (see OneScreenLayout).
  */
 export const OneScreenTransliterator = ({
   speech,
@@ -78,16 +79,22 @@ export const OneScreenTransliterator = ({
   copyText,
   syncUrl,
   suppressErrors,
+  onOpenLink,
 }: {
   speech: SpeechInput;
   tts: SpeechOutput;
   copyText: (text: string) => Promise<void>;
   syncUrl: boolean;
   suppressErrors?: boolean;
+  onOpenLink?: (href: string) => void;
 }) => {
   const {
     langFrom,
     langTo,
+    spelling,
+    setSpelling,
+    spellingApplies,
+    spellingUnavailable,
     sourceLang,
     autoDetectedLang,
     sourceText,
@@ -124,12 +131,15 @@ export const OneScreenTransliterator = ({
 
   // The target panel appears as soon as a transliteration starts loading, and
   // stays while the next one loads (e.g. after a language change), so that the
-  // layout doesn't jump; it goes away with the source text or on an error
+  // layout doesn't jump; it goes away with the source text or on an error,
+  // except one that the other spelling may avoid, as it has the spelling button
   const [showTarget, setShowTarget] = useState(false);
   useEffect(() => {
     if (loading || targetText) setShowTarget(true);
-    else if (!sourceText.trim() || errorMsg || detectedLang) setShowTarget(false);
-  }, [loading, targetText, sourceText, errorMsg, detectedLang]);
+    else if (!sourceText.trim() || (errorMsg && !spellingUnavailable) || detectedLang) {
+      setShowTarget(false);
+    }
+  }, [loading, targetText, sourceText, errorMsg, spellingUnavailable, detectedLang]);
 
   const reportResultShown = useReportResultShown();
   useEffect(() => reportResultShown(showTarget), [showTarget, reportResultShown]);
@@ -271,16 +281,23 @@ export const OneScreenTransliterator = ({
               direction="row"
               sx={{ alignItems: "center", justifyContent: "space-between", px: 1.5, py: 0.5 }}
             >
-              {ttsSupported ? (
-                <ListenButton
-                  lang={langTo}
-                  {...targetListen}
-                  onClick={handleTargetListen}
-                  ariaLabel="Listen to transliteration"
-                />
-              ) : (
-                <span />
-              )}
+              <Stack component="div" direction="row" sx={{ alignItems: "center" }}>
+                {ttsSupported && (
+                  <ListenButton
+                    lang={langTo}
+                    {...targetListen}
+                    onClick={handleTargetListen}
+                    ariaLabel="Listen to transliteration"
+                  />
+                )}
+                {spellingApplies && (
+                  <SpellingMenu
+                    spelling={spelling}
+                    onChange={setSpelling}
+                    onOpenLink={onOpenLink}
+                  />
+                )}
+              </Stack>
               <Stack component="div" direction="row" sx={{ alignItems: "center" }}>
                 <Tooltip title={copied ? "Copied!" : "Copy"}>
                   <span>

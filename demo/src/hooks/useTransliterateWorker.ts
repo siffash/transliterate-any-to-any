@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef } from "react";
-import { Language } from "transliterate-any-to-any";
+import { Language, Spelling } from "transliterate-any-to-any";
 import type { WorkerRequest, WorkerResponse } from "../workers/transliterate.worker";
 
 export const isLoadError = (message: string) =>
@@ -78,12 +78,12 @@ export function useTransliterateWorker() {
   }, [start]);
 
   const run = useCallback(
-    (text: string, from: Language | undefined, to: Language) => {
+    (text: string, from: Language | undefined, to: Language, spelling: Spelling) => {
       return new Promise<string>((resolve, reject) => {
         const worker = workerRef.current ?? start();
         const id = ++idRef.current;
         pendingRef.current.set(id, { resolve, reject });
-        const request: WorkerRequest = { id, text, from, to };
+        const request: WorkerRequest = { id, text, from, to, spelling };
         worker.postMessage(request);
       });
     },

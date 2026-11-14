@@ -25,6 +25,7 @@ import { MAX_CHARS } from "../constants";
 import { LanguageSelect } from "./LanguageSelect";
 import { ListenButton } from "./ListenButton";
 import { SourceAlert } from "./SourceAlert";
+import { SpellingMenu } from "./SpellingMenu";
 import { CodeBadge } from "./CodeBadge";
 
 const copyText = (text: string) => navigator.clipboard.writeText(text);
@@ -35,6 +36,9 @@ export const TransliteratorCard = ({ suppressErrors = false }: { suppressErrors?
   const {
     langFrom,
     langTo,
+    spelling,
+    setSpelling,
+    spellingApplies,
     sourceLang,
     autoDetectedLang,
     sourceText,
@@ -249,16 +253,17 @@ export const TransliteratorCard = ({ suppressErrors = false }: { suppressErrors?
               direction="row"
               sx={{ alignItems: "center", justifyContent: "space-between", px: 1.5, py: 1 }}
             >
-              {ttsSupported ? (
-                <ListenButton
-                  lang={langTo}
-                  {...targetListen}
-                  onClick={handleTargetListen}
-                  ariaLabel="Listen to transliteration"
-                />
-              ) : (
-                <span />
-              )}
+              <Stack component="div" direction="row" sx={{ alignItems: "center" }}>
+                {ttsSupported && (
+                  <ListenButton
+                    lang={langTo}
+                    {...targetListen}
+                    onClick={handleTargetListen}
+                    ariaLabel="Listen to transliteration"
+                  />
+                )}
+                {spellingApplies && <SpellingMenu spelling={spelling} onChange={setSpelling} />}
+              </Stack>
               <Stack component="div" direction="row" sx={{ alignItems: "center" }}>
                 <Tooltip title={copied ? "Copied!" : "Copy"}>
                   <span>

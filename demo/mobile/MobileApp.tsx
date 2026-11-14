@@ -55,7 +55,13 @@ export function MobileApp() {
         onOpenLink={openLink}
         keyboardOpen={keyboardVisible}
       >
-        <OneScreenTransliterator speech={speech} tts={tts} copyText={copyText} syncUrl={false} />
+        <OneScreenTransliterator
+          speech={speech}
+          tts={tts}
+          copyText={copyText}
+          syncUrl={false}
+          onOpenLink={openLink}
+        />
       </OneScreenLayout>
     </ThemeProvider>
   );

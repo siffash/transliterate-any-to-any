@@ -47,3 +47,16 @@ export const keepsLatinText = (to: Language) => !respellingLatinTargets.includes
 
 export const usesEnglishRomanization = (from: Language, to: Language) =>
   englishRomanizationSources[to]?.includes(from) ?? false;
+
+/*
+ * Confirm if the spelling option can change the transliteration from one language to another.
+ * @param options.from - The source language.
+ * @param options.to - The target language.
+ * @returns true if `spelling: "established"` can give another result than `spelling: "orthographic"`,
+ * false otherwise (also for an unsupported language).
+ */
+export const spellingAffects = ({ from, to }: { from: Language; to: Language }): boolean =>
+  from !== to &&
+  !!languages[from] &&
+  languages[to]?.script === "Latn" &&
+  ((languages[from].script === "Latn" && keepsLatinText(to)) || usesEnglishRomanization(from, to));

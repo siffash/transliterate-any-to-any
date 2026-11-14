@@ -1,9 +1,16 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { detectLanguage, Language, languages, validateLanguage } from "transliterate-any-to-any";
+import {
+  detectLanguage,
+  Language,
+  languages,
+  Spelling,
+  spellingAffects,
+  validateLanguage,
+} from "transliterate-any-to-any";
 import { isLoadError, useTransliterateWorker } from "./useTransliterateWorker";
 import type { SpeechInput } from "./useSpeechRecognition";
 import type { SpeechOutput } from "./useSpeechSynthesis";
-import { useQueryParams } from "./useQueryParams.ts";
+import { isLanguage, isSourceLanguage, isSpelling, useQueryParams } from "./useQueryParams.ts";
 import {
   AUTO_DETECT,
   DEBOUNCE_MS,
@@ -14,9 +21,12 @@ import {
   type SourceLanguage,
 } from "../constants";
 
-function getErrorMessage(err: Error): string {
+// With `withSpelling`, for a pair whose spelling can load another converter
+// (e.g. the English one), which a pair used only with the other spelling lacks
+function getErrorMessage(err: Error, withSpelling: boolean): string {
   if (!navigator.onLine && isLoadError(err.message)) {
-    return "This language pair isn't available offline yet. To make it available offline, use it once while online.";
+    const pair = withSpelling ? "This language pair with this spelling" : "This language pair";
+    return `${pair} isn't available offline yet. To make it available offline, use it once while online.`;
   }
   return err.message || "Transliteration failed.";
 }
@@ -54,11 +64,11 @@ function getInitialLangFrom(): SourceLanguage {
   // try to get from URL
   const params = new URLSearchParams(window.location.search);
   const paramFrom = params.get("from");
-  if (paramFrom) return paramFrom as SourceLanguage;
+  if (isSourceLanguage(paramFrom)) return paramFrom;
   // try to get from localStorage
   if (typeof window === "undefined") return DEFAULT_LANGS.langFrom;
   const stored = window.localStorage.getItem(LOCAL_STORAGE_KEYS.langFrom);
-  if (stored) return stored as SourceLanguage;
+  if (isSourceLanguage(stored)) return stored;
   // fallback to the system's language
   return getSystemLang() ?? DEFAULT_LANGS.langFrom;
 }
@@ -67,22 +77,71 @@ function getInitialLangTo(): Language {
   // try to get from URL
   const params = new URLSearchParams(window.location.search);
   const paramTo = params.get("to");
-  if (paramTo) return paramTo as Language;
+  if (isLanguage(paramTo)) return paramTo;
   // try to get from localStorage
   if (typeof window === "undefined") return DEFAULT_LANGS.langTo;
   const stored = window.localStorage.getItem(LOCAL_STORAGE_KEYS.langTo);
-  if (stored) return stored as Language;
+  if (isLanguage(stored)) return stored;
   // fallback to default, unless the source (see above) already is it
   return getInitialLangFrom() === DEFAULT_LANGS.langTo ? "en" : DEFAULT_LANGS.langTo;
+}
+
+// Whether the spelling can change the transliteration of the text (with
+// "Detect language", that of the language detected in it)
+function spellingMatters(from: SourceLanguage, to: Language, text: string): boolean {
+  const source = from === AUTO_DETECT ? tryDetectLanguage(text) : from;
+  return !!source && spellingAffects({ from: source, to });
+}
+
+// A link's spelling (where it matters), else the one chosen in a previous
+// visit, else the orthographic one
+function getInitialSpelling(): Spelling {
+  const params = new URLSearchParams(window.location.search);
+  const from = params.get("from");
+  const to = params.get("to");
+  const param = params.get("spelling");
+  if (
+    isSpelling(param) &&
+    isSourceLanguage(from) &&
+    isLanguage(to) &&
+    spellingMatters(from, to, params.get("text") ?? "")
+  ) {
+    return param;
+  }
+  const stored = window.localStorage.getItem(LOCAL_STORAGE_KEYS.spelling);
+  return isSpelling(stored) ? stored : "orthographic";
+}
+
+// The URL's parameters, with the spelling exactly when it matters (so that a
+// link or a history entry always has it then, and never has it otherwise)
+function getUrlParams(from: SourceLanguage, to: Language, text: string, spelling: Spelling) {
+  const params = new URLSearchParams({ from, to, text });
+  if (spellingMatters(from, to, text)) params.set("spelling", spelling);
+  return params;
+}
+
+// Adds a history entry for the URL, unless it already is the current one
+function pushUrl(params: URLSearchParams) {
+  if (window.location.search === `?${params.toString()}`) return;
+  history.pushState({}, "", `/?${params.toString()}`);
+}
+
+// A link's text, shown from the start, so that the URL never gets the empty
+// text it would otherwise have until the link is applied (see below)
+function getInitialText(syncUrl: boolean): string {
+  if (!syncUrl) return "";
+  const params = new URLSearchParams(window.location.search);
+  if (!isSourceLanguage(params.get("from")) || !isLanguage(params.get("to"))) return "";
+  return params.get("text") ?? "";
 }
 
 // Whether a language was already chosen: in the URL or in a previous visit
 function hasChosenLangs(): boolean {
   const params = new URLSearchParams(window.location.search);
-  if (params.get("from") || params.get("to")) return true;
-  return Boolean(
-    window.localStorage.getItem(LOCAL_STORAGE_KEYS.langFrom) ||
-    window.localStorage.getItem(LOCAL_STORAGE_KEYS.langTo),
+  if (isSourceLanguage(params.get("from")) || isLanguage(params.get("to"))) return true;
+  return (
+    isSourceLanguage(window.localStorage.getItem(LOCAL_STORAGE_KEYS.langFrom)) ||
+    isLanguage(window.localStorage.getItem(LOCAL_STORAGE_KEYS.langTo))
   );
 }
 
@@ -123,9 +182,10 @@ export function useTransliterator({
 }) {
   const [langFrom, setLangFrom] = useState<SourceLanguage>(getInitialLangFrom);
   const [langTo, setLangTo] = useState<Language>(getInitialLangTo);
+  const [spelling, setSpelling] = useState<Spelling>(getInitialSpelling);
   const [defaultLangs] = useState(() => (hasChosenLangs() ? null : { langFrom, langTo }));
   const langsChosenRef = useRef(false);
-  const [sourceText, setSourceText] = useState("");
+  const [sourceText, setSourceText] = useState(() => getInitialText(syncUrl));
   const [targetText, setTargetText] = useState("");
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
@@ -134,6 +194,12 @@ export function useTransliterator({
   const [swapRotation, setSwapRotation] = useState(0);
   const [retryKey, setRetryKey] = useState(0);
   const [rejected, setRejected] = useState<{ text: string; lang: SourceLanguage } | null>(null);
+  const [unavailable, setUnavailable] = useState<{
+    text: string;
+    from: SourceLanguage;
+    to: Language;
+    spelling: Spelling;
+  } | null>(null);
   const [detected, setDetected] = useState<{
     text: string;
     from: SourceLanguage;
@@ -145,10 +211,11 @@ export function useTransliterator({
   const requestIdRef = useRef(0);
   const baseTextRef = useRef("");
   const dontPushToHistory = useRef(false);
+  const urlSyncedRef = useRef(false);
   const loadFailedRef = useRef(false);
 
   const {
-    params: { paramFrom, paramTo, paramText },
+    params: { paramFrom, paramTo, paramText, paramSpelling },
     paramsChanged,
     setParamsChanged,
   } = useQueryParams();
@@ -194,12 +261,7 @@ export function useTransliterator({
         if (dontPushToHistory.current) {
           dontPushToHistory.current = false;
         } else {
-          const params = new URLSearchParams({
-            from: langFrom,
-            to: langTo,
-            text: sourceText,
-          });
-          history.pushState({}, "", `/?${params.toString()}`);
+          pushUrl(getUrlParams(langFrom, langTo, sourceText, spelling));
         }
       }
 
@@ -252,10 +314,11 @@ export function useTransliterator({
         return;
       }
 
-      run(sourceText, langFrom === AUTO_DETECT ? undefined : langFrom, langTo)
+      run(sourceText, langFrom === AUTO_DETECT ? undefined : langFrom, langTo, spelling)
         .then(result => {
           if (thisId === requestIdRef.current) {
             loadFailedRef.current = false;
+            setUnavailable(null);
             setTargetText(result);
             setErrorMsg(null);
           }
@@ -264,8 +327,14 @@ export function useTransliterator({
           if (thisId === requestIdRef.current) {
             loadFailedRef.current = isLoadError(err.message);
             if (!loadFailedRef.current) setRejected({ text: sourceText, lang: langFrom });
+            const withSpelling = !!sourceLang && spellingAffects({ from: sourceLang, to: langTo });
+            setUnavailable(
+              loadFailedRef.current && withSpelling
+                ? { text: sourceText, from: langFrom, to: langTo, spelling }
+                : null,
+            );
             setTargetText("");
-            setErrorMsg(getErrorMessage(err));
+            setErrorMsg(getErrorMessage(err, withSpelling));
           }
         })
         .finally(() => {
@@ -276,7 +345,7 @@ export function useTransliterator({
     }, DEBOUNCE_MS);
 
     return () => clearTimeout(timer);
-  }, [sourceText, langFrom, sourceLang, langTo, run, retryKey, syncUrl]);
+  }, [sourceText, langFrom, sourceLang, langTo, spelling, run, retryKey, syncUrl]);
 
   // A language pair that failed to load (e.g. offline) is loaded again as soon
   // as the connection is back, without waiting for the next keystroke
@@ -298,6 +367,10 @@ export function useTransliterator({
     window.localStorage.setItem(LOCAL_STORAGE_KEYS.langTo, langTo);
   }, [langTo]);
 
+  useEffect(() => {
+    window.localStorage.setItem(LOCAL_STORAGE_KEYS.spelling, spelling);
+  }, [spelling]);
+
   // The page's title names the language pair (for search engines too), once
   // one is chosen: in the URL, in a previous visit, or by changing a language
   useEffect(() => {
@@ -318,12 +391,12 @@ export function useTransliterator({
     const params = new URLSearchParams(window.location.search);
     const paramFrom = params.get("from");
     const paramTo = params.get("to");
-    if (!paramFrom || !paramTo) {
-      const params = new URLSearchParams({
-        from: langFrom,
-        to: langTo,
-        text: sourceText,
-      });
+    const firstSync = !urlSyncedRef.current;
+    urlSyncedRef.current = true;
+    // The URL the page was opened with (e.g. a link without the saved spelling),
+    // or one without the languages or with ones we don't have, gets ours in place
+    if (firstSync || !isSourceLanguage(paramFrom) || !isLanguage(paramTo)) {
+      const params = getUrlParams(langFrom, langTo, sourceText, spelling);
       history.replaceState({}, "", `/?${params.toString()}`);
       return;
     }
@@ -335,14 +408,9 @@ export function useTransliterator({
     if (dontPushToHistory.current) {
       dontPushToHistory.current = false;
     } else {
-      const params = new URLSearchParams({
-        from: langFrom,
-        to: langTo,
-        text: sourceText,
-      });
-      history.pushState({}, "", `/?${params.toString()}`);
+      pushUrl(getUrlParams(langFrom, langTo, sourceText, spelling));
     }
-  }, [sourceText, langFrom, langTo, syncUrl]);
+  }, [sourceText, langFrom, langTo, spelling, syncUrl]);
 
   useEffect(() => {
     if (!syncUrl) return;
@@ -356,10 +424,24 @@ export function useTransliterator({
       setLangFrom(paramFrom);
       setLangTo(paramTo);
       setSourceText(paramText);
+      // A link's or a history entry's spelling, where it matters (where it
+      // doesn't, there's none, and the current one stays)
+      if (paramSpelling && spellingMatters(paramFrom, paramTo, paramText)) {
+        setSpelling(paramSpelling);
+      }
     }
-  }, [paramFrom, paramTo, paramText, paramsChanged, syncUrl]);
+  }, [paramFrom, paramTo, paramText, paramSpelling, paramsChanged, syncUrl]);
 
   const sourceRejected = rejected?.text === sourceText && rejected.lang === langFrom;
+
+  // The error is that the transliteration with this spelling couldn't be loaded
+  // (e.g. offline), while the other spelling may well be available
+  const spellingUnavailable =
+    !!errorMsg &&
+    unavailable?.text === sourceText &&
+    unavailable.from === langFrom &&
+    unavailable.to === langTo &&
+    unavailable.spelling === spelling;
 
   // The language the source text looks like, while the text and the source language stay the same
   const detectedLang =
@@ -414,10 +496,10 @@ export function useTransliterator({
     }
   };
 
-  // A link that opens the PWA with the same languages and source text
+  // A link that opens the PWA with the same languages, spelling and source text
   const handleShare = async () => {
     if (!targetText) return;
-    const params = new URLSearchParams({ from: langFrom, to: langTo, text: sourceText });
+    const params = getUrlParams(langFrom, langTo, sourceText, spelling);
     try {
       await copyText(`${SITE_URL}?${params.toString()}`);
       setLinkCopied(true);
@@ -488,6 +570,10 @@ export function useTransliterator({
   return {
     langFrom,
     langTo,
+    spelling,
+    setSpelling,
+    spellingApplies: !!sourceLang && spellingAffects({ from: sourceLang, to: langTo }),
+    spellingUnavailable,
     sourceLang,
     autoDetectedLang,
     sourceText,
