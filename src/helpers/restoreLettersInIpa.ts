@@ -140,6 +140,13 @@ function flattenRules(rules: RestoreIpaRule[]): RestoreTask[] {
   return tasks;
 }
 
+interface Match {
+  candidate: Span;
+  wordSpan: Span;
+  distance: number;
+  taskIndex: number;
+}
+
 interface PlannedReplacement {
   start: number;
   end: number;
@@ -205,68 +212,89 @@ export const restoreLettersInIpa = (
     (a, b) => b.originalLetters.length - a.originalLetters.length,
   );
 
+  const lengthGroups: RestoreTask[][] = [];
   for (const task of orderedTasks) {
-    for (const { boundary, literal } of task.anchoredNeedles) {
-      const wordSpan = anchoredWordSpan(originalWord, task.originalLetters, boundary);
-      if (!wordSpan) continue;
-      if (isConsumed(wordSpan, consumedWordIndices)) continue;
+    const last = lengthGroups[lengthGroups.length - 1];
+    if (last && last[0].originalLetters.length === task.originalLetters.length) last.push(task);
+    else lengthGroups.push([task]);
+  }
 
-      if (literal) {
-        const literalSpan = textAtBoundary(cleanIpa, literal, boundary);
-        if (!literalSpan || isConsumed(literalSpan, consumedIpaIndices)) continue;
-        markConsumed(wordSpan, consumedWordIndices);
-        markConsumed(literalSpan, consumedIpaIndices);
-        planReplacement(
-          toOriginalIndex[literalSpan.start],
-          toOriginalIndex[literalSpan.end - 1] + 1,
-          task.replacement,
-        );
-      } else {
-        const alreadyRestored = textAtBoundary(cleanIpa, task.replacement, boundary);
-        if (alreadyRestored && !isConsumed(alreadyRestored, consumedIpaIndices)) {
-          markConsumed(wordSpan, consumedWordIndices);
-          markConsumed(alreadyRestored, consumedIpaIndices);
-          continue;
+  for (const group of lengthGroups) {
+    const matches: Match[] = [];
+    group.forEach((task, taskIndex) => {
+      const shifts = shiftsFor(task.window);
+      for (const candidate of findCandidates(cleanIpa, task.needles)) {
+        const anchor = projectIndex(candidate.start, cleanIpa.length, originalWord.length);
+        for (const shift of shifts) {
+          const start = anchor + shift;
+          const end = start + task.originalLetters.length;
+          if (start < 0 || end > originalWord.length) continue;
+          if (originalWord.slice(start, end) !== task.originalLetters) continue;
+          matches.push({
+            candidate,
+            wordSpan: { start, end },
+            distance: Math.abs(shift),
+            taskIndex,
+          });
         }
-        markConsumed(wordSpan, consumedWordIndices);
-        const point = insertionPointFor(ipa, boundary);
-        planReplacement(point, point, task.replacement);
       }
-    }
+    });
+    const hasCloserRival = (match: Match): boolean =>
+      match.distance > 1 &&
+      matches.some(
+        rival =>
+          rival.taskIndex !== match.taskIndex &&
+          rival.candidate.start === match.candidate.start &&
+          rival.candidate.end === match.candidate.end &&
+          rival.distance < match.distance &&
+          !isConsumed(rival.wordSpan, consumedWordIndices),
+      );
 
-    const candidates = findCandidates(cleanIpa, task.needles);
-    const shifts = shiftsFor(task.window);
-
-    for (const candidate of candidates) {
-      if (isConsumed(candidate, consumedIpaIndices)) continue;
-
-      const anchor = projectIndex(candidate.start, cleanIpa.length, originalWord.length);
-
-      let matchedWordSpan: Span | null = null;
-      for (const shift of shifts) {
-        const start = anchor + shift;
-        if (start < 0) continue;
-        const end = start + task.originalLetters.length;
-        if (end > originalWord.length) continue;
-        const wordSpan: Span = { start, end };
+    group.forEach((task, taskIndex) => {
+      for (const { boundary, literal } of task.anchoredNeedles) {
+        const wordSpan = anchoredWordSpan(originalWord, task.originalLetters, boundary);
+        if (!wordSpan) continue;
         if (isConsumed(wordSpan, consumedWordIndices)) continue;
-        if (originalWord.slice(start, end) === task.originalLetters) {
-          matchedWordSpan = wordSpan;
-          break;
+
+        if (literal) {
+          const literalSpan = textAtBoundary(cleanIpa, literal, boundary);
+          if (!literalSpan || isConsumed(literalSpan, consumedIpaIndices)) continue;
+          markConsumed(wordSpan, consumedWordIndices);
+          markConsumed(literalSpan, consumedIpaIndices);
+          planReplacement(
+            toOriginalIndex[literalSpan.start],
+            toOriginalIndex[literalSpan.end - 1] + 1,
+            task.replacement,
+          );
+        } else {
+          const alreadyRestored = textAtBoundary(cleanIpa, task.replacement, boundary);
+          if (alreadyRestored && !isConsumed(alreadyRestored, consumedIpaIndices)) {
+            markConsumed(wordSpan, consumedWordIndices);
+            markConsumed(alreadyRestored, consumedIpaIndices);
+            continue;
+          }
+          markConsumed(wordSpan, consumedWordIndices);
+          const point = insertionPointFor(ipa, boundary);
+          planReplacement(point, point, task.replacement);
         }
       }
 
-      if (!matchedWordSpan) continue;
-
-      markConsumed(matchedWordSpan, consumedWordIndices);
-      markConsumed(candidate, consumedIpaIndices);
-      const start = toOriginalIndex[candidate.start];
-      const end = toOriginalIndex[candidate.end - 1] + 1;
-      const value = task.keepStress
-        ? keepInnerStress(ipa.slice(start, end), task.replacement)
-        : task.replacement;
-      planReplacement(start, end, value);
-    }
+      for (const match of matches) {
+        if (match.taskIndex !== taskIndex) continue;
+        const { candidate, wordSpan } = match;
+        if (isConsumed(candidate, consumedIpaIndices)) continue;
+        if (isConsumed(wordSpan, consumedWordIndices)) continue;
+        if (hasCloserRival(match)) continue;
+        markConsumed(wordSpan, consumedWordIndices);
+        markConsumed(candidate, consumedIpaIndices);
+        const start = toOriginalIndex[candidate.start];
+        const end = toOriginalIndex[candidate.end - 1] + 1;
+        const value = task.keepStress
+          ? keepInnerStress(ipa.slice(start, end), task.replacement)
+          : task.replacement;
+        planReplacement(start, end, value);
+      }
+    });
   }
 
   replacements.sort((a, b) => b.start - a.start || b.end - a.end || b.index - a.index);

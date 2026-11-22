@@ -7,12 +7,13 @@ export const thLt = async (text: Text) => {
   const { thLatnKRules } = await import("data/th/th-latn_k.rules");
   const { thLatnTRules } = await import("data/th/th-latn_t.rules");
   const { latnLtRules } = await import("data/latn/latn-lt.rules");
+  const { latnVvRules } = await import("data/latn/latn_vv.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
   const { normalizeTh } = await import("helpers/normalizeTh");
 
   const toRtgs = await thRtgs();
   const transliterator = RBT.fromRules(
-    thLatnRules + thLatnKRules + thLatnTRules + latnLtRules + "::Title;",
+    thLatnRules + thLatnKRules + thLatnTRules + latnLtRules + latnVvRules + "::Title;",
   );
 
   const convert = async (text: string) => {

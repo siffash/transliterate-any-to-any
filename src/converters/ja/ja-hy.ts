@@ -20,8 +20,8 @@ export const jaHy = async (text: Text) => {
   const exceptions = jaIpaRules.replace(/( ?> ?[^;]+;)|\[|]|\n/g, "");
 
   const convert = async (text: string) => {
-    const ipa = await wordSplitter(normalizeJa(text), "ja", async text => {
-      const hiragana = await kuroshiro.convert(text, { to: "hiragana" });
+    const ipa = await wordSplitter(normalizeJa(text), "ja", async (text, _, tokens) => {
+      const hiragana = await kuroshiro.convert(text, { to: "hiragana" }, tokens);
       const options = /\p{scx=Latin}/u.test(hiragana) ? {} : { language: "ja" };
       const ipa = toIPA(prepassTransliterator.transliterate(hiragana), options);
       return filterIpa(ipa, hiragana, "ja", exceptions);

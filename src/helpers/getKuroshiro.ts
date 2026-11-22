@@ -151,6 +151,24 @@ const load = () => {
   return kuroshiroPromise;
 };
 
-export const getKuroshiro = async () => (await load()).kuroshiro;
+export const getKuroshiro = async () => {
+  const { kuroshiro } = await load();
+  return {
+    convert: (
+      text: string,
+      options: { to: "romaji" | "hiragana" },
+      tokens?: KuromojiToken[],
+    ): Promise<string> =>
+      tokens
+        ? kuroshiro.convert.call(
+            Object.create(kuroshiro, {
+              _analyzer: { value: { parse: async () => tokens.map(token => ({ ...token })) } },
+            }),
+            text,
+            options,
+          )
+        : kuroshiro.convert(text, options),
+  };
+};
 
 export const getKuromojiAnalyzer = async () => (await load()).analyzer;

@@ -16,7 +16,7 @@ export const jaEl = async (text: Text) => {
     const romanized = await wordSplitter(
       normalizeJa(text),
       "ja",
-      async text => await kuroshiro.convert(text, { to: "romaji" }),
+      async (text, _, tokens) => await kuroshiro.convert(text, { to: "romaji" }, tokens),
     );
     return transliterator.transliterate(romanized);
   };

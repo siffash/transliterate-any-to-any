@@ -3,6 +3,7 @@ import { getKuromojiAnalyzer } from "helpers/getKuroshiro";
 
 type LatticeNode = { name: number; type: string; length: number };
 type Tokenizer = {
+  tokenize(text: string): KuromojiToken[];
   getLattice(text: string): { nodes_end_at: (LatticeNode[] | undefined)[] };
   viterbi_searcher: { search(lattice: unknown): LatticeNode[] };
   token_info_dictionary: { getFeatures(name: number): string | null };
@@ -25,12 +26,25 @@ const sameReading = (a: string, b: string) =>
   a.replaceAll("ニッポン", "ニホン") === b.replaceAll("ニッポン", "ニホン");
 
 const INFIXES: Record<string, string> = { ー: "ー", ノ: "ノ", ヶ: "が" };
+const READ_ALONE = "国";
+const SUFFIXES = new Set("岳川山島湖");
 const CANNOT_START = /^[んンっッゃゅょャュョぁぃぅぇぉァィゥェォ]/u;
 
 const isInfix = (token: KuromojiToken) =>
   Object.hasOwn(INFIXES, token.surface_form) && (token.pos === "記号" || !token.reading);
 
 const isOrganization = (features: string) => /^[^,]*,名詞,固有名詞,組織,/.test(features);
+
+const readAlone = (tokenizer: Tokenizer, token: KuromojiToken) =>
+  tokenizer
+    .tokenize(token.surface_form)
+    .map(part => part.reading ?? "")
+    .join("");
+
+const readsInContext = (token: KuromojiToken) =>
+  token.surface_form !== READ_ALONE &&
+  !(token.pos_detail_2 === "地域" && token.pos_detail_3 === "国") &&
+  (!SUFFIXES.has(token.surface_form) || token.pos_detail_1 === "接尾");
 
 const splitCompound = (tokenizer: Tokenizer, token: KuromojiToken): KuromojiToken[] => {
   const { surface_form: word, reading } = token;
@@ -56,7 +70,8 @@ const splitCompound = (tokenizer: Tokenizer, token: KuromojiToken): KuromojiToke
         : null;
     });
     return parts.length >= 2 &&
-      sameReading(parts.map(part => part?.reading ?? "").join(""), reading)
+      sameReading(parts.map(part => part?.reading ?? "").join(""), reading) &&
+      sameReading(parts.map(part => (part ? readAlone(tokenizer, part) : "")).join(""), reading)
       ? (parts as KuromojiToken[])
       : null;
   };
@@ -68,21 +83,25 @@ const splitCompound = (tokenizer: Tokenizer, token: KuromojiToken): KuromojiToke
 export const segmentJapanese = async (text: string) => {
   const analyzer = await getKuromojiAnalyzer();
   const tokenizer = (analyzer as unknown as { _analyzer: Tokenizer })._analyzer;
-  const tokens = (await analyzer.parse(text)).flatMap(token =>
-    token.pos === "名詞" && token.pos_detail_1 === "固有名詞"
-      ? splitCompound(tokenizer, token)
-      : [token],
-  );
-  const words: { segment: string; isWordLike: boolean }[] = [];
+  const tokens = (await analyzer.parse(text)).flatMap(token => {
+    const parts =
+      token.pos === "名詞" && token.pos_detail_1 === "固有名詞"
+        ? splitCompound(tokenizer, token)
+        : [token];
+    return parts.map(part => ({ token: part, inContext: parts.length === 1 }));
+  });
+  const words: { segment: string; isWordLike: boolean; tokens?: KuromojiToken[] }[] = [];
   let joinsNext = false;
-  for (const token of tokens) {
+  for (const { token, inContext } of tokens) {
     const last = words.at(-1);
     if (last?.isWordLike && isInfix(token)) {
       last.segment += INFIXES[token.surface_form];
+      delete last.tokens;
       joinsNext = token.surface_form !== "ー";
       continue;
     }
     const parts = token.surface_form.split(/([^\p{L}\p{M}]+)/u).filter(Boolean);
+    const tokens = inContext && parts.length === 1 && readsInContext(token) ? [token] : undefined;
     parts.forEach((part, i) => {
       const isWordLike = token.pos !== "記号" && /\p{L}/u.test(part);
       const last = words.at(-1);
@@ -93,8 +112,9 @@ export const segmentJapanese = async (text: string) => {
         (joinsNext || joinsPrevious(token) || CANNOT_START.test(part))
       ) {
         last.segment += part;
+        last.tokens = last.tokens && tokens && [...last.tokens, ...tokens];
       } else {
-        words.push({ segment: part, isWordLike });
+        words.push({ segment: part, isWordLike, tokens });
       }
     });
     joinsNext = false;

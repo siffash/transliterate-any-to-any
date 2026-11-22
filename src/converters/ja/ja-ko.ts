@@ -29,14 +29,14 @@ export const jaKo = async (text: Text) => {
     const normalized = normalizeJa(text);
     const inName = (segment: string) =>
       NAME_UNITS.some(unit => normalized.includes(segment + unit));
-    const hiragana = await wordSplitter(normalized, "ja", async text => {
+    const hiragana = await wordSplitter(normalized, "ja", async (text, _, tokens) => {
       if (Object.hasOwn(UNITS, text) && !inName(text))
         return String.fromCharCode(UNIT_MARK + unitMarks.indexOf(text));
       if (Object.hasOwn(GENERICS, text) && !inName(text)) {
         generics.push(GENERICS[text]![1]);
         return "";
       }
-      const reading = await kuroshiro.convert(text, { to: "hiragana" });
+      const reading = await kuroshiro.convert(text, { to: "hiragana" }, tokens);
       const [ending, korean] = GENERICS[text.match(GENERIC)?.[0] ?? ""] ?? [];
       if (!ending || !ending.test(reading) || inName(text)) return reading;
       generics.push(korean!);

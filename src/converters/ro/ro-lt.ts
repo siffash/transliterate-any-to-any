@@ -6,10 +6,11 @@ export const roLt = async (text: Text) => {
   const { roLatnVjvRules } = await import("data/ro/ro-latn_vjv.rules");
   const { latnLtRules } = await import("data/latn/latn-lt.rules");
   const { roLatnLtRules } = await import("data/ro/ro-latn_lt.rules");
+  const { roLatnIiRules } = await import("data/ro/ro-latn_ii.rules");
   const { latnIRules } = await import("data/latn/latn_i.rules");
 
   const transliterator = RBT.fromRules(
-    roLatnLtRules + roLatnRules + roLatnVjvRules + latnIRules + latnLtRules,
+    roLatnLtRules + roLatnIiRules + roLatnRules + roLatnVjvRules + latnIRules + latnLtRules,
   );
 
   if (typeof text === "string") {

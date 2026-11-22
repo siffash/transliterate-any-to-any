@@ -19,6 +19,8 @@ export const enKo = async (text: Text) => {
     boroughReducedRestoreRules,
     sexRestoreRules,
     juzRestoreRules,
+    yesRestoreRules,
+    yesVoicelessRestoreRules,
   } = await import("helpers/normalizeEnIpa");
   const { enIpaOuRules } = await import("data/en/en-ipa_ou.rules");
   const { enIpaKoRules } = await import("data/en/en-ipa_ko.rules");
@@ -37,6 +39,7 @@ export const enKo = async (text: Text) => {
       ...koVowelRestoreRules,
       ...mouthReducedRestoreRules,
       ...boroughReducedRestoreRules,
+      ...yesVoicelessRestoreRules,
     ],
     [
       ...ettRestoreRules,
@@ -48,6 +51,7 @@ export const enKo = async (text: Text) => {
       ...boroughRestoreRules,
       ...sexRestoreRules,
       ...juzRestoreRules,
+      ...yesRestoreRules,
     ],
   );
   const result = ipa.map(ipa => transliterator.transliterate(ipa));

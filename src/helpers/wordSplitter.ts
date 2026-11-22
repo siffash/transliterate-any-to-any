@@ -1,3 +1,4 @@
+import type { KuromojiToken } from "kuroshiro-analyzer-kuromoji";
 import { Segmenter } from "intl-segmenter";
 import { Language } from "types";
 import { languages } from "helpers/constants";
@@ -32,7 +33,12 @@ const PUNCTUATION: Record<string, [replacement: string, kind: Kind]> = {
   "​": ["", "separator"],
 };
 
-type Segment = { segment: string; isWordLike?: boolean; surname?: boolean };
+type Segment = {
+  segment: string;
+  isWordLike?: boolean;
+  surname?: boolean;
+  tokens?: KuromojiToken[];
+};
 
 const joinThaiWords = (segments: Segment[]): Segment[] => {
   const result: Segment[] = [];
@@ -96,13 +102,13 @@ const needsSpace = (prev: Kind | undefined, next: Kind) =>
 export const wordSplitter = async (
   input: string,
   language: Language,
-  fn?: (word: string, givenName: boolean) => string | Promise<string>,
+  fn?: (word: string, givenName: boolean, tokens?: KuromojiToken[]) => string | Promise<string>,
   skipSegmenter?: boolean,
   joinNames?: boolean,
 ): Promise<string> => {
   if (language === "ko") input = (await import("helpers/normalizeKo")).joinSpacedNames(input);
   const { regex } = languages[language];
-  const re = new RegExp(`[${regex}\\p{L}]+`, "gu");
+  const re = new RegExp(`[${regex}\\p{L}${language === "ja" ? "\\p{Nd}" : ""}]+`, "gu");
   const segment = skipSegmenter ? undefined : await getWordSegmenter(language);
   const parts: string[] = [];
   let cursor = 0;
@@ -119,24 +125,27 @@ export const wordSplitter = async (
 
     let prev: Kind | undefined;
     let afterSurname = false;
-    const push = async (kind: Kind, text: string) => {
+    const push = async (kind: Kind, text: string, tokens?: KuromojiToken[]) => {
       if (kind === "close" && /^[,.;?]$/.test(text) && parts.length) {
         parts[parts.length - 1] = parts[parts.length - 1]!.replace(/\s+$/, "");
       }
       if (needsSpace(prev, kind) && !(joinNames && afterSurname && kind === "word")) {
         parts.push(" ");
       }
-      parts.push(kind === "word" && fn ? await fn(text, afterSurname) : text);
+      parts.push(kind === "word" && fn ? await fn(text, afterSurname, tokens) : text);
       prev = kind;
     };
 
-    for (const { segment, isWordLike, surname } of segments) {
+    for (const { segment, isWordLike, surname, tokens } of segments) {
       if (isWordLike) {
-        await push("word", segment);
+        await push("word", segment, tokens);
         afterSurname = Boolean(surname);
       } else {
         for (const char of segment) {
-          const [replacement, kind] = PUNCTUATION[char] ?? [char, "inline"];
+          const [replacement, kind] = PUNCTUATION[char] ?? [
+            toHalfwidth(char, false, false),
+            "inline",
+          ];
           await push(kind, replacement);
         }
       }

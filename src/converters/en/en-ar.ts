@@ -8,6 +8,10 @@ export const enAr = async (text: Text) => {
     geminateRestoreRules,
     geminateSingleRestoreRules,
     airRestoreRules,
+    ayRestoreRules,
+    ayDiphthongRestoreRules,
+    yesRestoreRules,
+    yesDiphthongRestoreRules,
   } = await import("helpers/normalizeEnIpa");
   const { ipaArRules } = await import("data/ipa/ipa-ar.rules");
 
@@ -16,8 +20,14 @@ export const enAr = async (text: Text) => {
   const words = typeof text === "string" ? [text] : text;
   const ipa = await enIpa<string[]>(
     words,
-    [...syllabicLRestoreRules, ...geminateSingleRestoreRules, ...airRestoreRules],
-    geminateRestoreRules,
+    [
+      ...syllabicLRestoreRules,
+      ...geminateSingleRestoreRules,
+      ...airRestoreRules,
+      ...ayDiphthongRestoreRules,
+      ...yesDiphthongRestoreRules,
+    ],
+    [...geminateRestoreRules, ...ayRestoreRules, ...yesRestoreRules],
   );
   const result = ipa.map(ipa => transliterator.transliterate(ipa));
   return typeof text === "string" ? result[0] : result;

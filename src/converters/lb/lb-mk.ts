@@ -5,8 +5,9 @@ export const lbMk = async (text: Text) => {
   const { lbLatn } = await import("converters/lb/lb-latn");
   const { latnSilentHRules } = await import("data/latn/latn_silent-h.rules");
   const { latnMkRules } = await import("data/latn/latn-mk.rules");
+  const { latnMkVvRules } = await import("data/latn/latn-mk_vv.rules");
 
-  const transliterator = RBT.fromRules(latnSilentHRules + latnMkRules);
+  const transliterator = RBT.fromRules(latnSilentHRules + latnMkRules + latnMkVvRules);
 
   if (typeof text === "string") {
     const latn = await lbLatn<string>(text);

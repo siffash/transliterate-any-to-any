@@ -15,8 +15,8 @@ export const jaSq = async (text: Text) => {
   const transliterator = RBT.fromRules(jaLatnRules + latnHardRules + latnSqRules);
 
   const convert = async (text: string) => {
-    const romanized = await wordSplitter(normalizeJa(text), "ja", async text =>
-      markJaUnit(text, await kuroshiro.convert(text, { to: "romaji" })),
+    const romanized = await wordSplitter(normalizeJa(text), "ja", async (text, _, tokens) =>
+      markJaUnit(text, await kuroshiro.convert(text, { to: "romaji" }, tokens)),
     );
     return joinJaUnits(transliterator.transliterate(romanized));
   };

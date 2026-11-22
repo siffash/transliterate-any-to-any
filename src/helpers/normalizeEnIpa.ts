@@ -148,6 +148,28 @@ export const juzRestoreRules: RestoreIpaRule[] = [
   { ipaCharToBeReplaced: "nuz", lettersToRestore: { news: "njuz" } },
 ];
 
+export const ayRestoreRules: RestoreIpaRule[] = [
+  { ipaCharToBeReplaced: ["eɪ", "ɛɪ"], lettersToRestore: { ay: "eɪ" } },
+];
+export const ayDiphthongRestoreRules: RestoreIpaRule[] = [
+  { ipaCharToBeReplaced: ["eɪ", "ɛɪ"], lettersToRestore: { ay: "aɪ" } },
+];
+
+const ayesIpa = ["eɪɛs$", "eɪɛz$", "eɪs$", "eɪz$"];
+const oyesIpa = ["ɔɪɛs$", "ɔɪɛz$", "ɔɪs$", "ɔɪz$"];
+export const yesRestoreRules: RestoreIpaRule[] = [
+  { ipaCharToBeReplaced: ayesIpa, lettersToRestore: { ayes: "eɪz" } },
+  { ipaCharToBeReplaced: oyesIpa, lettersToRestore: { oyes: "ɔɪz" } },
+];
+export const yesDiphthongRestoreRules: RestoreIpaRule[] = [
+  { ipaCharToBeReplaced: ayesIpa, lettersToRestore: { ayes: "aɪz" } },
+  { ipaCharToBeReplaced: oyesIpa, lettersToRestore: { oyes: "ɔɪz" } },
+];
+export const yesVoicelessRestoreRules: RestoreIpaRule[] = [
+  { ipaCharToBeReplaced: ayesIpa, lettersToRestore: { ayes: "eɪs" } },
+  { ipaCharToBeReplaced: oyesIpa, lettersToRestore: { oyes: "ɔɪs" } },
+];
+
 export const irRestoreRules: RestoreIpaRule[] = [
   { ipaCharToBeReplaced: ["ɝ", "ɚ"], lettersToRestore: { ir: "ɪɹ" } },
 ];
@@ -429,9 +451,9 @@ export const normalizeEnIpa = (
         ate: "eɪ",
         ave: "eɪ",
         aze: "eɪ",
-        ay: "eɪ",
       },
     },
+    ...ayRestoreRules,
     { ipaCharToBeReplaced: ["eɪ", "ɛɪ"], lettersToRestore: { e: "ɛ" } },
     ...ellRestoreRules,
     ...ettRestoreRules,
@@ -464,6 +486,7 @@ export const normalizeEnIpa = (
     { ipaCharToBeReplaced: "j", lettersToRestore: { ja: "j" } },
     { ipaCharToBeReplaced: "ə", lettersToRestore: { ja: "ja" } },
     ...juzRestoreRules,
+    ...yesRestoreRules,
     ...sRestoreRules,
     { ipaCharToBeReplaced: "ɡz", lettersToRestore: { x: "ks" } },
     { ipaCharToBeReplaced: "ɹəɫ", lettersToRestore: { rl: "ɹɫ" } },

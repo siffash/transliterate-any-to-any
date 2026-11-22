@@ -6,8 +6,11 @@ export const huMk = async (text: Text) => {
   const { huLatnRules } = await import("data/hu/hu-latn.rules");
   const { huLatnYRules } = await import("data/hu/hu-latn_y.rules");
   const { latnMkRules } = await import("data/latn/latn-mk.rules");
+  const { latnMkVvRules } = await import("data/latn/latn-mk_vv.rules");
 
-  const transliterator = RBT.fromRules(huLatnMkRules + huLatnRules + huLatnYRules + latnMkRules);
+  const transliterator = RBT.fromRules(
+    huLatnMkRules + huLatnRules + huLatnYRules + latnMkRules + latnMkVvRules,
+  );
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);

@@ -5,11 +5,17 @@ export const svLt = async (text: Text) => {
   const { svLatnRules } = await import("data/sv/sv-latn.rules");
   const { noSvLatnLtRules } = await import("data/latn/no_sv-latn_lt.rules");
   const { latnLtRules } = await import("data/latn/latn-lt.rules");
+  const { latnVvRules } = await import("data/latn/latn_vv.rules");
   const { svLatnBalticPreRules } = await import("data/sv/sv-latn_baltic-pre.rules");
   const { svLatnBalticRules } = await import("data/sv/sv-latn_baltic.rules");
 
   const transliterator = RBT.fromRules(
-    noSvLatnLtRules + svLatnBalticPreRules + svLatnRules + svLatnBalticRules + latnLtRules,
+    noSvLatnLtRules +
+      svLatnBalticPreRules +
+      svLatnRules +
+      svLatnBalticRules +
+      latnLtRules +
+      latnVvRules,
   );
 
   if (typeof text === "string") {

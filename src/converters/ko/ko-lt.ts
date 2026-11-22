@@ -7,11 +7,12 @@ export const koLt = async (text: Text) => {
   const { koLatnAssimRules } = await import("data/ko/ko-latn_assim.rules");
   const { koLatnRules } = await import("data/ko/ko-latn.rules");
   const { latnLtRules } = await import("data/latn/latn-lt.rules");
+  const { latnVvRules } = await import("data/latn/latn_vv.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
   const { normalizeKo } = await import("helpers/normalizeKo");
 
   const transliterator = RBT.fromRules(
-    koLatnAssimRules + koLatnRules + latnLtRules + latnKoHyphenRules,
+    koLatnAssimRules + koLatnRules + latnLtRules + latnVvRules + latnKoHyphenRules,
   );
 
   const convert = async (text: string) => {

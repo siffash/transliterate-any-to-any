@@ -8,10 +8,11 @@ export const zhLt = async (text: Text) => {
   const { latnIRules } = await import("data/latn/latn_i.rules");
   const { latnXHRules } = await import("data/latn/latn_x-h.rules");
   const { latnLtRules } = await import("data/latn/latn-lt.rules");
+  const { latnVvRules } = await import("data/latn/latn_vv.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
 
   const transliterator = RBT.fromRules(
-    zhLatnLtRules + zhLatnRules + latnIRules + latnXHRules + latnLtRules,
+    zhLatnLtRules + zhLatnRules + latnIRules + latnXHRules + latnLtRules + latnVvRules,
   );
 
   const convert = async (text: string) => {

@@ -13,6 +13,8 @@ export const enZh = async (text: Text) => {
     boroughRestoreRules,
     boroughReducedRestoreRules,
     juzRestoreRules,
+    yesRestoreRules,
+    yesVoicelessRestoreRules,
   } = await import("helpers/normalizeEnIpa");
   const { enIpaZhRules } = await import("data/en/en-ipa_zh.rules");
   const { ipaZhRules } = await import("data/ipa/ipa-zh.rules");
@@ -28,8 +30,15 @@ export const enZh = async (text: Text) => {
       ...airRestoreRules,
       ...mouthDiphthongRestoreRules,
       ...boroughReducedRestoreRules,
+      ...yesVoicelessRestoreRules,
     ],
-    [...ettRestoreRules, ...mouthRestoreRules, ...boroughRestoreRules, ...juzRestoreRules],
+    [
+      ...ettRestoreRules,
+      ...mouthRestoreRules,
+      ...boroughRestoreRules,
+      ...juzRestoreRules,
+      ...yesRestoreRules,
+    ],
   );
   const result = ipa.map(ipa => transliterator.transliterate(ipa));
   return typeof text === "string" ? result[0] : result;

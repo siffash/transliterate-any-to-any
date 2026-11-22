@@ -4,11 +4,12 @@ export const etLt = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { etLatnRules } = await import("data/et/et-latn.rules");
   const { latnLtRules } = await import("data/latn/latn-lt.rules");
+  const { latnVvRules } = await import("data/latn/latn_vv.rules");
   const { latnHyphenSpaceRules } = await import("data/latn/latn_hyphen-space.rules");
   const { latnIERules } = await import("data/latn/latn_i-e.rules");
 
   const transliterator = RBT.fromRules(
-    etLatnRules + latnIERules + latnLtRules + latnHyphenSpaceRules,
+    etLatnRules + latnIERules + latnLtRules + latnVvRules + latnHyphenSpaceRules,
   );
 
   if (typeof text === "string") {
