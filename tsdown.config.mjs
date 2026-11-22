@@ -38,9 +38,9 @@ export default defineConfig({
         const minifiedCode = code.replace(regex, (match, declaration, rulesContent) => {
           const minified = rulesContent.replace(/'[^']*'|\s+/g, m => {
             if (m.startsWith("'")) {
-              return m; // keep the single-quoted string exactly as is
+              return m;
             }
-            return ""; // strip everything else (spaces, tabs, newlines)
+            return "";
           });
           return `${declaration}\`${minified}\``;
         });

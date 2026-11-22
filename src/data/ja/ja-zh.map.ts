@@ -415,3 +415,11 @@ export const jaZhMap: Record<string, string> = {
   っ: "",
   ー: "",
 };
+
+export const jaZhKanjiMap: Record<string, string> = {
+  戸: "户",
+  郞: "郎",
+  氷: "冰",
+  騨: "驒",
+  鄕: "乡",
+};

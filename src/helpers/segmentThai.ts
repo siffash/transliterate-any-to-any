@@ -1,10 +1,6 @@
 import { Segmenter } from "intl-segmenter";
 
-// Intl.Segmenter splits Thai words missing from its dictionary (mostly names) into
-// pieces that can't be read alone: a bare consonant (ปรียา|ภ|รณ์), a coda silenced
-// with ์ (รณ์), or a vowel sign without a consonant (ธีร|ะ|กุล)
 const THAI_KARAN = /[ก-ฮ](?:ิ|ุ)?์/g;
-// Vowel signs ะ–ฺ, leading vowels เ–ๅ and ็ (no character class: they are combining marks)
 const isThaiVowel = (char: string) => {
   const code = char.codePointAt(0)!;
   return (
@@ -21,8 +17,6 @@ const isThaiFragment = (segment: string) => {
 
 let segmenter: Segmenter | undefined;
 
-// Splits a Thai word into the dictionary words it is made of (ธีระกุล → ธีระ|กุล), each
-// readable alone, so that a compound name is read piece by piece and written as one word
 export const segmentThai = (word: string): string[] => {
   segmenter ??= new Segmenter("th", { granularity: "word" });
   const result: string[] = [];
@@ -30,6 +24,16 @@ export const segmentThai = (word: string): string[] => {
   for (const { segment } of segmenter.segment(word)) {
     const piece = carry + segment;
     carry = "";
+    const previous = result[result.length - 1];
+    if (
+      previous !== undefined &&
+      ((/เ[ก-ฮ]{1,2}ื[่้๊๋]?$/u.test(previous) && segment.startsWith("อ")) ||
+        (/เ[ก-ฮ]{1,2}ี[่้๊๋]?$/u.test(previous) && segment.startsWith("ย")) ||
+        (/[ก-ฮ]$/u.test(previous) && /^[ะาำ]/u.test(segment)))
+    ) {
+      result[result.length - 1] += piece;
+      continue;
+    }
     if (isThaiFragment(segment)) {
       const core = segment.replace(THAI_KARAN, "");
       const coda = segment.includes("์") || !/[ก-ฮ]/.test(core);

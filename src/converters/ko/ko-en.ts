@@ -12,7 +12,6 @@ export const koEn = async (text: Text) => {
 
   const transliterator = RBT.fromRules(koLatnAssimRules + koEnRules + latnKoHyphenRules);
 
-  // A split surname takes its English spelling (김‧정은 → Kim Jeong-eun), and so does one standing alone (김 → Kim)
   const romanize = (text: string) =>
     Aromanize.romanize(
       text

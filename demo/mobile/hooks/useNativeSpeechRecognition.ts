@@ -5,7 +5,6 @@ import type { SpeechInput } from "../../src/hooks/useSpeechRecognition";
 
 type StartParams = Parameters<SpeechInput["start"]>;
 
-// The plugin's error codes (Android and iOS), worded like the PWA's
 const FRIENDLY: Record<string, string> = {
   INSUFFICIENT_PERMISSIONS: "Microphone access was denied.",
   MICROPHONE_PERMISSION_DENIED: "Microphone access was denied.",
@@ -25,24 +24,15 @@ const FRIENDLY: Record<string, string> = {
   MODEL_DOWNLOAD_SCHEDULED: "Voice input isn't available right now.",
   START_FAILED: "Voice input isn't available right now.",
   MODERN_START_FAILED: "Voice input isn't available right now.",
-  // iOS's recognizer errors, reported as <ERROR DOMAIN>_<CODE>
   KAFASSISTANTERRORDOMAIN_1110: "Didn't catch any speech — try again.",
 };
 
-// On iOS, kLSRErrorDomain covers the on-device recognizer failing to load
-// (e.g. a missing or broken speech model)
 const getMessage = (code?: string) =>
   (code && FRIENDLY[code]) ||
   (code?.startsWith("KLSRERRORDOMAIN_")
     ? "Voice input isn't available right now."
     : "Voice input failed.");
 
-/**
- * Voice input through the OS speech recognizer, with the same interface as
- * the PWA's useSpeechRecognition (the Web Speech API is missing in Android's
- * WebView). Each session reports its transcript so far as interim text, which
- * the caller appends to the text typed before the session started.
- */
 export function useNativeSpeechRecognition(): SpeechInput {
   const [isSupported, setIsSupported] = useState(false);
   const [isListening, setIsListening] = useState(false);
@@ -65,8 +55,6 @@ export function useNativeSpeechRecognition(): SpeechInput {
       }),
       SpeechRecognition.addListener("error", ({ code }) => {
         setIsListening(false);
-        // A session stopped by the user may still end with an error (e.g. no
-        // match yet), while its last words still arrive as a result
         if (!stoppedRef.current) callbacksRef.current?.onError?.(getMessage(code));
       }),
     ];

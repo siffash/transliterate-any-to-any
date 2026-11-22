@@ -3,4 +3,6 @@ export const latnTgGlottalRules = `
 
 [:Ll:] { ’ } s [^[:L:][:M:]] > ’;
 [:Ll:] { ’ } [:Ll:] > \\';
+[:Lu:] { ’ } S [^[:L:][:M:]] > ’;
+[:Lu:] [:Lu:] { ’ } [:Lu:] > \\';
 `;

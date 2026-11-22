@@ -5,8 +5,12 @@ export const esUr = async (text: Text) => {
   const { esIpaRules } = await import("data/es/es-ipa.rules");
   const { esIpaZRules } = await import("data/es/es-ipa_z.rules");
   const { ipaUrRules } = await import("data/ipa/ipa-ur.rules");
+  const { ipaUrInitialARules } = await import("data/ipa/ipa-ur_initial-a.rules");
+  const { esIpaYRules } = await import("data/es/es-ipa_y.rules");
 
-  const transliterator = RBT.fromRules(esIpaZRules + esIpaRules + ipaUrRules);
+  const transliterator = RBT.fromRules(
+    esIpaZRules + esIpaRules + ipaUrInitialARules + esIpaYRules + ipaUrRules,
+  );
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);

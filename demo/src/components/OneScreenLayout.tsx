@@ -28,22 +28,12 @@ export const FOOTER_LINKS: FooterLink[] = [
   { label: "Support", href: LINKS.support, icon: <FavoriteIcon /> },
 ];
 
-// The space taken by the status bar, notch, home indicator, etc. (the app
-// draws the page under them with viewport-fit=cover in its index.html)
 const safeArea = (side: "top" | "right" | "bottom" | "left") => `env(safe-area-inset-${side}, 0px)`;
 
 const ResultShownContext = createContext<(shown: boolean) => void>(() => {});
 
-// For the transliterator to tell the layout whether its result panel is shown
 export const useReportResultShown = () => useContext(ResultShownContext);
 
-/**
- * The phone layout of the app and of the web demo on small screens, like the
- * Google Translate app: the title and the light/dark toggle, the transliterator
- * (children) taking the rest of the screen, and links at the bottom. Nothing
- * scrolls but the text areas, and the layout shrinks above the keyboard. While
- * there's a result, the title and the links make way for the text.
- */
 export function OneScreenLayout({
   mode,
   onToggleMode,
@@ -55,9 +45,7 @@ export function OneScreenLayout({
   mode: ColorMode;
   onToggleMode: () => void;
   links: FooterLink[];
-  // Opens a link instead of the browser (e.g. in the app's in-app browser)
   onOpenLink?: (href: string) => void;
-  // Whether the on-screen keyboard is open, if known (else from the viewport)
   keyboardOpen?: boolean;
   children: ReactNode;
 }) {
@@ -65,16 +53,13 @@ export function OneScreenLayout({
   const keyboard = keyboardOpen ?? viewport.keyboardOpen;
   const [resultShown, setResultShown] = useState(false);
   const footerShown = !keyboard && !resultShown;
-  // The header and the footer slide away (at once if motion is reduced)
   const timeout = useMediaQuery("(prefers-reduced-motion: reduce)") ? 0 : undefined;
 
   return (
     <>
       <GlobalStyles
         styles={theme => ({
-          // Everything fits on one screen; only the text areas scroll
           "html, body, #root": { height: "100%", overflow: "hidden", overscrollBehavior: "none" },
-          // The whole screen is the desktop layout's card, also behind the keyboard
           body: {
             backgroundColor: theme.palette.background.paper,
             WebkitTapHighlightColor: "transparent",
@@ -93,7 +78,6 @@ export function OneScreenLayout({
           bgcolor: "background.paper",
           pt: safeArea("top"),
           pr: safeArea("right"),
-          // The keyboard covers the home indicator
           pb: keyboard ? 0 : safeArea("bottom"),
           pl: safeArea("left"),
         }}
@@ -107,10 +91,7 @@ export function OneScreenLayout({
             width: "100%",
             maxWidth: 720,
             mx: "auto",
-            // For the error snackbar (see OneScreenTransliterator)
             position: "relative",
-            // Without the header or the footer, the content keeps a margin from
-            // the screen edges, growing as they slide away
             pt: resultShown ? 1 : 0,
             pb: footerShown ? 0 : 1,
             transition: theme =>
@@ -151,7 +132,6 @@ export function OneScreenLayout({
             {children}
           </ResultShownContext.Provider>
 
-          {/* Hidden while typing or showing a result, to leave the space to the text */}
           <Collapse in={footerShown} timeout={timeout} sx={{ flexShrink: 0 }}>
             <Box component="footer" sx={{ display: "flex", px: 1, pb: 0.5 }}>
               {links.map(({ label, href, icon }) => (
@@ -176,7 +156,6 @@ export function OneScreenLayout({
                     py: 1,
                     borderRadius: 3,
                     color: "text.secondary",
-                    // One line even on a 320px wide screen
                     fontSize: "clamp(0.68rem, 3.4vw, 0.75rem)",
                     lineHeight: 1.2,
                     whiteSpace: "nowrap",

@@ -5,8 +5,12 @@ export const ruHy = async (text: Text) => {
   const { ruLatnRules } = await import("data/ru/ru-latn.rules");
   const { latnSeparatorRules } = await import("data/latn/latn_separator.rules");
   const { latnHyRules } = await import("data/latn/latn-hy.rules");
+  const { hyEvRules } = await import("data/hy/hy_ev.rules");
+  const { ruHyVowelsRules } = await import("data/ru/ru-hy_vowels.rules");
 
-  const transliterator = RBT.fromRules(ruLatnRules + latnSeparatorRules + latnHyRules);
+  const transliterator = RBT.fromRules(
+    ruLatnRules + latnSeparatorRules + latnHyRules + hyEvRules + ruHyVowelsRules,
+  );
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);

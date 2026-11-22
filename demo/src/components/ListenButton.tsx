@@ -3,10 +3,6 @@ import StopIcon from "@mui/icons-material/Stop";
 import VolumeUpIcon from "@mui/icons-material/VolumeUp";
 import { languages, type Language } from "transliterate-any-to-any";
 
-/**
- * Reads its text area's text aloud, or stops reading it. The caller leaves it
- * out where text-to-speech isn't supported at all.
- */
 export const ListenButton = ({
   lang,
   langSupported,

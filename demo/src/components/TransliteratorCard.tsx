@@ -131,7 +131,6 @@ export const TransliteratorCard = ({ suppressErrors = false }: { suppressErrors?
         </Box>
 
         <Stack direction={{ xs: "column", md: "row" }} spacing={2.5}>
-          {/* Source panel */}
           <Box
             sx={{
               flex: 1,
@@ -216,7 +215,6 @@ export const TransliteratorCard = ({ suppressErrors = false }: { suppressErrors?
             </Stack>
           </Box>
 
-          {/* Target panel */}
           <Box
             sx={{
               flex: 1,

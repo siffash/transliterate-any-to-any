@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Capacitor } from "@capacitor/core";
 import { Keyboard } from "@capacitor/keyboard";
 
-// Whether the on-screen keyboard is open (always false in a browser)
 export function useKeyboardVisible() {
   const [visible, setVisible] = useState(false);
 

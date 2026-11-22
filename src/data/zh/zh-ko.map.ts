@@ -75,7 +75,6 @@ export const JONG = [
   "ㅎ",
 ];
 
-// The pinyin initials in the official Korean table for Chinese (국립국어원 외래어 표기법)
 export const INITIALS: Record<string, string> = {
   b: "ㅂ",
   p: "ㅍ",
@@ -100,7 +99,6 @@ export const INITIALS: Record<string, string> = {
   s: "ㅆ",
 };
 
-// Finals as [vowel, final consonant, following syllables]: ai → 아이 (白 바이), uan → 완 (关 관)
 export const FINALS: Record<string, [string, string?, string?]> = {
   a: ["ㅏ"],
   o: ["ㅗ"],
@@ -116,7 +114,6 @@ export const FINALS: Record<string, [string, string?, string?]> = {
   eng: ["ㅓ", "ㅇ"],
   ong: ["ㅜ", "ㅇ"],
   er: ["ㅓ", "ㄹ"],
-  // The i after zh ch sh r z c s (知 즈, 日 르, 四 쓰)
   ɨ: ["ㅡ"],
   i: ["ㅣ"],
   ia: ["ㅑ"],
@@ -141,13 +138,11 @@ export const FINALS: Record<string, [string, string?, string?]> = {
   üe: ["ㅞ"],
   üan: ["ㅟ", "", "안"],
   ün: ["ㅟ", "ㄴ"],
-  // Written alone, wei, wen and weng aren't 우이, 운, 웅 as after a consonant
   uei: ["ㅞ", "", "이"],
   uen: ["ㅝ", "ㄴ"],
   ueng: ["ㅝ", "ㅇ"],
 };
 
-// Syllables without an initial, spelled with y and w (yan 옌, wei 웨이)
 export const ZERO_INITIAL: Record<string, string> = {
   yi: "i",
   ya: "ia",
@@ -175,7 +170,6 @@ export const ZERO_INITIAL: Record<string, string> = {
   weng: "ueng",
 };
 
-// Syllables without a vowel (嗯 n, 呣 m)
 export const SYLLABIC: Record<string, string> = {
   m: "음",
   n: "은",
@@ -184,10 +178,24 @@ export const SYLLABIC: Record<string, string> = {
   hng: "흥",
 };
 
-// ㅈ, ㅉ and ㅊ take no y-vowel (家 자, 九 주, 钱 첸)
 export const PLAIN_VOWELS: Record<string, string> = {
   ㅑ: "ㅏ",
   ㅖ: "ㅔ",
   ㅛ: "ㅗ",
   ㅠ: "ㅜ",
+};
+
+export const UNITS: Record<string, string> = {
+  市: "시",
+  县: "현",
+  縣: "현",
+  区: "구",
+  區: "구",
+  旗: "기",
+  盟: "맹",
+  乡: "향",
+  鄉: "향",
+  镇: "진",
+  鎮: "진",
+  州: "주",
 };

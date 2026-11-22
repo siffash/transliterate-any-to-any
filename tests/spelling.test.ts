@@ -97,7 +97,6 @@ describe("spellingAffects", () => {
     expect(spellingAffects({ from: from as Language, to: to as Language })).toBe(false);
   });
 
-  // Every pair it rules out gives the same result either way
   it.each([
     ["Харків", "uk", "de"],
     ["東京", "ja", "lv"],

@@ -55,9 +55,6 @@ export const frIpa = async <T = Text>(
       true,
     );
 
-  // Saint links to a vowel (or a mute h) after the hyphen: Saint-Étienne [sɛ̃tetjɛn], Сент-Этьен
-  // ja/ko/th syllabify the t onto the next word (サンテチェンヌ); zh keeps it before the hyphen, which ipa-zh reads as 圣.
-  // Bourg links a k the same way: Bourg-en-Bresse [buʁkɑ̃bʁɛs], Бурк-ан-Брес, ブール＝カン＝ブレス, 부르캉브레스
   const liaisons = [
     {
       spelling: /(^|[^\p{L}\p{M}])saint-[aeiouyhàâéèêëîïôûœ]/iu,

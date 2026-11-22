@@ -4,9 +4,12 @@ export const kkUr = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { kkIpaRules } = await import("data/kk/kk-ipa.rules");
   const { ipaDevoiceVRules } = await import("data/ipa/ipa_devoice-v.rules");
+  const { ipaUrInitialARules } = await import("data/ipa/ipa-ur_initial-a.rules");
   const { ipaUrRules } = await import("data/ipa/ipa-ur.rules");
 
-  const transliterator = RBT.fromRules(kkIpaRules + ipaDevoiceVRules + ipaUrRules);
+  const transliterator = RBT.fromRules(
+    kkIpaRules + ipaDevoiceVRules + ipaUrInitialARules + ipaUrRules,
+  );
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);

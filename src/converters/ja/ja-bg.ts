@@ -5,6 +5,7 @@ export const jaBg = async (text: Text) => {
   const { normalizeJa } = await import("helpers/normalizeJa");
   const { jaBgRules } = await import("data/ja/ja-bg.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
+  const { markJaUnit, joinJaUnits } = await import("helpers/jaUnits");
   const { getKuroshiro } = await import("helpers/getKuroshiro");
 
   const kuroshiro = await getKuroshiro();
@@ -12,12 +13,10 @@ export const jaBg = async (text: Text) => {
   const transliterator = RBT.fromRules(jaBgRules);
 
   const convert = async (text: string) => {
-    const romanized = await wordSplitter(
-      normalizeJa(text),
-      "ja",
-      async text => await kuroshiro.convert(text, { to: "romaji" }),
+    const romanized = await wordSplitter(normalizeJa(text), "ja", async text =>
+      markJaUnit(text, await kuroshiro.convert(text, { to: "romaji" })),
     );
-    return transliterator.transliterate(romanized);
+    return joinJaUnits(transliterator.transliterate(romanized));
   };
 
   if (typeof text === "string") {

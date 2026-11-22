@@ -6,8 +6,11 @@ export const itKo = async (text: Text) => {
   const { itIpaRules } = await import("data/it/it-ipa.rules");
   const { ipaKoFinalKpRules } = await import("data/ipa/ipa-ko_final-kp.rules");
   const { ipaKoRules } = await import("data/ipa/ipa-ko.rules");
+  const { itIpaKoSRules } = await import("data/it/it-ipa_ko-s.rules");
 
-  const transliterator = RBT.fromRules(itIpaRules + itIpaKoRules + ipaKoFinalKpRules + ipaKoRules);
+  const transliterator = RBT.fromRules(
+    itIpaRules + itIpaKoSRules + itIpaKoRules + ipaKoFinalKpRules + ipaKoRules,
+  );
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);

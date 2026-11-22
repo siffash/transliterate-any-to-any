@@ -8,9 +8,18 @@ export const faFr = async (text: Text) => {
   const { faIpaARules } = await import("data/fa/fa-ipa_a.rules");
   const { faIpaEhRules } = await import("data/fa/fa-ipa_eh.rules");
   const { ipaFrRules } = await import("data/ipa/ipa-fr.rules");
+  const { ipaTHoldRules } = await import("data/ipa/ipa_t-hold.rules");
+  const { ipaTRestoreRules } = await import("data/ipa/ipa_t-restore.rules");
 
   const transliterator = RBT.fromRules(
-    ipaGemRules + faIpaARules + faIpaEhRules + ipaFrRules + "::Title;" + faLowerRules,
+    ipaTHoldRules +
+      ipaGemRules +
+      faIpaARules +
+      faIpaEhRules +
+      ipaFrRules +
+      "::Title;" +
+      faLowerRules +
+      ipaTRestoreRules,
   );
 
   if (typeof text === "string") {

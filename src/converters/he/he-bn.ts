@@ -3,9 +3,11 @@ import { Text } from "types";
 export const heBn = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { heIpa } = await import("converters/he/he-ipa");
+  const { ipaBnYRules } = await import("data/ipa/ipa-bn_y.rules");
+  const { ipaBnAjRules } = await import("data/ipa/ipa-bn_aj.rules");
   const { ipaBnRules } = await import("data/ipa/ipa-bn.rules");
 
-  const transliterator = RBT.fromRules(ipaBnRules);
+  const transliterator = RBT.fromRules(ipaBnAjRules + ipaBnYRules + ipaBnRules);
 
   if (typeof text === "string") {
     const ipa = await heIpa<string>(text);

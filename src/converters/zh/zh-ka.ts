@@ -5,10 +5,11 @@ export const zhKa = async (text: Text) => {
   const { toIPA } = await getPhonemizeAll();
   const { filterIpa } = await import("helpers/filterIpa");
   const { RBT } = await import("helpers/rbt");
+  const { zhIpaKaRules } = await import("data/zh/zh-ipa_ka.rules");
   const { ipaKaRules } = await import("data/ipa/ipa-ka.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
 
-  const transliterator = RBT.fromRules(ipaKaRules);
+  const transliterator = RBT.fromRules(zhIpaKaRules + ipaKaRules);
 
   const convert = async (text: string) => {
     const ipa = await wordSplitter(text, "zh", text =>

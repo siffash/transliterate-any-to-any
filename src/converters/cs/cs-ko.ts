@@ -13,7 +13,7 @@ export const csKo = async (text: Text) => {
   const { csIpaHardIRules } = await import("data/cs/cs-ipa_hard-i.rules");
   const { ipaKoFinalKpRules } = await import("data/ipa/ipa-ko_final-kp.rules");
   const { csSkIpaKoPalatalRules } = await import("data/ipa/cs_sk-ipa_ko-palatal.rules");
-  const { csSkIpaKoRules } = await import("data/ipa/cs_sk-ipa_ko.rules");
+  const { ipaFinalDRules } = await import("data/ipa/ipa_final-d.rules");
   const { ipaKoRules } = await import("data/ipa/ipa-ko.rules");
 
   const transliterator = RBT.fromRules(
@@ -27,7 +27,7 @@ export const csKo = async (text: Text) => {
       ipaDevoiceZRules +
       csSkIpaRzhKoRules +
       csSkIpaKoPalatalRules +
-      csSkIpaKoRules +
+      ipaFinalDRules +
       ipaKoFinalKpRules +
       ipaKoRules,
   );

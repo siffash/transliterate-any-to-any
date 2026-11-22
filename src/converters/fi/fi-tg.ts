@@ -5,8 +5,11 @@ export const fiTg = async (text: Text) => {
   const { fiLatnRules } = await import("data/fi/fi-latn.rules");
   const { latnThTRules } = await import("data/latn/latn_th-t.rules");
   const { latnTgRules } = await import("data/latn/latn-tg.rules");
+  const { latnDiphthongIyRules } = await import("data/latn/latn_diphthong-iy.rules");
 
-  const transliterator = RBT.fromRules(fiLatnRules + latnThTRules + latnTgRules);
+  const transliterator = RBT.fromRules(
+    fiLatnRules + latnDiphthongIyRules + latnThTRules + latnTgRules,
+  );
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);

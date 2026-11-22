@@ -10,12 +10,14 @@ export const elPl = async (text: Text) => {
   const { latnSingleRules } = await import("data/latn/latn_single.rules");
   const { latnCTsRules } = await import("data/latn/latn_c-ts.rules");
   const { latnPlRules } = await import("data/latn/latn-pl.rules");
+  const { elLatnIaRules } = await import("data/el/el-latn_ia.rules");
 
   const transliterator = RBT.fromRules(
     elLatnGiRules +
       elLatnJiRules +
       elLatnGeRules +
       elLatnIoRules +
+      elLatnIaRules +
       elLatnRules +
       latnSingleRules +
       latnCTsRules +

@@ -5,9 +5,12 @@ export const urUk = async (text: Text) => {
   const { ipaGemDRules } = await import("data/ipa/ipa_gemd.rules");
   const { urIpa } = await import("converters/ur/ur-ipa");
   const { ipaAspXRules } = await import("data/ipa/ipa_aspx.rules");
+  const { urIpaUkRules } = await import("data/ur/ur-ipa_uk.rules");
   const { ipaUkRules } = await import("data/ipa/ipa-uk.rules");
 
-  const transliterator = RBT.fromRules(ipaGemDRules + ipaAspXRules + ipaUkRules + "::Title;");
+  const transliterator = RBT.fromRules(
+    ipaGemDRules + ipaAspXRules + urIpaUkRules + ipaUkRules + "::Title;",
+  );
 
   if (typeof text === "string") {
     const ipa = await urIpa<string>(text);

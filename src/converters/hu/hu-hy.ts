@@ -6,16 +6,18 @@ export const huHy = async (text: Text) => {
   const { huLatnEoHoldRules } = await import("data/hu/hu-latn_eo-hold.rules");
   const { huLatnEoRestoreRules } = await import("data/hu/hu-latn_eo-restore.rules");
   const { huLatnYRules } = await import("data/hu/hu-latn_y.rules");
-  const { huLatnGyRules } = await import("data/hu/hu-latn_gy.rules");
+  const { huLatnGyDropRules } = await import("data/hu/hu-latn_gy-drop.rules");
   const { latnHyRules } = await import("data/latn/latn-hy.rules");
+  const { hyEvRules } = await import("data/hy/hy_ev.rules");
 
   const transliterator = RBT.fromRules(
     huLatnEoHoldRules +
       huLatnRules +
       huLatnEoRestoreRules +
       huLatnYRules +
-      huLatnGyRules +
-      latnHyRules,
+      huLatnGyDropRules +
+      latnHyRules +
+      hyEvRules,
   );
 
   if (typeof text === "string") {

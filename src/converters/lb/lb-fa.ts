@@ -6,8 +6,10 @@ export const lbFa = async (text: Text) => {
   const { ipaDevoiceVRules } = await import("data/ipa/ipa_devoice-v.rules");
   const { ipaErRules } = await import("data/ipa/ipa_er.rules");
   const { ipaFaRules } = await import("data/ipa/ipa-fa.rules");
+  const { ipaFaInitialARules } = await import("data/ipa/ipa-fa_initial-a.rules");
+  const { ipaFaOeRules } = await import("data/ipa/ipa-fa_oe.rules");
 
-  const transliterator = RBT.fromRules(ipaErRules + ipaFaRules);
+  const transliterator = RBT.fromRules(ipaErRules + ipaFaInitialARules + ipaFaOeRules + ipaFaRules);
 
   if (typeof text === "string") {
     const ipa = await lbIpa<string>(text, false, undefined, ipaDevoiceVRules);

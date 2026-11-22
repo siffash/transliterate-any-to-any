@@ -81,5 +81,4 @@ export function useSpeechRecognition() {
   return { isSupported, isListening, start, stop };
 }
 
-// Also implemented by the mobile app's native speech recognition
 export type SpeechInput = ReturnType<typeof useSpeechRecognition>;

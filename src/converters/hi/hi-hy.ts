@@ -4,8 +4,9 @@ export const hiHy = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { hiIpaRules } = await import("data/hi/hi-ipa.rules");
   const { ipaHyRules } = await import("data/ipa/ipa-hy.rules");
+  const { hiIpaHyRules } = await import("data/hi/hi-ipa_hy.rules");
 
-  const transliterator = RBT.fromRules(hiIpaRules + ipaHyRules + "::Title;");
+  const transliterator = RBT.fromRules(hiIpaRules + hiIpaHyRules + ipaHyRules + "::Title;");
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);

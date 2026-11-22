@@ -5,8 +5,9 @@ export const elSq = async (text: Text) => {
   const { elLatnRules } = await import("data/el/el-latn.rules");
   const { latnSingleRules } = await import("data/latn/latn_single.rules");
   const { latnSqRules } = await import("data/latn/latn-sq.rules");
+  const { elLatnNtRules } = await import("data/el/el-latn_nt.rules");
 
-  const transliterator = RBT.fromRules(elLatnRules + latnSingleRules + latnSqRules);
+  const transliterator = RBT.fromRules(elLatnNtRules + elLatnRules + latnSingleRules + latnSqRules);
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);

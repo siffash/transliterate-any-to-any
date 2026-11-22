@@ -4,10 +4,14 @@ export const faKa = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { faIpaUvular } = await import("converters/fa/fa-ipa");
   const { faIpaARules } = await import("data/fa/fa-ipa_a.rules");
-  const { faIpaUvularQRules } = await import("data/fa/fa-ipa_uvular-q.rules");
+  const { ipaUvularQRules } = await import("data/ipa/ipa_uvular-q.rules");
   const { ipaKaRules } = await import("data/ipa/ipa-ka.rules");
+  const { ipaTHoldRules } = await import("data/ipa/ipa_t-hold.rules");
+  const { ipaKaTRestoreRules } = await import("data/ipa/ipa-ka_t-restore.rules");
 
-  const transliterator = RBT.fromRules(faIpaUvularQRules + faIpaARules + ipaKaRules);
+  const transliterator = RBT.fromRules(
+    ipaTHoldRules + ipaUvularQRules + faIpaARules + ipaKaRules + ipaKaTRestoreRules,
+  );
 
   if (typeof text === "string") {
     const ipa = await faIpaUvular<string>(text);

@@ -7,11 +7,11 @@ export const lbEs = async (text: Text) => {
   const { latnEsRules } = await import("data/latn/latn-es.rules");
   const { latnShSRules } = await import("data/latn/latn_sh-s.rules");
   const { latnIRules } = await import("data/latn/latn_i.rules");
-  const { latnEsXRules } = await import("data/latn/latn-es_x.rules");
+  const { latnXRules } = await import("data/latn/latn_x.rules");
   const { latnKQuRules } = await import("data/latn/latn_k-qu.rules");
 
   const transliterator = RBT.fromRules(
-    latnSilentHRules + latnIRules + latnShSRules + latnEsRules + latnEsXRules + latnKQuRules,
+    latnSilentHRules + latnIRules + latnShSRules + latnEsRules + latnXRules + latnKQuRules,
   );
 
   if (typeof text === "string") {

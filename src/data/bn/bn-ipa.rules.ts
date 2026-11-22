@@ -116,13 +116,4 @@ n dʒ { ɔ } [^[:L:][:M:]] > ;
 ::Null;
 
 [aeiouɔæ] [̃]? [kɡŋ{tʃ}{dʒ}ʈɖɽtdnpbmfjrlʃh] [ʰʱ̪]* { ɔ } [kɡŋ{tʃ}{dʒ}ʈɖɽtdnpbmfjrlʃh] [ʰʱ̪]* [aeiouɔæ] [̃]? > ;
-
-::Null;
-
-ɔ } ([kɡŋ{tʃ}{dʒ}ʈɖɽtdnpbmfjrlʃh] [ʰʱ̪]*)+ [iu] > o;
-
-::Null;
-
-\\# > ;
-[:Bengali:] > ;
 `;

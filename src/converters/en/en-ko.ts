@@ -18,12 +18,14 @@ export const enKo = async (text: Text) => {
     boroughRestoreRules,
     boroughReducedRestoreRules,
     sexRestoreRules,
+    juzRestoreRules,
   } = await import("helpers/normalizeEnIpa");
   const { enIpaOuRules } = await import("data/en/en-ipa_ou.rules");
   const { enIpaKoRules } = await import("data/en/en-ipa_ko.rules");
   const { ipaKoRules } = await import("data/ipa/ipa-ko.rules");
+  const { enIpaShireRules } = await import("data/en/en-ipa_shire.rules");
 
-  const transliterator = RBT.fromRules(enIpaOuRules + enIpaKoRules + ipaKoRules);
+  const transliterator = RBT.fromRules(enIpaShireRules + enIpaOuRules + enIpaKoRules + ipaKoRules);
 
   const words = typeof text === "string" ? [text] : text;
   const ipa = await enIpa<string[]>(
@@ -45,6 +47,7 @@ export const enKo = async (text: Text) => {
       ...mouthRestoreRules,
       ...boroughRestoreRules,
       ...sexRestoreRules,
+      ...juzRestoreRules,
     ],
   );
   const result = ipa.map(ipa => transliterator.transliterate(ipa));

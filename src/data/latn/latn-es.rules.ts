@@ -18,6 +18,10 @@ c > ts;
 [Đđ] { [Đđ] > ;
 [Ǯǯ] { [Ǯǯ] > ;
 [Ľľ] { [Ľľ] > ;
+[Ll] { Ľ [Yy] > I;
+[Ll] { ľ [Yy] > i;
+[Ll] { Ľ } [AaEeIiOoUu] > I;
+[Ll] { ľ } [AaEeIiOoUu] > i;
 
 ::Null;
 

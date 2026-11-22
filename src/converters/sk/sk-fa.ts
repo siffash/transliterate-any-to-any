@@ -6,9 +6,10 @@ export const skFa = async (text: Text) => {
   const { ipaDevoiceVRules } = await import("data/ipa/ipa_devoice-v.rules");
   const { csSkIpaRzhKoRules } = await import("data/ipa/cs_sk-ipa_rzh-ko.rules");
   const { ipaFaRules } = await import("data/ipa/ipa-fa.rules");
+  const { skIpaFaRules } = await import("data/sk/sk-ipa_fa.rules");
 
   const transliterator = RBT.fromRules(
-    skIpaRules + ipaDevoiceVRules + csSkIpaRzhKoRules + ipaFaRules,
+    skIpaRules + skIpaFaRules + ipaDevoiceVRules + csSkIpaRzhKoRules + ipaFaRules,
   );
 
   if (typeof text === "string") {

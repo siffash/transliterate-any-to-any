@@ -6,8 +6,11 @@ export const trRu = async (text: Text) => {
   const { trLatnRules } = await import("data/tr/tr-latn.rules");
   const { latnOeRules } = await import("data/latn/latn_oe.rules");
   const { latnRuRules } = await import("data/latn/latn-ru.rules");
+  const { trCyrlFrontLRules } = await import("data/tr/tr-cyrl_front-l.rules");
 
-  const transliterator = RBT.fromRules(trLatnFrontGRules + trLatnRules + latnOeRules + latnRuRules);
+  const transliterator = RBT.fromRules(
+    trLatnFrontGRules + trLatnRules + latnOeRules + latnRuRules + trCyrlFrontLRules,
+  );
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);

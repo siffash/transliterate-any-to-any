@@ -2,7 +2,6 @@ import { describe, it, expect } from "vitest";
 import { RBT, settings } from "../src/helpers/rbt";
 import { ipaLatnRules } from "../src/data/ipa/ipa-latn.rules";
 
-// The Standardized Latin Mapping, plus the IPA symbols that it folds into its letters
 const cases = [
   ["a æ e i ɨ o ø u y ʏ", "a ä e i ï o ö u ü ÿ"],
   ["ɛɪ", "ij"],

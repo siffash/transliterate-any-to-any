@@ -147,8 +147,8 @@ j } [eEiI] > g;
 
 n } [bBpPmM] > m;
 N } [bBpPmM] > M;
-m } [fFvV] > n;
-M } [fFvV] > N;
+m } [vV] > n;
+M } [vV] > N;
 
 [^[:L:][:M:]] { ç } [eEiIéÉíÍèÈ] > c;
 [^[:L:][:M:]] { Ç } [eEiIéÉíÍèÈ] > C;

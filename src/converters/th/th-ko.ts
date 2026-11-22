@@ -12,7 +12,10 @@ export const thKo = async (text: Text) => {
   const transliterator = RBT.fromRules(thIpaTsRules + ipaKoRules);
 
   const convert = async (text: string) => {
-    return wordSplitter(normalizeTh(text), "th", text => transliterator.transliterate(toIpa(text)));
+    const result = await wordSplitter(normalizeTh(text), "th", text =>
+      transliterator.transliterate(toIpa(text)),
+    );
+    return result.replace(/(?<=[\p{L}\p{M}])-(?=\p{L})/gu, "");
   };
 
   if (typeof text === "string") {

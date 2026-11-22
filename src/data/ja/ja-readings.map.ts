@@ -1,5 +1,3 @@
-// Readings for kanji that kuromoji's dictionary leaves without one (mostly name kanji:
-// 純也, 翔哉, 航輔); kuroshiro would otherwise pass them through and the rules drop them
 export const jaReadingsMap: Record<string, string> = {
   以: "イ",
   予: "ヨ",

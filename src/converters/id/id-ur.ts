@@ -5,8 +5,11 @@ export const idUr = async (text: Text) => {
   const { idIpaRules } = await import("data/id/id-ipa.rules");
   const { msIdIpaAspRules } = await import("data/ipa/ms_id-ipa_asp.rules");
   const { ipaUrRules } = await import("data/ipa/ipa-ur.rules");
+  const { ipaUrInitialARules } = await import("data/ipa/ipa-ur_initial-a.rules");
 
-  const transliterator = RBT.fromRules(idIpaRules + msIdIpaAspRules + ipaUrRules);
+  const transliterator = RBT.fromRules(
+    idIpaRules + msIdIpaAspRules + ipaUrInitialARules + ipaUrRules,
+  );
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);

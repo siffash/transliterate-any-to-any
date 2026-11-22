@@ -10,6 +10,7 @@ export const jaAr = async (text: Text) => {
   const { jaIpaPrepassRules } = await import("data/ja/ja-ipa_prepass.rules");
   const { ipaArRules } = await import("data/ipa/ipa-ar.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
+  const { markJaUnit, joinJaUnits } = await import("helpers/jaUnits");
   const { getKuroshiro } = await import("helpers/getKuroshiro");
 
   const kuroshiro = await getKuroshiro();
@@ -21,13 +22,11 @@ export const jaAr = async (text: Text) => {
   const convert = async (text: string) => {
     const ipa = await wordSplitter(normalizeJa(text), "ja", async text => {
       const hiragana = await kuroshiro.convert(text, { to: "hiragana" });
-      // Force Japanese: phonemize otherwise reads the pre-pass Latin letters at the start
-      // of a word as English, and lone kanji as Chinese
       const options = /\p{scx=Latin}/u.test(hiragana) ? {} : { language: "ja" };
       const ipa = toIPA(prepassTransliterator.transliterate(hiragana), options);
-      return filterIpa(ipa, hiragana, "ja", exceptions);
+      return markJaUnit(text, filterIpa(ipa, hiragana, "ja", exceptions));
     });
-    return transliterator.transliterate(ipa);
+    return joinJaUnits(transliterator.transliterate(ipa));
   };
 
   if (typeof text === "string") {

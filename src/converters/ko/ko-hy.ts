@@ -6,11 +6,12 @@ export const koHy = async (text: Text) => {
   const { filterIpa } = await import("helpers/filterIpa");
   const { normalizeKoIpa } = await import("helpers/normalizeKoIpa");
   const { RBT } = await import("helpers/rbt");
+  const { koIpaHyRules } = await import("data/ko/ko-ipa_hy.rules");
   const { ipaHyRules } = await import("data/ipa/ipa-hy.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
   const { normalizeKo } = await import("helpers/normalizeKo");
 
-  const transliterator = RBT.fromRules(ipaHyRules + "::Title;");
+  const transliterator = RBT.fromRules(koIpaHyRules + ipaHyRules + "::Title;");
 
   const convert = async (text: string) => {
     const ipa = await wordSplitter(text, "ko", text =>

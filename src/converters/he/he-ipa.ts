@@ -1,11 +1,12 @@
 import { Text } from "types";
 
-/**
- * @param text - The Hebrew text.
- * @param addVowels - Whether a word spelled without vowel letters gets e between its consonants; scripts that
- * don't write short vowels (Arabic) keep its consonants only.
- */
-export const heIpa = async <T = Text>(text: Text, addVowels = true): Promise<T> => {
+export const heIpa = async <T = Text>(
+  text: Text,
+  {
+    addVowels = true,
+    pharyngealHet = false,
+  }: { addVowels?: boolean; pharyngealHet?: boolean } = {},
+): Promise<T> => {
   const { heIpaMap, charMap } = await import("data/he/he-ipa.map");
   const { filterIpa } = await import("helpers/filterIpa");
 
@@ -26,7 +27,6 @@ export const heIpa = async <T = Text>(text: Text, addVowels = true): Promise<T> 
   };
   const DAGESH_STOPS: Record<string, string> = { ב: "b", כ: "k", ך: "k", פ: "p", ף: "p" };
 
-  // A pointed word read from its niqqud (הַרפָּז → harpaz), for words the map does not know
   const pointedIpa = (word: string): string => {
     const letters = [...word.matchAll(/([\u05D0-\u05EA])([\u0591-\u05BD\u05BF-\u05C7]*)/g)].map(
       ([, letter, marks]) => ({
@@ -68,9 +68,7 @@ export const heIpa = async <T = Text>(text: Text, addVowels = true): Promise<T> 
     );
 
   const convert = (text: string) => {
-    // The gershayim of an acronym (חב״ד, also typed as ") isn't read
     text = text.replace(/(?<=[א-ת])[״"](?=[א-ת])/g, "");
-    // Pointed words the map does not know are read from their niqqud
     text = text.replace(
       /[\u05D0-\u05EA](?:[\u05D0-\u05EA]|[\u0591-\u05BD\u05BF-\u05C7])*/g,
       word =>
@@ -78,7 +76,6 @@ export const heIpa = async <T = Text>(text: Text, addVowels = true): Promise<T> 
           ? pointedIpa(word)
           : word,
     );
-    // Niqqud and cantillation marks: the map and the fallback read unpointed spelling
     text = text.replace(MARKS, "");
     const SINGLE_PREFIXES = ["ו", "ב", "כ", "ל", "מ", "ה"];
     const DOUBLE_PREFIXES = ["וב", "וכ", "ול", "ומ", "וה", "שה", "מה"];
@@ -94,7 +91,6 @@ export const heIpa = async <T = Text>(text: Text, addVowels = true): Promise<T> 
         processedText = processedText.replace(regex, filterIpa(heIpaMap[key], key, "he"));
       }
 
-      // A geresh after ג, ז, צ… (ג'ורג', צ׳ק) belongs to the word, as ' in the map keys
       const tokens = processedText
         .replace(/(?<=[גזצץתדח])['’׳]/g, "׳")
         .split(/([^\u0590-\u05FF]+)/);
@@ -104,18 +100,19 @@ export const heIpa = async <T = Text>(text: Text, addVowels = true): Promise<T> 
           if (!/^[\u0590-\u05FF]+$/.test(token)) {
             return token;
           }
-          return processWord(token.replaceAll("׳", "'"));
+          const ipa = processWord(token.replaceAll("׳", "'"));
+          if (!pharyngealHet) return ipa;
+          const het = token.includes("ח") && !/[כך]/.test(token) ? ipa.replace(/[χx]/g, "ħ") : ipa;
+          return token.includes("ע") && !token.includes("א") ? het.replace(/ʔ/g, "ʕ") : het;
         })
         .join("");
     };
 
     const processWord = (word: string): string => {
-      // Step 1: Direct Dictionary Match
       if (heIpaMap[word]) {
         return filterIpa(heIpaMap[word], word, "he");
       }
 
-      // Step 2: Double Prefix Check (e.g., "וב" - and in)
       for (const prefix of DOUBLE_PREFIXES) {
         if (word.startsWith(prefix) && word.length > prefix.length) {
           const stem = word.slice(prefix.length);
@@ -125,7 +122,6 @@ export const heIpa = async <T = Text>(text: Text, addVowels = true): Promise<T> 
         }
       }
 
-      // Step 3: Single Prefix Check (e.g., "ה" - the)
       for (const prefix of SINGLE_PREFIXES) {
         if (word.startsWith(prefix) && word.length > prefix.length) {
           const stem = word.slice(prefix.length);
@@ -144,7 +140,6 @@ export const heIpa = async <T = Text>(text: Text, addVowels = true): Promise<T> 
       switch (prefix) {
         case "ה":
           prefixIpa = "ha";
-          // Handle Begadkefat hardening after 'ha'
           if (hebrewStem.startsWith("ב")) ipaStem = ipaStem.replace(/^v/, "b");
           if (hebrewStem.startsWith("כ")) ipaStem = ipaStem.replace(/^χ/, "k");
           if (hebrewStem.startsWith("פ")) ipaStem = ipaStem.replace(/^f/, "p");
@@ -206,25 +201,20 @@ export const heIpa = async <T = Text>(text: Text, addVowels = true): Promise<T> 
       processed = processed.replace(/וו/g, "v");
       processed = processed.replace(/יי/g, "j");
 
-      // Aleph spells a; before ו/י it only marks a hiatus after a vowel letter or at the word start (אוסקר, לואיס)
-      processed = processed.replace(/(?<=[וי])א(?=ל$)/, "ʔe"); // עמיאל, נואל
-      processed = processed.replace(/(?<=[^וי])א(?=a$)/, "eʔ"); // לאה (final ה is already a)
+      processed = processed.replace(/(?<=[וי])א(?=ל$)/, "ʔe");
+      processed = processed.replace(/(?<=[^וי])א(?=a$)/, "eʔ");
       processed = processed.replace(/(?<=[^ויא])א(?!a$)|א(?![וי]|a$)/g, "a");
 
       let output = "";
       for (let i = 0; i < processed.length; i++) {
         const char = processed[i];
-        output += charMap[char] || char; // fallback to original if not in map
+        output += charMap[char] || char;
       }
 
-      // Re-apply word-initial Begadkefat stops
       if (startsWithB) output = output.replace(/^v/, "b");
       if (startsWithK) output = output.replace(/^χ/, "k");
       if (startsWithP) output = output.replace(/^f/, "p");
 
-      // A word spelled without vowel letters gets e between its consonants, the most common reading of such
-      // Hebrew words (גשר gesher, שמן shemen, פלס peles), and a next to an ע or א (עמל ʕamal, נעם naʕm);
-      // one with י is read by the targets' own rules
       const sounds = output.match(/t͡s|t͡ʃ|d͡ʒ|./gu) ?? [];
       if (addVowels && sounds.length > 1 && !sounds.some(sound => /^[aeiouɛɔəɪʊj]/.test(sound))) {
         let result = "";
@@ -236,7 +226,6 @@ export const heIpa = async <T = Text>(text: Text, addVowels = true): Promise<T> 
         });
         return result;
       }
-      // Two consonants before an ע or א and a vowel take i between them (צבעון tsivʕon, גבעות givʕot)
       const [first, second, third, fourth] = sounds;
       if (
         addVowels &&
@@ -246,7 +235,6 @@ export const heIpa = async <T = Text>(text: Text, addVowels = true): Promise<T> 
       ) {
         return first + "i" + sounds.slice(1).join("");
       }
-      // so do they after the article (השבעה haʃivʕa), and one consonant before them takes a (מעון maʕon)
       const isConsonant = (sound?: string) => !!sound && !/^[aeiouɛɔəɪʊʔʕ]/.test(sound);
       if (
         addVowels &&
@@ -265,6 +253,9 @@ export const heIpa = async <T = Text>(text: Text, addVowels = true): Promise<T> 
         /^[aeiouɛɔ]/.test(third ?? "")
       ) {
         return first + "a" + sounds.slice(1).join("");
+      }
+      if (addVowels && first === "ʕ" && isConsonant(second) && second !== "j") {
+        return "ʕa" + sounds.slice(1).join("");
       }
 
       return output;

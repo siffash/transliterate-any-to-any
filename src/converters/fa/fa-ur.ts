@@ -6,15 +6,18 @@ export const faUr = async (text: Text) => {
   const { faNormRules } = await import("data/fa/fa_norm.rules");
   const { faUrRules } = await import("data/fa/fa-ur.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
+  const { splitFaCompoundNames } = await import("helpers/splitFaCompoundNames");
 
   const normalizer = RBT.fromRules(faNormRules);
   const transliterator = RBT.fromRules(faUrRules);
 
-  // A final ی read as ā (موسی, مصطفی) takes the dagger alif in Urdu: موسیٰ
   const convert = async (text: string) =>
     transliterator.transliterate(
-      await wordSplitter(normalizer.transliterate(text), "fa", (word: string) =>
-        word.endsWith("ی") && /ɒː?$/.test(faIpaMap[word] ?? "") ? word + "ٰ" : word,
+      await wordSplitter(
+        splitFaCompoundNames(normalizer.transliterate(text)),
+        "fa",
+        (word: string) =>
+          word.endsWith("ی") && /ɒː?$/.test(faIpaMap[word] ?? "") ? word + "ٰ" : word,
       ),
     );
 

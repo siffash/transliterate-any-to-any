@@ -9,9 +9,19 @@ export const faLt = async (text: Text) => {
   const { faIpaGhRules } = await import("data/fa/fa-ipa_gh.rules");
   const { faIpaARules } = await import("data/fa/fa-ipa_a.rules");
   const { ipaLtRules } = await import("data/ipa/ipa-lt.rules");
+  const { ipaTHoldRules } = await import("data/ipa/ipa_t-hold.rules");
+  const { ipaTRestoreRules } = await import("data/ipa/ipa_t-restore.rules");
 
   const transliterator = RBT.fromRules(
-    faIpaKRules + faIpaGhRules + ipaGemRules + faIpaARules + ipaLtRules + "::Title;" + faLowerRules,
+    ipaTHoldRules +
+      faIpaKRules +
+      faIpaGhRules +
+      ipaGemRules +
+      faIpaARules +
+      ipaLtRules +
+      "::Title;" +
+      faLowerRules +
+      ipaTRestoreRules,
   );
 
   if (typeof text === "string") {

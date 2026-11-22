@@ -4,9 +4,12 @@ export const bnBs = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { ipaGemRules } = await import("data/ipa/ipa_gem.rules");
   const { bnIpaRules } = await import("data/bn/bn-ipa.rules");
+  const { bnIpaRaiseRules } = await import("data/bn/bn-ipa_raise.rules");
   const { ipaBsRules } = await import("data/ipa/ipa-bs.rules");
 
-  const transliterator = RBT.fromRules(bnIpaRules + ipaGemRules + ipaBsRules + "::Title;");
+  const transliterator = RBT.fromRules(
+    bnIpaRules + bnIpaRaiseRules + ipaGemRules + ipaBsRules + "::Title;",
+  );
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);

@@ -1,7 +1,3 @@
-// Helpers for choosing between two readings of a Thai word: the IPA of th-ipa.rules (which keeps
-// vowel length) and the RTGS romanization of @pcampus/thai-romanization
-
-// The RTGS spelling of an IPA reading, without length, tones or syllable breaks
 export const ipaToRtgs = (ipa: string): string =>
   ipa
     .normalize("NFD")
@@ -44,7 +40,6 @@ const RTGS_VOWELS: [RegExp, string][] = [
   [/io/g, "iw"],
 ];
 
-// IPA of an RTGS romanization whose syllables are joined with "-" (no vowel length, as RTGS has none)
 export const rtgsToIpa = (rtgs: string): string =>
   rtgs
     .toLowerCase()
@@ -74,12 +69,8 @@ const isOnset = (consonants: string[]) =>
     (/^kʰ?[rlw]$/.test(consonants.join("")) ||
       /^pʰ?[rl]$/.test(consonants.join("")) ||
       /^tʰ?r$/.test(consonants.join(""))));
-// th-ipa leaves some final stops aspirated (เทพ → tʰeːpʰ), which is still a possible syllable
 const isCoda = (consonant: string) => /^([ptk]ʰ?|[mnŋjwʔ])$/.test(consonant);
 
-// Whether an IPA reading is made of possible Thai syllables: onsets are one consonant,
-// k/kʰ + r/l/w, p/pʰ + r/l or t/tʰ + r, codas one of p t k m n ŋ j w ʔ. th-ipa breaks this
-// when it misses an unwritten vowel (สวัสดี → swatdi, อุบล → upl, ถลาง → tʰlaːŋ)
 export const isThaiSyllabic = (ipa: string): boolean => {
   const parts = ipa
     .normalize("NFD")
@@ -104,9 +95,6 @@ export const isThaiSyllabic = (ipa: string): boolean => {
   return true;
 };
 
-// Consonants of a reading: the romanizer drops some of a word's letters when it misreads it
-// (พงศกร → phan), while th-ipa keeps them all and misses only vowels. th-ipa's tʰr counts once,
-// as native ทร is s (ทราย → sai)
 export const rtgsConsonantCount = (rtgs: string): number =>
   (rtgs.toLowerCase().match(/kh|ph|th|ch|ng|[bdfhklmnprstwy]/g) ?? []).length;
 
@@ -120,8 +108,6 @@ export const ipaConsonantCount = (ipa: string): number =>
 
 const isOnsetUnit = (unit: string) => /^(tɕʰ|tɕ|[pkt]ʰ|[bdfhklmnprstwjŋʔ])$/.test(unit);
 
-// th-ipa misses unwritten vowels (สวัสดี → swat̚diː): this puts an "a" into each cluster that no
-// Thai syllable allows, keeping the reading's vowel length (sawat̚diː)
 export const insertImplicitVowels = (ipa: string, closeSyllables = false): string => {
   const units =
     ipa
@@ -148,8 +134,6 @@ export const insertImplicitVowels = (ipa: string, closeSyllables = false): strin
     }
     while (consonants.length > 1 && !isOnset(consonants)) {
       const onset = consonants.shift();
-      // the added vowel can close its syllable, where Thai reads it as o (มงคล → moŋkʰon), or stay
-      // open as a (สวัสดี → sawat̚diː, compounds like กาญจนบุรี → kaːntɕanaburiː)
       if (
         closeSyllables &&
         consonants.length > 1 &&

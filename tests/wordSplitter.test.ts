@@ -40,8 +40,6 @@ describe("wordSplitter", () => {
   });
 
   describe("punctuation inside letter runs", () => {
-    // Unicode assigns these marks to the Han/kana or Arabic scripts, so they
-    // match the language's letters; they become script-neutral punctuation.
     it("converts Japanese sentence punctuation and spaces it like Latin text", async () => {
       expect(await wordSplitter("東京に行きます。", "ja")).toBe("東京 に 行きます.");
       expect(await wordSplitter("はい、そうです。", "ja")).toBe("はい, そう です.");
@@ -110,7 +108,6 @@ describe("wordSplitter", () => {
     });
 
     it("awaits an async fn for one word before calling it for the next", async () => {
-      // A single run of letters that the segmenter splits into several words
       const events: string[] = [];
       const result = await wordSplitter("東京に行きます", "ja", async word => {
         events.push(`start ${word}`);
@@ -155,8 +152,6 @@ describe("wordSplitter", () => {
     });
   });
 
-  // Where jieba-wasm can't run (no WebAssembly, a strict CSP, its .wasm not
-  // emitted by the bundler), Chinese is still split by Intl.Segmenter
   describe("Chinese without jieba", () => {
     afterEach(() => {
       vi.doUnmock("../src/helpers/getJieba");
@@ -171,7 +166,6 @@ describe("wordSplitter", () => {
       return (await import("../src/helpers/wordSplitter")).wordSplitter;
     };
 
-    // Words as the engine's ICU data splits them, whatever its version
     const intlWords = (text: string) =>
       Array.from(new Intl.Segmenter("zh", { granularity: "word" }).segment(text))
         .filter(({ isWordLike }) => isWordLike)
@@ -186,7 +180,6 @@ describe("wordSplitter", () => {
       const split = await importWithJieba(getJieba);
       expect(await split(TEXT, "zh", word => `[${word}]`)).toBe(intlWords(TEXT));
       expect(await split(TEXT, "zh", word => `[${word}]`)).toBe(intlWords(TEXT));
-      // Tried again on the next call, but warned only once
       expect(getJieba).toHaveBeenCalledTimes(2);
       expect(warn).toHaveBeenCalledOnce();
     });

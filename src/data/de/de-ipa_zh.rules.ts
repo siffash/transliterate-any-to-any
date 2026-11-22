@@ -3,6 +3,10 @@ export const deIpaZhRules = `
 
 [^[:L:][:M:]] { luːdvɪç > 路德维希;
 bɛ { ʁ } [ɡk] > ;
+bʊ { ʁ } [ɡk] > ʁ;
+[aɐəɛɪɔʊœʏeiouyø] ː? [bcdfɡhjklmnpqstvwxzʃʒçʁl施]+ [oɔ] ː? { ʁ } n [^[:L:][:M:]] > ə;
+[aɐəɛɪɔʊœʏeiouyø] ː? [bcdfɡhjklmnpqstvwxzʃʒçʁl施]+ [aɐəɛɪɔʊœʏeiouyø] ː? { ʁ } [bcdfɡhjklmnpqstvwxzʃʒç] > ;
+ɚ } [bcdfɡhjklmnpqstvwxzʃʒç] > ə;
 d } s > t;
 ʃ } [bdfɡgklmnpʁrtvwz] > 施;
 z } ən > s;

@@ -10,8 +10,9 @@ export const enFa = async (text: Text) => {
     airRestoreRules,
   } = await import("helpers/normalizeEnIpa");
   const { ipaFaRules } = await import("data/ipa/ipa-fa.rules");
+  const { enIpaShireRules } = await import("data/en/en-ipa_shire.rules");
 
-  const transliterator = RBT.fromRules(ipaFaRules);
+  const transliterator = RBT.fromRules(enIpaShireRules + ipaFaRules);
 
   const words = typeof text === "string" ? [text] : text;
   const ipa = await enIpa<string[]>(

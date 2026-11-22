@@ -8,9 +8,16 @@ export const ruRo = async (text: Text) => {
   const { latnDzRules } = await import("data/latn/latn_dz.rules");
   const { latnRoERules } = await import("data/latn/latn-ro_e.rules");
   const { latnRoRules } = await import("data/latn/latn-ro.rules");
+  const { latnRoDjRules } = await import("data/latn/latn-ro_dj.rules");
 
   const transliterator = RBT.fromRules(
-    ruLatnRules + latnSeparatorRules + latnIyIiRules + latnDzRules + latnRoERules + latnRoRules,
+    ruLatnRules +
+      latnSeparatorRules +
+      latnIyIiRules +
+      latnDzRules +
+      latnRoERules +
+      latnRoDjRules +
+      latnRoRules,
   );
 
   if (typeof text === "string") {

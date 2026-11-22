@@ -28,7 +28,6 @@ function patchDir(dir) {
   }
 }
 
-// 1. Patch the top-level hoisted version
 try {
   const hoisted = require.resolve("zlibjs/bin/gunzip.min.js");
   patchDir(path.dirname(hoisted));
@@ -37,7 +36,6 @@ try {
   console.error(e);
 }
 
-// 2. Patch nested versions just in case npm duplicated them
 const nestedDirs = [
   path.join(__dirname, "../../node_modules/kuromoji/node_modules/zlibjs/bin"),
   path.join(__dirname, "../../node_modules/kuroshiro-analyzer-kuromoji/node_modules/zlibjs/bin"),

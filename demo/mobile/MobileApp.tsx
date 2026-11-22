@@ -21,7 +21,6 @@ const PRIVACY_LINK: FooterLink = {
 
 const links = [...FOOTER_LINKS.filter(link => link.href !== LINKS.support), PRIVACY_LINK];
 
-// The OS's text-to-speech, or the browser's one outside the app (e.g. in vite preview)
 const useTextToSpeech = Capacitor.isNativePlatform()
   ? useNativeSpeechSynthesis
   : useSpeechSynthesis;

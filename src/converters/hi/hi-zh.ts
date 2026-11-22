@@ -6,8 +6,11 @@ export const hiZh = async (text: Text) => {
   const { hiIpaGemRules } = await import("data/hi/hi-ipa_gem.rules");
   const { ipaZhFaiRules } = await import("data/ipa/ipa-zh_fai.rules");
   const { ipaZhRules } = await import("data/ipa/ipa-zh.rules");
+  const { ipaZhChaRules } = await import("data/ipa/ipa-zh_cha.rules");
 
-  const transliterator = RBT.fromRules(hiIpaRules + hiIpaGemRules + ipaZhFaiRules + ipaZhRules);
+  const transliterator = RBT.fromRules(
+    hiIpaRules + hiIpaGemRules + ipaZhFaiRules + ipaZhChaRules + ipaZhRules,
+  );
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);

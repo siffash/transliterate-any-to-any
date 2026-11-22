@@ -9,26 +9,17 @@ import {
   getKuromojiDictUrl,
 } from "../src/helpers/getKuromojiDictUrl.mts";
 
-// The web part of the Android/iOS app (see capacitor.config.ts). Unlike the
-// PWA, it has no service worker nor offline pack: the app ships every file.
-
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const KUROMOJI_DICT_URL = getKuromojiDictUrl();
-// Served by the app itself; kuromoji fetches the files relative to the origin
 const LOCAL_DICT_PATH = "/kuromoji-dict/";
 const DICT_FILES = getKuromojiDictFiles();
-// The app has the dictionary's .gz files as .gzip: Android's build unzips every
-// asset named *.gz and drops the extension, while kuromoji unzips them itself
 const localDictFile = (file: string) => file.replace(/\.gz$/, ".gzip");
-// The file names in kuromoji's loader, in any quotes
 const DICT_FILE_NAMES = new RegExp(
   `(["'\`])(${DICT_FILES.map(file => file.replaceAll(".", "\\.")).join("|")})\\1`,
   "g",
 );
 
-// Makes kuromoji (in the worker) load the dictionary bundled with the app
-// instead of the one on jsDelivr, so that Japanese works offline
 const localKuromojiDict = (): Plugin => {
   let urlFound = false;
   const filesFound = new Set<string>();
@@ -63,7 +54,6 @@ const localKuromojiDict = (): Plugin => {
   };
 };
 
-// Adds the dictionary files to the app
 const emitKuromojiDict = (): Plugin => ({
   name: "emit-kuromoji-dict",
   apply: "build",
@@ -82,7 +72,6 @@ export default defineConfig({
   root: path.resolve(__dirname, "mobile"),
   base: "/",
   publicDir: false,
-  // Apart from the PWA's, as both dev servers may run at once
   cacheDir: path.resolve(__dirname, "node_modules/.vite-mobile"),
   plugins: [react({ compiler: true }), emitKuromojiDict()],
   resolve: {
@@ -96,7 +85,6 @@ export default defineConfig({
   },
   server: {
     fs: {
-      // jieba's .wasm, which the library (../dist) loads from the repo's node_modules
       allow: [
         searchForWorkspaceRoot(__dirname),
         path.resolve(__dirname, "../node_modules/jieba-wasm"),

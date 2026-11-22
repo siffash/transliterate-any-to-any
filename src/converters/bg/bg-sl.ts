@@ -5,8 +5,9 @@ export const bgSl = async (text: Text) => {
   const { bgLatnRules } = await import("data/bg/bg-latn.rules");
   const { bgRRules } = await import("data/bg/bg_r.rules");
   const { latnSlRules } = await import("data/latn/latn-sl.rules");
+  const { bgLatnSlRules } = await import("data/bg/bg-latn_sl.rules");
 
-  const transliterator = RBT.fromRules(bgRRules + bgLatnRules + latnSlRules);
+  const transliterator = RBT.fromRules(bgRRules + bgLatnRules + latnSlRules + bgLatnSlRules);
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);

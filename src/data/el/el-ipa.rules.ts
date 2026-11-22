@@ -1,5 +1,10 @@
 export const elIpaRules = `
 ::Lower;
+::NFD;
+
+[̀͂] > ́;
+[̓̔ͅ] > ;
+
 ::NFC;
 
 αί > έ;

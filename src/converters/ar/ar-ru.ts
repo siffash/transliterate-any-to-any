@@ -9,16 +9,24 @@ export const arRu = async (text: Text) => {
   const { arLowerRules } = await import("data/ar/ar_lower.rules");
   const { ipaRuRules } = await import("data/ipa/ipa-ru.rules");
   const { ruLlRules } = await import("data/ru/ru_ll.rules");
+  const { ruLSoftRules } = await import("data/ru/ru_l-soft.rules");
 
   const transliterator = RBT.fromRules(
-    ipaGemDRules + arIpaRuRules + ipaRuRules + ruLlRules + ruAlRules + "::Title;" + arLowerRules,
+    ipaGemDRules +
+      arIpaRuRules +
+      ipaRuRules +
+      ruLlRules +
+      ruAlRules +
+      ruLSoftRules +
+      "::Title;" +
+      arLowerRules,
   );
 
   if (typeof text === "string") {
-    const ipa = await arIpa<string>(text);
+    const ipa = await arIpa<string>(text, { firstArticleE: true });
     return transliterator.transliterate(ipa);
   } else {
-    const ipaArray = await arIpa<string[]>(text);
+    const ipaArray = await arIpa<string[]>(text, { firstArticleE: true });
     return ipaArray.map(ipa => transliterator.transliterate(ipa));
   }
 };

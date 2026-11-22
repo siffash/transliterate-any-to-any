@@ -16,20 +16,13 @@ import {
 } from "data/zh/zh-names";
 import { getJieba, type Jieba } from "helpers/getJieba";
 
-// Transliterated names stay whole (阿里巴巴, 麦当劳)
 const FOREIGN_NAME_TAG = "nrt";
-// Names jieba knows, "nrfg" being well-known people (李强, 刘备)
 const NAME_TAGS = new Set(["nr", "nrfg"]);
-// An emperor's dynasty and title, each a word of its own (唐|太宗)
 const EMPEROR_TAG = "emperor";
-// Three characters that jieba read as words, taken as one name (see segmentChinese)
 const JOINED_TAG = "joined";
 
-// Han punctuation between words (王伟、张伟, 《红楼梦》): the text on each side is segmented on
-// its own, as when a comma separates it (王伟, 张伟 → Wang Wei, Zhang Wei)
 const BREAKS = /([、。｡､「」『』《》〈〉【】〔〕〜]+)/u;
 
-// Longer titles first, so that 光武帝 isn't taken as 武帝
 const EMPEROR = new RegExp(
   `([${[...DYNASTIES].join("")}])(${[...EMPEROR_TITLES].sort((a, b) => b.length - a.length).join("|")})`,
   "g",
@@ -47,11 +40,8 @@ const getToSimplified = () => {
   return toSimplifiedPromise;
 };
 
-// A surname is marked, as Korean writes it together with the given name (마오쩌둥)
 type Part = { word: string; surname?: boolean };
 
-// Pinyin writes a name as surname + given name (Zhang Weijie, Ouyang Xiu), but
-// not a place or a foreign name that jieba takes for one (石家庄, 许昌, 马丁)
 const splitName = (name: string): Part[] => {
   const chars = [...name];
   if (
@@ -76,13 +66,9 @@ const splitName = (name: string): Part[] => {
     : [{ word: name }];
 };
 
-// jieba's dictionary has long compounds (中华人民共和国, 清华大学, 今天天气),
-// which pinyin writes as separate words (Zhonghua Renmin Gongheguo): they're
-// split into the fewest of the shorter words that its search mode finds inside
 const splitCompound = (jieba: Jieba, word: string) => {
   if ([...word].length < 4) return [word];
   const parts = jieba.cut_for_search(word, true).filter(part => part !== word);
-  // fewest[i]: the fewest parts that make up word.slice(i)
   const fewest: (string[] | undefined)[] = [];
   fewest[word.length] = [];
   for (let i = word.length - 1; i >= 0; i--) {
@@ -94,13 +80,10 @@ const splitCompound = (jieba: Jieba, word: string) => {
   return fewest[0] ?? [word];
 };
 
-// A place's own name stays whole, apart from the generic terms after it (Erlianhaote,
-// Lianyungangshi, Pudong Xinqu, Linxia Huizu Zizhizhou) and a province before it (Shanxi Datong)
 const splitPlace = (word: string) => {
   const chars = [...word];
   const generics: string[] = [];
   let end = chars.length;
-  // Longest first, so that 土家族 isn't taken as 家族, nor 东乡族自治县 as 东乡 and 族
   for (let length = 5; length >= 2; length--) {
     const generic = chars.slice(end - length, end).join("");
     if (end - length >= 2 && PLACE_GENERICS.has(generic)) {
@@ -112,7 +95,6 @@ const splitPlace = (word: string) => {
   let province = [3, 2].find(
     length => end - length >= 2 && PROVINCES.has(chars.slice(0, length).join("")),
   );
-  // with its own unit (上海市|浦东新区, not 上海|市浦东)
   if (province && end - province >= 3 && "省市".includes(chars[province]!)) province++;
   return [
     ...(province
@@ -122,17 +104,11 @@ const splitPlace = (word: string) => {
   ];
 };
 
-// A place written alone that ends in its unit is one name, however jieba cuts it (大岭|山镇,
-// 乌兰察布|市 are Dalingshanzhen, Wulanchabushi), unless it's a place inside another one
-// (北京市朝阳区, but 贾市庄镇 is a town), has a generic term of its own (巴里坤哈萨克自治县,
-// 工业园区) or is an area that jieba knows (管理区, 旅游区) or is described by words (经济发展区).
-// Words before another generic stay apart (喇叭沟门满族乡 is Labagoumen Manzuxiang), as do provinces
 const splitTown = (text: string, tagged: { word: string; tag: string }[]) => {
   const chars = [...text];
   const unit = chars[chars.length - 1];
   const last = tagged[tagged.length - 1]!;
   const inner = chars.slice(2, -2).findIndex(char => HIGHER_UNITS.has(char)) + 3;
-  // A town in its county or city: 当阳市|庙前镇
   if (inner > 2 && !chars.slice(inner, -1).some(char => HIGHER_UNITS.has(char))) {
     return UNITS.has(unit) && tagged.length > 1
       ? [chars.slice(0, inner).join(""), chars.slice(inner).join("")]
@@ -159,8 +135,6 @@ const splitTown = (text: string, tagged: { word: string; tag: string }[]) => {
   return parts;
 };
 
-// Nor is a place that jieba doesn't tag as one cut before its last character
-// (冷水|滩区 is 冷水滩区, but 峰峰|矿区 and 自然|保护区 stay)
 const splitOther = (jieba: Jieba, word: string) => {
   const parts = splitCompound(jieba, word);
   const last = [...(parts[parts.length - 1] ?? "")];
@@ -186,8 +160,6 @@ const splitWord = (
   if (tag === JOINED_TAG) {
     return LANDFORM_ENDINGS.has([...word][length - 1]) ? [{ word }] : splitName(word);
   }
-  // A name jieba knows, or a new word it guessed ("x") of a name's length:
-  // three characters, or two when it's the whole word (王伟, 张伟)
   if (
     NAMES.has(word) ||
     NAME_TAGS.has(tag) ||
@@ -205,16 +177,12 @@ const splitWord = (
 
 let namesAdded = false;
 
-// The listed people become words of jieba's that it tags as names, as it splits some
-// (屠呦呦 as 屠|呦|呦) and tags others as something else (周恩来 as a time word)
 const addNames = (jieba: Jieba) => {
   if (namesAdded) return;
   namesAdded = true;
   for (const name of NAMES) jieba.add_word(name, null, "nr");
 };
 
-// jieba joins an emperor's dynasty and title with the characters around them
-// (宋徽宗赵佶 as 宋徽|宗赵佶), so they're split off before it sees the text
 const tagWords = (jieba: Jieba, text: string) => {
   const tagged: { word: string; tag: string }[] = [];
   let index = 0;
@@ -227,17 +195,6 @@ const tagWords = (jieba: Jieba, text: string) => {
   return tagged;
 };
 
-/**
- * Chinese words from jieba: without the CJ dictionary in the engine's ICU data
- * (e.g. in Android's Chrome and WebView), Intl.Segmenter splits Chinese into
- * single characters, whose readings then lose their context (银|行 → yín xíng).
- *
- * jieba's dictionary and pinyin-pro's readings are in simplified Chinese, so
- * traditional text is split by its simplified form (OpenCC converts it
- * character for character), and its words are given in that form.
- *
- * Rejects if jieba or OpenCC can't be loaded.
- */
 export const loadChineseSegmenter = async () => {
   const [jieba, toSimplified] = await Promise.all([getJieba(), getToSimplified()]);
   addNames(jieba);
@@ -254,14 +211,10 @@ export const loadChineseSegmenter = async () => {
 
 const segmentChinese = (jieba: Jieba, toSimplified: (text: string) => string, text: string) => {
   const original = [...text];
-  // OpenCC takes 乾 for 干 "dry" (乾安县 as 干安县), but in a name it's qián, which
-  // simplified Chinese writes 乾 too (乾隆, 乾县)
   const simplified = [...toSimplified(text)].map((char, i) => (original[i] === "乾" ? "乾" : char));
   const source = simplified.length === original.length ? simplified.join("") : text;
   let index = 0;
   let tagged = tagWords(jieba, source);
-  // Three characters on their own are a name, even when jieba reads words in them (许家|印,
-  // 寮|步镇, 王家|营): its ending tells a place (Liaobuzhen, Wangjiaying) from a person (Xu Jiayin)
   if (
     tagged.length > 1 &&
     /^\p{Script=Han}{3}$/u.test(source) &&
@@ -270,8 +223,6 @@ const segmentChinese = (jieba: Jieba, toSimplified: (text: string) => string, te
     tagged = [{ word: source, tag: JOINED_TAG }];
   }
   const town = /^\p{Script=Han}+$/u.test(source) ? splitTown(source, tagged) : undefined;
-  // A subdistrict with a short name is that name and 街道, however jieba cuts it (长安街|道,
-  // 赛|虹桥|街道), unless it's in a district (北城区街道)
   const subdistrict =
     /^\p{Script=Han}{2,3}街道$/u.test(source) && ![...source].some(char => HIGHER_UNITS.has(char))
       ? [source.slice(0, -2), "街道"]
@@ -283,9 +234,6 @@ const segmentChinese = (jieba: Jieba, toSimplified: (text: string) => string, te
     const length = [...word].length;
     const segment = original.slice(index, (index += length)).join("");
     const isWordLike = /\p{L}/u.test(word);
-    // Punctuation stays as it was, as wordSplitter replaces it itself.
-    // 什 is shí in names (喀什 Kashi, 什邡 Shifang), but pinyin-pro reads it shén, as in 什么:
-    // 十 reads shí in every language (십, thập)
     return {
       segment: isWordLike ? word.replace(/什(?![么麼])/gu, "十") : segment,
       isWordLike,

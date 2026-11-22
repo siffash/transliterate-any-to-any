@@ -7,9 +7,15 @@ export const ukSk = async (text: Text) => {
   const { ukLatnSoftLRules } = await import("data/uk/uk-latn_soft-l.rules");
   const { latnSeparatorRules } = await import("data/latn/latn_separator.rules");
   const { latnSkRules } = await import("data/latn/latn-sk.rules");
+  const { latnSkCyRules } = await import("data/latn/latn-sk_cy.rules");
 
   const transliterator = RBT.fromRules(
-    ukLatnRules + latnCsSoftRules + ukLatnSoftLRules + latnSeparatorRules + latnSkRules,
+    ukLatnRules +
+      latnCsSoftRules +
+      ukLatnSoftLRules +
+      latnSeparatorRules +
+      latnSkCyRules +
+      latnSkRules,
   );
 
   if (typeof text === "string") {

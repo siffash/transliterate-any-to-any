@@ -28,13 +28,13 @@ export const zhUkRules = `
 
 ::Null;
 
-iang } [aeiouü] > яньґ;
-uang } [aeiouü] > уаньґ;
-ang } [aeiouü] > аньґ;
-eng } [aeiouü] > еньґ;
-ing } [aeiouü] > іньґ;
-ong } [aeiouü] > уньґ;
-iong } [aeiouü] > юньґ;
+iang } [aeiouü] > яньг;
+uang } [aeiouü] > уаньг;
+ang } [aeiouü] > аньг;
+eng } [aeiouü] > еньг;
+ing } [aeiouü] > іньг;
+ong } [aeiouü] > уньг;
+iong } [aeiouü] > юньг;
 
 ang ['’‘\`´ʼ] } [aeo] > ан\\';
 eng ['’‘\`´ʼ] } [aeo] > ен\\';
@@ -147,7 +147,7 @@ d > д;
 t > т;
 n > н;
 l > л;
-g > ґ;
+g > г;
 k > к;
 h > х;
 j > цз;

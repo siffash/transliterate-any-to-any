@@ -12,14 +12,16 @@ export const enTh = async (text: Text) => {
     boroughRestoreRules,
     boroughReducedRestoreRules,
     woodRestoreRules,
+    juzRestoreRules,
   } = await import("helpers/normalizeEnIpa");
   const { enIpaThRules } = await import("data/en/en-ipa_th.rules");
   const { ipaThOpenRules } = await import("data/ipa/ipa-th_open.rules");
   const { ipaThRules } = await import("data/ipa/ipa-th.rules");
   const { ipaThKaranRules } = await import("data/ipa/ipa-th_karan.rules");
+  const { enIpaShireRules } = await import("data/en/en-ipa_shire.rules");
 
   const transliterator = RBT.fromRules(
-    enIpaThRules + ipaThOpenRules + ipaThRules + ipaThKaranRules,
+    enIpaShireRules + enIpaThRules + ipaThOpenRules + ipaThRules + ipaThKaranRules,
   );
 
   const words = typeof text === "string" ? [text] : text;
@@ -32,7 +34,7 @@ export const enTh = async (text: Text) => {
       ...mouthReducedRestoreRules,
       ...boroughReducedRestoreRules,
     ],
-    [...mouthRestoreRules, ...boroughRestoreRules, ...woodRestoreRules],
+    [...mouthRestoreRules, ...boroughRestoreRules, ...woodRestoreRules, ...juzRestoreRules],
   );
   const result = ipa.map(ipa => transliterator.transliterate(ipa));
   return typeof text === "string" ? result[0] : result;

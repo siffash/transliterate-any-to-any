@@ -10,18 +10,20 @@ export const skKo = async (text: Text) => {
   const { csSkIpaRzhKoRules } = await import("data/ipa/cs_sk-ipa_rzh-ko.rules");
   const { ipaKoFinalKpRules } = await import("data/ipa/ipa-ko_final-kp.rules");
   const { csSkIpaKoPalatalRules } = await import("data/ipa/cs_sk-ipa_ko-palatal.rules");
-  const { csSkIpaKoRules } = await import("data/ipa/cs_sk-ipa_ko.rules");
+  const { ipaFinalDRules } = await import("data/ipa/ipa_final-d.rules");
   const { ipaKoRules } = await import("data/ipa/ipa-ko.rules");
+  const { skIpaKoVRules } = await import("data/sk/sk-ipa_ko-v.rules");
 
   const transliterator = RBT.fromRules(
     csSkIpaKoDjRules +
       skIpaRules +
+      skIpaKoVRules +
       ipaDevoiceBgRules +
       ipaDevoiceVRules +
       ipaDevoiceZRules +
       csSkIpaRzhKoRules +
       csSkIpaKoPalatalRules +
-      csSkIpaKoRules +
+      ipaFinalDRules +
       ipaKoFinalKpRules +
       ipaKoRules,
   );

@@ -13,9 +13,6 @@ export const thEn = async (text: Text) => {
 
   const romanize = (word: string) => word.replace(/[^๐-๙]+/g, part => toRtgs(part));
 
-  // The generic words of a place are cut off the reading of the whole name, which can differ from
-  // the reading of its rest alone (แม่ฮ่องสอน Mae Hongson, not Hongason). The name stays whole if
-  // its reading doesn't start with theirs
   const romanizePlace = (word: string) => {
     const reading = romanize(word);
     const words: string[] = [];
@@ -31,8 +28,6 @@ export const thEn = async (text: Text) => {
     return start < reading.length ? [...words, reading.slice(start)].join(" ") : reading;
   };
 
-  // A place is a name of one word: สราลีย์ ทุ่งทองคำ is a person (Thungthongkham), so a list
-  // (เชียงใหม่, เกาะสมุย) is read name by name
   const romanizeName = (name: string) =>
     wordSplitter(name, "th", /\s/.test(name.trim()) ? romanize : romanizePlace);
 

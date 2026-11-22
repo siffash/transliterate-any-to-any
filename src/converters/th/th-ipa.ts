@@ -1,13 +1,3 @@
-// Reads a Thai word two ways and picks one. th-ipa.rules keep vowel length but often miss
-// unwritten vowels (อยุธยา → jutjaː), while the romanizer reads them but has no length and
-// sometimes drops letters of names it doesn't know (พงศกร → phan). In order:
-// • both agree: the rules' reading (with length) and the romanizer's spelling;
-// • the rules' reading becomes the romanizer's once the missing vowels are put back (สวัสดี);
-// • the romanizer has fewer consonants than the rules' reading: the rules' reading, with missing
-//   vowels put back if it needs them (พงศกร → pʰoŋsakɔːn);
-// • the romanizer is sure, or the rules' reading has syllables Thai doesn't: the romanizer's;
-// • otherwise the rules' reading.
-// The romanizer's own non-RTGS spellings (Suvarnabhumi) are kept for Latin output only
 export const thaiReader = async () => {
   const { romanizeDetailed } = await import("@pcampus/thai-romanization");
   const { RBT } = await import("helpers/rbt");
@@ -30,8 +20,12 @@ export const thaiReader = async () => {
     const { text, confidence } = romanizeDetailed(word, { separator: "-" });
     const rtgs = text.replace(/-/g, "");
     const agrees = (reading: string) => rtgsSkeleton(ipaToRtgs(reading)) === rtgsSkeleton(rtgs);
-    if (/[๐-๙]/.test(word) || agrees(ipa)) {
+    if (/[๐-๙]/.test(word) || (agrees(ipa) && isThaiSyllabic(ipa))) {
       return { ipa, rtgs };
+    }
+    if (agrees(ipa)) {
+      const reading = insertImplicitVowels(ipa, true);
+      return { ipa: reading, rtgs: ipaToRtgs(reading) };
     }
     if (!isThaiSyllabic(ipa)) {
       const repaired = [insertImplicitVowels(ipa), insertImplicitVowels(ipa, true)].find(agrees);
@@ -52,9 +46,6 @@ export const thaiReader = async () => {
     return { ipa, rtgs: ipaToRtgs(ipa) };
   };
 
-  // A compound name is read piece by piece (see segmentThai). A piece that ends in ร after i or u, or
-  // in ทธ, links to the next one with "a", as inside a piece: จิร|วัฒน์ Chirawat (like สุรศักดิ์ Surasak),
-  // พุทธ|มณฑล Phutthamonthon, but ยงยุทธ Yongyut
   const link = (piece: string, { ipa, rtgs }: { ipa: string; rtgs: string }) => {
     if (/[ิีุู]ร$/u.test(piece) && /n$/.test(rtgs)) {
       return { ipa: ipa.replace(/n$/, "ra"), rtgs: rtgs.replace(/n$/, "ra") };
@@ -65,25 +56,42 @@ export const thaiReader = async () => {
     return { ipa, rtgs };
   };
 
-  return (word: string): { ipa: string; rtgs: string } => {
+  const readAt = (pieces: string[], i: number) => {
+    const reading = readPiece(pieces[i]);
+    if (i === 0 && /^[ก-ฮ]$/u.test(pieces[i]) && !/[aeiouɛɤɯɔ]/.test(reading.ipa)) {
+      return { ipa: reading.ipa + "a", rtgs: ipaToRtgs(reading.ipa + "a") };
+    }
+    if (i > 0 && pieces[i] === "ทร" && pieces[i - 1].endsWith("า")) {
+      return { ipa: "tʰɔːn", rtgs: "thon" };
+    }
+    return reading;
+  };
+
+  const read = (word: string): { ipa: string; rtgs: string } => {
     const pieces = segmentThai(word);
     const readings = pieces.map((piece, i) =>
-      i < pieces.length - 1 ? link(piece, readPiece(piece)) : readPiece(piece),
+      i < pieces.length - 1 ? link(piece, readAt(pieces, i)) : readAt(pieces, i),
     );
     return {
       ipa: readings.map(reading => reading.ipa).join(""),
       rtgs: readings.map(reading => reading.rtgs).join(""),
     };
   };
+
+  return (word: string): { ipa: string; rtgs: string } => {
+    const readings = word.split("-").map(part => (part ? read(part) : { ipa: "", rtgs: "" }));
+    return {
+      ipa: readings.map(reading => reading.ipa).join("-"),
+      rtgs: readings.map(reading => reading.rtgs).join("-"),
+    };
+  };
 };
 
-// The IPA of a Thai word (see thaiReader)
 export const thIpa = async () => {
   const read = await thaiReader();
   return (word: string): string => read(word).ipa;
 };
 
-// The RTGS romanization of a Thai word (see thaiReader)
 export const thRtgs = async () => {
   const read = await thaiReader();
   return (word: string): string => read(word).rtgs;

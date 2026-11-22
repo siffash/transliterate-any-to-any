@@ -1,10 +1,6 @@
 import { Language } from "types";
 import { languages } from "helpers/constants";
 
-// Converts the text with `convert`, except that each word for which `exception` returns a string
-// is replaced by that string. A word behind an elided article or preposition (d'Marie, l'Hôpital)
-// counts too, and the elided part stays with the text around it. That text is converted in one
-// piece, so rules keep their context across spaces, hyphens and apostrophes.
 export const convertWithExceptions = (
   text: string,
   language: Language,

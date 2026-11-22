@@ -16,9 +16,6 @@ export const scripts: Record<Script, { cases: boolean; direction: Direction }> =
   Latn: { cases: true, direction: "LTR" },
 } as const;
 
-// The order matters for detectLanguage: when the text matches several languages, the first one wins
-// (zh over ja, ar over fa over ur, ru over the other Cyrillic ones, en over the other Latin ones,
-// then the more common Latin ones: de, fr, es, tr over az, sr over hr/bs)
 export const languages: Record<
   Language,
   { name: string; script: Script; locale: string; regex: string }

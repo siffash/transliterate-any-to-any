@@ -10,7 +10,6 @@ function getInitialMode(): ColorMode {
   return window.matchMedia?.("(prefers-color-scheme: light)").matches ? "light" : "dark";
 }
 
-// The light/dark mode, kept in localStorage (on the first run, the system's)
 export function useColorMode() {
   const [mode, setMode] = useState<ColorMode>(getInitialMode);
 

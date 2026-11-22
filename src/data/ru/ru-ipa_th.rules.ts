@@ -3,4 +3,5 @@ export const ruIpaThRules = `
 
 ʐʐ > dʒ;
 ʐ > dʒ;
+s { k } [^[:L:][:M:]] > kʰ;
 `;

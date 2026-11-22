@@ -27,6 +27,13 @@ export const plLatnUkRules = `
 ń } [eE] > n;
 Ń } [eE] > N;
 
+ń } [iI] [cC] [eE] [^[:L:][:M:]] > n;
+Ń } [iI] [cC] [eE] [^[:L:][:M:]] > N;
+i } [cC] [eE] [^[:L:][:M:]] > и;
+I } [cC] [eE] [^[:L:][:M:]] > И;
+[iIïÏиИ] [cC] { e } [^[:L:][:M:]] > і;
+[iIïÏиИ] [cC] { E } [^[:L:][:M:]] > І;
+
 [цЦ] { i > и;
 [цЦ] { I > И;
 

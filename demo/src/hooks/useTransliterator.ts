@@ -21,8 +21,6 @@ import {
   type SourceLanguage,
 } from "../constants";
 
-// With `withSpelling`, for a pair whose spelling can load another converter
-// (e.g. the English one), which a pair used only with the other spelling lacks
 function getErrorMessage(err: Error, withSpelling: boolean): string {
   if (!navigator.onLine && isLoadError(err.message)) {
     const pair = withSpelling ? "This language pair with this spelling" : "This language pair";
@@ -31,8 +29,6 @@ function getErrorMessage(err: Error, withSpelling: boolean): string {
   return err.message || "Transliteration failed.";
 }
 
-// The system's languages, most preferred first: the browser's, or the OS's in
-// the mobile app (where they're set with setSystemLocales before rendering)
 let systemLocales: readonly string[] =
   typeof navigator === "undefined" ? [] : (navigator.languages ?? [navigator.language]);
 
@@ -40,8 +36,6 @@ export function setSystemLocales(locales: readonly string[]) {
   systemLocales = locales;
 }
 
-// Codes that differ from ours: Norwegian Bokmål/Nynorsk, Serbo-Croatian, and
-// Java's legacy ones for Hebrew and Indonesian
 const LOCALE_ALIASES: Record<string, Language> = {
   nb: "no",
   nn: "no",
@@ -50,7 +44,6 @@ const LOCALE_ALIASES: Record<string, Language> = {
   in: "id",
 };
 
-// The first of the system's languages that we support
 function getSystemLang(): Language | undefined {
   for (const locale of systemLocales) {
     const code = locale.toLowerCase().split(/[-_]/)[0];
@@ -61,40 +54,30 @@ function getSystemLang(): Language | undefined {
 }
 
 function getInitialLangFrom(): SourceLanguage {
-  // try to get from URL
   const params = new URLSearchParams(window.location.search);
   const paramFrom = params.get("from");
   if (isSourceLanguage(paramFrom)) return paramFrom;
-  // try to get from localStorage
   if (typeof window === "undefined") return DEFAULT_LANGS.langFrom;
   const stored = window.localStorage.getItem(LOCAL_STORAGE_KEYS.langFrom);
   if (isSourceLanguage(stored)) return stored;
-  // fallback to the system's language
   return getSystemLang() ?? DEFAULT_LANGS.langFrom;
 }
 
 function getInitialLangTo(): Language {
-  // try to get from URL
   const params = new URLSearchParams(window.location.search);
   const paramTo = params.get("to");
   if (isLanguage(paramTo)) return paramTo;
-  // try to get from localStorage
   if (typeof window === "undefined") return DEFAULT_LANGS.langTo;
   const stored = window.localStorage.getItem(LOCAL_STORAGE_KEYS.langTo);
   if (isLanguage(stored)) return stored;
-  // fallback to default, unless the source (see above) already is it
   return getInitialLangFrom() === DEFAULT_LANGS.langTo ? "en" : DEFAULT_LANGS.langTo;
 }
 
-// Whether the spelling can change the transliteration of the text (with
-// "Detect language", that of the language detected in it)
 function spellingMatters(from: SourceLanguage, to: Language, text: string): boolean {
   const source = from === AUTO_DETECT ? tryDetectLanguage(text) : from;
   return !!source && spellingAffects({ from: source, to });
 }
 
-// A link's spelling (where it matters), else the one chosen in a previous
-// visit, else the orthographic one
 function getInitialSpelling(): Spelling {
   const params = new URLSearchParams(window.location.search);
   const from = params.get("from");
@@ -112,22 +95,17 @@ function getInitialSpelling(): Spelling {
   return isSpelling(stored) ? stored : "orthographic";
 }
 
-// The URL's parameters, with the spelling exactly when it matters (so that a
-// link or a history entry always has it then, and never has it otherwise)
 function getUrlParams(from: SourceLanguage, to: Language, text: string, spelling: Spelling) {
   const params = new URLSearchParams({ from, to, text });
   if (spellingMatters(from, to, text)) params.set("spelling", spelling);
   return params;
 }
 
-// Adds a history entry for the URL, unless it already is the current one
 function pushUrl(params: URLSearchParams) {
   if (window.location.search === `?${params.toString()}`) return;
   history.pushState({}, "", `/?${params.toString()}`);
 }
 
-// A link's text, shown from the start, so that the URL never gets the empty
-// text it would otherwise have until the link is applied (see below)
 function getInitialText(syncUrl: boolean): string {
   if (!syncUrl) return "";
   const params = new URLSearchParams(window.location.search);
@@ -135,7 +113,6 @@ function getInitialText(syncUrl: boolean): string {
   return params.get("text") ?? "";
 }
 
-// Whether a language was already chosen: in the URL or in a previous visit
 function hasChosenLangs(): boolean {
   const params = new URLSearchParams(window.location.search);
   if (isSourceLanguage(params.get("from")) || isLanguage(params.get("to"))) return true;
@@ -145,7 +122,6 @@ function hasChosenLangs(): boolean {
   );
 }
 
-// The language of the text, or undefined when it has none or mixes several
 function tryDetectLanguage(text: string): Language | undefined {
   try {
     return detectLanguage(text);
@@ -154,19 +130,8 @@ function tryDetectLanguage(text: string): Language | undefined {
   }
 }
 
-// The generic title from index.html, kept until a language is chosen
 const DEFAULT_TITLE = typeof document === "undefined" ? "" : document.title;
 
-/**
- * The state and behaviour of the transliterator, shared by the PWA's card and
- * the mobile app's screen, which only differ in layout and in these options:
- * - `speech`: voice input (the Web Speech API, or the native one in the app)
- * - `tts`: reading the texts aloud (likewise)
- * - `copyText`: writes the transliteration, or a link to it, to the clipboard
- * - `syncUrl`: keeps the languages and the text in the URL, with a history
- *   entry for each change, so that they can be shared and survive a reload
- * - `suppressErrors`: hides errors while something else is shown in their place
- */
 export function useTransliterator({
   speech,
   tts,
@@ -227,15 +192,12 @@ export function useTransliterator({
     stop: stopListening,
   } = speech;
 
-  // With "Detect language", the language detected in the text, if any (which
-  // is what transliterate() detects too, as it's given no source language)
   const autoDetectedLang = useMemo(
     () => (langFrom === AUTO_DETECT ? tryDetectLanguage(sourceText) : undefined),
     [langFrom, sourceText],
   );
   const sourceLang = langFrom === AUTO_DETECT ? autoDetectedLang : langFrom;
 
-  // Voice input without a source language listens for the system's one
   const fromLocale = useMemo(
     () => languages[sourceLang ?? getSystemLang() ?? "en"]?.locale ?? "en-US",
     [sourceLang],
@@ -244,8 +206,6 @@ export function useTransliterator({
 
   const { speakingId, speak, stop: stopSpeaking } = tts;
 
-  // Debounced transliteration: fires MAX_CHARS/DEBOUNCE_MS after the last keystroke or language change,
-  // and ignores a response that arrives after a newer request has already been fired
   useEffect(() => {
     if (!sourceText.trim()) {
       setTargetText("");
@@ -265,9 +225,6 @@ export function useTransliterator({
         }
       }
 
-      // Kept as is (after the URL is updated, so that it has the text too): a
-      // text in the target language, or one without letters (which has no
-      // language to detect, but would stay the same in any language)
       if (sourceLang === langTo || (langFrom === AUTO_DETECT && !/\p{L}/u.test(sourceText))) {
         setTargetText(sourceText);
         setErrorMsg(null);
@@ -275,8 +232,6 @@ export function useTransliterator({
         return;
       }
 
-      // A text that doesn't match the source language isn't sent to the worker
-      // when its language can be detected: a switch to it is suggested instead
       if (langFrom !== AUTO_DETECT && !validateLanguage(langFrom, sourceText)) {
         let lang: Language | undefined;
         try {
@@ -298,8 +253,6 @@ export function useTransliterator({
         }
       }
 
-      // With "Detect language", a text whose language can't be detected isn't
-      // sent to the worker, which would only fail to detect it the same way
       if (langFrom === AUTO_DETECT && !sourceLang) {
         let message = "Couldn't detect the language of the text.";
         try {
@@ -347,8 +300,6 @@ export function useTransliterator({
     return () => clearTimeout(timer);
   }, [sourceText, langFrom, sourceLang, langTo, spelling, run, retryKey, syncUrl]);
 
-  // A language pair that failed to load (e.g. offline) is loaded again as soon
-  // as the connection is back, without waiting for the next keystroke
   useEffect(() => {
     const onOnline = () => {
       if (!loadFailedRef.current) return;
@@ -371,8 +322,6 @@ export function useTransliterator({
     window.localStorage.setItem(LOCAL_STORAGE_KEYS.spelling, spelling);
   }, [spelling]);
 
-  // The page's title names the language pair (for search engines too), once
-  // one is chosen: in the URL, in a previous visit, or by changing a language
   useEffect(() => {
     if (!syncUrl) return;
     langsChosenRef.current ||=
@@ -393,8 +342,6 @@ export function useTransliterator({
     const paramTo = params.get("to");
     const firstSync = !urlSyncedRef.current;
     urlSyncedRef.current = true;
-    // The URL the page was opened with (e.g. a link without the saved spelling),
-    // or one without the languages or with ones we don't have, gets ours in place
     if (firstSync || !isSourceLanguage(paramFrom) || !isLanguage(paramTo)) {
       const params = getUrlParams(langFrom, langTo, sourceText, spelling);
       history.replaceState({}, "", `/?${params.toString()}`);
@@ -424,8 +371,6 @@ export function useTransliterator({
       setLangFrom(paramFrom);
       setLangTo(paramTo);
       setSourceText(paramText);
-      // A link's or a history entry's spelling, where it matters (where it
-      // doesn't, there's none, and the current one stays)
       if (paramSpelling && spellingMatters(paramFrom, paramTo, paramText)) {
         setSpelling(paramSpelling);
       }
@@ -434,8 +379,6 @@ export function useTransliterator({
 
   const sourceRejected = rejected?.text === sourceText && rejected.lang === langFrom;
 
-  // The error is that the transliteration with this spelling couldn't be loaded
-  // (e.g. offline), while the other spelling may well be available
   const spellingUnavailable =
     !!errorMsg &&
     unavailable?.text === sourceText &&
@@ -443,14 +386,11 @@ export function useTransliterator({
     unavailable.to === langTo &&
     unavailable.spelling === spelling;
 
-  // The language the source text looks like, while the text and the source language stay the same
   const detectedLang =
     !suppressErrors && detected?.text === sourceText && detected.from === langFrom
       ? detected.lang
       : null;
 
-  // A text stops being read aloud as soon as it or its language changes, or
-  // its Listen button gets disabled (which would leave no way to stop it)
   useEffect(() => stopSpeaking("source"), [sourceText, langFrom, sourceRejected, stopSpeaking]);
   useEffect(() => stopSpeaking("target"), [targetText, langTo, loading, stopSpeaking]);
 
@@ -465,8 +405,6 @@ export function useTransliterator({
     setErrorMsg(null);
   };
 
-  // With "Detect language", only once a language other than the target is
-  // detected, which then becomes the target
   const canSwap = sourceLang !== undefined && sourceLang !== langTo;
 
   const handleSwap = () => {
@@ -496,7 +434,6 @@ export function useTransliterator({
     }
   };
 
-  // A link that opens the PWA with the same languages, spelling and source text
   const handleShare = async () => {
     if (!targetText) return;
     const params = getUrlParams(langFrom, langTo, sourceText, spelling);

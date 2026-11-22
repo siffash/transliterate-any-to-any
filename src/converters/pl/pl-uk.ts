@@ -7,9 +7,23 @@ export const plUk = async (text: Text) => {
   const { plLatnSoftRules } = await import("data/pl/pl-latn_soft.rules");
   const { plLatnUkRules } = await import("data/pl/pl-latn_uk.rules");
   const { latnUkRules } = await import("data/latn/latn-uk.rules");
+  const { ukSkRules } = await import("data/uk/uk_sk.rules");
+  const { ukEcRules } = await import("data/uk/uk_ec.rules");
+  const { ukIcaRules } = await import("data/uk/uk_ica.rules");
+  const { plCyrlUkTskRules } = await import("data/pl/pl-cyrl_uk-tsk.rules");
+  const { ukSouthSlavicAdjRules } = await import("data/uk/uk_south-slavic-adj.rules");
 
   const transliterator = RBT.fromRules(
-    plLatnCyrlRules + plLatnSoftRules + plLatnRules + plLatnUkRules + latnUkRules,
+    plLatnCyrlRules +
+      plLatnSoftRules +
+      plLatnRules +
+      plLatnUkRules +
+      latnUkRules +
+      ukIcaRules +
+      ukEcRules +
+      ukSkRules +
+      ukSouthSlavicAdjRules +
+      plCyrlUkTskRules,
   );
 
   if (typeof text === "string") {

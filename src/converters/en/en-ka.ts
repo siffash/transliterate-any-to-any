@@ -5,8 +5,9 @@ export const enKa = async (text: Text) => {
   const { enIpa } = await import("converters/en/en-ipa");
   const { syllabicLRestoreRules, airRestoreRules } = await import("helpers/normalizeEnIpa");
   const { ipaKaRules } = await import("data/ipa/ipa-ka.rules");
+  const { enIpaShireIRules } = await import("data/en/en-ipa_shire-i.rules");
 
-  const transliterator = RBT.fromRules(ipaKaRules);
+  const transliterator = RBT.fromRules(enIpaShireIRules + ipaKaRules);
 
   const words = typeof text === "string" ? [text] : text;
   const ipa = await enIpa<string[]>(words, [...syllabicLRestoreRules, ...airRestoreRules]);

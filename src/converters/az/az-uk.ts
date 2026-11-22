@@ -5,8 +5,11 @@ export const azUk = async (text: Text) => {
   const { azLatnRules } = await import("data/az/az-latn.rules");
   const { latnOeRules } = await import("data/latn/latn_oe.rules");
   const { latnUkRules } = await import("data/latn/latn-uk.rules");
+  const { azLatnInitialARules } = await import("data/az/az-latn_initial-a.rules");
 
-  const transliterator = RBT.fromRules(azLatnRules + latnOeRules + latnUkRules);
+  const transliterator = RBT.fromRules(
+    azLatnRules + azLatnInitialARules + latnOeRules + latnUkRules,
+  );
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);

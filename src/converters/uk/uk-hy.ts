@@ -1,19 +1,8 @@
 import { Text } from "types";
 
 export const ukHy = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt");
-  const { ukLatnRules } = await import("data/uk/uk-latn.rules");
-  const { ukLatnJoRules } = await import("data/uk/uk-latn_jo.rules");
-  const { latnSeparatorRules } = await import("data/latn/latn_separator.rules");
-  const { latnHyRules } = await import("data/latn/latn-hy.rules");
+  const { ukRu } = await import("converters/uk/uk-ru");
+  const { ruHy } = await import("converters/ru/ru-hy");
 
-  const transliterator = RBT.fromRules(
-    ukLatnRules + ukLatnJoRules + latnSeparatorRules + latnHyRules,
-  );
-
-  if (typeof text === "string") {
-    return transliterator.transliterate(text);
-  } else {
-    return text.map(text => transliterator.transliterate(text));
-  }
+  return ruHy(await ukRu<Text>(text));
 };

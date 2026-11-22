@@ -6,8 +6,12 @@ export const faSq = async (text: Text) => {
   const { faIpa } = await import("converters/fa/fa-ipa");
   const { faIpaARules } = await import("data/fa/fa-ipa_a.rules");
   const { ipaSqRules } = await import("data/ipa/ipa-sq.rules");
+  const { ipaTHoldRules } = await import("data/ipa/ipa_t-hold.rules");
+  const { ipaTRestoreRules } = await import("data/ipa/ipa_t-restore.rules");
 
-  const transliterator = RBT.fromRules(faIpaARules + ipaSqRules + "::Title;" + faLowerRules);
+  const transliterator = RBT.fromRules(
+    ipaTHoldRules + faIpaARules + ipaSqRules + "::Title;" + faLowerRules + ipaTRestoreRules,
+  );
 
   if (typeof text === "string") {
     const ipa = await faIpa<string>(text);

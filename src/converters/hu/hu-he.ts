@@ -4,8 +4,9 @@ export const huHe = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { huIpaRules } = await import("data/hu/hu-ipa.rules");
   const { ipaHeRules } = await import("data/ipa/ipa-he.rules");
+  const { huIpaHeRules } = await import("data/hu/hu-ipa_he.rules");
 
-  const transliterator = RBT.fromRules(huIpaRules + ipaHeRules);
+  const transliterator = RBT.fromRules(huIpaRules + huIpaHeRules + ipaHeRules);
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);

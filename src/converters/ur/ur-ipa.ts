@@ -13,17 +13,12 @@ export const urIpa = async <T = Text>(text: Text, keepNasals = false): Promise<T
   const transliterator = RBT.fromRules(urIpaRules);
   const normalizer = RBT.fromRules(urNormRules);
 
-  // Arabic spells an initial i- with a hamza below (إبراهيم), the map with a plain alef (ابراہیم); the map
-  // keys have no harakat (محمّد → محمد)
   const lookup = (word: string) =>
     urIpaMap[word] ??
     urIpaMap[word.replace(/^إ/, "ا")] ??
     urIpaMap[word.replace(/[\u064B-\u0652\u0670]/g, "")] ??
-    // a superscript alef is a long a (رحمٰن as رحمان)
     urIpaMap[word.replace(/[\u064B-\u0652]/g, "").replace(/\u0670/g, "ا")];
 
-  // A word missing from the map gets its unwritten vowels back as ə (ہشتپر → ɦəʃtəpɾ); an aspirate, a nasal or a
-  // long vowel stays one segment with its sound
   const isConsonant = (segment: string) => /^\p{L}/u.test(segment) && !/^[ɑeoiuəɪʊa]/.test(segment);
   const fallback = (word: string) =>
     breakClusters(
@@ -32,8 +27,6 @@ export const urIpa = async <T = Text>(text: Text, keepNasals = false): Promise<T
       "ə",
     );
 
-  // Most languages spell a nasal vowel (ں) as the vowel and n, or ŋ before k and g (میانوالی Mianwali, نانگا Nanga);
-  // Hindi and Bengali have a letter for it (मियाँ)
   const spellNasals = (ipa: string) =>
     keepNasals
       ? ipa

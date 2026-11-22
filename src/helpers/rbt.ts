@@ -39,7 +39,6 @@ export interface CompiledRule {
   post: PatternNode[];
   replacement: ReplacementSegment[];
   cursorOffset: number | null;
-  // '^' / '$' anchors: the match must start / end at the edge of the text
   anchorStart: boolean;
   anchorEnd: boolean;
   source: string;
@@ -241,12 +240,6 @@ const STRUCTURAL_CHARS = new Set([
   "^",
 ]);
 
-// Characters that '\X' turns into a literal X anywhere in the grammar
-// (pattern, replacement, inside '[...]', inside '{...}'), and that are also
-// literal when written bare - without a backslash - inside a '{...}'
-// multi-character string. The only characters excluded from this list are
-// '{ } [ ]', which keep real structural meaning everywhere (multi-character
-// strings and nested/POSIX sets), including behind a backslash.
 const BACKSLASH_ESCAPABLE_CHARS = new Set([
   "'",
   "*",
@@ -266,14 +259,17 @@ const BACKSLASH_ESCAPABLE_CHARS = new Set([
   "^",
 ]);
 
-// The subset of BACKSLASH_ESCAPABLE_CHARS that is *also* literal when
-// written bare - without a backslash - directly inside a '[...]' set (not
-// inside a nested '{...}' string). This excludes '&', '$' and '^', which stay
-// reserved when bare at this level, like in ICU: '&' and a misplaced '^'
-// raise a parse error (see readBracketSetLiteral), and '$' right before ']'
-// is ICU's "ether" member, which matches zero-width at the edges of the text
-// (see parseBracketSetBody). All three are literal via '\&' / '\$' / '\^',
-// and when bare inside '{...}'.
+const CONTROL_ESCAPES: Record<string, string> = {
+  a: "\u0007",
+  b: "\u0008",
+  e: "\u001b",
+  f: "\u000c",
+  n: "\n",
+  r: "\r",
+  t: "\t",
+  v: "\u000b",
+};
+
 const BRACKET_BARE_LITERAL_CHARS = new Set(
   [...BACKSLASH_ESCAPABLE_CHARS].filter(ch => ch !== "&" && ch !== "$" && ch !== "^"),
 );
@@ -309,7 +305,6 @@ function combineSets(left: SetMembers, right: SetMembers, operator: "-" | "&"): 
     };
   }
 
-  // A character can be in both sets via a listed member on either side or via a test on both
   return {
     alternatives: [
       ...left.alternatives.filter(alt => setHasString(right, alt)),
@@ -419,6 +414,12 @@ class Parser {
           this.i += 2;
           return { type: "literal", char: ch };
         }
+        const escaped = this.src.codePointAt(this.i + 1);
+        if (escaped !== undefined && !/^[0-7xUN]$/.test(String.fromCodePoint(escaped))) {
+          const ch = String.fromCodePoint(escaped);
+          this.i += 1 + ch.length;
+          return { type: "literal", char: CONTROL_ESCAPES[ch] ?? ch };
+        }
       }
 
       if (this.inQuote) {
@@ -522,8 +523,6 @@ class Parser {
     };
   }
 
-  // Like ICU, '^' anchors the match to the start of the text, and only before any pattern atom
-  // ('^ { a', '(^a)'); 'a ^', '{ a } ^b' and '^^' are errors
   private parseAnchorStart(): void {
     if (this.sawPatternAtom || this.anchorStart) {
       this.fail(
@@ -584,7 +583,6 @@ class Parser {
           this.parseAnchorStart();
           break;
         case "$": {
-          // Like ICU, a bare '$' is only an end-of-text anchor at the very end of the left side
           const after = this.peek();
           if (after === null || after.type !== "marker" || after.char !== ">") {
             this.fail(
@@ -845,8 +843,6 @@ class Parser {
           matchesStartOfString = matchesStartOfString || child.matchesStartOfString;
           matchesEndOfString = matchesEndOfString || child.matchesEndOfString;
           sawAnyMember = true;
-          // Like ICU, '[[:L:]-[aeiou]]' is a difference and '&' an intersection, applied to
-          // everything accumulated so far in this set ('[a[b]-[a]]' leaves only 'b')
           for (;;) {
             const operatorPos = this.i;
             this.skipRawWhitespace();
@@ -878,9 +874,6 @@ class Parser {
           continue;
         }
         if (!this.atEnd() && this.src[this.i] === "$") {
-          // ICU's "ether" member (U+FFFF), only right before ']': it matches no character, only
-          // zero-width at the edges of the text ('a } [a$]'), and it's the member that makes a
-          // negated set like '[^a]' match there too
           this.i++;
           this.skipRawWhitespace();
           if (this.atEnd() || this.src[this.i] !== "]") {
@@ -1007,8 +1000,6 @@ class Parser {
   }
 }
 
-// One entry per UTF-16 unit of a plain one-character atom; every other node (set, quantifier, group)
-// stands for itself, so like ICU's stand-ins it only ever equals itself
 function patternUnits(nodes: PatternNode[]): Array<string | PatternNode> {
   return nodes.flatMap<string | PatternNode>(node =>
     node.kind === "atom" && node.atom.kind === "char" && node.quantifier === "one"
@@ -1024,9 +1015,6 @@ interface RulePattern {
   keyLength: number;
 }
 
-// ICU's TransliterationRule::masks: aligned at the key, r1 covers no more context than r2 on either
-// side and equals r2 there, so r1 always wins and r2 can never fire ('a > b; ab > c;'). Anchors only
-// count when both patterns are the same length: then '^a' doesn't mask 'a', but 'a' masks '^a'
 function masks(r1: RulePattern, r2: RulePattern): boolean {
   const left = r1.anteLength;
   const left2 = r2.anteLength;
@@ -1042,10 +1030,6 @@ function masks(r1: RulePattern, r2: RulePattern): boolean {
   return right < right2 || (right === right2 && r1.keyLength <= r2.keyLength);
 }
 
-// Like ICU's TransliterationRuleSet::freeze, a masked rule is an error. Only a rule made of plain
-// characters can mask another one, and it equals that rule from its own first key (or, with an
-// empty key, post-context) unit on, so earlier rules are binned by that unit. A rule with no key
-// or post-context at all ('a{} > x;') goes in every bin
 function checkRuleMasking(rules: CompiledRule[]): void {
   const plainByIndexUnit = new Map<string, RulePattern[]>();
   const plainWithoutIndexUnit: RulePattern[] = [];
@@ -1153,7 +1137,6 @@ function matchGlobalTransform(identifier: string): GlobalTransformName | null {
 const CASED = /\p{Cased}/u;
 const CASE_IGNORABLE = /\p{Case_Ignorable}/u;
 
-// Upper-cases the first character and lower-cases the rest as one string, which keeps the final sigma (Σας)
 function titleCaseOneWord(word: string): string {
   const codepoints = Array.from(word);
   if (codepoints.length === 0) return word;
@@ -1166,8 +1149,6 @@ function titleCaseOneWord(word: string): string {
   return first.toLocaleUpperCase() + rest;
 }
 
-// Like ICU's Any-Title: a word starts after any character that is neither cased nor case-ignorable
-// (a space, a hyphen, a digit: 5Вань); apostrophes and dots don't split one (O'brien, St.petersburg)
 function applyTitleCase(input: string): string {
   let result = "";
   let word = "";
@@ -1253,8 +1234,6 @@ function atomMatchLengthBackward(atom: MatchAtom, text: string[], posEnd: number
   return best;
 }
 
-// Like ICU, a set matches zero-width only at the edge it runs into: forward (key, post-context) at
-// the end of the string, backward (ante-context) at the start ('[:^L:] > X;' leaves 'A' alone)
 function tryMatchForward(atom: MatchAtom, text: string[], pos: number): number | null {
   const consumed = atomMatchLengthForward(atom, text, pos);
   if (consumed !== null) return consumed;
@@ -1400,21 +1379,6 @@ interface MatchResult {
   captures: ReadonlyMap<number, string[]>;
 }
 
-// ICU's RuleBasedTransliterator documentation is explicit that "if multiple
-// rules may match at some point, the first matching rule is applied." Rule
-// precedence at a given cursor position is therefore governed entirely by
-// declaration order - never by which candidate would consume more text or
-// carries more ante/post context. It is the rule author's job to place more
-// specific (typically longer) rules before more general (typically shorter)
-// fallback rules if that ordering is what they want; this function must not
-// second-guess that by picking a "better" match further down the list.
-//
-// ICU *does* apply longest-match logic elsewhere, but only in two narrower
-// places that are unrelated to this function: (1) UnicodeSet alternatives
-// such as [a b {ch} {ll}], handled by atomMatchLengthForward/Backward above,
-// where the longest alternative within a *single* set is preferred, and
-// (2) charset conversion tables, which this transliteration engine does not
-// implement. Neither extends to the order in which standalone rules match.
 function findFirstMatch(text: string[], cursor: number, rules: CompiledRule[]): MatchResult | null {
   for (const rule of rules) {
     const keyOutcome = matchSequenceForward(text, cursor, rule.key);
@@ -1458,9 +1422,6 @@ function runPass(input: string, rules: CompiledRule[]): string {
   const text: string[] = Array.from(input);
   let cursor = 0;
 
-  // Like ICU's RuleBasedTransliterator, a pass gives up after 16 steps per UTF-16 unit of its input
-  // and leaves the rest untouched, so a rule that never moves the cursor ('a >| a;', '[ab]* > ;')
-  // stops instead of hanging
   const loopLimit = Math.min(input.length * 16, 0x10000000);
 
   for (let loopCount = 0; cursor < text.length && loopCount <= loopLimit; loopCount++) {
@@ -1508,11 +1469,8 @@ export class RBT_JS {
   }
 }
 
-// EXPORT
-
 type RbtApi = typeof RBT_JS;
 
-// 1. Default to JS implementation, which is already loaded
 let isJsImpl = true;
 let activeImpl: RbtApi = RBT_JS;
 let nativeCache: RbtApi;
@@ -1525,21 +1483,16 @@ export const settings = {
     if (isJsImpl === value) return;
     isJsImpl = value;
 
-    // 2. If JS, switch immediately.
-    // If Native, apply the cache (which is `undefined` on first run).
     activeImpl = value ? RBT_JS : nativeCache;
   },
 };
 
 export const RBT = new Proxy({} as RbtApi, {
   get(_target, prop) {
-    // 3. HOT PATH: Completely bypassed if using JS or already loaded native!
-    // This only executes once: the very first time Native is accessed.
     if (!activeImpl) {
       activeImpl = nativeCache = require("icu-transliterator").RBT;
     }
 
-    // 4. Direct property access
     return activeImpl[prop as keyof RbtApi];
   },
 });

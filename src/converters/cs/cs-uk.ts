@@ -9,6 +9,7 @@ export const csUk = async (text: Text) => {
   const { latnUkRules } = await import("data/latn/latn-uk.rules");
   const { latnUkPalatalRules } = await import("data/latn/latn-uk_palatal.rules");
   const { latnUkHushingRules } = await import("data/latn/latn-uk_hushing.rules");
+  const { ukEcRules } = await import("data/uk/uk_ec.rules");
 
   const transliterator = RBT.fromRules(
     csSkLatnUkAdjRules +
@@ -17,6 +18,7 @@ export const csUk = async (text: Text) => {
       csLatnRules +
       latnUkPalatalRules +
       latnUkRules +
+      ukEcRules +
       latnUkHushingRules,
   );
 

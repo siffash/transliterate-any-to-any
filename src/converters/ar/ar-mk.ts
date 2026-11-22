@@ -9,10 +9,10 @@ export const arMk = async (text: Text) => {
   const transliterator = RBT.fromRules(ipaMkRules + "::Title;" + arLowerRules);
 
   if (typeof text === "string") {
-    const ipa = await arIpa<string>(text);
+    const ipa = await arIpa<string>(text, { dropLoneArticle: true });
     return transliterator.transliterate(ipa);
   } else {
-    const ipaArray = await arIpa<string[]>(text);
+    const ipaArray = await arIpa<string[]>(text, { dropLoneArticle: true });
     return ipaArray.map(ipa => transliterator.transliterate(ipa));
   }
 };

@@ -40,9 +40,6 @@ describe("restoreLettersInIpa", () => {
   });
 
   describe("word matching is case-insensitive", () => {
-    // originalWord is lowercased internally, so callers can pass capitalized
-    // words (proper nouns, sentence-initial words, etc.) without pre-processing.
-    // lettersToRestore keys are matched as-given and are expected to be lowercase.
     it("matches a rule key against a word regardless of the word's casing", () => {
       const result = restoreLettersInIpa("Rr", "X", {
         ipaCharToBeReplaced: "X",
@@ -61,12 +58,7 @@ describe("restoreLettersInIpa", () => {
   });
 
   describe("does not force a match when nothing plausible is nearby", () => {
-    // Real bug reports: an earlier version always replaced whichever
-    // candidate was closest, even when it was too far away to plausibly
-    // correspond to the requested letters.
     it("leaves the ipa unchanged when the candidate found actually corresponds to a different letter (Florence)", () => {
-      // The "ə" in "ˈfɫɔɹəns" corresponds to the "e" in Florence, not the
-      // "o" -- the "o" is already correctly "ɔ" and needs no restoring.
       const result = restoreLettersInIpa("Florence", "ˈfɫɔɹəns", [
         { ipaCharToBeReplaced: ["oʊ", "ɑ", "ʌ", "ə"], lettersToRestore: { o: "ɔ" } },
       ]);
@@ -74,7 +66,6 @@ describe("restoreLettersInIpa", () => {
     });
 
     it("leaves the ipa unchanged when neither candidate corresponds to the requested letter (Elizabeth)", () => {
-      // Both "ə"s in "ɪˈɫɪzəbəθ" correspond to "a" and "e" -- neither is "i".
       const result = restoreLettersInIpa("Elizabeth", "ɪˈɫɪzəbəθ", [
         { ipaCharToBeReplaced: ["ə", "o"], lettersToRestore: { i: "i" } },
       ]);
@@ -82,9 +73,6 @@ describe("restoreLettersInIpa", () => {
     });
 
     it("replaces only the candidates that actually correspond to a requested letter, leaving the rest alone", () => {
-      // Two "Q"s in the ipa; only the first sits where the word has "a".
-      // The second sits where the word has "z", which isn't a rule key, so
-      // it must be left completely untouched.
       const result = restoreLettersInIpa("aZZZZz", "QYYYYQ", {
         ipaCharToBeReplaced: ["Q"],
         lettersToRestore: { a: "1" },
@@ -94,9 +82,6 @@ describe("restoreLettersInIpa", () => {
   });
 
   describe("search window scales with candidate width, capped at 3", () => {
-    // Synthetic words/ipa so the exact required shift distance is known and
-    // controlled. Keys are lowercase throughout (see "word matching is
-    // case-insensitive" above for why that now matters).
     it("a 2-character candidate searches up to 2 letters away", () => {
       const result = restoreLettersInIpa("pppppkeqqqqqqq", "aaaaaXYaaa", {
         ipaCharToBeReplaced: ["XY"],
@@ -114,9 +99,6 @@ describe("restoreLettersInIpa", () => {
     });
 
     it("a 4-character candidate still only searches up to 3 letters away (the cap)", () => {
-      // The matching word content is 4 letters away from the anchor -- one
-      // further than the cap allows -- so this must NOT match, even though
-      // the candidate is wider than 3 characters.
       const result = restoreLettersInIpa("aatestaaaaaa", "aaaaaaWXYZaa", {
         ipaCharToBeReplaced: ["WXYZ"],
         lettersToRestore: { test: "done4" },

@@ -2,6 +2,13 @@ export const enIpaBgRules = `
 ::Null;
 
 iː > ii;
+[ˈˌ] [bdfɡhjklɫmnpɹstvwzʃʒθðŋ]+ { i } [bfɡklɫpɹsvzʃʒθð] [bdfɡkmnptvzʃʒθðŋ] > ii;
+[ˈˌ] [bdfɡhjklɫmnpɹstvwzʃʒθðŋ]+ { i } [mnŋ] [bdfɡkpstvzʃʒθð] > ii;
+[ˈˌ] [bdfɡhjklɫmnpɹstvwzʃʒθðŋ]+ { i } d [bdfɡkmnpstvzθðŋ] > ii;
+[ˈˌ] [bdfɡhjklɫmnpɹstvwzʃʒθðŋ]+ { i } t [bdfɡkmnpsvzθðŋ] > ii;
+[^[:L:][:M:]] ˈ [bdfɡhjklɫmnpɹstvwzʃʒθðŋ]+ { i } [bdfɡklɫmnpɹstvzʃʒθðŋ] ɫ? [^[:L:][:M:]] > ii;
+ˌ [bdfɡhjklɫmnpɹstvwzʃʒθðŋ]+ { i } [bdfɡklɫmnpɹstvzʃʒθðŋ] ɫ? [^[:L:][:M:]] > ii;
+[ˈˌ] [bdfɡhjklɫmnpɹstvwzʃʒθðŋ]+ { i } [bdfɡkpstvzʃʒθð] [eə] ɫ [sz]? [^[:L:][:M:]] > ii;
 i { a } n [^[:L:][:M:]] > ə;
 [aeoɔ] ɪ { a } [bdfɡklɫmnpɹstvzʃʒθðŋ]+ [^[:L:][:M:]] > ə;
 [aeiouæɑɒɔəɛɜɪʊʌ] ɫ+ { a } n [^[:L:][:M:]] > ə;

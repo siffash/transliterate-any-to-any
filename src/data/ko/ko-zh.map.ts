@@ -1,4 +1,3 @@
-// Optimized Phonetic Map for Chinese Transliteration
 export const IV_MAP: Record<string, string> = {
   ga: "加",
   gae: "盖",
@@ -435,8 +434,6 @@ export const DIRECT_MAP: Record<string, string> = {
   지: "智",
 };
 
-// The usual characters of surnames that are split off a given name (이·명박 → 李), where a
-// syllable alone is read by sound (이란 伊兰)
 export const SURNAME_MAP: Record<string, string> = {
   이: "李",
   리: "李",
@@ -474,7 +471,6 @@ export const SURNAME_MAP: Record<string, string> = {
   예: "芮",
 };
 
-// Syllables with a final consonant, read as one Sino-Korean character (연 延, 민 敏, 흥 兴)
 export const SYLLABLE_MAP: Record<string, string> = {
   각: "角",
   간: "干",
@@ -778,6 +774,27 @@ export const SYLLABLE_MAP: Record<string, string> = {
   흠: "钦",
   흡: "吸",
   흥: "兴",
+  대: "大",
+  소: "昭",
+  미: "美",
+  규: "圭",
+  예: "艺",
+};
+
+export const UNIT_MAP: Record<string, string> = {
+  특별자치시: "特别自治市",
+  특별자치도: "特别自治道",
+  특별시: "特别市",
+  광역시: "广域市",
+  시: "市",
+  군: "郡",
+  구: "区",
+  읍: "邑",
+  면: "面",
+  동: "洞",
+  도: "道",
+  북도: "北道",
+  남도: "南道",
 };
 
 export const INITIALS = [

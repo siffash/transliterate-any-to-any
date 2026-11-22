@@ -39,7 +39,6 @@ const panelSx = {
   position: "relative",
 } as const;
 
-// The text area fills its panel and scrolls inside it
 const textAreaSx = {
   px: 2,
   pt: 2,
@@ -51,7 +50,6 @@ const textAreaSx = {
     fontFamily: multilingualTextStack,
     fontSize: "1.05rem",
   },
-  // Not the hidden copy that MUI measures the text with
   "& textarea:not([aria-hidden])": {
     height: "100% !important",
     overflow: "auto !important",
@@ -67,12 +65,6 @@ const spinnerSx = {
   ml: `${-SPINNER_SIZE / 2}px`,
 } as const;
 
-/**
- * The transliterator card laid out like the Google Translate app, for
- * OneScreenLayout: the source panel takes all the space until there is a
- * transliteration, and then shares it equally with the target panel. The
- * options are useTransliterator's, and the way to open links (see OneScreenLayout).
- */
 export const OneScreenTransliterator = ({
   speech,
   tts,
@@ -129,10 +121,6 @@ export const OneScreenTransliterator = ({
     handleDismissDetected,
   } = useTransliterator({ speech, tts, copyText, syncUrl, suppressErrors });
 
-  // The target panel appears as soon as a transliteration starts loading, and
-  // stays while the next one loads (e.g. after a language change), so that the
-  // layout doesn't jump; it goes away with the source text or on an error,
-  // except one that the other spelling may avoid, as it has the spelling button
   const [showTarget, setShowTarget] = useState(false);
   useEffect(() => {
     if (loading || targetText) setShowTarget(true);
@@ -189,7 +177,6 @@ export const OneScreenTransliterator = ({
           pb: 1,
         }}
       >
-        {/* Source panel */}
         <Box sx={panelSx}>
           <TextField
             multiline
@@ -258,7 +245,6 @@ export const OneScreenTransliterator = ({
           </Stack>
         </Box>
 
-        {/* Target panel */}
         {showTarget && (
           <Box sx={panelSx}>
             <TextField
@@ -270,7 +256,6 @@ export const OneScreenTransliterator = ({
                 input: { readOnly: true, disableUnderline: true },
                 htmlInput: { "aria-label": "Transliterated text", "aria-busy": loading },
               }}
-              // The previous result stays, dimmed, while the next one loads
               sx={[textAreaSx, { opacity: loading ? 0.4 : 1, transition: "opacity 0.2s" }]}
             />
             {loading && (
@@ -326,8 +311,6 @@ export const OneScreenTransliterator = ({
           </Box>
         )}
 
-        {/* At the bottom of the layout's column (see OneScreenLayout) rather than
-            of the screen, over the footer, so that it stays above the keyboard too */}
         <Snackbar
           open={linkCopied && !errorMsg && !detectedLang}
           autoHideDuration={3000}

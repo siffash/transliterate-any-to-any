@@ -4,9 +4,10 @@ export const mkZh = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { mkIpaRules } = await import("data/mk/mk-ipa.rules");
   const { ipaZhEvRules } = await import("data/ipa/ipa-zh_ev.rules");
+  const { ipaZhChaRules } = await import("data/ipa/ipa-zh_cha.rules");
   const { ipaZhRules } = await import("data/ipa/ipa-zh.rules");
 
-  const transliterator = RBT.fromRules(mkIpaRules + ipaZhEvRules + ipaZhRules);
+  const transliterator = RBT.fromRules(mkIpaRules + ipaZhChaRules + ipaZhEvRules + ipaZhRules);
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);

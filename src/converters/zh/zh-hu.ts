@@ -8,7 +8,6 @@ export const zhHu = async (text: Text) => {
 
   const transliterator = RBT.fromRules(zhHuRules);
 
-  // Hungarian writes a place as one word (Tiencsin) and hyphenates a given name (Hszi Csin-ping)
   const convert = async (text: string) => {
     const romanized = await wordSplitter(text, "zh", (text, givenName) =>
       zhPinyin(text, givenName ? "‧" : "'"),

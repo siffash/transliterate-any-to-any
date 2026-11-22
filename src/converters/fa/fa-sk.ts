@@ -7,9 +7,19 @@ export const faSk = async (text: Text) => {
   const { faIpa } = await import("converters/fa/fa-ipa");
   const { faIpaARules } = await import("data/fa/fa-ipa_a.rules");
   const { ipaSkRules } = await import("data/ipa/ipa-sk.rules");
+  const { ipaILongRules } = await import("data/ipa/ipa_i-long.rules");
+  const { ipaTHoldRules } = await import("data/ipa/ipa_t-hold.rules");
+  const { ipaTRestoreRules } = await import("data/ipa/ipa_t-restore.rules");
 
   const transliterator = RBT.fromRules(
-    ipaGemDRules + faIpaARules + ipaSkRules + "::Title;" + faLowerRules,
+    ipaTHoldRules +
+      ipaGemDRules +
+      faIpaARules +
+      ipaILongRules +
+      ipaSkRules +
+      "::Title;" +
+      faLowerRules +
+      ipaTRestoreRules,
   );
 
   if (typeof text === "string") {

@@ -1,7 +1,8 @@
 export const frIpaThRules = `
 ::Null;
 
-\\- } [aæʌɑɛeiɪoɒɔuʊyʏøœɵəɜɐ] > ʔ;
+\\- } [aæʌɑɛeiɪoɒɔuʊyʏøœɵəɜɐ] > ;
+ŋ { \\- } t [aæʌɑɛeiɪoɒɔuʊyʏøœɵəɜɐ] > ;
 ɥ [iɪ] > uj;
 [aɑɐeɛəoɔiɪ] { [yʏɥ] } [aɑɐoɔɒ] > ʔuʔ;
 [yʏɥ] } [aɑɐoɔɒ] > uʔ;

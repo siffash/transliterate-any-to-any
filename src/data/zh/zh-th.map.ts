@@ -1,6 +1,3 @@
-// The Royal Institute of Thailand's system for writing Mandarin in Thai script (2000). C is the initial consonant and
-// T is where its tone mark goes
-
 export const INITIALS: Record<string, string> = {
   b: "ป",
   p: "พ",
@@ -64,13 +61,11 @@ export const FINALS: Record<string, string> = {
   üe: "เCฺวT",
   üan: "เCฺวีTยน",
   ün: "CฺวิTน",
-  // The syllabic n, ng and m of 嗯, 呣
   n: "CึTน",
   ng: "CึTง",
   m: "CึTม",
 };
 
-// Syllables without an initial consonant: y and w are ย and ว, but yi, yin, ying and wu start with อ
 export const ZERO_INITIAL: Record<string, [initial: string, final: string]> = {
   yi: ["อ", "i"],
   ya: ["ย", "a"],
@@ -101,7 +96,6 @@ export const ZERO_INITIAL: Record<string, [initial: string, final: string]> = {
   m: ["อ", "m"],
 };
 
-// Tones 2 and 3 need a high-class initial: a low-class one becomes its high-class pair or takes a leading ห
 export const HIGH_CLASS_PAIRS: Record<string, string> = {
   ค: "ข",
   ช: "ฉ",

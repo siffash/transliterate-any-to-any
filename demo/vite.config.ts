@@ -15,8 +15,6 @@ const KUROMOJI_DICT_PATTERN = new RegExp(
   `^${KUROMOJI_DICT_URL.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`,
 );
 
-// The library's chunks and the kuromoji dictionary are downloaded only when
-// the app runs installed (see src/hooks/useOfflinePack.ts)
 const pack = offlinePack({ extraUrls: KUROMOJI_DICT_FILES.map(file => KUROMOJI_DICT_URL + file) });
 
 const ICON_BACKGROUND = { resizeOptions: { background: "#D9AE4F" } };
@@ -56,7 +54,6 @@ export default defineConfig({
         navigateFallbackDenylist: [/^\/google[0-9a-f]+\.html$/],
         cleanupOutdatedCaches: true,
         clientsClaim: true,
-        // Only the app shell is precached
         manifestTransforms: [
           async entries => ({ manifest: entries.filter(entry => !pack.isInPack(entry.url)) }),
         ],
@@ -76,14 +73,11 @@ export default defineConfig({
             },
           },
           {
-            // The file names are content-hashed, so a cached file never goes stale
             urlPattern: ({ url, sameOrigin }) => sameOrigin && url.pathname.startsWith("/assets/"),
             handler: "CacheFirst",
             options: {
               cacheName: "assets",
               cacheableResponse: { statuses: [200] },
-              // Files downloaded by useOfflinePack are requested without the Origin
-              // header that module imports send, while servers may vary on it
               matchOptions: { ignoreVary: true },
             },
           },
@@ -107,13 +101,11 @@ export default defineConfig({
     },
     tsconfigPaths: true,
   },
-  // The mobile app isn't part of the PWA
   optimizeDeps: {
     entries: ["index.html"],
   },
   server: {
     fs: {
-      // jieba's .wasm, which the library (../dist) loads from the repo's node_modules
       allow: [
         searchForWorkspaceRoot(__dirname),
         path.resolve(__dirname, "../node_modules/jieba-wasm"),
@@ -128,10 +120,6 @@ export default defineConfig({
     plugins: () => [pack.workerPlugin()],
     rolldownOptions: {
       output: {
-        // The worker entry chunk lists every converter's file name, so its hash
-        // changes with any library change. Bundled into it, the library's
-        // constants would make the ~500 chunks that use them import the entry,
-        // and so get renamed (and re-downloaded) on every library change.
         codeSplitting: {
           groups: [{ name: "constants", test: /[\\/]dist[\\/]constants-[^\\/]+\.mjs$/ }],
         },

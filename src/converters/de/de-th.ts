@@ -8,9 +8,18 @@ export const deTh = async (text: Text) => {
   const { ipaThOpenRules } = await import("data/ipa/ipa-th_open.rules");
   const { ipaThRules } = await import("data/ipa/ipa-th.rules");
   const { ipaThKaranRules } = await import("data/ipa/ipa-th_karan.rules");
+  const { deIpaThRules } = await import("data/de/de-ipa_th.rules");
+  const { deThBurgRules } = await import("data/de/de-th_burg.rules");
 
   const transliterator = RBT.fromRules(
-    deIpaRules + deIpaIgRules + ipaErRules + ipaThOpenRules + ipaThRules + ipaThKaranRules,
+    deIpaRules +
+      deIpaIgRules +
+      ipaErRules +
+      ipaThOpenRules +
+      deIpaThRules +
+      ipaThRules +
+      ipaThKaranRules +
+      deThBurgRules,
   );
 
   if (typeof text === "string") {

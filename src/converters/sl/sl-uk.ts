@@ -4,8 +4,25 @@ export const slUk = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { slLatnRules } = await import("data/sl/sl-latn.rules");
   const { latnUkRules } = await import("data/latn/latn-uk.rules");
+  const { latnUkSouthSlavicIRules } = await import("data/latn/latn-uk_south-slavic-i.rules");
+  const { ukSkRules } = await import("data/uk/uk_sk.rules");
+  const { latnApostropheDropRules } = await import("data/latn/latn_apostrophe-drop.rules");
+  const { ukSouthSlavicAdjRules } = await import("data/uk/uk_south-slavic-adj.rules");
+  const { ukEcRules } = await import("data/uk/uk_ec.rules");
+  const { ukIcaRules } = await import("data/uk/uk_ica.rules");
+  const { ukIjaRules } = await import("data/uk/uk_ija.rules");
 
-  const transliterator = RBT.fromRules(slLatnRules + latnUkRules);
+  const transliterator = RBT.fromRules(
+    slLatnRules +
+      latnUkSouthSlavicIRules +
+      latnUkRules +
+      ukIjaRules +
+      ukIcaRules +
+      ukEcRules +
+      ukSkRules +
+      ukSouthSlavicAdjRules +
+      latnApostropheDropRules,
+  );
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);

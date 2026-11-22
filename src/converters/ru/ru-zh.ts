@@ -2,11 +2,15 @@ import { Text } from "types";
 
 export const ruZh = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
+  const { ruZhPrefixRules } = await import("data/ru/ru-zh_prefix.rules");
   const { ruIpaRules } = await import("data/ru/ru-ipa.rules");
   const { ruIpaZhRules } = await import("data/ru/ru-ipa_zh.rules");
+  const { ruIpaZhXinhuaRules } = await import("data/ru/ru-ipa_zh-xinhua.rules");
   const { ipaZhRules } = await import("data/ipa/ipa-zh.rules");
 
-  const transliterator = RBT.fromRules(ruIpaRules + ruIpaZhRules + ipaZhRules);
+  const transliterator = RBT.fromRules(
+    ruZhPrefixRules + ruIpaRules + ruIpaZhRules + ruIpaZhXinhuaRules + ipaZhRules,
+  );
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);

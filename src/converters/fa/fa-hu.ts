@@ -10,16 +10,20 @@ export const faHu = async (text: Text) => {
   const { faIpaShortIuRules } = await import("data/fa/fa-ipa_short-iu.rules");
   const { faIpaARules } = await import("data/fa/fa-ipa_a.rules");
   const { ipaHuRules } = await import("data/ipa/ipa-hu.rules");
+  const { ipaTHoldRules } = await import("data/ipa/ipa_t-hold.rules");
+  const { ipaTRestoreRules } = await import("data/ipa/ipa_t-restore.rules");
 
   const transliterator = RBT.fromRules(
-    faIpaKRules +
+    ipaTHoldRules +
+      faIpaKRules +
       faIpaGhRules +
       faIpaShortIuRules +
       ipaGemHuRules +
       faIpaARules +
       ipaHuRules +
       "::Title;" +
-      faLowerRules,
+      faLowerRules +
+      ipaTRestoreRules,
   );
 
   if (typeof text === "string") {

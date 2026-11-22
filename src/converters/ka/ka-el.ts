@@ -3,9 +3,10 @@ import { Text } from "types";
 export const kaEl = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { kaLatnRules } = await import("data/ka/ka-latn.rules");
+  const { kaLatnJoinRules } = await import("data/ka/ka-latn_join.rules");
   const { latnElRules } = await import("data/latn/latn-el.rules");
 
-  const transliterator = RBT.fromRules(kaLatnRules + latnElRules);
+  const transliterator = RBT.fromRules(kaLatnRules + latnElRules + kaLatnJoinRules);
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);

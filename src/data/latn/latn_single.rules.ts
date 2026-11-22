@@ -9,4 +9,5 @@ export const latnSingleRules = `
 [Rr] { [Rr] > ;
 [Ss] { [Ss] > ;
 [Tt] { [Tt] > ;
+[Vv] { [Vv] > ;
 `;

@@ -8,11 +8,17 @@ export const koAz = async (text: Text) => {
   const { koLatnInitialRules } = await import("data/ko/ko-latn_initial.rules");
   const { latnAzRules } = await import("data/latn/latn-az.rules");
   const { latnKoHyphenRules } = await import("data/latn/latn_ko-hyphen.rules");
+  const { koLatnNRules } = await import("data/ko/ko-latn_n.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
   const { normalizeKo } = await import("helpers/normalizeKo");
 
   const transliterator = RBT.fromRules(
-    koLatnAssimRules + koLatnRules + koLatnInitialRules + latnAzRules + latnKoHyphenRules,
+    koLatnAssimRules +
+      koLatnRules +
+      koLatnInitialRules +
+      koLatnNRules +
+      latnAzRules +
+      latnKoHyphenRules,
   );
 
   const convert = async (text: string) => {

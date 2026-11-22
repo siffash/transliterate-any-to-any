@@ -1,6 +1,3 @@
-// Generic words that begin a Thai place name and are written apart from the rest of it in
-// Latin script (เกาะสมุย Ko Samui, หาดใหญ่ Hat Yai, แม่น้ำปิง Mae Nam Ping). Words that also
-// begin people's names (นคร, ภู, ลำ, ศรี) are left out
 export const PLACE_GENERICS = [
   "จังหวัด",
   "ตำบล",

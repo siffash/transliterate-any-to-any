@@ -5,8 +5,9 @@ export const slJa = async (text: Text) => {
   const { slIpaRules } = await import("data/sl/sl-ipa.rules");
   const { ipaDevoiceZRules } = await import("data/ipa/ipa_devoice-z.rules");
   const { ipaJaRules } = await import("data/ipa/ipa-ja.rules");
+  const { ipaJaIcRules } = await import("data/ipa/ipa-ja_ic.rules");
 
-  const transliterator = RBT.fromRules(slIpaRules + ipaDevoiceZRules + ipaJaRules);
+  const transliterator = RBT.fromRules(slIpaRules + ipaDevoiceZRules + ipaJaIcRules + ipaJaRules);
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);

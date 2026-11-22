@@ -10,7 +10,6 @@ export const urAr = async (text: Text) => {
   const normalizer = RBT.fromRules(urNormRules);
   const transliterator = RBT.fromRules(urArRules);
 
-  // A final ی read as ā, typed without the dagger alif (موسی), is alef maksura in Arabic: موسى
   const convert = async (text: string) =>
     transliterator.transliterate(
       await wordSplitter(normalizer.transliterate(text), "ur", (word: string) =>

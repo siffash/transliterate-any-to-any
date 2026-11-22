@@ -1,7 +1,5 @@
 apply plugin: 'com.android.application'
 
-// The upload key that signs release builds for Google Play, set in
-// android/keystore.properties (not committed, see keystore.properties.example)
 def keystorePropertiesFile = rootProject.file('keystore.properties')
 def keystoreProperties = new Properties()
 if (keystorePropertiesFile.exists()) {
@@ -65,8 +63,6 @@ dependencies {
 
 apply from: 'capacitor.build.gradle'
 
-// Google Play doesn't take unsigned bundles; Android Studio's "Generate Signed
-// App Bundle" passes its own key instead of keystore.properties
 if (!keystorePropertiesFile.exists() && !project.hasProperty('android.injected.signing.store.file')) {
     tasks.matching { it.name in ['bundleRelease', 'assembleRelease'] }.configureEach {
         doFirst {

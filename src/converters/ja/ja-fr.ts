@@ -7,18 +7,17 @@ export const jaFr = async (text: Text) => {
   const { latnFrRules } = await import("data/latn/latn-fr.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
   const { getKuroshiro } = await import("helpers/getKuroshiro");
+  const { markJaUnit, joinJaUnits } = await import("helpers/jaUnits");
 
   const kuroshiro = await getKuroshiro();
 
   const transliterator = RBT.fromRules(jaLatnRules + latnFrRules);
 
   const convert = async (text: string) => {
-    const romanized = await wordSplitter(
-      normalizeJa(text),
-      "ja",
-      async text => await kuroshiro.convert(text, { to: "romaji" }),
+    const romanized = await wordSplitter(normalizeJa(text), "ja", async text =>
+      markJaUnit(text, await kuroshiro.convert(text, { to: "romaji" })),
     );
-    return transliterator.transliterate(romanized);
+    return joinJaUnits(transliterator.transliterate(romanized));
   };
 
   if (typeof text === "string") {

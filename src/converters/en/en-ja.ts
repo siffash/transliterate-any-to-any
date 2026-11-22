@@ -16,8 +16,9 @@ export const enJa = async (text: Text) => {
   } = await import("helpers/normalizeEnIpa");
   const { enIpaJaRules } = await import("data/en/en-ipa_ja.rules");
   const { ipaJaRules } = await import("data/ipa/ipa-ja.rules");
+  const { enIpaShireRules } = await import("data/en/en-ipa_shire.rules");
 
-  const transliterator = RBT.fromRules(enIpaJaRules + ipaJaRules);
+  const transliterator = RBT.fromRules(enIpaShireRules + enIpaJaRules + ipaJaRules);
 
   const words = typeof text === "string" ? [text] : text;
   const ipa = await enIpa<string[]>(

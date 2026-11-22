@@ -21,8 +21,6 @@ export const jaHe = async (text: Text) => {
   const convert = async (text: string) => {
     const ipa = await wordSplitter(normalizeJa(text), "ja", async text => {
       const hiragana = await kuroshiro.convert(text, { to: "hiragana" });
-      // Force Japanese: phonemize otherwise reads the pre-pass Latin letters at the start
-      // of a word as English, and lone kanji as Chinese
       const options = /\p{scx=Latin}/u.test(hiragana) ? {} : { language: "ja" };
       const ipa = toIPA(prepassTransliterator.transliterate(hiragana), options);
       return filterIpa(ipa, hiragana, "ja", exceptions);

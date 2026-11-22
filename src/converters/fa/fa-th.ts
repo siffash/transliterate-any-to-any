@@ -3,12 +3,15 @@ import { Text } from "types";
 export const faTh = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { faIpa } = await import("converters/fa/fa-ipa");
-  const { faIpaARules } = await import("data/fa/fa-ipa_a.rules");
+  const { faIpaThRules } = await import("data/fa/fa-ipa_th.rules");
   const { ipaThOpenRules } = await import("data/ipa/ipa-th_open.rules");
   const { ipaThRules } = await import("data/ipa/ipa-th.rules");
   const { ipaThKaranRules } = await import("data/ipa/ipa-th_karan.rules");
+  const { ipaThTSplitRules } = await import("data/ipa/ipa-th_t-split.rules");
 
-  const transliterator = RBT.fromRules(faIpaARules + ipaThOpenRules + ipaThRules + ipaThKaranRules);
+  const transliterator = RBT.fromRules(
+    ipaThTSplitRules + faIpaThRules + ipaThOpenRules + ipaThRules + ipaThKaranRules,
+  );
 
   if (typeof text === "string") {
     const ipa = await faIpa<string>(text);

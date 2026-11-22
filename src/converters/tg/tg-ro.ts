@@ -6,9 +6,10 @@ export const tgRo = async (text: Text) => {
   const { latnQHoldRules } = await import("data/latn/latn_q-hold.rules");
   const { latnRoRules } = await import("data/latn/latn-ro.rules");
   const { latnQRestoreRules } = await import("data/latn/latn_q-restore.rules");
+  const { latnRoDjRules } = await import("data/latn/latn-ro_dj.rules");
 
   const transliterator = RBT.fromRules(
-    tgLatnRules + latnQHoldRules + latnRoRules + latnQRestoreRules,
+    tgLatnRules + latnQHoldRules + latnRoDjRules + latnRoRules + latnQRestoreRules,
   );
 
   if (typeof text === "string") {

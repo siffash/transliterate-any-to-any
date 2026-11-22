@@ -8,7 +8,6 @@ export type Jieba = {
 
 let jiebaPromise: Promise<Jieba> | undefined;
 
-// jieba's Chinese word segmentation (WebAssembly, with its dictionary built in)
 export const getJieba = () => {
   jiebaPromise ??= (async (): Promise<Jieba> => {
     if (isNode || isDeno || isBun) {
@@ -19,7 +18,6 @@ export const getJieba = () => {
       const pkg = "jieba-wasm";
       return require(pkg);
     }
-    // The browser build fetches and compiles its .wasm first
     const jieba = await import("jieba-wasm/web");
     await jieba.default();
     return jieba;

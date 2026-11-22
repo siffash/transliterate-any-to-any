@@ -5,8 +5,9 @@ export const itHe = async (text: Text) => {
   const { ipaWURules } = await import("data/ipa/ipa_w-u.rules");
   const { itIpaRules } = await import("data/it/it-ipa.rules");
   const { ipaHeRules } = await import("data/ipa/ipa-he.rules");
+  const { itIpaHeRules } = await import("data/it/it-ipa_he.rules");
 
-  const transliterator = RBT.fromRules(itIpaRules + ipaWURules + ipaHeRules);
+  const transliterator = RBT.fromRules(itIpaRules + itIpaHeRules + ipaWURules + ipaHeRules);
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);

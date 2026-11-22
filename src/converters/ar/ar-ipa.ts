@@ -1,6 +1,12 @@
 import { Text } from "types";
 
-export const arIpa = async <T = Text>(text: Text): Promise<T> => {
+export const arIpa = async <T = Text>(
+  text: Text,
+  {
+    dropLoneArticle = false,
+    firstArticleE = false,
+  }: { dropLoneArticle?: boolean | "all"; firstArticleE?: boolean } = {},
+): Promise<T> => {
   const { arIpaMap, charMap, stemCharMap } = await import("data/ar/ar-ipa.map");
   const { RBT } = await import("helpers/rbt");
   const { arIpaRules } = await import("data/ar/ar-ipa.rules");
@@ -10,7 +16,6 @@ export const arIpa = async <T = Text>(text: Text): Promise<T> => {
 
   const transliterator = RBT.fromRules(arIpaRules);
 
-  // Prefixes longest-first - order is critical for greedy matching
   const PREFIXES = [
     "وال",
     "فال",
@@ -32,25 +37,20 @@ export const arIpa = async <T = Text>(text: Text): Promise<T> => {
 
   const SUFFIXES = ["هم", "هن", "كم", "كن", "نا", "ها", "ه", "ك", "ي", "ة", "ات"];
 
-  const MIN_STEM = 2; // never strip if remaining stem would be shorter
+  const MIN_STEM = 2;
 
   const normalize = (s: string): string => {
-    return s.replace(/[\u064B-\u065F\u0670]/g, ""); // strip tashkeel
+    return s.replace(/[\u064B-\u065F\u0670]/g, "");
   };
 
   const charFallback = (s: string): string => {
-    // A hamza carrier inside a word is a glottal stop (الأفق → alʔafq); a word-initial one stays a plain vowel
     return [...s].map((ch, i) => (i && /[أإ]/.test(ch) ? "ʔ" : "") + (charMap[ch] ?? ch)).join("");
   };
 
   const CONSONANT = /[بتثجحخدذرزسشصضطظعغفقكلمنه]/;
 
-  // A whole word missing from the map: ا inside it is long; و/ي between consonants (or after one at the end) are
-  // the long vowels uː/iː (محمود, سعيد), elsewhere the glides w/j; -ية is -ijja
   const stemFallback = (s: string, afterArticle: boolean): string => {
     const chars = [...s];
-    // A short name in the fayʕal/fawʕal pattern has a diphthong and an a after it: حيدر, بيبرس → bajbars, كوثر.
-    // بو- is the Maghrebi Bū- (بومدين)
     const diphthong =
       chars.length <= 5 &&
       /[يو]/.test(chars[1]) &&
@@ -75,17 +75,13 @@ export const arIpa = async <T = Text>(text: Text): Promise<T> => {
         (diphthong && i === 2 ? "a" : "")
       );
     });
-    // Arabic has no word-initial clusters and no runs of three consonants: the unwritten vowel is most often a
-    // (حجاز → ħadʒaːz, المتجددة → almatadʒadda)
     const isConsonant = (segment: string) => /\p{L}/u.test(segment) && !/[aiuةآ]/.test(segment);
-    // تش is one sound in foreign names (تشاد → tʃaːd)
     for (let i = segments.length - 1; i > 0; i--) {
       if (segments[i - 1] === "t" && segments[i] === "ʃ") segments.splice(i - 1, 2, "tʃ");
     }
     return breakClusters(segments, isConsonant, "a");
   };
 
-  // The article, alone or after a one-letter prefix (للخدمات → lilxdmaːt)
   const ARTICLE_PREFIXES: [string, string][] = [
     ["وال", "wal"],
     ["فال", "fal"],
@@ -95,11 +91,9 @@ export const arIpa = async <T = Text>(text: Text): Promise<T> => {
     ["ال", "al"],
   ];
 
-  // وال، فال، بال، كال: charFallback would read the alif and give wali-, bia-li- (والقاهرة → Valikahira)
   const prefixIPA = (pre: string): string =>
     pre.length === 3 ? ARTICLE_PREFIXES.find(([p]) => p === pre)![1] : charFallback(pre);
 
-  // A prefix vowel elides the article's a: بالله → billaːh, وبالله → wabillaːh
   const joinPrefix = (pre: string, stem: string, stemIPA: string): string => {
     const preIPA = prefixIPA(pre);
     return stem.startsWith("ال") && /[ai]$/.test(preIPA) && stemIPA.startsWith("a")
@@ -116,7 +110,6 @@ export const arIpa = async <T = Text>(text: Text): Promise<T> => {
     return stemFallback(word, false);
   };
 
-  // A word missing from the map whose -ي adjective is there takes its reading (حجاز from حجازي ħiˈdʒaːziː)
   const lookup = (s: string): string => {
     if (arIpaMap[s] || s.length < 3 || s.endsWith("ي")) return arIpaMap[s];
     const nisba = arIpaMap[s + "ي"];
@@ -126,11 +119,9 @@ export const arIpa = async <T = Text>(text: Text): Promise<T> => {
   const wordToIPA = (rawWord: string): string => {
     const word = normalize(rawWord);
 
-    // 1. Full word - best accuracy (preserves sun-letter assimilation etc.)
     const direct = filterIpa(lookup(word), word, "ar");
     if (direct) return direct;
 
-    // 2. Prefix only
     for (const pre of PREFIXES) {
       if (!word.startsWith(pre)) continue;
       const stem = word.slice(pre.length);
@@ -139,7 +130,6 @@ export const arIpa = async <T = Text>(text: Text): Promise<T> => {
       const stemIPA = filterIpa(lookup(stem), stem, "ar");
       if (stemIPA) return joinPrefix(pre, stem, stemIPA);
 
-      // 3. Prefix + suffix
       for (const suf of SUFFIXES) {
         if (!stem.endsWith(suf)) continue;
         const core = stem.slice(0, stem.length - suf.length);
@@ -150,7 +140,6 @@ export const arIpa = async <T = Text>(text: Text): Promise<T> => {
       }
     }
 
-    // 4. Suffix only (no prefix)
     for (const suf of SUFFIXES) {
       if (!word.endsWith(suf)) continue;
       const stem = word.slice(0, word.length - suf.length);
@@ -160,20 +149,36 @@ export const arIpa = async <T = Text>(text: Text): Promise<T> => {
       if (stemIPA) return stemIPA + charFallback(suf);
     }
 
-    // 5. Character-by-character fallback
     return wordFallback(word);
   };
 
-  // Marks words with the article; ar-ipa.rules writes a hyphen after it (aʃ-ʃams, an-naːsˤir). الله stays one word
   const ARTICLE = /^ال(?!له(م|$))../;
 
-  const markArticle = (rawWord: string): string => {
+  const markArticle = (rawWord: string, lone: boolean): string => {
     const ipa = wordToIPA(rawWord);
-    return ARTICLE.test(normalize(rawWord)) ? "\uE001" + ipa : ipa;
+    const mark = !lone ? "\uE001" : firstArticleE ? "\uE003" : "\uE002";
+    return ARTICLE.test(normalize(rawWord)) ? mark + ipa : ipa;
+  };
+
+  const loneWords = async (text: string): Promise<boolean[]> => {
+    const marked = await wordSplitter(text, "ar", word =>
+      normalize(word).endsWith("ي") ? "\uE011" : "\uE010",
+    );
+    return marked.split(/[,;.]/).flatMap(part => {
+      const words = part.match(/[\uE010\uE011]/g) ?? [];
+      return words.map(
+        (word, i) => word === "\uE010" && (firstArticleE ? i === 0 : words.length === 1),
+      );
+    });
   };
 
   const convert = async (text: string) => {
-    const result = await wordSplitter(text, "ar", markArticle);
+    const lone =
+      dropLoneArticle !== "all" && (dropLoneArticle || firstArticleE) ? await loneWords(text) : [];
+    let index = 0;
+    const result = await wordSplitter(text, "ar", word =>
+      markArticle(word, dropLoneArticle === "all" || !!lone[index++]),
+    );
     return transliterator.transliterate(result);
   };
 

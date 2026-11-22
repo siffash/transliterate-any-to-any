@@ -6,8 +6,12 @@ export const noFa = async (text: Text) => {
   const { svNoIpaRRules } = await import("data/ipa/sv_no-ipa_r.rules");
   const { noIpaOyRules } = await import("data/no/no-ipa_oy.rules");
   const { ipaFaRules } = await import("data/ipa/ipa-fa.rules");
+  const { ipaFaOeRules } = await import("data/ipa/ipa-fa_oe.rules");
+  const { ipaFaYRules } = await import("data/ipa/ipa-fa_y.rules");
 
-  const transliterator = RBT.fromRules(noIpaRules + svNoIpaRRules + noIpaOyRules + ipaFaRules);
+  const transliterator = RBT.fromRules(
+    noIpaRules + svNoIpaRRules + noIpaOyRules + ipaFaOeRules + ipaFaYRules + ipaFaRules,
+  );
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);

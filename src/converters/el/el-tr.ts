@@ -8,9 +8,18 @@ export const elTr = async (text: Text) => {
   const { elLatnRules } = await import("data/el/el-latn.rules");
   const { latnCChRules } = await import("data/latn/latn_c-ch.rules");
   const { latnTrRules } = await import("data/latn/latn-tr.rules");
+  const { latnGhGRules } = await import("data/latn/latn_gh-g.rules");
+  const { elLatnDzRules } = await import("data/el/el-latn_dz.rules");
 
   const transliterator = RBT.fromRules(
-    elLatnGiRules + elLatnJiRules + elLatnGeRules + elLatnRules + latnCChRules + latnTrRules,
+    elLatnGiRules +
+      elLatnJiRules +
+      elLatnGeRules +
+      elLatnRules +
+      latnCChRules +
+      latnGhGRules +
+      elLatnDzRules +
+      latnTrRules,
   );
 
   if (typeof text === "string") {

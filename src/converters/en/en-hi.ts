@@ -10,10 +10,10 @@ export const enHi = async (text: Text) => {
     airRestoreRules,
   } = await import("helpers/normalizeEnIpa");
   const { enIpaRetroflexRules } = await import("data/en/en-ipa_retroflex.rules");
-  const { enIpaHiRules } = await import("data/en/en-ipa_hi.rules");
+  const { ipaILongRules } = await import("data/ipa/ipa_i-long.rules");
   const { ipaHiRules } = await import("data/ipa/ipa-hi.rules");
 
-  const transliterator = RBT.fromRules(enIpaRetroflexRules + enIpaHiRules + ipaHiRules);
+  const transliterator = RBT.fromRules(enIpaRetroflexRules + ipaILongRules + ipaHiRules);
 
   const words = typeof text === "string" ? [text] : text;
   const ipa = await enIpa<string[]>(

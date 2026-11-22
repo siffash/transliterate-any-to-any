@@ -3,10 +3,15 @@ import { Text } from "types";
 export const hyRu = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { hyLatnRules } = await import("data/hy/hy-latn.rules");
+  const { hyLatnGhRules } = await import("data/hy/hy-latn_gh.rules");
+  const { hyLatnH0Rules } = await import("data/hy/hy-latn_h0.rules");
+  const { hyLatnHRules } = await import("data/hy/hy-latn_h.rules");
   const { latnRuRules } = await import("data/latn/latn-ru.rules");
   const { hyLatnRuRules } = await import("data/hy/hy-latn_ru.rules");
 
-  const transliterator = RBT.fromRules(hyLatnRules + latnRuRules + hyLatnRuRules);
+  const transliterator = RBT.fromRules(
+    hyLatnRules + hyLatnGhRules + hyLatnHRules + hyLatnH0Rules + latnRuRules + hyLatnRuRules,
+  );
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);

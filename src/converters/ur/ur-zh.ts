@@ -6,8 +6,9 @@ export const urZh = async (text: Text) => {
   const { urIpa } = await import("converters/ur/ur-ipa");
   const { ipaZhFaiRules } = await import("data/ipa/ipa-zh_fai.rules");
   const { ipaZhRules } = await import("data/ipa/ipa-zh.rules");
+  const { urIpaZhRules } = await import("data/ur/ur-ipa_zh.rules");
 
-  const transliterator = RBT.fromRules(ipaGemRules + ipaZhFaiRules + ipaZhRules);
+  const transliterator = RBT.fromRules(ipaGemRules + urIpaZhRules + ipaZhFaiRules + ipaZhRules);
 
   if (typeof text === "string") {
     const ipa = await urIpa<string>(text);

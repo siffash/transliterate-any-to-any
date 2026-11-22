@@ -5,8 +5,18 @@ export const caRu = async (text: Text) => {
   const { caLatnRules } = await import("data/ca/ca-latn.rules");
   const { latnRuRules } = await import("data/latn/latn-ru.rules");
   const { ruLRules } = await import("data/ru/ru_l.rules");
+  const { caLatnDiphthongIRules } = await import("data/ca/ca-latn_diphthong-i.rules");
+  const { caLatnRuSRules } = await import("data/ca/ca-latn_ru-s.rules");
+  const { latnRomanceLyRules } = await import("data/latn/latn_romance-ly.rules");
 
-  const transliterator = RBT.fromRules(caLatnRules + latnRuRules + ruLRules);
+  const transliterator = RBT.fromRules(
+    caLatnDiphthongIRules +
+      caLatnRuSRules +
+      caLatnRules +
+      latnRomanceLyRules +
+      latnRuRules +
+      ruLRules,
+  );
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);

@@ -5,43 +5,44 @@ export const zhVi = async (text: Text) => {
   const { zhPinyinArray } = await import("helpers/zhPinyin");
   const { getHanviet } = await import("hanviet-pinyin-words");
   const { ZH_VI_MAP, ZH_VI_WORDS } = await import("data/zh/zh-vi.map");
+  const { ZH_VI_PINYIN } = await import("data/zh/zh-vi_pinyin.map");
 
   const converter = OpenCC.Converter({ from: "cn", to: "t" });
 
+  const placeTone = (syllable: string) =>
+    syllable
+      .normalize("NFD")
+      .replace(
+        /(?<!q)(o[ae]|uy)([\u0300\u0301\u0303\u0309\u0323])$/i,
+        (_, vowels: string, tone: string) => vowels[0] + tone + vowels[1],
+      )
+      .normalize("NFC");
+
   const convert = (text: string) => {
-    // 1. Normalize input to Traditional Chinese for accurate dictionary lookups,
-    // and full-width digits to ASCII ones
     const traditionalText = converter(text).replace(/[０-９]/g, digit =>
       String(digit.charCodeAt(0) - 0xff10),
     );
 
-    // 2. Regex to extract continuous blocks of Chinese characters
-    const chineseRegex = /[\u4e00-\u9fa5]+/g;
+    const chineseRegex = /[\u3400-\u4dbf\u4e00-\u9fff]+/g;
 
     let result = "";
     let lastIndex = 0;
     let match;
 
-    // 3. Process the string, distinguishing Chinese chunks from other characters
     while ((match = chineseRegex.exec(traditionalText)) !== null) {
-      // Append preceding non-Chinese text (spaces, punctuation, English)
       const preceding = traditionalText.substring(lastIndex, match.index);
       result += preceding;
 
-      // Add a visual space boundary if English text collides with Vietnamese syllables
-      if (result.length > 0 && /[a-zA-Z0-9]$/.test(result)) {
+      if (result.length > 0 && /[\p{L}\p{N}]$/u.test(result)) {
         result += " ";
       }
 
       const chunk = match[0];
 
-      // 4. Get the context-aware Pinyin array for the entire chunk
-      // `toneType: 'num'` gives us formats like ['zhong1', 'guo2']
       const pyArray = zhPinyinArray(chunk, "num");
 
       const chunkHanViet: string[] = [];
 
-      // 5. Look up Hán Việt pronunciation for each individual character
       for (let i = 0; i < chunk.length; i++) {
         const word = Object.keys(ZH_VI_WORDS).find(word => chunk.startsWith(word, i));
         if (word) {
@@ -53,9 +54,6 @@ export const zhVi = async (text: Text) => {
         const char = chunk[i];
         let py = pyArray[i];
 
-        // Fix Tone Discrepancy: pinyin-pro returns '0' for neutral tones,
-        // but hanviet-pinyin-words expects '5' (e.g., shang0 -> shang5)
-        // and spells ü as "u:", like CC-CEDICT (呂 lu:3)
         py = py.replace(/0$/, "5").replace("ü", "u:");
 
         if (ZH_VI_MAP[char]) {
@@ -66,45 +64,38 @@ export const zhVi = async (text: Text) => {
         try {
           let hvResult = getHanviet(char, [py]);
 
-          // Fallback: If exact pinyin + tone match fails, try stripping the tone
           if (hvResult === "_" || !hvResult) {
             const pyNoTone = py.replace(/[0-9]/g, "");
             hvResult = getHanviet(char, [pyNoTone]);
           }
 
-          // Then the same syllable in another tone: pinyin-pro applies tone sandhi
-          // (不错 bu2) and reads some traditional characters differently (許 xu1)
           for (const tone of "1234") {
             if (hvResult && hvResult !== "_") break;
             hvResult = getHanviet(char, [py.replace(/[0-9]$/, "") + tone]);
           }
 
-          // Extract the primary (first) pronunciation for clean output
           const primaryHv = hvResult ? hvResult.split(",")[0].split("|")[0].trim() : "_";
 
-          chunkHanViet.push(primaryHv !== "_" ? primaryHv : char);
+          chunkHanViet.push(primaryHv !== "_" ? primaryHv : (ZH_VI_PINYIN[py] ?? char));
         } catch (e) {
           console.error(e);
           chunkHanViet.push(char);
         }
       }
 
-      // Capitalize the first letter of each Hán Việt syllable (Title Case)
       const titleCasedChunk = chunkHanViet.map(word => {
         if (!word) return word;
-        return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+        return placeTone(word.charAt(0).toUpperCase() + word.slice(1).toLowerCase());
       });
 
-      // Join the transliterated words of the chunk
       result += titleCasedChunk.join(" ");
       lastIndex = chineseRegex.lastIndex;
     }
 
-    // 6. Append any trailing non-Chinese text
     const remainder = traditionalText.substring(lastIndex);
     if (
       remainder.length > 0 &&
-      /^[a-zA-Z0-9]/.test(remainder) &&
+      /^[\p{L}\p{N}]/u.test(remainder) &&
       result.length > 0 &&
       !result.endsWith(" ")
     ) {
@@ -112,13 +103,12 @@ export const zhVi = async (text: Text) => {
     }
     result += remainder;
 
-    // Clean up any double spaces that might have been introduced
     result = result
       .replace(/\s+/g, " ")
       .replace(/\s+([.,!?;:])/g, "$1")
       .trim();
 
-    return result;
+    return text.match(/^\s*/)![0] + result + text.match(/\s*$/)![0];
   };
 
   if (typeof text === "string") {

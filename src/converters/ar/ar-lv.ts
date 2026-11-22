@@ -5,8 +5,9 @@ export const arLv = async (text: Text) => {
   const { arIpa } = await import("converters/ar/ar-ipa");
   const { arLowerRules } = await import("data/ar/ar_lower.rules");
   const { ipaLvRules } = await import("data/ipa/ipa-lv.rules");
+  const { arIpaArticleRules } = await import("data/ar/ar-ipa_article.rules");
 
-  const transliterator = RBT.fromRules(ipaLvRules + "::Title;" + arLowerRules);
+  const transliterator = RBT.fromRules(arIpaArticleRules + ipaLvRules + "::Title;" + arLowerRules);
 
   if (typeof text === "string") {
     const ipa = await arIpa<string>(text);

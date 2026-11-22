@@ -17,9 +17,9 @@ export const frUk = async (text: Text) => {
 
   if (typeof text === "string") {
     const ipa = await frIpa<string>(text, { spelledEy: true, doubleConsonants: "final" });
-    return copyCase(text, keepElision(ipa, transliterator), "uk");
+    return copyCase(text, keepElision(ipa, transliterator, "'"), "uk");
   } else {
     const ipaArray = await frIpa<string[]>(text, { spelledEy: true, doubleConsonants: "final" });
-    return ipaArray.map((ipa, i) => copyCase(text[i], keepElision(ipa, transliterator), "uk"));
+    return ipaArray.map((ipa, i) => copyCase(text[i], keepElision(ipa, transliterator, "'"), "uk"));
   }
 };

@@ -11,7 +11,6 @@ export const lbZh = async (text: Text) => {
 
   const transliterator = RBT.fromRules(ipaZhRules);
   const frenchTransliterator = RBT.fromRules(ipaZhInRules);
-  // French words get the same Chinese reading as fr → zh (Luxembourgish -eng stays 伦)
   const frenchIpa = async (words: string[]) =>
     (
       await frIpa<string[]>(words, {

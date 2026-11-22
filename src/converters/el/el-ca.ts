@@ -6,9 +6,10 @@ export const elCa = async (text: Text) => {
   const { latnCaGHoldRules } = await import("data/latn/latn-ca_g-hold.rules");
   const { latnCaRules } = await import("data/latn/latn-ca.rules");
   const { latnCaGRestoreRules } = await import("data/latn/latn-ca_g-restore.rules");
+  const { latnXRules } = await import("data/latn/latn_x.rules");
 
   const transliterator = RBT.fromRules(
-    elLatnRules + latnCaGHoldRules + latnCaRules + latnCaGRestoreRules,
+    elLatnRules + latnCaGHoldRules + latnCaRules + latnCaGRestoreRules + latnXRules,
   );
 
   if (typeof text === "string") {

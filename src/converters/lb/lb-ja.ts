@@ -13,7 +13,6 @@ export const lbJa = async (text: Text) => {
 
   const transliterator = RBT.fromRules(ipaJaRules);
   const frenchTransliterator = RBT.fromRules(frIpaJaRules);
-  // French words get the same Japanese reading as fr → ja
   const frenchIpa = async (words: string[]) =>
     (await frIpa<string[]>(words, { japanese: true })).map(ipa =>
       frenchTransliterator.transliterate(ipa),

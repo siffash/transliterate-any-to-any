@@ -9,14 +9,23 @@ export const koUr = async (text: Text) => {
   const { ipaUrRules } = await import("data/ipa/ipa-ur.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
   const { normalizeKo } = await import("helpers/normalizeKo");
+  const { koIpaLiRules } = await import("data/ko/ko-ipa_li.rules");
+  const { koIpaVoicedRules } = await import("data/ko/ko-ipa_voiced.rules");
+  const { koIpaParkRules } = await import("data/ko/ko-ipa_park.rules");
+  const { koIpaEoRules } = await import("data/ko/ko-ipa_eo.rules");
+  const { koIpaUrRules } = await import("data/ko/ko-ipa_ur.rules");
 
-  const transliterator = RBT.fromRules(ipaUrRules);
+  const transliterator = RBT.fromRules(koIpaEoRules + koIpaUrRules + ipaUrRules);
+  const voiced = RBT.fromRules(koIpaLiRules + koIpaParkRules + koIpaVoicedRules);
 
   const convert = async (text: string) => {
     const ipa = await wordSplitter(text, "ko", text =>
       normalizeKo(
         text,
-        text => filterIpa(normalizeKoIpa(toIPA(text, { anyAscii: true })), text, "ko"),
+        text =>
+          voiced.transliterate(
+            filterIpa(normalizeKoIpa(toIPA(text, { anyAscii: true })), text, "ko"),
+          ),
         "ipa",
         { name: "~", syllable: "~" },
       ),

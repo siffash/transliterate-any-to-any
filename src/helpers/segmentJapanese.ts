@@ -1,7 +1,6 @@
 import type { KuromojiToken } from "kuroshiro-analyzer-kuromoji";
 import { getKuromojiAnalyzer } from "helpers/getKuroshiro";
 
-// kuromoji's internals (it's bundled at a fixed version), used to split compounds
 type LatticeNode = { name: number; type: string; length: number };
 type Tokenizer = {
   getLattice(text: string): { nodes_end_at: (LatticeNode[] | undefined)[] };
@@ -12,10 +11,7 @@ type Tokenizer = {
   };
 };
 
-// Copulas start a word of their own (都市 です), while other auxiliary verbs stay
-// with the word they inflect (食べ+たい, 買い+まし+た)
 const COPULAS = new Set(["だ", "です"]);
-// Conjunctive particles that are part of a verb form (使っ+て, 読ん+で, 行け+ば)
 const VERB_ENDINGS = new Set(["て", "で", "ば", "ちゃ", "じゃ"]);
 
 const joinsPrevious = (token: KuromojiToken) =>
@@ -23,27 +19,17 @@ const joinsPrevious = (token: KuromojiToken) =>
   (token.pos === "助詞" &&
     token.pos_detail_1 === "接続助詞" &&
     VERB_ENDINGS.has(token.surface_form)) ||
-  // Passive and causative endings (食べ+られる, 行か+せる)
   (token.pos === "動詞" && token.pos_detail_1 === "接尾");
 
-// 日本 reads either Nihon or Nippon
 const sameReading = (a: string, b: string) =>
   a.replaceAll("ニッポン", "ニホン") === b.replaceAll("ニッポン", "ニホン");
 
-// Kana that kuromoji tags as a symbol or leaves without a reading inside a word: the
-// long-vowel mark ends the word before it (しゃちょー), the genitive ノ and ヶ also join
-// the word after them (沖ノ鳥島 Okinotorishima); ヶ reads ga (吉野ヶ里 Yoshinogasato)
 const INFIXES: Record<string, string> = { ー: "ー", ノ: "ノ", ヶ: "が" };
+const CANNOT_START = /^[んンっッゃゅょャュョぁぃぅぇぉァィゥェォ]/u;
+
 const isInfix = (token: KuromojiToken) =>
   Object.hasOwn(INFIXES, token.surface_form) && (token.pos === "記号" || !token.reading);
 
-// kuromoji's dictionary has whole names of companies and places (三菱商事,
-// 東日本旅客鉄道, 鹿児島湾), which are romanized as separate words. They're
-// split the way kuromoji would without that entry, but only if the parts
-// read the same as the whole (unlike 瀬戸内海: Setonaikai, not Setouchi Umi).
-// Kana always reads the same, so names without kanji stay whole (アメリカ, not アメ リカ).
-// An organization's short name inside a longer one is skipped when the rest still reads the
-// same (京都大学: 京都 大学, not the 京都大 of 京都大+学)
 const isOrganization = (features: string) => /^[^,]*,名詞,固有名詞,組織,/.test(features);
 
 const splitCompound = (tokenizer: Tokenizer, token: KuromojiToken): KuromojiToken[] => {
@@ -79,12 +65,6 @@ const splitCompound = (tokenizer: Tokenizer, token: KuromojiToken): KuromojiToke
   return parts.flatMap(part => splitCompound(tokenizer, part));
 };
 
-/**
- * Japanese words, built from kuromoji's morphemes: Intl.Segmenter splits
- * Japanese differently depending on the engine's ICU data (without its CJ
- * dictionary, e.g. in Android's Chrome and WebView, only where the script
- * changes: 大|きい), and splits verbs mid-way even with it (食|べた|い).
- */
 export const segmentJapanese = async (text: string) => {
   const analyzer = await getKuromojiAnalyzer();
   const tokenizer = (analyzer as unknown as { _analyzer: Tokenizer })._analyzer;
@@ -102,12 +82,16 @@ export const segmentJapanese = async (text: string) => {
       joinsNext = token.surface_form !== "ー";
       continue;
     }
-    // A morpheme may include punctuation (e.g. ヴィクトリア・), which is split off
     const parts = token.surface_form.split(/([^\p{L}\p{M}]+)/u).filter(Boolean);
     parts.forEach((part, i) => {
       const isWordLike = token.pos !== "記号" && /\p{L}/u.test(part);
       const last = words.at(-1);
-      if (i === 0 && last?.isWordLike && isWordLike && (joinsNext || joinsPrevious(token))) {
+      if (
+        i === 0 &&
+        last?.isWordLike &&
+        isWordLike &&
+        (joinsNext || joinsPrevious(token) || CANNOT_START.test(part))
+      ) {
         last.segment += part;
       } else {
         words.push({ segment: part, isWordLike });

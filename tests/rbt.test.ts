@@ -126,8 +126,19 @@ describe("escaping special characters with a backslash", () => {
     expect(RBT_JS.fromRules("a > \\_; ::Null; \\_ > Z;").transliterate("a")).toBe("Z");
   });
 
-  it("a backslash immediately followed by a character outside this set falls back to a literal, matchable backslash rather than being silently dropped", () => {
-    expect(RBT_JS.fromRules("\\q > X;").transliterate("\\q")).toBe("X");
+  it("a backslash makes any other character literal too, like ICU, so '\\q' is 'q' and '\\\\' a backslash", () => {
+    expect(RBT_JS.fromRules("\\q > X;").transliterate("\\q q")).toBe("\\X X");
+    expect(RBT_JS.fromRules("\\~ > X;").transliterate("\\~ ~")).toBe("\\X X");
+    expect(RBT_JS.fromRules("[\\~\\#] > X;").transliterate("\\~#")).toBe("\\XX");
+    expect(RBT_JS.fromRules("a } \\~ > X;").transliterate("a~ a\\~")).toBe("X~ a\\~");
+    expect(RBT_JS.fromRules("\\\\ > X;").transliterate("\\ \\\\")).toBe("X XX");
+    expect(RBT_JS.fromRules("a > \\#;").transliterate("a")).toBe("#");
+  });
+
+  it("'\\t', '\\n' and the other C escapes are control characters, like ICU", () => {
+    expect(RBT_JS.fromRules("\\t > X;").transliterate("\t t")).toBe("X t");
+    expect(RBT_JS.fromRules("[{\\t}]+ > X;").transliterate("a\t\tb")).toBe("aXb");
+    expect(RBT_JS.fromRules("\\n > X;").transliterate("\n n")).toBe("X n");
   });
 
   it("a bare, unescaped occurrence of one of these characters now has quantifier/grouping meaning instead, and errors clearly if used that way", () => {
@@ -898,15 +909,8 @@ describe("multi-character strings in sets: `[abc{de}f]`", () => {
     });
 
     it("this per-set preference does not extend into a cross-rule 'longest match wins' policy: which RULE fires is still decided purely by declaration order", () => {
-      // Both rules below are individually capable of matching "de": the first rule's set
-      // still internally prefers its own longer {de} alternative over a lone "d". But ICU's
-      // RuleBasedTransliterator docs state plainly that "if multiple rules may match at some
-      // point, the first matching rule is applied" - so it is declaration order, not either
-      // rule's key length, that decides the winner here.
       expect(RBT_JS.fromRules("[{de}] > LONG; d > SHORT;").transliterate("de")).toBe("LONG");
       expect(RBT_JS.fromRules("[{de}] > LONG; d > SHORT;").transliterate("dx")).toBe("SHORTx");
-      // Proof it's declaration order and not key length: swap which rule comes first and the
-      // shorter, single-character rule now wins, even though "de" would satisfy the longer key.
       expect(RBT_JS.fromRules("d > SHORT; [{de}] > LONG;").transliterate("de")).toBe("SHORTe");
     });
   });
@@ -1050,7 +1054,6 @@ describe("quantifiers: `?`, `*`, `+`, and `(...)` grouping", () => {
         name: "is greedy: consumes the longest contiguous run",
         rules: "[ab]* > X;",
         input: "aabbc",
-        // then it keeps matching empty before 'c' without moving the cursor, until the loop limit
         expected: "X".repeat(81) + "c",
       },
     ])("$name", ({ rules, input, expected }) => {
@@ -1140,10 +1143,6 @@ describe("quantifiers: `?`, `*`, `+`, and `(...)` grouping", () => {
 
   it("a quantified key that would greedily consume more text still only wins because it was declared first - not because its match is longer", () => {
     expect(RBT_JS.fromRules("[ab]+ > LONG; a > SHORT;").transliterate("aab")).toBe("LONG");
-    // Reverse the declaration order and the plain, single-character rule wins instead, one
-    // character at a time, even though "[ab]+" could have greedily matched "aa" as a unit.
-    // ICU does not compare candidate rules by how much they'd consume; whichever rule is
-    // declared first and matches at the cursor is applied immediately.
     expect(RBT_JS.fromRules("a > SHORT; [ab]+ > LONG;").transliterate("aab")).toBe(
       "SHORTSHORTLONG",
     );
@@ -1466,21 +1465,15 @@ describe("combinations across features", () => {
   describe("rule precedence remains correct once quantifiers and groups are in the mix", () => {
     it("a quantified group that matches more text still only wins because it is declared first, not because its match is longer", () => {
       expect(RBT_JS.fromRules("(ab)+ > LONG; a > SHORT;").transliterate("abab")).toBe("LONG");
-      // Reversed order: the plain rule now wins each time it applies, since it is checked
-      // first, even though "(ab)+" would have matched a longer run starting from an "a".
       expect(RBT_JS.fromRules("a > SHORT; (ab)+ > LONG;").transliterate("abab")).toBe(
         "SHORTbSHORTb",
       );
     });
 
     it("declaration order is absolute: even a vacuous, zero-width match from an earlier rule pre-empts a real match a later rule would have made at the same position", () => {
-      // "(ab)*" can match zero repetitions - a valid, empty match - and per ICU that still
-      // counts as "the first matching rule" if it is declared first. It fires (inserting
-      // "LONG" without moving past "x") until the loop limit, so "x > SHORT;" never runs here.
       expect(RBT_JS.fromRules("(ab)* > LONG; x > SHORT;").transliterate("x")).toBe(
         "LONG".repeat(17) + "x",
       );
-      // With the order swapped, "x > SHORT;" is checked first, matches for real, and wins.
       expect(RBT_JS.fromRules("x > SHORT; (ab)* > LONG;").transliterate("x")).toBe("SHORT");
     });
   });
@@ -1775,15 +1768,6 @@ describe("ante-context: `a { b > c;`", () => {
   });
 });
 
-// ICU's RuleBasedTransliterator documentation states plainly: "If multiple rules may match
-// at some point, the first matching rule is applied." Unlike a regex engine hunting for the
-// longest overall match, ICU does not auto-sort rules by length or specificity - it is the
-// rule author's job to place specific/longer rules before general/shorter fallback rules if
-// that's the precedence they want. Every pair of cases below holds key length, context, or
-// specificity constant across two declaration orders to show that only the order changes the
-// outcome. (ICU *does* use longest-match logic in two other, narrower places - a single
-// UnicodeSet's own string alternatives, covered above, and charset conversion tables, which
-// this engine doesn't implement - but neither of those is "the order rules are declared in".)
 describe("rule precedence when several rules could match at the same position", () => {
   it.each([
     {

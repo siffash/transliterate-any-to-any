@@ -5,8 +5,9 @@ export const elHi = async (text: Text) => {
   const { elIpaRules } = await import("data/el/el-ipa.rules");
   const { ipaHiLongARules } = await import("data/ipa/ipa-hi_long-a.rules");
   const { ipaHiRules } = await import("data/ipa/ipa-hi.rules");
+  const { ipaHiORules } = await import("data/ipa/ipa-hi_o.rules");
 
-  const transliterator = RBT.fromRules(elIpaRules + ipaHiLongARules + ipaHiRules);
+  const transliterator = RBT.fromRules(elIpaRules + ipaHiLongARules + ipaHiORules + ipaHiRules);
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);

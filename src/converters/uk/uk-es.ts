@@ -10,10 +10,12 @@ export const ukEs = async (text: Text) => {
   const { latnDzjRules } = await import("data/latn/latn_dzj.rules");
   const { latnDzRules } = await import("data/latn/latn_dz.rules");
   const { latnEsRules } = await import("data/latn/latn-es.rules");
+  const { latnYjIRules } = await import("data/latn/latn_yj-i.rules");
 
   const transliterator = RBT.fromRules(
     ukLatnRules +
       latnSeparatorRules +
+      latnYjIRules +
       latnIyIRules +
       latnIRules +
       latnIaRules +

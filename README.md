@@ -48,7 +48,7 @@ await transliterate("Λάρισα", { from: "el", to: "hy" }); // → Լարիս
 await transliterate("Копривщица", { from: "bg", to: "cs" }); // → Koprivštica
 
 // Japanese → Arabic
-await transliterate("青森", { from: "ja", to: "ar" }); // → اوموري
+await transliterate("青森", { from: "ja", to: "ar" }); // → أوموري
 
 // Korean → English
 await transliterate(["서울", "부산"], { from: "ko", to: "en" }); // → ["Seoul", "Busan"]

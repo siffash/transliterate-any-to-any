@@ -6,9 +6,10 @@ export const nlRu = async (text: Text) => {
   const { latnSilentHRules } = await import("data/latn/latn_silent-h.rules");
   const { nlLatnCyrlRules } = await import("data/nl/nl-latn_cyrl.rules");
   const { latnRuRules } = await import("data/latn/latn-ru.rules");
+  const { nlCyrlOuRules } = await import("data/nl/nl-cyrl_ou.rules");
 
   const transliterator = RBT.fromRules(
-    nlLatnRules + latnSilentHRules + nlLatnCyrlRules + latnRuRules,
+    nlLatnRules + latnSilentHRules + nlLatnCyrlRules + latnRuRules + nlCyrlOuRules,
   );
 
   if (typeof text === "string") {

@@ -5,8 +5,20 @@ export const caZh = async (text: Text) => {
   const { caIpaRules } = await import("data/ca/ca-ipa.rules");
   const { caIpaLRules } = await import("data/ca/ca-ipa_l.rules");
   const { ipaZhRules } = await import("data/ipa/ipa-zh.rules");
+  const { ipaZhSanRules } = await import("data/ipa/ipa-zh_san.rules");
+  const { ipaZhKeRules } = await import("data/ipa/ipa-zh_ke.rules");
+  const { ipaZhLjeRules } = await import("data/ipa/ipa-zh_lje.rules");
+  const { ipaZhSRules } = await import("data/ipa/ipa-zh_s.rules");
 
-  const transliterator = RBT.fromRules(caIpaRules + caIpaLRules + ipaZhRules);
+  const transliterator = RBT.fromRules(
+    caIpaRules +
+      caIpaLRules +
+      ipaZhSanRules +
+      ipaZhKeRules +
+      ipaZhLjeRules +
+      ipaZhSRules +
+      ipaZhRules,
+  );
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);

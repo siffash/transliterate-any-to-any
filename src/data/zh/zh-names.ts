@@ -1,11 +1,7 @@
-// The most common surnames (in simplified Chinese, see loadChineseSegmenter)
 export const SURNAMES = new Set(
   "王李张刘陈杨黄赵吴周徐孙马朱胡郭何高林罗郑梁谢宋唐许韩冯邓曹彭曾肖田董袁潘于蒋蔡余杜叶程苏魏吕丁任沈姚卢姜崔钟谭陆汪范金石廖贾夏韦付方白邹孟熊秦邱江尹薛闫段雷侯龙史陶黎贺顾毛郝龚邵万钱严覃武戴莫孔向汤",
 );
 
-// Less common surnames (习, 章, 温), taken as one only in a three-character name
-// or a listed one (鲁迅): jieba also tags words and places like 丘陵, 常德 and
-// 颜色混合 as names
 export const RARER_SURNAMES = new Set(
   "习章温成萧易傅颜柳齐牛鲁葛邢岳聂庄关常殷倪俞季祝左尤毕焦梅翟樊庞赖伍申丛耿舒詹苗凌纪靳盛童甄项裴席屈鲍翁隋阮闵柴冉辜饶刁瞿戚丘池滕苑邬臧畅宫苟褚廉简娄奚穆党燕郎邸冀姬屠郜晏栾郁喻窦迟敖鄢卓仇蓝巩仲虞卞竺冼匡鞠荆谌岑胥蔺谷乔霍洪荣闻涂骆游祁蒲佟邝谈储栗禹漆晁尚管解牟冷桂康包施辛费阎文",
 );
@@ -30,23 +26,17 @@ export const COMPOUND_SURNAMES = new Set([
   "南宫",
 ]);
 
-// Place names end in these, but given names hardly ever do (石家庄, 周村, 徐汇区, 李家沟)
 export const PLACE_ENDINGS = new Set(
   "州庄村镇县市区乡家集店屯坊塘坪坝口沟滩埠场港关坑甸峪圩堰潭墩洼宅巷铺堤渡湖湾堡岛",
 );
 
-// Administrative units a place's name ends in (大岭山镇, 乌兰察布市), and those of them that
-// name a place of its own inside another one (北京市朝阳区, 徐汇区虹桥镇)
 export const UNITS = new Set("镇乡村县市区旗");
 export const HIGHER_UNITS = new Set("省市县区");
 
-// Places end in these too, but so do given names (张家山 a village, 刘江 a man): they mark a place only
-// in three characters that jieba reads as words rather than as a person's name (王家|营, 江苏|路)
 export const LANDFORM_ENDINGS = new Set(
   "山河江岭桥营寨路街岗楼窑井驿川岩台洞寺庙峡坡嘴咀塬砭峁垭畔泉园城冲垴头岔沱疃坨畈垣涧渠池溪岙坳冈矶洲墟凹哨卫所站道门殿宫阁馆堂府厂矿房套泊塔隔庵棚垴垱堆峪岘坞沽崖硷院窝塞孜塄窠堎埂塅圙圈坬淖涯荡陇腰子里户地司顶尖包图什砂",
 );
 
-// Areas whose names end in 区 like a district's (工业园区 an industrial park, 冷水滩区 a district)
 export const AREAS = new Set([
   "园区",
   "林区",
@@ -63,7 +53,6 @@ export const AREAS = new Set([
   "渔场",
 ]);
 
-// Provinces, written apart from a place in them (Shanxi Datong, Jiangsu Nanjing)
 export const PROVINCES = new Set([
   "北京",
   "天津",
@@ -101,9 +90,6 @@ export const PROVINCES = new Set([
   "澳门",
 ]);
 
-// Generic terms and ethnic groups that pinyin writes apart from a place's own name (Pudong Xinqu,
-// Xinjiang Weiwu'er Zizhiqu, Urad Zhongqi), which stays whole even when jieba's search mode cuts it
-// into words (二连|浩特, 连云|港市): a one-character generic stays with it, as in 北京市 (Beijingshi)
 export const PLACE_GENERICS = new Set([
   "自治区",
   "自治县",
@@ -217,11 +203,8 @@ export const PLACE_GENERICS = new Set([
   "塔塔尔族",
 ]);
 
-// Dynasties written before an emperor's title (唐太宗, 汉武帝)
 export const DYNASTIES = new Set("夏商周秦汉晋隋唐宋元明清辽金魏齐梁陈吴蜀");
 
-// Emperors' temple names (太宗, 成祖) and posthumous names (武帝, 光武帝), which pinyin
-// writes whole and apart from the dynasty (Tang Taizong, Han Guangwudi)
 export const EMPEROR_TITLES = new Set([
   "太宗",
   "高宗",
@@ -314,7 +297,6 @@ export const EMPEROR_TITLES = new Set([
   "孝静帝",
 ]);
 
-// Places, landmarks and foreign names that jieba tags as a person's name (许昌, 黄鹤楼, 马丁, 莫斯科)
 export const NOT_NAMES = new Set([
   "丁丁",
   "丁尼亚",
@@ -2034,8 +2016,6 @@ export const NOT_NAMES = new Set([
   "龚普洛",
 ]);
 
-// People whose names jieba tags as something else (周恩来 as a time word), or
-// with a less common surname in two characters (鲁迅)
 export const NAMES = new Set([
   "万学文",
   "丘处机",

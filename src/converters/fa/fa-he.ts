@@ -6,9 +6,28 @@ export const faHe = async (text: Text) => {
   const { faIpa } = await import("converters/fa/fa-ipa");
   const { faIpaARules } = await import("data/fa/fa-ipa_a.rules");
   const { faIpaOwRules } = await import("data/fa/fa-ipa_ow.rules");
+  const { ipaHeKhRules } = await import("data/ipa/ipa-he_kh.rules");
+  const { ipaHeAnRules } = await import("data/ipa/ipa-he_an.rules");
+  const { ipaHeAaRules } = await import("data/ipa/ipa-he_aa.rules");
+  const { faIpaHeRules } = await import("data/fa/fa-ipa_he.rules");
   const { ipaHeRules } = await import("data/ipa/ipa-he.rules");
+  const { ipaHeKRules } = await import("data/ipa/ipa-he_k.rules");
+  const { ipaTHoldRules } = await import("data/ipa/ipa_t-hold.rules");
+  const { ipaHeTRestoreRules } = await import("data/ipa/ipa-he_t-restore.rules");
 
-  const transliterator = RBT.fromRules(ipaGemRules + faIpaARules + faIpaOwRules + ipaHeRules);
+  const transliterator = RBT.fromRules(
+    ipaTHoldRules +
+      ipaGemRules +
+      faIpaARules +
+      faIpaOwRules +
+      ipaHeAnRules +
+      ipaHeKhRules +
+      ipaHeAaRules +
+      faIpaHeRules +
+      ipaHeRules +
+      ipaHeKRules +
+      ipaHeTRestoreRules,
+  );
 
   if (typeof text === "string") {
     const ipa = await faIpa<string>(text);

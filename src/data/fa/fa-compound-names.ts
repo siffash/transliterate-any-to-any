@@ -1,5 +1,3 @@
-// Given names that Persian writes together with محمد or علی before them, but that are read as two names
-// (محمدرضا Mohammad Reza, علی‌اکبر Ali Akbar); علیرضا is one (Alireza)
 export const COMPOUND_NAMES: Record<string, string[]> = {
   محمد: [
     "رضا",

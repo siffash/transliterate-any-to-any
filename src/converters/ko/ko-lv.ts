@@ -9,7 +9,7 @@ export const koLv = async (text: Text) => {
   const { koLatnInitialChRules } = await import("data/ko/ko-latn_initial-ch.rules");
   const { koLatnNRules } = await import("data/ko/ko-latn_n.rules");
   const { latnLvRules } = await import("data/latn/latn-lv.rules");
-  const { latnKoHyphenRules } = await import("data/latn/latn_ko-hyphen.rules");
+  const { latnKoJoinRules } = await import("data/latn/latn_ko-join.rules");
   const { wordSplitter } = await import("helpers/wordSplitter");
   const { normalizeKo } = await import("helpers/normalizeKo");
 
@@ -20,7 +20,7 @@ export const koLv = async (text: Text) => {
       koLatnInitialChRules +
       koLatnNRules +
       latnLvRules +
-      latnKoHyphenRules,
+      latnKoJoinRules,
   );
 
   const convert = async (text: string) => {

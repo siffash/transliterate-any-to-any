@@ -5,11 +5,12 @@ export const mtTh = async (text: Text) => {
   const { mtIpaRules } = await import("data/mt/mt-ipa.rules");
   const { ipaThGlottalRules } = await import("data/ipa/ipa-th_glottal.rules");
   const { ipaThOpenRules } = await import("data/ipa/ipa-th_open.rules");
+  const { ipaJoinRules } = await import("data/ipa/ipa_join.rules");
   const { ipaThRules } = await import("data/ipa/ipa-th.rules");
   const { ipaThKaranRules } = await import("data/ipa/ipa-th_karan.rules");
 
   const transliterator = RBT.fromRules(
-    mtIpaRules + ipaThGlottalRules + ipaThOpenRules + ipaThRules + ipaThKaranRules,
+    mtIpaRules + ipaJoinRules + ipaThGlottalRules + ipaThOpenRules + ipaThRules + ipaThKaranRules,
   );
 
   if (typeof text === "string") {

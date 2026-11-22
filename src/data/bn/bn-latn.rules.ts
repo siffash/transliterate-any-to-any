@@ -49,6 +49,7 @@ export const bnLatnRules = `
 প > p·;
 ফ > f·;
 ব > b·;
+[^[:L:][:M:]·] { ভ > bh·;
 ভ > v·;
 ম > m·;
 র > r·;

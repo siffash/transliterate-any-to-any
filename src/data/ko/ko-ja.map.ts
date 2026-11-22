@@ -116,9 +116,6 @@ export const VOWEL_TO_IDX: Record<string, number> = {
   ㅢ: 1,
 };
 
-// A final consonant before a syllable that begins with the silent ㅇ: [what stays, what moves].
-// Of a double one, the second consonant moves (없어 업써, 읽어 일거); ㅎ is silent (좋아 조아, 않아 아나);
-// ㅇ is pronounced in its own syllable (영어 영어)
 export const LIAISON: Record<string, [string, string]> = {
   ㄳ: ["ㄱ", "ㅅ"],
   ㄵ: ["ㄴ", "ㅈ"],
@@ -135,7 +132,6 @@ export const LIAISON: Record<string, [string, string]> = {
   ㅇ: ["ㅇ", "ㅇ"],
 };
 
-// The final consonant that is pronounced (닭 닥, 없다 업다, 밖 박)
 export const CODAS: Record<string, string> = {
   ㄲ: "ㄱ",
   ㅋ: "ㄱ",
@@ -152,7 +148,6 @@ export const CODAS: Record<string, string> = {
   ㅄ: "ㅂ",
 };
 
-// Vowels with a glide after the silent ㅇ (연 ヨン, 원 ウォン, 의 ウィ)
 export const GLIDE_KANA: Record<string, string> = {
   ㅑ: "ヤ",
   ㅕ: "ヨ",
@@ -169,7 +164,6 @@ export const GLIDE_KANA: Record<string, string> = {
   ㅢ: "ウィ",
 };
 
-// The small vowel after the u-kana of ㄱ and ㅎ (광 クァン, 화 ファ, 회 フェ)
 export const W_KANA: Record<string, string> = {
   ㅘ: "ァ",
   ㅝ: "ォ",

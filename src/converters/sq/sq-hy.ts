@@ -5,8 +5,9 @@ export const sqHy = async (text: Text) => {
   const { sqLatnFinalERules } = await import("data/sq/sq-latn_final-e.rules");
   const { sqLatnRules } = await import("data/sq/sq-latn.rules");
   const { latnHyRules } = await import("data/latn/latn-hy.rules");
+  const { hyEvRules } = await import("data/hy/hy_ev.rules");
 
-  const transliterator = RBT.fromRules(sqLatnFinalERules + sqLatnRules + latnHyRules);
+  const transliterator = RBT.fromRules(sqLatnFinalERules + sqLatnRules + latnHyRules + hyEvRules);
 
   if (typeof text === "string") {
     return transliterator.transliterate(text);

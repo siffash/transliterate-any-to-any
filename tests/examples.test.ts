@@ -19,7 +19,7 @@ describe("README examples", () => {
     { from: "en", to: "ko", text: "Sean Connery", expected: "숀 코너리" },
     { from: "el", to: "hy", text: "Λάρισα", expected: "Լարիսա" },
     { from: "bg", to: "cs", text: "Копривщица", expected: "Koprivštica" },
-    { from: "ja", to: "ar", text: "青森", expected: "اوموري" },
+    { from: "ja", to: "ar", text: "青森", expected: "أوموري" },
     { from: "ko", to: "en", text: ["서울", "부산"], expected: ["Seoul", "Busan"] },
     { from: "zh", to: "bg", text: ["上海", "广州"], expected: ["Шанхай", "Гуанджоу"] },
     { from: "hi", to: "he", text: ["मुंबई", "कोलकाता"], expected: ["מומבאי", "קולקטה"] },

@@ -3,6 +3,8 @@ export const frIpaJaRules = `
 
 [bdfgklmnpstvzʃʒʁ] { j } [ɛœ]̃ > i;
 [ɛœ]̃ > ã;
+d { jø } [^[:L:][:M:]] > yː;
+d { jø > y;
 [uø] } [^[:L:][:M:]] > uː;
 [dt] { ə > o;
 ə } [bdfgɡklmnpstvzʃʒʁɲŋ] [bdfgɡkmnpstvzʃʒɲŋ] > e;

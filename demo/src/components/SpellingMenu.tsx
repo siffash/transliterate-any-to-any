@@ -28,11 +28,6 @@ const OPTIONS: { value: Spelling; label: string; description: string }[] = [
   },
 ];
 
-/**
- * The spelling of the transliteration, as a small button in the target panel's
- * toolbar that opens a menu explaining both options. The caller only shows it
- * for the language pairs whose transliteration it can change (spellingAffects).
- */
 export const SpellingMenu = ({
   spelling,
   onChange,
@@ -40,7 +35,6 @@ export const SpellingMenu = ({
 }: {
   spelling: Spelling;
   onChange: (spelling: Spelling) => void;
-  // Opens a link instead of the browser (e.g. in the app's in-app browser)
   onOpenLink?: (href: string) => void;
 }) => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
@@ -97,7 +91,6 @@ export const SpellingMenu = ({
           </MenuItem>
         ))}
         <Divider />
-        {/* A menu item (rather than a link in the menu) so that the keyboard reaches it too */}
         <MenuItem
           component="a"
           href={LINKS.spelling}

@@ -3,4 +3,6 @@ export const frIpaBgRules = `
 
 [^[:L:][:M:]] [bdfɡklmnpʁstvzʃʒ] { ə } [^[:L:][:M:]] > œ;
 ə > e;
+[bdfmnpʁstvzʃʒ] { j } ø [^[:L:][:M:]] > ij;
+[ɡkl] { j } ø [^[:L:][:M:]] > ;
 `;

@@ -1,10 +1,7 @@
 export interface RestoreIpaRule {
   ipaCharToBeReplaced: string | string[];
   lettersToRestore: Record<string, string>;
-  // Put a stress mark that falls inside the replaced IPA back into the replacement
   keepStress?: boolean;
-  // How many letters the spelling may sit away from where the IPA projects onto the word
-  // (by default the needle length, at most MAX_SEARCH_WINDOW)
   window?: number;
 }
 
@@ -16,8 +13,8 @@ const START_ANCHOR = "^";
 const END_ANCHOR = "$";
 
 interface Span {
-  start: number; // inclusive
-  end: number; // exclusive
+  start: number;
+  end: number;
 }
 
 type Boundary = "start" | "end";
@@ -144,7 +141,7 @@ function flattenRules(rules: RestoreIpaRule[]): RestoreTask[] {
 }
 
 interface PlannedReplacement {
-  start: number; // index into the ORIGINAL ipa string
+  start: number;
   end: number;
   value: string;
   index: number;
@@ -174,8 +171,6 @@ function textAtBoundary(cleanIpa: string, text: string, boundary: Boundary): Spa
   return start >= 0 && cleanIpa.endsWith(text) ? { start, end: cleanIpa.length } : null;
 }
 
-// A stress mark inside a replaced span goes back in front of the same onset
-// in the replacement (hɪˈɫ → hɛˈɫɫ), or is dropped if that onset is gone
 function keepInnerStress(original: string, replacement: string): string {
   let result = replacement;
   let searchFrom = 1;
@@ -206,8 +201,6 @@ export const restoreLettersInIpa = (
     replacements.push({ start, end, value, index: replacements.length });
   };
 
-  // Longer spellings first (globally, across every rule and every key),
-  // so e.g. "eille" claims its territory before "eil" can match inside it
   const orderedTasks = [...tasks].sort(
     (a, b) => b.originalLetters.length - a.originalLetters.length,
   );
@@ -215,7 +208,7 @@ export const restoreLettersInIpa = (
   for (const task of orderedTasks) {
     for (const { boundary, literal } of task.anchoredNeedles) {
       const wordSpan = anchoredWordSpan(originalWord, task.originalLetters, boundary);
-      if (!wordSpan) continue; // the word doesn't have these letters at this boundary
+      if (!wordSpan) continue;
       if (isConsumed(wordSpan, consumedWordIndices)) continue;
 
       if (literal) {
@@ -245,7 +238,7 @@ export const restoreLettersInIpa = (
     const shifts = shiftsFor(task.window);
 
     for (const candidate of candidates) {
-      if (isConsumed(candidate, consumedIpaIndices)) continue; // claimed by an earlier task
+      if (isConsumed(candidate, consumedIpaIndices)) continue;
 
       const anchor = projectIndex(candidate.start, cleanIpa.length, originalWord.length);
 
@@ -259,12 +252,10 @@ export const restoreLettersInIpa = (
         if (isConsumed(wordSpan, consumedWordIndices)) continue;
         if (originalWord.slice(start, end) === task.originalLetters) {
           matchedWordSpan = wordSpan;
-          break; // closest valid match wins; stop searching further out
+          break;
         }
       }
 
-      // No plausible match near this candidate for this key - leave the IPA
-      // exactly as it is here rather than forcing the nearest guess
       if (!matchedWordSpan) continue;
 
       markConsumed(matchedWordSpan, consumedWordIndices);
@@ -278,10 +269,6 @@ export const restoreLettersInIpa = (
     }
   }
 
-  // Splice right-to-left so earlier replacements don't shift later indices.
-  // At the same start a replacement goes before an insertion, which then lands
-  // in front of it; other ties keep their relative processing order via `index`,
-  // covering e.g. two bare-anchor insertions landing at the same point.
   replacements.sort((a, b) => b.start - a.start || b.end - a.end || b.index - a.index);
   let result = ipa;
   for (const r of replacements) {

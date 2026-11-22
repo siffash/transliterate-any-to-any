@@ -6,16 +6,11 @@ export const itEs = async (text: Text) => {
   const { itLatnYHoldRules } = await import("data/it/it-latn_y-hold.rules");
   const { itLatnYRestoreRules } = await import("data/it/it-latn_y-restore.rules");
   const { latnEsRules } = await import("data/latn/latn-es.rules");
-  const { latnEsXRules } = await import("data/latn/latn-es_x.rules");
+  const { latnXRules } = await import("data/latn/latn_x.rules");
   const { latnKQuRules } = await import("data/latn/latn_k-qu.rules");
 
   const transliterator = RBT.fromRules(
-    itLatnYHoldRules +
-      itLatnRules +
-      itLatnYRestoreRules +
-      latnEsRules +
-      latnEsXRules +
-      latnKQuRules,
+    itLatnYHoldRules + itLatnRules + itLatnYRestoreRules + latnEsRules + latnXRules + latnKQuRules,
   );
 
   if (typeof text === "string") {

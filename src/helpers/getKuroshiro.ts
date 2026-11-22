@@ -5,9 +5,6 @@ type Analyzer = { parse(text: string): Promise<KuromojiToken[]> };
 
 let kuroshiroPromise: Promise<{ kuroshiro: any; analyzer: Analyzer }> | undefined;
 
-// kuroshiro romanizes each morpheme separately, so a sokuon ending one (行きたかっ|た)
-// became "tsu" instead of doubling the next consonant. It joins such morphemes
-// itself, but only verbs and adjectives, so this joins the rest (e.g. たかっ).
 const joinSokuon = (tokens: KuromojiToken[]) => {
   const joined: KuromojiToken[] = [];
   for (const token of tokens) {
@@ -27,10 +24,6 @@ const joinSokuon = (tokens: KuromojiToken[]) => {
   return joined;
 };
 
-// Kana kuromoji reads as written (ユウ, ゾウ) or not at all (シュウヘイ) keep their う, which kuroshiro
-// spells out (yuuki, kenzou), where a word it knows gets a long vowel (コウ → コー, kōzō). A う after a
-// palatal (ゆう, しゅう) or ending the word after o or u (たろう) is one too; elsewhere it may begin another
-// part of the name (いのうえ, やまのうち)
 const KANA = /^[\p{scx=Hiragana}\p{scx=Katakana}]+$/u;
 const LONG_AFTER_PALATAL = /(?<=[ャュョユヨ])ウ/gu;
 const LONG_AT_END = /(?<=[オコソトノホモヨロゴゾドボポヲウクスツヌフムユルグズヅブプ])ウ$/u;
@@ -50,7 +43,6 @@ const lengthenKana = (tokens: KuromojiToken[]) => {
     let pronunciation = (token.pronunciation ?? reading).replace(LONG_AFTER_PALATAL, "ー");
     const last = result.at(-1);
     if (i === tokens.length - 1) {
-      // a う of its own (たろ|う) lengthens the token before it
       if (
         pronunciation === "ウ" &&
         last?.pronunciation &&
@@ -75,18 +67,14 @@ const lengthenKana = (tokens: KuromojiToken[]) => {
   return result;
 };
 
-// Kanji that end given names: at the end of a name they join the kanji before them (純+也 Jun'ya)
 const NAME_ENDINGS = new Set("也哉輔嗣汰");
 
-// kuromoji's pronunciation form, which kuroshiro romanizes: long o and u are written with ー (コウ → コー)
 const toPronunciation = (reading: string) =>
   reading.replace(
     /([オコソトノホモヨロゴゾドボポョ]|[ウクスツヌフムユルグズヅブプュ])ウ/gu,
     "$1ー",
   );
 
-// Hepburn writes a long i as ii (Niigata, not Nīgata): the pronunciation (ニーガタ)
-// gets its イ back wherever the reading (ニイガタ) has one
 const restoreLongI = (token: KuromojiToken): KuromojiToken => {
   const { reading, pronunciation } = token;
   if (!reading || !pronunciation || reading.length !== pronunciation.length) return token;
@@ -96,12 +84,9 @@ const restoreLongI = (token: KuromojiToken): KuromojiToken => {
   return restored === pronunciation ? token : { ...token, pronunciation: restored };
 };
 
-// A name ending follows a one- or two-mora reading (ジュン, ケイ, トモ); a longer one is a
-// whole given name (敬 タカシ, 浩 ヒロシ), so 敬輔 would become Takashisuke
 const isNameStart = (token?: KuromojiToken) =>
   !!token?.reading && token.reading.replace(/[ャュョァィゥェォ]/gu, "").length <= 2;
 
-// Gives the kanji kuromoji has no reading for (純也, 翔哉) one from jaReadingsMap
 const addReadings = async (
   tokens: KuromojiToken[],
   parse: (text: string) => Promise<KuromojiToken[]>,
@@ -123,7 +108,6 @@ const addReadings = async (
       /^\p{scx=Han}+$/u.test(last.surface_form) &&
       !/^\p{scx=Han}/u.test(next)
     ) {
-      // the reading kuromoji gives the kanji on its own may be the short one (敬 ケイ)
       if (!isNameStart(last)) {
         const alone = await parse(last.surface_form);
         if (alone.length === 1 && isNameStart(alone[0])) {
@@ -169,5 +153,4 @@ const load = () => {
 
 export const getKuroshiro = async () => (await load()).kuroshiro;
 
-// kuroshiro's kuromoji, which also splits Japanese into words (see segmentJapanese)
 export const getKuromojiAnalyzer = async () => (await load()).analyzer;

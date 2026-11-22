@@ -4,13 +4,13 @@ export const faTg = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { faLowerRules } = await import("data/fa/fa_lower.rules");
   const { faIpaUvular } = await import("converters/fa/fa-ipa");
-  const { faIpaUvularQRules } = await import("data/fa/fa-ipa_uvular-q.rules");
+  const { ipaUvularQRules } = await import("data/ipa/ipa_uvular-q.rules");
   const { faIpaTgRules } = await import("data/fa/fa-ipa_tg.rules");
   const { arFaUrIpaTgRules } = await import("data/ipa/ar_fa_ur-ipa_tg.rules");
   const { ipaTgRules } = await import("data/ipa/ipa-tg.rules");
 
   const transliterator = RBT.fromRules(
-    faIpaUvularQRules + faIpaTgRules + arFaUrIpaTgRules + ipaTgRules + "::Title;" + faLowerRules,
+    ipaUvularQRules + faIpaTgRules + arFaUrIpaTgRules + ipaTgRules + "::Title;" + faLowerRules,
   );
 
   if (typeof text === "string") {

@@ -2,21 +2,14 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 type ErrorCallback = (message: string) => void;
 
-// Codes that TTS engines may use for a language instead of the library's own
 const LANGUAGE_ALIASES: Record<string, string[]> = {
   nb: ["no"],
   he: ["iw"],
   id: ["in"],
 };
 
-// "en_US" (older Android browsers) → "en-us"
 const normalizeTag = (tag: string) => tag.replace(/_/g, "-").toLowerCase();
 
-/**
- * The voice locale (one of `available`, as given) to read text of `locale`
- * with: the same locale if there is one (e.g. en-US for en-US), else any
- * other locale of the same language (e.g. en-GB), else null.
- */
 export function findVoiceLang(locale: string, available: readonly string[]): string | null {
   const wanted = normalizeTag(locale);
   const [language] = wanted.split("-");
@@ -26,7 +19,6 @@ export function findVoiceLang(locale: string, available: readonly string[]): str
   return available.find(tag => languages.includes(normalizeTag(tag).split("-")[0])) ?? null;
 }
 
-// The Web Speech API's error codes, worded like voice input's
 const FRIENDLY: Record<string, string> = {
   "not-allowed": "The browser didn't allow reading the text aloud.",
   "language-unavailable": "Listening isn't available for this language.",
@@ -43,20 +35,10 @@ const getSynth = () =>
     ? window.speechSynthesis
     : null;
 
-/**
- * Reads text aloud with the browser's Web Speech API, one text at a time.
- * Each text is read under an id (e.g. the text area it's in), so that the
- * caller can tell which one is being read and stop only that one.
- * - `isSupported`: the browser has the API and at least one voice (the voices
- *   may load a bit after the page, so it can become true later)
- * - `canSpeak(locale)`: there is a voice for the locale's language
- */
 export function useSpeechSynthesis() {
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>(() => getSynth()?.getVoices() ?? []);
   const [speakingId, setSpeakingId] = useState<string | null>(null);
   const speakingIdRef = useRef<string | null>(null);
-  // Also keeps the utterance from being garbage-collected before it ends,
-  // which drops its events in Chrome
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
 
   useEffect(() => {
@@ -84,7 +66,6 @@ export function useSpeechSynthesis() {
         voices.map(voice => voice.lang),
       );
       if (!lang) return null;
-      // The default voice of the language, if it's among its voices
       const sameLang = voices.filter(voice => voice.lang === lang);
       return sameLang.find(voice => voice.default) ?? sameLang[0];
     },
@@ -102,8 +83,6 @@ export function useSpeechSynthesis() {
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.voice = voice;
       utterance.lang = voice.lang;
-      // Only the latest utterance may change the state: a cancelled one still
-      // ends (or fails with "interrupted"/"canceled") after the next one starts
       const isCurrent = () => utteranceRef.current === utterance;
       utterance.onend = () => {
         if (!isCurrent()) return;
@@ -127,7 +106,6 @@ export function useSpeechSynthesis() {
     [findVoice, setSpeaking],
   );
 
-  // Without an id, stops whatever is being read
   const stop = useCallback(
     (id?: string) => {
       if (speakingIdRef.current === null) return;
@@ -142,5 +120,4 @@ export function useSpeechSynthesis() {
   return { isSupported: voices.length > 0, canSpeak, speakingId, speak, stop };
 }
 
-// Also implemented by the mobile app's native text-to-speech
 export type SpeechOutput = ReturnType<typeof useSpeechSynthesis>;

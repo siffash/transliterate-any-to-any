@@ -3,7 +3,6 @@ import { Text } from "types";
 export const lbIpa = async <T = Text>(
   text: Text,
   velarA = false,
-  // A target that reads French words its own way (ja, th) passes their IPA
   frenchIpa?: (words: string[]) => Promise<string[]>,
   rules = "",
 ): Promise<T> => {
@@ -30,7 +29,6 @@ export const lbIpa = async <T = Text>(
       (Object.prototype.hasOwnProperty.call(lbIpaMap, key) &&
         filterIpa(lbIpaMap[key], word, "lb")) ||
       undefined;
-    // The map holds French IPA with ɑ̃ already as ɑn/ɑm, so it gets frIpa's velarA here
     return ipa && velarA ? ipa.replace(/ɑ[nm](?![aɑeɛəiɪoɔuʊyøœ])/g, "ɑŋ") : ipa;
   };
 

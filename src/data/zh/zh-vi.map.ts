@@ -39,10 +39,13 @@ export const ZH_VI_MAP: Record<string, string> = {
   彝: "di",
   只: "chích",
   着: "trước",
+  任: "nhậm",
+  曾: "tăng",
+  戴: "đới",
+  麗: "lệ",
+  棗: "tảo",
 };
 
-// Words whose Hán Việt reading pinyin-pro gets wrong in Traditional Chinese
-// (重慶 zhong4 instead of chong2), keyed in Traditional Chinese
 export const ZH_VI_WORDS: Record<string, string[]> = {
   重慶: ["trùng", "khánh"],
   銀行: ["ngân", "hàng"],

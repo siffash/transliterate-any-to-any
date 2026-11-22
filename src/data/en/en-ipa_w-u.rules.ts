@@ -1,5 +1,9 @@
 export const enIpaWURules = `
 ::Null;
 
-[^[:L:][:M:]] [ˈˌ]? { w } [ɪieɛæəɜɝɚʌaɑɒɔo] > у;
+[aeiouyæɑɒɔəɪʊɛʌɜɐː] [ˈˌ]? { w } [eɛɜɝɚ] > у;
+[aeiouyæɑɒɔəɪʊɛʌɜɐː] [ˈˌ]? { w > w;
+w [ɒæ] > уɔ;
+w [ɑa] } [bcdfɡhklɫmnpstvzʃʒθðŋ] > уɔ;
+w } [ɪieɛæəɜɝɚʌaɑɒɔo] > у;
 `;

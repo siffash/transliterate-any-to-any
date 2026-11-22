@@ -6,13 +6,9 @@ import {
   type SpeechOutput,
 } from "../../src/hooks/useSpeechSynthesis";
 
-// Android's TextToSpeech binds to the TTS engine a moment after the app
-// starts, and reports no languages (or fails) until then: several seconds
-// when the engine itself has to start (e.g. the first launch after a reboot)
 const LANGUAGES_ATTEMPTS = 30;
 const LANGUAGES_RETRY_MS = 500;
 
-// The plugin's rejection for a language without a voice (Android and iOS)
 const UNSUPPORTED_LANGUAGE = "This language is not supported.";
 
 const getMessage = (error: unknown) =>
@@ -20,17 +16,10 @@ const getMessage = (error: unknown) =>
     ? "Listening isn't available for this language."
     : SPEECH_OUTPUT_FAILED;
 
-/**
- * Reads text aloud with the OS's text-to-speech (Android's TextToSpeech, iOS's
- * AVSpeechSynthesizer), with the same interface as the PWA's
- * useSpeechSynthesis (the Web Speech API is missing in Android's WebView).
- */
 export function useNativeSpeechSynthesis(): SpeechOutput {
   const [languages, setLanguages] = useState<string[]>([]);
   const [speakingId, setSpeakingId] = useState<string | null>(null);
   const speakingIdRef = useRef<string | null>(null);
-  // Bumped by every speak() and stop(): Android never settles the promise of
-  // a stopped text, and iOS settles it only after the next one has started
   const sessionRef = useRef(0);
 
   useEffect(() => {

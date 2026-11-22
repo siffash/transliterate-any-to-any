@@ -16,7 +16,6 @@ export const lbKo = async (text: Text) => {
 
   const transliterator = RBT.fromRules(ipaKoEzhRules + ipaKoFinalKpRules + ipaKoRules);
   const frenchTransliterator = RBT.fromRules(frIpaKoRules);
-  // French words get the same Korean reading as fr → ko (르블랑, 샹탈)
   const frenchIpa = async (words: string[]) =>
     (await frIpa<string[]>(words, { keepSchwa: true, velarNasals: true, finalIeu: true })).map(
       ipa => frenchTransliterator.transliterate(ipa),
