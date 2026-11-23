@@ -1,6 +1,6 @@
 import { Text } from "types";
 
-export const faIpaUvular = async <T = Text>(text: Text): Promise<T> => {
+export const faIpaUvular = async <T = Text>(text: Text, joiner = ""): Promise<T> => {
   const { faIpaMap } = await import("data/fa/fa-ipa.map");
   const { RBT } = await import("helpers/rbt");
   const { faIpaRules } = await import("data/fa/fa-ipa.rules");
@@ -24,6 +24,9 @@ export const faIpaUvular = async <T = Text>(text: Text): Promise<T> => {
     breakClusters(transliterator.transliterate(word).match(/d͡ʒ|t͡ʃ|./gu) ?? [], isConsonant, "æ");
 
   const compound = (word: string) => {
+    const article = word.match(/^\u0639\u0628\u062f\u0627\u0644(.{3,})$/u)?.[1];
+    const articleIpa = article && filterIpa(lookup(article), article, "fa");
+    if (articleIpa) return "æbdol" + articleIpa.replace(/^ʔ/, "");
     const chars = [...word];
     for (let i = chars.length - 3; i >= 3; i--) {
       const first = chars.slice(0, i).join("");
@@ -40,21 +43,45 @@ export const faIpaUvular = async <T = Text>(text: Text): Promise<T> => {
   const toIpa = (word: string) =>
     filterIpa(lookup(word), word, "fa") || compound(word) || fallback(word);
 
+  const silentHeSplit = (word: string) => {
+    if (!joiner) return undefined;
+    const whole = lookup(word);
+    if (whole && !whole.includes("eh")) return undefined;
+    const chars = [...word];
+    for (let i = 2; i < chars.length - 2; i++) {
+      if (chars[i] !== "\u0647") continue;
+      const first = chars.slice(0, i + 1).join("");
+      const second = chars.slice(i + 1).join("");
+      if (second.startsWith("\u0627") || (second.length < 3 && first.length < 4)) continue;
+      const firstIpa = filterIpa(lookup(first), first, "fa");
+      const secondIpa = firstIpa?.endsWith("e") && filterIpa(lookup(second), second, "fa");
+      if (secondIpa) return firstIpa + joiner + secondIpa.replace(/^ʔ/, "");
+    }
+    return undefined;
+  };
+
   const withSuffix = (word: string) => {
-    if (lookup(word) || !/\u0647\u200c?\u0627\u06cc$/.test(word)) return undefined;
+    if (
+      (lookup(word) && !(joiner && word.includes("\u200c"))) ||
+      !/\u0647\u200c?\u0627\u06cc$/.test(word) ||
+      /\u200c\u0647\u0627\u06cc$/.test(word)
+    )
+      return undefined;
     if (!word.includes("\u200c") && lookup(word.slice(0, -3))) return undefined;
     const stem = word.replace(/\u200c?\u0627\u06cc$/, "");
     const ipa = word.includes("\u200c") ? toIpa(stem) : filterIpa(lookup(stem), stem, "fa");
-    return ipa?.endsWith("e") ? ipa + "\u0294i" : undefined;
+    return ipa?.endsWith("e") ? ipa + joiner + "\u0294i" : undefined;
   };
 
   const convert = async (text: string) =>
     await wordSplitter(
-      splitFaCompoundNames(normalizer.transliterate(text)),
+      splitFaCompoundNames(normalizer.transliterate(text), joiner ? "\u200c" : " "),
       "fa",
       (word: string) =>
         withSuffix(word) ??
-        (word.includes("\u200c") && !lookup(word)
+        silentHeSplit(word) ??
+        (word.includes("\u200c") &&
+        (!lookup(word) || (joiner && /[^\u200c]{2}\u0647\u200c/.test(word)))
           ? word
               .split("\u200c")
               .map((part, i) =>
@@ -64,7 +91,7 @@ export const faIpaUvular = async <T = Text>(text: Text): Promise<T> => {
                       .replace(/^æll[ɒæ]ː?h/, "ollɒh")
                   : toIpa(part),
               )
-              .join("")
+              .join(joiner)
           : toIpa(word)),
     );
 

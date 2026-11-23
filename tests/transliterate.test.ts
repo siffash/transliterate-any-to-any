@@ -195,6 +195,13 @@ describe("native and full-width digits", () => {
       "Donya 2",
     ]);
   });
+
+  it("converts every line of an array item separately", async () => {
+    expect(await transliterate(["دشت\nقزوین", "شیراز"], { from: "fa", to: "tg" })).toEqual([
+      "Дашт\nҚазвин",
+      "Шероз",
+    ]);
+  });
 });
 
 describe("apostrophe look-alikes", () => {

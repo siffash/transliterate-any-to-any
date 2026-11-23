@@ -2718,14 +2718,17 @@ export const transliterate = async <T extends Text>(text: T, options: Options): 
 
   try {
     const convert = await load();
-    if (typeof text === "string" && text.includes("\n")) {
-      const lines = text.split(/(\r?\n)/);
-      const indexes = lines.flatMap((line, i) => (i % 2 === 0 && line.trim() ? [i] : []));
-      const converted = indexes.length
-        ? ((await convert(indexes.map(i => lines[i]))) as string[])
-        : [];
-      indexes.forEach((index, i) => (lines[index] = converted[i]));
-      return lines.join("") as T;
+    const items: string[] = typeof text === "string" ? [text] : text;
+    if (items.some(item => item.includes("\n"))) {
+      const isLine = (line: string, i: number) => i % 2 === 0 && line.trim() !== "";
+      const pieces = items.map(item => item.split(/(\r?\n)/));
+      const lines = pieces.flatMap(piece => piece.filter(isLine));
+      const converted = lines.length ? ((await convert(lines)) as string[]) : [];
+      let next = 0;
+      const joined = pieces.map(piece =>
+        piece.map((line, i) => (isLine(line, i) ? converted[next++] : line)).join(""),
+      );
+      return (typeof text === "string" ? joined[0] : joined) as T;
     }
     return (await convert(text)) as T;
   } catch (e: unknown) {

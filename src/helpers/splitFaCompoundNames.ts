@@ -5,11 +5,11 @@ const compoundName = new RegExp(
   "gu",
 );
 
-export const splitFaCompoundNames = (text: string): string =>
+export const splitFaCompoundNames = (text: string, separator = " "): string =>
   text.replace(/[^\s]+/gu, word => {
     const bare = word.replace(/[ً-ْٰ]/g, "");
     const split = bare.replace(compoundName, (match, first: string, second: string) =>
-      COMPOUND_NAMES[first]!.includes(second) ? `${first} ${second}` : match,
+      COMPOUND_NAMES[first]!.includes(second) ? `${first}${separator}${second}` : match,
     );
     return split === bare ? word : split;
   });
