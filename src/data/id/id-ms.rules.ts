@@ -48,11 +48,11 @@ P } [aA] [hH] [aA] [mM] > F;
 [jJ] [aA] [dD] { w } [aA] [lL] > u;
 [jJ] [aA] [dD] { W } [aA] [lL] > U;
 
-[^[:L:][:M:]] { u } [aA] [nN] [gG] > w;
-[^[:L:][:M:]] { U } [aA] [nN] [gG] > W;
-
 [^[:L:][:M:]] [kK] [eE] { u } [aA] [nN] [gG] [aA] [nN] > w;
 [^[:L:][:M:]] [kK] [eE] { U } [aA] [nN] [gG] [aA] [nN] > W;
+
+[^[:L:][:M:]] { u } [aA] [nN] [gG] > w;
+[^[:L:][:M:]] { U } [aA] [nN] [gG] > W;
 
 [sS] { [yY] } [aA] [rR] [aA] [fF] > ;
 
@@ -68,11 +68,11 @@ P } [aA] [hH] [aA] [mM] > F;
 [^[:L:][:M:]] [eE] [sS] { a } [iI] [^[:L:][:M:]] > e;
 [^[:L:][:M:]] [eE] [sS] { A } [iI] [^[:L:][:M:]] > E;
 
-[^[:L:][:M:]] [aA] [rR] { sip } [^[:L:][:M:]] > kib;
-[^[:L:][:M:]] [aA] [rR] { SIP } [^[:L:][:M:]] > KIB;
-
 [^[:L:][:M:]] [mM] [uU] { s } [iI] [kK] [^[:L:][:M:]] > z;
 [^[:L:][:M:]] [mM] [uU] { S } [iI] [kK] [^[:L:][:M:]] > Z;
+
+[^[:L:][:M:]] [aA] [rR] { sip } [^[:L:][:M:]] > kib;
+[^[:L:][:M:]] [aA] [rR] { SIP } [^[:L:][:M:]] > KIB;
 
 [^[:L:][:M:]] { kamar } [^[:L:][:M:]] [mM] [aA] [nN] [dD] [iI] > bilik;
 [^[:L:][:M:]] { Kamar } [^[:L:][:M:]] [mM] [aA] [nN] [dD] [iI] > Bilik;
