@@ -7,6 +7,7 @@ export const arIpa = async <T = Text>(
     firstArticleE = false,
   }: { dropLoneArticle?: boolean | "all"; firstArticleE?: boolean } = {},
 ): Promise<T> => {
+  const { mapText } = await import("helpers/convertText");
   const { arIpaMap, charMap, stemCharMap } = await import("data/ar/ar-ipa.map");
   const { RBT } = await import("helpers/rbt");
   const { arIpaRules } = await import("data/ar/ar-ipa.rules");
@@ -182,9 +183,5 @@ export const arIpa = async <T = Text>(
     return transliterator.transliterate(result);
   };
 
-  if (typeof text === "string") {
-    return (await convert(text)) as T;
-  } else {
-    return (await Promise.all(text.map(convert))) as T;
-  }
+  return (await mapText(text, convert)) as T;
 };

@@ -1,28 +1,11 @@
 import { Text } from "types";
 
 export const jaSr = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt");
-  const { normalizeJa } = await import("helpers/normalizeJa");
+  const { convertText } = await import("helpers/convertText");
   const { jaLatnRules } = await import("data/ja/ja-latn.rules");
   const { jaSrRules } = await import("data/ja/ja-sr.rules");
-  const { wordSplitter } = await import("helpers/wordSplitter");
-  const { getKuroshiro } = await import("helpers/getKuroshiro");
-  const { markJaUnit, joinJaUnits } = await import("helpers/jaUnits");
+  const { joinJaUnits } = await import("helpers/jaUnits");
+  const { jaLatn } = await import("converters/ja/ja-latn");
 
-  const kuroshiro = await getKuroshiro();
-
-  const transliterator = RBT.fromRules(jaLatnRules + jaSrRules);
-
-  const convert = async (text: string) => {
-    const romanized = await wordSplitter(normalizeJa(text), "ja", async (text, _, tokens) =>
-      markJaUnit(text, await kuroshiro.convert(text, { to: "romaji" }, tokens)),
-    );
-    return joinJaUnits(transliterator.transliterate(romanized));
-  };
-
-  if (typeof text === "string") {
-    return await convert(text);
-  } else {
-    return Promise.all(text.map(convert));
-  }
+  return convertText(text, jaLatnRules + jaSrRules, { source: jaLatn, post: joinJaUnits });
 };

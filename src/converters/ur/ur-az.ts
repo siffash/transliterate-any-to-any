@@ -1,7 +1,7 @@
 import { Text } from "types";
 
 export const urAz = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { urIpa } = await import("converters/ur/ur-ipa");
   const { ipaAspHRules } = await import("data/ipa/ipa_asph.rules");
   const { ipaAzRules } = await import("data/ipa/ipa-az.rules");
@@ -9,15 +9,9 @@ export const urAz = async (text: Text) => {
   const { latnQHoldRules } = await import("data/latn/latn_q-hold.rules");
   const { latnQRestoreRules } = await import("data/latn/latn_q-restore.rules");
 
-  const transliterator = RBT.fromRules(
+  return convertText(
+    text,
     ipaAspHRules + latnQHoldRules + ipaAzRules + ipaDottedIRules + "::Title;" + latnQRestoreRules,
+    { source: urIpa },
   );
-
-  if (typeof text === "string") {
-    const ipa = await urIpa<string>(text);
-    return transliterator.transliterate(ipa);
-  } else {
-    const ipaArray = await urIpa<string[]>(text);
-    return ipaArray.map(ipa => transliterator.transliterate(ipa));
-  }
 };

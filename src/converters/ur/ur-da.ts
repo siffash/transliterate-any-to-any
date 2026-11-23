@@ -1,19 +1,13 @@
 import { Text } from "types";
 
 export const urDa = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { ipaGemTRules } = await import("data/ipa/ipa_gemt.rules");
   const { urIpa } = await import("converters/ur/ur-ipa");
   const { ipaAspHRules } = await import("data/ipa/ipa_asph.rules");
   const { ipaDaRules } = await import("data/ipa/ipa-da.rules");
 
-  const transliterator = RBT.fromRules(ipaGemTRules + ipaAspHRules + ipaDaRules + "::Title;");
-
-  if (typeof text === "string") {
-    const ipa = await urIpa<string>(text);
-    return transliterator.transliterate(ipa);
-  } else {
-    const ipaArray = await urIpa<string[]>(text);
-    return ipaArray.map(ipa => transliterator.transliterate(ipa));
-  }
+  return convertText(text, ipaGemTRules + ipaAspHRules + ipaDaRules + "::Title;", {
+    source: urIpa,
+  });
 };

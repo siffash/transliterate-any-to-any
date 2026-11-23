@@ -7,6 +7,7 @@ export const enIpa = async <T = Text>(
   skippedRestoreRules: RestoreIpaRule[] = [],
   extraIpaRules = "",
 ): Promise<T> => {
+  const { mapText } = await import("helpers/convertText");
   const { getPhonemize, getPhonemizeEnG2P } = await import("helpers/getPhonemize");
   const { toIPA } = await getPhonemize();
   const { filterIpa } = await import("helpers/filterIpa");
@@ -46,9 +47,5 @@ export const enIpa = async <T = Text>(
       return IRISH_O.test(word.replaceAll("'", "’")) ? converted.replace(/^ɔ/u, "ɔ’") : converted;
     });
 
-  if (typeof text === "string") {
-    return (await convert(text)) as T;
-  } else {
-    return (await Promise.all(text.map(convert))) as T;
-  }
+  return (await mapText(text, convert)) as T;
 };

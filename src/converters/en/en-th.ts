@@ -1,7 +1,7 @@
 import { Text } from "types";
 
 export const enTh = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { enIpa } = await import("converters/en/en-ipa");
   const {
     syllabicLSchwaRestoreRules,
@@ -22,29 +22,29 @@ export const enTh = async (text: Text) => {
   const { ipaThKaranRules } = await import("data/ipa/ipa-th_karan.rules");
   const { enIpaShireRules } = await import("data/en/en-ipa_shire.rules");
 
-  const transliterator = RBT.fromRules(
+  return convertText(
+    text,
     enIpaShireRules + enIpaThRules + ipaThOpenRules + ipaThRules + ipaThKaranRules,
+    {
+      source: words =>
+        enIpa(
+          words,
+          [
+            ...syllabicLSchwaRestoreRules,
+            ...ngConsonantRestoreRules,
+            ...airRestoreRules,
+            ...mouthReducedRestoreRules,
+            ...boroughReducedRestoreRules,
+            ...yesVoicelessRestoreRules,
+          ],
+          [
+            ...mouthRestoreRules,
+            ...boroughRestoreRules,
+            ...woodRestoreRules,
+            ...juzRestoreRules,
+            ...yesRestoreRules,
+          ],
+        ),
+    },
   );
-
-  const words = typeof text === "string" ? [text] : text;
-  const ipa = await enIpa<string[]>(
-    words,
-    [
-      ...syllabicLSchwaRestoreRules,
-      ...ngConsonantRestoreRules,
-      ...airRestoreRules,
-      ...mouthReducedRestoreRules,
-      ...boroughReducedRestoreRules,
-      ...yesVoicelessRestoreRules,
-    ],
-    [
-      ...mouthRestoreRules,
-      ...boroughRestoreRules,
-      ...woodRestoreRules,
-      ...juzRestoreRules,
-      ...yesRestoreRules,
-    ],
-  );
-  const result = ipa.map(ipa => transliterator.transliterate(ipa));
-  return typeof text === "string" ? result[0] : result;
 };

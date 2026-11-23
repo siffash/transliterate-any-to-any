@@ -1,19 +1,11 @@
 import { Text } from "types";
 
 export const lbBn = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { lbIpa } = await import("converters/lb/lb-ipa");
   const { ipaErRules } = await import("data/ipa/ipa_er.rules");
   const { ipaFinalSchwaERules } = await import("data/ipa/ipa_final-schwa-e.rules");
   const { ipaBnRules } = await import("data/ipa/ipa-bn.rules");
 
-  const transliterator = RBT.fromRules(ipaErRules + ipaFinalSchwaERules + ipaBnRules);
-
-  if (typeof text === "string") {
-    const ipa = await lbIpa<string>(text);
-    return transliterator.transliterate(ipa);
-  } else {
-    const ipaArray = await lbIpa<string[]>(text);
-    return ipaArray.map(ipa => transliterator.transliterate(ipa));
-  }
+  return convertText(text, ipaErRules + ipaFinalSchwaERules + ipaBnRules, { source: lbIpa });
 };

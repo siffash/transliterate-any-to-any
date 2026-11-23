@@ -1,6 +1,7 @@
 import { Text } from "types";
 
 export const viZh = async (text: Text) => {
+  const { mapText } = await import("helpers/convertText");
   const { compoundDictionary, singleDictionary } = await import("data/vi/vi-zh.map");
   const { RBT } = await import("helpers/rbt");
   const { viIpaRules } = await import("data/vi/vi-ipa.rules");
@@ -84,9 +85,5 @@ export const viZh = async (text: Text) => {
       .replace(/([\u4E00-\u9FFF])\s+([\u4E00-\u9FFF])/g, "$1$2");
   };
 
-  if (typeof text === "string") {
-    return await convert(text);
-  } else {
-    return Promise.all(text.map(text => convert(text)));
-  }
+  return mapText(text, convert);
 };

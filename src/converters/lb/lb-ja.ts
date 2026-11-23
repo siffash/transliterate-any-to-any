@@ -1,6 +1,7 @@
 import { Text } from "types";
 
 export const lbJa = async (text: Text) => {
+  const { convertText } = await import("helpers/convertText");
   const { RBT } = await import("helpers/rbt");
   const { lbIpa } = await import("converters/lb/lb-ipa");
   const { frIpa } = await import("converters/fr/fr-ipa");
@@ -11,28 +12,19 @@ export const lbJa = async (text: Text) => {
   const { ipaDevoiceBgRules } = await import("data/ipa/ipa_devoice-bg.rules");
   const { ipaJaRules } = await import("data/ipa/ipa-ja.rules");
 
-  const transliterator = RBT.fromRules(ipaJaRules);
   const frenchTransliterator = RBT.fromRules(frIpaJaRules);
   const frenchIpa = async (words: string[]) =>
     (await frIpa<string[]>(words, { japanese: true })).map(ipa =>
       frenchTransliterator.transliterate(ipa),
     );
 
-  if (typeof text === "string") {
-    const ipa = await lbIpa<string>(
-      text,
-      false,
-      frenchIpa,
-      lbIpaErRules + lbIpaDevoiceRules + ipaDevoiceBgRules + lbIpaJaRules,
-    );
-    return transliterator.transliterate(ipa);
-  } else {
-    const ipaArray = await lbIpa<string[]>(
-      text,
-      false,
-      frenchIpa,
-      lbIpaErRules + lbIpaDevoiceRules + ipaDevoiceBgRules + lbIpaJaRules,
-    );
-    return ipaArray.map(ipa => transliterator.transliterate(ipa));
-  }
+  return convertText(text, ipaJaRules, {
+    source: words =>
+      lbIpa(
+        words,
+        false,
+        frenchIpa,
+        lbIpaErRules + lbIpaDevoiceRules + ipaDevoiceBgRules + lbIpaJaRules,
+      ),
+  });
 };

@@ -1,6 +1,7 @@
 import { Text } from "types";
 
 export const zhKo = async (text: Text) => {
+  const { mapText } = await import("helpers/convertText");
   const { ZH_KO_ETHNONYMS } = await import("data/zh/zh-ethnonyms.map");
   const { zhPinyinArray } = await import("helpers/zhPinyin");
   const { CHO, FINALS, INITIALS, JONG, JUNG, PLAIN_VOWELS, SYLLABIC, UNITS, ZERO_INITIAL } =
@@ -56,9 +57,5 @@ export const zhKo = async (text: Text) => {
     return hangul.replace(/[０-９]/g, digit => String(digit.charCodeAt(0) - 0xff10));
   };
 
-  if (typeof text === "string") {
-    return await convert(text);
-  } else {
-    return Promise.all(text.map(convert));
-  }
+  return mapText(text, convert);
 };

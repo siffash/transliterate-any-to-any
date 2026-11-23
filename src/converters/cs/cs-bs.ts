@@ -1,20 +1,15 @@
 import { Text } from "types";
 
 export const csBs = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { csLatnRules } = await import("data/cs/cs-latn.rules");
   const { csLatnNjRules } = await import("data/cs/cs-latn_nj.rules");
   const { csLatnJeRules } = await import("data/cs/cs-latn_je.rules");
   const { csSkLatnPalatalRules } = await import("data/latn/cs_sk-latn_palatal.rules");
   const { latnBsRules } = await import("data/latn/latn-bs.rules");
 
-  const transliterator = RBT.fromRules(
+  return convertText(
+    text,
     csSkLatnPalatalRules + csLatnNjRules + csLatnJeRules + csLatnRules + latnBsRules,
   );
-
-  if (typeof text === "string") {
-    return transliterator.transliterate(text);
-  } else {
-    return text.map(text => transliterator.transliterate(text));
-  }
 };

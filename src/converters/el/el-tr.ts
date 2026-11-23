@@ -1,7 +1,7 @@
 import { Text } from "types";
 
 export const elTr = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { elLatnGiRules } = await import("data/el/el-latn_gi.rules");
   const { elLatnJiRules } = await import("data/el/el-latn_ji.rules");
   const { elLatnRules } = await import("data/el/el-latn.rules");
@@ -10,7 +10,8 @@ export const elTr = async (text: Text) => {
   const { latnGhGRules } = await import("data/latn/latn_gh-g.rules");
   const { elLatnDzRules } = await import("data/el/el-latn_dz.rules");
 
-  const transliterator = RBT.fromRules(
+  return convertText(
+    text,
     elLatnGiRules +
       elLatnJiRules +
       elLatnRules +
@@ -19,10 +20,4 @@ export const elTr = async (text: Text) => {
       elLatnDzRules +
       latnTrRules,
   );
-
-  if (typeof text === "string") {
-    return transliterator.transliterate(text);
-  } else {
-    return text.map(text => transliterator.transliterate(text));
-  }
 };

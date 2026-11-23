@@ -1,16 +1,10 @@
 import { Text } from "types";
 
 export const elZh = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { elIpaRules } = await import("data/el/el-ipa.rules");
   const { elIpaZhRules } = await import("data/el/el-ipa_zh.rules");
   const { ipaZhRules } = await import("data/ipa/ipa-zh.rules");
 
-  const transliterator = RBT.fromRules(elIpaRules + elIpaZhRules + ipaZhRules);
-
-  if (typeof text === "string") {
-    return transliterator.transliterate(text);
-  } else {
-    return text.map(text => transliterator.transliterate(text));
-  }
+  return convertText(text, elIpaRules + elIpaZhRules + ipaZhRules);
 };

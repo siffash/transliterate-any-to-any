@@ -1,14 +1,8 @@
 import { Text } from "types";
 
 export const ukBg = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { ukBgRules } = await import("data/uk/uk-bg.rules");
 
-  const transliterator = RBT.fromRules(ukBgRules);
-
-  if (typeof text === "string") {
-    return transliterator.transliterate(text);
-  } else {
-    return text.map(text => transliterator.transliterate(text));
-  }
+  return convertText(text, ukBgRules);
 };

@@ -1,7 +1,7 @@
 import { Text } from "types";
 
 export const svUr = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { svIpaRules } = await import("data/sv/sv-ipa.rules");
   const { svNoIpaRRules } = await import("data/ipa/sv_no-ipa_r.rules");
   const { ipaUrRules } = await import("data/ipa/ipa-ur.rules");
@@ -9,7 +9,8 @@ export const svUr = async (text: Text) => {
   const { ipaUrInitialARules } = await import("data/ipa/ipa-ur_initial-a.rules");
   const { svIpaUrRules } = await import("data/sv/sv-ipa_ur.rules");
 
-  const transliterator = RBT.fromRules(
+  return convertText(
+    text,
     svIpaRules +
       svIpaUrRules +
       svNoIpaRRules +
@@ -17,10 +18,4 @@ export const svUr = async (text: Text) => {
       ipaUrInitialARules +
       ipaUrRules,
   );
-
-  if (typeof text === "string") {
-    return transliterator.transliterate(text);
-  } else {
-    return text.map(text => transliterator.transliterate(text));
-  }
 };

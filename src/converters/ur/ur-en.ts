@@ -1,6 +1,7 @@
 import { Text } from "types";
 
 export const urEn = async <T = Text>(text: Text): Promise<T> => {
+  const { mapText } = await import("helpers/convertText");
   const { urIpaMap } = await import("data/ur/ur-ipa.map");
   const { RBT } = await import("helpers/rbt");
   const { ipaAspHRules } = await import("data/ipa/ipa_asph.rules");
@@ -61,9 +62,5 @@ export const urEn = async <T = Text>(text: Text): Promise<T> => {
       ),
     );
 
-  if (typeof text === "string") {
-    return (await convert(text)) as T;
-  } else {
-    return (await Promise.all(text.map(convert))) as T;
-  }
+  return (await mapText(text, convert)) as T;
 };

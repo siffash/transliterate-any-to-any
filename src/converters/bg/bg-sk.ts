@@ -1,16 +1,10 @@
 import { Text } from "types";
 
 export const bgSk = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { bgLatnRules } = await import("data/bg/bg-latn.rules");
   const { bgSchwaRules } = await import("data/bg/bg_schwa.rules");
   const { latnSkRules } = await import("data/latn/latn-sk.rules");
 
-  const transliterator = RBT.fromRules(bgSchwaRules + bgLatnRules + latnSkRules);
-
-  if (typeof text === "string") {
-    return transliterator.transliterate(text);
-  } else {
-    return text.map(text => transliterator.transliterate(text));
-  }
+  return convertText(text, bgSchwaRules + bgLatnRules + latnSkRules);
 };

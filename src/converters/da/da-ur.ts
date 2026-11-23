@@ -1,7 +1,7 @@
 import { Text } from "types";
 
 export const daUr = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { daIpaRules } = await import("data/da/da-ipa.rules");
   const { daIpaRRules } = await import("data/da/da-ipa_r.rules");
   const { ipaFinalSchwaERules } = await import("data/ipa/ipa_final-schwa-e.rules");
@@ -9,7 +9,8 @@ export const daUr = async (text: Text) => {
   const { ipaUrRetroflexRules } = await import("data/ipa/ipa-ur_retroflex.rules");
   const { ipaAspirationDropRules } = await import("data/ipa/ipa_aspiration-drop.rules");
 
-  const transliterator = RBT.fromRules(
+  return convertText(
+    text,
     daIpaRules +
       daIpaRRules +
       ipaFinalSchwaERules +
@@ -17,10 +18,4 @@ export const daUr = async (text: Text) => {
       ipaAspirationDropRules +
       ipaUrRules,
   );
-
-  if (typeof text === "string") {
-    return transliterator.transliterate(text);
-  } else {
-    return text.map(text => transliterator.transliterate(text));
-  }
 };

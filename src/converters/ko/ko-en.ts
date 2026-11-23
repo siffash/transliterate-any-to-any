@@ -1,6 +1,7 @@
 import { Text } from "types";
 
 export const koEn = async (text: Text) => {
+  const { mapText } = await import("helpers/convertText");
   const Aromanize = (await import("aromanize")).default;
   const { RBT } = await import("helpers/rbt");
   const { latnKoHyphenRules } = await import("data/latn/latn_ko-hyphen.rules");
@@ -32,9 +33,5 @@ export const koEn = async (text: Text) => {
     return transliterator.transliterate(romanized);
   };
 
-  if (typeof text === "string") {
-    return await convert(text);
-  } else {
-    return Promise.all(text.map(convert));
-  }
+  return mapText(text, convert);
 };

@@ -1,24 +1,14 @@
 import { Text } from "types";
 
 export const zhFr = async (text: Text) => {
-  const { zhPinyin } = await import("helpers/zhPinyin");
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { zhLatnRules } = await import("data/zh/zh-latn.rules");
   const { latnIRules } = await import("data/latn/latn_i.rules");
   const { zhLatnFrRules } = await import("data/zh/zh-latn_fr.rules");
   const { latnFrRules } = await import("data/latn/latn-fr.rules");
-  const { wordSplitter } = await import("helpers/wordSplitter");
+  const { zhLatn } = await import("converters/zh/zh-latn");
 
-  const transliterator = RBT.fromRules(zhLatnRules + latnIRules + zhLatnFrRules + latnFrRules);
-
-  const convert = async (text: string) => {
-    const romanized = await wordSplitter(text, "zh", text => zhPinyin(text));
-    return transliterator.transliterate(romanized);
-  };
-
-  if (typeof text === "string") {
-    return await convert(text);
-  } else {
-    return Promise.all(text.map(convert));
-  }
+  return convertText(text, zhLatnRules + latnIRules + zhLatnFrRules + latnFrRules, {
+    source: zhLatn,
+  });
 };

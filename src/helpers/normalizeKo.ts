@@ -179,7 +179,7 @@ const markSyllableBoundaries = (text: string) => {
   return result;
 };
 
-type KoSeparator = { name?: string; syllable?: string; unit?: string; province?: string };
+export type KoSeparator = { name?: string; syllable?: string; unit?: string; province?: string };
 
 export const normalizeKo = async (
   text: string,

@@ -1,3 +1,5 @@
+import { Text } from "types";
+
 export const thaiReader = async () => {
   const { romanizeDetailed } = await import("@pcampus/thai-romanization");
   const { RBT } = await import("helpers/rbt");
@@ -95,4 +97,20 @@ export const thIpa = async () => {
 export const thRtgs = async () => {
   const read = await thaiReader();
   return (word: string): string => read(word).rtgs;
+};
+
+export const thIpaText = async <T = Text>(text: Text, rules?: string): Promise<T> => {
+  const { RBT } = await import("helpers/rbt");
+  const { wordSplitter } = await import("helpers/wordSplitter");
+  const { normalizeTh } = await import("helpers/normalizeTh");
+  const { mapText } = await import("helpers/convertText");
+
+  const toIpa = await thIpa();
+  const transliterator = rules === undefined ? undefined : RBT.fromRules(rules);
+
+  return (await mapText(text, text =>
+    wordSplitter(normalizeTh(text), "th", word =>
+      transliterator ? transliterator.transliterate(toIpa(word)) : toIpa(word),
+    ),
+  )) as T;
 };

@@ -1,7 +1,7 @@
 import { Text } from "types";
 
 export const nlJa = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { nlIpaRules } = await import("data/nl/nl-ipa.rules");
   const { nlIpaJaRules } = await import("data/nl/nl-ipa_ja.rules");
   const { ipaDevoiceBgRules } = await import("data/ipa/ipa_devoice-bg.rules");
@@ -10,7 +10,8 @@ export const nlJa = async (text: Text) => {
   const { ipaDevoiceZRules } = await import("data/ipa/ipa_devoice-z.rules");
   const { ipaJaRules } = await import("data/ipa/ipa-ja.rules");
 
-  const transliterator = RBT.fromRules(
+  return convertText(
+    text,
     nlIpaRules +
       nlIpaJaRules +
       ipaDevoiceBgRules +
@@ -19,10 +20,4 @@ export const nlJa = async (text: Text) => {
       ipaDevoiceZRules +
       ipaJaRules,
   );
-
-  if (typeof text === "string") {
-    return transliterator.transliterate(text);
-  } else {
-    return text.map(text => transliterator.transliterate(text));
-  }
 };

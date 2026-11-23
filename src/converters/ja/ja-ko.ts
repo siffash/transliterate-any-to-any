@@ -1,6 +1,7 @@
 import { Text } from "types";
 
 export const jaKo = async (text: Text) => {
+  const { mapText } = await import("helpers/convertText");
   const { default: Hangul } = await import("hangul-js");
   const { normalizeJa } = await import("helpers/normalizeJa");
   const { jaKoMap } = await import("data/ja/ja-ko.map");
@@ -63,9 +64,5 @@ export const jaKo = async (text: Text) => {
       .replace(/ ?\uE010/g, () => generics.shift()!);
   };
 
-  if (typeof text === "string") {
-    return await convert(text);
-  } else {
-    return Promise.all(text.map(convert));
-  }
+  return mapText(text, convert);
 };

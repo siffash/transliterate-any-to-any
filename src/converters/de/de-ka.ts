@@ -1,16 +1,10 @@
 import { Text } from "types";
 
 export const deKa = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { deLatnRules } = await import("data/de/de-latn.rules");
   const { latnKaRules } = await import("data/latn/latn-ka.rules");
   const { latnKaIuRules } = await import("data/latn/latn-ka_iu.rules");
 
-  const transliterator = RBT.fromRules(deLatnRules + latnKaIuRules + latnKaRules);
-
-  if (typeof text === "string") {
-    return transliterator.transliterate(text);
-  } else {
-    return text.map(text => transliterator.transliterate(text));
-  }
+  return convertText(text, deLatnRules + latnKaIuRules + latnKaRules);
 };

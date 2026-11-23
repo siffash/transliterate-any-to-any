@@ -1,19 +1,13 @@
 import { Text } from "types";
 
 export const urHi = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { urIpa } = await import("converters/ur/ur-ipa");
   const { urIpaHiRules } = await import("data/ur/ur-ipa_hi.rules");
   const { ipaHiRules } = await import("data/ipa/ipa-hi.rules");
   const { ipaViramaDropRules } = await import("data/ipa/ipa_virama-drop.rules");
 
-  const transliterator = RBT.fromRules(urIpaHiRules + ipaHiRules + ipaViramaDropRules);
-
-  if (typeof text === "string") {
-    const ipa = await urIpa<string>(text, true);
-    return transliterator.transliterate(ipa);
-  } else {
-    const ipaArray = await urIpa<string[]>(text, true);
-    return ipaArray.map(ipa => transliterator.transliterate(ipa));
-  }
+  return convertText(text, urIpaHiRules + ipaHiRules + ipaViramaDropRules, {
+    source: words => urIpa(words, true),
+  });
 };

@@ -1,7 +1,7 @@
 import { Text } from "types";
 
 export const faTg = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { faLowerRules } = await import("data/fa/fa_lower.rules");
   const { faIpaUvular } = await import("converters/fa/fa-ipa");
   const { ipaUvularQRules } = await import("data/ipa/ipa_uvular-q.rules");
@@ -11,7 +11,8 @@ export const faTg = async (text: Text) => {
   const { faTgRules } = await import("data/fa/fa-tg.rules");
   const { faTgLowerRules } = await import("data/fa/fa-tg_lower.rules");
 
-  const transliterator = RBT.fromRules(
+  return convertText(
+    text,
     ipaUvularQRules +
       faIpaTgRules +
       arFaUrIpaTgRules +
@@ -20,13 +21,6 @@ export const faTg = async (text: Text) => {
       "::Title;" +
       faLowerRules +
       faTgLowerRules,
+    { source: words => faIpaUvular(words, "·") },
   );
-
-  if (typeof text === "string") {
-    const ipa = await faIpaUvular<string>(text, "·");
-    return transliterator.transliterate(ipa);
-  } else {
-    const ipaArray = await faIpaUvular<string[]>(text, "·");
-    return ipaArray.map(ipa => transliterator.transliterate(ipa));
-  }
 };

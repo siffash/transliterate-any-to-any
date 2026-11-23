@@ -1,16 +1,10 @@
 import { Text } from "types";
 
 export const msLv = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { msIdLatnRules } = await import("data/latn/ms_id-latn.rules");
   const { latnLvRules } = await import("data/latn/latn-lv.rules");
   const { latnLvNgRules } = await import("data/latn/latn-lv_ng.rules");
 
-  const transliterator = RBT.fromRules(msIdLatnRules + latnLvNgRules + latnLvRules);
-
-  if (typeof text === "string") {
-    return transliterator.transliterate(text);
-  } else {
-    return text.map(text => transliterator.transliterate(text));
-  }
+  return convertText(text, msIdLatnRules + latnLvNgRules + latnLvRules);
 };

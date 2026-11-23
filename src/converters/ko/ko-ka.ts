@@ -1,32 +1,11 @@
 import { Text } from "types";
 
 export const koKa = async (text: Text) => {
-  const { getPhonemizeAll } = await import("helpers/getPhonemize");
-  const { toIPA } = await getPhonemizeAll();
-  const { filterIpa } = await import("helpers/filterIpa");
-  const { normalizeKoIpa } = await import("helpers/normalizeKoIpa");
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { ipaKaRules } = await import("data/ipa/ipa-ka.rules");
-  const { wordSplitter } = await import("helpers/wordSplitter");
-  const { normalizeKo } = await import("helpers/normalizeKo");
+  const { koIpa } = await import("converters/ko/ko-ipa");
 
-  const transliterator = RBT.fromRules(ipaKaRules);
-
-  const convert = async (text: string) => {
-    const ipa = await wordSplitter(text, "ko", text =>
-      normalizeKo(
-        text,
-        text => filterIpa(normalizeKoIpa(toIPA(text, { anyAscii: true })), text, "ko"),
-        "ipa",
-        { name: "~", syllable: "~" },
-      ),
-    );
-    return transliterator.transliterate(ipa);
-  };
-
-  if (typeof text === "string") {
-    return await convert(text);
-  } else {
-    return Promise.all(text.map(convert));
-  }
+  return convertText(text, ipaKaRules, {
+    source: words => koIpa(words, { name: "~", syllable: "~" }),
+  });
 };

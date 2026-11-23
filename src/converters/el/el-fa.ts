@@ -1,7 +1,7 @@
 import { Text } from "types";
 
 export const elFa = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { elIpaRules } = await import("data/el/el-ipa.rules");
   const { elIpaDRules } = await import("data/el/el-ipa_d.rules");
   const { elIpaXRules } = await import("data/el/el-ipa_x.rules");
@@ -10,7 +10,8 @@ export const elFa = async (text: Text) => {
   const { latnGhGRules } = await import("data/latn/latn_gh-g.rules");
   const { ipaFaRules } = await import("data/ipa/ipa-fa.rules");
 
-  const transliterator = RBT.fromRules(
+  return convertText(
+    text,
     elIpaRules +
       elIpaDRules +
       elIpaXRules +
@@ -19,10 +20,4 @@ export const elFa = async (text: Text) => {
       ipaFaInitialARules +
       ipaFaRules,
   );
-
-  if (typeof text === "string") {
-    return transliterator.transliterate(text);
-  } else {
-    return text.map(text => transliterator.transliterate(text));
-  }
 };

@@ -1,6 +1,7 @@
 import { Text } from "types";
 
 export const zhJa = async (text: Text) => {
+  const { mapText } = await import("helpers/convertText");
   const OpenCC = await import("opencc-js");
   const { ZH_JA_ETHNONYMS } = await import("data/zh/zh-ethnonyms.map");
 
@@ -13,9 +14,5 @@ export const zhJa = async (text: Text) => {
       .replaceAll("莱", "萊")
       .replaceAll("舗", "鋪");
 
-  if (typeof text === "string") {
-    return convert(text);
-  } else {
-    return text.map(convert);
-  }
+  return mapText(text, convert);
 };

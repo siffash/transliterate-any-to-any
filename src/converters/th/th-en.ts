@@ -1,6 +1,7 @@
 import { Text } from "types";
 
 export const thEn = async (text: Text) => {
+  const { mapText } = await import("helpers/convertText");
   const { thRtgs } = await import("converters/th/th-ipa");
   const { RBT } = await import("helpers/rbt");
   const { wordSplitter } = await import("helpers/wordSplitter");
@@ -39,9 +40,5 @@ export const thEn = async (text: Text) => {
     return transliterator.transliterate(romanized.join(""));
   };
 
-  if (typeof text === "string") {
-    return await convert(text);
-  } else {
-    return Promise.all(text.map(convert));
-  }
+  return mapText(text, convert);
 };

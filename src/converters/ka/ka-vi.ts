@@ -1,15 +1,9 @@
 import { Text } from "types";
 
 export const kaVi = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { kaLatnRules } = await import("data/ka/ka-latn.rules");
   const { latnViRules } = await import("data/latn/latn-vi.rules");
 
-  const transliterator = RBT.fromRules(kaLatnRules + latnViRules);
-
-  if (typeof text === "string") {
-    return transliterator.transliterate(text);
-  } else {
-    return text.map(text => transliterator.transliterate(text));
-  }
+  return convertText(text, kaLatnRules + latnViRules);
 };

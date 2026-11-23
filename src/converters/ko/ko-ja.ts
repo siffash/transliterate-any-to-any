@@ -27,6 +27,7 @@ export const koJa = async (text: Text) => {
     VOWELS,
     W_KANA,
   } = await import("data/ko/ko-ja.map");
+  const { mapText } = await import("helpers/convertText");
   const { RBT } = await import("helpers/rbt");
   const { normalizeKo } = await import("helpers/normalizeKo");
   const { ipaJaRules } = await import("data/ipa/ipa-ja.rules");
@@ -145,9 +146,5 @@ export const koJa = async (text: Text) => {
       (letters ??= RBT.fromRules(ipaJaRules)).transliterate(text),
     );
 
-  if (typeof text === "string") {
-    return await convert(text);
-  } else {
-    return Promise.all(text.map(convert));
-  }
+  return mapText(text, convert);
 };

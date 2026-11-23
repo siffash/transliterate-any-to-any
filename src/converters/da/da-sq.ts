@@ -1,16 +1,10 @@
 import { Text } from "types";
 
 export const daSq = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { daLatnRules } = await import("data/da/da-latn.rules");
   const { latnSilentHRules } = await import("data/latn/latn_silent-h.rules");
   const { latnSqRules } = await import("data/latn/latn-sq.rules");
 
-  const transliterator = RBT.fromRules(daLatnRules + latnSilentHRules + latnSqRules);
-
-  if (typeof text === "string") {
-    return transliterator.transliterate(text);
-  } else {
-    return text.map(text => transliterator.transliterate(text));
-  }
+  return convertText(text, daLatnRules + latnSilentHRules + latnSqRules);
 };

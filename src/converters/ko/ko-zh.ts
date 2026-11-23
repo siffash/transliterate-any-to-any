@@ -12,6 +12,7 @@ export const koZh = async (text: Text) => {
     UNIT_MAP,
     VOWELS,
   } = await import("data/ko/ko-zh.map");
+  const { mapText } = await import("helpers/convertText");
   const { PLACES, UNIT_PLACES } = await import("data/ko/ko-zh_places.map");
   const { RBT } = await import("helpers/rbt");
   const { normalizeKo } = await import("helpers/normalizeKo");
@@ -99,9 +100,5 @@ export const koZh = async (text: Text) => {
       (letters ??= RBT.fromRules(ipaZhRules)).transliterate(text),
     );
 
-  if (typeof text === "string") {
-    return await convert(text);
-  } else {
-    return Promise.all(text.map(convert));
-  }
+  return mapText(text, convert);
 };

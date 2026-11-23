@@ -1,7 +1,7 @@
 import { Text } from "types";
 
 export const enAr = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { enIpa } = await import("converters/en/en-ipa");
   const {
     syllabicLRestoreRules,
@@ -15,20 +15,18 @@ export const enAr = async (text: Text) => {
   } = await import("helpers/normalizeEnIpa");
   const { ipaArRules } = await import("data/ipa/ipa-ar.rules");
 
-  const transliterator = RBT.fromRules(ipaArRules);
-
-  const words = typeof text === "string" ? [text] : text;
-  const ipa = await enIpa<string[]>(
-    words,
-    [
-      ...syllabicLRestoreRules,
-      ...geminateSingleRestoreRules,
-      ...airRestoreRules,
-      ...ayDiphthongRestoreRules,
-      ...yesDiphthongRestoreRules,
-    ],
-    [...geminateRestoreRules, ...ayRestoreRules, ...yesRestoreRules],
-  );
-  const result = ipa.map(ipa => transliterator.transliterate(ipa));
-  return typeof text === "string" ? result[0] : result;
+  return convertText(text, ipaArRules, {
+    source: words =>
+      enIpa(
+        words,
+        [
+          ...syllabicLRestoreRules,
+          ...geminateSingleRestoreRules,
+          ...airRestoreRules,
+          ...ayDiphthongRestoreRules,
+          ...yesDiphthongRestoreRules,
+        ],
+        [...geminateRestoreRules, ...ayRestoreRules, ...yesRestoreRules],
+      ),
+  });
 };

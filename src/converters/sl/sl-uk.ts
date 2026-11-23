@@ -1,7 +1,7 @@
 import { Text } from "types";
 
 export const slUk = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { slLatnRules } = await import("data/sl/sl-latn.rules");
   const { latnUkRules } = await import("data/latn/latn-uk.rules");
   const { latnUkSouthSlavicIRules } = await import("data/latn/latn-uk_south-slavic-i.rules");
@@ -11,7 +11,8 @@ export const slUk = async (text: Text) => {
   const { ukIcaRules } = await import("data/uk/uk_ica.rules");
   const { ukIjaRules } = await import("data/uk/uk_ija.rules");
 
-  const transliterator = RBT.fromRules(
+  return convertText(
+    text,
     slLatnRules +
       latnUkSouthSlavicIRules +
       latnUkRules +
@@ -21,10 +22,4 @@ export const slUk = async (text: Text) => {
       ukSouthSlavicAdjRules +
       latnApostropheDropRules,
   );
-
-  if (typeof text === "string") {
-    return transliterator.transliterate(text);
-  } else {
-    return text.map(text => transliterator.transliterate(text));
-  }
 };

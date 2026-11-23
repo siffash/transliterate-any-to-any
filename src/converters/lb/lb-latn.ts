@@ -1,6 +1,7 @@
 import { Text } from "types";
 
 export const lbLatn = async <T = Text>(text: Text): Promise<T> => {
+  const { mapText } = await import("helpers/convertText");
   const { lbIpaMap } = await import("data/lb/lb-ipa.map");
   const { RBT } = await import("helpers/rbt");
   const { lbLatnRules } = await import("data/lb/lb-latn.rules");
@@ -29,9 +30,5 @@ export const lbLatn = async <T = Text>(text: Text): Promise<T> => {
   const convert = (text: string) =>
     convertWithExceptions(text, "lb", exception, text => transliterator.transliterate(text));
 
-  if (typeof text === "string") {
-    return convert(text) as T;
-  } else {
-    return text.map(convert) as T;
-  }
+  return (await mapText(text, convert)) as T;
 };

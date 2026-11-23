@@ -1,19 +1,9 @@
 import { Text } from "types";
 
 export const frMs = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { frIpa } = await import("converters/fr/fr-ipa");
   const { ipaMsRules } = await import("data/ipa/ipa-ms.rules");
-  const { copyCase } = await import("helpers/copyCase");
-  const { keepElision } = await import("helpers/keepElision");
 
-  const transliterator = RBT.fromRules(ipaMsRules);
-
-  if (typeof text === "string") {
-    const ipa = await frIpa<string>(text);
-    return copyCase(text, keepElision(ipa, transliterator), "ms");
-  } else {
-    const ipaArray = await frIpa<string[]>(text);
-    return ipaArray.map((ipa, i) => copyCase(text[i], keepElision(ipa, transliterator), "ms"));
-  }
+  return convertText(text, ipaMsRules, { source: frIpa, caseLang: "ms", elision: true });
 };

@@ -1,16 +1,10 @@
 import { Text } from "types";
 
 export const idHi = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { idIpaRules } = await import("data/id/id-ipa.rules");
   const { msIdIpaAspRules } = await import("data/ipa/ms_id-ipa_asp.rules");
   const { ipaHiRules } = await import("data/ipa/ipa-hi.rules");
 
-  const transliterator = RBT.fromRules(idIpaRules + msIdIpaAspRules + ipaHiRules);
-
-  if (typeof text === "string") {
-    return transliterator.transliterate(text);
-  } else {
-    return text.map(text => transliterator.transliterate(text));
-  }
+  return convertText(text, idIpaRules + msIdIpaAspRules + ipaHiRules);
 };

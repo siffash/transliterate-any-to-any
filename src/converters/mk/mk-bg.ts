@@ -1,14 +1,8 @@
 import { Text } from "types";
 
 export const mkBg = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { mkBgRules } = await import("data/mk/mk-bg.rules");
 
-  const transliterator = RBT.fromRules(mkBgRules);
-
-  if (typeof text === "string") {
-    return transliterator.transliterate(text);
-  } else {
-    return text.map(text => transliterator.transliterate(text));
-  }
+  return convertText(text, mkBgRules);
 };

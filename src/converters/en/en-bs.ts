@@ -1,16 +1,13 @@
 import { Text } from "types";
 
 export const enBs = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { enIpa } = await import("converters/en/en-ipa");
   const { syllabicLRestoreRules } = await import("helpers/normalizeEnIpa");
   const { ipaBsRules } = await import("data/ipa/ipa-bs.rules");
-  const { copyCase } = await import("helpers/copyCase");
 
-  const transliterator = RBT.fromRules(ipaBsRules);
-
-  const words = typeof text === "string" ? [text] : text;
-  const ipa = await enIpa<string[]>(words, syllabicLRestoreRules);
-  const result = ipa.map((ipa, i) => copyCase(words[i], transliterator.transliterate(ipa), "bs"));
-  return typeof text === "string" ? result[0] : result;
+  return convertText(text, ipaBsRules, {
+    source: words => enIpa(words, syllabicLRestoreRules),
+    caseLang: "bs",
+  });
 };

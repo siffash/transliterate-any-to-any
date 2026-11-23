@@ -1,17 +1,9 @@
 import { Text } from "types";
 
 export const urJa = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { urIpa } = await import("converters/ur/ur-ipa");
   const { ipaJaRules } = await import("data/ipa/ipa-ja.rules");
 
-  const transliterator = RBT.fromRules(ipaJaRules + "::Title;");
-
-  if (typeof text === "string") {
-    const ipa = await urIpa<string>(text);
-    return transliterator.transliterate(ipa);
-  } else {
-    const ipaArray = await urIpa<string[]>(text);
-    return ipaArray.map(ipa => transliterator.transliterate(ipa));
-  }
+  return convertText(text, ipaJaRules + "::Title;", { source: urIpa });
 };

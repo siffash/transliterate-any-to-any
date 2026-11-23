@@ -21,6 +21,7 @@ export const frIpa = async <T = Text>(
     oiO = false,
   }: FrIpaOptions = {},
 ): Promise<T> => {
+  const { mapText } = await import("helpers/convertText");
   const { frIpaMap } = await import("data/fr/fr-ipa.map");
   const { RBT } = await import("helpers/rbt");
   const { frIpaRules } = await import("data/fr/fr-ipa.rules");
@@ -79,9 +80,5 @@ export const frIpa = async <T = Text>(
       await convert(text),
     );
 
-  if (typeof text === "string") {
-    return (await liaison(text)) as T;
-  } else {
-    return (await Promise.all(text.map(liaison))) as T;
-  }
+  return (await mapText(text, liaison)) as T;
 };

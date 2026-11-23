@@ -1,7 +1,7 @@
 import { Text } from "types";
 
 export const svLv = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { svLatnRules } = await import("data/sv/sv-latn.rules");
   const { svLatnLvRules } = await import("data/sv/sv-latn_lv.rules");
   const { noSvLatnLvRules } = await import("data/latn/no_sv-latn_lv.rules");
@@ -11,7 +11,8 @@ export const svLv = async (text: Text) => {
   const { svLatnBalticRules } = await import("data/sv/sv-latn_baltic.rules");
   const { svLatnBalticPreRules } = await import("data/sv/sv-latn_baltic-pre.rules");
 
-  const transliterator = RBT.fromRules(
+  return convertText(
+    text,
     noSvLatnLvRules +
       svLatnBalticPreRules +
       svLatnRules +
@@ -21,10 +22,4 @@ export const svLv = async (text: Text) => {
       latnLvUmlautRules +
       latnLvRules,
   );
-
-  if (typeof text === "string") {
-    return transliterator.transliterate(text);
-  } else {
-    return text.map(text => transliterator.transliterate(text));
-  }
 };

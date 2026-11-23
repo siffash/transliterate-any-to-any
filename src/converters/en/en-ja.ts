@@ -1,7 +1,7 @@
 import { Text } from "types";
 
 export const enJa = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { enIpa } = await import("converters/en/en-ipa");
   const {
     syllabicLeRestoreRules,
@@ -18,20 +18,18 @@ export const enJa = async (text: Text) => {
   const { ipaJaRules } = await import("data/ipa/ipa-ja.rules");
   const { enIpaShireRules } = await import("data/en/en-ipa_shire.rules");
 
-  const transliterator = RBT.fromRules(enIpaShireRules + enIpaJaRules + ipaJaRules);
-
-  const words = typeof text === "string" ? [text] : text;
-  const ipa = await enIpa<string[]>(
-    words,
-    [
-      ...syllabicLeRestoreRules,
-      ...jaRestoreRules,
-      ...ngtRestoreRules,
-      ...mouthReducedRestoreRules,
-      ...boroughReducedRestoreRules,
-    ],
-    [...irRestoreRules, ...sRestoreRules, ...mouthRestoreRules, ...boroughRestoreRules],
-  );
-  const result = ipa.map(ipa => transliterator.transliterate(ipa));
-  return typeof text === "string" ? result[0] : result;
+  return convertText(text, enIpaShireRules + enIpaJaRules + ipaJaRules, {
+    source: words =>
+      enIpa(
+        words,
+        [
+          ...syllabicLeRestoreRules,
+          ...jaRestoreRules,
+          ...ngtRestoreRules,
+          ...mouthReducedRestoreRules,
+          ...boroughReducedRestoreRules,
+        ],
+        [...irRestoreRules, ...sRestoreRules, ...mouthRestoreRules, ...boroughRestoreRules],
+      ),
+  });
 };

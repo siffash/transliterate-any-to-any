@@ -1,27 +1,11 @@
 import { Text } from "types";
 
 export const thNo = async (text: Text) => {
-  const { thRtgs } = await import("converters/th/th-ipa");
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { thLatnRules } = await import("data/th/th-latn.rules");
   const { latnNoRules } = await import("data/latn/latn-no.rules");
   const { latnIRules } = await import("data/latn/latn_i.rules");
-  const { wordSplitter } = await import("helpers/wordSplitter");
-  const { normalizeTh } = await import("helpers/normalizeTh");
+  const { thLatn } = await import("converters/th/th-latn");
 
-  const toRtgs = await thRtgs();
-  const transliterator = RBT.fromRules(thLatnRules + latnIRules + latnNoRules + "::Title;");
-
-  const convert = async (text: string) => {
-    const romanized = await wordSplitter(normalizeTh(text), "th", text =>
-      text.replace(/[^๐-๙]+/g, part => toRtgs(part)),
-    );
-    return transliterator.transliterate(romanized);
-  };
-
-  if (typeof text === "string") {
-    return await convert(text);
-  } else {
-    return Promise.all(text.map(convert));
-  }
+  return convertText(text, thLatnRules + latnIRules + latnNoRules + "::Title;", { source: thLatn });
 };

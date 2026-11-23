@@ -1,17 +1,11 @@
 import { Text } from "types";
 
 export const slJa = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { slIpaRules } = await import("data/sl/sl-ipa.rules");
   const { ipaDevoiceZRules } = await import("data/ipa/ipa_devoice-z.rules");
   const { ipaJaRules } = await import("data/ipa/ipa-ja.rules");
   const { ipaJaIcRules } = await import("data/ipa/ipa-ja_ic.rules");
 
-  const transliterator = RBT.fromRules(slIpaRules + ipaDevoiceZRules + ipaJaIcRules + ipaJaRules);
-
-  if (typeof text === "string") {
-    return transliterator.transliterate(text);
-  } else {
-    return text.map(text => transliterator.transliterate(text));
-  }
+  return convertText(text, slIpaRules + ipaDevoiceZRules + ipaJaIcRules + ipaJaRules);
 };

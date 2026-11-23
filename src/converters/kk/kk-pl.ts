@@ -1,7 +1,7 @@
 import { Text } from "types";
 
 export const kkPl = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { kkLatnJeRules } = await import("data/kk/kk-latn_je.rules");
   const { kkLjRules } = await import("data/kk/kk_lj.rules");
   const { kkLatnRules } = await import("data/kk/kk-latn.rules");
@@ -11,7 +11,8 @@ export const kkPl = async (text: Text) => {
   const { latnPlLRules } = await import("data/latn/latn-pl_l.rules");
   const { latnPlRules } = await import("data/latn/latn-pl.rules");
 
-  const transliterator = RBT.fromRules(
+  return convertText(
+    text,
     kkLatnJeRules +
       kkLjRules +
       kkLatnRules +
@@ -21,10 +22,4 @@ export const kkPl = async (text: Text) => {
       latnPlLRules +
       latnPlRules,
   );
-
-  if (typeof text === "string") {
-    return transliterator.transliterate(text);
-  } else {
-    return text.map(text => transliterator.transliterate(text));
-  }
 };

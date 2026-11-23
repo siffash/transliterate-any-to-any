@@ -1,19 +1,11 @@
 import { Text } from "types";
 
 export const fiTg = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { fiLatnRules } = await import("data/fi/fi-latn.rules");
   const { latnThTRules } = await import("data/latn/latn_th-t.rules");
   const { latnTgRules } = await import("data/latn/latn-tg.rules");
   const { latnDiphthongIyRules } = await import("data/latn/latn_diphthong-iy.rules");
 
-  const transliterator = RBT.fromRules(
-    fiLatnRules + latnDiphthongIyRules + latnThTRules + latnTgRules,
-  );
-
-  if (typeof text === "string") {
-    return transliterator.transliterate(text);
-  } else {
-    return text.map(text => transliterator.transliterate(text));
-  }
+  return convertText(text, fiLatnRules + latnDiphthongIyRules + latnThTRules + latnTgRules);
 };

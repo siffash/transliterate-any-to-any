@@ -1,8 +1,7 @@
 import { Text } from "types";
 
 export const koLv = async (text: Text) => {
-  const Aromanize = (await import("aromanize")).default;
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { koLatnAssimRules } = await import("data/ko/ko-latn_assim.rules");
   const { koLatnRules } = await import("data/ko/ko-latn.rules");
   const { koLatnInitialRules } = await import("data/ko/ko-latn_initial.rules");
@@ -10,10 +9,10 @@ export const koLv = async (text: Text) => {
   const { koLatnNRules } = await import("data/ko/ko-latn_n.rules");
   const { latnLvRules } = await import("data/latn/latn-lv.rules");
   const { latnKoJoinRules } = await import("data/latn/latn_ko-join.rules");
-  const { wordSplitter } = await import("helpers/wordSplitter");
-  const { normalizeKo } = await import("helpers/normalizeKo");
+  const { koLatn } = await import("converters/ko/ko-latn");
 
-  const transliterator = RBT.fromRules(
+  return convertText(
+    text,
     koLatnAssimRules +
       koLatnRules +
       koLatnInitialRules +
@@ -21,18 +20,6 @@ export const koLv = async (text: Text) => {
       koLatnNRules +
       latnLvRules +
       latnKoJoinRules,
+    { source: koLatn },
   );
-
-  const convert = async (text: string) => {
-    const romanized = await wordSplitter(text, "ko", text =>
-      normalizeKo(text, text => Aromanize.romanize(text), "latn", { syllable: "‧", unit: "‧" }),
-    );
-    return transliterator.transliterate(romanized);
-  };
-
-  if (typeof text === "string") {
-    return await convert(text);
-  } else {
-    return Promise.all(text.map(convert));
-  }
 };

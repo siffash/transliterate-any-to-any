@@ -1,6 +1,7 @@
 import { Text } from "types";
 
 export const zhVi = async (text: Text) => {
+  const { mapText } = await import("helpers/convertText");
   const OpenCC = await import("opencc-js");
   const { zhPinyinArray } = await import("helpers/zhPinyin");
   const { getHanviet } = await import("hanviet-pinyin-words");
@@ -111,9 +112,5 @@ export const zhVi = async (text: Text) => {
     return text.match(/^\s*/)![0] + result + text.match(/\s*$/)![0];
   };
 
-  if (typeof text === "string") {
-    return convert(text);
-  } else {
-    return text.map(text => convert(text));
-  }
+  return mapText(text, convert);
 };

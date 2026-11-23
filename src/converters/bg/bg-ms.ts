@@ -1,15 +1,9 @@
 import { Text } from "types";
 
 export const bgMs = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { bgLatnRules } = await import("data/bg/bg-latn.rules");
   const { latnMsRules } = await import("data/latn/latn-ms.rules");
 
-  const transliterator = RBT.fromRules(bgLatnRules + latnMsRules);
-
-  if (typeof text === "string") {
-    return transliterator.transliterate(text);
-  } else {
-    return text.map(text => transliterator.transliterate(text));
-  }
+  return convertText(text, bgLatnRules + latnMsRules);
 };

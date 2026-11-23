@@ -1,14 +1,8 @@
 import { Text } from "types";
 
 export const hiBn = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { hiBnRules } = await import("data/hi/hi-bn.rules");
 
-  const transliterator = RBT.fromRules(hiBnRules);
-
-  if (typeof text === "string") {
-    return transliterator.transliterate(text);
-  } else {
-    return text.map(text => transliterator.transliterate(text));
-  }
+  return convertText(text, hiBnRules);
 };

@@ -1,25 +1,9 @@
 import { Text } from "types";
 
 export const zhHi = async (text: Text) => {
-  const { getPhonemizeAll } = await import("helpers/getPhonemize");
-  const { toIPA } = await getPhonemizeAll();
-  const { filterIpa } = await import("helpers/filterIpa");
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { ipaHiRules } = await import("data/ipa/ipa-hi.rules");
-  const { wordSplitter } = await import("helpers/wordSplitter");
+  const { zhIpa } = await import("converters/zh/zh-ipa");
 
-  const transliterator = RBT.fromRules(ipaHiRules);
-
-  const convert = async (text: string) => {
-    const ipa = await wordSplitter(text, "zh", text =>
-      filterIpa(toIPA(text, { separator: "" }), text, "zh"),
-    );
-    return transliterator.transliterate(ipa);
-  };
-
-  if (typeof text === "string") {
-    return await convert(text);
-  } else {
-    return Promise.all(text.map(convert));
-  }
+  return convertText(text, ipaHiRules, { source: zhIpa });
 };

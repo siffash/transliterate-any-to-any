@@ -1,6 +1,7 @@
 import { Text } from "types";
 
 export const faUr = async (text: Text) => {
+  const { mapText } = await import("helpers/convertText");
   const { faIpaMap } = await import("data/fa/fa-ipa.map");
   const { RBT } = await import("helpers/rbt");
   const { faNormRules } = await import("data/fa/fa_norm.rules");
@@ -21,9 +22,5 @@ export const faUr = async (text: Text) => {
       ),
     );
 
-  if (typeof text === "string") {
-    return await convert(text);
-  } else {
-    return await Promise.all(text.map(convert));
-  }
+  return mapText(text, convert);
 };

@@ -1,21 +1,13 @@
 import { Text } from "types";
 
 export const arKo = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { arIpa } = await import("converters/ar/ar-ipa");
   const { ipaKoFinalKpRules } = await import("data/ipa/ipa-ko_final-kp.rules");
   const { ipaKoHyphenCcRules } = await import("data/ipa/ipa-ko_hyphen-cc.rules");
   const { ipaKoRules } = await import("data/ipa/ipa-ko.rules");
 
-  const transliterator = RBT.fromRules(
-    ipaKoFinalKpRules + ipaKoHyphenCcRules + ipaKoRules + "::Title;",
-  );
-
-  if (typeof text === "string") {
-    const ipa = await arIpa<string>(text, { dropLoneArticle: true });
-    return transliterator.transliterate(ipa);
-  } else {
-    const ipaArray = await arIpa<string[]>(text, { dropLoneArticle: true });
-    return ipaArray.map(ipa => transliterator.transliterate(ipa));
-  }
+  return convertText(text, ipaKoFinalKpRules + ipaKoHyphenCcRules + ipaKoRules + "::Title;", {
+    source: words => arIpa(words, { dropLoneArticle: true }),
+  });
 };

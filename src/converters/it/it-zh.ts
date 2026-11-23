@@ -1,7 +1,7 @@
 import { Text } from "types";
 
 export const itZh = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { ipaZhWRules } = await import("data/ipa/ipa-zh_w.rules");
   const { itIpaRules } = await import("data/it/it-ipa.rules");
   const { ipaZhOvaRules } = await import("data/ipa/ipa-zh_ova.rules");
@@ -10,7 +10,8 @@ export const itZh = async (text: Text) => {
   const { ipaZhChaRules } = await import("data/ipa/ipa-zh_cha.rules");
   const { ipaZhSRules } = await import("data/ipa/ipa-zh_s.rules");
 
-  const transliterator = RBT.fromRules(
+  return convertText(
+    text,
     itIpaRules +
       ipaZhWRules +
       ipaZhOvaRules +
@@ -19,10 +20,4 @@ export const itZh = async (text: Text) => {
       ipaZhSRules +
       ipaZhRules,
   );
-
-  if (typeof text === "string") {
-    return transliterator.transliterate(text);
-  } else {
-    return text.map(text => transliterator.transliterate(text));
-  }
 };

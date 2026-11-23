@@ -1,7 +1,7 @@
 import { Text } from "types";
 
 export const bgRo = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { bgSchwaRules } = await import("data/bg/bg_schwa.rules");
   const { bgLatnRules } = await import("data/bg/bg-latn.rules");
   const { latnIyIiRules } = await import("data/latn/latn_iy-ii.rules");
@@ -10,7 +10,8 @@ export const bgRo = async (text: Text) => {
   const { latnRoEaRules } = await import("data/latn/latn-ro_ea.rules");
   const { latnRoDjRules } = await import("data/latn/latn-ro_dj.rules");
 
-  const transliterator = RBT.fromRules(
+  return convertText(
+    text,
     bgSchwaRules +
       bgLatnRules +
       latnIyIiRules +
@@ -19,10 +20,4 @@ export const bgRo = async (text: Text) => {
       latnRoDjRules +
       latnRoRules,
   );
-
-  if (typeof text === "string") {
-    return transliterator.transliterate(text);
-  } else {
-    return text.map(text => transliterator.transliterate(text));
-  }
 };

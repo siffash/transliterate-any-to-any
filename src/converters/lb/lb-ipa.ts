@@ -6,6 +6,7 @@ export const lbIpa = async <T = Text>(
   frenchIpa?: (words: string[]) => Promise<string[]>,
   rules = "",
 ): Promise<T> => {
+  const { mapText } = await import("helpers/convertText");
   const { lbIpaMap } = await import("data/lb/lb-ipa.map");
   const { RBT } = await import("helpers/rbt");
   const { lbIpaRules } = await import("data/lb/lb-ipa.rules");
@@ -35,9 +36,5 @@ export const lbIpa = async <T = Text>(
   const convert = (text: string) =>
     convertWithExceptions(text, "lb", exception, text => transliterator.transliterate(text));
 
-  if (typeof text === "string") {
-    return convert(text) as T;
-  } else {
-    return text.map(convert) as T;
-  }
+  return (await mapText(text, convert)) as T;
 };

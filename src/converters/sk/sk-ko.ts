@@ -1,7 +1,7 @@
 import { Text } from "types";
 
 export const skKo = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { csSkIpaKoDjRules } = await import("data/ipa/cs_sk-ipa_ko-dj.rules");
   const { skIpaRules } = await import("data/sk/sk-ipa.rules");
   const { ipaDevoiceBgRules } = await import("data/ipa/ipa_devoice-bg.rules");
@@ -14,7 +14,8 @@ export const skKo = async (text: Text) => {
   const { ipaKoRules } = await import("data/ipa/ipa-ko.rules");
   const { skIpaKoVRules } = await import("data/sk/sk-ipa_ko-v.rules");
 
-  const transliterator = RBT.fromRules(
+  return convertText(
+    text,
     csSkIpaKoDjRules +
       skIpaRules +
       skIpaKoVRules +
@@ -27,10 +28,4 @@ export const skKo = async (text: Text) => {
       ipaKoFinalKpRules +
       ipaKoRules,
   );
-
-  if (typeof text === "string") {
-    return transliterator.transliterate(text);
-  } else {
-    return text.map(text => transliterator.transliterate(text));
-  }
 };

@@ -1,15 +1,9 @@
 import { Text } from "types";
 
 export const ltBn = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { ltIpaRules } = await import("data/lt/lt-ipa.rules");
   const { ipaBnRules } = await import("data/ipa/ipa-bn.rules");
 
-  const transliterator = RBT.fromRules(ltIpaRules + ipaBnRules);
-
-  if (typeof text === "string") {
-    return transliterator.transliterate(text);
-  } else {
-    return text.map(text => transliterator.transliterate(text));
-  }
+  return convertText(text, ltIpaRules + ipaBnRules);
 };

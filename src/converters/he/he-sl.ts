@@ -1,17 +1,9 @@
 import { Text } from "types";
 
 export const heSl = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { heIpa } = await import("converters/he/he-ipa");
   const { ipaSlRules } = await import("data/ipa/ipa-sl.rules");
 
-  const transliterator = RBT.fromRules(ipaSlRules + "::Title;");
-
-  if (typeof text === "string") {
-    const ipa = await heIpa<string>(text);
-    return transliterator.transliterate(ipa);
-  } else {
-    const ipaArray = await heIpa<string[]>(text);
-    return ipaArray.map(ipa => transliterator.transliterate(ipa));
-  }
+  return convertText(text, ipaSlRules + "::Title;", { source: heIpa });
 };

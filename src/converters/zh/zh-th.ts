@@ -1,6 +1,7 @@
 import { Text } from "types";
 
 export const zhTh = async (text: Text) => {
+  const { mapText } = await import("helpers/convertText");
   const { zhPinyinArray } = await import("helpers/zhPinyin");
   const { FINALS, HIGH_CLASS_PAIRS, INITIALS, MID_CLASS, SONORANTS, ZERO_INITIAL } =
     await import("data/zh/zh-th.map");
@@ -65,9 +66,5 @@ export const zhTh = async (text: Text) => {
     return thai.replace(/[０-９]/g, digit => String(digit.charCodeAt(0) - 0xff10));
   };
 
-  if (typeof text === "string") {
-    return await convert(text);
-  } else {
-    return Promise.all(text.map(convert));
-  }
+  return mapText(text, convert);
 };

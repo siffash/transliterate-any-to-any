@@ -1,20 +1,12 @@
 import { Text } from "types";
 
 export const hiZh = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { hiIpaRules } = await import("data/hi/hi-ipa.rules");
   const { ipaGemRules } = await import("data/ipa/ipa_gem.rules");
   const { ipaZhFaiRules } = await import("data/ipa/ipa-zh_fai.rules");
   const { ipaZhRules } = await import("data/ipa/ipa-zh.rules");
   const { ipaZhChaRules } = await import("data/ipa/ipa-zh_cha.rules");
 
-  const transliterator = RBT.fromRules(
-    hiIpaRules + ipaGemRules + ipaZhFaiRules + ipaZhChaRules + ipaZhRules,
-  );
-
-  if (typeof text === "string") {
-    return transliterator.transliterate(text);
-  } else {
-    return text.map(text => transliterator.transliterate(text));
-  }
+  return convertText(text, hiIpaRules + ipaGemRules + ipaZhFaiRules + ipaZhChaRules + ipaZhRules);
 };

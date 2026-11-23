@@ -1,22 +1,14 @@
 import { Text } from "types";
 
 export const faTh = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { faIpa } = await import("converters/fa/fa-ipa");
   const { faIpaThRules } = await import("data/fa/fa-ipa_th.rules");
   const { ipaThOpenRules } = await import("data/ipa/ipa-th_open.rules");
   const { ipaThRules } = await import("data/ipa/ipa-th.rules");
   const { ipaThKaranRules } = await import("data/ipa/ipa-th_karan.rules");
 
-  const transliterator = RBT.fromRules(
-    faIpaThRules + ipaThOpenRules + ipaThRules + ipaThKaranRules,
-  );
-
-  if (typeof text === "string") {
-    const ipa = await faIpa<string>(text);
-    return transliterator.transliterate(ipa);
-  } else {
-    const ipaArray = await faIpa<string[]>(text);
-    return ipaArray.map(ipa => transliterator.transliterate(ipa));
-  }
+  return convertText(text, faIpaThRules + ipaThOpenRules + ipaThRules + ipaThKaranRules, {
+    source: faIpa,
+  });
 };

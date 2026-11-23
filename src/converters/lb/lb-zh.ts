@@ -1,6 +1,7 @@
 import { Text } from "types";
 
 export const lbZh = async (text: Text) => {
+  const { convertText } = await import("helpers/convertText");
   const { RBT } = await import("helpers/rbt");
   const { lbIpa } = await import("converters/lb/lb-ipa");
   const { frIpa } = await import("converters/fr/fr-ipa");
@@ -9,7 +10,6 @@ export const lbZh = async (text: Text) => {
   const { ipaZhInRules } = await import("data/ipa/ipa-zh_in.rules");
   const { ipaZhRules } = await import("data/ipa/ipa-zh.rules");
 
-  const transliterator = RBT.fromRules(ipaZhRules);
   const frenchTransliterator = RBT.fromRules(ipaZhInRules);
   const frenchIpa = async (words: string[]) =>
     (
@@ -21,11 +21,7 @@ export const lbZh = async (text: Text) => {
       })
     ).map(ipa => frenchTransliterator.transliterate(ipa));
 
-  if (typeof text === "string") {
-    const ipa = await lbIpa<string>(text, true, frenchIpa, lbIpaErRules + lbIpaZhRules);
-    return transliterator.transliterate(ipa);
-  } else {
-    const ipaArray = await lbIpa<string[]>(text, true, frenchIpa, lbIpaErRules + lbIpaZhRules);
-    return ipaArray.map(ipa => transliterator.transliterate(ipa));
-  }
+  return convertText(text, ipaZhRules, {
+    source: words => lbIpa(words, true, frenchIpa, lbIpaErRules + lbIpaZhRules),
+  });
 };

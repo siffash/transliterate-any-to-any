@@ -1,7 +1,7 @@
 import { Text } from "types";
 
 export const caFa = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { caIpaRules } = await import("data/ca/ca-ipa.rules");
   const { ipaFaRules } = await import("data/ipa/ipa-fa.rules");
   const { caIpaFaRules } = await import("data/ca/ca-ipa_fa.rules");
@@ -12,7 +12,8 @@ export const caFa = async (text: Text) => {
   const { ipaFaODropRules } = await import("data/ipa/ipa-fa_o-drop.rules");
   const { ipaLlJRules } = await import("data/ipa/ipa_ll-j.rules");
 
-  const transliterator = RBT.fromRules(
+  return convertText(
+    text,
     caLatnSantRules +
       caIpaRules +
       caIpaFaRules +
@@ -23,10 +24,4 @@ export const caFa = async (text: Text) => {
       ipaLlJRules +
       ipaFaRules,
   );
-
-  if (typeof text === "string") {
-    return transliterator.transliterate(text);
-  } else {
-    return text.map(text => transliterator.transliterate(text));
-  }
 };

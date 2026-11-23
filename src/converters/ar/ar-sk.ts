@@ -1,19 +1,13 @@
 import { Text } from "types";
 
 export const arSk = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { ipaGemDRules } = await import("data/ipa/ipa_gemd.rules");
   const { arIpa } = await import("converters/ar/ar-ipa");
   const { arLowerRules } = await import("data/ar/ar_lower.rules");
   const { ipaSkRules } = await import("data/ipa/ipa-sk.rules");
 
-  const transliterator = RBT.fromRules(ipaGemDRules + ipaSkRules + "::Title;" + arLowerRules);
-
-  if (typeof text === "string") {
-    const ipa = await arIpa<string>(text);
-    return transliterator.transliterate(ipa);
-  } else {
-    const ipaArray = await arIpa<string[]>(text);
-    return ipaArray.map(ipa => transliterator.transliterate(ipa));
-  }
+  return convertText(text, ipaGemDRules + ipaSkRules + "::Title;" + arLowerRules, {
+    source: arIpa,
+  });
 };

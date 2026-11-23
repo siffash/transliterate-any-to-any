@@ -1,7 +1,7 @@
 import { Text } from "types";
 
 export const ukEt = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { ukLatnRules } = await import("data/uk/uk-latn.rules");
   const { ukLatnJoRules } = await import("data/uk/uk-latn_jo.rules");
   const { latnSeparatorRules } = await import("data/latn/latn_separator.rules");
@@ -10,7 +10,8 @@ export const ukEt = async (text: Text) => {
   const { latnEtRules } = await import("data/latn/latn-et.rules");
   const { latnJRestoreRules } = await import("data/latn/latn_j-restore.rules");
 
-  const transliterator = RBT.fromRules(
+  return convertText(
+    text,
     ukLatnRules +
       ukLatnJoRules +
       latnSeparatorRules +
@@ -19,10 +20,4 @@ export const ukEt = async (text: Text) => {
       latnEtRules +
       latnJRestoreRules,
   );
-
-  if (typeof text === "string") {
-    return transliterator.transliterate(text);
-  } else {
-    return text.map(text => transliterator.transliterate(text));
-  }
 };

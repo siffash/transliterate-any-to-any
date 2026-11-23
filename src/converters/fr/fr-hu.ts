@@ -1,20 +1,14 @@
 import { Text } from "types";
 
 export const frHu = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { frIpa } = await import("converters/fr/fr-ipa");
   const { frIpaNgRules } = await import("data/fr/fr-ipa_ng.rules");
   const { ipaHuRules } = await import("data/ipa/ipa-hu.rules");
-  const { copyCase } = await import("helpers/copyCase");
-  const { keepElision } = await import("helpers/keepElision");
 
-  const transliterator = RBT.fromRules(frIpaNgRules + ipaHuRules);
-
-  if (typeof text === "string") {
-    const ipa = await frIpa<string>(text);
-    return copyCase(text, keepElision(ipa, transliterator), "hu");
-  } else {
-    const ipaArray = await frIpa<string[]>(text);
-    return ipaArray.map((ipa, i) => copyCase(text[i], keepElision(ipa, transliterator), "hu"));
-  }
+  return convertText(text, frIpaNgRules + ipaHuRules, {
+    source: frIpa,
+    caseLang: "hu",
+    elision: true,
+  });
 };

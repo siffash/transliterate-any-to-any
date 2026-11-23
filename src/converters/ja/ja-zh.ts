@@ -1,6 +1,7 @@
 import { Text } from "types";
 
 export const jaZh = async (text: Text) => {
+  const { mapText } = await import("helpers/convertText");
   const OpenCC = await import("opencc-js");
   const { normalizeJa } = await import("helpers/normalizeJa");
   const { jaZhMap, jaZhKanjiMap } = await import("data/ja/ja-zh.map");
@@ -20,9 +21,5 @@ export const jaZh = async (text: Text) => {
     return joined.replace(/ー(?=[ンん])/g, "").replace(pattern, match => jaZhMap[match]);
   };
 
-  if (typeof text === "string") {
-    return convert(text);
-  } else {
-    return text.map(convert);
-  }
+  return mapText(text, convert);
 };

@@ -1,22 +1,16 @@
 import { Text } from "types";
 
 export const frBg = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { frIpa } = await import("converters/fr/fr-ipa");
   const { frIpaNgRules } = await import("data/fr/fr-ipa_ng.rules");
   const { frIpaCyrlRules } = await import("data/fr/fr-ipa_cyrl.rules");
   const { frIpaBgRules } = await import("data/fr/fr-ipa_bg.rules");
   const { ipaBgRules } = await import("data/ipa/ipa-bg.rules");
-  const { copyCase } = await import("helpers/copyCase");
-  const { keepElision } = await import("helpers/keepElision");
 
-  const transliterator = RBT.fromRules(frIpaNgRules + frIpaCyrlRules + frIpaBgRules + ipaBgRules);
-
-  if (typeof text === "string") {
-    const ipa = await frIpa<string>(text, { keepSchwa: true, finalIeu: true });
-    return copyCase(text, keepElision(ipa, transliterator, "'"), "bg");
-  } else {
-    const ipaArray = await frIpa<string[]>(text, { keepSchwa: true, finalIeu: true });
-    return ipaArray.map((ipa, i) => copyCase(text[i], keepElision(ipa, transliterator, "'"), "bg"));
-  }
+  return convertText(text, frIpaNgRules + frIpaCyrlRules + frIpaBgRules + ipaBgRules, {
+    source: words => frIpa(words, { keepSchwa: true, finalIeu: true }),
+    caseLang: "bg",
+    elision: "'",
+  });
 };

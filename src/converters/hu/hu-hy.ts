@@ -1,7 +1,7 @@
 import { Text } from "types";
 
 export const huHy = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { huLatnRules } = await import("data/hu/hu-latn.rules");
   const { huLatnEoHoldRules } = await import("data/hu/hu-latn_eo-hold.rules");
   const { huLatnEoRestoreRules } = await import("data/hu/hu-latn_eo-restore.rules");
@@ -10,7 +10,8 @@ export const huHy = async (text: Text) => {
   const { latnHyRules } = await import("data/latn/latn-hy.rules");
   const { hyEvRules } = await import("data/hy/hy_ev.rules");
 
-  const transliterator = RBT.fromRules(
+  return convertText(
+    text,
     huLatnEoHoldRules +
       huLatnRules +
       huLatnEoRestoreRules +
@@ -19,10 +20,4 @@ export const huHy = async (text: Text) => {
       latnHyRules +
       hyEvRules,
   );
-
-  if (typeof text === "string") {
-    return transliterator.transliterate(text);
-  } else {
-    return text.map(text => transliterator.transliterate(text));
-  }
 };

@@ -1,20 +1,12 @@
 import { Text } from "types";
 
 export const caEs = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { caLatnRules } = await import("data/ca/ca-latn.rules");
   const { latnEsCaRules } = await import("data/latn/latn-es_ca.rules");
   const { latnEsRules } = await import("data/latn/latn-es.rules");
   const { latnXRules } = await import("data/latn/latn_x.rules");
   const { latnKQuRules } = await import("data/latn/latn_k-qu.rules");
 
-  const transliterator = RBT.fromRules(
-    caLatnRules + latnEsCaRules + latnEsRules + latnXRules + latnKQuRules,
-  );
-
-  if (typeof text === "string") {
-    return transliterator.transliterate(text);
-  } else {
-    return text.map(text => transliterator.transliterate(text));
-  }
+  return convertText(text, caLatnRules + latnEsCaRules + latnEsRules + latnXRules + latnKQuRules);
 };

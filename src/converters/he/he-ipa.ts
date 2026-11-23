@@ -7,6 +7,7 @@ export const heIpa = async <T = Text>(
     pharyngealHet = false,
   }: { addVowels?: boolean; pharyngealHet?: boolean } = {},
 ): Promise<T> => {
+  const { mapText } = await import("helpers/convertText");
   const { heIpaMap, charMap } = await import("data/he/he-ipa.map");
   const { filterIpa } = await import("helpers/filterIpa");
 
@@ -264,9 +265,5 @@ export const heIpa = async <T = Text>(
     return convertHebrewToIPA(text);
   };
 
-  if (typeof text === "string") {
-    return convert(text) as T;
-  } else {
-    return text.map(convert) as T;
-  }
+  return (await mapText(text, convert)) as T;
 };

@@ -1,14 +1,8 @@
 import { Text } from "types";
 
 export const elEn = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { elEnRules } = await import("data/el/el-en.rules");
 
-  const transliterator = RBT.fromRules(elEnRules);
-
-  if (typeof text === "string") {
-    return transliterator.transliterate(text);
-  } else {
-    return text.map(text => transliterator.transliterate(text));
-  }
+  return convertText(text, elEnRules);
 };

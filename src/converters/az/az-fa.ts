@@ -1,7 +1,7 @@
 import { Text } from "types";
 
 export const azFa = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { azIpaRules } = await import("data/az/az-ipa.rules");
   const { ipaDevoiceVRules } = await import("data/ipa/ipa_devoice-v.rules");
   const { ipaFaRules } = await import("data/ipa/ipa-fa.rules");
@@ -11,7 +11,8 @@ export const azFa = async (text: Text) => {
   const { azIpaFaRules } = await import("data/az/az-ipa_fa.rules");
   const { azFaMammadRules } = await import("data/az/az-fa_mammad.rules");
 
-  const transliterator = RBT.fromRules(
+  return convertText(
+    text,
     azLatnQRules +
       azIpaRules +
       azIpaFaRules +
@@ -21,10 +22,4 @@ export const azFa = async (text: Text) => {
       ipaFaRules +
       azFaMammadRules,
   );
-
-  if (typeof text === "string") {
-    return transliterator.transliterate(text);
-  } else {
-    return text.map(text => transliterator.transliterate(text));
-  }
 };

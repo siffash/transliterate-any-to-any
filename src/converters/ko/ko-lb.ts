@@ -1,29 +1,14 @@
 import { Text } from "types";
 
 export const koLb = async (text: Text) => {
-  const Aromanize = (await import("aromanize")).default;
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { latnKoHyphenRules } = await import("data/latn/latn_ko-hyphen.rules");
   const { koLatnAssimRules } = await import("data/ko/ko-latn_assim.rules");
   const { koLatnRules } = await import("data/ko/ko-latn.rules");
   const { latnLbRules } = await import("data/latn/latn-lb.rules");
-  const { wordSplitter } = await import("helpers/wordSplitter");
-  const { normalizeKo } = await import("helpers/normalizeKo");
+  const { koLatn } = await import("converters/ko/ko-latn");
 
-  const transliterator = RBT.fromRules(
-    koLatnAssimRules + koLatnRules + latnLbRules + latnKoHyphenRules,
-  );
-
-  const convert = async (text: string) => {
-    const romanized = await wordSplitter(text, "ko", text =>
-      normalizeKo(text, text => Aromanize.romanize(text), "latn", { syllable: "‧", unit: "‧" }),
-    );
-    return transliterator.transliterate(romanized);
-  };
-
-  if (typeof text === "string") {
-    return await convert(text);
-  } else {
-    return Promise.all(text.map(convert));
-  }
+  return convertText(text, koLatnAssimRules + koLatnRules + latnLbRules + latnKoHyphenRules, {
+    source: koLatn,
+  });
 };

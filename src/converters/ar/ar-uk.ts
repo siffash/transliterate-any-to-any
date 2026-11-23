@@ -1,7 +1,7 @@
 import { Text } from "types";
 
 export const arUk = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { ipaGemDRules } = await import("data/ipa/ipa_gemd.rules");
   const { arIpa } = await import("converters/ar/ar-ipa");
   const { arIpaRuRules } = await import("data/ar/ar-ipa_ru.rules");
@@ -9,15 +9,9 @@ export const arUk = async (text: Text) => {
   const { arLowerRules } = await import("data/ar/ar_lower.rules");
   const { ipaUkRules } = await import("data/ipa/ipa-uk.rules");
 
-  const transliterator = RBT.fromRules(
+  return convertText(
+    text,
     ipaGemDRules + arIpaRuRules + ipaUkRules + ruAlRules + "::Title;" + arLowerRules,
+    { source: words => arIpa(words, { dropLoneArticle: true }) },
   );
-
-  if (typeof text === "string") {
-    const ipa = await arIpa<string>(text, { dropLoneArticle: true });
-    return transliterator.transliterate(ipa);
-  } else {
-    const ipaArray = await arIpa<string[]>(text, { dropLoneArticle: true });
-    return ipaArray.map(ipa => transliterator.transliterate(ipa));
-  }
 };

@@ -1,17 +1,9 @@
 import { Text } from "types";
 
 export const frBn = async (text: Text) => {
-  const { RBT } = await import("helpers/rbt");
+  const { convertText } = await import("helpers/convertText");
   const { frIpa } = await import("converters/fr/fr-ipa");
   const { ipaBnRules } = await import("data/ipa/ipa-bn.rules");
 
-  const transliterator = RBT.fromRules(ipaBnRules);
-
-  if (typeof text === "string") {
-    const ipa = await frIpa<string>(text, { finalIeu: true });
-    return transliterator.transliterate(ipa);
-  } else {
-    const ipaArray = await frIpa<string[]>(text, { finalIeu: true });
-    return ipaArray.map(ipa => transliterator.transliterate(ipa));
-  }
+  return convertText(text, ipaBnRules, { source: words => frIpa(words, { finalIeu: true }) });
 };
