@@ -25,6 +25,7 @@ export const LOCAL_STORAGE_KEYS = {
   langFrom: "lang-from",
   langTo: "lang-to",
   spelling: "spelling",
+  sourceText: "source-text",
 };
 
 export const MAX_CHARS = 5000;

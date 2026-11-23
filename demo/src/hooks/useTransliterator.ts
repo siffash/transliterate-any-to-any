@@ -107,7 +107,7 @@ function pushUrl(params: URLSearchParams) {
 }
 
 function getInitialText(syncUrl: boolean): string {
-  if (!syncUrl) return "";
+  if (!syncUrl) return window.localStorage.getItem(LOCAL_STORAGE_KEYS.sourceText) ?? "";
   const params = new URLSearchParams(window.location.search);
   if (!isSourceLanguage(params.get("from")) || !isLanguage(params.get("to"))) return "";
   return params.get("text") ?? "";
@@ -321,6 +321,10 @@ export function useTransliterator({
   useEffect(() => {
     window.localStorage.setItem(LOCAL_STORAGE_KEYS.spelling, spelling);
   }, [spelling]);
+
+  useEffect(() => {
+    if (!syncUrl) window.localStorage.setItem(LOCAL_STORAGE_KEYS.sourceText, sourceText);
+  }, [sourceText, syncUrl]);
 
   useEffect(() => {
     if (!syncUrl) return;
