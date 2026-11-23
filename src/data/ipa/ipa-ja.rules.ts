@@ -20,7 +20,7 @@ export const ipaJaRules = `
 
 ::Null;
 
-[{\\t}]+ > \u0020;
+[{\\t}]+ > ' ';
 
 tː [ʃɕʂ] > tch;
 dː [ʒʑʐ] > jj;
