@@ -100,9 +100,8 @@ J > Y;
 [aeouAEOU] { i } [aeouAEOU] > y;
 [aeouAEOU] { I } [aeouAEOU] > Y;
 
-h > ;
 H ([:L:]) >| &Any-Upper($1);
-H > ;
+[hH] > ;
 
 ::Null;
 

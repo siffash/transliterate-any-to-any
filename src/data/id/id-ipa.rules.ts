@@ -9,19 +9,13 @@ kh > x;
 gh > ɣ;
 ng > ŋ;
 ny > ɲ;
-sj > ʃ;
-sy > ʃ;
-sh > ʃ;
+s [jyh] > ʃ;
 tj > tʃ;
 
-n } c > ɲ;
-n } j > ɲ;
+n } [cj] > ɲ;
 n } tʃ > ɲ;
 n } dʒ > ɲ;
-n } k > ŋ;
-n } g > ŋ;
-n } q > ŋ;
-n } x > ŋ;
+n } [kqx] > ŋ;
 
 ai > aɪ;
 au > aʊ;

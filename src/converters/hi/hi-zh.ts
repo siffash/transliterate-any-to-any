@@ -3,13 +3,13 @@ import { Text } from "types";
 export const hiZh = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { hiIpaRules } = await import("data/hi/hi-ipa.rules");
-  const { hiIpaGemRules } = await import("data/hi/hi-ipa_gem.rules");
+  const { ipaGemRules } = await import("data/ipa/ipa_gem.rules");
   const { ipaZhFaiRules } = await import("data/ipa/ipa-zh_fai.rules");
   const { ipaZhRules } = await import("data/ipa/ipa-zh.rules");
   const { ipaZhChaRules } = await import("data/ipa/ipa-zh_cha.rules");
 
   const transliterator = RBT.fromRules(
-    hiIpaRules + hiIpaGemRules + ipaZhFaiRules + ipaZhChaRules + ipaZhRules,
+    hiIpaRules + ipaGemRules + ipaZhFaiRules + ipaZhChaRules + ipaZhRules,
   );
 
   if (typeof text === "string") {

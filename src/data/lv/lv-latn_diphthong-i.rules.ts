@@ -7,6 +7,6 @@ export const lvLatnDiphthongIRules = `
 [aeouāēūAEOUĀĒŪ] { i } [^[:L:][:M:]] > y;
 [aeouāēūAEOUĀĒŪ] { I } [^[:L:][:M:]] > Y;
 
-[aeouāēūAEOUĀĒŪ] { i } [bcdfghjkļlmņnprsštvzžčģķBCDFGHJKĻLMŅNPRSŠTVZŽČĢĶ] > y;
-[aeouāēūAEOUĀĒŪ] { I } [bcdfghjkļlmņnprsštvzžčģķBCDFGHJKĻLMŅNPRSŠTVZŽČĢĶ] > Y;
+[aeouāēūAEOUĀĒŪ] { i } [bcdfghkļlmņnprsštvzžčģķBCDFGHKĻLMŅNPRSŠTVZŽČĢĶ] > y;
+[aeouāēūAEOUĀĒŪ] { I } [bcdfghkļlmņnprsštvzžčģķBCDFGHKĻLMŅNPRSŠTVZŽČĢĶ] > Y;
 `;

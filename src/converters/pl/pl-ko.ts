@@ -8,7 +8,6 @@ export const plKo = async (text: Text) => {
   const { ipaDevoiceVRules } = await import("data/ipa/ipa_devoice-v.rules");
   const { ipaDevoiceZRules } = await import("data/ipa/ipa_devoice-z.rules");
   const { plIpaDziRules } = await import("data/pl/pl-ipa_dzi.rules");
-  const { plIpaIRules } = await import("data/pl/pl-ipa_i.rules");
   const { plIpaKoRules } = await import("data/pl/pl-ipa_ko.rules");
   const { ipaKoFinalKpRules } = await import("data/ipa/ipa-ko_final-kp.rules");
   const { ipaKoRules } = await import("data/ipa/ipa-ko.rules");
@@ -20,7 +19,6 @@ export const plKo = async (text: Text) => {
       ipaDevoiceVRules +
       plIpaDziRules +
       ipaDevoiceZRules +
-      plIpaIRules +
       plIpaKoRules +
       ipaKoFinalKpRules +
       ipaKoRules,

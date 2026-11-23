@@ -40,10 +40,9 @@ yae > je;
 wae > ve;
 yeo > jo;
 wa > va;
-we > ve;
+[wo] e > ve;
 wo > vo;
 wi > vi;
-oe > ve;
 yu > ju;
 ya > ja;
 ae > e;
@@ -73,8 +72,7 @@ s > s;
 h > h;
 
 [kpt] · { g > g;
-· { g > k;
-[kptshč] { g > k;
+[·kptshč] { g > k;
 [kptshč] '‧' { g > k;
 '‧' { g > g;
 '․' { g > g;
@@ -126,8 +124,6 @@ ji > i;
 [^[:L:][:M:]] { ['’‘\`´ʼ] } r > ;
 
 · > ' ';
-
-
 
 ::Null;
 

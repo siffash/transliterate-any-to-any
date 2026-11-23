@@ -13,6 +13,6 @@ export const ptLatnDiphthongIRules = `
 [aeoáéóàèòâêôAEOÁÉÓÀÈÒÂÊÔ] { i } [^[:L:][:M:]] > y;
 [aeoáéóàèòâêôAEOÁÉÓÀÈÒÂÊÔ] { I } [^[:L:][:M:]] > Y;
 
-[aeoáéóàèòâêôAEOÁÉÓÀÈÒÂÊÔ] { i } [bcdfghjklmnpqrstvwxzñçBCDFGHJKLMNPQRSTVWXZÑÇ] > y;
-[aeoáéóàèòâêôAEOÁÉÓÀÈÒÂÊÔ] { I } [bcdfghjklmnpqrstvwxzñçBCDFGHJKLMNPQRSTVWXZÑÇ] > Y;
+[aeoáéóàèòâêôAEOÁÉÓÀÈÒÂÊÔ] { i } [bcdfghklmnpqrstvwxzñçBCDFGHKLMNPQRSTVWXZÑÇ] > y;
+[aeoáéóàèòâêôAEOÁÉÓÀÈÒÂÊÔ] { I } [bcdfghklmnpqrstvwxzñçBCDFGHKLMNPQRSTVWXZÑÇ] > Y;
 `;

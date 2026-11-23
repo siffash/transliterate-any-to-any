@@ -12,4 +12,13 @@ export const hyLatnGhRules = `
 
 ɣ } [ptkcćčsšfxhPTKCĆČSŠFXH] > x;
 Ɣ } [ptkcćčsšfxhPTKCĆČSŠFXH] > X;
+
+::Null;
+
+[aeiouəAEIOUƏ] { [hH] } [aeiouəAEIOUƏ] > ;
+
+::Null;
+
+[^[:L:][:M:]] { H ([aeiouə]) > &Any-Upper($1);
+[^[:L:][:M:]] { [hH] } [aeiouəAEIOUƏ] > ;
 `;

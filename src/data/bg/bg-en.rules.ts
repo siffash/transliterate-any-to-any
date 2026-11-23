@@ -115,8 +115,6 @@ export const bgEnRules = `
 
 [:Cyrillic:] > ;
 
-
-
 ::Null;
 
 [wW] { [wW]+ > ;

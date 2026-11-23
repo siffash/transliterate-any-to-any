@@ -5,10 +5,8 @@ export const svLatnRules = `
 
 À > A;
 à > a;
-É > E;
-é > e;
-[ÈÊË] > E;
-[èêë] > e;
+[ÉÈÊË] > E;
+[éèêë] > e;
 Ï > I;
 ï > i;
 Ô > O;
@@ -61,10 +59,8 @@ TION > ŠON;
 Tion > Šon;
 t [iI] [oO] [nN] > šon;
 
-[:L:] { T } [hH] [aA] [mM] [mM] > T;
-[:L:] { t } [hH] [aA] [mM] [mM] > t;
-[:L:] { T } [hH] [aA] [mM] [nN] > T;
-[:L:] { t } [hH] [aA] [mM] [nN] > t;
+[:L:] { T } [hH] [aA] [mM] [mMnN] > T;
+[:L:] { t } [hH] [aA] [mM] [mMnN] > t;
 [:L:] { T } [hH] [uU] [sS] > T;
 [:L:] { t } [hH] [uU] [sS] > t;
 [:L:] { T } [hH] [oO] [lL] [mM] > T;
@@ -95,10 +91,8 @@ p [hH] > f;
 [Åå] { K } [Ee] > K;
 [Åå] { k } [Ee] > k;
 
-[Rr] { G } [AOUÅRaouår] > G;
-[Rr] { g } [AOUÅRaouår] > g;
-[Ll] { G } [AOUÅRaouår] > G;
-[Ll] { g } [AOUÅRaouår] > g;
+[RrLl] { G } [AOUÅRaouår] > G;
+[RrLl] { g } [AOUÅRaouår] > g;
 
 [^[:L:][:M:]] { K } [Ii] [Rr] [Uu] [Nn] [Aa] > K;
 [^[:L:][:M:]] { k } [Ii] [Rr] [Uu] [Nn] [Aa] > k;
@@ -165,10 +159,8 @@ N [Gg] [Hh] } [^[:L:][:M:]] > Ŋ;
 n [Gg] [Hh] } [^[:L:][:M:]] > ŋ;
 N [Gg] > Ŋ;
 n [Gg] > ŋ;
-[:L:] { T } [hH] [aA] [mM] [mM] > T;
-[:L:] { t } [hH] [aA] [mM] [mM] > t;
-[:L:] { T } [hH] [aA] [mM] [nN] > T;
-[:L:] { t } [hH] [aA] [mM] [nN] > t;
+[:L:] { T } [hH] [aA] [mM] [mMnN] > T;
+[:L:] { t } [hH] [aA] [mM] [mMnN] > t;
 [:L:] { T } [hH] [uU] [sS] > T;
 [:L:] { t } [hH] [uU] [sS] > t;
 [:L:] { T } [hH] [oO] [lL] [mM] > T;

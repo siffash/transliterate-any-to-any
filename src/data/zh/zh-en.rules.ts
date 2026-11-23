@@ -27,8 +27,6 @@ export const zhEnRules = `
 
 ['’‘\`´ʼ] } [^aeoAEO] > ;
 
-
-
 ::Null;
 
 w { w+ > ;

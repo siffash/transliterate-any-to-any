@@ -6,4 +6,8 @@ export const enIpaRuRules = `
 [bcdfgɡhklmnpqrstvwxzɹɾrlɫθðŋ] { æ > a;
 [bcdfgɡhklmnpqrstvwxzɹɾrlɫθðŋ] [ˈˌ]? { ɛ } ɹ [ˈˌ]? [bcdfɡɟhjklɫmnpstvwzʃʒθðŋу] > э;
 [bcdfgɡhklmnpqrstvwxzɹɾrlɫθðŋ] [ˈˌ]? { ɛ } ɹ [^[:L:][:M:]] > э;
+
+::Null;
+
+[θð] > t;
 `;

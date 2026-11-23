@@ -1,7 +1,7 @@
 export const ukEnRules = `
 ::NFC;
 
-['’‘\`´ʼ] > ;
+['’‘\`´ʼЬь] > ;
 
 ЗГ > ZGH;
 Зг > Zgh;
@@ -42,21 +42,15 @@ export const ukEnRules = `
 [^[:L:][:M:]] { Ї > Yi;
 [^[:L:][:M:]] { ї > yi;
 
-[:Lu:] { Ї > I;
-Ї } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > I;
-Ї } [:Lu:] > I;
-Ї > I;
-ї > i;
-
 [^[:L:][:M:]] { Й } [:Lu:] > Y;
 [^[:L:][:M:]] { Й > Y;
 [^[:L:][:M:]] { й > y;
 
-[:Lu:] { Й > I;
-Й } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > I;
-Й } [:Lu:] > I;
-Й > I;
-й > i;
+[:Lu:] { [ЇЙ] > I;
+[ЇЙ] } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > I;
+[ЇЙ] } [:Lu:] > I;
+[ЇІЙ] > I;
+[їій] > i;
 
 [:Lu:] { Щ > SHCH;
 Щ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > SHCH;
@@ -121,9 +115,6 @@ export const ukEnRules = `
 И > Y;
 и > y;
 
-І > I;
-і > i;
-
 К > K;
 к > k;
 
@@ -157,13 +148,9 @@ export const ukEnRules = `
 Ф > F;
 ф > f;
 
-[Ьь] > ;
-
 ::Null;
 
 [:Cyrillic:] > ;
-
-
 
 ::Null;
 

@@ -2,8 +2,8 @@ export const csLatnSrRules = `
 ::NFC;
 
 [AEIOUYÁÉÍÓÚŮÝĚ] { Ř } [aeiouyáéíóúůýěAEIOUYÁÉÍÓÚŮÝĚ] > RŽ;
-[aeiouyáéíóúůýěAEIOUYÁÉÍÓÚŮÝĚ] { Ř } [AEIOUYÁÉÍÓÚŮÝĚ] > RŽ;
-[aeiouyáéíóúůýěAEIOUYÁÉÍÓÚŮÝĚ] { Ř } [aeiouyáéíóúůýěAEIOUYÁÉÍÓÚŮÝĚ] > Rž;
+[aeiouyáéíóúůýě] { Ř } [AEIOUYÁÉÍÓÚŮÝĚ] > RŽ;
+[aeiouyáéíóúůýě] { Ř } [aeiouyáéíóúůýě] > Rž;
 [aeiouyáéíóúůýěAEIOUYÁÉÍÓÚŮÝĚ] { ř } [aeiouyáéíóúůýěAEIOUYÁÉÍÓÚŮÝĚ] > rž;
 
 [aeiouyáéíóúůýěAEIOUYÁÉÍÓÚŮÝĚ] { Ř } [^[:L:][:M:]] > RŽ;

@@ -11,8 +11,7 @@ export const arUrRules = `
 ٧ > ۷;
 ٨ > ۸;
 ٩ > ۹;
-أ > ا;
-إ > ا;
+[أإ] > ا;
 [ًٌٍَُِّْ] > ;
 
 ::Null;
@@ -25,8 +24,6 @@ export const arUrRules = `
 ة > ت;
 ه > ہ;
 ٱ > ا;
-
-
 
 ::Null;
 

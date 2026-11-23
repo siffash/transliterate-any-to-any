@@ -10,12 +10,11 @@ export const enRu = async (text: Text) => {
   const { enIpaAeRules } = await import("data/en/en-ipa_ae.rules");
   const { enIpaRuRules } = await import("data/en/en-ipa_ru.rules");
   const { ipaRuRules } = await import("data/ipa/ipa-ru.rules");
-  const { enIpaRuThRules } = await import("data/en/en-ipa_ru-th.rules");
   const { copyCase } = await import("helpers/copyCase");
   const { keepElision } = await import("helpers/keepElision");
 
   const transliterator = RBT.fromRules(
-    enIpaCyrlRules + enIpaWURules + enIpaAeRules + enIpaRuRules + enIpaRuThRules + ipaRuRules,
+    enIpaCyrlRules + enIpaWURules + enIpaAeRules + enIpaRuRules + ipaRuRules,
   );
 
   const words = typeof text === "string" ? [text] : text;

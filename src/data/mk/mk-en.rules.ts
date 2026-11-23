@@ -99,8 +99,6 @@ export const mkEnRules = `
 
 [:Cyrillic:] > ;
 
-
-
 ::Null;
 
 [wW] { [wW]+ > ;

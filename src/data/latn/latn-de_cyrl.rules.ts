@@ -7,7 +7,7 @@ export const latnDeCyrlRules = `
 [Aa] [Ss] [Nn] [Oo] { s } [AaEeIiOoUuÏï] > ꞅ;
 
 Ï { S } [AaEeIiOoUuÏï] > SS;
-[Ïï] { S } [AEIOUÏ] > SS;
-[Ïï] { S } [AaEeIiOoUuÏï] > Ss;
+ï { S } [AEIOUÏ] > SS;
+ï { S } [aeiouï] > Ss;
 [Ïï] { s } [AaEeIiOoUuÏï] > ss;
 `;

@@ -120,8 +120,7 @@ export const ukItRules = `
 Ш > Š;
 ш > š;
 
-Ь > \\';
-ь > \\';
+[Ьь] > \\';
 
 ::Null;
 

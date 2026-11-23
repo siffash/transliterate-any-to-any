@@ -42,8 +42,8 @@ export const ruEnRules = `
 Д > D;
 д > d;
 
-Е > E;
-е > e;
+[ЕЭ] > E;
+[еэ] > e;
 
 Ё } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > YO;
 Ё } [:Lu:] > YO;
@@ -63,8 +63,8 @@ export const ruEnRules = `
 И > I;
 и > i;
 
-Й > Y;
-й > y;
+[ЙЫ] > Y;
+[йы] > y;
 
 К > K;
 к > k;
@@ -129,12 +129,6 @@ export const ruEnRules = `
 Щ > Shch;
 щ > shch;
 
-Ы > Y;
-ы > y;
-
-Э > E;
-э > e;
-
 Ю } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > YU;
 Ю } [:Lu:] > YU;
 [:Lu:] { Ю > YU;
@@ -150,8 +144,6 @@ export const ruEnRules = `
 ::Null;
 
 [:Cyrillic:] > ;
-
-
 
 ::Null;
 

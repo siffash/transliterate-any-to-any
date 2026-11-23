@@ -29,23 +29,20 @@ export const ruFrRules = `
 [^[:L:][:M:]] { Е > Ie;
 [^[:L:][:M:]] { е > ie;
 
-[Ii] { Е > E;
-[Ii] { е > e;
+[IiЫыYy] { Е > E;
+[IiЫыYy] { е > e;
 
-[ЫыYy] { Е > E;
-[ЫыYy] { е > e;
-[АЕЁИОУЫЭЮЯAEIOUYĽŃ] { Е > IE;
-[АЕЁИОУЫЭЮЯаеёиоуыэюяAaEeIiOoUuYyĽľŃń] { Е } [:Lu:] > IE;
-[АЕЁИОУЫЭЮЯаеёиоуыэюяAaEeIiOoUuYyĽľŃń] { Е > Ie;
-[АЕЁИОУЫЭЮЯаеёиоуыэюяAaEeIiOoUuYyĽľŃń] { е > ie;
+[АЕЁИОУЭЮЯAEOUĽŃ] { Е > IE;
+[аеёиоуэюяaeouľń] { Е } [:Lu:] > IE;
+[аеёиоуэюяaeouľń] { Е > Ie;
+[АЕЁИОУЭЮЯаеёиоуэюяAaEeOoUuĽľŃń] { е > ie;
 
 [ЪЬ] Е > IE;
 [ъь] Е > iE;
 [ЪЬ] е > Ie;
-[ъь] е > ie;
 \\' Е } [:Lu:] > IE;
 \\' Е > Ie;
-\\' е > ie;
+[ъь\\'] е > ie;
 
 [:L:] [:L:] [Ii] { [Йй] } [Аа] > ;
 [:L:] [:L:] [Ii] { Я > A;
@@ -163,8 +160,8 @@ export const ruFrRules = `
 ж > j;
 
 [AEIOUY] { С } [AEIOUYaeiouyЙй] > SS;
-[AEIOUYaeiouy] { С } [AEIOUYЙ] > SS;
-[AEIOUYaeiouy] { С } [AEIOUYaeiouyЙй] > Ss;
+[aeiouy] { С } [AEIOUYЙ] > SS;
+[aeiouy] { С } [aeiouyй] > Ss;
 [AEIOUYaeiouy] { с } [AEIOUYaeiouyЙй] > ss;
 
 [aeoAEO] { К [сС] } [^[:L:][:M:]] > X;

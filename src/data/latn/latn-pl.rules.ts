@@ -52,18 +52,18 @@ ij > ej;
 
 ć } [iIüÜÿŸ] > c;
 Ć } [iIüÜÿŸ] > C;
-ć } [aäeïoöuüÿ] > ci;
-ć } [AÄEÏOÖUÜŸ] > cI;
-Ć } [aäeïoöuüÿ] > Ci;
-Ć } [AÄEÏOÖUÜŸ] > CI;
+ć } [aäeïoöu] > ci;
+ć } [AÄEÏOÖU] > cI;
+Ć } [aäeïoöu] > Ci;
+Ć } [AÄEÏOÖU] > CI;
 
 đ } [iIüÜÿŸ] > dz;
 Đ } [iüÿ] > Dz;
 Đ } [IÜŸ] > DZ;
-đ } [aäeïoöuüÿ] > dzi;
-đ } [AÄEÏOÖUÜŸ] > dzI;
-Đ } [aäeïoöuüÿ] > Dzi;
-Đ } [AÄEÏOÖUÜŸ] > DZI;
+đ } [aäeïoöu] > dzi;
+đ } [AÄEÏOÖU] > dzI;
+Đ } [aäeïoöu] > Dzi;
+Đ } [AÄEÏOÖU] > DZI;
 Đ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > DŹ;
 Đ } [:Lu:] > DŹ;
 [:Lu:] { Đ > DŹ;
@@ -72,10 +72,10 @@ ij > ej;
 
 ń } [iIüÜÿŸ] > n;
 Ń } [iIüÜÿŸ] > N;
-ń } [aäeïoöuüÿ] > ni;
-ń } [AÄEÏOÖUÜŸ] > nI;
-Ń } [aäeïoöuüÿ] > Ni;
-Ń } [AÄEÏOÖUÜŸ] > NI;
+ń } [aäeïoöu] > ni;
+ń } [AÄEÏOÖU] > nI;
+Ń } [aäeïoöu] > Ni;
+Ń } [AÄEÏOÖU] > NI;
 
 Š } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > SZ;
 Š } [:Lu:] > SZ;
@@ -129,28 +129,24 @@ Q > K;
 ć } [aąeęoóu] > ci;
 Ć } [aąeęoóu] > Ci;
 Ć } [AĄEĘOÓU] > CI;
-ć } i > c;
-Ć } i > C;
-Ć } I > C;
+ć } [iI] > c;
+Ć } [iI] > C;
 
 ś } [aąeęoóu] > si;
 Ś } [aąeęoóu] > Si;
 Ś } [AĄEĘOÓU] > SI;
-ś } i > s;
-Ś } i > S;
-Ś } I > S;
+ś } [iI] > s;
+Ś } [iI] > S;
 
 ź } [aąeęoóu] > zi;
 Ź } [aąeęoóu] > Zi;
 Ź } [AĄEĘOÓU] > ZI;
-ź } i > z;
-Ź } i > Z;
-Ź } I > Z;
+ź } [iI] > z;
+Ź } [iI] > Z;
 
 ń } [aąeęoóu] > ni;
 Ń } [aąeęoóu] > Ni;
 Ń } [AĄEĘOÓU] > NI;
-ń } i > n;
-Ń } i > N;
-Ń } I > N;
+ń } [iI] > n;
+Ń } [iI] > N;
 `;

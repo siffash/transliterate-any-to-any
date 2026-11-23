@@ -14,8 +14,6 @@ export const thEnRules = `
 
 [:Thai:] > ;
 
-
-
 ::Null;
 
 w { w+ > ;

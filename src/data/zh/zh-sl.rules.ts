@@ -28,7 +28,7 @@ export const zhSlRules = `
 
 ::Null;
 
-yang > jang;
+[yi] ang > jang;
 ying > jing;
 yong > jong;
 yuan > juan;
@@ -93,19 +93,15 @@ xun > šun;
 ji > dži;
 qi > či;
 xi > ši;
-ju > džu;
-qu > ču;
-xu > šu;
-jü > džu;
-qü > ču;
-xü > šu;
+j [uü] > džu;
+q [uü] > ču;
+x [uü] > šu;
 
 zhi > dži;
 chi > či;
 shi > ši;
 zi > dzi;
 
-iang > jang;
 iong > iong;
 uang > uang;
 ueng > ueng;
@@ -173,8 +169,6 @@ u > u;
 ü > ju;
 
 ['’‘\`´ʼ] > ;
-
-
 
 ::Null;
 

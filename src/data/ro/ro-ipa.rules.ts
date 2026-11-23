@@ -24,11 +24,7 @@ export const roIpaRules = `
 [^[:L:][:M:]] e { x } h [aăâeîiou] > gz;
 x > ks;
 
-n } c > ŋ;
-n } k > ŋ;
-n } g > ŋ;
-n } q > ŋ;
-n } x > ŋ;
+n } [ckgqx] > ŋ;
 
 cea } > t͡ʃa;
 ceo } > t͡ʃo;
@@ -53,12 +49,10 @@ chi } > ki;
 ghe } > ge;
 ghi } > gi;
 
-c } e > t͡ʃ;
-c } i > t͡ʃ;
-g } e > d͡ʒ;
-g } i > d͡ʒ;
+c } [ei] > t͡ʃ;
+g } [ei] > d͡ʒ;
 
-c > k;
+[cq] > k;
 
 i } [aăâeîou] > j;
 [aăâeîou] { i } > j;
@@ -70,17 +64,14 @@ e } a > e̯;
 o } a > o̯;
 
 i { i } [^[:L:][:M:]] > j;
-[bdfhjklmnprstvwxzșțkgŋ] r { i } [^[:L:][:M:]] > i;
-[bdfhjklmnprstvwxzșțkgŋ] l { i } [^[:L:][:M:]] > i;
+[bdfhjklmnprstvwxzșțkgŋ] [rl] { i } [^[:L:][:M:]] > i;
 [bdfhjklmnprstvwxzșțkgŋ] { i } [^[:L:][:M:]] > ʲ;
 
 ă > ə;
-â > ɨ;
-î > ɨ;
+[âî] > ɨ;
 ș > ʃ;
 ț > t͡s;
 j > ʒ;
 y > i;
 w > v;
-q > k;
 `;

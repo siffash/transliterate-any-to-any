@@ -8,8 +8,7 @@ d { jø > y;
 [uø] } [^[:L:][:M:]] > uː;
 [dt] { ə > o;
 ə } [bdfgɡklmnpstvzʃʒʁɲŋ] [bdfgɡkmnpstvzʃʒɲŋ] > e;
-ə > u;
-[œø] > u;
+[əœø] > u;
 
 ::Null;
 
@@ -23,7 +22,6 @@ o } [bdfgɡklmnpstʃ] [^[:L:][:M:]] > oː;
 ɲ } [^[:L:][:M:]] > ɲu;
 i { j } [^[:L:][:M:]] > ːju;
 [aɛeoɔuœø] { j } [^[:L:][:M:]] > iju;
-[aɑɛeoɔuyœø] { j } [ɛe] > i;
-[aɑɛeoɔuyœø] { j } i > i;
+[aɑɛeoɔuyœø] { j } [ɛei] > i;
 [aɑɛeoɔuyœø] { j } [aɑoɔuy] > ij;
 `;

@@ -154,8 +154,6 @@ export const tgEnRules = `
 
 [:Cyrillic:] > ;
 
-
-
 ::Null;
 
 [wW] { [wW]+ > ;

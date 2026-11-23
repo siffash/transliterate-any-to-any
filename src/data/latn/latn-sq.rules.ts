@@ -24,8 +24,8 @@ export const latnSqRules = `
 Ẑ > X;
 ẑ > x;
 
-Ḫ > H;
-ḫ > h;
+[ḪX] > H;
+[ḫx] > h;
 
 Ɣ > G;
 ɣ > g;
@@ -34,9 +34,6 @@ IJ > EJ;
 Ij > Ej;
 iJ > eJ;
 ij > ej;
-
-X > H;
-x > h;
 
 ::Null;
 
@@ -62,8 +59,6 @@ x > h;
 ń } [^[:L:][:M:]] > n;
 Ń } [bcdfghjklmnpqrstvwxzçčćđšžțșłBCDFGHJKLMNPQRSTVWXZÇČĆĐŠŽȚȘŁ] > N;
 ń } [bcdfghjklmnpqrstvwxzçčćđšžțșłBCDFGHJKLMNPQRSTVWXZÇČĆĐŠŽȚȘŁ] > n;
-Ń } [Jj] > N;
-ń } [Jj] > n;
 Ń } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > NJ;
 Ń } [:Lu:] > NJ;
 [:Lu:] { Ń > NJ;
@@ -74,8 +69,6 @@ x > h;
 ľ } [^[:L:][:M:]] > l;
 Ľ } [bcdfghjklmnpqrstvwxzçčćđšžțșłBCDFGHJKLMNPQRSTVWXZÇČĆĐŠŽȚȘŁ] > L;
 ľ } [bcdfghjklmnpqrstvwxzçčćđšžțșłBCDFGHJKLMNPQRSTVWXZÇČĆĐŠŽȚȘŁ] > l;
-Ľ } [Jj] > L;
-ľ } [Jj] > l;
 Ľ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > LJ;
 Ľ } [:Lu:] > LJ;
 [:Lu:] { Ľ > LJ;

@@ -87,10 +87,8 @@ y > j;
 
 [ķģļņšžčĶĢĻŅŠŽČ] { [jJ]+ > ;
 [dD] [žŽ] { [jJ]+ > ;
-[jJ] { ie > e;
-[jJ] { Ie > e;
-[jJ] { iE > E;
-[jJ] { IE > E;
+[jJ] { [iI] e > e;
+[jJ] { [iI] E > E;
 [bB] { [bB]+ > ;
 [cC] { [cC]+ > ;
 [dD] { [dD]+ > ;

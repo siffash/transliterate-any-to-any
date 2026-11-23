@@ -52,7 +52,7 @@ kh > kh;
 
 [:Lu:] { Ɣ } [EIYÏeiyï] > GU;
 Ɣ } [EIYÏ] > GU;
-Ɣ } [EIYÏeiyï] > Gu;
+Ɣ } [eiyï] > Gu;
 ɣ } [EIYÏeiyï] > gu;
 
 Ɣ > G;
@@ -79,8 +79,6 @@ kh > kh;
 ľ } [^[:L:][:M:]] > l;
 Ľ } [bcdfghjklmnpqrstvwxzçčćđšžțșłBCDFGHJKLMNPQRSTVWXZÇČĆĐŠŽȚȘŁ] > L;
 ľ } [bcdfghjklmnpqrstvwxzçčćđšžțșłBCDFGHJKLMNPQRSTVWXZÇČĆĐŠŽȚȘŁ] > l;
-Ľ } [Hh] > L;
-ľ } [Hh] > l;
 Ľ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > LH;
 Ľ } [:Lu:] > LH;
 [:Lu:] { Ľ > LH;
@@ -91,8 +89,6 @@ kh > kh;
 ń } [^[:L:][:M:]] > n;
 Ń } [bcdfghjklmnpqrstvwxzçčćđšžțșłBCDFGHJKLMNPQRSTVWXZÇČĆĐŠŽȚȘŁ] > N;
 ń } [bcdfghjklmnpqrstvwxzçčćđšžțșłBCDFGHJKLMNPQRSTVWXZÇČĆĐŠŽȚȘŁ] > n;
-Ń } [Hh] > N;
-ń } [Hh] > n;
 Ń } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > NH;
 Ń } [:Lu:] > NH;
 [:Lu:] { Ń > NH;
@@ -155,8 +151,6 @@ y > i;
 [^[:L:][:M:]] { ['·] > ;
 ['·] } [^[:L:][:M:]] > ;
 · > \\-;
-
-
 
 ::Null;
 

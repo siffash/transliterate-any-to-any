@@ -2,7 +2,7 @@ export const bgLatnIjeRules = `
 ::Null;
 
 И { Е > ɈE;
-[Ии] { Е } [:Lu:] > ɈE;
-[Ии] { Е > Ɉe;
+и { Е } [:Lu:] > ɈE;
+и { Е > Ɉe;
 [Ии] { е > ɉe;
 `;

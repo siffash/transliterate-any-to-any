@@ -2,10 +2,8 @@ export const lvIpaRules = `
 ::Lower;
 ::NFC;
 
-n } k > ŋ;
-n } g > ŋ;
-n } ķ > ɲ;
-n } ģ > ɲ;
+n } [kg] > ŋ;
+n } [ķģ] > ɲ;
 
 ie > iɛ;
 ai > ai;
@@ -15,15 +13,13 @@ ui > ui;
 
 dž > d͡ʒ;
 dz > d͡z;
-ds > t͡s;
-dš > t͡ʃ;
-ts > t͡s;
-tš > t͡ʃ;
+[dt] s > t͡s;
+[dt] š > t͡ʃ;
 
-q > k;
-w > v;
+[qk] > k;
+[wv] > v;
 x > ks;
-y > i;
+[yi] > i;
 a > a;
 ā > aː;
 b > b;
@@ -37,10 +33,8 @@ f > f;
 g > ɡ;
 ģ > ɟ;
 h > x;
-i > i;
 ī > iː;
 j > j;
-k > k;
 ķ > c;
 l > l;
 ļ > ʎ;
@@ -55,7 +49,6 @@ s > s;
 t > t;
 u > u;
 ū > uː;
-v > v;
 z > z;
 ž > ʒ;
 `;

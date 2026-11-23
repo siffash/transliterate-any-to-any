@@ -14,8 +14,7 @@ mig } [^[:L:][:M:]] > mɑj;
 rr { h } > ;
 [aeiouyæøåäöüéèêóòôàâ] [aeiouyæøåäöüéèêóòôàâ] { h } [bcdfgklmnpqrstxz] > ;
 [aeiouyæøåäöüéèêóòôàâ] { h } [bcdfgklmnpqrstxz] > ː;
-[aeiouyæøåäöüéèêóòôàâ] { h } [^[:L:][:M:]] > ;
-[dg] { h } [^[:L:][:M:]] > ;
+[aeiouyæøåäöüéèêóòôàâdg] { h } [^[:L:][:M:]] > ;
 
 ::Null;
 
@@ -101,16 +100,15 @@ og > ɔʊ̯;
 en } [^[:L:][:M:]] > ən;
 
 c } [eiyæø] > s;
-c > k;
+[ckq] > k;
 g } [eiyæø] > j;
 
 a > ɑ;
-e > ɛ;
+[eæ] > ɛ;
 i > i;
 o > o;
 u > u;
 y > y;
-æ > ɛ;
 ø > œ;
 å > ɔ;
 
@@ -119,19 +117,15 @@ d > d;
 f > f;
 h > h;
 j > j;
-k > k;
 l > l;
 m > m;
 n > n;
 p > p;
-q > k;
 r > ʁ;
-s > s;
+[sz] > s;
 t > t;
-v > v;
-w > v;
+[vw] > v;
 x > ks;
-z > s;
 
 ::Null;
 

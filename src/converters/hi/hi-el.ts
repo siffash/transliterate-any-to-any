@@ -3,7 +3,7 @@ import { Text } from "types";
 export const hiEl = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { hiIpaRules } = await import("data/hi/hi-ipa.rules");
-  const { hiIpaGemRules } = await import("data/hi/hi-ipa_gem.rules");
+  const { ipaGemRules } = await import("data/ipa/ipa_gem.rules");
   const { hiIpaElRules } = await import("data/hi/hi-ipa_el.rules");
   const { ipaAspHRules } = await import("data/ipa/ipa_asph.rules");
   const { ipaLatnRules } = await import("data/ipa/ipa-latn.rules");
@@ -11,7 +11,7 @@ export const hiEl = async (text: Text) => {
 
   const transliterator = RBT.fromRules(
     hiIpaRules +
-      hiIpaGemRules +
+      ipaGemRules +
       hiIpaElRules +
       ipaAspHRules +
       ipaLatnRules +

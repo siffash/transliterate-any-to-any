@@ -9,9 +9,8 @@ export const hyEnRules = `
 
 ::Null;
 
-։ > \\.;
+[։՟] > \\.;
 ՝ > ',';
-՟ > \\.;
 ֊ > \\-;
 ՚ > ’;
 
@@ -48,11 +47,11 @@ export const hyEnRules = `
 Խ > Kh;
 խ > kh;
 
-[:Lu:] { Ծ > TS;
+[:Lu:] { [ԾՑ] > TS;
 Ծ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > TS;
-Ծ } [:Lu:] > TS;
-Ծ > Ts;
-ծ > ts;
+[ԾՑ] } [:Lu:] > TS;
+[ԾՑ] > Ts;
+[ծց] > ts;
 
 [:Lu:] { Ձ > DZ;
 Ձ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > DZ;
@@ -66,27 +65,17 @@ export const hyEnRules = `
 Ղ > Gh;
 ղ > gh;
 
-[:Lu:] { Ճ > CH;
+[:Lu:] { [ՃՉ] > CH;
 Ճ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > CH;
-Ճ } [:Lu:] > CH;
-Ճ > Ch;
-ճ > ch;
+[ՃՉ] } [:Lu:] > CH;
+[ՃՉ] > Ch;
+[ճչ] > ch;
 
 [:Lu:] { Շ > SH;
 Շ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > SH;
 Շ } [:Lu:] > SH;
 Շ > Sh;
 շ > sh;
-
-[:Lu:] { Չ > CH;
-Չ } [:Lu:] > CH;
-Չ > Ch;
-չ > ch;
-
-[:Lu:] { Ց > TS;
-Ց } [:Lu:] > TS;
-Ց > Ts;
-ց > ts;
 
 Ա > A;
 ա > a;
@@ -109,8 +98,8 @@ export const hyEnRules = `
 [ԸՅ] > Y;
 [ըյ] > y;
 
-Թ > T;
-թ > t;
+[ԹՏ] > T;
+[թտ] > t;
 
 Ի > I;
 ի > i;
@@ -118,8 +107,8 @@ export const hyEnRules = `
 Լ > L;
 լ > l;
 
-Կ > K;
-կ > k;
+[ԿՔ] > K;
+[կք] > k;
 
 Հ > H;
 հ > h;
@@ -133,8 +122,8 @@ export const hyEnRules = `
 [ՈՕ] > O;
 [ոօ] > o;
 
-Պ > P;
-պ > p;
+[ՊՓ] > P;
+[պփ] > p;
 
 Ջ > J;
 ջ > j;
@@ -148,17 +137,8 @@ export const hyEnRules = `
 Վ > V;
 վ > v;
 
-Տ > T;
-տ > t;
-
 Ւ > W;
 ւ > w;
-
-Փ > P;
-փ > p;
-
-Ք > K;
-ք > k;
 
 Ֆ > F;
 ֆ > f;
@@ -166,8 +146,6 @@ export const hyEnRules = `
 ::NFC;
 
 [:Armenian:] > ;
-
-
 
 ::Null;
 

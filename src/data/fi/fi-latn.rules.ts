@@ -17,8 +17,8 @@ c [hH] > č;
 C } [EIYÄÖeiyäö] > S;
 c } [EIYÄÖeiyäö] > s;
 
-C > K;
-c > k;
+[CQ] > K;
+[cq] > k;
 
 X } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > KS;
 X } [:Lu:] > KS;
@@ -28,9 +28,6 @@ x > ks;
 
 Z > C;
 z > c;
-
-Q > K;
-q > k;
 
 W > V;
 w > v;

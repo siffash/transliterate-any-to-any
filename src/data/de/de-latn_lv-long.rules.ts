@@ -9,8 +9,8 @@ export const deLatnLvLongRules = `
 i [eE] > ī;
 I [eE] > Ī;
 
-i [hH] } [^aeiouäöüAEIOUÄÖÜ] > ī;
-I [hH] } [^aeiouäöüAEIOUÄÖÜ] > Ī;
+[iü] [hH] } [^aeiouäöüAEIOUÄÖÜ] > ī;
+[IÜ] [hH] } [^aeiouäöüAEIOUÄÖÜ] > Ī;
 
 a [aA] > ā;
 A [aA] > Ā;
@@ -29,7 +29,4 @@ U [hH] } [^aeiouäöüAEIOUÄÖÜ] > Ū;
 
 ö [hH] } [^aeiouäöüAEIOUÄÖÜ] > öö;
 Ö [hH] } [^aeiouäöüAEIOUÄÖÜ] > ÖÖ;
-
-ü [hH] } [^aeiouäöüAEIOUÄÖÜ] > ī;
-Ü [hH] } [^aeiouäöüAEIOUÄÖÜ] > Ī;
 `;

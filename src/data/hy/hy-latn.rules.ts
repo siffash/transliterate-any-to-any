@@ -9,9 +9,8 @@ export const hyLatnRules = `
 
 ::Null;
 
-։ > \\.;
+[։՟] > \\.;
 ՝ > ',';
-՟ > \\.;
 ֊ > \\-;
 ՚ > ’;
 
@@ -35,17 +34,14 @@ export const hyLatnRules = `
 
 ::Null;
 
-Ծ > C;
-ծ > c;
+[ԾՑ] > C;
+[ծց] > c;
 
 Ձ > Ẑ;
 ձ > ẑ;
 
 Ղ > Ɣ;
 ղ > ɣ;
-
-Ց > C;
-ց > c;
 
 Ջ > Ǯ;
 ջ > ǯ;

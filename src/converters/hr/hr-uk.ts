@@ -5,7 +5,6 @@ export const hrUk = async (text: Text) => {
   const { hrLatnRules } = await import("data/hr/hr-latn.rules");
   const { latnUkRules } = await import("data/latn/latn-uk.rules");
   const { latnUkSouthSlavicIRules } = await import("data/latn/latn-uk_south-slavic-i.rules");
-  const { ukSkRules } = await import("data/uk/uk_sk.rules");
   const { ukSouthSlavicAdjRules } = await import("data/uk/uk_south-slavic-adj.rules");
   const { ukEcRules } = await import("data/uk/uk_ec.rules");
   const { ukAcRules } = await import("data/uk/uk_ac.rules");
@@ -20,7 +19,6 @@ export const hrUk = async (text: Text) => {
       ukIcaRules +
       ukAcRules +
       ukEcRules +
-      ukSkRules +
       ukSouthSlavicAdjRules,
   );
 

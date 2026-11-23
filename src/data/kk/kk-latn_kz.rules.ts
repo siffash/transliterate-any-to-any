@@ -58,8 +58,8 @@ export const kkLatnKzRules = `
 Д > D;
 д > d;
 
-Е > E;
-е > e;
+[ЕЭ] > E;
+[еэ] > e;
 
 Ж > J;
 ж > j;
@@ -67,11 +67,8 @@ export const kkLatnKzRules = `
 З > Z;
 з > z;
 
-И > I;
-и > i;
-
-Й > I;
-й > i;
+[ИЙІ] > I;
+[ийі] > i;
 
 К > K;
 к > k;
@@ -121,11 +118,8 @@ export const kkLatnKzRules = `
 Ф > F;
 ф > f;
 
-Х > H;
-х > h;
-
-Һ > H;
-һ > h;
+[ХҺ] > H;
+[хһ] > h;
 
 Ш > Ş;
 ш > ş;
@@ -134,12 +128,6 @@ export const kkLatnKzRules = `
 
 Ы > Y;
 ы > y;
-
-І > I;
-і > i;
-
-Э > E;
-э > e;
 
 ::Null;
 

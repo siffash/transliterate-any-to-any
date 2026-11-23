@@ -76,9 +76,9 @@ i { j } [bcdfghjklmnprstvwxzžš] > i;
 [bcdfghjklmnprstvwxzžš] { šš > š;
 [bcdfghjklmnprstvwxzžš] { žž > ž;
 [bcdfghjklmnprstvwxzžš] { ff > f;
-š { š } [bcdfghjklmnprstvwxzžš] > ;
-ž { ž } [bcdfghjklmnprstvwxzžš] > ;
-f { f } [bcdfghjklmnprstvwxzžš] > ;
+š { š } [bcdfghjklmnprstvwxzž] > ;
+ž { ž } [bcdfghjklmnprstvwxzš] > ;
+f { f } [bcdghjklmnprstvwxzžš] > ;
 
 ::Null;
 

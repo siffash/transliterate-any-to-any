@@ -5,18 +5,15 @@ export const itIpaRules = `
 à > a;
 è > ɛ;
 é > e;
-ì > i;
-í > i;
+[ìíy] > i;
 ò > ɔ;
 ó > o;
-ù > u;
-ú > u;
+[ùú] > u;
 
 [aàeèéiìíoòóuùúɛɔ] { sci } [aàeèéiìíoòóuùúɛɔ] > ʃː;
 sci } [aàeèéiìíoòóuùúɛɔ] > ʃ;
 [aàeèéiìíoòóuùúɛɔ] { sc } [eèéiìíɛ] > ʃː;
 sc } [eèéiìíɛ] > ʃ;
-sci > ʃi;
 
 [aàeèéiìíoòóuùúɛɔ] { gli } [aàeèéiìíoòóuùúɛɔ] > ʎː;
 gli } [aàeèéiìíoòóuùúɛɔ] > ʎ;
@@ -40,7 +37,7 @@ ch > k;
 gh > g;
 
 bb > bː;
-cc > kː;
+c [cq] > kː;
 dd > dː;
 ff > fː;
 gg > gː;
@@ -49,7 +46,6 @@ mm > mː;
 nn > nː;
 pp > pː;
 qq > kː;
-cq > kː;
 rr > rː;
 ss > sː;
 tt > tː;
@@ -58,8 +54,7 @@ zz > tːs;
 
 n } [pb{pː}{bː}] > m;
 n } [fv{fː}{vː}] > ɱ;
-n } c [aàoòóuùúhrl] > ŋ;
-n } g [aàoòóuùúhrl] > ŋ;
+n } [cg] [aàoòóuùúhrl] > ŋ;
 n } [kq] > ŋ;
 
 [aàeèéiìíoòóuùúɛɔ] { s } [aàeèéiìíoòóuùúɛɔ] > z;
@@ -74,26 +69,22 @@ gu } [aàeèéiìíoòóuùúɛɔ] > gw;
 u } [aàeèéiìíoòóuùúɛɔ] > w;
 
 ph > f;
-\\' > ;
+[\\'h] > ;
 b > b;
-c > k;
+[ckq] > k;
 d > d;
 f > f;
 g > g;
-h > ;
 j > j;
-k > k;
 l > l;
 m > m;
 n > n;
 p > p;
-q > k;
 r > r;
 s > s;
 t > t;
 v > v;
 w > w;
 x > ks;
-y > i;
 z > ts;
 `;

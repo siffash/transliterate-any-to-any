@@ -8,14 +8,14 @@ export const roTg = async (text: Text) => {
   const { latnRuSchwaRules } = await import("data/latn/latn-ru_schwa.rules");
   const { latnTgRules } = await import("data/latn/latn-tg.rules");
   const { roCyrlEaRules } = await import("data/ro/ro-cyrl_ea.rules");
-  const { roLatnTgHRules } = await import("data/ro/ro-latn_tg-h.rules");
+  const { latnHXRules } = await import("data/latn/latn_h-x.rules");
 
   const transliterator = RBT.fromRules(
     roLatnSchwaRules +
       roLatnRules +
       roLatnGlideRules +
       latnRuSchwaRules +
-      roLatnTgHRules +
+      latnHXRules +
       latnTgRules +
       roCyrlEaRules,
   );

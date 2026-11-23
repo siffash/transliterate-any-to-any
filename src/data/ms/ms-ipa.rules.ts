@@ -2,8 +2,7 @@ export const msIpaRules = `
 ::Lower;
 ::NFC;
 
-sy > ʃ;
-sh > ʃ;
+s [yh] > ʃ;
 ny > ɲ;
 ng > ŋ;
 kh > x;
@@ -15,9 +14,8 @@ y > j;
 q > k;
 [^[:L:][:M:]] { x > z;
 x > ks;
-a { i } [^[:L:][:M:]] > i̯;
+[ao] { i } [^[:L:][:M:]] > i̯;
 a { u } [^[:L:][:M:]] > u̯;
-o { i } [^[:L:][:M:]] > i̯;
 ee > iː;
 e > ə;
 g > ɡ;

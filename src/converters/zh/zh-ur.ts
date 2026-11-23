@@ -5,7 +5,6 @@ export const zhUr = async (text: Text) => {
   const { toIPA } = await getPhonemizeAll();
   const { filterIpa } = await import("helpers/filterIpa");
   const { RBT } = await import("helpers/rbt");
-  const { zhIpaHRules } = await import("data/zh/zh-ipa_h.rules");
   const { zhIpaArabRules } = await import("data/zh/zh-ipa_arab.rules");
   const { zhIpaRRules } = await import("data/zh/zh-ipa_r.rules");
   const { zhIpaVoicedRules } = await import("data/zh/zh-ipa_voiced.rules");
@@ -16,8 +15,7 @@ export const zhUr = async (text: Text) => {
   const { wordSplitter } = await import("helpers/wordSplitter");
 
   const transliterator = RBT.fromRules(
-    zhIpaHRules +
-      zhIpaArabRules +
+    zhIpaArabRules +
       zhIpaVoicedRules +
       zhIpaRRules +
       zhIpaFaRules +

@@ -50,8 +50,8 @@ export const ruLatnRules = `
 [^[:L:][:M:]] { е > ye;
 
 [АЕЁИОУЫЭЮЯAEIOUYÏĽŃĐ] { Е > YE;
-[АЕЁИОУЫЭЮЯаеёиоуыэюяAaEeIiOoUuYyÏïĽľŃńĐđ] { Е } [:Lu:] > YE;
-[АЕЁИОУЫЭЮЯаеёиоуыэюяAaEeIiOoUuYyÏïĽľŃńĐđ] { Е > Ye;
+[аеёиоуыэюяaeiouyïľńđ] { Е } [:Lu:] > YE;
+[аеёиоуыэюяaeiouyïľńđ] { Е > Ye;
 [АЕЁИОУЫЭЮЯаеёиоуыэюяAaEeIiOoUuYyÏïĽľŃńĐđ] { е > ye;
 
 ЪЕ > \\'YE;

@@ -43,7 +43,7 @@ gh } [aăâeêioôơuưy] > ᄀ;
 [bv] } [aăâeêioôơuưy] > ᄇ;
 [dzj] } [aăâeêioôơuưy] > ᄌ;
 đ } [aăâeêioôơuưy] > ᄃ;
-g } [aăâeêioôơuưy] > ᄀ;
+g } [aăâeêoôơuưy] > ᄀ;
 h } [aăâeêioôơuưy] > ᄒ;
 [ᅡ-ᅵɯ] { l } [aăâeêioôơuưy] > ᆯᄅ;
 [lr] } [aăâeêioôơuưy] > ᄅ;

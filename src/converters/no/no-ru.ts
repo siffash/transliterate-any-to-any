@@ -8,16 +8,9 @@ export const noRu = async (text: Text) => {
   const { ruLlRules } = await import("data/ru/ru_ll.rules");
   const { ruLRules } = await import("data/ru/ru_l.rules");
   const { noCyrlRuRules } = await import("data/no/no-cyrl_ru.rules");
-  const { noCyrlRuOyaRules } = await import("data/no/no-cyrl_ru-oya.rules");
 
   const transliterator = RBT.fromRules(
-    noLatnRules +
-      latnSilentHRules +
-      latnRuRules +
-      ruLlRules +
-      ruLRules +
-      noCyrlRuRules +
-      noCyrlRuOyaRules,
+    noLatnRules + latnSilentHRules + latnRuRules + ruLlRules + ruLRules + noCyrlRuRules,
   );
 
   if (typeof text === "string") {

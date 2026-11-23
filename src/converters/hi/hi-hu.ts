@@ -2,7 +2,7 @@ import { Text } from "types";
 
 export const hiHu = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
-  const { hiIpaGemHuRules } = await import("data/hi/hi-ipa_gemhu.rules");
+  const { ipaGemHuRules } = await import("data/ipa/ipa_gemhu.rules");
   const { hiIpaShortEoRules } = await import("data/hi/hi-ipa_short-eo.rules");
   const { hiIpaShortFinalARules } = await import("data/hi/hi-ipa_short-final-a.rules");
   const { hiIpaShortFinalIRules } = await import("data/hi/hi-ipa_short-final-i.rules");
@@ -15,7 +15,7 @@ export const hiHu = async (text: Text) => {
       hiIpaShortEoRules +
       hiIpaShortFinalARules +
       hiIpaShortFinalIRules +
-      hiIpaGemHuRules +
+      ipaGemHuRules +
       ipaAspHRules +
       ipaHuRules +
       "::Title;",

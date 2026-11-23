@@ -43,7 +43,7 @@ G [Ħħ] ([:L:]) >| &Any-Upper($1);
 ħ > h;
 
 H ([:L:]) >| &Any-Upper($1);
-[Hh] } [:L:] > ;
+h } [:L:] > ;
 
 C [hH] > K;
 c [hH] > k;
@@ -84,11 +84,8 @@ Gg } [eEiIyY] > Ǯǯ;
 gg } [eEiIyY] > ǯǯ;
 G } [eEiIyY] > Ǯ;
 g } [eEiIyY] > ǯ;
-C > K;
-c > k;
-
-Q > K;
-q > k;
+[CQ] > K;
+[cq] > k;
 
 ::Null;
 

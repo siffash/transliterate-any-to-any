@@ -5,5 +5,5 @@ export const enIpaWURules = `
 [aeiouyæɑɒɔəɪʊɛʌɜɐː] [ˈˌ]? { w > w;
 w [ɒæ] > уɔ;
 w [ɑa] } [bcdfɡhklɫmnpstvzʃʒθðŋ] > уɔ;
-w } [ɪieɛæəɜɝɚʌaɑɒɔo] > у;
+w } [ɪieɛəɜɝɚʌaɑɔo] > у;
 `;

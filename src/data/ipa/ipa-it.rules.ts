@@ -21,9 +21,8 @@ export const ipaItRules = `
 
 [kqxχ] } [ei] > ch;
 [kqxχ] > c;
-[ɡɢɣɰ] } [ei] > gh;
+[ɡɢɣɰg] } [ei] > gh;
 [ɡɢɣɰ] > g;
-g } [ei] > gh;
 tʃ } tʃ > c;
 dʒ } dʒ > g;
 tʃ } [ei] > c;
@@ -33,28 +32,23 @@ tʃ > ci;
 c } [^ei] > ci;
 dʒ } [ei] > g;
 dʒ > gi;
-ɟ } [ei] > g;
-ɟ > gi;
+[ɟʒʐʑž] } [ei] > g;
+[ɟʒʐʑž] > gi;
 [ʃʂɕç] } [ei] > sc;
 [ʃʂɕç] > sci;
-[ʒʐʑž] } [ei] > g;
-[ʒʐʑž] > gi;
 ʎ } i > gl;
 ʎ > gli;
 ɲ > gn;
 [ʈθť] > t;
 [ɖɗďð] > d;
 ɓ > b;
-β > v;
+[βʋ] > v;
 [ɫɭ] > l;
 [ɽɾʀʁɹ] > r;
 [ŋɳ] > n;
 ɱ > m;
-ʋ > v;
 [ɦɧħ] > h;
 ɸ > f;
-
-
 
 ::Null;
 

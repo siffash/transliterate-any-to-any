@@ -8,8 +8,8 @@ export const plLatnUkRules = `
 ʲe > е;
 
 [PBMVF] { ʲO > ЙО;
-[pbmvfPBMVF] { ʲO } [:Lu:] > ЙО;
-[pbmvfPBMVF] { ʲO > Йо;
+[pbmvf] { ʲO } [:Lu:] > ЙО;
+[pbmvf] { ʲO > Йо;
 [pbmvfPBMVF] { ʲo > йо;
 
 [:Lu:] { ʲO > ЬО;

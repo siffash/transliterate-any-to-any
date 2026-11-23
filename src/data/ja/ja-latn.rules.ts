@@ -28,10 +28,8 @@ export const jaLatnRules = `
 
 ::Null;
 
-tch } e > čč;
-cch } e > čč;
-tch > ćć;
-cch > ćć;
+[tc] ch } e > čč;
+[tc] ch > ćć;
 ssh > šš;
 sh > š;
 ch } e > č;

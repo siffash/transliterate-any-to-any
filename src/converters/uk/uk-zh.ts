@@ -5,12 +5,11 @@ export const ukZh = async (text: Text) => {
   const { ukZhPrefixRules } = await import("data/uk/uk-zh_prefix.rules");
   const { ukIpaRules } = await import("data/uk/uk-ipa.rules");
   const { ukIpaZhRules } = await import("data/uk/uk-ipa_zh.rules");
-  const { ukIpaZhXinhuaRules } = await import("data/uk/uk-ipa_zh-xinhua.rules");
   const { ipaIjRules } = await import("data/ipa/ipa_ij.rules");
   const { ipaZhRules } = await import("data/ipa/ipa-zh.rules");
 
   const transliterator = RBT.fromRules(
-    ukZhPrefixRules + ukIpaRules + ukIpaZhRules + ukIpaZhXinhuaRules + ipaIjRules + ipaZhRules,
+    ukZhPrefixRules + ukIpaRules + ukIpaZhRules + ipaIjRules + ipaZhRules,
   );
 
   if (typeof text === "string") {

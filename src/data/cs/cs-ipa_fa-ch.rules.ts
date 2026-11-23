@@ -3,4 +3,8 @@ export const csIpaFaChRules = `
 
 t͡ʃ > تش;
 tʃ > تش;
+
+::Null;
+
+oʊ̯ } [^[:L:][:M:]] > ow;
 `;

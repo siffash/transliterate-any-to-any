@@ -31,11 +31,9 @@ C [zZ] > Č;
 r [zZ] > ž;
 R [zZ] > Ž;
 
-s [zZ] > š;
-S [zZ] > Š;
+s [zZhH] > š;
+S [zZhH] > Š;
 
-S [hH] > Š;
-s [hH] > š;
 Z [hH] > Ž;
 z [hH] > ž;
 

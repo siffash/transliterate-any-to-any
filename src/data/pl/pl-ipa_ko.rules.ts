@@ -1,6 +1,10 @@
 export const plIpaKoRules = `
 ::Null;
 
+ɨ > i;
+
+::Null;
+
 ʂ > ʃ;
 ʐ > ʒ;
 u { w } [^[:L:][:M:]] > ;

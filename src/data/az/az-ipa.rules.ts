@@ -27,10 +27,8 @@ vv > vː;
 zz > zː;
 
 q } [pfktsşxçh] > k;
-q > ɡ;
 
-k } [eəiöü] > c;
-k } [pfktsşxçh] > c;
+k } [eəiöüpftsşxçh] > c;
 k } [^[:L:][:M:]] > c;
 
 l } [aıou] > ɫ;
@@ -59,7 +57,7 @@ u > u;
 b > b;
 d > d;
 f > f;
-g > ɡ;
+[qg] > ɡ;
 h > h;
 k > k;
 l > l;

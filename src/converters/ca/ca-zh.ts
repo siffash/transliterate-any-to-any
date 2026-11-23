@@ -3,7 +3,6 @@ import { Text } from "types";
 export const caZh = async (text: Text) => {
   const { RBT } = await import("helpers/rbt");
   const { caIpaRules } = await import("data/ca/ca-ipa.rules");
-  const { caIpaLRules } = await import("data/ca/ca-ipa_l.rules");
   const { ipaZhRules } = await import("data/ipa/ipa-zh.rules");
   const { ipaZhSanRules } = await import("data/ipa/ipa-zh_san.rules");
   const { ipaZhKeRules } = await import("data/ipa/ipa-zh_ke.rules");
@@ -11,13 +10,7 @@ export const caZh = async (text: Text) => {
   const { ipaZhSRules } = await import("data/ipa/ipa-zh_s.rules");
 
   const transliterator = RBT.fromRules(
-    caIpaRules +
-      caIpaLRules +
-      ipaZhSanRules +
-      ipaZhKeRules +
-      ipaZhLjeRules +
-      ipaZhSRules +
-      ipaZhRules,
+    caIpaRules + ipaZhSanRules + ipaZhKeRules + ipaZhLjeRules + ipaZhSRules + ipaZhRules,
   );
 
   if (typeof text === "string") {

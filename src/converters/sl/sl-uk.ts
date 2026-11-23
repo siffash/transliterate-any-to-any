@@ -5,7 +5,6 @@ export const slUk = async (text: Text) => {
   const { slLatnRules } = await import("data/sl/sl-latn.rules");
   const { latnUkRules } = await import("data/latn/latn-uk.rules");
   const { latnUkSouthSlavicIRules } = await import("data/latn/latn-uk_south-slavic-i.rules");
-  const { ukSkRules } = await import("data/uk/uk_sk.rules");
   const { latnApostropheDropRules } = await import("data/latn/latn_apostrophe-drop.rules");
   const { ukSouthSlavicAdjRules } = await import("data/uk/uk_south-slavic-adj.rules");
   const { ukEcRules } = await import("data/uk/uk_ec.rules");
@@ -19,7 +18,6 @@ export const slUk = async (text: Text) => {
       ukIjaRules +
       ukIcaRules +
       ukEcRules +
-      ukSkRules +
       ukSouthSlavicAdjRules +
       latnApostropheDropRules,
   );

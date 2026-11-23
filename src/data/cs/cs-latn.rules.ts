@@ -24,8 +24,8 @@ C [hH] > X;
 c [hH] > x;
 
 [PTKFSŠCČXŤ] { Ř > RŠ;
-[ptkfsšcčxťPTKFSŠCČXŤ] { Ř } [:Lu:] > RŠ;
-[ptkfsšcčxťPTKFSŠCČXŤ] { Ř > Rš;
+[ptkfsšcčxť] { Ř } [:Lu:] > RŠ;
+[ptkfsšcčxť] { Ř > Rš;
 [ptkfsšcčxťPTKFSŠCČXŤ] { ř > rš;
 
 Ř } [PTKFSŠCČXŤ] > RŠ;

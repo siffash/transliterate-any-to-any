@@ -46,8 +46,8 @@ export const bgItRules = `
 И > I;
 и > i;
 
-Й > J;
-й > j;
+[ЙЬ] > J;
+[йь] > j;
 
 К > K;
 к > k;
@@ -96,9 +96,6 @@ export const bgItRules = `
 
 Ъ > Ă;
 ъ > ă;
-
-Ь > J;
-ь > j;
 
 ::Null;
 

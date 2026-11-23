@@ -28,9 +28,9 @@ export const zhSrRules = `
 
 ::Null;
 
-yang > jang;
+[yi] ang > jang;
 ying > jing;
-yong > jung;
+[yi] ong > jung;
 yuan > juen;
 yue > jue;
 yun > jun;
@@ -93,25 +93,19 @@ xun > sjun;
 ji > đi;
 qi > ći;
 xi > si;
-ju > đu;
-qu > ću;
-xu > sju;
-jü > đu;
-qü > ću;
-xü > sju;
+j [uü] > đu;
+q [uü] > ću;
+x [uü] > sju;
 
 zhi > dži;
 chi > či;
 shi > ši;
 ri > ži;
-zi > ci;
-ci > ci;
+[zc] i > ci;
 si > si;
 
 hui > huej;
 
-iang > jang;
-iong > jung;
 uang > uang;
 ueng > ueng;
 
@@ -150,9 +144,8 @@ zh > dž;
 ch > č;
 sh > š;
 r > ž;
-z > c;
-c > c;
-s > s;
+[zc] > c;
+[sx] > s;
 b > b;
 p > p;
 m > m;
@@ -166,7 +159,6 @@ k > k;
 h > h;
 j > đ;
 q > ć;
-x > s;
 w > v;
 y > j;
 
@@ -181,8 +173,6 @@ a { ['’‘\`´ʼ] } a > \\';
 e { ['’‘\`´ʼ] } e > \\';
 o { ['’‘\`´ʼ] } o > \\';
 ['’‘\`´ʼ] > ;
-
-
 
 ::Null;
 

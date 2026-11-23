@@ -10,6 +10,6 @@ export const caLatnDiphthongIRules = `
 [aeoáéóàèòâêôAEOÁÉÓÀÈÒÂÊÔ] { i } [^[:L:][:M:]] > y;
 [aeoáéóàèòâêôAEOÁÉÓÀÈÒÂÊÔ] { I } [^[:L:][:M:]] > Y;
 
-[aeoáéóàèòâêôAEOÁÉÓÀÈÒÂÊÔ] { i } [bcdfghjklmnpqrstvwxzñçBCDFGHJKLMNPQRSTVWXZÑÇ] > y;
-[aeoáéóàèòâêôAEOÁÉÓÀÈÒÂÊÔ] { I } [bcdfghjklmnpqrstvwxzñçBCDFGHJKLMNPQRSTVWXZÑÇ] > Y;
+[aeoáéóàèòâêôAEOÁÉÓÀÈÒÂÊÔ] { i } [bcdfghklmnpqrstvwzñçBCDFGHKLMNPQRSTVWZÑÇ] > y;
+[aeoáéóàèòâêôAEOÁÉÓÀÈÒÂÊÔ] { I } [bcdfghklmnpqrstvwzñçBCDFGHKLMNPQRSTVWZÑÇ] > Y;
 `;

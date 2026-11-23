@@ -7,10 +7,9 @@ export const elAz = async (text: Text) => {
   const { latnAzQRules } = await import("data/latn/latn-az_q.rules");
   const { elLatnGiRules } = await import("data/el/el-latn_gi.rules");
   const { elLatnJiRules } = await import("data/el/el-latn_ji.rules");
-  const { elLatnGeRules } = await import("data/el/el-latn_ge.rules");
 
   const transliterator = RBT.fromRules(
-    elLatnGiRules + elLatnJiRules + elLatnGeRules + elLatnRules + latnAzQRules + latnAzRules,
+    elLatnGiRules + elLatnJiRules + elLatnRules + latnAzQRules + latnAzRules,
   );
 
   if (typeof text === "string") {

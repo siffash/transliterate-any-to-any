@@ -2,8 +2,7 @@ export const noIpaKoRules = `
 ::Null;
 
 æʉ > au;
-æ > e;
-ə > e;
+[æə] > e;
 u > o;
 ʉ > u;
 `;

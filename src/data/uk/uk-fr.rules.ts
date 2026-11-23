@@ -38,7 +38,7 @@ export const ukFrRules = `
 
 [AEIOUYaeiouyĽľŃń] { Є } [:Lu:] > IE;
 [AEIOUYĽŃ] { Є > IE;
-[AEIOUYaeiouyĽľŃń] { Є > Ie;
+[aeiouyľń] { Є > Ie;
 [AEIOUYaeiouyĽľŃń] { є > ie;
 
 ['’‘\`´ʼ] Є } [:Lu:] > IE;
@@ -168,8 +168,8 @@ export const ukFrRules = `
 ж > j;
 
 [AEIOUY] { С } [AEIOUYaeiouyЙй] > SS;
-[AEIOUYaeiouy] { С } [AEIOUYЙ] > SS;
-[AEIOUYaeiouy] { С } [AEIOUYaeiouyЙй] > Ss;
+[aeiouy] { С } [AEIOUYЙ] > SS;
+[aeiouy] { С } [aeiouyй] > Ss;
 [AEIOUYaeiouy] { с } [AEIOUYaeiouyЙй] > ss;
 
 [aeoAEO] { К [сС] } [^[:L:][:M:]] > X;

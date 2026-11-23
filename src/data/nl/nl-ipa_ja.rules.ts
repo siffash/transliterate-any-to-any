@@ -5,8 +5,7 @@ export const nlIpaJaRules = `
 ɛi > ɑi;
 ɣ > x;
 [ɛeɪi] ː? { x } [^aɑeɛəiɪoɔuyʏøœ] > ç;
-[:L:] { ʏ > u;
-[:L:] { y > u;
+[:L:] { [ʏy] > u;
 v > f;
 ə > e;
 `;

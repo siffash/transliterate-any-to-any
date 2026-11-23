@@ -20,8 +20,8 @@ export const ptLatnRules = `
 
 ::Null;
 
-C [hH] > Š;
-c [hH] > š;
+[CS] [hH] > Š;
+[cs] [hH] > š;
 
 L [hH] > Ľ;
 l [hH] > ľ;
@@ -29,8 +29,6 @@ l [hH] > ľ;
 N [hH] > Ń;
 n [hH] > ń;
 
-S [hH] > Š;
-s [hH] > š;
 Z [hH] > Ž;
 z [hH] > ž;
 
@@ -50,13 +48,10 @@ gU } [AOao] > gW;
 Gu } [AOao] > Gw;
 gu } [AOao] > gw;
 
-Q > K;
-q > k;
-
 C } [EIei] > S;
 c } [EIei] > s;
-C > K;
-c > k;
+[QC] > K;
+[qc] > k;
 
 Ç > S;
 ç > s;

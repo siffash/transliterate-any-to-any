@@ -127,8 +127,6 @@ export const mkBgRules = `
 Џ > Дж;
 џ > дж;
 
-
-
 ::Null;
 
 [Бб] { [Бб]+ > ;

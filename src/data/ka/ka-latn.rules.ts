@@ -15,7 +15,7 @@ export const kaLatnRules = `
 ბ > b;
 გ > g;
 დ > d;
-ე > e;
+[ეჱ] > e;
 ვ > v;
 ზ > z;
 [თტ] > t;
@@ -24,7 +24,7 @@ export const kaLatnRules = `
 ლ > l;
 მ > m;
 ნ > n;
-ო > o;
+[ოჵ] > o;
 [პფ] > p;
 ჟ > ž;
 რ > r;
@@ -40,11 +40,9 @@ export const kaLatnRules = `
 ჯ > ǯ;
 ჰ > h;
 
-ჱ > e;
 ჲ > y;
 ჳ > w;
 ჴ > ḫ;
-ჵ > o;
 ჶ > f;
 ჷ > ï;
 ჸ > \\';

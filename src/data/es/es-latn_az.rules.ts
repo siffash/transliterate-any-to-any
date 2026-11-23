@@ -1,6 +1,11 @@
 export const esLatnAzRules = `
 ::Null;
 
+[gG] { w > u;
+[gG] { W > U;
+
+::Null;
+
 [bcdfgklmnprstvxzčšžBCDFGKLMNPRSTVXZČŠŽ] { i } [aA] [^[:L:][:M:]] > i;
 [bcdfgklmnprstvxzčšžBCDFGKLMNPRSTVXZČŠŽ] { I } [aA] [^[:L:][:M:]] > I;
 

@@ -11,11 +11,11 @@ export const latnItRules = `
 Ŋ > Ng;
 ŋ > ng;
 
-[:Lu:] { C > TS;
-C } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > TS;
-C } [:Lu:] > TS;
-C > Ts;
-c > ts;
+[:Lu:] { [CẐ] > TS;
+[CẐ] } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > TS;
+[CẐ] } [:Lu:] > TS;
+[CẐ] > Ts;
+[cẑ] > ts;
 
 [Šš] { [Šš] > ;
 Č } [Čč] > C;
@@ -27,15 +27,9 @@ c > ts;
 Đ } [Đđ] > G;
 đ } [Đđ] > g;
 
-[:Lu:] { Ẑ > TS;
-Ẑ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > TS;
-Ẑ } [:Lu:] > TS;
-Ẑ > Ts;
-ẑ > ts;
-
 [:Lu:] { Ḫ } [EIÏYeiïy] > CH;
 Ḫ } [EIYÏ] > CH;
-Ḫ } [EIÏYeiïy] > Ch;
+Ḫ } [eiïy] > Ch;
 ḫ } [EIÏYeiïy] > ch;
 
 Ḫ > C;
@@ -43,7 +37,7 @@ c > ts;
 
 [:Lu:] { Ɣ } [EIÏYeiïy] > GH;
 Ɣ } [EIYÏ] > GH;
-Ɣ } [EIÏYeiïy] > Gh;
+Ɣ } [eiïy] > Gh;
 ɣ } [EIÏYeiïy] > gh;
 
 Ɣ > G;
@@ -58,23 +52,14 @@ ij > ei;
 
 ::Null;
 
-Ǯ } [EIÏYeiïy] > G;
-ǯ } [EIÏYeiïy] > g;
+[ǮĐ] } [EIÏYeiïy] > G;
+[ǯđ] } [EIÏYeiïy] > g;
 
-[:Lu:] { Ǯ > GI;
-Ǯ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > GI;
-Ǯ } [:Lu:] > GI;
-Ǯ > Gi;
-ǯ > gi;
-
-Đ } [EIÏYeiïy] > G;
-đ } [EIÏYeiïy] > g;
-
-[:Lu:] { Đ > GI;
-Đ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > GI;
-Đ } [:Lu:] > GI;
-Đ > Gi;
-đ > gi;
+[:Lu:] { [ǮĐ] > GI;
+[ǮĐ] } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > GI;
+[ǮĐ] } [:Lu:] > GI;
+[ǮĐ] > Gi;
+[ǯđ] > gi;
 
 [ČĆ] } [EIÏYeiïy] > C;
 [čć] } [EIÏYeiïy] > c;
@@ -155,9 +140,8 @@ z > s;
 
 [cCgG] { h } [EIÏYeiïy] > h;
 [cCgG] { H } [EIÏYeiïy] > H;
-h > ;
 H ([:L:]) >| &Any-Upper($1);
-H > ;
+[hH·] > ;
 
 [cCgG] [iIïÏ] { Y } [AEOUÄÖÜaeouäöü] > I;
 [cCgG] [iIïÏ] { y } [AEOUÄÖÜaeouäöü] > i;
@@ -176,9 +160,6 @@ Y [iï] > I;
 
 [^[:L:][:M:]] { \\' > ;
 \\' } [^[:L:][:M:]] > ;
-· > ;
-
-
 
 ::Null;
 

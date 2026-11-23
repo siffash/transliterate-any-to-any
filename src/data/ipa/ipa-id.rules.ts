@@ -8,8 +8,7 @@ export const ipaIdRules = `
 ŋ } [ɡg] > n;
 ŋ > ng;
 ɲ > ny;
-ʃ > sy;
-ʂ > sy;
+[ʃʂ] > sy;
 [χx] > kh;
 [^[:L:][:M:]] { [ʕʔ] > ;
 [ʕʔ] } [ʕʔ] > ;
@@ -19,12 +18,10 @@ export const ipaIdRules = `
 [jʲ] > y;
 [çɕθ] > s;
 t͡ʃ > c;
-tʃ > c;
-tɕ > c;
+t [ʃɕ] > c;
 ʈʂ > c;
 d͡ʒ > j;
-dʒ > j;
-dʑ > j;
+d [ʒʑ] > j;
 č > c;
 [ťʈ] > t;
 ɓ > b;

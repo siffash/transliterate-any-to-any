@@ -1,9 +1,8 @@
 export const ipaUrRetroflexRules = `
 ::Null;
 
-t } [ʃʒɕʑ͡] > t;
+t } [ʃʒɕʑ͡s] > t;
 d } [ʃʒɕʑ͡] > d;
-t } s > t;
 t > ʈ;
 d > ɖ;
 `;

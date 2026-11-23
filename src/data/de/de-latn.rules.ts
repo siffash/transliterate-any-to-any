@@ -5,8 +5,7 @@ export const deLatnRules = `
 
 [^[:L:][:M:]] [sS] [oO] { [eE] } [sS] [tT] > ;
 [^[:L:][:M:]] [cC] [oO] { [eE] } [sS] [fF] [eE] [lL] [dD] > ;
-[^[:L:][:M:]] [cC] [oO] { [eE] } [rR] [dD] [eE] > ;
-[^[:L:][:M:]] [vV] [oO] { [eE] } [rR] [dD] [eE] > ;
+[^[:L:][:M:]] [cCvV] [oO] { [eE] } [rR] [dD] [eE] > ;
 [^[:L:][:M:]] [oO] { [eE] } [rR] [^[:L:][:M:]] > ;
 [^[:L:][:M:]] [kK] [eE] [vV] [eE] [lL] [aA] { [eE] } [rR] > ;
 [^[:L:][:M:]] [lL] [aA] { [eE] } [rR] [^[:L:][:M:]] > ;
@@ -29,9 +28,8 @@ o } [eE] [lL]? [^[:L:][:M:]] > o;
 O } [eE] [lL]? [^[:L:][:M:]] > O;
 C } [oO] [eE] > K;
 c } [oO] [eE] > k;
-OE > Ö;
-Oe > Ö;
-oe > ö;
+O [eE] > Ö;
+o [eE] > ö;
 
 AEU > ÄU;
 Aeu > Äu;
@@ -40,9 +38,8 @@ a } [eE] [lL] [iI]? [sS]? [aA]? [^[:L:][:M:]] > a;
 A } [eE] [lL] [iI]? [sS]? [aA]? [^[:L:][:M:]] > A;
 a } [eE] [lL] [sS] [eEoO] [nN] [^[:L:][:M:]] > a;
 A } [eE] [lL] [sS] [eEoO] [nN] [^[:L:][:M:]] > A;
-AE > Ä;
-Ae > Ä;
-ae > ä;
+A [eE] > Ä;
+a [eE] > ä;
 
 [aAeEäÄqQ] { u } [eE] > u;
 [aAeEäÄqQ] { U } [eE] > U;
@@ -50,9 +47,8 @@ u } [eE] [lL] [sS]? [aA]? [^[:L:][:M:]] > u;
 U } [eE] [lL] [sS]? [aA]? [^[:L:][:M:]] > U;
 u } [eE] [lL] [sS] [sS]? [oO] [nN] [^[:L:][:M:]] > u;
 U } [eE] [lL] [sS] [sS]? [oO] [nN] [^[:L:][:M:]] > U;
-UE > Ü;
-Ue > Ü;
-ue > ü;
+U [eE] > Ü;
+u [eE] > ü;
 
 ::Null;
 
@@ -83,15 +79,11 @@ s } [tT] [aA] [dD] [tT] > š;
 [bdfgklmnprtzBDFGKLMNPRTZẑẐ] { s } [pP] [iI] [tT] [zZ] > š;
 [bdfgklmnprtzBDFGKLMNPRTZẑẐ] { S } [pP] [iI] [tT] [zZ] > Š;
 
-TSCH > Č;
-TSch > Č;
-Tsch > Č;
-tsch > č;
+t [Ss] [Cc] [hH] > č;
+T [Ss] [Cc] [hH] > Č;
 
-SCH > Š;
-Sch > Š;
-sCh > š;
-sch > š;
+s [Cc] [hH] > š;
+S [Cc] [hH] > Š;
 
 [:Lu:] { X > KS;
 X } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > KS;

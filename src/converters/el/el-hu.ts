@@ -8,16 +8,9 @@ export const elHu = async (text: Text) => {
   const { latnHuXRules } = await import("data/latn/latn-hu_x.rules");
   const { elLatnGiRules } = await import("data/el/el-latn_gi.rules");
   const { elLatnJiRules } = await import("data/el/el-latn_ji.rules");
-  const { elLatnGeRules } = await import("data/el/el-latn_ge.rules");
 
   const transliterator = RBT.fromRules(
-    elLatnGiRules +
-      elLatnJiRules +
-      elLatnGeRules +
-      elLatnIoRules +
-      elLatnRules +
-      latnHuRules +
-      latnHuXRules,
+    elLatnGiRules + elLatnJiRules + elLatnIoRules + elLatnRules + latnHuRules + latnHuXRules,
   );
 
   if (typeof text === "string") {

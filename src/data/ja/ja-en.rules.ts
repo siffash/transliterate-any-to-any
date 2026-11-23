@@ -28,8 +28,6 @@ export const jaEnRules = `
 
 ･ > ' ';
 
-
-
 ::Null;
 
 w { w+ > ;

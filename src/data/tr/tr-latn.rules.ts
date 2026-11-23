@@ -4,7 +4,7 @@ export const trLatnRules = `
 Â > A;
 â > a;
 
-Î > I;
+[Îİ] > I;
 î > i;
 
 Û > U;
@@ -26,7 +26,6 @@ c > ǯ;
 
 I > Ï;
 ı > ï;
-İ > I;
 
 J > Ž;
 j > ž;

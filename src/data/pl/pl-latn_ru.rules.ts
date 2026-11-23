@@ -8,10 +8,10 @@ export const plLatnRuRules = `
 ʲ E > Е;
 ʲ O > Ё;
 ʲ U > Ю;
-ʲ [aA] > я;
-ʲ [eE] > е;
-ʲ [oO] > ё;
-ʲ [uU] > ю;
+ʲ a > я;
+ʲ e > е;
+ʲ o > ё;
+ʲ u > ю;
 [:Lu:] { ʲ > Ь;
 ʲ } [:Lu:] > Ь;
 ʲ > ь;

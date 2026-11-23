@@ -34,22 +34,15 @@ export const hiEnRules = `
 ख > kha;
 ग > ga;
 घ > gha;
-ङ > na;
+[ङञणन] > na;
 च > cha;
 छ > chha;
 ज > ja;
 झ > jha;
-ञ > na;
-ट > ta;
-ठ > tha;
-ड > da;
-ढ > dha;
-ण > na;
-त > ta;
-थ > tha;
-द > da;
-ध > dha;
-न > na;
+[टत] > ta;
+[ठथ] > tha;
+[डद] > da;
+[ढध] > dha;
 प > pa;
 फ > pha;
 ब > ba;
@@ -57,12 +50,10 @@ export const hiEnRules = `
 म > ma;
 य > ya;
 र > ra;
-ल > la;
-ळ > la;
+[लळ] > la;
 ऌ > li;
 व > va;
-श > sha;
-ष > sha;
+[शष] > sha;
 स > sa;
 ह > ha;
 
@@ -98,25 +89,24 @@ a् > ;
 ::Null;
 
 ंva } [^[:L:][:M:]] > on;
-ं}h > ng;
-ं}kh > n;
-ं}k > n;
-ं}gh > n;
-ं}g > n;
-ं}chh > n;
-ं}c > n;
-ं}jh > n;
-ं}j > n;
-ं}th > n;
-ं}t > n;
-ं}dh > n;
-ं}d > n;
-ं}ph > m;
-ं}p > m;
-ं}bh > m;
-ं}b > m;
-ं}m > m;
-ं} [^[:L:][:M:]] > n;
+ं } h > ng;
+ं } kh > n;
+ं } k > n;
+ं } gh > n;
+ं } g > n;
+ं } chh > n;
+ं } c > n;
+ं } jh > n;
+ं } j > n;
+ं } th > n;
+ं } t > n;
+ं } dh > n;
+ं } d > n;
+ं } ph > m;
+ं } p > m;
+ं } bh > m;
+ं } [bm] > m;
+ं } [^[:L:][:M:]] > n;
 ं > n;
 ँ > m̐;
 ः > h;
@@ -126,10 +116,7 @@ a् > ;
 [^[:L:][:M:]] [bcdfghjklmnpqrstvwxyz] hh { a } [^[:L:][:M:]] > a;
 [^[:L:][:M:]] [bcdfghjklmnpqrstvwxyz] h { a } [^[:L:][:M:]] > a;
 [^[:L:][:M:]] [bcdfghjklmnpqrstvwxyz] { a } [^[:L:][:M:]] > a;
-[bcdfghjklmnpqrstvwxyz] y { a } [^[:L:][:M:]] > a;
-[bcdfghjklmnpqrstvwxyz] [mln] { a } [^[:L:][:M:]] > a;
-[bcdfghjklmnpqrstvwxyz] r { a } [^[:L:][:M:]] > a;
-[bcdfghjklmnpqrstvwxyz] v { a } [^[:L:][:M:]] > a;
+[bcdfghjklmnpqrstvwxyz] [ymlnrv] { a } [^[:L:][:M:]] > a;
 [bcdfghjklmnpqrstvwxyz] { a } [^[:L:][:M:]] > ;
 
 ::Null;
@@ -203,8 +190,6 @@ v } āliyā [^[:L:][:M:]] > w;
 ::Null;
 
 [:Devanagari:] > ;
-
-
 
 ::Null;
 

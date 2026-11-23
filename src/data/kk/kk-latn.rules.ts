@@ -2,7 +2,7 @@ export const kkLatnRules = `
 ::NFC;
 
 [AÄEIÏOÖUÜ] { Е > YE;
-[AÄEIÏOÖUÜaäeiïoöuü] { Е > Ye;
+[aäeiïoöuü] { Е > Ye;
 [AÄEIÏOÖUÜaäeiïoöuü] { е > ye;
 
 [ЪЬ] Е > YE;

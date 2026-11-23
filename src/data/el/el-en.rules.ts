@@ -1,9 +1,7 @@
 export const elEnRules = `
 ::NFD;
 
-̓ > ;
-̔ > ;
-ͅ > ;
+[̓̔ͅ] > ;
 
 ΑΫ́ > AŸ́;
 ΑΫ > AŸ;
@@ -178,10 +176,8 @@ export const elEnRules = `
 ε > e;
 Ζ > Z;
 ζ > z;
-Η > I;
-η > i;
-Ι > I;
-ι > i;
+[ΗΙ] > I;
+[ηι] > i;
 Κ > K;
 κ > k;
 Λ > L;
@@ -192,34 +188,28 @@ export const elEnRules = `
 ν > n;
 Ξ > X;
 ξ > x;
-Ο > O;
-ο > o;
+[ΟΩ] > O;
+[οω] > o;
 Π > P;
 π > p;
 Ρ > R;
 ρ > r;
 Σ > S;
-σ > s;
-ς > s;
+[σς] > s;
 Τ > T;
 τ > t;
 Υ > Y;
 υ > y;
 Φ > F;
 φ > f;
-Ω > O;
-ω > o;
 
 ::Null;
 
-́ > ;
-̈ > ;
+[́̈] > ;
 
 ::NFC;
 
 [:Greek:] > ;
-
-
 
 ::Null;
 

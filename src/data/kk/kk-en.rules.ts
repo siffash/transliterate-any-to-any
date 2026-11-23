@@ -5,7 +5,7 @@ export const kkEnRules = `
 [ЫИ] [йЙ] } [^[:L:][:M:]] > Y;
 
 [AÄEIÏOÖUÜ] { Е > YE;
-[AÄEIÏOÖUÜaäeiïoöuü] { Е > Ye;
+[aäeiïoöuü] { Е > Ye;
 [AÄEIÏOÖUÜaäeiïoöuü] { е > ye;
 
 [ЪЬ] Е > YE;
@@ -135,8 +135,6 @@ export const kkEnRules = `
 ::Null;
 
 [:Cyrillic:] > ;
-
-
 
 ::Null;
 

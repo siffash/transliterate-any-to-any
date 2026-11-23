@@ -22,10 +22,8 @@ X } [:Lu:] > KS;
 X > Ks;
 x > ks;
 
-CH > X;
-Ch > X;
-cH > x;
-ch > x;
+C [Hh] > X;
+c [Hh] > x;
 
 [:L:] { C } SS > K;
 [:L:] { c } ss > k;
