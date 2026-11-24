@@ -19,3 +19,13 @@ export const joinUrduArticles = (text: string) =>
     if (sun && /(?<!\p{L})Abd$/iu.test(before)) return `${vowel}${sun.toLowerCase()} ${sun}${rest}`;
     return sun ? `${vowel}${sun.toLowerCase()}${sun.toLowerCase()}${rest}` : `${vowel}l ${rest}`;
   });
+
+const JOINED_IPA = new RegExp(`(oː?)?${JOINER}(t̪|d̪|[tdsʃzɾrn](?![͡ʃʒ]))?`, "gu");
+
+export const joinUrduArticlesIpa = (text: string) =>
+  text.replace(JOINED_IPA, (_, o: string | undefined, sun: string | undefined, offset: number) => {
+    const before = text.slice(0, offset);
+    const vowel = !o && /[uʊ]ː?$/.test(before) ? "" : "ʊ";
+    if (sun && /(?<!\p{L})abd̪?$/u.test(before)) return `${vowel}${sun} ${sun}`;
+    return sun ? `${vowel}${sun}${sun}` : `${vowel}l `;
+  });

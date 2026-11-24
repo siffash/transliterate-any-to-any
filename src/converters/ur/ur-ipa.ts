@@ -10,6 +10,7 @@ export const urIpa = async <T = Text>(text: Text, keepNasals = false): Promise<T
   const { filterIpa } = await import("helpers/filterIpa");
   const { breakClusters } = await import("helpers/breakClusters");
   const { markUrduSuffixes, joinUrduSuffixes } = await import("helpers/joinUrduSuffixes");
+  const { markUrduArticles, joinUrduArticlesIpa } = await import("helpers/joinUrduArticles");
 
   const transliterator = RBT.fromRules(urIpaRules);
   const normalizer = RBT.fromRules(urNormRules);
@@ -39,12 +40,20 @@ export const urIpa = async <T = Text>(text: Text, keepNasals = false): Promise<T
           .normalize("NFC");
 
   const convert = async (text: string) =>
-    joinUrduSuffixes(
-      await wordSplitter(markUrduSuffixes(normalizer.transliterate(text)), "ur", (word: string) =>
-        spellNasals(
-          (filterIpa(lookup(word), word, "ur") || fallback(word))
-            .replaceAll("ə\u0303", "ɐ\u0303")
-            .replaceAll("ə", "a"),
+    joinUrduArticlesIpa(
+      joinUrduSuffixes(
+        await wordSplitter(
+          markUrduArticles(
+            markUrduSuffixes(normalizer.transliterate(text)),
+            word => !!lookup(word),
+          ),
+          "ur",
+          (word: string) =>
+            spellNasals(
+              (filterIpa(lookup(word), word, "ur") || fallback(word))
+                .replaceAll("ə\u0303", "ɐ\u0303")
+                .replaceAll("ə", "a"),
+            ),
         ),
       ),
     );

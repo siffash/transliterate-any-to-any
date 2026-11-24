@@ -64,7 +64,8 @@ export const arIpa = async <T = Text>(
       if (diphthong && i === 1) return ch === "و" ? "aw" : "aj";
       if (ch === "و") return vowel ? "uː" : "w";
       if (ch === "ي") {
-        if (vowel) return "iː";
+        if (vowel || (prev === "و" && next === undefined)) return "iː";
+        if (i === 1 && prev === "إ" && CONSONANT.test(next ?? "")) return "ː";
         return i > 0 && CONSONANT.test(prev) && next === "ة" && i === chars.length - 2
           ? "ijj"
           : "j";

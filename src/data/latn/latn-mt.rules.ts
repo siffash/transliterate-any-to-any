@@ -1,12 +1,15 @@
 export const latnMtRules = `
 ::Null;
 
+Ŋ } [xXḫḪ] > N;
+ŋ } [xXḫḪ] > n;
 [:Lu:] { Ŋ > NG;
 Ŋ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > NG;
 Ŋ } [:Lu:] > NG;
 Ŋ > Ng;
 ŋ > ng;
 
+[ɣƔ] } [ɣƔ] > ;
 [:Lu:] { Ɣ > GĦ;
 Ɣ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > GĦ;
 Ɣ } [:Lu:] > GĦ;
@@ -18,9 +21,6 @@ export const latnMtRules = `
 
 Ǯ > Ġ;
 ǯ > ġ;
-
-Ẑ > Z;
-ẑ > z;
 
 IJ > EJ;
 iJ > eJ;
@@ -67,8 +67,8 @@ y > j;
 Þ > T;
 þ > t;
 
-C > Z;
-c > z;
+[CẐ] > Z;
+[cẑ] > z;
 
 Z > Ż;
 z > ż;

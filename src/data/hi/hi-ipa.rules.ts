@@ -119,8 +119,10 @@ export const hiIpaRules = `
 ॠ > ɾiː;
 ऌ > li;
 ॡ > liː;
+ऎ > e;
 ए > eː;
 ऐ > aɪ;
+ऒ > o;
 ओ > oː;
 औ > aʊ;
 ऑ > ɔ;

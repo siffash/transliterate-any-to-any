@@ -202,10 +202,11 @@ c > k;
 J > Y;
 j > y;
 
-[:Lu:] { [ẞß] > SS;
-[ẞß] } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > SS;
-[ẞß] } [:Lu:] > SS;
-[ẞß] > ss;
+ẞ+ > SS;
+[:Lu:] { ß+ } [:Lu:] > SS;
+[:Lu:] { ß+ } ['’‘\`´ʼ-] [:Lu:] [:Lu:] > SS;
+[:Lu:] [:Lu:] { ß+ } [^[:L:][:M:]] > SS;
+ß+ > ss;
 
 [aeiouäöüāēīūAEIOUÄÖÜĀĒĪŪ] [nrkxNRKX] { I } [eE] [lL] [aeAE]? [^[:L:][:M:]] > I;
 [aeiouäöüāēīūAEIOUÄÖÜĀĒĪŪ] [nrkxNRKX] { i } [eE] [lL] [aeAE]? [^[:L:][:M:]] > i;

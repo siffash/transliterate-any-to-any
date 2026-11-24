@@ -29,6 +29,8 @@ a [aA] > o;
 Ø > Ö;
 ø > ö;
 
+[aeiouæøåäöüAEIOUÆØÅÄÖÜ] { Y } [^aeiouæøåäöüAEIOUÆØÅÄÖÜYy] > Y;
+[aeiouæøåäöüAEIOUÆØÅÄÖÜ] { y } [^aeiouæøåäöüAEIOUÆØÅÄÖÜYy] > y;
 Y > Ü;
 y > ü;
 
