@@ -2,10 +2,10 @@ import { Text } from "types";
 
 export const urIpa = async <T = Text>(text: Text, keepNasals = false): Promise<T> => {
   const { mapText } = await import("helpers/convertText");
-  const { urIpaMap } = await import("data/ur/ur-ipa.map");
   const { RBT } = await import("helpers/rbt");
   const { urIpaRules } = await import("data/ur/ur-ipa.rules");
   const { urNormRules } = await import("data/ur/ur_norm.rules");
+  const { lookupUrIpa, deriveUrIpa } = await import("helpers/lookupUrIpa");
   const { wordSplitter } = await import("helpers/wordSplitter");
   const { filterIpa } = await import("helpers/filterIpa");
   const { breakClusters } = await import("helpers/breakClusters");
@@ -14,12 +14,6 @@ export const urIpa = async <T = Text>(text: Text, keepNasals = false): Promise<T
 
   const transliterator = RBT.fromRules(urIpaRules);
   const normalizer = RBT.fromRules(urNormRules);
-
-  const lookup = (word: string) =>
-    urIpaMap[word] ??
-    urIpaMap[word.replace(/^إ/, "ا")] ??
-    urIpaMap[word.replace(/[\u064B-\u0652\u0670]/g, "")] ??
-    urIpaMap[word.replace(/[\u064B-\u0652]/g, "").replace(/\u0670/g, "ا")];
 
   const isConsonant = (segment: string) => /^\p{L}/u.test(segment) && !/^[ɑeoiuəɪʊa]/.test(segment);
   const fallback = (word: string) =>
@@ -45,12 +39,12 @@ export const urIpa = async <T = Text>(text: Text, keepNasals = false): Promise<T
         await wordSplitter(
           markUrduArticles(
             markUrduSuffixes(normalizer.transliterate(text)),
-            word => !!lookup(word),
+            word => !!lookupUrIpa(word),
           ),
           "ur",
           (word: string) =>
             spellNasals(
-              (filterIpa(lookup(word), word, "ur") || fallback(word))
+              (filterIpa(deriveUrIpa(word), word, "ur") || fallback(word))
                 .replaceAll("ə\u0303", "ɐ\u0303")
                 .replaceAll("ə", "a"),
             ),

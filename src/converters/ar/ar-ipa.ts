@@ -103,6 +103,16 @@ export const arIpa = async <T = Text>(
       : preIPA + stemIPA;
   };
 
+  const compound = (word: string): string | undefined => {
+    const chars = [...word];
+    for (let i = chars.length - 3; i >= 3; i--) {
+      const first = known(chars.slice(0, i).join(""));
+      const second = first && known(chars.slice(i).join(""));
+      if (first && second) return first + second.replace(/^ʔ/, "");
+    }
+    return undefined;
+  };
+
   const wordFallback = (word: string): string => {
     for (const [pre, ipa] of ARTICLE_PREFIXES) {
       if (word.startsWith(pre) && word.length > pre.length + 1) {
@@ -118,10 +128,12 @@ export const arIpa = async <T = Text>(
     return nisba?.endsWith("iː") ? nisba.slice(0, -2).replace(/[ˈˌ](?=[^aiueoɛɔː]*$)/, "") : "";
   };
 
+  const known = (s: string): string => filterIpa(lookup(s), s, "ar");
+
   const wordToIPA = (rawWord: string): string => {
     const word = normalize(rawWord);
 
-    const direct = filterIpa(lookup(word), word, "ar");
+    const direct = known(word);
     if (direct) return direct;
 
     for (const pre of PREFIXES) {
@@ -129,7 +141,7 @@ export const arIpa = async <T = Text>(
       const stem = word.slice(pre.length);
       if (stem.length < MIN_STEM) continue;
 
-      const stemIPA = filterIpa(lookup(stem), stem, "ar");
+      const stemIPA = known(stem);
       if (stemIPA) return joinPrefix(pre, stem, stemIPA);
 
       for (const suf of SUFFIXES) {
@@ -137,7 +149,7 @@ export const arIpa = async <T = Text>(
         const core = stem.slice(0, stem.length - suf.length);
         if (core.length < MIN_STEM) continue;
 
-        const coreIPA = filterIpa(lookup(core), core, "ar");
+        const coreIPA = known(core);
         if (coreIPA) return joinPrefix(pre, core, coreIPA) + charFallback(suf);
       }
     }
@@ -147,11 +159,11 @@ export const arIpa = async <T = Text>(
       const stem = word.slice(0, word.length - suf.length);
       if (stem.length < MIN_STEM) continue;
 
-      const stemIPA = filterIpa(lookup(stem), stem, "ar");
+      const stemIPA = known(stem);
       if (stemIPA) return stemIPA + charFallback(suf);
     }
 
-    return wordFallback(word);
+    return compound(word) ?? wordFallback(word);
   };
 
   const ARTICLE = /^ال(?!له(م|$))../;

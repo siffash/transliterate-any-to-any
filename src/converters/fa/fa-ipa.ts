@@ -24,25 +24,33 @@ export const faIpaUvular = async <T = Text>(text: Text, joiner = ""): Promise<T>
   const fallback = (word: string) =>
     breakClusters(transliterator.transliterate(word).match(/d͡ʒ|t͡ʃ|./gu) ?? [], isConsonant, "æ");
 
+  const known = (word: string) => filterIpa(lookup(word), word, "fa");
+
+  const tail = (ipa: string) => ipa.replace(/^ʔ/, "").replace(/^æll[ɒæ]ː?h/, "ollɒh");
+
   const compound = (word: string) => {
     const article = word.match(/^\u0639\u0628\u062f\u0627\u0644(.{3,})$/u)?.[1];
-    const articleIpa = article && filterIpa(lookup(article), article, "fa");
+    const articleIpa = article && known(article);
     if (articleIpa) return "æbdol" + articleIpa.replace(/^ʔ/, "");
     const chars = [...word];
     for (let i = chars.length - 3; i >= 3; i--) {
       const first = chars.slice(0, i).join("");
       const second = chars.slice(i).join("");
-      const firstIpa = filterIpa(lookup(first), first, "fa");
-      const secondIpa = firstIpa && filterIpa(lookup(second), second, "fa");
+      const firstIpa = known(first);
+      const secondIpa = firstIpa && known(second);
       if (firstIpa && secondIpa) {
-        return firstIpa + secondIpa.replace(/^ʔ/, "").replace(/^æll[ɒæ]ː?h/, "ollɒh");
+        return firstIpa + tail(secondIpa);
       }
     }
     return undefined;
   };
 
-  const toIpa = (word: string) =>
-    filterIpa(lookup(word), word, "fa") || compound(word) || fallback(word);
+  const nisba = (word: string) => {
+    const stem = /\u06cc$/.test(word) && [...word].length > 3 && known(word.slice(0, -1));
+    return stem && !/[ɒæeoiuː]$/.test(stem) ? stem + "i" : undefined;
+  };
+
+  const toIpa = (word: string) => known(word) || compound(word) || nisba(word) || fallback(word);
 
   const silentHeSplit = (word: string) => {
     if (!joiner) return undefined;
@@ -54,8 +62,8 @@ export const faIpaUvular = async <T = Text>(text: Text, joiner = ""): Promise<T>
       const first = chars.slice(0, i + 1).join("");
       const second = chars.slice(i + 1).join("");
       if (second.startsWith("\u0627") || (second.length < 3 && first.length < 4)) continue;
-      const firstIpa = filterIpa(lookup(first), first, "fa");
-      const secondIpa = firstIpa?.endsWith("e") && filterIpa(lookup(second), second, "fa");
+      const firstIpa = known(first);
+      const secondIpa = firstIpa?.endsWith("e") && known(second);
       if (secondIpa) return firstIpa + joiner + secondIpa.replace(/^ʔ/, "");
     }
     return undefined;
@@ -70,7 +78,7 @@ export const faIpaUvular = async <T = Text>(text: Text, joiner = ""): Promise<T>
       return undefined;
     if (!word.includes("\u200c") && lookup(word.slice(0, -3))) return undefined;
     const stem = word.replace(/\u200c?\u0627\u06cc$/, "");
-    const ipa = word.includes("\u200c") ? toIpa(stem) : filterIpa(lookup(stem), stem, "fa");
+    const ipa = word.includes("\u200c") ? toIpa(stem) : known(stem);
     return ipa?.endsWith("e") ? ipa + joiner + "\u0294i" : undefined;
   };
 
@@ -85,13 +93,7 @@ export const faIpaUvular = async <T = Text>(text: Text, joiner = ""): Promise<T>
         (!lookup(word) || (joiner && /[^\u200c]{2}\u0647\u200c/.test(word)))
           ? word
               .split("\u200c")
-              .map((part, i) =>
-                i
-                  ? toIpa(part)
-                      .replace(/^ʔ/, "")
-                      .replace(/^æll[ɒæ]ː?h/, "ollɒh")
-                  : toIpa(part),
-              )
+              .map((part, i) => (i ? tail(toIpa(part)) : toIpa(part)))
               .join(joiner)
           : toIpa(word)),
     );

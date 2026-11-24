@@ -1692,6 +1692,7 @@ export const urIpaMap: Record<string, string> = {
   اقرا: "ɪqrɑː",
   اقراء: "ɪqrɑ",
   الہ: "əllɑːɦ",
+  الہی: "ɛlɑːɦiː",
   امام: "ɪmɑːm",
   امیر: "əmiːɾ",
   انور: "ənʋər",

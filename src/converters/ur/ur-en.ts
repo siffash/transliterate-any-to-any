@@ -2,13 +2,13 @@ import { Text } from "types";
 
 export const urEn = async <T = Text>(text: Text): Promise<T> => {
   const { mapText } = await import("helpers/convertText");
-  const { urIpaMap } = await import("data/ur/ur-ipa.map");
   const { RBT } = await import("helpers/rbt");
   const { ipaAspHRules } = await import("data/ipa/ipa_asph.rules");
   const { ipaEnRules } = await import("data/ipa/ipa-en.rules");
   const { urEnRules } = await import("data/ur/ur-en.rules");
   const { urIpaEnRules } = await import("data/ur/ur-ipa_en.rules");
   const { urNormRules } = await import("data/ur/ur_norm.rules");
+  const { lookupUrIpa, deriveUrIpa } = await import("helpers/lookupUrIpa");
   const { wordSplitter } = await import("helpers/wordSplitter");
   const { filterIpa } = await import("helpers/filterIpa");
   const { breakClusters } = await import("helpers/breakClusters");
@@ -19,23 +19,17 @@ export const urEn = async <T = Text>(text: Text): Promise<T> => {
   const transliteratorEn = RBT.fromRules(urEnRules);
   const normalizer = RBT.fromRules(urNormRules);
 
-  const lookup = (word: string) =>
-    urIpaMap[word] ??
-    urIpaMap[word.replace(/^إ/, "ا")] ??
-    urIpaMap[word.replace(/[\u064B-\u0652\u0670]/g, "")] ??
-    urIpaMap[word.replace(/[\u064B-\u0652]/g, "").replace(/\u0670/g, "ا")];
-
   const convert = async (text: string) =>
     joinUrduArticles(
       joinUrduSuffixes(
         await wordSplitter(
           markUrduArticles(
             markUrduSuffixes(normalizer.transliterate(text)),
-            word => !!lookup(word),
+            word => !!lookupUrIpa(word),
           ),
           "ur",
           (word: string) => {
-            const ipa = filterIpa(lookup(word), word, "ur")
+            const ipa = filterIpa(deriveUrIpa(word), word, "ur")
               ?.replaceAll("ə\u0303", "ɐ\u0303")
               .replaceAll("ə", "a");
             if (ipa) {
