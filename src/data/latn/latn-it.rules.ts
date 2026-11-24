@@ -135,11 +135,13 @@ w > v;
 T [sS] > Z;
 t [sS] > z;
 
-Z > S;
-z > s;
+[AEIOUYÀÈÉÌÒÙÏaeiouyàèéìòùï] { Z } [AEIOUYÀÈÉÌÒÙÏaeiouyàèéìòùï] > S;
+[AEIOUYÀÈÉÌÒÙÏaeiouyàèéìòùï] { z } [AEIOUYÀÈÉÌÒÙÏaeiouyàèéìòùï] > s;
 
 [cCgG] { h } [EIÏYeiïy] > h;
 [cCgG] { H } [EIÏYeiïy] > H;
+[^[:L:][:M:]] { H ’ ([:L:]) >| &Any-Upper($1);
+[^[:L:][:M:]] { [hH] ’ > ;
 H ([:L:]) >| &Any-Upper($1);
 [hH·] > ;
 

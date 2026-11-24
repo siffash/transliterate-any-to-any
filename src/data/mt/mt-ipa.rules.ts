@@ -7,29 +7,32 @@ export const mtIpaRules = `
 [ìíî] > i;
 [òóô] > o;
 [ùúû] > u;
+[[:L:][:M:]] { [\\'’] } [[:L:][:M:]] > ;
 
 ::Null;
 
-għi > ɐɪ̯;
-għaj > ɐːɪ̯;
+għi > aɪ̯;
+għaj > aːɪ̯;
 għej > ɛɪ̯;
-għaw > ɐʊ̯;
+għaw > aʊ̯;
 għew > ɛʊ̯;
 għoj > ɔɪ̯;
 għum > ɔʊ̯m;
-għa > ɐː;
+għa > aː;
 għe > ɛː;
 għo > ɔː;
 għu > ʊː;
-għ } [aeiou] > ɐː;
+għ } [aeiou] > aː;
 
-agħ > ɐː;
+agħ > aː;
 egħ > ɛː;
 igħ > iː;
 ogħ > ɔː;
 ugħ > uː;
 
+cch > kː;
 ch > k;
+qu } [aeiou] > kw;
 ph > f;
 sh > ʃ;
 th > t;
@@ -37,13 +40,13 @@ għh > ħː;
 għ } [^[:L:][:M:]] > ħ;
 h } [^[:L:][:M:]] > ħ;
 
-ah > ɐː;
+ah > aː;
 eh > ɛː;
 ih > iː;
 oh > ɔː;
 uh > uː;
 
-aħ > ɐːħ;
+aħ > aːħ;
 eħ > ɛːħ;
 iħ > iːħ;
 oħ > ɔːħ;
@@ -51,19 +54,19 @@ uħ > uːħ;
 
 ie > ɪː;
 
-a } [jw] [aeiou] > ɐ;
+a } [jw] [aeiou] > a;
 e } [jw] [aeiou] > ɛ;
 i } w [aeiou] > ɪ;
 o } [jw] [aeiou] > ɔ;
 
-aj > ɐɪ̯;
-a [wu] > ɐʊ̯;
+aj > aɪ̯;
+a [wu] > aʊ̯;
 ej > ɛɪ̯;
 ew > ɛʊ̯;
 iw > ɪʊ̯;
 oj > ɔɪ̯;
 ow > ɔʊ̯;
-ou > ɐʊ̯;
+ou > aʊ̯;
 
 bb > bː;
 ċċ > t͡ʃː;
@@ -78,7 +81,7 @@ ll > lː;
 mm > mː;
 nn > nː;
 pp > pː;
-qq > qː;
+qq > ʔ;
 rr > rː;
 ss > sː;
 tt > tː;
@@ -97,7 +100,7 @@ d͡ʒɪː { g } [^[:L:][:M:]] > d͡ʒ;
 g } [eiyɛɪ] > d͡ʒ;
 z } [^[:L:][:M:]] > t͡s;
 
-a > ɐ;
+a > a;
 e > ɛ;
 [iy] > ɪ;
 o > ɔ;
@@ -108,7 +111,7 @@ c } [eiyɛɪ] > t͡ʃ;
 ċ > t͡ʃ;
 ġ > d͡ʒ;
 ħ > ħ;
-q > q;
+q > ʔ;
 x > ʃ;
 ż > z;
 z > t͡s;
@@ -121,6 +124,9 @@ h > ;
 j > j;
 l > l;
 m > m;
+n } [ckg] [^eiyɛɪ] > ŋ;
+n } [ckg] [^[:L:][:M:]] > ŋ;
+n } k > ŋ;
 n > n;
 p > p;
 r > r;

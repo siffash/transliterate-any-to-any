@@ -3,6 +3,8 @@ import { Text } from "types";
 export const mtTh = async (text: Text) => {
   const { convertText } = await import("helpers/convertText");
   const { mtIpaRules } = await import("data/mt/mt-ipa.rules");
+  const { mtIpaThRules } = await import("data/mt/mt-ipa_th.rules");
+  const { ipaThHiatusRules } = await import("data/ipa/ipa-th_hiatus.rules");
   const { ipaThGlottalRules } = await import("data/ipa/ipa-th_glottal.rules");
   const { ipaThOpenRules } = await import("data/ipa/ipa-th_open.rules");
   const { ipaJoinRules } = await import("data/ipa/ipa_join.rules");
@@ -11,6 +13,13 @@ export const mtTh = async (text: Text) => {
 
   return convertText(
     text,
-    mtIpaRules + ipaJoinRules + ipaThGlottalRules + ipaThOpenRules + ipaThRules + ipaThKaranRules,
+    mtIpaRules +
+      mtIpaThRules +
+      ipaJoinRules +
+      ipaThGlottalRules +
+      ipaThHiatusRules +
+      ipaThOpenRules +
+      ipaThRules +
+      ipaThKaranRules,
   );
 };

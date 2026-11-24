@@ -5,6 +5,7 @@ export const lbIpa = async <T = Text>(
   velarA = false,
   frenchIpa?: (words: string[]) => Promise<string[]>,
   rules = "",
+  exceptionRules = "",
 ): Promise<T> => {
   const { mapText } = await import("helpers/convertText");
   const { lbIpaMap } = await import("data/lb/lb-ipa.map");
@@ -15,6 +16,7 @@ export const lbIpa = async <T = Text>(
   const { lbFrenchIpa } = await import("converters/lb/lb-french");
 
   const transliterator = RBT.fromRules(lbIpaRules + rules);
+  const exceptionTransliterator = exceptionRules ? RBT.fromRules(exceptionRules) : undefined;
   const french = await lbFrenchIpa(
     typeof text === "string" ? [text] : text,
     lbIpaMap,
@@ -23,7 +25,7 @@ export const lbIpa = async <T = Text>(
     !!frenchIpa,
   );
 
-  const exception = (word: string) => {
+  const lookup = (word: string) => {
     const key = word.normalize("NFC").toLocaleLowerCase("lb");
     if (Object.prototype.hasOwnProperty.call(french, key)) return french[key];
     const ipa =
@@ -31,6 +33,11 @@ export const lbIpa = async <T = Text>(
         filterIpa(lbIpaMap[key], word, "lb")) ||
       undefined;
     return ipa && velarA ? ipa.replace(/ɑ[nm](?![aɑeɛəiɪoɔuʊyøœ])/g, "ɑŋ") : ipa;
+  };
+
+  const exception = (word: string) => {
+    const ipa = lookup(word);
+    return ipa && exceptionTransliterator ? exceptionTransliterator.transliterate(ipa) : ipa;
   };
 
   const convert = (text: string) =>

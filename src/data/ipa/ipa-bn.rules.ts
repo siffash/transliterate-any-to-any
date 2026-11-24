@@ -7,6 +7,10 @@ export const ipaBnRules = `
 [iɪ] { [aɑɐ] } [^[:L:][:M:]] > ja;
 [aeiouɛɔəɑɐæɪʊyʏøœɤɯɨ] [iɪ] { [aɑɐ] > a;
 [:L:] [iɪ] { [aɑɐ] > ja;
+[aeiouɛɔəɑɐæɪʊyʏøœɤɯɨ] [uʊ] { [aɑɐ] > a;
+[aeiouɛɔəɑɐæɪʊyʏøœɤɯɨ] [iɪuʊ] { [eɛ] > e;
+[eɛoɔuʊ] { [aɑɐ] > ja;
+[aɑɐiɪoɔuʊ] { [eɛ] > je;
 
 ０ > 0;
 １ > 1;

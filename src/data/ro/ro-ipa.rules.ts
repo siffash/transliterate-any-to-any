@@ -56,7 +56,8 @@ g } [ei] > d͡ʒ;
 
 i } [aăâeîou] > j;
 [aăâeîou] { i } > j;
-u } [aăâeîo] > w;
+[^[:L:][:M:]] { u } [aăâeîo] > w;
+j { u } [aăâeîo] > w;
 [aăâeîo] { u } > w;
 
 eea > eja;
