@@ -4,6 +4,7 @@ export const arAz = async (text: Text) => {
   const { convertText } = await import("helpers/convertText");
   const { arIpa } = await import("converters/ar/ar-ipa");
   const { arLowerRules } = await import("data/ar/ar_lower.rules");
+  const { arIpaAzRules } = await import("data/ar/ar-ipa_az.rules");
   const { ipaAzRules } = await import("data/ipa/ipa-az.rules");
   const { ipaDottedIRules } = await import("data/ipa/ipa_dotted-i.rules");
   const { arIpaArticleRules } = await import("data/ar/ar-ipa_article.rules");
@@ -13,6 +14,7 @@ export const arAz = async (text: Text) => {
   return convertText(
     text,
     arIpaArticleRules +
+      arIpaAzRules +
       latnQHoldRules +
       ipaAzRules +
       ipaDottedIRules +

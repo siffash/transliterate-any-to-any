@@ -20,8 +20,8 @@ For any other Latin target, keep the text as it is (see _Skip Same-Script Pairs_
 
 Each cell says which output to use for a source language **S** and a target language **T**:
 
-- **EN**: the English romanization, i.e. the library's `S → en` output (Pinyin, Hepburn, Revised Romanization, etc.). Example: Chengdu stays _Chengdu_ in German.
-- **own**: the target's own spelling, i.e. the library's `S → T` output. Example: Chelyabinsk becomes _Tscheljabinsk_ in German.
+- **EN**: the English romanization, i.e. the library's `S → en` output (Pinyin, Hepburn, Revised Romanization, etc.). Example: Chengdu (成都) stays _Chengdu_ in German.
+- **own**: the target's own spelling, i.e. the library's `S → T` output. Example: Chengdu (成都) becomes _Tschengdu_ in German.
 
 | Target | ru uk bg mk kk | tg  | ar fa | hi bn ur | zh  | ja ko | th  | el  | he  | ka  | hy  |
 | ------ | -------------- | --- | ----- | -------- | --- | ----- | --- | --- | --- | --- | --- |
