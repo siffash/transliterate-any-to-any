@@ -4,7 +4,13 @@ import { wordSplitter } from "../src/helpers/wordSplitter";
 describe("wordSplitter", () => {
   describe("segmentation", () => {
     it("splits Japanese into space-separated words", async () => {
-      expect(await wordSplitter("日本語のテキスト", "ja")).toBe("日本語 の テキスト");
+      expect(await wordSplitter("司馬遼太郎, 伊豆の国市", "ja")).toBe("司馬 遼太郎, 伊豆の国 市");
+    });
+
+    it("keeps a Japanese prefix out of the word ending in の", async () => {
+      expect(await wordSplitter("おばたのお兄さん, ラクチョウのお時", "ja")).toBe(
+        "おばたの お 兄さん, ラクチョウの お 時",
+      );
     });
 
     it("splits Chinese into space-separated words", async () => {

@@ -1,5 +1,6 @@
 import type { KuromojiToken } from "kuroshiro-analyzer-kuromoji";
 import { getKuromojiAnalyzer } from "helpers/getKuroshiro";
+import { isJaUnit } from "helpers/jaUnits";
 
 type LatticeNode = { name: number; type: string; length: number };
 type Tokenizer = {
@@ -25,13 +26,22 @@ const joinsPrevious = (token: KuromojiToken) =>
 const sameReading = (a: string, b: string) =>
   a.replaceAll("ニッポン", "ニホン") === b.replaceAll("ニッポン", "ニホン");
 
-const INFIXES: Record<string, string> = { ー: "ー", ノ: "ノ", ヶ: "が" };
+const INFIXES: Record<string, string> = { ー: "ー", ノ: "ノ", ヶ: "が", の: "の" };
 const READ_ALONE = "国";
 const SUFFIXES = new Set("岳川山島湖");
 const CANNOT_START = /^[んンっッゃゅょャュョぁぃぅぇぉァィゥェォ]/u;
 
 const isInfix = (token: KuromojiToken) =>
-  Object.hasOwn(INFIXES, token.surface_form) && (token.pos === "記号" || !token.reading);
+  Object.hasOwn(INFIXES, token.surface_form) &&
+  (token.pos === "記号" || token.pos_detail_1 === "連体化" || !token.reading);
+
+const isGivenName = (token?: KuromojiToken): token is KuromojiToken =>
+  token?.pos_detail_2 === "人名" && token.pos_detail_3 === "名";
+
+const isGivenNamePart = (token: KuromojiToken, previous?: KuromojiToken) =>
+  isGivenName(token) &&
+  isGivenName(previous) &&
+  Math.min([...token.surface_form].length, [...previous.surface_form].length) === 1;
 
 const isOrganization = (features: string) => /^[^,]*,名詞,固有名詞,組織,/.test(features);
 
@@ -109,7 +119,10 @@ export const segmentJapanese = async (text: string) => {
         i === 0 &&
         last?.isWordLike &&
         isWordLike &&
-        (joinsNext || joinsPrevious(token) || CANNOT_START.test(part))
+        ((joinsNext && !isJaUnit(part) && token.pos !== "接頭詞") ||
+          joinsPrevious(token) ||
+          CANNOT_START.test(part) ||
+          isGivenNamePart(token, last.tokens?.at(-1)))
       ) {
         last.segment += part;
         last.tokens = last.tokens && tokens && [...last.tokens, ...tokens];
