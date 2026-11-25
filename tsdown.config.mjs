@@ -23,6 +23,8 @@ export default defineConfig({
       "zlibjs",
       "fflate",
     ],
+    neverBundle: ["icu-transliterator"],
+    onlyBundle: false,
   },
   plugins: [
     nodePolyfills(),
