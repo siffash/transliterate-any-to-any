@@ -5,5 +5,7 @@ export const hePt = async (text: Text) => {
   const { heIpa } = await import("converters/he/he-ipa");
   const { ipaPtRules } = await import("data/ipa/ipa-pt.rules");
 
-  return convertText(text, ipaPtRules + "::Title;", { source: heIpa });
+  return convertText(text, ipaPtRules + "::Title;", {
+    source: words => heIpa(words, { pharyngealHet: true }),
+  });
 };

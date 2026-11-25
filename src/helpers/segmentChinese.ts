@@ -108,7 +108,8 @@ const splitTown = (text: string, tagged: { word: string; tag: string }[]) => {
   const chars = [...text];
   const unit = chars[chars.length - 1];
   const last = tagged[tagged.length - 1]!;
-  const inner = chars.slice(2, -2).findIndex(char => HIGHER_UNITS.has(char)) + 3;
+  const inner =
+    chars.slice(2, -2).findIndex((char, i) => HIGHER_UNITS.has(char) && chars[i + 3] !== "级") + 3;
   if (inner > 2 && !chars.slice(inner, -1).some(char => HIGHER_UNITS.has(char))) {
     return UNITS.has(unit) && tagged.length > 1
       ? [chars.slice(0, inner).join(""), chars.slice(inner).join("")]

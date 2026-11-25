@@ -7,6 +7,7 @@ export const zhVi = async (text: Text) => {
   const { getHanviet } = await import("hanviet-pinyin-words");
   const { ZH_VI_MAP, ZH_VI_WORDS } = await import("data/zh/zh-vi.map");
   const { ZH_VI_PINYIN } = await import("data/zh/zh-vi_pinyin.map");
+  const { stripZhUnits } = await import("helpers/zhUnits");
 
   const converter = OpenCC.Converter({ from: "cn", to: "t" });
 
@@ -19,7 +20,8 @@ export const zhVi = async (text: Text) => {
       )
       .normalize("NFC");
 
-  const convert = (text: string) => {
+  const convert = async (input: string) => {
+    const text = await stripZhUnits(input);
     const traditionalText = converter(text).replace(/[０-９]/g, digit =>
       String(digit.charCodeAt(0) - 0xff10),
     );

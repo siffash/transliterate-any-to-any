@@ -5,9 +5,13 @@ export const zhIpa = async <T = Text>(text: Text): Promise<T> => {
   const { filterIpa } = await import("helpers/filterIpa");
   const { wordSplitter } = await import("helpers/wordSplitter");
   const { mapText } = await import("helpers/convertText");
+  const { stripZhUnit } = await import("helpers/zhUnits");
   const { toIPA } = await getPhonemizeAll();
 
   return (await mapText(text, text =>
-    wordSplitter(text, "zh", text => filterIpa(toIPA(text, { separator: "" }), text, "zh")),
+    wordSplitter(text, "zh", text => {
+      const word = stripZhUnit(text);
+      return filterIpa(toIPA(word, { separator: "" }), word, "zh");
+    }),
   )) as T;
 };

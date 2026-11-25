@@ -6,6 +6,7 @@ export const zhTh = async (text: Text) => {
   const { FINALS, HIGH_CLASS_PAIRS, INITIALS, MID_CLASS, SONORANTS, ZERO_INITIAL } =
     await import("data/zh/zh-th.map");
   const { wordSplitter } = await import("helpers/wordSplitter");
+  const { stripZhUnit } = await import("helpers/zhUnits");
 
   const syllableToThai = (syllable: string) => {
     const tone = Number(/\d$/.exec(syllable)?.[0] ?? 0);
@@ -62,7 +63,7 @@ export const zhTh = async (text: Text) => {
   };
 
   const convert = async (text: string) => {
-    const thai = await wordSplitter(text, "zh", wordToThai);
+    const thai = await wordSplitter(text, "zh", word => wordToThai(stripZhUnit(word)));
     return thai.replace(/[０-９]/g, digit => String(digit.charCodeAt(0) - 0xff10));
   };
 

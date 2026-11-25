@@ -4,14 +4,15 @@ export const zhLatn = async <T = Text>(text: Text, givenNameSeparator?: string):
   const { zhPinyin } = await import("helpers/zhPinyin");
   const { wordSplitter } = await import("helpers/wordSplitter");
   const { mapText } = await import("helpers/convertText");
+  const { stripZhUnit } = await import("helpers/zhUnits");
 
   return (await mapText(text, text =>
     wordSplitter(
       text,
       "zh",
       givenNameSeparator === undefined
-        ? text => zhPinyin(text)
-        : (text, givenName) => zhPinyin(text, givenName ? givenNameSeparator : "'"),
+        ? text => zhPinyin(stripZhUnit(text))
+        : (text, givenName) => zhPinyin(stripZhUnit(text), givenName ? givenNameSeparator : "'"),
     ),
   )) as T;
 };
