@@ -6,6 +6,11 @@ export const arLb = async (text: Text) => {
   const { arIpa } = await import("converters/ar/ar-ipa");
   const { arLowerRules } = await import("data/ar/ar_lower.rules");
   const { ipaLbRules } = await import("data/ipa/ipa-lb.rules");
+  const { arIpaArticleRules } = await import("data/ar/ar-ipa_article.rules");
 
-  return convertText(text, ipaGemRules + ipaLbRules + "::Title;" + arLowerRules, { source: arIpa });
+  return convertText(
+    text,
+    arIpaArticleRules + ipaGemRules + ipaLbRules + "::Title;" + arLowerRules,
+    { source: arIpa },
+  );
 };

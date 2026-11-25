@@ -8,10 +8,17 @@ export const arTr = async (text: Text) => {
   const { arIpaTrRules } = await import("data/ar/ar-ipa_tr.rules");
   const { ipaTrRules } = await import("data/ipa/ipa-tr.rules");
   const { ipaDottedIRules } = await import("data/ipa/ipa_dotted-i.rules");
+  const { arIpaArticleRules } = await import("data/ar/ar-ipa_article.rules");
 
   return convertText(
     text,
-    arIpaTrRules + ipaTrRules + arTrRules + ipaDottedIRules + "::Title;" + arLowerRules,
+    arIpaArticleRules +
+      arIpaTrRules +
+      ipaTrRules +
+      arTrRules +
+      ipaDottedIRules +
+      "::Title;" +
+      arLowerRules,
     {
       source: arIpa,
     },
